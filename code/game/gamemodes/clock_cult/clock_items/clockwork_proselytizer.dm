@@ -178,21 +178,24 @@
 	return TRUE
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
-/obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user, no_table_check)
+/obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user, silent, no_table_check)
 	if(!target || !user)
 		return FALSE
 	if(repairing)
-		to_chat(user, "<span class='warning'>You are currently repairing [repairing] with [src]!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are currently repairing [repairing] with [src]!</span>")
 		return FALSE
 	if(recharging)
-		to_chat(user, "<span class='warning'>You are currently recharging [src] from the [recharging.sigil_name]!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are currently recharging [src] from the [recharging.sigil_name]!</span>")
 		return FALSE
-	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
+	var/list/proselytize_values = target.proselytize_vals(user, src, silent) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		if(proselytize_values != TRUE) //if we get true, fail, but don't send a message for whatever reason
 			if(!isturf(target)) //otherwise, if we didn't get TRUE and the original target wasn't a turf, try to proselytize the turf
 				return proselytize(get_turf(target), user, no_table_check)
-			to_chat(user, "<span class='warning'>[target] cannot be proselytized!</span>")
+			if(!silent)
+				to_chat(user, "<span class='warning'>[target] cannot be proselytized!</span>")
 			if(!no_table_check)
 				return TRUE
 		return FALSE
@@ -207,19 +210,22 @@
 
 	var/target_type = target.type
 
-	if(!proselytize_checks(proselytize_values, target, target_type, user))
+	if(!proselytize_checks(proselytize_values, target, target_type, user, silent))
 		return FALSE
 
 	proselytize_values["operation_time"] *= speed_multiplier
 
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"])
-		user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
+		if(!silent)
+			user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 		if(!do_after(user, proselytize_values["operation_time"], target = target, extra_checks = CALLBACK(src, .proc/proselytize_checks, proselytize_values, target, target_type, user, TRUE)))
 			return FALSE
-		user.visible_message("<span class='warning'>[user]'s [name] covers [target] in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
+		if(!silent)
+			user.visible_message("<span class='warning'>[user]'s [name] covers [target] in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 	else
-		user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
+		if(!silent)
+			user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/new_thing_type = proselytize_values["new_obj_type"]
@@ -227,11 +233,12 @@
 		var/turf/T = target
 		T.ChangeTurf(new_thing_type)
 	else
-		if(proselytize_values["dir_in_new"])
-			new new_thing_type(get_turf(target), proselytize_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
-		else
-			var/atom/A = new new_thing_type(get_turf(target))
-			A.setDir(proselytize_values["spawn_dir"])
+		if(new_thing_type)
+			if(proselytize_values["dir_in_new"])
+				new new_thing_type(get_turf(target), proselytize_values["spawn_dir"]) //please verify that your new object actually wants to get a dir in New()
+			else
+				var/atom/A = new new_thing_type(get_turf(target))
+				A.setDir(proselytize_values["spawn_dir"])
 		if(!proselytize_values["no_target_deletion"]) //for some cases where proselytize_vals() modifies the object but doesn't want it deleted
 			qdel(target)
 	modify_stored_power(-proselytize_values["power_cost"])

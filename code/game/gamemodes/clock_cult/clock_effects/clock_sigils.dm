@@ -73,7 +73,7 @@
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	L.Stun(5)
-	new /obj/effect/overlay/temp/ratvar/sigil/transgression(get_turf(src))
+	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
 
 
@@ -102,7 +102,7 @@
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
 	animate(src, color = "#AF0AAF", time = convert_time)
-	var/obj/effect/overlay/temp/ratvar/sigil/glow
+	var/obj/effect/temp_visual/ratvar/sigil/glow
 	if(glow_type)
 		glow = new glow_type(get_turf(src))
 		animate(glow, alpha = 255, time = convert_time)
@@ -158,7 +158,7 @@
 	light_color = "#A97F1B"
 	delete_on_finish = FALSE
 	sigil_name = "Sigil of Accession"
-	glow_type = /obj/effect/overlay/temp/ratvar/sigil/accession
+	glow_type = /obj/effect/temp_visual/ratvar/sigil/accession
 	resist_string = "glows bright orange"
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
@@ -321,14 +321,14 @@
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || vitality))) && get_turf(L) == get_turf(src))
 		sigil_active = TRUE
 		if(animation_number >= 4)
-			new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
+			new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = 0
 			if(L.stat == DEAD)
 				vitality_drained = L.maxHealth
-				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
+				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
@@ -356,7 +356,7 @@
 					if(ghost)
 						ghost.reenter_corpse()
 					L.revive(1, 1)
-					var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = new /obj/effect/overlay/temp/ratvar/sigil/vitality(get_turf(src))
+					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
 					playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
 					L.visible_message("<span class='warning'>[L] suddenly gets back up, [GLOB.ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \

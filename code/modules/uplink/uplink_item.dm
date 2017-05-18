@@ -1136,6 +1136,19 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/device/jammer
 	cost = 5
 
+/datum/uplink_item/device_tools/codespeak_manual
+	name = "Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
+	item = /obj/item/weapon/codespeak_manual
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+	name = "Deluxe Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
+	cost = 8
+	include_modes = list(/datum/game_mode/nuclear)
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1275,6 +1288,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 20
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+
+/datum/uplink_item/role_restricted/pie_cannon
+	name = "Banana Cream Pie Cannon"
+	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
+	cost = 10
+	item = /obj/item/weapon/pneumatic_cannon/pie/selfcharge
+	restricted_roles = list("Clown")
+	surplus = 0	//No fun unless you're the clown!
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"

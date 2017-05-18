@@ -48,6 +48,7 @@
 	var/icon_deny				//Icon_state when vending!
 	var/seconds_electrified = 0	//Shock customers like an airlock.
 	var/shoot_inventory = 0		//Fire items at customers! We're broken!
+	var/shoot_inventory_chance = 2
 	var/shut_up = 0				//Stop spouting those godawful pitches!
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
@@ -561,7 +562,7 @@
 		speak(slogan)
 		last_slogan = world.time
 
-	if(shoot_inventory && prob(2))
+	if(shoot_inventory && prob(shoot_inventory_chance))
 		throw_item()
 
 
@@ -592,7 +593,7 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in product_records)
+	for(var/datum/data/vending_product/R in shuffle(product_records))
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
@@ -605,9 +606,14 @@
 	if(!throw_item)
 		return 0
 
+	pre_throw(throw_item)
+
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
 	return 1
+
+/obj/machinery/vending/proc/pre_throw(obj/item/I)
+	return
 
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
@@ -615,9 +621,7 @@
 		return FALSE
 	if(!prob(prb))
 		return FALSE
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 0.7, check_range))
 		return TRUE
@@ -864,6 +868,11 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/weapon/storage/fancy/cigarettes/cigars = 1, /obj/item/weapon/storage/fancy/cigarettes/cigars/havana = 1, /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
+/obj/machinery/vending/cigarette/pre_throw(obj/item/I)
+	if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
+		L.set_lit(TRUE)
+
 /obj/machinery/vending/medical
 	name = "\improper NanoMed Plus"
 	desc = "Medical drug dispenser."
@@ -918,6 +927,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/weapon/coin/antagtoken = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+
+/obj/machinery/vending/security/pre_throw(obj/item/I)
+	if(istype(I, /obj/item/weapon/grenade))
+		var/obj/item/weapon/grenade/G = I
+		G.preprime()
+	else if(istype(I, /obj/item/device/flashlight))
+		var/obj/item/device/flashlight/F = I
+		F.on = TRUE
+		F.update_brightness()
 
 /obj/machinery/vending/hydronutrients
 	name = "\improper NutriMax"
