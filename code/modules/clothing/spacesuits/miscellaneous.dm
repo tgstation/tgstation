@@ -147,10 +147,11 @@ Contains:
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
-	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 80, acid = 80)
+	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	brightness_on = 7
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team suit"
@@ -159,9 +160,10 @@ Contains:
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 30, bullet = 50, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 0, acid = 95)
+	armor = list(melee = 30, bullet = 50, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 100)
 	slowdown = 0
 	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
