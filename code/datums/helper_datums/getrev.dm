@@ -20,7 +20,7 @@
 			if(line)
 				var/tmcommit = testmerge[line]["commit"]
 				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.add_details("testmerged_prs","[line][tmcommit]")
+				SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
 		log_world("Based off master commit [parentcommit]")
 	else
 		log_world(parentcommit)
