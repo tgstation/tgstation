@@ -32,17 +32,17 @@ namespace TGServerService
 		/// </summary>
 		/// <param name="message">The message to send</param>
 		/// <param name="channel">The channel to send to</param>
-		/// <returns></returns>
+		/// <returns>null on success, error message on failure</returns>
 		string SendMessageDirect(string message, string channel);
 	}
 
 	/// <summary>
 	/// Callback for the chat provider recieving a message
 	/// </summary>
-	/// <param name="speaker"></param>
-	/// <param name="channel"></param>
-	/// <param name="message"></param>
-	/// <param name="tagged"></param>
+	/// <param name="speaker">The username of the speaker</param>
+	/// <param name="channel">The name of the channel</param>
+	/// <param name="message">The message text</param>
+	/// <param name="tagged">true if the bot was mentioned in the first word, false otherwise</param>
 	public delegate void OnChatMessage(string speaker, string channel, string message, bool tagged);
 
 	partial class TGStationServer : ITGChat
@@ -107,9 +107,10 @@ namespace TGServerService
 
 		string HasChatAdmin(string speaker, string channel)
 		{
-			if (!Properties.Settings.Default.ChatAdmins.Contains(speaker.ToLower()))
+			var Config = Properties.Settings.Default;
+			if (!Config.ChatAdmins.Contains(speaker.ToLower()))
 				return "You are not authorized to use that command!";
-			if (channel.ToLower() != Properties.Settings.Default.ChatAdminChannel.ToLower())
+			if (channel.ToLower() != Config.ChatAdminChannel.ToLower())
 				return "Use this command in the admin channel!";
 			return null;
 		}
@@ -143,7 +144,7 @@ namespace TGServerService
 					if (res != null)
 						return res;
 					if (parameters.Count < 2)
-						return "Usage: pm <ckey> <message>";
+						return "Usage: ahelp <ckey> <message>";
 					var ckey = parameters[0];
 					parameters.RemoveAt(0);
 					return SendPM(ckey, speaker, String.Join(" ", parameters));
