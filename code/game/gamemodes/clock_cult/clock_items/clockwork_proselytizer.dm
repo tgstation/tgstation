@@ -246,8 +246,13 @@
 		return TRUE
 	return FALSE
 
+//The following three procs are heavy wizardry.
+//What these procs do is they take an existing list of values, which they then modify.
+//This(modifying an existing object, in this case the list) is the only way to get information OUT of a do_after callback, which this is used as.
+
+//The proselytize check proc.
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize_checks(list/proselytize_values, atom/target, expected_type, mob/user, silent) //checked constantly while proselytizing
-	if(!islist(proselytize_values) || !target || QDELETED(target) || !user)
+	if(!islist(proselytize_values) || QDELETED(target) || QDELETED(user))
 		return FALSE
 	if(repairing || recharging)
 		return FALSE
@@ -266,11 +271,8 @@
 	return TRUE
 
 //The repair check proc.
-//Is dark magic. Can probably kill you.
-//What this proc does is it takes an existing list of values, which it modifies.
-//This(modifying an existing object) is the only way to get information OUT of a do_after callback, which this is used as.
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytizer_repair_checks(list/repair_values, atom/target, mob/user, silent) //Exists entirely to avoid an otherwise unreadable series of checks.
-	if(!islist(repair_values) || !target || QDELETED(target) || !user)
+	if(!islist(repair_values) || QDELETED(target) || QDELETED(user))
 		return FALSE
 	if(isliving(target)) //standard checks for if we can affect the target
 		var/mob/living/L = target
@@ -309,9 +311,9 @@
 		return FALSE
 	return TRUE
 
-//checked constantly while charging from a sigil
+//The sigil charge check proc.
 /obj/item/clockwork/clockwork_proselytizer/proc/sigil_charge_checks(list/charge_values, obj/effect/clockwork/sigil/transmission/sigil, mob/user, silent)
-	if(!islist(charge_values) || !sigil || QDELETED(sigil) || !user)
+	if(!islist(charge_values) || QDELETED(sigil) || QDELETED(user))
 		return FALSE
 	if(can_use_power(RATVAR_POWER_CHECK))
 		return FALSE
