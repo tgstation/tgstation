@@ -75,6 +75,7 @@
 	new /obj/item/device/megaphone/sec(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
+	new /obj/item/clothing/tie/webbing/adv(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
@@ -98,6 +99,7 @@
 	new /obj/item/clothing/under/rank/warden/navyblue(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/weapon/holosign_creator/security(src)
+	new /obj/item/clothing/tie/webbing(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/storage/box/zipties(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
@@ -118,6 +120,7 @@
 	new /obj/item/clothing/head/helmet/sec(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
+	new /obj/item/clothing/tie/webbing(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/device/flashlight/seclite(src)
 

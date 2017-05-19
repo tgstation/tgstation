@@ -68,3 +68,27 @@
 
 /obj/item/weapon/storage/internal/pocket/small/detective/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)
+
+/obj/item/weapon/storage/internal/pocket/small/webbing
+	storage_slots = 2
+	can_hold = list(
+		/obj/item/weapon/grenade,
+		/obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/restraints/handcuffs,
+		/obj/item/device/assembly/flash/handheld,
+		/obj/item/clothing/glasses,
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/weapon/kitchen/knife/combat,
+		/obj/item/device/flashlight/seclite,
+		/obj/item/weapon/melee/classic_baton/telescopic,
+		/obj/item/device/radio,
+		/obj/item/clothing/gloves/,
+		/obj/item/weapon/restraints/legcuffs/bola
+		)
+	priority = TRUE
+
+/obj/item/weapon/storage/internal/pocket/small/webbing/adv
+	storage_slots = 3
