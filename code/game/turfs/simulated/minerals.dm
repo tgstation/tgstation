@@ -73,6 +73,8 @@
 		for(i in 1 to mineralAmt)
 			new mineralType(src)
 			SSblackbox.add_details("ore_mined",mineralType)
+	for(var/obj/effect/temp_visual/mining_overlay/M in src)
+		qdel(M)
 	ChangeTurf(turf_type, defer_change)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
