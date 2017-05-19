@@ -1400,8 +1400,13 @@
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
 #include "code\modules\language\monkey.dm"
+<<<<<<< HEAD
+#include "code\modules\language\mushroom.dm"
+#include "code\modules\language\ratvar.dm"
+=======
 #include "code\modules\language\narsian.dm"
 #include "code\modules\language\ratvarian.dm"
+>>>>>>> 29e359e5a0edbb1a452fed61c0e4d5de49d1f9fe
 #include "code\modules\language\slime.dm"
 #include "code\modules\language\swarmer.dm"
 #include "code\modules\language\xenocommon.dm"
@@ -1567,6 +1572,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\humans.dm"
 #include "code\modules\mob\living\carbon\human\species_types\jellypeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\lizardpeople.dm"
+#include "code\modules\mob\living\carbon\human\species_types\mushpeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\plasmamen.dm"
 #include "code\modules\mob\living\carbon\human\species_types\podpeople.dm"
 #include "code\modules\mob\living\carbon\human\species_types\shadowpeople.dm"

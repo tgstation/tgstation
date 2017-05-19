@@ -9,6 +9,7 @@
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	eye_style = "jell"
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
