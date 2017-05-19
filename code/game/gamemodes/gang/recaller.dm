@@ -320,12 +320,12 @@
 	desc = "An implanted gang tool that lets you purchase gear"
 	background_icon_state = "bg_mime"
 	button_icon_state = "bolt_action"
-	button.color = G.color
 	var/obj/item/device/gangtool/soldier/GT
 
 /datum/action/innate/gang/tool/Grant(mob/user, var/obj/reg)
 	. = ..()
 	GT = reg
+	button.color = G.color
 
 /datum/action/innate/gang/tool/Activate()
 	GT.attack_self(owner)
