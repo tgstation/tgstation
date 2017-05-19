@@ -228,24 +228,3 @@
 	var/mob/living/L = user
 	if(L)
 		L.bubble_icon = initial(L.bubble_icon)
-
-///////////
-//Webbing//
-///////////
-
-
-/obj/item/clothing/tie/webbing
-	name = "security webbing"
-	desc = "Webbing able to hold minor security equipment"
-	icon_state = "webbing_sec"
-	item_state = "webbing_sec"
-	item_color = "webbing_sec"
-	pockets = /obj/item/weapon/storage/internal/pocket/small/webbing
-
-/obj/item/clothing/tie/webbing/adv
-	name = "security tactical webbing"
-	desc = "Larger webbing able to hold extra security equipment."
-	icon_state = "webbing_adv"
-	item_state = "webbing_adv"
-	item_color = "webbing_adv"
-	pockets = /obj/item/weapon/storage/internal/pocket/small/webbing/adv

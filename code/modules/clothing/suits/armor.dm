@@ -25,6 +25,15 @@
 	icon_state = "armor"
 	item_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/webbing
+	name = "webbing vest"
+	desc = "An unarmoured vest that can hold additional security equipment. Trade protection for more equipment."
+	icon_state = "webbing_adv"
+	item_state = "webbing_adv"
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	pockets = /obj/item/weapon/storage/internal/pocket/small/webbing
+
+
 /obj/item/clothing/suit/armor/vest/blueshirt
 	icon_state = "blueshift"
 	item_state = "blueshift"

@@ -70,7 +70,7 @@
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)
 
 /obj/item/weapon/storage/internal/pocket/small/webbing
-	storage_slots = 2
+	storage_slots = 4
 	can_hold = list(
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/reagent_containers/spray/pepper,
@@ -89,6 +89,3 @@
 		/obj/item/weapon/restraints/legcuffs/bola
 		)
 	priority = TRUE
-
-/obj/item/weapon/storage/internal/pocket/small/webbing/adv
-	storage_slots = 3
