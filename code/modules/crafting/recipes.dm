@@ -262,6 +262,21 @@
 	time = 100
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/lmusket
+	name = "Laser Musket"
+	result = /obj/item/weapon/gun/energy/l_musket
+	reqs = list(/obj/item/weaponcrafting/reciever = 1,
+				/obj/item/pipe = 1,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/sheet/plasteel = 1,
+				/obj/item/weapon/shard = 1,
+				/obj/item/weapon/stock_parts/micro_laser = 1,
+				/obj/item/weapon/stock_parts/capacitor = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 100
+	category = CAT_WEAPON
+
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/weapon/twohanded/required/chainsaw
