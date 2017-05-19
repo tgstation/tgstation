@@ -230,7 +230,7 @@
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
-	cost = 10
+	cost = 18
 	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
 
 /datum/gang_item/equipment/stimpack
