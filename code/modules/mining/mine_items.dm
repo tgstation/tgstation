@@ -305,11 +305,27 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = 0
 	glass = 1
+	var/vertical = FALSE
+
+/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
+	..()
+	if(rotation == 90 || rotation == 270) //door turns when shuttle turns
+		if(vertical)
+			icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_pod
+			vertical = FALSE
+		else
+			icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
+			assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
+			vertical = TRUE
 
 /obj/machinery/door/airlock/survival_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
+	vertical = TRUE
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
@@ -320,11 +336,27 @@
 	state = 1
 	mineral = "glass"
 	material = "glass"
+	var/vertical = FALSE
+
+/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
+	..()
+	if(rotation == 90 || rotation == 270)
+		if(vertical)
+			icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+			airlock_type = /obj/machinery/door/airlock/survival_pod
+			vertical = FALSE
+		else
+			icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
+			overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
+			airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
+			vertical = TRUE
 
 /obj/structure/door_assembly/door_assembly_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
+	vertical = TRUE
 
 //Table
 /obj/structure/table/survival_pod
