@@ -1057,7 +1057,7 @@
 /obj/machinery/manned_turret/proc/volley()
 	target_turf = get_turf(target)
 	for(var/i in 1 to number_of_shots)
-		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, target_turf), i*rate_of_fire)
+		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper), i*rate_of_fire)
 
 
 /obj/machinery/manned_turret/proc/fire_helper()
