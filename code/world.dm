@@ -192,7 +192,7 @@
 		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	ServiceReboot(); //handles alternative actions if necessary
+	ServiceReboot() //handles alternative actions if necessary
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
