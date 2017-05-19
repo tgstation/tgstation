@@ -14,6 +14,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 0)
 	resistance_flags = 0
 
 /obj/item/clothing/under/color/black/ghost
