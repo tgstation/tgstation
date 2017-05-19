@@ -428,14 +428,14 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		to_chat(C, "<span class='userdanger'>That was a really dumb idea.</span>")
-		investigate_log("has been tk attacked by [C].", "supermatter")
+		investigate_log("has been tk attacked by [user].", "supermatter")
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart("head")
 		rip_u.dismember(BURN) //nice try jedi
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		investigate_log("has been attacked with a paw by [C].", "supermatter")
+		investigate_log("has been attacked with a paw by [user].", "supermatter")
 		return attack_hand(user)
 
 
@@ -458,7 +458,7 @@
 			"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
-		investigate_log("has been punched by [C].", "supermatter")
+		investigate_log("has been punched by [user].", "supermatter")
 
 		Consume(user)
 
