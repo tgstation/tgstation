@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(garbage)
 		for(var/path in sleptDestroy)
 			dellog += "Path : [path] \n"
 			dellog += "Sleeps : [sleptDestroy[path]] \n"
-		log_world(dellog.Join())
+		text2file("[GLOB.log_directory]/qdel.log", dellog.Join())
 
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()

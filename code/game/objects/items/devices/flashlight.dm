@@ -162,18 +162,18 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			new /obj/effect/overlay/temp/medical_holosign(T,user) //produce a holographic glow
+			new /obj/effect/temp_visual/medical_holosign(T,user) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
 
-/obj/effect/overlay/temp/medical_holosign
+/obj/effect/temp_visual/medical_holosign
 	name = "medical holosign"
 	desc = "A small holographic glow that indicates a medic is coming to treat a patient."
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/overlay/temp/medical_holosign/Initialize(mapload, creator)
+/obj/effect/temp_visual/medical_holosign/Initialize(mapload, creator)
 	. = ..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
