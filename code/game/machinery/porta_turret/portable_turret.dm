@@ -934,7 +934,7 @@
 	max_integrity = 100
 	obj_integrity = 100
 	buckle_lying = 0
-	layer = 4.2
+	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
 	var/projectile_type = /obj/item/projectile/bullet/weakbullet3
@@ -942,7 +942,7 @@
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
 	var/atom/target
-	var/target_turf
+	var/turf/target_turf
 	var/warned = FALSE
 
 //BUCKLE HOOKS
@@ -975,7 +975,7 @@
 			var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
 			M.put_in_hands(TC)
 	M.pixel_y = 14
-	layer = 4.1
+	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	anchored = TRUE
@@ -991,8 +991,11 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON
 	var/obj/machinery/manned_turret/turret
 
-/obj/item/gun_control/New(var/obj/machinery/manned_turret/MT)
-	turret = MT
+/obj/item/gun_control/New(obj/machinery/manned_turret/MT)
+	if(MT)
+		turret = MT
+	else
+		qdel(src)
 
 /obj/item/gun_control/CanItemAutoclick()
 	return 1
@@ -1057,7 +1060,7 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, target_turf), i*rate_of_fire)
 
 
-/obj/machinery/manned_turret/proc/fire_helper(var/target_turf)
+/obj/machinery/manned_turret/proc/fire_helper()
 	if(!src)
 		return
 	var/turf/targets_from = get_turf(src)
