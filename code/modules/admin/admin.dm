@@ -423,6 +423,8 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	if(world.RunningService())
+		options += "Service Restart (Force restart DD)";
 	var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 	if(result)
 		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -433,31 +435,9 @@
 				world.Reboot()
 			if("Hardest Restart (No actions, just reboot)")
 				world.Reboot(fast_track = TRUE)		
-
-/datum/admins/proc/reboot_dd()
-	set category = "Server"
-	set name = "Reboot DreamDaemon"
-
-	if(!check_rights(R_SERVER, TRUE))
-		return
-
-	if(!world.RunningService())
-		to_chat(usr, "<span class='adminnotice'>The DreamDaemon instance isn't running through the server tools. Command unavailable.</span>")
-		return
-
-	if(alert(usr, "Warning: This will close DreamDaemon and rely on the server watchdog to reboot it. ARE YOU SURE?", "DreamDaemon Reboot", "Reboot", "Cancel") != "Reboot" || !usr)
-		return
-	
-	var/n1 = rand(1,9)
-	var/n2 = rand(1,9)
-
-	if((input(usr, "Additional verification. Please input the answer to [n1] + [n2]:", "DreamDaemon Reboot") as null|num) != n1 + n2)
-		return
-
-	if(!usr)
-		return
-
-	world.ServiceReboot()
+			if("Service Restart (Force restart DD)")
+				GLOB.reboot_mode = REBOOT_MODE_HARD
+				world.ServiceReboot()
 
 /datum/admins/proc/end_round()
 	set category = "Server"

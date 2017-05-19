@@ -114,8 +114,6 @@ GLOBAL_LIST_INIT(admin_verbs_server, world.AVerbsServer())
 	/client/proc/panicbunker,
 	/client/proc/toggle_hub
 	)
-	if(world.RunningService())
-		. += /datum/admins/proc/reboot_dd
 GLOBAL_PROTECT(admin_verbs_debug)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 /world/proc/AVerbsDebug()
