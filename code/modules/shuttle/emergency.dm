@@ -235,7 +235,7 @@
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
 		return
-	if(SSshuttle.emergencyNoRecall == TRUE)
+	if(SSshuttle.emergencyNoRecall)
 		return
 	
 	invertTimer()
