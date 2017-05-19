@@ -165,7 +165,7 @@
 	if(!can_use(user))
 		return 0
 		
-	if(SSticker.mode.forced_shuttle)
+	if(SSshuttle.emergencyNoRecall)
 		return 0
 
 	if(recalling)
