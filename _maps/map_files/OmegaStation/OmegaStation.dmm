@@ -14511,14 +14511,6 @@
 	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
-/obj/structure/cable/white{
-	tag = "icon-2-4";
-	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	tag = "icon-2-8";
-	icon_state = "2-8"
-	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -14893,11 +14885,6 @@
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Bar APC";
-	pixel_y = -26
-	},
 /obj/structure/cable/white,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar)
@@ -77588,7 +77575,7 @@ aaa
 aaa
 aaa
 aaa
-bwn
+bwb
 aaa
 aaa
 aaa
@@ -77846,7 +77833,7 @@ aaa
 aaa
 bwb
 bwo
-bwA
+bwb
 aaa
 aaa
 aaa
@@ -78102,7 +78089,7 @@ aaa
 aaa
 aaa
 bwc
-bwp
+bwi
 bwB
 aaa
 aaa
@@ -78358,9 +78345,9 @@ aaa
 aaa
 aaa
 aaa
-bwd
+bvS
 bwq
-bwC
+bvS
 aaa
 aaa
 aaa
@@ -78615,10 +78602,10 @@ aaa
 aaa
 aaa
 bvS
-bwe
+bvS
 bwr
-bwD
-bwM
+bvS
+bvS
 aaa
 aaa
 aaa
@@ -78873,9 +78860,9 @@ aaa
 aaa
 bvT
 bwf
-bws
+bwi
 bwE
-bwN
+bvT
 aaa
 aaa
 aaa
@@ -79128,11 +79115,11 @@ aaa
 aaa
 aaa
 aaa
-bvU
-bwg
-bwt
-bwF
-bwO
+bvS
+bwf
+bwi
+bwE
+bvS
 aaa
 aaa
 aaa
@@ -79385,11 +79372,11 @@ aaa
 aaa
 aaa
 aaa
-bvV
+bvS
 bwh
-bwu
-bwG
-bwP
+bwi
+bwi
+bvS
 aaa
 aaa
 aaa
@@ -79645,7 +79632,7 @@ aaa
 bvW
 bwi
 bwv
-bwH
+bwi
 bwQ
 aaa
 aaa
@@ -79899,11 +79886,11 @@ aaa
 aaa
 aaa
 aaa
-bvX
-bwj
-bww
+bvS
+bwi
+bwi
 bwI
-bwR
+bvS
 aaa
 aaa
 aaa
@@ -80156,11 +80143,11 @@ aaa
 aaa
 aaa
 aaa
-bvY
-bwk
-bwx
-bwJ
-bwS
+bvS
+bwf
+bwi
+bwE
+bvS
 aaa
 aaa
 aaa
@@ -80413,11 +80400,11 @@ aaa
 aaa
 aaa
 aaa
-bvZ
-bwl
-bwy
-bwK
-bwT
+bvT
+bwf
+bwi
+bwE
+bvT
 aaa
 aaa
 aaa
@@ -80670,11 +80657,11 @@ aaa
 aaa
 aaa
 aaa
-bwa
-bwm
+bvS
+bvT
 bwz
-bwL
-bwU
+bvT
+bvS
 aaa
 aaa
 aaa

@@ -9,7 +9,6 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
-	var/savefile/chisel_messages_sav
 
 	var/savefile/trophy_sav
 	var/list/saved_trophies = list()
@@ -75,14 +74,14 @@ SUBSYSTEM_DEF(persistence)
 		break //Who's been duping the bird?!
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()
-	chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
+	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
 	var/saved_json
 	chisel_messages_sav[SSmapping.config.map_name] >> saved_json
 
 	if(!saved_json)
 		return
 
-	var/saved_messages = json_decode(saved_json)
+	var/list/saved_messages = json_decode(saved_json)
 
 	for(var/item in saved_messages)
 		if(!islist(item))
@@ -104,10 +103,10 @@ SUBSYSTEM_DEF(persistence)
 
 		var/obj/structure/chisel_message/M = new(T)
 
-		M.unpack(item)
-		if(!M.loc)
-			M.persists = FALSE
-			qdel(M)
+		if(!QDELETED(M))
+			M.unpack(item)
+
+	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
 	trophy_sav = new /savefile("data/npc_saves/TrophyItems.sav")
@@ -175,8 +174,12 @@ SUBSYSTEM_DEF(persistence)
 	secret_satchels[SSmapping.config.map_name] << old_secret_satchels
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
+	var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
+
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
+
+	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 	chisel_messages_sav[SSmapping.config.map_name] << json_encode(saved_messages)
 

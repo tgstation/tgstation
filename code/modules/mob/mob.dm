@@ -35,7 +35,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	..()
+	. = ..()
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -292,14 +292,14 @@
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/overlay/temp/point))
+	if(istype(A, /obj/effect/temp_visual/point))
 		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
 		return 0
 
-	new /obj/effect/overlay/temp/point(A,invisibility)
+	new /obj/effect/temp_visual/point(A,invisibility)
 
 	return 1
 

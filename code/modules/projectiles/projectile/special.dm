@@ -5,7 +5,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -202,7 +202,7 @@
 	damage = 5
 	range = 3.5 //works as 4, but doubles to 7
 	dismemberment = 20
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
@@ -270,7 +270,7 @@
 		A.throw_at(throwtarget,power+1,1)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravityattract
 	name = "attraction bolt"
@@ -300,7 +300,7 @@
 		A.throw_at(T, power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravitychaos
 	name = "gravitational blast"
@@ -330,5 +330,5 @@
 		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(Z)
+		new /obj/effect/temp_visual/gravpush(Z)
 

@@ -1,5 +1,5 @@
 /obj/item/soapstone
-	name = "chisel"
+	name = "soapstone"
 	desc = "Leave informative messages for the crew, including the crew of future shifts!\nEven if out of uses, it can still be used to remove messages.\n(Not suitable for engraving on shuttles, off station or on cats. Side effects may include beatings, bannings and orbital bombardment.)"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soapstone"
@@ -9,36 +9,9 @@
 	var/tool_speed = 50
 	var/remaining_uses = 3
 
-	var/non_dull_name
-	var/w_engrave = "engrave"
-	var/w_engraving = "engraving"
-	var/w_chipping = "chipping"
-	var/w_dull = "dull"
-
-/obj/item/soapstone/New()
+/obj/item/soapstone/Initialize(mapload)
 	. = ..()
-	random_name()
-	check_name() // could start empty
-
-/obj/item/soapstone/proc/random_name()
-	name = pick("soapstone", "chisel", "chalk", "magic marker")
-	non_dull_name = name
-	if(name == "chalk" || name == "magic marker")
-		desc = replacetext(desc, "engraving", "scribbling")
-		w_engrave = "scribble"
-		w_engraving = "scribbling"
-		w_chipping = "sketching"
-		if(name == "chalk")
-			w_dull = "used"
-		if(name == "magic marker")
-			w_dull = "empty"
-
-	if(name == "soapstone" || name == "chisel")
-		desc = replacetext(desc, "scribbling", "engraving")
-		w_engrave = initial(w_engrave)
-		w_engraving = initial(w_engraving)
-		w_chipping = initial(w_chipping)
-		w_dull = "dull"
+	check_name()
 
 /obj/item/soapstone/examine(mob/user)
 	. = ..()
@@ -57,11 +30,11 @@
 		return
 
 	if(!good_chisel_message_location(T))
-		to_chat(user, "<span class='warning'>It's not appropriate to [w_engrave] on [T].</span>")
+		to_chat(user, "<span class='warning'>It's not appropriate to engrave on [T].</span>")
 		return
 
 	if(existing_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a chipping sound.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 		if(do_after(user, tool_speed, target = existing_message))
 			user.visible_message("<span class='notice'>[user] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>")
@@ -72,19 +45,19 @@
 				refund_use()
 		return
 
-	var/message = stripped_input(user, "What would you like to [w_engrave]?", "Leave a message")
+	var/message = stripped_input(user, "What would you like to engrave?", "Leave a message")
 	if(!message)
-		to_chat(user, "<span class='notice'>You decide not to [w_engrave] anything.</span>")
+		to_chat(user, "<span class='notice'>You decide not to engrave anything.</span>")
 		return
 
 	if(!target.Adjacent(user) && locate(/obj/structure/chisel_message) in T)
 		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-	user.visible_message("<span class='notice'>[user] starts [w_engraving] a message into [T]...</span>", "<span class='notice'>You start [w_engraving] a message into [T]...</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='italics'>You hear a chipping sound.</span>")
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
 		if(!locate(/obj/structure/chisel_message in T))
-			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You [w_engrave] a message into [T]!</span>", "<span class='italics'>You hear a [w_chipping] sound.</span>")
+			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='italics'>You hear a chipping sound.</span>")
 			playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
@@ -107,9 +80,10 @@
 
 /obj/item/soapstone/proc/check_name()
 	if(remaining_uses)
-		name = non_dull_name
+		// This will mess up RPG loot names, but w/e
+		name = initial(name)
 	else
-		name = "[w_dull] [name]"
+		name = "dull [initial(name)]"
 
 /* Persistent engraved messages, etched onto the station turfs to serve
    as instructions and/or memes for the next generation of spessmen.
@@ -127,10 +101,6 @@
 /proc/good_chisel_message_location(turf/T)
 	if(!T)
 		. = FALSE
-	else if(T.z != ZLEVEL_STATION)
-		. = FALSE
-	else if(istype(get_area(T), /area/shuttle))
-		. = FALSE
 	else if(!(isfloorturf(T) || iswallturf(T)))
 		. = FALSE
 	else
@@ -142,9 +112,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "soapstone_message"
 	layer = HIGH_OBJ_LAYER
-	density = 0
-	anchored = 1
-	luminosity = 1
+	density = FALSE
+	anchored = TRUE
 	obj_integrity = 30
 	max_integrity = 30
 
@@ -157,16 +126,17 @@
 	var/list/like_keys = list()
 	var/list/dislike_keys = list()
 
-/obj/structure/chisel_message/New(newloc)
-	..()
+	var/turf/original_turf
+
+/obj/structure/chisel_message/Initialize(mapload)
+	. = ..()
 	SSpersistence.chisel_messages += src
 	var/turf/T = get_turf(src)
+	original_turf = T
+
 	if(!good_chisel_message_location(T))
 		persists = FALSE
 		qdel(src)
-
-/obj/structure/chisel_message/singularity_pull()
-	return
 
 /obj/structure/chisel_message/proc/register(mob/user, newmessage)
 	hidden_message = newmessage
@@ -181,6 +151,8 @@
 	var/hash = md5(hidden_message)
 	var/newcolor = copytext(hash, 1, 7)
 	add_atom_colour("#[newcolor]", FIXED_COLOUR_PRIORITY)
+	light_color = "#[newcolor]"
+	set_light(1)
 
 /obj/structure/chisel_message/proc/pack()
 	var/list/data = list()
@@ -189,12 +161,12 @@
 	data["creator_key"] = creator_key
 	data["realdate"] = realdate
 	data["map"] = SSmapping.config.map_name
-	var/turf/T = get_turf(src)
-	data["x"] = T.x
-	data["y"] = T.y
-	data["z"] = T.z
+	data["x"] = original_turf.x
+	data["y"] = original_turf.y
+	data["z"] = original_turf.z
 	data["like_keys"] = like_keys
 	data["dislike_keys"] = dislike_keys
+	return data
 
 /obj/structure/chisel_message/proc/unpack(list/data)
 	if(!islist(data))

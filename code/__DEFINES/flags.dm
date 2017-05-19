@@ -4,6 +4,8 @@
 #define ALL ~0 //For convenience.
 #define NONE 0
 
+GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
+
 //FLAGS BITMASK
 #define STOPSPRESSUREDMAGE 1	//This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
 //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
@@ -25,6 +27,7 @@
 #define BLOCK_GAS_SMOKE_EFFECT 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
+#define PREVENT_CLICK_UNDER 32768 //Prevent clicking things below it on the same turf eg. doors/ fulltile windows
 
 /* Secondary atom flags, access using the SECONDARY_FLAG macros */
 
