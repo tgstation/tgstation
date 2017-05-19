@@ -359,7 +359,8 @@
 		/obj/item/weapon/reagent_containers/borghypo/peace,
 		/obj/item/weapon/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/weapon/extinguisher)
+		/obj/item/weapon/extinguisher,
+		/obj/item/borg/projectile_dampen)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/peacekeeper,

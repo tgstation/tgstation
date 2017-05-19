@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Added modified syringe guns. They fire DNA injectors. Geneticists and CMOs can buy them from the traitor uplink for 14 TC."

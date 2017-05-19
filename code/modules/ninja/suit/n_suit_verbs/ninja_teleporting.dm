@@ -16,16 +16,10 @@ Contents:
 		var/mob/living/victim =	H.pulling
 		if(!victim.anchored)
 			victim.forceMove(locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z))
-	return
 
 
 //Jaunt
 /obj/item/clothing/suit/space/space_ninja/proc/ninjajaunt()
-	set name = "Phase Jaunt (10E)"
-	set desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
-	set category = "Ninja Ability"
-	set popup_menu = 0
-
 	if(!ninjacost(100,N_STEALTH_CANCEL))
 		var/mob/living/carbon/human/H = affecting
 		var/turf/destination = get_teleport_loc(H.loc,H,9,1,3,1,0,1)
@@ -47,7 +41,6 @@ Contents:
 			s_coold = 1
 		else
 			to_chat(H, "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>")
-	return
 
 
 //Right-Click teleport: It's basically admin "jump to turf"
@@ -76,6 +69,3 @@ Contents:
 			s_coold = 1
 		else
 			to_chat(H, "<span class='danger'>You cannot teleport into solid walls or from solid matter</span>")
-	return
-
-

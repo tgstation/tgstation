@@ -1,5 +1,6 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
 	desc = "It's watching you closely."
@@ -820,7 +821,9 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				new /obj/effect/temp_visual/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				C.damage = 30
+				C.monster_damage_boost = FALSE
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast
@@ -1004,7 +1007,9 @@
 	for(var/i in 1 to range)
 		if(!J)
 			return
-		new /obj/effect/temp_visual/hierophant/blast(J, user, friendly_fire_check)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
+		B.damage = 30
+		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1015,4 +1020,5 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/temp_visual/hierophant/blast(t, user, friendly_fire_check)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
+		B.damage = 15 //keeps monster damage boost due to lower damage
