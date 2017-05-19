@@ -10,6 +10,7 @@
 
 /obj/item/ammo_casing/energy/chameleon
 	e_cost = 0
+	nodamage = TRUE		//Can be overridden by parent gun var copying if it's set on it.
 	var/list/projectile_vars = list()
 
 /obj/item/ammo_casing/energy/chameleon/ready_proj()
