@@ -27,11 +27,9 @@
 		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/weapon/twohanded/required/mining_hammer,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator,						750),
 		new /datum/data/mining_equipment("Resonator",			/obj/item/weapon/resonator,												800),
-		new /datum/data/mining_equipment("Meson scanners",		/obj/item/clothing/glasses/meson,										750),
 		new /datum/data/mining_equipment("Fulton Pack",			/obj/item/weapon/extraction_pack,										1000),
 		new /datum/data/mining_equipment("Lazarus Injector",	/obj/item/weapon/lazarus_injector,										1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,										1000),
-		new /datum/data/mining_equipment("GAR Meson scanners",	/obj/item/clothing/glasses/meson/gar,									1000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/weapon/tank/jetpack/suit,										2000),
 		new /datum/data/mining_equipment("Space Cash",			/obj/item/stack/spacecash/c1000,										2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,							2000),
@@ -183,7 +181,6 @@
 		if("Extraction and Rescue Kit")
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
-			new /obj/item/clothing/glasses/meson(loc)
 		if("Crusher Kit")
 			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
