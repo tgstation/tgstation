@@ -67383,7 +67383,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/closed/wall{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/maintenance/aft{
@@ -134088,7 +134088,7 @@ ciW
 ckX
 cdG
 cmo
-cmV
+cle
 cog
 coK
 cpL
