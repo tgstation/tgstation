@@ -18,6 +18,7 @@
 	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/item/projectile/tracked
 	var/list/obj/item/projectile/staging
+	use_host_turf = TRUE
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/New()
 	tracked = list()
