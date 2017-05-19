@@ -5,19 +5,11 @@ DAMAGE_MULTIPLIER 1
 
 ## REVIVAL ###
 
-<<<<<<< HEAD
 ## whether pod plants work or not
-REVIVAL_POD_PLANTS 1
-
-## whether cloning tubes work or not
-REVIVAL_CLONING 1
-=======
-# whether pod plants work or not
 REVIVAL_POD_PLANTS
 
-# whether cloning tubes work or not
+## whether cloning tubes work or not
 REVIVAL_CLONING
->>>>>>> master
 
 ## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
