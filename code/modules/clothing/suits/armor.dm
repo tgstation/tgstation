@@ -120,6 +120,7 @@
 	icon_state = "bulletproof"
 	item_state = "armor"
 	blood_overlay_type = "armor"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 5, bullet = 70, laser = 5, energy = 5, bomb = 60, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 70
 	put_on_delay = 50
