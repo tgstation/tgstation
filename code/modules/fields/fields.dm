@@ -93,12 +93,12 @@
 
 /datum/proximity_monitor/advanced/proc/check_movement()
 	if(!use_host_turf)
-		if(host.loc != old_host_loc)
-			old_host_loc = host.loc
+		if(host.loc != last_host_loc)
+			last_host_loc = host.loc
 			return TRUE
 	else
-		if(get_turf(host) != old_host_loc)
-			old_host_loc = get_turf(host)
+		if(get_turf(host) != last_host_loc)
+			last_host_loc = get_turf(host)
 			return TRUE
 	return FALSE
 
