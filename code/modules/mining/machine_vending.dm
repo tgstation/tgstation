@@ -284,6 +284,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
 	..()
 	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/clothing/suit/hooded/explorer(src)

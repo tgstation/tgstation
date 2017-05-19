@@ -31,7 +31,7 @@
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
-	desc = "Used by engineering staff and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "magnets=1;engineering=2"
