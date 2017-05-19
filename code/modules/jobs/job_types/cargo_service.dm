@@ -105,7 +105,6 @@ Shaft Miner
 	name = "Shaft Miner (Lavaland + Equipment)"
 	suit = /obj/item/clothing/suit/hooded/explorer
 	mask = /obj/item/clothing/mask/gas/explorer
-	glasses = /obj/item/clothing/glasses/meson
 	suit_store = /obj/item/weapon/tank/internals/oxygen
 	internals_slot = slot_s_store
 	backpack_contents = list(

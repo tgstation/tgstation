@@ -477,7 +477,6 @@
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
 		/obj/item/weapon/storage/bag/ore/cyborg,
 		/obj/item/weapon/pickaxe/drill/cyborg,
 		/obj/item/weapon/shovel,
