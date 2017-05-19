@@ -197,6 +197,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	to_chat(user, "<span class='notice'>You begin setting the landing zone parameters...</span>")
 	setting = TRUE
 	if(!do_after(user, 50, target = user)) //You get a few seconds to cancel if you do not want to drop there.
+		setting = FALSE
 		return
 	setting = FALSE
 
