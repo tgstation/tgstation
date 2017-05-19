@@ -386,7 +386,6 @@
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
-	var/tracking = FALSE
 	var/mob/living/simple_animal/hostile/construct/harvester/the_construct
 
 /datum/action/innate/seek_prey/Grant(var/mob/living/C)
@@ -396,12 +395,10 @@
 /datum/action/innate/seek_prey/Activate()
 	if(GLOB.cult_narsie == null)
 		return
-	if(tracking)
+	if(the_construct.seeking)
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
-		tracking = FALSE
 		the_construct.seeking = FALSE
-		the_construct.master = GLOB.cult_narsie
 		to_chat(the_construct, "<span class='cultitalic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
 		return
 	else
@@ -413,7 +410,6 @@
 			return
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"
-		tracking = TRUE
 		the_construct.seeking = TRUE
 
 
