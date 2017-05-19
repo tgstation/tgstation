@@ -66,7 +66,7 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(picked_excuse)
-			to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+				to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
 			if(H.glasses == src)
 				H.update_sight()
 	else if(!(vision_flags & SEE_TURFS))
