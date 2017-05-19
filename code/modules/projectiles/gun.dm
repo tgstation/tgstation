@@ -45,6 +45,8 @@
 
 	var/obj/item/device/flashlight/gun_light = null
 	var/can_flashlight = 0
+	var/obj/item/weapon/kitchen/knife/bayonet = null
+	var/can_knife = FALSE
 
 	var/list/upgrades = list()
 
@@ -52,6 +54,8 @@
 	var/ammo_y_offset = 0
 	var/flight_x_offset = 0
 	var/flight_y_offset = 0
+	var/knife_x_offset = 0
+	var/knife_y_offset = 0
 
 	//Zooming
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
@@ -275,35 +279,53 @@
 		return
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
-	if(can_flashlight)
-		if(istype(I, /obj/item/device/flashlight/seclite))
-			var/obj/item/device/flashlight/seclite/S = I
-			if(!gun_light)
-				if(!user.transferItemToLoc(I, src))
-					return
-				to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
-				if(S.on)
-					set_light(0)
-				gun_light = S
-				update_icon()
+	if(istype(I, /obj/item/device/flashlight/seclite))
+		if(!can_flashlight)
+			return ..()
+		var/obj/item/device/flashlight/seclite/S = I
+		if(!gun_light)
+			if(!user.transferItemToLoc(I, src))
+				return
+			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
+			if(S.on)
+				set_light(0)
+			gun_light = S
+			update_icon()
+			update_gunlight(user)
+			verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+			var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
+			if(loc == user)
+				A.Grant(user)
+	if(istype(I, /obj/item/weapon/kitchen/knife))
+		if(!can_knife)
+			return ..()
+		var/obj/item/weapon/kitchen/knife/K = I
+		if(!bayonet)
+			if(!user.transferItemToLoc(I, src))
+				return
+			to_chat(user, "<span class='notice'>You attach [K] to the front of [src].</span>")
+			force = K.force
+			sharpness = K.sharpness
+			update_icon()
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(gun_light)
+			for(var/obj/item/device/flashlight/seclite/S in src)
+				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
+				gun_light = null
+				S.forceMove(get_turf(user))
 				update_gunlight(user)
-				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
-				var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
-				if(loc == user)
-					A.Grant(user)
-
-		if(istype(I, /obj/item/weapon/screwdriver))
-			if(gun_light)
-				for(var/obj/item/device/flashlight/seclite/S in src)
-					to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
-					gun_light = null
-					S.forceMove(get_turf(user))
-					update_gunlight(user)
-					S.update_brightness(user)
-					update_icon()
-					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
-					qdel(TGL)
+				S.update_brightness(user)
+				update_icon()
+				verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
+			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
+				qdel(TGL)
+		if(bayonet)
+			var/obj/item/weapon/kitchen/knife/K = bayonet
+			K.forceMove(get_turf(user))
+			bayonet = null
+			force = initial(force)
+			sharpness = initial(sharpness)
+			update_icon()
 	else
 		..()
 

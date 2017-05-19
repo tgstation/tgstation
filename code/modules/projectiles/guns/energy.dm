@@ -146,6 +146,12 @@
 		flashlight_overlay.pixel_x = flight_x_offset
 		flashlight_overlay.pixel_y = flight_y_offset
 		add_overlay(flashlight_overlay)
+	if(bayonet && can_knife)
+		var/iconK = "bayonet"
+		var/mutable_appearance/knife_overlay = mutable_appearance(icon, iconK)
+		knife_overlay.pixel_x = knife_x_offset
+		knife_overlay.pixel_y = knife_y_offset
+		add_overlay(knife_overlay)
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
