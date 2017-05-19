@@ -33,6 +33,11 @@ namespace TGServerService
 		//Just cleanup
 		void InitByond()
 		{
+			CleanByondStaging();
+		}
+
+		void CleanByondStaging()
+		{
 			//linger not
 			if (File.Exists(RevisionDownloadPath))
 				File.Delete(RevisionDownloadPath);
@@ -46,7 +51,7 @@ namespace TGServerService
 			{
 				if (RevisionStaging != null)
 					RevisionStaging.Abort();
-				InitByond();
+				CleanByondStaging();
 			}
 		}
 
@@ -94,6 +99,7 @@ namespace TGServerService
 			{
 				if (type == TGByondVersion.Latest)
 				{
+					//get the latest version from the website
 					HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ByondLatestURL);
 					var results = new List<string>();
 					using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
@@ -145,10 +151,7 @@ namespace TGServerService
 
 			try
 			{
-				//remove leftovers
-				if (File.Exists(RevisionDownloadPath))
-					File.Delete(RevisionDownloadPath);
-				Program.DeleteDirectory(StagingDirectory);
+				CleanByondStaging();
 
 				var vi = (VersionInfo)param;
 				using (var client = new WebClient())
@@ -250,7 +253,6 @@ namespace TGServerService
 					return false;
 				lock (ByondLock)
 				{
-
 					if (updateStat != TGByondStatus.Staged)
 						return false;
 					updateStat = TGByondStatus.Updating;
@@ -267,12 +269,14 @@ namespace TGServerService
 					Program.DeleteDirectory(StagingDirectory);
 					lastError = null;
 					SendMessage("BYOND: Update completed!");
+					TGServerService.WriteLog(String.Format("BYOND update {0} completed!", GetVersion(TGByondVersion.Installed)));
 					return true;
 				}
 				catch (Exception e)
 				{
 					lastError = e.ToString();
 					SendMessage("BYOND: Update failed!");
+					TGServerService.WriteLog("BYOND update failed!");
 					return false;
 				}
 				finally
