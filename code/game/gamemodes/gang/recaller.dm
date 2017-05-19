@@ -251,7 +251,7 @@
 	gang = user.mind.gang_datum
 	gang.gangtools += src
 	var/datum/action/innate/gang/tool/GT = new
-	GT.Grant(user, src)
+	GT.Grant(user, src, gang)
 
 /obj/item/device/gangtool/soldier/attack_self(mob/user)
 	if (!can_use(user))
@@ -322,7 +322,7 @@
 	button_icon_state = "bolt_action"
 	var/obj/item/device/gangtool/soldier/GT
 
-/datum/action/innate/gang/tool/Grant(mob/user, var/obj/reg)
+/datum/action/innate/gang/tool/Grant(mob/user, obj/reg, datum/gang/G)
 	. = ..()
 	GT = reg
 	button.color = G.color
