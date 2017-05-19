@@ -9,6 +9,7 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/energy/chameleon
+	projectile_type = /obj/item/projectile/energy/chameleon
 	e_cost = 0
 	var/list/projectile_vars = list()
 
