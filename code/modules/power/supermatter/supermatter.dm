@@ -494,7 +494,7 @@
 		return
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
-	investigate_log("has been bumped by [user].", "supermatter")
+	investigate_log("has been bumped by [AM].", "supermatter")
 
 	Consume(AM)
 
