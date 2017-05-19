@@ -182,14 +182,13 @@ SUBSYSTEM_DEF(garbage)
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE)
-	if(!D)
+	if(!istype(D))
+		del(D)
 		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[D.type]"
 #endif
-	if(!istype(D))
-		del(D)
-	else if(isnull(D.gc_destroyed))
+	if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
