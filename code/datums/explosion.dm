@@ -299,7 +299,6 @@ GLOBAL_LIST_EMPTY(explosions)
 		stoplag()
 
 /datum/explosion/Destroy()
-	set waitfor = FALSE
 	running = FALSE
 	if(stopped < 2)	//wait for main thread and spiral_range thread
 		return QDEL_HINT_IWILLGC
