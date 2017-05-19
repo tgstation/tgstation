@@ -294,14 +294,14 @@
 "aaQ" = (
 /turf/closed/wall,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "aaR" = (
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "aaS" = (
 /turf/closed/wall{
@@ -413,7 +413,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abf" = (
 /obj/structure/disposalpipe/segment{
@@ -421,7 +421,7 @@
 	},
 /turf/closed/wall,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abg" = (
 /obj/structure/disposalpipe/trunk{
@@ -432,7 +432,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abh" = (
 /obj/machinery/conveyor/auto{
@@ -447,7 +447,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abi" = (
 /obj/machinery/conveyor/auto{
@@ -456,7 +456,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abj" = (
 /obj/machinery/conveyor/auto{
@@ -468,7 +468,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abk" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -479,7 +479,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abl" = (
 /obj/machinery/light{
@@ -590,7 +590,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -598,7 +598,7 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abv" = (
 /obj/effect/turf_decal/stripes/line{
@@ -606,7 +606,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abw" = (
 /obj/machinery/conveyor/auto{
@@ -615,7 +615,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abx" = (
 /obj/structure/showcase{
@@ -723,7 +723,7 @@
 "abF" = (
 /turf/closed/wall/rust,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abG" = (
 /obj/machinery/light/small,
@@ -731,7 +731,7 @@
 /obj/item/weapon/storage/toolbox/emergency,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abH" = (
 /obj/structure/rack,
@@ -739,7 +739,7 @@
 /obj/item/weapon/tank/internals/emergency_oxygen,
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abI" = (
 /obj/structure/cable/orange{
@@ -758,7 +758,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abJ" = (
 /obj/structure/cable/orange{
@@ -768,7 +768,7 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abK" = (
 /obj/effect/turf_decal/stripes/line{
@@ -776,7 +776,7 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abL" = (
 /obj/structure/disposalpipe/trunk,
@@ -786,7 +786,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abM" = (
 /obj/machinery/porta_turret/ai{
@@ -894,13 +894,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abY" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "abZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -1024,7 +1024,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "acl" = (
 /obj/machinery/disposal/deliveryChute,
@@ -1033,7 +1033,7 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "acm" = (
 /obj/docking_port/stationary{
@@ -1118,7 +1118,7 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal{
-	name = "Northen External Waste Belt"
+	name = "Northern External Waste Belt"
 	})
 "acu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -34001,7 +34001,7 @@
 "bhT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
-	c_tag = "SEngineering Asteroid Hallway 5";
+	c_tag = "Engineering Asteroid Hallway 5";
 	dir = 4;
 	icon_state = "camera"
 	},
@@ -34174,7 +34174,7 @@
 /area/medical/surgery)
 "bil" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Surgey Observation";
+	name = "Surgery Observation";
 	req_access_txt = "5"
 	},
 /turf/open/floor/plating{
@@ -42303,7 +42303,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Central Asteroid Maintence APC";
+	name = "Central Asteroid Maintenance APC";
 	pixel_x = 0;
 	pixel_y = 24
 	},
@@ -58330,7 +58330,7 @@
 /area/atmos)
 "bWJ" = (
 /obj/machinery/camera{
-	c_tag = "Atmoshperic Tanks 1";
+	c_tag = "Atmospheric Tanks 1";
 	dir = 1;
 	icon_state = "camera";
 	network = list("SS13","CE")
@@ -59510,7 +59510,7 @@
 /obj/structure/table,
 /obj/item/weapon/paper{
 	desc = "";
-	info = "Brusies sustained in the holodeck can be healed simply by sleeping.";
+	info = "Bruises sustained in the holodeck can be healed simply by sleeping.";
 	name = "Holodeck Disclaimer"
 	},
 /turf/open/floor/plasteel{
@@ -79628,7 +79628,7 @@
 	})
 "cHA" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Maintenance Drone Dispensery";
+	name = "Maintenance Drone Dispensary";
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating{
@@ -92718,7 +92718,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
 	filter_type = "n2";
-	name = "nitogren filter";
+	name = "n2o filter";
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -117842,7 +117842,7 @@ aaa
 aXE
 aXE
 aXS
-deR
+deQ
 aXS
 aXS
 aXS
@@ -118099,7 +118099,7 @@ aXS
 aXS
 aXS
 aXS
-deS
+deQ
 aXS
 aXS
 aXS
@@ -118356,7 +118356,7 @@ aYg
 aYg
 aXS
 aXS
-deT
+deQ
 aXS
 aXS
 aXS
@@ -122215,8 +122215,8 @@ bGO
 bGO
 bGO
 bOx
-dfi
-dfl
+dff
+dff
 dfo
 dft
 dfz
@@ -122478,7 +122478,7 @@ bQI
 dfu
 bPH
 dfH
-bUO
+dfD
 bVu
 bWj
 bWH
@@ -122722,7 +122722,7 @@ bBK
 cHu
 bDZ
 bFi
-deL
+deK
 bIr
 deO
 bKK
@@ -122735,7 +122735,7 @@ dfp
 dfv
 bQJ
 dfI
-bUO
+dfD
 bUP
 bWk
 bWI
@@ -122989,9 +122989,9 @@ bOA
 bGO
 bGO
 bQK
-dfw
+dfv
 bQJ
-dfJ
+dfI
 dfR
 bVy
 dfX
@@ -123245,11 +123245,11 @@ bDV
 bOB
 bGO
 bGO
-bRI
-bSI
+dfp
+dfv
 bQJ
-dfK
-bUO
+dfI
+dfD
 bUQ
 bWl
 bWG
@@ -142487,7 +142487,7 @@ aZP
 aZP
 aZP
 aZP
-cFS
+aZr
 bgx
 bhq
 bid
