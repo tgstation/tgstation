@@ -14,21 +14,27 @@
 	var/mob/living/user = usr
 	if(!istype(user))
 		return
-	var/msg
 	if(!can_cast(user))
-		msg = "<span class='warning'>You can no longer cast [name]!</span>"
-		remove_ranged_ability(msg)
+		remove_ranged_ability("<span class='warning'>You can no longer cast [name]!</span>")
 		return
 	if(active)
-		msg = "<span class='notice'>[deactive_msg]</span>"
+
+		remove_ranged_ability("<span class='notice'>[deactive_msg]</span>")
+	else
+		add_ranged_ability(user, "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>", TRUE)
+
+/obj/effect/proc_holder/spell/aimed/add_ranged_ability(mob/living/user, msg, forced)
+	. = ..()
+	if(.)
+		current_amount = projectile_amount
+
+/obj/effect/proc_holder/spell/aimed/remove_ranged_ability(msg)
+	. = ..()
+	if(.)
 		if(charge_type == "recharge")
 			var/refund_percent = current_amount/projectile_amount
 			charge_counter = charge_max * refund_percent
-		remove_ranged_ability(msg)
-	else
-		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"
-		current_amount = projectile_amount
-		add_ranged_ability(user, msg, TRUE)
+			INVOKE_ASYNC(src, .proc/start_recharge)
 
 /obj/effect/proc_holder/spell/aimed/update_icon()
 	if(!action)
@@ -53,15 +59,15 @@
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
 		return FALSE
-	fire_projectile(user, target)
-	user.newtonian_move(get_dir(U, T))
+	if(fire_projectile(user, target))
+		user.newtonian_move(get_dir(U, T))
 	if(current_amount <= 0)
 		remove_ranged_ability() //Auto-disable the ability once you run out of bullets.
-		charge_counter = 0
-		start_recharge()
 	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/proc/fire_projectile(mob/living/user, atom/target)
+	if(!current_amount)
+		return FALSE
 	current_amount--
 	var/obj/item/projectile/P = new projectile_type(user.loc)
 	P.current = get_turf(user)

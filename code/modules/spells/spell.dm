@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			to_chat(user, "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>.")
 			user.ranged_ability.remove_ranged_ability()
 		else
-			return
+			return FALSE
 	user.ranged_ability = src
 	user.client.click_intercept = user.ranged_ability
 	add_mousepointer(user.client)
@@ -45,6 +45,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(ranged_ability_user, msg)
 	active = TRUE
 	update_icon()
+	return TRUE
 
 /obj/effect/proc_holder/proc/add_mousepointer(client/C)
 	if(C && ranged_mousepointer && C.mouse_pointer_icon == initial(C.mouse_pointer_icon))
@@ -56,7 +57,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
-		return
+		return FALSE
 	ranged_ability_user.ranged_ability = null
 	ranged_ability_user.client.click_intercept = null
 	remove_mousepointer(ranged_ability_user.client)
@@ -65,6 +66,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	ranged_ability_user = null
 	active = FALSE
 	update_icon()
+	return TRUE
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -83,7 +85,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/charge_max = 100 //recharge time in deciseconds if charge_type = "recharge" or starting charges if charge_type = "charges"
 	var/charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 	var/still_recharging_msg = "<span class='notice'>The spell is still recharging.</span>"
-	var/recharging = TRUE
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -227,13 +228,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/Initialize()
 	. = ..()
 	action = new(src)
-	START_PROCESSING(SSfastprocess, src)
 
 	still_recharging_msg = "<span class='notice'>[name] is still recharging.</span>"
 	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
 	qdel(action)
 	return ..()
 
@@ -251,24 +250,19 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	if(action)
 		action.UpdateButtonIcon()
-	recharging = TRUE
+	while(charge_counter < charge_max && !QDELETED(src))
+		sleep(1)
+		charge_counter++
 	if(action)
 		action.UpdateButtonIcon()
-
-/obj/effect/proc_holder/spell/process()
-	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
-		charge_counter += 2	//processes 5 times per second instead of 10.
-		if(charge_counter >= charge_max)
-			charge_counter = charge_max
-			recharging = FALSE
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
 		user.log_message("<span class='danger'>cast the spell [name].</span>", INDIVIDUAL_ATTACK_LOG)
-	if(recharge)
-		recharging = TRUE
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge)
 	if(sound)
 		playMagSound()
 	if(prob(critfailchance))
