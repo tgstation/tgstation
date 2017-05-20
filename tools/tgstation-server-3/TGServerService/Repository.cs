@@ -76,7 +76,7 @@ namespace TGServerService
 		{
 			lock (RepoLock)
 			{
-				return RepoBusy || Repository.IsValid(RepoPath);
+				return Repository.IsValid(RepoPath);
 			}
 		}
 
