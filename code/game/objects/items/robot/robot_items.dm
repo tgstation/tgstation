@@ -522,7 +522,6 @@
 	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
 	var/projectile_tick_speed_ecost = 15
-	var/current_damage_dampening = 0
 	var/list/obj/item/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
@@ -585,10 +584,11 @@
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0
 	for(var/I in tracked)
-		if(!tracked[I])	//No damage
+		var/obj/item/projectile/P = I
+		if(!P.stun && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
-	usage += (current_damage_dampening * projectile_damage_tick_ecost_coefficient)
+		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
 	energy = Clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
@@ -610,7 +610,6 @@
 		return
 	if(track_projectile)
 		tracked[P] = P.damage
-		current_damage_dampening += P.damage
 	P.damage *= projectile_damage_coefficient
 	P.speed *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)
