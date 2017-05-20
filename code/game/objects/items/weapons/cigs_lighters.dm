@@ -714,22 +714,25 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/vape/proc/itstimetovape(mob/user)
-	to_chat(user, "<span class='notice'>You start inhaling from \the [src].</span>")
 	reagents.set_reacting(TRUE)
 	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/mask/vape/proc/itstimetostop()
+	reagents.set_reacting(FALSE)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			itstimetovape(user)
+			to_chat(user, "<span class='notice'>You start inhaling from \the [src].</span>")
+			itstimetovape()
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
 
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(slot_wear_mask) == src)
-		reagents.set_reacting(FALSE)
-		STOP_PROCESSING(SSobj, src)
+		itstimetostop()
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
 	if(reagents.total_volume)
