@@ -627,14 +627,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/screw = 0 // kinky
 	var/super = 0 //for the fattest vapes dude.
 	var/emagged = 0 //LET THE GRIEF BEGIN
+	var/param_color = null
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
-	..()
+/obj/item/clothing/mask/vape/Initialize()
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 50)
@@ -703,14 +704,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/attack_self(mob/user)
 	if(reagents.total_volume > 0)
-		to_chat(user, "<span class='notice'>you empty [src] of all reagents.</span>")
+		to_chat(user, "<span class='notice'>You empty [src] of all reagents.</span>")
 		reagents.clear_reagents()
 	return
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
+			to_chat(user, "<span class='notice'>You start inhaling from the [name].</span>")
 			reagents.set_reacting(TRUE)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
