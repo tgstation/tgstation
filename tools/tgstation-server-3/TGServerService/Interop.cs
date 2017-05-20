@@ -172,8 +172,10 @@ namespace TGServerService
 			{
 				var np = NudgePort(out string error);
 				if (error != null)
-					//I guess we'll come back some other time
+				{
+					TGServerService.WriteLog("Unable to start nudge handler! Error: " + error, EventLogEntryType.Warning);
 					return;
+				}
 
 				using (var listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
 				{
