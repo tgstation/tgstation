@@ -123,7 +123,7 @@ You can clear all active test merges using `Reset to Origin Branch` in the `Repo
 
 ### Viewing Server Logs
 * Logs are stored in the Windows event viewer under `Windows Logs` -> `Application`. You'll need to filter this list for `TG Station Server`
-* You can also import the custom view `View TGS3 Logs.xml` to have them automatically filtered
+* You can also import the custom view `View TGS3 Logs.xml` in this folder to have them automatically filtered
 
 ## CONTRIBUTING
 
