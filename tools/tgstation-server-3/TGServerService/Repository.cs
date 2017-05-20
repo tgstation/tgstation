@@ -117,12 +117,24 @@ namespace TGServerService
 				{
 					DisposeRepo();
 					Program.DeleteDirectory(RepoPath);
-					Program.DeleteDirectory(StaticBackupDir);	//you had your chance
 					DeletePRList();
 					lock (configLock)
 					{
 						if (Directory.Exists(StaticDirs))
-							Program.CopyDirectory(StaticDirs, StaticBackupDir);
+						{
+							int count = 1;
+							
+							string path = Path.GetDirectoryName(StaticBackupDir);
+							string newFullPath = StaticBackupDir;
+
+							while (File.Exists(StaticBackupDir) || Directory.Exists(StaticBackupDir))
+							{
+								string tempDirName = string.Format("{0}({1})", StaticBackupDir, count++);
+								newFullPath = Path.Combine(path, tempDirName);
+							}
+
+							Program.CopyDirectory(StaticDirs, newFullPath);
+						}
 						Program.DeleteDirectory(StaticDirs);
 					}
 
