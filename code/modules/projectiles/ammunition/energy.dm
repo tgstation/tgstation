@@ -77,6 +77,9 @@
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
 
+/obj/item/ammo_casing/energy/electrode/spec
+	e_cost = 100
+
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
