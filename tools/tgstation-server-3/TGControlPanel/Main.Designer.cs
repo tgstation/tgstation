@@ -414,7 +414,7 @@
             this.HardReset.Name = "HardReset";
             this.HardReset.Size = new System.Drawing.Size(140, 29);
             this.HardReset.TabIndex = 13;
-            this.HardReset.Text = "Reset To Remote";
+            this.HardReset.Text = "Reset To Origin Branch";
             this.HardReset.UseVisualStyleBackColor = true;
             this.HardReset.Visible = false;
             this.HardReset.Click += new System.EventHandler(this.HardReset_Click);
