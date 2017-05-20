@@ -200,9 +200,10 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3.5 //works as 4, but doubles to 7
+	range = 4
 	dismemberment = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	var/mine_range = 4 //mines this many additional tiles
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
@@ -215,24 +216,27 @@
 		if(pressure < 60)
 			name = "full strength [name]"
 			damage *= 4
-			range *= 2
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-		Range()
+		if(mine_range)
+			mine_range--
+			range++
 		if(range > 0)
 			return -1
 
 /obj/item/projectile/plasma/adv
 	damage = 7
 	range = 5
+	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
 	range = 6
+	mine_range = 6
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
