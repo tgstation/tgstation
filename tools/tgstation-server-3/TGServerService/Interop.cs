@@ -175,25 +175,40 @@ namespace TGServerService
 					//I guess we'll come back some other time
 					return;
 
-				var listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-				listener.Bind(new IPEndPoint(IPAddress.Any, np));
-				listener.Listen(5);
-
-				// Start listening for connections.  
-				while (true)
+				using (var listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
 				{
-					// Program is suspended while waiting for an incoming connection.  
-					Socket handler = listener.Accept();
-					
-					var bytes = new byte[1024];
-					int bytesRec = handler.Receive(bytes);
-					// Show the data on the console.  
-					HandleCommand(Encoding.ASCII.GetString(bytes, 0, bytesRec));
-					
-					handler.Shutdown(SocketShutdown.Both);
-					handler.Close();
-				}
+					listener.Bind(new IPEndPoint(IPAddress.Any, np));
+					listener.Listen(5);
 
+					// Start listening for connections.  
+					using (var clientConnected = new ManualResetEvent(false))
+					{
+						while (true)
+						{
+							// Program is suspended while waiting for an incoming connection.  
+							clientConnected.Reset();
+							listener.BeginAccept(delegate (IAsyncResult asyncResult)
+							{
+								try
+								{
+									var handler = listener.EndAccept(asyncResult);
+
+									var bytes = new byte[1024];
+									int bytesRec = handler.Receive(bytes);
+									// Show the data on the console.  
+									HandleCommand(Encoding.ASCII.GetString(bytes, 0, bytesRec));
+
+									handler.Shutdown(SocketShutdown.Both);
+									handler.Close();
+									clientConnected.Set();
+								}
+								catch (ObjectDisposedException)
+								{ }
+							}, null);
+							clientConnected.WaitOne();
+						}
+					}
+				}
 			}
 			catch (ThreadAbortException)
 			{
