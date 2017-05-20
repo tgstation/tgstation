@@ -37,7 +37,7 @@
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 
 /obj/item/clothing/glasses/meson/night
