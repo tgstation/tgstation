@@ -650,7 +650,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				var/wasemtpy = false
-				if(!reagents.totalvolume)
+				if(!reagents.total_volume)
 					wasempty = true
 				O.reagents.trans_to(src,25)
 				to_chat(user, "<span class='notice'>You add the contents of [O] to the [src]</span>")
