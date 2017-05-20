@@ -43,7 +43,7 @@ This process is identical to the above steps in command line mode. You can alway
 1. `dm compile --wait`
 1. `dd start`
 
-### Folders and Files:
+### Folders and Files (None of these should be touched):
 * `Game/<A/B>/`
 	* This will house two copies of the game code, one for updating and one for live. When updating, it will automatically swap them.
 
@@ -115,6 +115,12 @@ You can clear all active test merges using `Reset to Origin Branch` in the `Repo
  
 ### Starting everything when the computer/server boots
 1. Just tick the `Autostart` option in the `Server` tab or run `dd autostart on` on the command line. As it's a windows service, it will automatically run without having to log ing
+
+### Configuring
+
+* The `Config` panel of the control panel lets you modify nearly all the game configuration settings
+* Not all settings can be modified from here. Although, you should never (have to) write to the service's folders directly. Instead you may use the `Download` button to download a copy of the config file locally, modify it there, then use the `Upload` button to apply it to the `Static/config` folder. You may also use the `DL Repo` button to download from the `Repository` config folder.
+* The above functions are the only ones availiable in command line mode using `config download <Static/config path> <local path>`, `config upload <Static/config path> <local path>`, and `config download <Repository/config path> <local path> --repo` respectively
 
 ## CONTRIBUTING
 
