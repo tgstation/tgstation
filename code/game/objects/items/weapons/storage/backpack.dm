@@ -72,12 +72,20 @@
 		investigate_log("has become a singularity. Caused by [user.key]","singulo")
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
-		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
-		singulo.energy = 300 //should make it a bit bigger~
-		message_admins("[key_name_admin(user)] detonated a bag of holding")
-		log_game("[key_name(user)] detonated a bag of holding")
+		var/area/A = get_area(src)
+		var/singulod = FALSE
+		if(A.singuloproof)
+			user << "<span class='userdanger'>The bag of holding detonates from having its bluespace fields inhibited by the local area!</span>"
+			explosion(get_turf(src), 2, 4, 8, 16)
+			. = ..()
+		else
+			var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
+			singulo.energy = 300 //should make it a bit bigger~
+			singulod = TRUE
+			singulo.process()
+		message_admins("[key_name_admin(user)] detonated a bag of holding. [singulod? "A singularity was created.":"An explosion was created."]")
+		log_game("[key_name(user)] detonated a bag of holding. [singulod? "A singularity was created.":"An explosion was created."]")
 		qdel(src)
-		singulo.process()
 		return
 	. = ..()
 

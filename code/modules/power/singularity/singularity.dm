@@ -255,6 +255,9 @@
 	set background = BACKGROUND_ENABLED
 	for(var/tile in spiral_range_turfs(grav_pull, src))
 		var/turf/T = tile
+		var/area/A = T.loc
+		if(A.singuloproof)
+			continue
 		if(!T || !isturf(loc))
 			continue
 		if(get_dist(T, src) > consume_range)
