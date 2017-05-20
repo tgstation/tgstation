@@ -21877,7 +21877,7 @@
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Reeducation Center APC";
+	name = "Education Chamber APC";
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -22581,7 +22581,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	name = "Reeducation Center";
+	name = "Education Chamber";
 	req_access_txt = "3"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

@@ -117,7 +117,7 @@
 	icon_state = "brig"
 	
 /area/prison/execution_room
-	name = "Prisoner Reeducation Center"
+	name = "Prisoner Education Chamber"
 	icon_state = "brig"
 
 /area/prison/cell_block/A

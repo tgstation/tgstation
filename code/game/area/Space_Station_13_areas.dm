@@ -161,6 +161,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/maintcentral
 	name = "Bridge Maintenance"
 	icon_state = "maintcentral"
+	
+/area/maintenance/maintcentral/central
+	name = "Central Maintenance"
+	icon_state = "maintcentral"
 
 /area/maintenance/fore
 	name = "Fore Maintenance"
@@ -185,6 +189,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/aft
 	name = "Engineering Maintenance"
 	icon_state = "amaint"
+	
+/area/maintenance/aft/xeno_maint
+	name = "Xenobiology Maintenance"
+	icon_state = "xenomaint"
 
 /area/maintenance/aft/Aft_Maintenance
 	name = "Aft Maintenance"
@@ -272,6 +280,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/storage
 	name = "Atmospherics"
+	icon_state = "green"
+	
+/area/maintenance/storage/tcom_storage
+	name = "Telecoms Storage"
 	icon_state = "green"
 
 /area/maintenance/incinerator
@@ -712,6 +724,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
+	
+/area/medical/medbay3/aft
+	name = "Medbay Aft"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
 
 /area/medical/abandoned_medbay
 	name = "Abandoned Medbay"
@@ -720,6 +737,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/medical/patients_rooms
 	name = "Patients' Rooms"
+	icon_state = "patients"
+	
+/area/medical/patients_rooms/room_a
+	name = "Patient Room A"
+	icon_state = "patients"
+	
+/area/medical/patients_rooms/room_b
+	name = "Patient Room B"
 	icon_state = "patients"
 
 /area/medical/cmo
@@ -947,6 +972,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/hydroponics/Abandoned_Garden
 	name = "Abandoned Garden"
+	icon_state = "hydro"
+	
+/area/hydroponics/garden
+	name = "Garden"
 	icon_state = "hydro"
 
 //Toxins
