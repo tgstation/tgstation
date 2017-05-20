@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -41,6 +41,40 @@ namespace TGCommandLine
 		protected override string GetHelpText()
 		{
 			return "Clean up everything and clones the repo at git-url with optional branch name";
+		}
+	}
+	class RepoStatusCommand : Command
+	{
+		public RepoStatusCommand()
+		{
+			Keyword = "status";
+		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var Repo = Server.GetComponent<ITGRepository>();
+			var busy = Repo.OperationInProgress();
+			if (!busy)
+				Console.WriteLine("Repo: Idle");
+			else
+			{
+				Console.WriteLine("Repo: Busy");
+				var progress = Repo.CheckoutProgress();
+				if (progress != -1)
+				{
+					var eqs = "";
+					for (var I = 0; I < progress / 10; ++I)
+						eqs += "=";
+					var dshs = "";
+					for (var I = 0; I < 10 - (progress / 10); ++I)
+						eqs += "-";
+					Console.WriteLine(String.Format("Progress: [{0}{1}] {2}%", eqs, dshs, progress));
+				}
+			}
+			return ExitCode.Normal;
+		}
+		protected override string GetHelpText()
+		{
+			return "Shows the busy status of the repo";
 		}
 	}
 
