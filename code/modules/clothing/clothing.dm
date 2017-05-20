@@ -38,7 +38,15 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+	var/greyscale = FALSE
+	var/my_clothing_icon = 'icons/mob/uniform.dmi'
 
+/obj/item/clothing/worn_overlays(isinhands = FALSE)
+	. = ..()
+	if(greyscale)
+		var/mutable_appearance/A = mutable_appearance(my_clothing_icon, item_state)
+		A.color = color
+		. += A
 /obj/item/clothing/New()
 	..()
 	if(ispath(pockets))
@@ -137,6 +145,10 @@
 			if(variable in user.vars)
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
+	if(greyscale)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.regenerate_icons()
 
 
 /obj/item/clothing/examine(mob/user)
@@ -190,6 +202,7 @@
 	throwforce = 0
 	slot_flags = SLOT_EARS
 	resistance_flags = 0
+	my_clothing_icon = 'icons/mob/ears.dmi'
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -223,6 +236,7 @@
 	strip_delay = 20
 	put_on_delay = 25
 	resistance_flags = 0
+	my_clothing_icon = 'icons/mob/eyes.dmi'
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -247,10 +261,11 @@ BLIND     // can't see anything
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	put_on_delay = 40
+	my_clothing_icon = 'icons/mob/hands.dmi'
 
 
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
@@ -275,10 +290,11 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	my_clothing_icon = 'icons/mob/head.dmi'
 
 
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
@@ -300,9 +316,10 @@ BLIND     // can't see anything
 	slot_flags = SLOT_NECK
 	strip_delay = 40
 	put_on_delay = 40
+	my_clothing_icon = 'icons/mob/neck.dmi'
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
@@ -321,10 +338,11 @@ BLIND     // can't see anything
 	put_on_delay = 40
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
+	my_clothing_icon = 'icons/mob/mask.dmi'
 
 
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
@@ -391,9 +409,10 @@ BLIND     // can't see anything
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/offset = 0
 	var/equipped_before_drop = FALSE
+	my_clothing_icon = 'icons/mob/feet.dmi'
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		var/bloody = 0
 		if(blood_DNA)
@@ -451,10 +470,11 @@ BLIND     // can't see anything
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	my_clothing_icon = 'icons/mob/suit.dmi'
 
 
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
@@ -529,9 +549,9 @@ BLIND     // can't see anything
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
-
+	my_clothing_icon = 'icons/mob/uniform.dmi'
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 
 	if(!isinhands)
 
