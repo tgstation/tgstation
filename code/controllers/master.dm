@@ -83,6 +83,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 	reverseRange(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
+		testing("Shutdown [ss.name] subsystem")
 		ss.Shutdown()
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,

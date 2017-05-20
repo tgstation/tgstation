@@ -26,8 +26,6 @@ Possible to do for anyone motivated enough:
 
 #define HOLOPAD_PASSIVE_POWER_USAGE 1
 #define HOLOGRAM_POWER_USAGE 2
-
-GLOBAL_LIST_EMPTY(holopads)
 #define HOLOPAD_MODE RANGE_BASED
 
 /obj/machinery/holopad
@@ -295,7 +293,7 @@ GLOBAL_LIST_EMPTY(holopads)
 			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 			Hologram.Impersonation = user
 
-		Hologram.language_holder = user.get_language_holder()
+		Hologram.copy_known_languages_from(user,replace = TRUE)
 		Hologram.mouse_opacity = 0//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.anchored = 1//So space wind cannot drag it.
