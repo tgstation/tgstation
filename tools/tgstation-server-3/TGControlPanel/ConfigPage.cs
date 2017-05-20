@@ -287,7 +287,7 @@ namespace TGControlPanel
 			var ranks = Server.GetComponent<ITGConfig>().AdminRanks(out string error);
 			AdminRanksListBox.Items.Clear();
 			if (ranks == null)
-				MessageBox.Show("Error: " + error);
+				Program.MessageBoxIfInitialized("Error: " + error);
 			else
 				foreach (var I in ranks)
 					AdminRanksListBox.Items.Add(I.Key);
@@ -305,7 +305,7 @@ namespace TGControlPanel
 			var admins = Server.GetComponent<ITGConfig>().Admins(out string error);
 			AdminsListBox.Items.Clear();
 			if (admins == null)
-				MessageBox.Show("Error: " + error);
+				Program.MessageBoxIfInitialized("Error: " + error);
 			else
 				foreach (var I in admins)
 					AdminsListBox.Items.Add(String.Format("{0} ({1})", I.Key, I.Value));
@@ -322,7 +322,7 @@ namespace TGControlPanel
 			var perms = Server.GetComponent<ITGConfig>().ListPermissions(out string error);
 			PermissionsListBox.Items.Clear();
 			if (perms == null)
-				MessageBox.Show("Error: " + error);
+				Program.MessageBoxIfInitialized("Error: " + error);
 			else
 				foreach (var I in perms)
 				{

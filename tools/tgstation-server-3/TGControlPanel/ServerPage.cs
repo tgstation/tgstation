@@ -86,11 +86,13 @@ namespace TGControlPanel
 			var val = Config.NudgePort(out string error);
 			if (error != null)
 			{
-				MessageBox.Show("Error: " + error);
+				Program.MessageBoxIfInitialized("Error: " + error);
 				val = 1;
 			}
 			NudgePortSelector.Value = val;
 			updatingFields = false;
+
+			initializeButton.Enabled = Server.GetComponent<ITGRepository>().Exists();
 
 			switch (DM.GetStatus())
 			{
