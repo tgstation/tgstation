@@ -58981,7 +58981,9 @@
 	req_access_txt = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	name = "Aft Primary Hallway"
+	},
 /turf/open/floor/plasteel/blue/corner{
 	dir = 8
 	},
@@ -58993,13 +58995,17 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	name = "Aft Primary Hallway"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bZh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	name = "Aft Primary Hallway"
+	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 2
 	},
