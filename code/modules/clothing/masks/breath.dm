@@ -55,7 +55,7 @@
 	. = ..() //I have no idea what this line does but apparently Initialize() is supposed to have it.
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE)
-	reagents.add_reagents("synaptizine", 25)
+	reagents.add_reagent("synaptizine", 25)
 
 /obj/item/clothing/mask/vape/vapormask/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers) && (O.container_type & OPENCONTAINER))
