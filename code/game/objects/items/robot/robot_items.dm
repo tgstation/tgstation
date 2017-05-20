@@ -596,7 +596,7 @@
 
 /obj/item/borg/projectile_dampen/proc/process_recharge()
 	if(!istype(host))
-		if(isrobot(host.loc))
+		if(iscyborg(host.loc))
 			host = host.loc
 		else
 			energy = Clamp(energy + energy_recharge, 0, maxenergy)
