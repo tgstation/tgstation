@@ -173,6 +173,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/starboard
 	name = "Starboard Maintenance"
 	icon_state = "smaint"
+	
+/area/maintenance/starboard/central
+	name = "Central Starboard Maintenance"
+	icon_state = "smaint"
 
 /area/maintenance/starboard/aft_starboard_maintenance
 	name = "Aft Starboard Maintenance"
@@ -184,6 +188,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/port
 	name = "Locker Room Maintenance"
+	icon_state = "pmaint"
+	
+/area/maintenance/port/central
+	name = "Central Port Maintenance"
 	icon_state = "pmaint"
 
 /area/maintenance/aft
