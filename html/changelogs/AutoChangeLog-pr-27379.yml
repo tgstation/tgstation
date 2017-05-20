@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Proto-kinetic crushers have been worked over by our highly qualified techs, will recharge 12% faster, and no longer require very low-pressure atmospheres to fire!"
+  - balance: "In addition, our techs have tweaked the quantum linker module and proto-kinetic crushers can apply multiple marks to different targets! Marks applied may eventually expire if not detonated."
