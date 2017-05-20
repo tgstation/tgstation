@@ -36,3 +36,30 @@
 	item_state = "m_mask"
 	permeability_coefficient = 0.01
 	put_on_delay = 10
+
+//Vaporizing breath mask
+
+
+/obj/item/clothing/mask/vape/vapormask
+    name = "Vaporizing Breath Mask"
+    desc = "A breath mask with an integrated chemical vaporizer."
+    icon_state = "vapor" 
+    item_state = "vapor"
+    chem_volume = 50 //Lower capacity than a regular vape
+    flags = MASKINTERNALS
+    flags_cover = MASKCOVERSMOUTH
+	gas_transfer_coefficient = 0.10
+	permeability_coefficient = 0.50
+
+/obj/item/clothing/mask/vape/vapormask/Initialize()
+    . = ..() //I have no idea what this line does but apparently Initialize() is supposed to have it.
+    create_reagents(chem_volume)
+    reagents.set_reacting(FALSE)
+
+
+/obj/item/clothing/mask/vape/vapormask/attackby(obj/item/O, mob/user, params)
+    if(istype(O, /obj/item/weapon/reagent_containers) && (O.container_type & OPENCONTAINER))
+        return ..()
+
+/obj/item/clothing/mask/vape/vapormask/emag_act()
+    return
