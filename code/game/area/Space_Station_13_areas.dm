@@ -117,6 +117,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
 	icon_state = "fpmaint"
+	
+/area/maintenance/department/chapel
+	name = "Chapel Maintenance"
+	icon_state = "fpmaint"
+	
+/area/maintenance/department/chapel/monastery
+	name = "Monastery Maintenance"
+	icon_state = "fpmaint"
+	
+/area/maintenance/department/security
+	name = "Security Maintenance"
+	icon_state = "fpmaint"
+	
+/area/maintenance/department/security/brig
+	name = "Brig Maintenance"
+	icon_state = "fpmaint"
 
 /area/maintenance/fpmaint
 	name = "EVA Maintenance"
@@ -506,6 +522,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
+	
+/area/crew_quarters/lounge
+	name = "Lounge"
+	icon_state = "yellow"
 
 /area/crew_quarters/locker/locker_toilet
 	name = "Locker Toilets"
@@ -522,9 +542,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
+	
+/area/crew_quarters/cafeteria/lunchroom
+	name = "Lunchroom"
+	icon_state = "cafeteria"
 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
+	icon_state = "kitchen"
+	
+/area/crew_quarters/kitchen/backroom
+	name = "Kitchen Coldroom"
 	icon_state = "kitchen"
 
 /area/crew_quarters/bar
@@ -568,6 +596,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel/main
 	name = "Chapel"
+	
+/area/chapel/main/monastery
+	name = "Monastery"
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -647,11 +678,67 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/solar/starboard
 	name = "Aft Starboard Solar Array"
 	icon_state = "panelsS"
+	
+/area/solar/starboard/starboard
+	name = "Starboard Solar Array"
+	icon_state = "panelsS"
+
+/area/solar/starboard/aft
+	name = "Starboard Quarter Solar Array"
+	icon_state = "panelsS"
+	
+/area/solar/starboard/fore
+	name = "Starboard Bow Solar Array"
+	icon_state = "panelsS"
 
 /area/solar/port
 	name = "Aft Port Solar Array"
 	icon_state = "panelsP"
+	
+/area/solar/port/port
+	name = "Port Solar Array"
+	icon_state = "panelsP"
 
+/area/solar/port/aft
+	name = "Port Quarter Solar Array"
+	icon_state = "panelsP"
+	
+/area/solar/port/fore
+	name = "Port Bow Solar Array"
+	icon_state = "panelsP"
+	
+/area/maintenance/solars
+	name = "Solar Maintenance"
+	icon_state = "yellow"
+	
+/area/maintenance/solars/port
+	name = "Port Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/port/aft
+	name = "Starboard Quarter Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/port/fore
+	name = "Starboard Bow Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/starboard
+	name = "Starboard Solar Maintenance"
+	icon_state = "SolarcontrolS"
+	
+	
+/area/maintenance/solars/starboard/aft
+	name = "Starboard Quarter Solar Maintenance"
+	icon_state = "SolarcontrolS"
+	
+/area/maintenance/solars/starboard/fore
+	name = "Starboard Bow Solar Maintenance"
+	icon_state = "SolarcontrolS"
+	
+
+	
+	
 /area/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
 	icon_state = "SolarcontrolA"
@@ -834,6 +921,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/processing
 	name = "Labor Shuttle Dock"
 	icon_state = "sec_prison"
+	
+/area/security/processing/cremation
+	name = "Security Crematorium"
+	icon_state = "sec_prison"
 
 /area/security/warden
 	name = "Brig Control"
@@ -978,8 +1069,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Hydroponics"
 	icon_state = "hydro"
 
-/area/hydroponics/Abandoned_Garden
+/area/hydroponics/garden/abandoned
 	name = "Abandoned Garden"
+	icon_state = "hydro"
+	
+/area/hydroponics/garden/monastery
+	name = "Monastery Garden"
 	icon_state = "hydro"
 	
 /area/hydroponics/garden
@@ -1089,6 +1184,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/mining_construction
 	name = "Auxillary Base Construction"
+	icon_state = "yellow"
+	
+/area/mining_construction/closet
+	name = "Auxiliary Closet Construction"
 	icon_state = "yellow"
 
 /area/construction/supplyshuttle
