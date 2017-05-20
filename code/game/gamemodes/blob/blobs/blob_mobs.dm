@@ -91,7 +91,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	obj_damage = 20
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING

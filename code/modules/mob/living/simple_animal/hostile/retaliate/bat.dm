@@ -22,7 +22,7 @@
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	mob_size = MOB_SIZE_TINY
 	movement_type = FLYING

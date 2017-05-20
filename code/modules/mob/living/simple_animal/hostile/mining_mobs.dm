@@ -4,7 +4,7 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	obj_damage = 30
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	response_help = "pokes"
@@ -215,7 +215,7 @@
 	ranged_cooldown = 0
 	ranged_cooldown_time = 20
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
@@ -334,7 +334,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE
 	del_on_death = 1
 
@@ -595,7 +595,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
@@ -640,7 +640,7 @@
 	minimum_distance = 1
 	move_to_delay = 6
 	transform *= 2
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
 	addtimer(CALLBACK(src, .proc/Deflate), 100)
@@ -660,7 +660,7 @@
 		move_to_delay = 2
 		transform /= 2
 		inflate_cooldown = 4
-		environment_smash = 0
+		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL
 		speed = 0
 
@@ -826,6 +826,7 @@
 	maxHealth = 120
 	health = 120
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+	icon_state = "dwarf_legion"
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
 	stat_attack = 2
@@ -836,7 +837,7 @@
 /mob/living/simple_animal/hostile/spawner/legion
 	name = "legion"
 	desc = "One of many."
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon = 'icons/mob/lavaland/dragon.dmi'
 	icon_state = "legion"
 	icon_living = "legion"
 	icon_dead = "legion"
@@ -864,7 +865,7 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	obj_damage = 30
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
@@ -923,7 +924,7 @@
 	speak_chance = 1
 	turns_per_move = 8
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	move_to_delay = 15
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
