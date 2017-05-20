@@ -60,9 +60,17 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
-	desc = "Sssssss..."
+	desc = "The sssoft ssskin of a sssneky sssnake."
 	singular_name = "lizard skin piece"
 	icon_state = "sheet-lizard"
+
+var/global/list/datum/stack_recipe/lizard_recipes = list ( \
+	new/datum/stack_recipe("lizard cloche hat", /obj/item/clothing/head/lizard, 1, on_floor=1), \
+	)
+
+/obj/item/stack/sheet/animalhide/lizard/New(var/loc, var/amount=null)
+	recipes = lizard_recipes
+	return ..()
 
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
