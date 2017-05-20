@@ -221,13 +221,18 @@ namespace TGServerService
 		{
 			lock (watchdogLock)
 			{
-				if (GetVersion(TGByondVersion.Installed) == null)
-					return "Byond is not installed!";
-				var DMB = GameDirLive + "/" + Properties.Settings.Default.ProjectName + ".dmb";
-				if (!File.Exists(DMB))
-					return String.Format("Unable to find {0}!", DMB);
-				return null;
+				return CanStartImpl();
 			}
+		}
+
+		string CanStartImpl()
+		{
+			if (GetVersion(TGByondVersion.Installed) == null)
+				return "Byond is not installed!";
+			var DMB = GameDirLive + "/" + Properties.Settings.Default.ProjectName + ".dmb";
+			if (!File.Exists(DMB))
+				return String.Format("Unable to find {0}!", DMB);
+			return null;
 		}
 
 		//public api
@@ -243,12 +248,12 @@ namespace TGServerService
 			{
 				if (currentStatus != TGDreamDaemonStatus.Offline)
 					return "Server already running";
-				currentStatus = TGDreamDaemonStatus.HardRebooting;
+				var res = CanStartImpl();
+				if (res != null)
+					return res;
 				currentPort = 0;
+				currentStatus = TGDreamDaemonStatus.HardRebooting;
 			}
-			var res = CanStart();
-			if (res != null)
-				return res;
 			return StartImpl(false);
 		}
 
@@ -291,12 +296,12 @@ namespace TGServerService
 		{
 			try
 			{
-				var res = CanStart();
-				if (res != null)
-					return res;
-
 				lock (watchdogLock)
 				{
+					var res = CanStartImpl();
+					if (res != null)
+						return res;
+
 					var Config = Properties.Settings.Default;
 					var DMB = GameDirLive + "/" + Config.ProjectName + ".dmb";
 
