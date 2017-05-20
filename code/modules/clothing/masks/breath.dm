@@ -41,7 +41,7 @@
 
 
 /obj/item/clothing/mask/vape/vapormask
-	name = "Vaporizing Breath Mask"
+	name = "vaporizing breath mask"
 	desc = "A breath mask with an integrated chemical vaporizer. A label reads \"In case of hallucinations, put mask on and inhale deeply. Warning: Do not fill with flammable materials.\""
 	icon_state = "vapor" 
 	item_state = "vapor"
