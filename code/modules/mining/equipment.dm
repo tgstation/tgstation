@@ -206,6 +206,8 @@
 		new /obj/effect/temp_visual/resonance(T, user, src)
 		if(!ismineralturf(T))
 			user.changeNext_move(CLICK_CD_MELEE)
+		else
+			user.changeNext_move(CLICK_CD_RANGE)
 
 /obj/item/weapon/resonator/pre_attackby(atom/target, mob/living/user, params)
 	CreateResonance(target, user)
@@ -235,10 +237,10 @@
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/burst), duration, TIMER_STOPPABLE)
 	for(var/mob/living/L in loc) //mob here, expand!
-		INVOKE_ASYNC(src, .proc/crossed_burst)
+		INVOKE_ASYNC(src, .proc/crossed_burst, 10)
 		return
 	if(ismineralturf(loc)) //mineral turf, expand!
-		INVOKE_ASYNC(src, .proc/crossed_burst)
+		INVOKE_ASYNC(src, .proc/crossed_burst, 25)
 
 /obj/effect/temp_visual/resonance/Destroy()
 	if(res)
@@ -265,13 +267,13 @@
 /obj/effect/temp_visual/resonance/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM) && !was_crossed && !is_bursting)
-		crossed_burst()
+		crossed_burst(10)
 
-/obj/effect/temp_visual/resonance/proc/crossed_burst()
+/obj/effect/temp_visual/resonance/proc/crossed_burst(delay_til_burst = 15)
 	was_crossed = TRUE
-	animate(src, transform = matrix()*1.5, time = 15)
+	animate(src, transform = matrix()*1.5, time = delay_til_burst)
 	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, .proc/burst), 15, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, .proc/burst), delay_til_burst, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/resonance/proc/burst()
 	is_bursting = TRUE
