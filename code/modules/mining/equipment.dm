@@ -240,7 +240,7 @@
 		INVOKE_ASYNC(src, .proc/crossed_burst, 10)
 		return
 	if(ismineralturf(loc)) //mineral turf, expand!
-		INVOKE_ASYNC(src, .proc/crossed_burst, 25)
+		INVOKE_ASYNC(src, .proc/crossed_burst, 20)
 
 /obj/effect/temp_visual/resonance/Destroy()
 	if(res)
@@ -277,7 +277,7 @@
 
 /obj/effect/temp_visual/resonance/proc/burst()
 	is_bursting = TRUE
-	animate(src, transform = matrix()*2, time = 2, flags = ANIMATION_END_NOW)
+	animate(src, transform = matrix()*1.5, time = 2, flags = ANIMATION_END_NOW)
 	var/turf/T = get_turf(src)
 	sleep(2)
 	new /obj/effect/temp_visual/resonance_crush(T)
