@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-	if((alive < LAZYLEN(GLOB.joined_player_list) * 0.4) && (SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4)))
+	if((alive < (GLOB.joined_player_list.len * 0.4)) && (SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4)))
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
