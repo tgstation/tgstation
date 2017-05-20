@@ -279,6 +279,28 @@
 	resistance_flags = FLAMMABLE
 
 
+/obj/item/toy/windupToolbox
+	name = "windup toolbox"
+	desc = "A replica toolbox that rumbles when you turn the key"
+	icon_state = "his_grace"
+	item_state = "artistic_toolbox"
+	var/active = FALSE
+	icon = 'icons/obj/weapons.dmi'
+	attack_verb = list("robusted")
+
+/obj/item/toy/windupToolbox/attack_self(mob/user)
+	if(!active)
+		icon_state = "his_grace_awakened"
+		to_chat(user, "<span class='warning'>You wind up [src], it begins to rumble.</span>")
+		active = TRUE
+		addtimer(CALLBACK(src, .proc/stopRumble), 600)
+	else
+		to_chat(user, "[src] is already active.")
+
+/obj/item/toy/windupToolbox/proc/stopRumble()
+	icon_state = initial(icon_state)
+	active = FALSE
+
 /*
  * Subtype of Double-Bladed Energy Swords
  */
