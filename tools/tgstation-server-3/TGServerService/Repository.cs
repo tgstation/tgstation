@@ -127,7 +127,7 @@ namespace TGServerService
 							string path = Path.GetDirectoryName(StaticBackupDir);
 							string newFullPath = StaticBackupDir;
 
-							while (File.Exists(StaticBackupDir) || Directory.Exists(StaticBackupDir))
+							while (File.Exists(newFullPath) || Directory.Exists(newFullPath))
 							{
 								string tempDirName = string.Format("{0}({1})", StaticBackupDir, count++);
 								newFullPath = Path.Combine(path, tempDirName);
@@ -794,6 +794,11 @@ namespace TGServerService
 				return false;
 			Properties.Settings.Default.PythonPath = Path.GetFullPath(path);
 			return true;
+		}
+
+		public string PythonPath()
+		{
+			return Properties.Settings.Default.PythonPath;
 		}
 	}
 }

@@ -32,6 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.Panels = new System.Windows.Forms.TabControl();
             this.RepoPanel = new System.Windows.Forms.TabPage();
+            this.RecloneButton = new System.Windows.Forms.Button();
+            this.PythonPathText = new System.Windows.Forms.TextBox();
+            this.PythonPathLabel = new System.Windows.Forms.Label();
             this.RepoPushButton = new System.Windows.Forms.Button();
             this.RepoCommitButton = new System.Windows.Forms.Button();
             this.RepoGenChangelogButton = new System.Windows.Forms.Button();
@@ -203,6 +206,9 @@
             // RepoPanel
             // 
             this.RepoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.RepoPanel.Controls.Add(this.RecloneButton);
+            this.RepoPanel.Controls.Add(this.PythonPathText);
+            this.RepoPanel.Controls.Add(this.PythonPathLabel);
             this.RepoPanel.Controls.Add(this.RepoPushButton);
             this.RepoPanel.Controls.Add(this.RepoCommitButton);
             this.RepoPanel.Controls.Add(this.RepoGenChangelogButton);
@@ -237,6 +243,39 @@
             this.RepoPanel.Size = new System.Drawing.Size(868, 366);
             this.RepoPanel.TabIndex = 0;
             this.RepoPanel.Text = "Repository";
+            // 
+            // RecloneButton
+            // 
+            this.RecloneButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RecloneButton.Location = new System.Drawing.Point(722, 247);
+            this.RecloneButton.Name = "RecloneButton";
+            this.RecloneButton.Size = new System.Drawing.Size(140, 29);
+            this.RecloneButton.TabIndex = 32;
+            this.RecloneButton.Text = "Reclone";
+            this.RecloneButton.UseVisualStyleBackColor = true;
+            this.RecloneButton.Visible = false;
+            this.RecloneButton.Click += new System.EventHandler(this.RecloneButton_Click);
+            // 
+            // PythonPathText
+            // 
+            this.PythonPathText.Location = new System.Drawing.Point(122, 112);
+            this.PythonPathText.Name = "PythonPathText";
+            this.PythonPathText.Size = new System.Drawing.Size(535, 20);
+            this.PythonPathText.TabIndex = 31;
+            this.PythonPathText.Visible = false;
+            // 
+            // PythonPathLabel
+            // 
+            this.PythonPathLabel.AutoSize = true;
+            this.PythonPathLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PythonPathLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.PythonPathLabel.Location = new System.Drawing.Point(6, 112);
+            this.PythonPathLabel.Name = "PythonPathLabel";
+            this.PythonPathLabel.Size = new System.Drawing.Size(114, 18);
+            this.PythonPathLabel.TabIndex = 30;
+            this.PythonPathLabel.Text = "Python Path:";
+            this.PythonPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.PythonPathLabel.Visible = false;
             // 
             // RepoPushButton
             // 
@@ -393,7 +432,7 @@
             // 
             // RepoBranchTextBox
             // 
-            this.RepoBranchTextBox.Location = new System.Drawing.Point(122, 89);
+            this.RepoBranchTextBox.Location = new System.Drawing.Point(122, 70);
             this.RepoBranchTextBox.Name = "RepoBranchTextBox";
             this.RepoBranchTextBox.Size = new System.Drawing.Size(535, 20);
             this.RepoBranchTextBox.TabIndex = 15;
@@ -401,7 +440,7 @@
             // 
             // RepoRemoteTextBox
             // 
-            this.RepoRemoteTextBox.Location = new System.Drawing.Point(122, 57);
+            this.RepoRemoteTextBox.Location = new System.Drawing.Point(122, 44);
             this.RepoRemoteTextBox.Name = "RepoRemoteTextBox";
             this.RepoRemoteTextBox.Size = new System.Drawing.Size(535, 20);
             this.RepoRemoteTextBox.TabIndex = 14;
@@ -503,7 +542,7 @@
             this.RemoteNameTitle.AutoSize = true;
             this.RemoteNameTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RemoteNameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.RemoteNameTitle.Location = new System.Drawing.Point(6, 57);
+            this.RemoteNameTitle.Location = new System.Drawing.Point(6, 46);
             this.RemoteNameTitle.Name = "RemoteNameTitle";
             this.RemoteNameTitle.Size = new System.Drawing.Size(78, 18);
             this.RemoteNameTitle.TabIndex = 5;
@@ -516,7 +555,7 @@
             this.BranchNameTitle.AutoSize = true;
             this.BranchNameTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BranchNameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.BranchNameTitle.Location = new System.Drawing.Point(6, 89);
+            this.BranchNameTitle.Location = new System.Drawing.Point(6, 72);
             this.BranchNameTitle.Name = "BranchNameTitle";
             this.BranchNameTitle.Size = new System.Drawing.Size(110, 18);
             this.BranchNameTitle.TabIndex = 4;
@@ -2017,6 +2056,9 @@
 		private System.Windows.Forms.Label NegativePermissionsTitle;
 		private System.Windows.Forms.Label ConfigDisabledLabel;
 		private System.Windows.Forms.CheckBox GenCLCheckbox;
+		private System.Windows.Forms.Button RecloneButton;
+		private System.Windows.Forms.TextBox PythonPathText;
+		private System.Windows.Forms.Label PythonPathLabel;
 	}
 }
 

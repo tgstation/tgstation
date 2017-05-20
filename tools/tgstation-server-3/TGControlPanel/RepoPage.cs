@@ -61,6 +61,9 @@ namespace TGControlPanel
 			RepoRemoteTextBox.Visible = true;
 			BranchNameTitle.Visible = true;
 			RepoBranchTextBox.Visible = true;
+			PythonPathLabel.Visible = true;
+			PythonPathText.Visible = true;
+			PythonPathText.Text = Repo.PythonPath();
 
 			if (!Repo.Exists())
 			{
@@ -95,6 +98,7 @@ namespace TGControlPanel
 				RepoGenChangelogButton.Visible = true;
 				RepoCommitButton.Visible = true;
 				RepoPushButton.Visible = true;
+				RecloneButton.Visible = true;
 
 				CurrentRevisionLabel.Text = Repo.GetHead(out string error) ?? "Unknown";
 				RepoRemoteTextBox.Text = Repo.GetRemote(out error) ?? "Unknown";
@@ -193,13 +197,30 @@ namespace TGControlPanel
 				RepoBGW.ReportProgress(Repo.CheckoutProgress());
 			} while (Repo.OperationInProgress());
 		}
-
+		void UpdatePythonPath()
+		{
+			if (!Server.GetComponent<ITGRepository>().SetPythonPath(PythonPathText.Text))
+				MessageBox.Show("Python could not be found in the selected location!");
+		}
 		private void CloneRepositoryButton_Click(object sender, EventArgs e)
+		{
+			CloneRepo();
+		}
+
+		void CloneRepo()
 		{
 			CloneRepoURL = RepoRemoteTextBox.Text;
 			CheckoutBranch = RepoBranchTextBox.Text;
+			UpdatePythonPath();
 
 			DoAsyncOp(RepoAction.Clone, String.Format("Cloning {0} branch of {1}...", CheckoutBranch, CloneRepoURL));
+		}
+		private void RecloneButton_Click(object sender, EventArgs e)
+		{
+			var DialogResult = MessageBox.Show("This will re-clone the repository, backup, and reset the Static configuration folders. Continue?", "Confim", MessageBoxButtons.YesNo);
+			if (DialogResult == DialogResult.No)
+				return;
+			CloneRepo();
 		}
 		void DoAsyncOp(RepoAction ra, string message)
 		{
@@ -233,11 +254,14 @@ namespace TGControlPanel
 			RepoGenChangelogButton.Visible = false;
 			RepoCommitButton.Visible = false;
 			RepoPushButton.Visible = false;
+			PythonPathLabel.Visible = false;
+			PythonPathText.Visible = false;
+			RecloneButton.Visible = false;
 
 			RepoPanel.UseWaitCursor = true;
 
 			RepoProgressBar.Value = 0;
-			RepoProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+			RepoProgressBar.Style = ProgressBarStyle.Marquee;
 
 			RepoProgressBarLabel.Text = message;
 			RepoProgressBarLabel.Visible = true;
@@ -288,6 +312,7 @@ namespace TGControlPanel
 					Repo.SetCredentials(CommitterLoginTextBox.Text, CommitterPasswordTextBox.Text);
 					CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
 				}
+				UpdatePythonPath();
 			}
 			else
 				CloneRepositoryButton_Click(null, null);
