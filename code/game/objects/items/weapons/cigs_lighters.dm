@@ -651,6 +651,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)
 				to_chat(user, "<span class='notice'>You add the contents of [O] to the [src]</span>")
+				if(C.get_item_by_slot(slot_wear_mask) == src)
+					equipped(user,slot_wear_mask)
 			else
 				to_chat(user, "<span class='warning'>The [O] is empty!</span>")
 		else
