@@ -1003,6 +1003,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/vacantoffice
 	name = "Vacant Office"
 	icon_state = "security"
+	
+/area/security/vacantoffice/a
+	name = "Vacant Office A"
+	icon_state = "security"
+	
+/area/security/vacantoffice/b
+	name = "Vacant Office B"
+	icon_state = "security"
 
 /area/security/vacantoffice2
 	name = "Vacant Office B"
@@ -1257,6 +1265,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
+	icon_state = "ai"
+	
+/area/ai_monitored/turret_protected/aisat/atmos
+	name = "AI Satellite Atmos"
+	icon_state = "ai"
+	
+	/area/ai_monitored/turret_protected/aisat/atmos
+	name = "AI Satellite Atmos"
+	icon_state = "ai"
+	
+/area/ai_monitored/turret_protected/aisat/service
+	name = "AI Satellite Service"
+	icon_state = "ai"
+	
+/area/ai_monitored/turret_protected/aisat/hallway
+	name = "AI Satellite Hallway"
 	icon_state = "ai"
 
 /area/aisat
