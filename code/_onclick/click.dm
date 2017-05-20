@@ -92,6 +92,9 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
+	if(A.IsObscured())
+		return
+
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
 		return M.click_action(A,src,params)
@@ -140,6 +143,24 @@
 			W.afterattack(A,src,0,params)
 		else
 			RangedAttack(A,params)
+
+//Is the atom obscured by a PREVENT_CLICK_UNDER object above it
+/atom/proc/IsObscured()
+	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
+		return FALSE
+	var/turf/T = get_turf_pixel(src)
+	if(!T)
+		return FALSE
+	for(var/atom/movable/AM in T)
+		if(AM.flags & PREVENT_CLICK_UNDER && AM.density && AM.layer > layer)
+			return TRUE
+	return FALSE
+
+/turf/IsObscured()
+	for(var/atom/movable/AM in src)
+		if(AM.flags & PREVENT_CLICK_UNDER && AM.density)
+			return TRUE
+	return FALSE
 
 /atom/movable/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
 	if(isturf(target) || isturf(target.loc) || DirectAccess(target)) //Directly accessible atoms

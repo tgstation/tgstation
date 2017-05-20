@@ -195,7 +195,7 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
-	var/obj/effect/overlay/temp/kinetic_blast/K = new /obj/effect/overlay/temp/kinetic_blast(target_turf)
+	var/obj/effect/temp_visual/kinetic_blast/K = new /obj/effect/temp_visual/kinetic_blast(target_turf)
 	K.color = color
 	for(var/type in hit_overlays)
 		new type(target_turf)
@@ -319,7 +319,7 @@
 /obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
 	K.name = "kinetic explosion"
 	if(!K.turf_aoe && !K.mob_aoe)
-		K.hit_overlays += /obj/effect/overlay/temp/explosion/fast
+		K.hit_overlays += /obj/effect/temp_visual/explosion/fast
 	K.mob_aoe += modifier
 
 /obj/item/borg/upgrade/modkit/aoe/turfs

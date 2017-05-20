@@ -50,9 +50,7 @@
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 		log_attack(log_msg)
-	else
-		to_chat(user, "<span class='notice'>It appears that [M] does not have compatible DNA.</span>")
-		return
+		return TRUE
 
 /obj/item/weapon/dnainjector/attack(mob/target, mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -79,7 +77,9 @@
 
 	add_logs(user, target, "injected", src)
 
-	inject(target, user)	//Now we actually do the heavy lifting.
+	if(!inject(target, user))	//Now we actually do the heavy lifting.
+		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
+
 	used = 1
 	icon_state = "dnainjector0"
 	desc += " This one is used up."

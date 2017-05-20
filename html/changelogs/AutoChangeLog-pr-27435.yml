@@ -1,0 +1,4 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - bugfix: "The Auxiliary Base can no longer land outside the lavaland map's boundaries."
