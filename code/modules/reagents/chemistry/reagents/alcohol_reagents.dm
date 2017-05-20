@@ -41,7 +41,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(dwarf)
 			if(dwarf.stored_alcohol < dwarf.max_alcohol)
 				dwarf.stored_alcohol += boozepwr * 0.01
-				return..() || .
+				return ..() || .
 
 		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
@@ -91,7 +91,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/datum/reagents/contained_reagents
 
 /datum/reagent/consumable/ethanol/customizable/New()
-	..()
+	. ..()
 	contained_reagents = new/datum/reagents(10000)
 
 /datum/reagent/consumable/ethanol/customizable/on_mob_life(mob/living/M)

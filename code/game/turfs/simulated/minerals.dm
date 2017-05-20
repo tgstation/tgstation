@@ -59,20 +59,12 @@
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 		P.playDigSound()
 
-		var/obj/item/organ/alcoholvessel/dwarf //check to see if the digger has the dwarf organ for increased mining speed
-		dwarf = user.getorganslot("dwarf_organ")
-		if(!dwarf)
-			if(do_after(user,P.digspeed, target = src)) //regular mining slowdown
-				if(ismineralturf(src))
-					to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
-					gets_drilled(user)
-					SSblackbox.add_details("pick_used_mining","[P.type]")
-		else
-			if(do_after(user,P.digspeed * 0.5, target = src)) //50% of normal slowdown, dwarf speed.
-				if(ismineralturf(src))
-					to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
-					gets_drilled(user)
-					SSblackbox.add_details("pick_used_mining","[P.type]")
+		var/adjusted_digspeed = (user.getorganslot("dwarf_organ") ? (P.digspeed * 0.5) : P.digspeed)
+		if(do_after(user,adjusted_digspeed, target = src)) //regular mining slowdown
+			if(ismineralturf(src))
+				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
+				gets_drilled(user)
+				SSblackbox.add_details("pick_used_mining","[P.type]")
 	else
 		return attack_hand(user)
 

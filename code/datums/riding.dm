@@ -328,19 +328,6 @@
 	else
 		to_chat(user, "<span class='notice'>You'll need something  to guide the [ridden.name].</span>")
 
-//minecart
-/datum/riding/minecart
-	keytype = null
-	generic_pixel_x = 0
-	generic_pixel_y = 4
-	vehicle_move_delay = 0
-
-/datum/riding/minecart/handle_vehicle_layer()
-	if(ridden.dir == SOUTH)
-		ridden.layer = ABOVE_MOB_LAYER
-	else
-		ridden.layer = OBJ_LAYER
-
 ///////Humans. Yes, I said humans. No, this won't end well...//////////
 /datum/riding/human
 	keytype = null
