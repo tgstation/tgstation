@@ -1148,7 +1148,7 @@
 
 	if(!istype(M)) //sanity check for drones.
 		return
-	if(H.mind)
+	if(M.mind)
 		attacker_style = M.mind.martial_art
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
