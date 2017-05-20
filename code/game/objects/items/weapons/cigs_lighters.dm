@@ -655,7 +655,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				O.reagents.trans_to(src,25)
 				to_chat(user, "<span class='notice'>You add the contents of [O] to the [src]</span>")
 				if(user.get_item_by_slot(slot_wear_mask) == src && wasempty)
-					itstimetovape()
+					itstimetovape(user)
 			else
 				to_chat(user, "<span class='warning'>The [O] is empty!</span>")
 		else
@@ -713,7 +713,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.clear_reagents()
 	return
 
-/obj/item/clothing/mask/vape/itstimetovape()
+/obj/item/clothing/mask/vape/proc/itstimetovape(mob/user)
 	to_chat(user, "<span class='notice'>You start inhaling from \the [src].</span>")
 	reagents.set_reacting(TRUE)
 	START_PROCESSING(SSobj, src)
@@ -721,7 +721,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			itstimetovape()
+			itstimetovape(user)
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
 
