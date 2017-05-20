@@ -295,7 +295,8 @@
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				SSblackbox.add_details("emergency_shuttle", src.name)
+				var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (shuttle_name) VALUES ([name]) WHERE id = [GLOB.round_id]")
+				query_round_shuttle_name.Execute()
 
 				// Gangs only have one attempt left if the shuttle has
 				// docked with the station to prevent suffering from

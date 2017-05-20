@@ -80,9 +80,9 @@
 		report = config.intercept
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	SSblackbox.set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)
-		SSblackbox.set_details("game_mode","[SSticker.mode]")
+		var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (game_mode) VALUES ([SSticker.mode]) WHERE id = [GLOB.round_id]")
+		query_round_game_mode.Execute()
 	if(GLOB.revdata.commit)
 		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
 	if(report)

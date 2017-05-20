@@ -113,13 +113,14 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-    
+
 	var/start_time = REALTIMEOFDAY
-  
+
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
-	SSblackbox.add_details("map_name", config.map_name)
+	var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (map_name) VALUES ([config.map_name]) WHERE id = [GLOB.round_id]")
+	query_round_map_name.Execute()
 
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")

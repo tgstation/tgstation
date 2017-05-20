@@ -60,6 +60,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/round_start_time = 0
 	var/list/round_start_events
+	var/mode_result = "undefined"
+	var/end_state = "undefined"
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
@@ -618,9 +620,9 @@ SUBSYSTEM_DEF(ticker)
 
 	sleep(50)
 	if(mode.station_was_nuked)
-		Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+		Reboot("Station destroyed by Nuclear Device.", "nuke")
 	else
-		Reboot("Round ended.", "end_proper", "proper completion")
+		Reboot("Round ended.", "proper completion")
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -806,7 +808,7 @@ SUBSYSTEM_DEF(ticker)
 		C.Export("##action=load_rsc", round_end_sound)
 	round_end_sound_sent = TRUE
 
-/datum/controller/subsystem/ticker/proc/Reboot(reason, feedback_c, feedback_r, delay)
+/datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
 	set waitfor = FALSE
 	if(usr && !check_rights(R_SERVER, TRUE))
 		return
@@ -817,7 +819,7 @@ SUBSYSTEM_DEF(ticker)
 	if(delay_end)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
-	
+
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 
 	var/start_wait = world.time
@@ -827,8 +829,8 @@ SUBSYSTEM_DEF(ticker)
 	if(delay_end)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
-	
-	SSblackbox.set_details("[feedback_c]","[feedback_r]")
+	if(end_string)
+		end_state = end_string
 
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 
