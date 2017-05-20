@@ -39172,10 +39172,7 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_x = -32;
-	pixel_y = -26
-	},
-/obj/structure/sign/electricshock{
-	pixel_x = -32
+	pixel_y = 6
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -39187,7 +39184,7 @@
 	name = "Transfer Door Control";
 	normaldoorcontrol = 1;
 	pixel_x = -24;
-	pixel_y = -40
+	pixel_y = -8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -40164,6 +40161,9 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/electricshock{
+	pixel_x = -32
+	},
 /turf/open/floor/plating,
 /area/security/transfer)
 "bBB" = (
