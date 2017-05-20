@@ -538,6 +538,7 @@
 	tracked = list()
 	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
+	host = loc
 
 /obj/item/borg/projectile_dampen/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -563,6 +564,14 @@
 	visible_message("<span class='warning'>The [src] shuts off!</span>")
 	for(var/obj/item/projectile/P in tracked)
 		restore_projectile(P)
+
+/obj/item/borg/projectile_dampen/dropped()
+	. = ..()
+	host = loc
+
+/obj/item/borg/projectile_dampen/equipped()
+	. = ..()
+	host = loc
 
 /obj/item/borg/projectile_dampen/process()
 	process_recharge()
