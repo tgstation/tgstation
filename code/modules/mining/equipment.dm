@@ -205,10 +205,7 @@
 		return
 	if(LAZYLEN(fields) < fieldlimit)
 		new /obj/effect/temp_visual/resonance(T, user, src, burst_time)
-		if(!ismineralturf(T))
-			user.changeNext_move(CLICK_CD_MELEE)
-		else
-			user.changeNext_move(CLICK_CD_RANGE)
+		user.changeNext_move(CLICK_CD_MELEE)
 
 /obj/item/weapon/resonator/pre_attackby(atom/target, mob/user, params)
 	if(check_allowed_items(target, 1))
