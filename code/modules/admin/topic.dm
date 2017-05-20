@@ -285,7 +285,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		trigger_centcom_recall()
+		usr.client.trigger_centcom_recall()
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
