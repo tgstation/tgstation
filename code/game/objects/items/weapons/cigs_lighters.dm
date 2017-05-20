@@ -646,12 +646,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
+	var/wasempty = FALSE
 	if(istype(O, /obj/item/weapon/reagent_containers) && (O.container_type & OPENCONTAINER))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
-				var/wasemtpy = false
 				if(!reagents.total_volume)
-					wasempty = true
+					wasempty = TRUE
 				O.reagents.trans_to(src,25)
 				to_chat(user, "<span class='notice'>You add the contents of [O] to the [src]</span>")
 				if(user.get_item_by_slot(slot_wear_mask) == src && wasempty)
