@@ -93,7 +93,7 @@ namespace TGCommandLine
 		}
 		protected override string GetArgumentString()
 		{
-			return "<source config file> <out file>";
+			return "<source config file> <out file> [--repo]";
 		}
 		protected override string GetHelpText()
 		{
