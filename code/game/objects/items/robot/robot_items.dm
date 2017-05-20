@@ -525,6 +525,7 @@
 	var/list/obj/item/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
+	var/active = FALSE
 
 /obj/item/borg/projectile_dampen/debug
 	maxenergy = 50000
@@ -544,7 +545,6 @@
 	return ..()
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
-	var/active = FALSE
 	if(!istype(dampening_field))
 		activate_field()
 		active = TRUE
