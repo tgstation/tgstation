@@ -255,10 +255,6 @@
 
 /datum/game_mode/proc/datum_cult_completion()
 	var/text = ""
-	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
-				acolytes_survived++
 	var/cult_fail = 0
 	cult_fail += eldergod
 	if(!GLOB.sac_complete)
