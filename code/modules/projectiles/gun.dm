@@ -47,6 +47,7 @@
 	var/can_flashlight = 0
 	var/obj/item/weapon/kitchen/knife/bayonet
 	var/can_bayonet = FALSE
+	var/datum/action/item_action/toggle_gunlight/alight
 
 	var/list/upgrades = list()
 
@@ -69,8 +70,7 @@
 	if(pin)
 		pin = new pin(src)
 	if(gun_light)
-		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
-		new /datum/action/item_action/toggle_gunlight(src)
+		alight = new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
 
 
@@ -294,10 +294,9 @@
 			gun_light = S
 			update_icon()
 			update_gunlight(user)
-			verbs += /obj/item/weapon/gun/proc/toggle_gunlight
-			var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
+			alight = new /datum/action/item_action/toggle_gunlight(src)
 			if(loc == user)
-				A.Grant(user)
+				alight.Grant(user)
 	else if(istype(I, /obj/item/weapon/kitchen/knife))
 		if(!can_bayonet)
 			return ..()
@@ -317,9 +316,7 @@
 			update_gunlight(user)
 			S.update_brightness(user)
 			update_icon()
-			verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
-			for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
-				qdel(TGL)
+			QDEL_NULL(alight)
 		if(bayonet)
 			var/obj/item/weapon/kitchen/knife/K = bayonet
 			K.forceMove(get_turf(user))
@@ -329,10 +326,6 @@
 		return ..()
 
 /obj/item/weapon/gun/proc/toggle_gunlight()
-	set name = "Toggle Gunlight"
-	set category = "Object"
-	set desc = "Click to toggle your weapon's attached flashlight."
-
 	if(!gun_light)
 		return
 
@@ -362,12 +355,16 @@
 	..()
 	if(azoom)
 		azoom.Grant(user)
+	if(alight)
+		alight.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
 	zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
+	if(alight)
+		alight.Remove(user)
 
 
 /obj/item/weapon/gun/AltClick(mob/user)
