@@ -57,7 +57,6 @@
 	icon_state = "pulse_pistol"
 	item_state = "gun"
 	cell_type = "/obj/item/weapon/stock_parts/cell/pulse/pistol"
-	can_charge = 0
 
 /obj/item/weapon/gun/energy/pulse/pistol/loyalpin
 	pin = /obj/item/device/firing_pin/implant/mindshield
