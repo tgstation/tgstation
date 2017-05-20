@@ -112,7 +112,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	radio = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	helmet = /obj/item/clothing/head/helmet/swat/nanotrasen
+	helmet = /obj/item/clothing/head/helmet
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
 	id_job = "Private Security Force"

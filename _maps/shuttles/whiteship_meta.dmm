@@ -1041,8 +1041,8 @@
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/suit/armor/vest,
 /obj/structure/table,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet,
+/obj/item/clothing/head/helmet,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bQ" = (
