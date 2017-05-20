@@ -176,6 +176,8 @@
 	var/fieldlimit = 3
 	var/list/fields = list()
 	var/quick_burst_mod = 3
+	var/mob_burst_speed = 1
+	var/turf_burst_speed = 2
 	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/examine(mob/user)
@@ -209,8 +211,8 @@
 		else
 			user.changeNext_move(CLICK_CD_RANGE)
 
-/obj/item/weapon/resonator/pre_attackby(atom/target, mob/living/user, params)
-	if(!istype(target, /obj/item/weapon/storage) && isturf(target.loc))
+/obj/item/weapon/resonator/pre_attackby(atom/target, mob/user, params)
+	if(check_allowed_items(target, 1))
 		CreateResonance(target, user)
 	return TRUE
 
@@ -222,6 +224,8 @@
 	duration = 50
 	var/resonance_damage = 5
 	var/damage_multiplier = 1
+	var/mob_burst_speed = 1
+	var/turf_burst_speed = 2
 	var/creator
 	var/obj/item/weapon/resonator/res
 	var/was_crossed = FALSE
@@ -233,15 +237,17 @@
 	res = set_resonator
 	if(res)
 		res.fields += src
+		mob_burst_speed = res.mob_burst_speed
+		turf_burst_speed = res.turf_burst_speed
 	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
 	transform = matrix()*0.75
 	deltimer(timerid)
 	timerid = addtimer(CALLBACK(src, .proc/burst), duration, TIMER_STOPPABLE)
 	for(var/mob/living/L in loc) //mob here, expand!
-		INVOKE_ASYNC(src, .proc/crossed_burst, 10)
+		INVOKE_ASYNC(src, .proc/crossed_burst, mob_burst_speed)
 		return
 	if(ismineralturf(loc)) //mineral turf, expand!
-		INVOKE_ASYNC(src, .proc/crossed_burst, 20)
+		INVOKE_ASYNC(src, .proc/crossed_burst, turf_burst_speed)
 
 /obj/effect/temp_visual/resonance/Destroy()
 	if(res)
@@ -268,7 +274,7 @@
 /obj/effect/temp_visual/resonance/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM) && !was_crossed && !is_bursting)
-		crossed_burst(10)
+		crossed_burst(mob_burst_speed)
 
 /obj/effect/temp_visual/resonance/proc/crossed_burst(delay_til_burst = 15)
 	was_crossed = TRUE
