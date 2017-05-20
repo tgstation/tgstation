@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "When a shuttle is called, sometimes an on-call admiral, using
-available information to them, will recall the shuttle from Centcom."
