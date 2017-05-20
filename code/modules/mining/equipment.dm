@@ -522,11 +522,17 @@
 	flag = "bomb"
 	range = 6
 	log_override = TRUE
+	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+
+/obj/item/projectile/destabilizer/Destroy()
+	hammer_synced = null
+	return ..()
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
 	if(isliving(target))
 		var/mob/living/L = target
-		L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		CM.hammer_synced = hammer_synced
 	var/target_turf = get_turf(target)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
@@ -541,6 +547,7 @@
 			return
 		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(proj_turf)
 		D.preparePixelProjectile(target, get_turf(target), user)
+		D.hammer_synced = src
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 		D.fire()
 		charged = FALSE
@@ -549,7 +556,8 @@
 		return
 	if(proximity_flag && isliving(target))
 		var/mob/living/L = target
-		if(!L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
+		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
 			return
 		new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 		var/backstab_dir = get_dir(user, L)
