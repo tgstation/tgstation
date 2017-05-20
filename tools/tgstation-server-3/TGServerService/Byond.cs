@@ -95,41 +95,48 @@ namespace TGServerService
 		//public api
 		public string GetVersion(TGByondVersion type)
 		{
-			lock (ByondLock)
+			try
 			{
-				if (type == TGByondVersion.Latest)
+				lock (ByondLock)
 				{
-					//get the latest version from the website
-					HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ByondLatestURL);
-					var results = new List<string>();
-					using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+					if (type == TGByondVersion.Latest)
 					{
-						using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+						//get the latest version from the website
+						HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ByondLatestURL);
+						var results = new List<string>();
+						using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
 						{
-							string html = reader.ReadToEnd();
+							using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+							{
+								string html = reader.ReadToEnd();
 
-							Regex regex = new Regex("\\\"([^\"]*)\\\"");
-							MatchCollection matches = regex.Matches(html);
-							foreach (Match match in matches)
-								if (match.Success && match.Value.Contains("_byond.exe"))
-									results.Add(match.Value.Replace("\"", "").Replace("_byond.exe", ""));
+								Regex regex = new Regex("\\\"([^\"]*)\\\"");
+								MatchCollection matches = regex.Matches(html);
+								foreach (Match match in matches)
+									if (match.Success && match.Value.Contains("_byond.exe"))
+										results.Add(match.Value.Replace("\"", "").Replace("_byond.exe", ""));
+							}
+						}
+						results.Sort();
+						results.Reverse();
+						return results.Count > 0 ? results[0] : null;
+					}
+					else
+					{
+						string DirToUse = type == TGByondVersion.Staged ? StagingDirectoryInner : ByondDirectory;
+						if (Directory.Exists(DirToUse))
+						{
+							string file = DirToUse + VersionFile;
+							if (File.Exists(file))
+								return File.ReadAllText(file);
 						}
 					}
-					results.Sort();
-					results.Reverse();
-					return results.Count > 0 ? results[0] : null;
+					return null;
 				}
-				else
-				{
-					string DirToUse = type == TGByondVersion.Staged ? StagingDirectoryInner : ByondDirectory;
-					if (Directory.Exists(DirToUse))
-					{
-						string file = DirToUse + VersionFile;
-						if (File.Exists(file))
-							return File.ReadAllText(file);
-					}
-				}
-				return null;
+			}
+			catch (Exception e)
+			{
+				return "Error: " + e.ToString();
 			}
 		}
 
