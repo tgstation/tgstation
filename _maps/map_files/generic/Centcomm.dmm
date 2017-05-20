@@ -12212,7 +12212,7 @@
 	name = "Thunderdome Blast Door"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -12243,7 +12243,7 @@
 	name = "General Supply"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -12394,7 +12394,7 @@
 /area/tdome/arena)
 "Ey" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -13716,7 +13716,7 @@
 /area/tdome/arena_source)
 "IS" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena_source)
@@ -13765,7 +13765,7 @@
 /area/tdome/arena_source)
 "Jd" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena_source)
