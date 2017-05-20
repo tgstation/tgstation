@@ -55,7 +55,7 @@
 
 
 /mob/living/simple_animal/hostile/Initialize()
-	..()
+	. = ..()
 
 	if(!targets_from)
 		targets_from = src

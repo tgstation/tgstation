@@ -362,8 +362,6 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_eat(src, eater)
 	if(!override)
-		if(prob(10))
-			eater.say("Nom")
 		qdel(src)
 
 /obj/structure/spacevine/attackby(obj/item/weapon/W, mob/user, params)
@@ -446,7 +444,7 @@
 /datum/spacevine_controller/Topic(href, href_list)
 	if(..() || !check_rights(R_ADMIN, FALSE))
 		return
-	
+
 	if(href_list["purge_vines"])
 		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
 			return
@@ -478,6 +476,7 @@
 
 	for(var/datum/spacevine_mutation/SM in SV.mutations)
 		SM.on_birth(SV)
+	location.Entered(SV)
 
 /datum/spacevine_controller/proc/VineDestroyed(obj/structure/spacevine/S)
 	S.master = null

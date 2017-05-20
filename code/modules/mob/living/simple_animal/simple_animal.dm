@@ -86,7 +86,7 @@
 	var/tame = 0
 
 /mob/living/simple_animal/Initialize()
-	..()
+	. = ..()
 	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
@@ -249,7 +249,7 @@
 
 /mob/living/simple_animal/gib_animation()
 	if(icon_gib)
-		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
+		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
 /mob/living/simple_animal/say_mod(input, message_mode)
 	if(speak_emote && speak_emote.len)

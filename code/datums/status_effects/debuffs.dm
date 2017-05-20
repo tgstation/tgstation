@@ -162,3 +162,35 @@
 				owner.confused = min(owner.confused + round(severity * 0.025, 1), 25) //2.5% of severity per second above 20 severity
 			owner.adjustToxLoss(severity * 0.02, TRUE, TRUE) //2% of severity per second
 		severity--
+
+/datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
+	id = "cult_ghost"
+	duration = -1
+	alert_type = null
+
+/datum/status_effect/crusher_mark
+	id = "crusher_mark"
+	duration = 300 //if you leave for 30 seconds you lose the mark, deal with it
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	var/mutable_appearance/marked_underlay
+	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+
+/datum/status_effect/crusher_mark/on_apply()
+	if(owner.mob_size >= MOB_SIZE_LARGE)
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+		marked_underlay.pixel_x = -owner.pixel_x
+		marked_underlay.pixel_y = -owner.pixel_y
+		owner.underlays += marked_underlay
+	return FALSE
+
+/datum/status_effect/crusher_mark/Destroy()
+	hammer_synced = null
+	if(owner)
+		owner.underlays -= marked_underlay
+	QDEL_NULL(marked_underlay)
+	return ..()
+
+/datum/status_effect/crusher_mark/be_replaced()
+	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
+	..()

@@ -444,7 +444,7 @@ Auto Patrol[]"},
 	if(severity==2 && prob(70))
 		..(severity-1)
 	else
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
 			if(C.stat==2)

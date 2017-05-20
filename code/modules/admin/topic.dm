@@ -281,6 +281,11 @@
 		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 		href_list["secrets"] = "check_antagonist"
+	else if(href_list["trigger_centcom_recall"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		trigger_centcom_recall()
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
@@ -1206,7 +1211,7 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 		Game() // updates the main game menu
-		world.save_mode(GLOB.master_mode)
+		SSticker.save_mode(GLOB.master_mode)
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])

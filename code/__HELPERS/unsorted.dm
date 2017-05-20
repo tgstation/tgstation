@@ -1399,3 +1399,41 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 
 /proc/pass()
 	return
+
+/proc/get_mob_or_brainmob(occupant)
+	var/mob/living/mob_occupant
+
+	if(isliving(occupant))
+		mob_occupant = occupant
+
+	else if(isbodypart(occupant))
+		var/obj/item/bodypart/head/head = occupant
+
+		mob_occupant = head.brainmob
+
+	else if(isorgan(occupant))
+		var/obj/item/organ/brain/brain = occupant
+		mob_occupant = brain.brainmob
+
+	return mob_occupant
+
+/proc/msglog_admins(text)
+	message_admins(text)
+	log_admin(text)
+
+/proc/trigger_centcom_recall()
+	if(SSshuttle.emergency.mode != SHUTTLE_CALL)
+		return
+
+	var/time = rand(600, 1200)
+	var/message = pick(GLOB.annoyed_admiral_messages)
+
+	message = input("Enter message from the on-call admiral to be put in the recall report.", "Annoyed Admiral Message", message) as text|null
+
+	if(!message)
+		return
+
+	message_admins("[key_name_admin(usr)] triggered a Centcom recall in [time/10] seconds, with the annoyed admiral message of: [message]")
+	log_game("[key_name(usr)] triggered a Centcom recall in [time/10] seconds, with the annoyed admiral message of: [message]")
+
+	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle/.proc/centcom_recall, SSshuttle.emergency.timer, message), time)

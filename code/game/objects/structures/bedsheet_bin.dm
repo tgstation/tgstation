@@ -106,6 +106,11 @@ LINEN BINS
 	icon_state = "sheetrd"
 	item_color = "director"
 
+// for Free Golems.
+/obj/item/weapon/bedsheet/rd/royal_cape
+	name = "Royal Cape of the Liberator"
+	desc = "Majestic."
+
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"
 	desc = "It's a sterilized* blanket commonly used in the Medbay.  *Sterilization is voided if a virologist is present onboard the station."
