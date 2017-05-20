@@ -552,17 +552,22 @@
 		deactivate_field()
 		active = FALSE
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] the [src].</span>")
+
+/obj/item/borg/projectile_dampen/update_icon()
+	. = ..()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
 	if(!istype(dampening_field))
 		dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
+	update_icon()
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
 	visible_message("<span class='warning'>The [src] shuts off!</span>")
 	for(var/obj/item/projectile/P in tracked)
 		restore_projectile(P)
+	update_icon()
 
 /obj/item/borg/projectile_dampen/dropped()
 	. = ..()
