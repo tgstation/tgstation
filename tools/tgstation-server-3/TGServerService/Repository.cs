@@ -24,6 +24,7 @@ namespace TGServerService
 
 		object RepoLock = new object();
 		bool RepoBusy = false;
+		bool Cloning = false;
 
 		Repository Repo;
 		int currentProgress = -1;
@@ -76,7 +77,7 @@ namespace TGServerService
 		{
 			lock (RepoLock)
 			{
-				return Repository.IsValid(RepoPath);
+				return !Cloning && Repository.IsValid(RepoPath);
 			}
 		}
 
@@ -159,6 +160,7 @@ namespace TGServerService
 				lock (RepoLock)
 				{
 					RepoBusy = false;
+					Cloning = false;
 				}
 			}
 		}
@@ -176,6 +178,7 @@ namespace TGServerService
 				if (DaemonStatus() != TGDreamDaemonStatus.Offline)
 					return false;
 				RepoBusy = true;
+				Cloning = true;
 				new Thread(new ParameterizedThreadStart(Clone))
 				{
 					IsBackground = true //make sure we don't hold up shutdown
