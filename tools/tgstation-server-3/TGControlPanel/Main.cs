@@ -15,7 +15,7 @@ namespace TGControlPanel
 			InitBYONDPage();
 			InitServerPage();
 			LoadChatPage();
-			LoadConfig();
+			InitConfigPage();
 		}
 
 		private void Main_Resize(object sender, EventArgs e)

@@ -34,12 +34,6 @@ namespace TGControlPanel
 			}
 		}
 
-		public static void MessageBoxIfInitialized(string msg)
-		{
-			if (Server.GetComponent<ITGRepository>().Exists())
-				MessageBox.Show(msg);
-		}
-
 		public static string TextPrompt(string caption, string text)
 		{
 			Form prompt = new Form()

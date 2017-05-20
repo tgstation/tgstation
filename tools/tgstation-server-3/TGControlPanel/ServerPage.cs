@@ -28,7 +28,21 @@ namespace TGControlPanel
 			WorldStatusChecker.RunWorkerCompleted += WorldStatusChecker_RunWorkerCompleted;
 			FullUpdateWorker.RunWorkerCompleted += FullUpdateWorker_RunWorkerCompleted;
 			ServerPathTextbox.LostFocus += ServerPathTextbox_LostFocus;
+			ServerPathTextbox.KeyDown += ServerPathTextbox_KeyDown;
 			projectNameText.LostFocus += ProjectNameText_LostFocus;
+			projectNameText.KeyDown += ProjectNameText_KeyDown;
+		}
+
+		private void ProjectNameText_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+				UpdateProjectName();
+		}
+
+		private void ServerPathTextbox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+				UpdateServerPath();
 		}
 
 		private void FullUpdateWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -60,39 +74,84 @@ namespace TGControlPanel
 
 		private void ServerPathTextbox_LostFocus(object sender, EventArgs e)
 		{
-			if (updatingFields)
+			UpdateServerPath();
+		}
+
+		void UpdateServerPath()
+		{
+			var Config = Server.GetComponent<ITGConfig>();
+			if (updatingFields || ServerPathTextbox.Text.Trim() == Config.ServerDirectory())
 				return;
 			var DialogResult = MessageBox.Show("This will move the entire server installation.", "Confim", MessageBoxButtons.YesNo);
 			if (DialogResult != DialogResult.Yes)
 				return;
-			MessageBox.Show(Server.GetComponent<ITGConfig>().MoveServer(ServerPathTextbox.Text) ?? "Success!");
+			MessageBox.Show(Config.MoveServer(ServerPathTextbox.Text) ?? "Success!");
 		}
 
 		void LoadServerPage()
 		{
+			var RepoExists = Server.GetComponent<ITGRepository>().Exists();
+			compileButton.Visible = RepoExists;
+			initializeButton.Visible = RepoExists;
+			NudgePortSelector.Visible = RepoExists;
+			AutostartCheckbox.Visible = RepoExists;
+			PortSelector.Visible = RepoExists;
+			projectNameText.Visible = RepoExists;
+			compilerProgressBar.Visible = RepoExists;
+			CompilerStatusLabel.Visible = RepoExists;
+			CompileCancelButton.Visible = RepoExists;
+			NudgePortLabel.Visible = RepoExists;
+			CompilerLabel.Visible = RepoExists;
+			ProjectPathLabel.Visible = RepoExists;
+			ServerPRLabel.Visible = RepoExists;
+			ServerGStopButton.Visible = RepoExists;
+			ServerStartButton.Visible = RepoExists;
+			ServerGRestartButton.Visible = RepoExists;
+			ServerRestartButton.Visible = RepoExists;
+			PortLabel.Visible = RepoExists;
+			ServerStopButton.Visible = RepoExists;
+			TestmergeButton.Visible = RepoExists;
+			ServerTestmergeInput.Visible = RepoExists;
+			UpdateHardButton.Visible = RepoExists;
+			UpdateMergeButton.Visible = RepoExists;
+			UpdateTestmergeButton.Visible = RepoExists;
+
 			var DM = Server.GetComponent<ITGCompiler>();
 			var DD = Server.GetComponent<ITGDreamDaemon>();
 			var Config = Server.GetComponent<ITGConfig>();
+
 			if (updatingFields)
 				return;
+
 			updatingFields = true;
-			AutostartCheckbox.Checked = DD.Autostart();
-			if(!PortSelector.Focused)
-				PortSelector.Value = DD.Port();
-			if(!projectNameText.Focused)
-				projectNameText.Text = DM.ProjectName();
-			if(!ServerPathTextbox.Focused)
+
+			if (!ServerPathTextbox.Focused)
 				ServerPathTextbox.Text = Config.ServerDirectory();
+
+			if (!RepoExists)
+			{
+				updatingFields = false;
+				return;
+			}
+
+			AutostartCheckbox.Checked = DD.Autostart();
+			if (!PortSelector.Focused)
+				PortSelector.Value = DD.Port();
+			if (!projectNameText.Focused)
+				projectNameText.Text = DM.ProjectName();
+
 			var val = Config.NudgePort(out string error);
 			if (error != null)
 			{
-				Program.MessageBoxIfInitialized("Error: " + error);
-				val = 1;
+				updatingFields = false;
+				MessageBox.Show("Error (I will try and recover): " + error);
+				NudgePortSelector.Value = 4567;
 			}
-			NudgePortSelector.Value = val;
-			updatingFields = false;
-
-			initializeButton.Enabled = Server.GetComponent<ITGRepository>().Exists();
+			else
+			{
+				updatingFields = false;
+				NudgePortSelector.Value = val;
+			}
 
 			switch (DM.GetStatus())
 			{
@@ -142,6 +201,11 @@ namespace TGControlPanel
 			LoadServerPage();
 		}
 		private void ProjectNameText_LostFocus(object sender, EventArgs e)
+		{
+			UpdateProjectName();
+		}
+
+		void UpdateProjectName()
 		{
 			if (!updatingFields)
 				Server.GetComponent<ITGCompiler>().SetProjectName(projectNameText.Text);
@@ -200,7 +264,10 @@ namespace TGControlPanel
 		//because of lol byond this can take some time...
 		private void WorldStatusChecker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
 		{
-			DDStatusString = Server.GetComponent<ITGDreamDaemon>().StatusString();
+			if (!Server.GetComponent<ITGRepository>().Exists())
+				DDStatusString = "NOT INSTALLED";
+			else
+				DDStatusString = Server.GetComponent<ITGDreamDaemon>().StatusString();
 		}
 
 		private void WorldStatusTimer_Tick(object sender, System.EventArgs e)

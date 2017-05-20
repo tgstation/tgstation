@@ -43,39 +43,51 @@ namespace TGControlPanel
 		{
 			flow.MaximumSize = new Size(parent.Width - 90, 9999999);
 		}
-		void LoadConfig()
+		void InitConfigPage()
 		{
-			ConfigConfigFlow = CreateFLP(ConfigConfigPanel);
-			GeneralChangelist = new List<ConfigSetting>();
-			LoadGenericConfig(TGConfigType.General);
-
-			DatabaseConfigFlow = CreateFLP(DatabaseConfigPanel);
-			DatabaseChangelist = new List<ConfigSetting>();
-			LoadGenericConfig(TGConfigType.Database);
-
-			GameConfigFlow = CreateFLP(GameConfigPanel);
-			GameChangelist = new List<ConfigSetting>();
-			LoadGenericConfig(TGConfigType.Game);
-
-			JobsConfigFlow = CreateFLP(JobsConfigPanel);
-			JobsChangelist = new List<JobSetting>();
-			LoadJobsConfig();
-
-			MapsConfigFlow = CreateFLP(MapsConfigPanel);
-			MapsChangelist = new List<MapSetting>();
-			LoadMapsConfig();
-
-			AdminRanksListBox.SelectedIndexChanged += AdminRanksListBox_SelectedIndexChanged;
-			PermissionsListBox.ItemCheck += AdjustCurrentRankPermissions;
-			NegativePermissions.ItemCheck += AdjustCurrentRankPermissions;
-
-			LoadAdminsConfig();
-
 			ConfigPanels.SelectedIndex = Properties.Settings.Default.LastConfigPageIndex;
 			ConfigApply.Enabled = (ConfigIndex)ConfigPanels.SelectedIndex != ConfigIndex.Admins;
 			ConfigPanels.SelectedIndexChanged += ConfigPanels_SelectedIndexChanged;
 
 			Resize += ReadjustFlow;
+
+			ConfigConfigFlow = CreateFLP(ConfigConfigPanel);
+			GeneralChangelist = new List<ConfigSetting>();
+
+			DatabaseConfigFlow = CreateFLP(DatabaseConfigPanel);
+			DatabaseChangelist = new List<ConfigSetting>();
+
+			GameConfigFlow = CreateFLP(GameConfigPanel);
+			GameChangelist = new List<ConfigSetting>();
+
+			JobsConfigFlow = CreateFLP(JobsConfigPanel);
+			JobsChangelist = new List<JobSetting>();
+
+			MapsConfigFlow = CreateFLP(MapsConfigPanel);
+			MapsChangelist = new List<MapSetting>();
+
+			AdminRanksListBox.SelectedIndexChanged += AdminRanksListBox_SelectedIndexChanged;
+			PermissionsListBox.ItemCheck += AdjustCurrentRankPermissions;
+			NegativePermissions.ItemCheck += AdjustCurrentRankPermissions;
+
+			LoadConfig();
+		}
+		void LoadConfig()
+		{
+			var RepoReady = Server.GetComponent<ITGRepository>().Exists();
+			ConfigPanels.Visible = RepoReady;
+			ConfigApply.Visible = RepoReady;
+			ConfigDownload.Visible = RepoReady;
+			ConfigDownloadRepo.Visible = RepoReady;
+			ConfigUpload.Visible = RepoReady;
+			if (!RepoReady)
+				return;
+			LoadGenericConfig(TGConfigType.General);
+			LoadGenericConfig(TGConfigType.Database);
+			LoadGenericConfig(TGConfigType.Game);
+			LoadJobsConfig();
+			LoadMapsConfig();
+			LoadAdminsConfig();
 		}
 
 		private void RemoveRankButton_Click(object sender, EventArgs e)
@@ -259,6 +271,9 @@ namespace TGControlPanel
 
 		public void RefreshCurrentPage()
 		{
+			if (!ConfigPanels.Visible)
+				LoadConfig();
+
 			switch ((ConfigIndex)ConfigPanels.SelectedIndex)
 			{
 				case ConfigIndex.Config:
@@ -287,7 +302,7 @@ namespace TGControlPanel
 			var ranks = Server.GetComponent<ITGConfig>().AdminRanks(out string error);
 			AdminRanksListBox.Items.Clear();
 			if (ranks == null)
-				Program.MessageBoxIfInitialized("Error: " + error);
+				MessageBox.Show("Error: " + error);
 			else
 				foreach (var I in ranks)
 					AdminRanksListBox.Items.Add(I.Key);
@@ -305,7 +320,7 @@ namespace TGControlPanel
 			var admins = Server.GetComponent<ITGConfig>().Admins(out string error);
 			AdminsListBox.Items.Clear();
 			if (admins == null)
-				Program.MessageBoxIfInitialized("Error: " + error);
+				MessageBox.Show("Error: " + error);
 			else
 				foreach (var I in admins)
 					AdminsListBox.Items.Add(String.Format("{0} ({1})", I.Key, I.Value));
@@ -322,7 +337,7 @@ namespace TGControlPanel
 			var perms = Server.GetComponent<ITGConfig>().ListPermissions(out string error);
 			PermissionsListBox.Items.Clear();
 			if (perms == null)
-				Program.MessageBoxIfInitialized("Error: " + error);
+				MessageBox.Show("Error: " + error);
 			else
 				foreach (var I in perms)
 				{

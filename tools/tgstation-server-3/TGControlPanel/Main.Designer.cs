@@ -84,7 +84,7 @@
             this.projectNameText = new System.Windows.Forms.TextBox();
             this.PortLabel = new System.Windows.Forms.Label();
             this.PortSelector = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ServerPRLabel = new System.Windows.Forms.Label();
             this.ServerTestmergeInput = new System.Windows.Forms.NumericUpDown();
             this.TestmergeButton = new System.Windows.Forms.Button();
             this.UpdateTestmergeButton = new System.Windows.Forms.Button();
@@ -158,6 +158,7 @@
             this.AddminButton = new System.Windows.Forms.Button();
             this.AdminsListBox = new System.Windows.Forms.ListBox();
             this.AdminsTitle = new System.Windows.Forms.Label();
+            this.ConfigDisabledLabel = new System.Windows.Forms.Label();
             this.RepoBGW = new System.ComponentModel.BackgroundWorker();
             this.BYONDTimer = new System.Windows.Forms.Timer(this.components);
             this.ServerTimer = new System.Windows.Forms.Timer(this.components);
@@ -769,7 +770,7 @@
             this.ServerPanel.Controls.Add(this.projectNameText);
             this.ServerPanel.Controls.Add(this.PortLabel);
             this.ServerPanel.Controls.Add(this.PortSelector);
-            this.ServerPanel.Controls.Add(this.label1);
+            this.ServerPanel.Controls.Add(this.ServerPRLabel);
             this.ServerPanel.Controls.Add(this.ServerTestmergeInput);
             this.ServerPanel.Controls.Add(this.TestmergeButton);
             this.ServerPanel.Controls.Add(this.UpdateTestmergeButton);
@@ -922,18 +923,18 @@
             0});
             this.PortSelector.ValueChanged += new System.EventHandler(this.PortSelector_ValueChanged);
             // 
-            // label1
+            // ServerPRLabel
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.label1.Location = new System.Drawing.Point(734, 102);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 18);
-            this.label1.TabIndex = 26;
-            this.label1.Text = "PR#:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ServerPRLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ServerPRLabel.AutoSize = true;
+            this.ServerPRLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerPRLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ServerPRLabel.Location = new System.Drawing.Point(734, 102);
+            this.ServerPRLabel.Name = "ServerPRLabel";
+            this.ServerPRLabel.Size = new System.Drawing.Size(49, 18);
+            this.ServerPRLabel.TabIndex = 26;
+            this.ServerPRLabel.Text = "PR#:";
+            this.ServerPRLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ServerTestmergeInput
             // 
@@ -1475,6 +1476,7 @@
             this.ConfigPanel.Controls.Add(this.ConfigRefresh);
             this.ConfigPanel.Controls.Add(this.ConfigApply);
             this.ConfigPanel.Controls.Add(this.ConfigPanels);
+            this.ConfigPanel.Controls.Add(this.ConfigDisabledLabel);
             this.ConfigPanel.Location = new System.Drawing.Point(4, 22);
             this.ConfigPanel.Name = "ConfigPanel";
             this.ConfigPanel.Padding = new System.Windows.Forms.Padding(3);
@@ -1780,6 +1782,21 @@
             this.AdminsTitle.Text = "Admins:";
             this.AdminsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // ConfigDisabledLabel
+            // 
+            this.ConfigDisabledLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ConfigDisabledLabel.AutoSize = true;
+            this.ConfigDisabledLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConfigDisabledLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.ConfigDisabledLabel.Location = new System.Drawing.Point(225, 160);
+            this.ConfigDisabledLabel.Name = "ConfigDisabledLabel";
+            this.ConfigDisabledLabel.Size = new System.Drawing.Size(428, 18);
+            this.ConfigDisabledLabel.TabIndex = 14;
+            this.ConfigDisabledLabel.Text = "Configuration is disabled until repository is set up!";
+            this.ConfigDisabledLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // RepoBGW
             // 
             this.RepoBGW.WorkerReportsProgress = true;
@@ -1840,6 +1857,7 @@
             this.ChatProviderSelectorPanel.ResumeLayout(false);
             this.ChatProviderSelectorPanel.PerformLayout();
             this.ConfigPanel.ResumeLayout(false);
+            this.ConfigPanel.PerformLayout();
             this.ConfigPanels.ResumeLayout(false);
             this.AdminsPanel.ResumeLayout(false);
             this.AdminsPanel.PerformLayout();
@@ -1904,7 +1922,7 @@
 		private System.Windows.Forms.Button ServerRestartButton;
 		private System.Windows.Forms.Button ServerStopButton;
 		private System.Windows.Forms.Button ServerStartButton;
-		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label ServerPRLabel;
 		private System.Windows.Forms.NumericUpDown ServerTestmergeInput;
 		private System.Windows.Forms.Button TestmergeButton;
 		private System.Windows.Forms.Button UpdateTestmergeButton;
@@ -1982,6 +2000,7 @@
 		private System.Windows.Forms.Label PermissionsTItle;
 		private System.Windows.Forms.CheckedListBox NegativePermissions;
 		private System.Windows.Forms.Label NegativePermissionsTitle;
+		private System.Windows.Forms.Label ConfigDisabledLabel;
 	}
 }
 
