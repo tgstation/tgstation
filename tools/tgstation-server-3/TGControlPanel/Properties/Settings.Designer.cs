@@ -46,5 +46,17 @@ namespace TGControlPanel.Properties {
                 this["LastConfigPageIndex"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UpdatesGenerateChangelogs {
+            get {
+                return ((bool)(this["UpdatesGenerateChangelogs"]));
+            }
+            set {
+                this["UpdatesGenerateChangelogs"] = value;
+            }
+        }
     }
 }

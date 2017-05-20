@@ -75,6 +75,7 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
+            this.GenCLCheckbox = new System.Windows.Forms.CheckBox();
             this.NudgePortSelector = new System.Windows.Forms.NumericUpDown();
             this.NudgePortLabel = new System.Windows.Forms.Label();
             this.ServerPathLabel = new System.Windows.Forms.Label();
@@ -761,6 +762,7 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ServerPanel.Controls.Add(this.GenCLCheckbox);
             this.ServerPanel.Controls.Add(this.NudgePortSelector);
             this.ServerPanel.Controls.Add(this.NudgePortLabel);
             this.ServerPanel.Controls.Add(this.ServerPathLabel);
@@ -795,6 +797,19 @@
             this.ServerPanel.Size = new System.Drawing.Size(868, 366);
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
+            // 
+            // GenCLCheckbox
+            // 
+            this.GenCLCheckbox.AutoSize = true;
+            this.GenCLCheckbox.Font = new System.Drawing.Font("Verdana", 12F);
+            this.GenCLCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.GenCLCheckbox.Location = new System.Drawing.Point(299, 129);
+            this.GenCLCheckbox.Name = "GenCLCheckbox";
+            this.GenCLCheckbox.Size = new System.Drawing.Size(272, 22);
+            this.GenCLCheckbox.TabIndex = 36;
+            this.GenCLCheckbox.Text = "Commit and Push Changelogs";
+            this.GenCLCheckbox.UseVisualStyleBackColor = true;
+            this.GenCLCheckbox.CheckedChanged += new System.EventHandler(this.GenCLCheckbox_CheckedChanged);
             // 
             // NudgePortSelector
             // 
@@ -1067,9 +1082,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CompilerStatusLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CompilerStatusLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.CompilerStatusLabel.Location = new System.Drawing.Point(360, 271);
+            this.CompilerStatusLabel.Location = new System.Drawing.Point(110, 271);
             this.CompilerStatusLabel.Name = "CompilerStatusLabel";
-            this.CompilerStatusLabel.Size = new System.Drawing.Size(122, 28);
+            this.CompilerStatusLabel.Size = new System.Drawing.Size(618, 28);
             this.CompilerStatusLabel.TabIndex = 14;
             this.CompilerStatusLabel.Text = "Idle";
             this.CompilerStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2001,6 +2016,7 @@
 		private System.Windows.Forms.CheckedListBox NegativePermissions;
 		private System.Windows.Forms.Label NegativePermissionsTitle;
 		private System.Windows.Forms.Label ConfigDisabledLabel;
+		private System.Windows.Forms.CheckBox GenCLCheckbox;
 	}
 }
 

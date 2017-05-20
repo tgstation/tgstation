@@ -6,7 +6,7 @@
       <Value Profile="(Default)">tgstation</Value>
     </Setting>
     <Setting Name="ServerPort" Type="System.UInt16" Scope="User">
-      <Value Profile="(Default)">2337</Value>
+      <Value Profile="(Default)">1337</Value>
     </Setting>
     <Setting Name="PushChangelogToGit" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

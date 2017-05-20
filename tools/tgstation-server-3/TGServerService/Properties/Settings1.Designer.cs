@@ -37,7 +37,7 @@ namespace TGServerService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2337")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1337")]
         public ushort ServerPort {
             get {
                 return ((ushort)(this["ServerPort"]));
