@@ -16,7 +16,7 @@
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
-	can_knife = TRUE
+	can_bayonet = TRUE
 	knife_x_offset = 15
 	knife_y_offset = 11
 

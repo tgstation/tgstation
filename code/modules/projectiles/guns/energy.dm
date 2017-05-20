@@ -139,16 +139,18 @@
 		else
 			add_overlay("[icon_state]_charge[ratio]")
 	if(gun_light && can_flashlight)
-		var/iconF = "flight"
-		if(gun_light.on)
-			iconF = "flight_on"
-		var/mutable_appearance/flashlight_overlay = mutable_appearance(icon, iconF)
+		var/icon_state = "flight[gun_light.on? "_on":""]"	//Generic state.
+		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
+			icon_state = gun_light.icon_state
+		var/mutable_appearance/flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', icon_state)
 		flashlight_overlay.pixel_x = flight_x_offset
 		flashlight_overlay.pixel_y = flight_y_offset
 		add_overlay(flashlight_overlay)
-	if(bayonet && can_knife)
-		var/iconK = "bayonet"
-		var/mutable_appearance/knife_overlay = mutable_appearance(icon, iconK)
+	if(bayonet && can_bayonet)
+		var/icon_state = "bayonet"							//Generic state.
+		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
+			icon_state = bayonet.icon_state
+		var/mutable_appearance/knife_overlay = mutable_appearance('icons/obj/guns/bayonets.dmi', icon_state)
 		knife_overlay.pixel_x = knife_x_offset
 		knife_overlay.pixel_y = knife_y_offset
 		add_overlay(knife_overlay)
