@@ -320,6 +320,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/exit
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
+	
+/area/hallway/secondary/exit/departure_lounge
+	name = "Departure Lounge"
+	icon_state = "escape"
 
 /area/hallway/secondary/bridges/cargo_ai
 	name = "Cargo-AI-Command Bridge"
@@ -357,6 +361,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Service-Science Bridge"
 	icon_state = "yellow"
 	
+/area/hallway/secondary/command
+	name = "Command Hallway"
+	icon_state = "bridge"
+	
 /area/hallway/secondary/construction
 	name = "Construction Area"
 	icon_state = "construction"
@@ -364,6 +372,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
 	icon_state = "entry"
+	
+/area/hallway/secondary/service
+	name = "Service Hallway"
+	icon_state = "Sleep"
 
 //Command
 
@@ -377,6 +389,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "meeting"
 	music = null
 
+/area/bridge/meeting_room/council
+	name = "Council Chamber"
+	icon_state = "meeting"
+	music = null
+	
+/area/bridge/showroom/corporate
+	name = "Corporate Showroom"
+	icon_state = "showroom"
+	music = null
+	
 /area/crew_quarters/captain
 	name = "Captain's Office"
 	icon_state = "captain"
@@ -431,6 +453,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
+	
+/area/crew_quarters/toilet/auxiliary
+	name = "Auxiliary Restrooms"
+	icon_state = "toilet"
+	
+		
+/area/crew_quarters/toilet/restrooms
+	name = "Restrooms"
+	icon_state = "toilet"
 
 /area/crew_quarters/sleep
 	name = "Dormitories"
@@ -463,6 +494,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
+	
+/area/crew_quarters/fitness/recreation
+	name = "Recreation Area"
+	icon_state = "fitness"
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
@@ -490,6 +525,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/crew_quarters/theatre
 	name = "Theatre"
+	icon_state = "Theatre"
+	
+/area/crew_quarters/theatre/abandoned
+	name = "Abandoned Theatre"
 	icon_state = "Theatre"
 
 /area/library
@@ -531,6 +570,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engineering"
 	icon_state = "engine"
 
+/area/engine/atmospherics_engine
+	name = "Atmospherics Engine"
+	icon_state = "blue"
+	
 /area/engine/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine"
@@ -539,13 +582,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chief Engineer's office"
 	icon_state = "engine_control"
 
-/area/engine/secure_construction
-	name = "Secure Construction Area"
-	icon_state = "engine"
-
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "blue"
+	
+/area/engine/secure_construction
+	name = "Secure Construction Area"
+	icon_state = "engine"
+	
+/area/engine/storage
+	name = "Engineering Storage"
+	icon_state = "engine"
+
+/area/engine/transit_tube
+	name = "Transit Tube"
+	icon_state = "engine"
+	
 
 //Solars
 
@@ -784,7 +836,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Transfer Centre"
 	icon_state = "armory"
 
-
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
@@ -816,6 +867,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/checkpoint/science
 	name = "Security Post - Science"
 	icon_state = "checkpoint1"
+	
+/area/security/checkpoint/science/research
+	name = "Security Post - Research Division"
+	icon_state = "checkpoint1"	
+	
+/area/security/checkpoint/customs
+	name = "Customs"
+	icon_state = "bridge"
 
 /area/security/vacantoffice
 	name = "Vacant Office"
@@ -920,7 +979,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/toxins/misc_lab
 	name = "Testing Lab"
 	icon_state = "toxmisc"
-
+	
+/area/toxins/misc_lab/range
+	name = "Research Testing Range"
+	icon_state = "toxmisc"
+	
 /area/toxins/server
 	name = "Research Division Server Room"
 	icon_state = "server"
