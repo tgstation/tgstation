@@ -184,11 +184,15 @@ namespace TGServerService
 					if (!Monitor.TryEnter(RepoLock))
 						repobusy_check = true;
 
-					if (!repobusy_check && RepoBusy)
+					if (!repobusy_check)
 					{
-						repobusy_check = true;
+						if (RepoBusy)
+							repobusy_check = true;
+						else
+							RepoBusy = true;
 						Monitor.Exit(RepoLock);
 					}
+					
 					if (repobusy_check)
 						lock (CompilerLock)
 						{
@@ -205,7 +209,10 @@ namespace TGServerService
 					}
 					finally
 					{
-						Monitor.Exit(RepoLock);
+						lock (RepoLock)
+						{
+							RepoBusy = false;
+						}
 					}
 
 					Program.CopyDirectory(GameDirA, GameDirB);
@@ -336,11 +343,15 @@ namespace TGServerService
 				if (!Monitor.TryEnter(RepoLock))
 					repobusy_check = true;
 
-				if (!repobusy_check && RepoBusy)
+				if (!repobusy_check)
 				{
-					repobusy_check = true;
+					if (RepoBusy)
+						repobusy_check = true;
+					else
+						RepoBusy = true;
 					Monitor.Exit(RepoLock);
 				}
+
 				if (repobusy_check)
 				{
 					SendMessage("DM: Copy aborted, repo locked!");
@@ -360,7 +371,10 @@ namespace TGServerService
 				}
 				finally
 				{
-					Monitor.Exit(RepoLock);
+					lock (RepoLock)
+					{
+						RepoBusy = false;
+					}
 				}
 
 				var dmeName = ProjectName() + ".dme";
