@@ -118,7 +118,7 @@
 	
 /area/prison/execution_room
 	name = "Prisoner Education Chamber"
-	icon_state = "brig"
+	icon_state = "armory"
 
 /area/prison/cell_block/A
 	name = "Prison Cell Block A"
