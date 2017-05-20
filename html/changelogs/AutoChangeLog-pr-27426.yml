@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - tweak: "Pulse Pistols can now be recharged."
