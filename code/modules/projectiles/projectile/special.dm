@@ -235,8 +235,8 @@
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 6
-	mine_range = 6
+	range = 9
+	mine_range = 3
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
