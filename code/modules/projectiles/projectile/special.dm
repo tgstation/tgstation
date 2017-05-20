@@ -203,7 +203,7 @@
 	range = 4
 	dismemberment = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	var/mine_range = 4 //mines this many additional tiles
+	var/mine_range = 3 //mines this many additional tiles
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
