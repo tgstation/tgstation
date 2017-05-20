@@ -368,6 +368,8 @@ namespace TGServerService
 					//just the tip
 					const string HeadFile = "/.git/logs/HEAD";
 					File.Copy(RepoPath + HeadFile, resurrectee + HeadFile);
+					var Head = GetHead(out string error);
+					TGServerService.WriteLog("Compilation at commit: " + (Head ?? "Error retrieving HEAD: " + error));
 				}
 				finally
 				{
