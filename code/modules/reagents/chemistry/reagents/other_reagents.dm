@@ -852,6 +852,8 @@
 	produce_type = /obj/item/stack/sheet/mineral/diamond
 	attack_force = 15
 	pick_speed = 8
+	penetration_value = 25
+	sharp_result = TRUE
 
 /datum/reagent/adamantine
 	name = "Adamantine"
@@ -863,6 +865,8 @@
 	produce_type = /obj/item/stack/sheet/mineral/adamantine
 	attack_force = 20
 	pick_speed = 3
+	penetration_value = 40
+	sharp_result = TRUE
 
 /datum/reagent/uranium
 	name ="Uranium"
@@ -1159,7 +1163,7 @@
 /datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)
 		M.drowsyness += max(round(reac_volume, 1), 2)
-		
+
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/M)
 	M.drowsyness += 2
 	if(ishuman(M))

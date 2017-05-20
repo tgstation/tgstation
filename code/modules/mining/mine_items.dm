@@ -482,20 +482,3 @@
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
-
-//Mining Tracks
-/obj/structure/minecart_rail
-	name = "minecart rail"
-	desc = "A set of tracks meant for minecarts."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "rail"
-	smooth = SMOOTH_TRUE
-	anchored = 1
-	density = 0
-
-/obj/structure/minecart_rail/attackby(obj/item/O, mob/user, params)
-	..()
-	if(istype(O,/obj/item/weapon/crowbar))
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		new /obj/item/stack/sheet/plasteel(src.loc)
-qdel(src)

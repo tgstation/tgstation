@@ -2,7 +2,7 @@
 	name = "Dwarf"
 	id = "dwarf"
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOBREATH)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,NOBREATH,NO_UNDERWEAR)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	limbs_id = "dwarf"
@@ -19,7 +19,7 @@
 	mutant_organs = list(/obj/item/organ/alcoholvessel)
 
 /datum/species/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
+	. = ..()
 	var/dwarf_hair = pick("Dwarf Beard", "Very Long Beard", "Full Beard")
 	var/mob/living/carbon/human/H = C
 	H.grant_language(/datum/language/dwarvish)
@@ -33,6 +33,4 @@
 		dwarf.Insert(H)
 
 /datum/species/dwarf/random_name(gender,unique,lastname)
-	var/randname = dwarf_name()
-
-	return randname
+	return dwarf_name()
