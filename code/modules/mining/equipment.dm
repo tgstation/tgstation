@@ -210,7 +210,8 @@
 			user.changeNext_move(CLICK_CD_RANGE)
 
 /obj/item/weapon/resonator/pre_attackby(atom/target, mob/living/user, params)
-	CreateResonance(target, user)
+	if(!istype(target, /obj/item/weapon/storage) && isturf(target.loc))
+		CreateResonance(target, user)
 	return TRUE
 
 /obj/effect/temp_visual/resonance
