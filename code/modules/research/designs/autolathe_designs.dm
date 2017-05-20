@@ -704,6 +704,14 @@
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
 
+/datum/design/c46mm
+	name = "Ammo Box (4.6x30mm)"
+	id = "c46mm"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c46mm
+	category = list("hacked", "Security")
+
 /datum/design/cleaver
 	name = "Butcher's Cleaver"
 	id = "cleaver"
@@ -783,7 +791,7 @@
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/device/modular_computer/tablet
 	category = list("initial","Misc")
-	
+
 /datum/design/slime_scanner
 	name = "Slime Scanner"
 	id = "slime_scanner"
@@ -791,4 +799,3 @@
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
 	category = list("initial", "Misc")
-	
