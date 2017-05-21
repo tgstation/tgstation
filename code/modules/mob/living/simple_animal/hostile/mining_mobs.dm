@@ -1055,7 +1055,7 @@
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
 	for(var/t in RANGE_TURFS(2, src))
-		var/turf/FT = t
+		var/turf/T = t
 		if(get_dist(T, src) > 1) //outer ring is lava, to help make the chasm more avoidable
 			T.TerraformTurf(/turf/open/floor/plating/lava/smooth/lava_land_surface)
 		else
