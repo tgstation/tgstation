@@ -1077,5 +1077,5 @@
 
 /obj/effect/light_emitter/tendril
 	set_luminosity = 4
-	set_cap = 3
+	set_cap = 2.5
 	light_color = LIGHT_COLOR_LAVA
