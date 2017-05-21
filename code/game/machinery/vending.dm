@@ -1153,7 +1153,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 /obj/machinery/vending/toyliberationstation
-	name = "\improper Toy Weapon Vendor"
+	name = "\improper Donksoft Toy Vendor"
 	desc = "A ages 8 and up approved vendor that dispenses toys. If you were to find the right wires, you can unlock the adult mode setting!"
 	icon_state = "liberationstation"
 	req_access_txt = "1"
