@@ -124,5 +124,13 @@ namespace TGServiceInterface
 		/// <returns>The path to the python 2.7 installation</returns>
 		[OperationContract]
 		string PythonPath();
+
+		/// <summary>
+		/// List the tagged commits of the repo at which compiles took place
+		/// </summary>
+		/// <param name="error">null on success, error message on failure</param>
+		/// <returns>A dictionary of tag name -> commit on success, null on failure</returns>
+		[OperationContract]
+		IDictionary<string, string> ListBackups(out string error);
 	}
 }

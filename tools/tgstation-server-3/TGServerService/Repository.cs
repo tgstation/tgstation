@@ -372,6 +372,63 @@ namespace TGServerService
 			}
 		}
 
+		string CreateBackup()
+		{
+			try
+			{
+				lock (RepoLock)
+				{
+					var res = LoadRepo();
+					if (res != null)
+						return res;
+
+					//Make sure we don't already have a backup at this commit
+					var HEAD = Repo.Head.Tip.Sha;
+					foreach (var T in Repo.Tags)
+						if (T.Target.Sha == HEAD)
+							return null;
+	
+					var tagName = "TGS-Compile-Backup-" + DateTime.Now.ToString("yyyy-MM-dd--HH.mm.ss");
+					var tag = Repo.ApplyTag(tagName);
+
+					if (tag != null)
+					{
+						TGServerService.WriteLog("Repo backup created at tag: " + tagName + " commit: " + HEAD);
+						return null;
+					}
+					return "Tag creation failed!";
+				}
+			}
+			catch (Exception e)
+			{
+				return e.ToString();
+			}
+		}
+
+		public IDictionary<string, string> ListBackups(out string error)
+		{
+			try
+			{
+				lock (RepoLock)
+				{
+					error = LoadRepo();
+					if (error != null)
+						return null;
+
+					var res = new Dictionary<string, string>();
+					foreach (var T in Repo.Tags)
+						if (T.FriendlyName.Contains("TGS"))
+							res.Add(T.FriendlyName, T.Target.Sha);
+					return res;
+				}
+			}
+			catch (Exception e)
+			{
+				error = e.ToString();
+				return null;
+			}
+		}
+
 		//public api
 		public string Reset()
 		{

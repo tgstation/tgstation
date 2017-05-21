@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -323,7 +323,7 @@ namespace TGCommandLine
 		public override ExitCode Run(IList<string> parameters)
 		{
 			var data = Server.GetComponent<ITGRepository>().MergedPullRequests(out string error);
-			if(data == null)
+			if (data == null)
 			{
 				Console.WriteLine(error);
 				return ExitCode.ServerError;
@@ -334,8 +334,35 @@ namespace TGCommandLine
 				foreach (var I in data)
 				{
 					var innerDick = I.Value;
-					Console.WriteLine(String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]));
+					Console.WriteLine(String.Format("#{0}: {2} by {3} at commit {1}", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]));
 				}
+			return ExitCode.Normal;
+		}
+	}
+
+	class RepoListBackupsCommand : Command
+	{
+		public RepoListBackupsCommand()
+		{
+			Keyword = "list-backups";
+		}
+		protected override string GetHelpText()
+		{
+			return "Lists backup tags created by compilation";
+		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var data = Server.GetComponent<ITGRepository>().ListBackups(out string error);
+			if (data == null)
+			{
+				Console.WriteLine(error);
+				return ExitCode.ServerError;
+			}
+			if (data.Count == 0)
+				Console.WriteLine("None!");
+			else
+				foreach (var I in data)
+					Console.WriteLine(String.Format("{0} at commit {1}", I.Key, I.Value));
 			return ExitCode.Normal;
 		}
 	}
