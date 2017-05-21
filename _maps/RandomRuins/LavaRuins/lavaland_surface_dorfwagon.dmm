@@ -1,0 +1,40 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/high_chance/volcanic,/area/mine/explored)
+"c" = (/turf/open/floor/grass{tag = "icon-dfgrass"; icon_state = "dfgrass"},/area/awaymission)
+"d" = (/turf/closed/wall/mineral/wood,/area/awaymission)
+"e" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/drinks/ale,/obj/item/weapon/reagent_containers/food/drinks/ale,/obj/item/weapon/reagent_containers/food/drinks/ale,/obj/item/weapon/reagent_containers/food/snacks/pie/plump_pie,/turf/open/floor/wood,/area/awaymission)
+"f" = (/obj/structure/table/wood,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/turf/open/floor/wood,/area/awaymission)
+"g" = (/obj/machinery/brewing_barrel,/turf/open/floor/wood,/area/awaymission)
+"h" = (/obj/machinery/door/airlock/wood,/turf/open/floor/wood,/area/awaymission)
+"i" = (/turf/open/floor/wood,/area/awaymission)
+"j" = (/obj/machinery/migrant_spawner,/turf/open/floor/wood,/area/awaymission)
+"k" = (/obj/machinery/smelter,/turf/open/floor/wood,/area/awaymission)
+"l" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/wood,/area/awaymission)
+"m" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/pickaxe,/obj/item/device/flashlight/flare/torch,/obj/item/device/flashlight/flare/torch,/obj/item/device/flashlight/flare/torch,/turf/open/floor/wood,/area/awaymission)
+"n" = (/obj/structure/table/wood,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/shovel,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/turf/open/floor/wood,/area/awaymission)
+"o" = (/mob/living/simple_animal/cow,/turf/open/floor/grass{tag = "icon-dfgrass"; icon_state = "dfgrass"},/area/awaymission)
+"p" = (/mob/living/simple_animal/chicken,/turf/open/floor/grass{tag = "icon-dfgrass"; icon_state = "dfgrass"},/area/awaymission)
+"q" = (/obj/structure/sink/puddle{name = "magic puddle"},/turf/open/floor/grass{tag = "icon-dfgrass"; icon_state = "dfgrass"},/area/awaymission)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaabbbbbbbbbbbaaaaa
+aaabbcccbcbcccbbaaaa
+aabbcccccccccccbbaaa
+aabccccddddddcccbaaa
+aabccccdefggdcccbaaa
+aabcccchiiijdcccbaaa
+aabccccdklmndccbbaaa
+aabbbccddddddcbbaaaa
+aabboccppccccccbaaaa
+aabcqccccccccccbaaaa
+aabbocccccccbbbbaaaa
+aaabbbbbbbbbbaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}
