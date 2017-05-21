@@ -614,7 +614,6 @@
 		var/obj/item/clothing/C = I
 		if(C.dwarf_only)
 			if(!isdwarf(H))
-				world << "not dwarf"
 				return 0
 	switch(slot)
 		if(slot_hands)
