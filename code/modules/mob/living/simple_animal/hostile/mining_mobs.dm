@@ -816,10 +816,10 @@
 	if(isdwarf(H))
 		L.name = "dwarf legion"
 		L.desc = "You can still see what was once a dwarf under the shifting mass of corruption."
-		L.icon_state = "legion_dwarf"
-		L.icon_living = "legion_dwarf"
-		L.icon_aggro = "legion_dwarf"
-		L.icon_dead = "legion_dwarf"
+		L.icon_state = "dwarf_legion"
+		L.icon_living = "dwarf_legion"
+		L.icon_aggro = "dwarf_legion"
+		L.icon_dead = "dwarf_legion"
 
 	H.death()
 	H.adjustBruteLoss(1000)

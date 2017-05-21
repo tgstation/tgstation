@@ -31,7 +31,8 @@
 	var/mutable_appearance/my_mold = null
 
 /obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
-	..()
+	if(!istype(W, /obj/item/weapon/smith_hammer))
+		..()
 	if(!current_mold && istype(W, /obj/item/weapon/reagent_containers/glass/mold))
 		var/obj/item/weapon/reagent_containers/glass/mold/M = W
 		var/datum/reagent/R = M.reagents.get_master_reagent()
