@@ -89,15 +89,57 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	if(panel_open)
 		icon_state = "cell-o"
-	else if(state_open)
+		cut_overlays()
+		return
+	if(state_open)
 		icon_state = "cell-open"
-	else if(on && is_operational())
+		cut_overlays()
+		return
+	if(on)
 		if(occupant)
-			icon_state = "cell-occupied"
+			icon_state = "cell-on"
+			cut_overlays()
+			var/image/Occ = image(occupant)
+			Occ.dir = dir
+			var/icon/O = getFlatIcon(Occ)
+			O.Crop(8,1,25,32)
+			Occ = image(O)
+			Occ.pixel_y = 24
+			Occ.pixel_x = 7
+			Occ.layer = layer + 0.01
+			overlays += Occ
+			var/image/I = new
+			I.icon = icon
+			I.icon_state = "cell-on"
+			I.layer = layer + 0.02
+			I.alpha = 190
+			overlays += I
 		else
 			icon_state = "cell-on"
+			cut_overlays()
 	else
-		icon_state = "cell-off"
+		if(occupant)
+			icon_state = "cell-off"
+			cut_overlays()
+			var/image/Occ = image(occupant)
+			Occ.dir = dir
+			var/icon/O = getFlatIcon(Occ)
+			O.Crop(8,1,25,32)
+			Occ = image(O)
+			Occ.pixel_y = 24
+			Occ.pixel_x = 7
+			Occ.layer = layer + 0.01
+			Occ.color = rgb(120,120,120)
+			overlays += Occ
+			var/image/I = new
+			I.icon = icon
+			I.icon_state = "cell-off"
+			I.layer = layer + 0.02
+			I.alpha = 190
+			overlays += I
+		else
+			icon_state = "cell-off"
+			cut_overlays()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
