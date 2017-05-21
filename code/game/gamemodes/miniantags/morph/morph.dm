@@ -73,7 +73,7 @@
 		return FALSE
 	else if(istype(A,/mob/living/simple_animal/hostile/morph))
 		return FALSE
-	else if(istype(A, /obj) || istype(A, /mob))
+	else if(isobj(A)) || istype(ismob(A))
 		return TRUE
 	else
 		return FALSE
