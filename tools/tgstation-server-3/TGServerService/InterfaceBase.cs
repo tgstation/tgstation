@@ -37,12 +37,23 @@ namespace TGServerService
 		public string UpdateServer(TGRepoUpdateMethod updateType, bool push_changelog_if_enabled, ushort testmerge_pr)
 		{
 			string res;
-			if (updateType != TGRepoUpdateMethod.None)
+			switch (updateType)
 			{
-				res = Update(updateType == TGRepoUpdateMethod.Hard);
-				if (res != null && res != RepoErrorUpToDate)
-					return res;
+				case TGRepoUpdateMethod.Hard:
+				case TGRepoUpdateMethod.Merge:
+					res = Update(updateType == TGRepoUpdateMethod.Hard);
+					if (res != null && res != RepoErrorUpToDate)
+						return res;
+					break;
+				case TGRepoUpdateMethod.Reset:
+					res = Reset(true);
+					if (res != null)
+						return res;
+					break;
+				case TGRepoUpdateMethod.None:
+					break;
 			}
+
 			if (testmerge_pr != 0)
 			{
 				res = MergePullRequest(testmerge_pr);

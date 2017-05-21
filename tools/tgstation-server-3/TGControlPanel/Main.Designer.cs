@@ -77,6 +77,7 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
+            this.ResetTestmerge = new System.Windows.Forms.Button();
             this.NudgePortSelector = new System.Windows.Forms.NumericUpDown();
             this.NudgePortLabel = new System.Windows.Forms.Label();
             this.ServerPathLabel = new System.Windows.Forms.Label();
@@ -786,6 +787,7 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ServerPanel.Controls.Add(this.ResetTestmerge);
             this.ServerPanel.Controls.Add(this.NudgePortSelector);
             this.ServerPanel.Controls.Add(this.NudgePortLabel);
             this.ServerPanel.Controls.Add(this.ServerPathLabel);
@@ -820,6 +822,17 @@
             this.ServerPanel.Size = new System.Drawing.Size(868, 366);
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
+            // 
+            // ResetTestmerge
+            // 
+            this.ResetTestmerge.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.ResetTestmerge.Location = new System.Drawing.Point(602, 95);
+            this.ResetTestmerge.Name = "ResetTestmerge";
+            this.ResetTestmerge.Size = new System.Drawing.Size(142, 28);
+            this.ResetTestmerge.TabIndex = 36;
+            this.ResetTestmerge.Text = "Reset and Recompile";
+            this.ResetTestmerge.UseVisualStyleBackColor = true;
+            this.ResetTestmerge.Click += new System.EventHandler(this.ResetTestmerge_Click);
             // 
             // NudgePortSelector
             // 
@@ -954,7 +967,7 @@
             this.ServerPRLabel.AutoSize = true;
             this.ServerPRLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerPRLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.ServerPRLabel.Location = new System.Drawing.Point(734, 102);
+            this.ServerPRLabel.Location = new System.Drawing.Point(745, 101);
             this.ServerPRLabel.Name = "ServerPRLabel";
             this.ServerPRLabel.Size = new System.Drawing.Size(49, 18);
             this.ServerPRLabel.TabIndex = 26;
@@ -964,20 +977,20 @@
             // ServerTestmergeInput
             // 
             this.ServerTestmergeInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ServerTestmergeInput.Location = new System.Drawing.Point(782, 101);
+            this.ServerTestmergeInput.Location = new System.Drawing.Point(806, 99);
             this.ServerTestmergeInput.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.ServerTestmergeInput.Name = "ServerTestmergeInput";
-            this.ServerTestmergeInput.Size = new System.Drawing.Size(80, 20);
+            this.ServerTestmergeInput.Size = new System.Drawing.Size(62, 20);
             this.ServerTestmergeInput.TabIndex = 25;
             // 
             // TestmergeButton
             // 
             this.TestmergeButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.TestmergeButton.Location = new System.Drawing.Point(586, 95);
+            this.TestmergeButton.Location = new System.Drawing.Point(454, 95);
             this.TestmergeButton.Name = "TestmergeButton";
             this.TestmergeButton.Size = new System.Drawing.Size(142, 28);
             this.TestmergeButton.TabIndex = 24;
@@ -988,7 +1001,7 @@
             // UpdateTestmergeButton
             // 
             this.UpdateTestmergeButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.UpdateTestmergeButton.Location = new System.Drawing.Point(438, 95);
+            this.UpdateTestmergeButton.Location = new System.Drawing.Point(306, 95);
             this.UpdateTestmergeButton.Name = "UpdateTestmergeButton";
             this.UpdateTestmergeButton.Size = new System.Drawing.Size(142, 28);
             this.UpdateTestmergeButton.TabIndex = 23;
@@ -999,7 +1012,7 @@
             // UpdateMergeButton
             // 
             this.UpdateMergeButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.UpdateMergeButton.Location = new System.Drawing.Point(290, 95);
+            this.UpdateMergeButton.Location = new System.Drawing.Point(158, 95);
             this.UpdateMergeButton.Name = "UpdateMergeButton";
             this.UpdateMergeButton.Size = new System.Drawing.Size(142, 28);
             this.UpdateMergeButton.TabIndex = 22;
@@ -1010,9 +1023,9 @@
             // UpdateHardButton
             // 
             this.UpdateHardButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.UpdateHardButton.Location = new System.Drawing.Point(142, 95);
+            this.UpdateHardButton.Location = new System.Drawing.Point(7, 95);
             this.UpdateHardButton.Name = "UpdateHardButton";
-            this.UpdateHardButton.Size = new System.Drawing.Size(142, 28);
+            this.UpdateHardButton.Size = new System.Drawing.Size(145, 28);
             this.UpdateHardButton.TabIndex = 21;
             this.UpdateHardButton.Text = "Update (Reset Testmerge)";
             this.UpdateHardButton.UseVisualStyleBackColor = true;
@@ -1021,7 +1034,7 @@
             // ServerGRestartButton
             // 
             this.ServerGRestartButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ServerGRestartButton.Location = new System.Drawing.Point(621, 54);
+            this.ServerGRestartButton.Location = new System.Drawing.Point(626, 54);
             this.ServerGRestartButton.Name = "ServerGRestartButton";
             this.ServerGRestartButton.Size = new System.Drawing.Size(118, 28);
             this.ServerGRestartButton.TabIndex = 20;
@@ -1032,7 +1045,7 @@
             // ServerGStopButton
             // 
             this.ServerGStopButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ServerGStopButton.Location = new System.Drawing.Point(497, 54);
+            this.ServerGStopButton.Location = new System.Drawing.Point(502, 54);
             this.ServerGStopButton.Name = "ServerGStopButton";
             this.ServerGStopButton.Size = new System.Drawing.Size(118, 28);
             this.ServerGStopButton.TabIndex = 19;
@@ -1043,7 +1056,7 @@
             // ServerRestartButton
             // 
             this.ServerRestartButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ServerRestartButton.Location = new System.Drawing.Point(373, 54);
+            this.ServerRestartButton.Location = new System.Drawing.Point(378, 54);
             this.ServerRestartButton.Name = "ServerRestartButton";
             this.ServerRestartButton.Size = new System.Drawing.Size(118, 28);
             this.ServerRestartButton.TabIndex = 18;
@@ -1054,7 +1067,7 @@
             // ServerStopButton
             // 
             this.ServerStopButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ServerStopButton.Location = new System.Drawing.Point(249, 54);
+            this.ServerStopButton.Location = new System.Drawing.Point(254, 54);
             this.ServerStopButton.Name = "ServerStopButton";
             this.ServerStopButton.Size = new System.Drawing.Size(118, 28);
             this.ServerStopButton.TabIndex = 17;
@@ -1065,7 +1078,7 @@
             // ServerStartButton
             // 
             this.ServerStartButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.ServerStartButton.Location = new System.Drawing.Point(125, 54);
+            this.ServerStartButton.Location = new System.Drawing.Point(130, 54);
             this.ServerStartButton.Name = "ServerStartButton";
             this.ServerStartButton.Size = new System.Drawing.Size(118, 28);
             this.ServerStartButton.TabIndex = 16;
@@ -1078,7 +1091,7 @@
             this.AutostartCheckbox.AutoSize = true;
             this.AutostartCheckbox.Font = new System.Drawing.Font("Verdana", 12F);
             this.AutostartCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.AutostartCheckbox.Location = new System.Drawing.Point(18, 101);
+            this.AutostartCheckbox.Location = new System.Drawing.Point(758, 17);
             this.AutostartCheckbox.Name = "AutostartCheckbox";
             this.AutostartCheckbox.Size = new System.Drawing.Size(104, 22);
             this.AutostartCheckbox.TabIndex = 15;
@@ -2028,6 +2041,7 @@
 		private System.Windows.Forms.Label PythonPathLabel;
 		private System.Windows.Forms.Button ResetRemote;
 		private System.Windows.Forms.TextBox CommitterPasswordTextBox;
+		private System.Windows.Forms.Button ResetTestmerge;
 	}
 }
 

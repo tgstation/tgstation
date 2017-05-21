@@ -77,9 +77,13 @@ namespace TGServiceInterface
 		/// </summary>
 		Merge,
 		/// <summary>
-		/// Update the repo by hard resetting to the origin branch
+		/// Update the repo by hard resetting to the remote branch
 		/// </summary>
 		Hard,
+		/// <summary>
+		/// Clean the repo by hard resetting to the origin branch
+		/// </summary>
+		Reset,
 	}
 
 	/// <summary>

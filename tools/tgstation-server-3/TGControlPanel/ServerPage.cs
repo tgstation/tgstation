@@ -11,6 +11,7 @@ namespace TGControlPanel
 			UpdateHard,
 			UpdateMerge,
 			UpdateHardTestmerge,
+			Reset,
 			Testmerge,
 		}
 
@@ -340,8 +341,16 @@ namespace TGControlPanel
 				case FullUpdateAction.UpdateMerge:
 					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Merge, true, (ushort)testmergePR);
 					break;
+				case FullUpdateAction.Reset:
+					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Reset, false, 0);
+					break;
 			}
 		}
+		private void ResetTestmerge_Click(object sender, EventArgs e)
+		{
+			RunServerUpdate(FullUpdateAction.Reset);
+		}
+
 		private void UpdateHardButton_Click(object sender, System.EventArgs e)
 		{
 			RunServerUpdate(FullUpdateAction.UpdateHard);
