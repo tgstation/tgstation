@@ -73,7 +73,7 @@
 		return FALSE
 	else if(istype(A,/mob/living/simple_animal/hostile/morph))
 		return FALSE
-	else if(isobj(A)) || istype(ismob(A))
+	else if(isobj(A) || ismob(A))
 		return TRUE
 	else
 		return FALSE
@@ -103,6 +103,7 @@
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
+	copy_overlays(target)
 	alpha = max(alpha, 150)	//fucking chameleons
 	transform = initial(transform)
 	pixel_y = initial(pixel_y)
