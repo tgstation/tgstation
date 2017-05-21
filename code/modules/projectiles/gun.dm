@@ -59,6 +59,12 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
+	//spark effects
+	var/datum/effect_system/spark_spread/spark_system
+	var/sparks = 0 //determines if gun shoots sparks when fired
+
+	var/dont_update = 0 //snowflake var for the pipe pistol. Keeps icon from updating.
+
 
 /obj/item/weapon/gun/New()
 	..()
@@ -68,6 +74,9 @@
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
+	spark_system = new /datum/effect_system/spark_spread
+	spark_system.set_up(2, 0, src)
+	spark_system.attach(src)
 
 
 /obj/item/weapon/gun/CheckParts(list/parts_list)
@@ -106,6 +115,9 @@
 
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+	if(sparks)
+		src.spark_system.start()
+
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
@@ -240,7 +252,8 @@
 				shoot_with_empty_chamber(user)
 				break
 			process_chamber()
-			update_icon()
+			if(!dont_update)
+				update_icon()
 			sleep(fire_delay)
 		firing_burst = 0
 	else
@@ -258,7 +271,8 @@
 			shoot_with_empty_chamber(user)
 			return
 		process_chamber()
-		update_icon()
+		if(!dont_update)
+			update_icon()
 		semicd = 1
 		spawn(fire_delay)
 			semicd = 0
@@ -285,7 +299,8 @@
 				if(S.on)
 					set_light(0)
 				gun_light = S
-				update_icon()
+				if(!dont_update)
+					update_icon()
 				update_gunlight(user)
 				verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 				var/datum/action/A = new /datum/action/item_action/toggle_gunlight(src)
@@ -300,7 +315,8 @@
 					S.forceMove(get_turf(user))
 					update_gunlight(user)
 					S.update_brightness(user)
-					update_icon()
+					if(!dont_update)
+						update_icon()
 					verbs -= /obj/item/weapon/gun/proc/toggle_gunlight
 				for(var/datum/action/item_action/toggle_gunlight/TGL in actions)
 					qdel(TGL)
@@ -331,7 +347,8 @@
 			set_light(gun_light.brightness_on)
 		else
 			set_light(0)
-		update_icon()
+		if(!dont_update)
+			update_icon()
 	else
 		set_light(0)
 	for(var/X in actions)
@@ -368,7 +385,8 @@
 			return
 		current_skin = options[choice]
 		to_chat(M, "Your gun is now skinned as [choice]. Say hello to your new friend.")
-		update_icon()
+		if(!dont_update)
+			update_icon()
 
 
 

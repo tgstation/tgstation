@@ -103,7 +103,10 @@
 	icon_state = "40mmHE"
 	projectile_type = /obj/item/projectile/bullet/a40mm
 
-
+/obj/item/ammo_casing/m9mm
+	desc = "A makeshift 9mm bullet casing."
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/makeshift
 
 /////SNIPER ROUNDS
 

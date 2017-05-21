@@ -262,6 +262,29 @@
 	time = 100
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/ipistol
+	name = "Pipe Pistol"
+	result = /obj/item/weapon/gun/ballistic/revolver/pipe
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
+				/obj/item/pipe = 2,
+				/obj/item/stack/packageWrap = 5,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/sheet/mineral/wood = 1,
+				/obj/item/stack/rods = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 150
+	category = CAT_WEAPON
+
+/datum/crafting_recipe/i9mm
+	name = "Makeshift 9mm Round"
+	result = /obj/item/ammo_casing/m9mm
+	reqs = list(/obj/item/stack/sheet/metal = 1,
+				/obj/item/stack/cable_coil = 1,
+				/datum/reagent/fuel = 10)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 50
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/chainsaw
 	name = "Chainsaw"
 	result = /obj/item/weapon/twohanded/required/chainsaw

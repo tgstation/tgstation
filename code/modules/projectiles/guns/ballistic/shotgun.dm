@@ -126,7 +126,6 @@
 	..()
 	to_chat(user, "The bolt is [bolt_open ? "open" : "closed"].")
 
-
 /obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
