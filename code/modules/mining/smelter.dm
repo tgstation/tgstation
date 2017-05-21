@@ -94,6 +94,20 @@
 	icon_state = "sword_blade"
 	mold_type = "offensive"
 
+/obj/item/weapon/mold_result/armor_plating
+	name = "armor plating"
+	desc = "Armor plating made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "armor"
+	mold_type = "offensive"
+
+/obj/item/weapon/mold_result/helmet_plating
+	name = "helmet plating"
+	desc = "Helmet plating made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "helmet"
+	mold_type = "offensive"
+
 /obj/item/weapon/mold_result/pickaxe_head
 	name = "pickaxe head"
 	desc = "A pickaxe head made of "

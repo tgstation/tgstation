@@ -6,7 +6,7 @@
 		else
 			t_max = rand(1,4)
 
-	var/seedloc = O.loc
+	var/seedloc = get_turf(O)
 	if(extractor)
 		seedloc = extractor.loc
 

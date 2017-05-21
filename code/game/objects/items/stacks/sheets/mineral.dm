@@ -395,6 +395,8 @@ GLOBAL_LIST_INIT(clay_recipes, list(
 	new /datum/stack_recipe("pickaxe mold", /obj/item/weapon/reagent_containers/glass/mold/pickaxe, req_amount=1, res_amount=1),
 	new /datum/stack_recipe("sword mold", /obj/item/weapon/reagent_containers/glass/mold/sword, req_amount=1, res_amount=1),
 	new /datum/stack_recipe("shovel mold", /obj/item/weapon/reagent_containers/glass/mold/shovel, req_amount=1, res_amount=1),
+	new /datum/stack_recipe("armor mold", /obj/item/weapon/reagent_containers/glass/mold/armor, req_amount=1, res_amount=1),
+	new /datum/stack_recipe("helmet mold", /obj/item/weapon/reagent_containers/glass/mold/helmet, req_amount=1, res_amount=1),
 	))
 
 /obj/item/stack/sheet/mineral/clay

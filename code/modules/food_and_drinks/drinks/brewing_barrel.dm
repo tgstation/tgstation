@@ -18,6 +18,7 @@
 	if(!brewing_result)
 		return ..()
 	if(user.drop_item())
+		seedify(W)
 		brewables += list(brewing_result)
 		already_brewing += W.type
 		to_chat(user, "You insert [W] into [src].")

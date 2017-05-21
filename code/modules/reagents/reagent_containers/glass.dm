@@ -340,6 +340,18 @@
 	icon_state = "mold_shovel"
 	produce_type = /obj/item/weapon/mold_result/shovel_head
 
+/obj/item/weapon/reagent_containers/glass/mold/helmet
+	name = "helmet mold"
+	desc = "A clay mold of a helmet."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/helmet_plating
+
+/obj/item/weapon/reagent_containers/glass/mold/armor
+	name = "armor mold"
+	desc = "A clay mold of armor plating."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/armor_plating
+
 /obj/item/weapon/reagent_containers/glass/mold/bar
 	name = "bar mold"
 	desc = "A clay mold of a bar."
