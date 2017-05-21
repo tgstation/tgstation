@@ -31,8 +31,28 @@ namespace TGControlPanel
 			RepoBGW.ProgressChanged += RepoBGW_ProgressChanged;
 			RepoBGW.RunWorkerCompleted += RepoBGW_RunWorkerCompleted;
 			RepoBGW.DoWork += RepoBGW_DoWork;
-			var Repo = Server.GetComponent<ITGRepository>();
+			BackupTagsList.MouseDoubleClick += BackupTagsList_MouseDoubleClick;
 			PopulateRepoFields();
+		}
+
+		private void BackupTagsList_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			int index = BackupTagsList.IndexFromPoint(e.Location);
+			if (index != ListBox.NoMatches)
+			{
+				var indexText = (string)BackupTagsList.Items[index];
+				if (indexText == "None" || indexText == "Unknown")
+					return;
+				var tagname = indexText.Split(':')[0];
+				var spaceSplits = indexText.Split(' ');
+				var sha = spaceSplits[spaceSplits.Length - 1];
+
+				if (MessageBox.Show(String.Format("Checkout tag {0} ({1})?", tagname, sha), "Restore Backup", MessageBoxButtons.YesNo) != DialogResult.Yes)
+					return;
+
+				CheckoutBranch = tagname;
+				DoAsyncOp(RepoAction.Checkout, "Checking out " + tagname + "...");
+			}
 		}
 
 		private void RepoBGW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -78,21 +98,14 @@ namespace TGControlPanel
 				CurrentRevisionLabel.Visible = true;
 				CurrentRevisionTitle.Visible = true;
 				IdentityLabel.Visible = true;
-				CommiterNameTitle.Visible = true;
-				CommitterEmailTitle.Visible = true;
-				RepoCommitterNameTextBox.Visible = true;
-				RepoEmailTextBox.Visible = true;
 				MergePRButton.Visible = true;
 				TestMergeListLabel.Visible = true;
 				TestMergeListTitle.Visible = true;
 				UpdateRepoButton.Visible = true;
+				BackupTagsList.Visible = true;
 				HardReset.Visible = true;
 				RepoApplyButton.Visible = true;
 				TestmergeSelector.Visible = true;
-				CommiterLoginTitle.Visible = true;
-				CommitterPasswordTitle.Visible = true;
-				CommitterPasswordTextBox.Visible = true;
-				CommitterLoginTextBox.Visible = true;
 				RepoGenChangelogButton.Visible = true;
 				RecloneButton.Visible = true;
 				ResetRemote.Visible = true;
@@ -100,28 +113,33 @@ namespace TGControlPanel
 				CurrentRevisionLabel.Text = Repo.GetHead(out string error) ?? "Unknown";
 				RepoRemoteTextBox.Text = Repo.GetRemote(out error) ?? "Unknown";
 				RepoBranchTextBox.Text = Repo.GetBranch(out error) ?? "Unknown";
-				CommitterLoginTextBox.Text = Repo.GetCredentialUsername() ?? "Unknown";
-				RepoCommitterNameTextBox.Text = Repo.GetCommitterName() ?? "Unknown";
-				RepoEmailTextBox.Text = Repo.GetCommitterEmail() ?? "Unknown";
 
-
-				var PRs = Repo.MergedPullRequests(out error);
-				if(PRs != null)
+				var Backups = Repo.ListBackups(out error);
+				BackupTagsList.Items.Clear();
+				if (Backups != null)
 				{
-					if (PRs.Count == 0)
-						TestMergeListLabel.Text = "None";
+					if (Backups.Count == 0)
+						BackupTagsList.Items.Add("None");
 					else
-					{
-						TestMergeListLabel.Text = "";
-						foreach (var I in PRs) {
-							var innerDick = I.Value;
-							TestMergeListLabel.Text += String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]);
-						}
-					}
+						foreach (var I in Backups)
+							BackupTagsList.Items.Add(I.Key + ": " + I.Value);
 				}
 				else
-					TestMergeListLabel.Text = "Unknown";
+					BackupTagsList.Items.Add("Unknown");
 
+				var PRs = Repo.MergedPullRequests(out error);
+				TestMergeListLabel.Items.Clear();
+				if (PRs != null)
+					if (PRs.Count == 0)
+						TestMergeListLabel.Items.Add("None");
+					else
+						foreach (var I in PRs)
+						{
+							var innerDick = I.Value;
+							TestMergeListLabel.Items.Add(String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]));
+						}
+				else
+					TestMergeListLabel.Items.Add("Unknown");
 			}
 		}
 
@@ -220,10 +238,6 @@ namespace TGControlPanel
 
 			CurrentRevisionLabel.Visible = false;
 			CurrentRevisionTitle.Visible = false;
-			CommiterNameTitle.Visible = false;
-			CommitterEmailTitle.Visible = false;
-			RepoCommitterNameTextBox.Visible = false;
-			RepoEmailTextBox.Visible = false;
 			TestMergeListLabel.Visible = false;
 			TestMergeListTitle.Visible = false;
 			RepoApplyButton.Visible = false;
@@ -238,15 +252,12 @@ namespace TGControlPanel
 			HardReset.Visible = false;
 			IdentityLabel.Visible = false;
 			TestmergeSelector.Visible = false;
-			CommiterLoginTitle.Visible = false;
-			CommitterPasswordTitle.Visible = false;
-			CommitterPasswordTextBox.Visible = false;
-			CommitterLoginTextBox.Visible = false;
 			RepoGenChangelogButton.Visible = false;
 			PythonPathLabel.Visible = false;
 			PythonPathText.Visible = false;
 			RecloneButton.Visible = false;
 			ResetRemote.Visible = false;
+			BackupTagsList.Visible = false;
 
 			RepoPanel.UseWaitCursor = true;
 
@@ -294,14 +305,7 @@ namespace TGControlPanel
 				CheckoutBranch = RepoBranchTextBox.Text;
 				if(branch != CheckoutBranch)
 					DoAsyncOp(RepoAction.Checkout, String.Format("Checking out {0}...", CheckoutBranch));
-
-				Repo.SetCommitterName(RepoCommitterNameTextBox.Text);
-				Repo.SetCommitterEmail(RepoEmailTextBox.Text);
-				if (CommitterPasswordTextBox.Text != "hunter2butseriouslyyoubetterfuckingrenamethis")
-				{
-					Repo.SetCredentials(CommitterLoginTextBox.Text, CommitterPasswordTextBox.Text);
-					CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
-				}
+				
 				UpdatePythonPath();
 			}
 			else

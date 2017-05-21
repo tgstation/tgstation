@@ -32,28 +32,21 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.Panels = new System.Windows.Forms.TabControl();
             this.RepoPanel = new System.Windows.Forms.TabPage();
+            this.BackupTagsList = new System.Windows.Forms.ListBox();
             this.ResetRemote = new System.Windows.Forms.Button();
             this.RecloneButton = new System.Windows.Forms.Button();
             this.PythonPathText = new System.Windows.Forms.TextBox();
             this.PythonPathLabel = new System.Windows.Forms.Label();
             this.RepoGenChangelogButton = new System.Windows.Forms.Button();
-            this.CommitterPasswordTextBox = new System.Windows.Forms.TextBox();
-            this.CommitterLoginTextBox = new System.Windows.Forms.TextBox();
-            this.CommitterPasswordTitle = new System.Windows.Forms.Label();
-            this.CommiterLoginTitle = new System.Windows.Forms.Label();
             this.TestmergeSelector = new System.Windows.Forms.NumericUpDown();
-            this.TestMergeListLabel = new System.Windows.Forms.TextBox();
+            this.TestMergeListLabel = new System.Windows.Forms.ListBox();
             this.CurrentRevisionLabel = new System.Windows.Forms.Label();
-            this.RepoEmailTextBox = new System.Windows.Forms.TextBox();
-            this.RepoCommitterNameTextBox = new System.Windows.Forms.TextBox();
             this.RepoApplyButton = new System.Windows.Forms.Button();
             this.RepoBranchTextBox = new System.Windows.Forms.TextBox();
             this.RepoRemoteTextBox = new System.Windows.Forms.TextBox();
             this.HardReset = new System.Windows.Forms.Button();
             this.UpdateRepoButton = new System.Windows.Forms.Button();
             this.MergePRButton = new System.Windows.Forms.Button();
-            this.CommitterEmailTitle = new System.Windows.Forms.Label();
-            this.CommiterNameTitle = new System.Windows.Forms.Label();
             this.IdentityLabel = new System.Windows.Forms.Label();
             this.TestMergeListTitle = new System.Windows.Forms.Label();
             this.RemoteNameTitle = new System.Windows.Forms.Label();
@@ -205,28 +198,21 @@
             // RepoPanel
             // 
             this.RepoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.RepoPanel.Controls.Add(this.BackupTagsList);
             this.RepoPanel.Controls.Add(this.ResetRemote);
             this.RepoPanel.Controls.Add(this.RecloneButton);
             this.RepoPanel.Controls.Add(this.PythonPathText);
             this.RepoPanel.Controls.Add(this.PythonPathLabel);
             this.RepoPanel.Controls.Add(this.RepoGenChangelogButton);
-            this.RepoPanel.Controls.Add(this.CommitterPasswordTextBox);
-            this.RepoPanel.Controls.Add(this.CommitterLoginTextBox);
-            this.RepoPanel.Controls.Add(this.CommitterPasswordTitle);
-            this.RepoPanel.Controls.Add(this.CommiterLoginTitle);
             this.RepoPanel.Controls.Add(this.TestmergeSelector);
             this.RepoPanel.Controls.Add(this.TestMergeListLabel);
             this.RepoPanel.Controls.Add(this.CurrentRevisionLabel);
-            this.RepoPanel.Controls.Add(this.RepoEmailTextBox);
-            this.RepoPanel.Controls.Add(this.RepoCommitterNameTextBox);
             this.RepoPanel.Controls.Add(this.RepoApplyButton);
             this.RepoPanel.Controls.Add(this.RepoBranchTextBox);
             this.RepoPanel.Controls.Add(this.RepoRemoteTextBox);
             this.RepoPanel.Controls.Add(this.HardReset);
             this.RepoPanel.Controls.Add(this.UpdateRepoButton);
             this.RepoPanel.Controls.Add(this.MergePRButton);
-            this.RepoPanel.Controls.Add(this.CommitterEmailTitle);
-            this.RepoPanel.Controls.Add(this.CommiterNameTitle);
             this.RepoPanel.Controls.Add(this.IdentityLabel);
             this.RepoPanel.Controls.Add(this.TestMergeListTitle);
             this.RepoPanel.Controls.Add(this.RemoteNameTitle);
@@ -241,6 +227,17 @@
             this.RepoPanel.Size = new System.Drawing.Size(868, 366);
             this.RepoPanel.TabIndex = 0;
             this.RepoPanel.Text = "Repository";
+            // 
+            // BackupTagsList
+            // 
+            this.BackupTagsList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BackupTagsList.Items.AddRange(new object[] {
+            "None"});
+            this.BackupTagsList.Location = new System.Drawing.Point(122, 142);
+            this.BackupTagsList.Name = "BackupTagsList";
+            this.BackupTagsList.Size = new System.Drawing.Size(535, 95);
+            this.BackupTagsList.TabIndex = 34;
+            this.BackupTagsList.Visible = false;
             // 
             // ResetRemote
             // 
@@ -299,54 +296,6 @@
             this.RepoGenChangelogButton.Visible = false;
             this.RepoGenChangelogButton.Click += new System.EventHandler(this.RepoGenChangelogButton_Click);
             // 
-            // CommitterPasswordTextBox
-            // 
-            this.CommitterPasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommitterPasswordTextBox.Location = new System.Drawing.Point(122, 256);
-            this.CommitterPasswordTextBox.Name = "CommitterPasswordTextBox";
-            this.CommitterPasswordTextBox.Size = new System.Drawing.Size(535, 20);
-            this.CommitterPasswordTextBox.TabIndex = 26;
-            this.CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
-            this.CommitterPasswordTextBox.UseSystemPasswordChar = true;
-            this.CommitterPasswordTextBox.Visible = false;
-            // 
-            // CommitterLoginTextBox
-            // 
-            this.CommitterLoginTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommitterLoginTextBox.Location = new System.Drawing.Point(122, 227);
-            this.CommitterLoginTextBox.Name = "CommitterLoginTextBox";
-            this.CommitterLoginTextBox.Size = new System.Drawing.Size(535, 20);
-            this.CommitterLoginTextBox.TabIndex = 25;
-            this.CommitterLoginTextBox.Visible = false;
-            // 
-            // CommitterPasswordTitle
-            // 
-            this.CommitterPasswordTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommitterPasswordTitle.AutoSize = true;
-            this.CommitterPasswordTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CommitterPasswordTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.CommitterPasswordTitle.Location = new System.Drawing.Point(6, 258);
-            this.CommitterPasswordTitle.Name = "CommitterPasswordTitle";
-            this.CommitterPasswordTitle.Size = new System.Drawing.Size(92, 18);
-            this.CommitterPasswordTitle.TabIndex = 24;
-            this.CommitterPasswordTitle.Text = "Password:";
-            this.CommitterPasswordTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.CommitterPasswordTitle.Visible = false;
-            // 
-            // CommiterLoginTitle
-            // 
-            this.CommiterLoginTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommiterLoginTitle.AutoSize = true;
-            this.CommiterLoginTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CommiterLoginTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.CommiterLoginTitle.Location = new System.Drawing.Point(6, 227);
-            this.CommiterLoginTitle.Name = "CommiterLoginTitle";
-            this.CommiterLoginTitle.Size = new System.Drawing.Size(59, 18);
-            this.CommiterLoginTitle.TabIndex = 23;
-            this.CommiterLoginTitle.Text = "Login:";
-            this.CommiterLoginTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.CommiterLoginTitle.Visible = false;
-            // 
             // TestmergeSelector
             // 
             this.TestmergeSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -364,12 +313,11 @@
             // TestMergeListLabel
             // 
             this.TestMergeListLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.TestMergeListLabel.Location = new System.Drawing.Point(122, 286);
-            this.TestMergeListLabel.Multiline = true;
+            this.TestMergeListLabel.Items.AddRange(new object[] {
+            "None"});
+            this.TestMergeListLabel.Location = new System.Drawing.Point(122, 260);
             this.TestMergeListLabel.Name = "TestMergeListLabel";
-            this.TestMergeListLabel.ReadOnly = true;
-            this.TestMergeListLabel.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TestMergeListLabel.Size = new System.Drawing.Size(535, 74);
+            this.TestMergeListLabel.Size = new System.Drawing.Size(535, 95);
             this.TestMergeListLabel.TabIndex = 21;
             this.TestMergeListLabel.Visible = false;
             // 
@@ -385,24 +333,6 @@
             this.CurrentRevisionLabel.Text = "Unknown";
             this.CurrentRevisionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.CurrentRevisionLabel.Visible = false;
-            // 
-            // RepoEmailTextBox
-            // 
-            this.RepoEmailTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.RepoEmailTextBox.Location = new System.Drawing.Point(122, 197);
-            this.RepoEmailTextBox.Name = "RepoEmailTextBox";
-            this.RepoEmailTextBox.Size = new System.Drawing.Size(535, 20);
-            this.RepoEmailTextBox.TabIndex = 19;
-            this.RepoEmailTextBox.Visible = false;
-            // 
-            // RepoCommitterNameTextBox
-            // 
-            this.RepoCommitterNameTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.RepoCommitterNameTextBox.Location = new System.Drawing.Point(122, 168);
-            this.RepoCommitterNameTextBox.Name = "RepoCommitterNameTextBox";
-            this.RepoCommitterNameTextBox.Size = new System.Drawing.Size(535, 20);
-            this.RepoCommitterNameTextBox.TabIndex = 18;
-            this.RepoCommitterNameTextBox.Visible = false;
             // 
             // RepoApplyButton
             // 
@@ -468,34 +398,6 @@
             this.MergePRButton.Visible = false;
             this.MergePRButton.Click += new System.EventHandler(this.TestMergeButton_Click);
             // 
-            // CommitterEmailTitle
-            // 
-            this.CommitterEmailTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommitterEmailTitle.AutoSize = true;
-            this.CommitterEmailTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CommitterEmailTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.CommitterEmailTitle.Location = new System.Drawing.Point(6, 199);
-            this.CommitterEmailTitle.Name = "CommitterEmailTitle";
-            this.CommitterEmailTitle.Size = new System.Drawing.Size(67, 18);
-            this.CommitterEmailTitle.TabIndex = 10;
-            this.CommitterEmailTitle.Text = "E-mail:";
-            this.CommitterEmailTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.CommitterEmailTitle.Visible = false;
-            // 
-            // CommiterNameTitle
-            // 
-            this.CommiterNameTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommiterNameTitle.AutoSize = true;
-            this.CommiterNameTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CommiterNameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.CommiterNameTitle.Location = new System.Drawing.Point(6, 170);
-            this.CommiterNameTitle.Name = "CommiterNameTitle";
-            this.CommiterNameTitle.Size = new System.Drawing.Size(62, 18);
-            this.CommiterNameTitle.TabIndex = 9;
-            this.CommiterNameTitle.Text = "Name:";
-            this.CommiterNameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.CommiterNameTitle.Visible = false;
-            // 
             // IdentityLabel
             // 
             this.IdentityLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -504,9 +406,9 @@
             this.IdentityLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
             this.IdentityLabel.Location = new System.Drawing.Point(6, 142);
             this.IdentityLabel.Name = "IdentityLabel";
-            this.IdentityLabel.Size = new System.Drawing.Size(257, 18);
+            this.IdentityLabel.Size = new System.Drawing.Size(116, 18);
             this.IdentityLabel.TabIndex = 8;
-            this.IdentityLabel.Text = "Changelog Committer Identity";
+            this.IdentityLabel.Text = "Backup Tags:";
             this.IdentityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.IdentityLabel.Visible = false;
             // 
@@ -515,7 +417,7 @@
             this.TestMergeListTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.TestMergeListTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TestMergeListTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.TestMergeListTitle.Location = new System.Drawing.Point(6, 286);
+            this.TestMergeListTitle.Location = new System.Drawing.Point(6, 260);
             this.TestMergeListTitle.Name = "TestMergeListTitle";
             this.TestMergeListTitle.Size = new System.Drawing.Size(110, 41);
             this.TestMergeListTitle.TabIndex = 6;
@@ -543,9 +445,9 @@
             this.BranchNameTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
             this.BranchNameTitle.Location = new System.Drawing.Point(6, 72);
             this.BranchNameTitle.Name = "BranchNameTitle";
-            this.BranchNameTitle.Size = new System.Drawing.Size(110, 18);
+            this.BranchNameTitle.Size = new System.Drawing.Size(70, 18);
             this.BranchNameTitle.TabIndex = 4;
-            this.BranchNameTitle.Text = "Branch/SHA:";
+            this.BranchNameTitle.Text = "Branch:";
             this.BranchNameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BranchNameTitle.Visible = false;
             // 
@@ -1905,30 +1807,9 @@
 
 		#endregion
 		private System.Windows.Forms.TabControl Panels;
-		private System.Windows.Forms.TabPage RepoPanel;
-		private System.Windows.Forms.Label RepoProgressBarLabel;
-		private System.Windows.Forms.ProgressBar RepoProgressBar;
-		private System.Windows.Forms.Button CloneRepositoryButton;
 		private System.ComponentModel.BackgroundWorker RepoBGW;
-		private System.Windows.Forms.Label CurrentRevisionLabel;
-		private System.Windows.Forms.TextBox RepoEmailTextBox;
-		private System.Windows.Forms.TextBox RepoCommitterNameTextBox;
-		private System.Windows.Forms.Button RepoApplyButton;
-		private System.Windows.Forms.TextBox RepoBranchTextBox;
-		private System.Windows.Forms.TextBox RepoRemoteTextBox;
-		private System.Windows.Forms.Button HardReset;
-		private System.Windows.Forms.Button UpdateRepoButton;
-		private System.Windows.Forms.Button MergePRButton;
-		private System.Windows.Forms.Label CommitterEmailTitle;
-		private System.Windows.Forms.Label CommiterNameTitle;
-		private System.Windows.Forms.Label IdentityLabel;
-		private System.Windows.Forms.Label TestMergeListTitle;
-		private System.Windows.Forms.Label RemoteNameTitle;
-		private System.Windows.Forms.Label BranchNameTitle;
-		private System.Windows.Forms.Label CurrentRevisionTitle;
 		private System.Windows.Forms.TabPage BYONDPanel;
 		private System.Windows.Forms.TabPage ServerPanel;
-		private System.Windows.Forms.TextBox TestMergeListLabel;
 		private System.Windows.Forms.Button UpdateButton;
 		private System.Windows.Forms.NumericUpDown MinorVersionNumeric;
 		private System.Windows.Forms.NumericUpDown MajorVersionNumeric;
@@ -1943,7 +1824,6 @@
 		private System.Windows.Forms.Label StagedVersionTitle;
 		private System.Windows.Forms.TabPage ChatPanel;
 		private System.Windows.Forms.TabPage ConfigPanel;
-		private System.Windows.Forms.NumericUpDown TestmergeSelector;
 		private System.Windows.Forms.Label ServerStatusTitle;
 		private System.Windows.Forms.Button compileButton;
 		private System.Windows.Forms.Button initializeButton;
@@ -1967,10 +1847,6 @@
 		private System.Windows.Forms.Button UpdateMergeButton;
 		private System.Windows.Forms.Button UpdateHardButton;
 		private System.ComponentModel.BackgroundWorker FullUpdateWorker;
-		private System.Windows.Forms.TextBox CommitterLoginTextBox;
-		private System.Windows.Forms.Label CommitterPasswordTitle;
-		private System.Windows.Forms.Label CommiterLoginTitle;
-		private System.Windows.Forms.Button RepoGenChangelogButton;
 		private System.Windows.Forms.TabControl ConfigPanels;
 		private System.Windows.Forms.TabPage ConfigConfigPanel;
 		private System.Windows.Forms.Button ConfigRefresh;
@@ -2036,12 +1912,31 @@
 		private System.Windows.Forms.CheckedListBox NegativePermissions;
 		private System.Windows.Forms.Label NegativePermissionsTitle;
 		private System.Windows.Forms.Label ConfigDisabledLabel;
+		private System.Windows.Forms.Button ResetTestmerge;
+		private System.Windows.Forms.TabPage RepoPanel;
+		private System.Windows.Forms.Button ResetRemote;
 		private System.Windows.Forms.Button RecloneButton;
 		private System.Windows.Forms.TextBox PythonPathText;
 		private System.Windows.Forms.Label PythonPathLabel;
-		private System.Windows.Forms.Button ResetRemote;
-		private System.Windows.Forms.TextBox CommitterPasswordTextBox;
-		private System.Windows.Forms.Button ResetTestmerge;
+		private System.Windows.Forms.Button RepoGenChangelogButton;
+		private System.Windows.Forms.NumericUpDown TestmergeSelector;
+		private System.Windows.Forms.ListBox TestMergeListLabel;
+		private System.Windows.Forms.Label CurrentRevisionLabel;
+		private System.Windows.Forms.Button RepoApplyButton;
+		private System.Windows.Forms.TextBox RepoBranchTextBox;
+		private System.Windows.Forms.TextBox RepoRemoteTextBox;
+		private System.Windows.Forms.Button HardReset;
+		private System.Windows.Forms.Button UpdateRepoButton;
+		private System.Windows.Forms.Button MergePRButton;
+		private System.Windows.Forms.Label IdentityLabel;
+		private System.Windows.Forms.Label TestMergeListTitle;
+		private System.Windows.Forms.Label RemoteNameTitle;
+		private System.Windows.Forms.Label BranchNameTitle;
+		private System.Windows.Forms.Label CurrentRevisionTitle;
+		private System.Windows.Forms.Button CloneRepositoryButton;
+		private System.Windows.Forms.Label RepoProgressBarLabel;
+		private System.Windows.Forms.ProgressBar RepoProgressBar;
+		private System.Windows.Forms.ListBox BackupTagsList;
 	}
 }
 
