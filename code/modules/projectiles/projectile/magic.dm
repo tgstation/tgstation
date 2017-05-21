@@ -11,8 +11,10 @@
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
-/obj/item/projectile/magic/death/on_hit(target)
+/obj/item/projectile/magic/death/on_hit(atom/target, blocked = 0)
 	. = ..()
+	if(prob(blocked))
+		return
 	if(ismob(target))
 		var/mob/M = target
 		M.death(0)
@@ -24,8 +26,10 @@
 	damage_type = OXY
 	nodamage = 1
 
-/obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
+/obj/item/projectile/magic/resurrection/on_hit(mob/living/target, blocked = 0)
 	. = ..()
+	if(prob(blocked))
+		return
 	if(isliving(target))
 		if(target.hellbound)
 			return
@@ -48,8 +52,10 @@
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
-/obj/item/projectile/magic/teleport/on_hit(mob/target)
+/obj/item/projectile/magic/teleport/on_hit(mob/target, blocked = 0)
 	. = ..()
+	if(prob(blocked))
+		return
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -73,8 +79,10 @@
 		/obj/structure/mineral_door/transparent/diamond)
 
 
-/obj/item/projectile/magic/door/on_hit(atom/target)
+/obj/item/projectile/magic/door/on_hit(atom/target, blocked = 0)
 	. = ..()
+	if(prob(blocked))
+		return
 	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
 	else
@@ -101,9 +109,11 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/change/on_hit(atom/change)
+/obj/item/projectile/magic/change/on_hit(atom/target, blocked = 0)
 	. = ..()
-	wabbajack(change)
+	if(prob(blocked))
+		return
+	wabbajack(target)
 	qdel(src)
 
 /proc/wabbajack(mob/living/M)
@@ -288,6 +298,8 @@
 	nodamage = 1
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+	if(prob(blocked))
+		return
 	target.animate_atom_living(firer)
 	..()
 
@@ -388,8 +400,10 @@
 		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
-/obj/item/projectile/magic/aoe/lightning/on_hit(target)
+/obj/item/projectile/magic/aoe/lightning/on_hit(atom/target, blocked = 0)
 	. = ..()
+	if(prob(blocked))
+		return
 	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
 	qdel(src)
 
@@ -410,8 +424,10 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
-/obj/item/projectile/magic/aoe/fireball/on_hit(target)
+/obj/item/projectile/magic/aoe/fireball/on_hit(atom/target, blocked = 0)
 	. = ..()
+	if(prob(blocked))
+		return
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 	if(ismob(target)) //multiple flavors of pain
