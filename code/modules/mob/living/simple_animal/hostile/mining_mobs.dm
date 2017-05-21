@@ -1043,7 +1043,7 @@
 	T.visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
 	T.visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(T,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
-	for(var/turf/closed/mineral/M in circlerangeturfs(T, 2))
+	for(var/turf/closed/mineral/M in RANGE_TURFS(2, T))
 		if(istype(M, /turf/closed/mineral/gibtonite))
 			var/turf/closed/mineral/gibtonite/G = M
 			G.stage = GIBTONITE_INERT
@@ -1056,7 +1056,8 @@
 	playsound(T,'sound/effects/explosionfar.ogg', 200, 1)
 	for(var/mob/M in range(7,T))
 		shake_camera(M, 15, 1)
-	for(var/turf/F in RANGE_TURFS(2, T))
+	for(var/t in RANGE_TURFS(2, T))
+		var/turf/F = t
 		if(get_dist(F, T) > 1) //outer ring is lava, to help make the chasm more avoidable
 			F.TerraformTurf(/turf/open/floor/plating/lava/smooth/lava_land_surface)
 		else
