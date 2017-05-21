@@ -26,6 +26,20 @@
 	reagent_state = SOLID
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
+	overdose_threshold = 200
+
+/datum/reagent/consumable/nutriment/overdose_process(mob/living/M)
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		if(!H.heart_attack)
+			H.heart_attack = 1 // rip in pepperoni
+			if(H.stat == CONSCIOUS)
+				H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
+		else
+			H.losebreath += 10
+			H.adjustOxyLoss(rand(5,25), 0)
+			. = 1
+	return ..() || .
 
 	var/brute_heal = 1
 	var/burn_heal = 0
