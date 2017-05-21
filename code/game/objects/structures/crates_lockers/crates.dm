@@ -19,6 +19,13 @@
 	..()
 	update_icon()
 
+/obj/structure/closet/crate/Bumped(AM as mob|obj)
+	..()
+	if(istype(AM, /obj/structure/closet/crate) && !anchored)
+		var/d = get_dir(AM, src)
+		if(step(src, d))
+			step(AM, d)
+
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
