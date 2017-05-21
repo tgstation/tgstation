@@ -297,10 +297,14 @@
 		if(bayonet)
 			bayonet.attack(M, user)
 			return
-		else
-			return ..()
-	else
-		return
+	return ..()
+
+/obj/item/weapon/gun/attack_obj(obj/O, mob/user)
+	if(user.a_intent == INTENT_HARM)
+		if(bayonet)
+			bayonet.attack_obj(O, user)
+			return
+	return ..()
 
 /obj/item/weapon/gun/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -409,9 +413,6 @@
 		current_skin = options[choice]
 		to_chat(M, "Your gun is now skinned as [choice]. Say hello to your new friend.")
 		update_icon()
-
-
-
 
 /obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
 	if(!ishuman(user) || !ishuman(target))
