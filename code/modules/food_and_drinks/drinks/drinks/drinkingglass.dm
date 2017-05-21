@@ -30,6 +30,17 @@
 		name = "drinking glass"
 		desc = "Your standard drinking glass."
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	if(istype(I, /obj/item/weapon/pen))
+		var/txt = stripped_input(user, "What would you like to name this drink?", "Mixology", "", 30)
+		if(txt)
+			user << "<span class='notice'>You give the drink a new name. Fancy!</span>"
+			name = "[txt]"
+			desc = "The bartender calls this [txt]. Wonder what's in it..."
+
+
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
 //  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
