@@ -272,9 +272,33 @@
 	SSblackbox.add_details("gun_fired","[src.type]")
 	return 1
 
+/obj/item/weapon/gun/update_icon()
+	..()
+	cut_overlays()
+	if(gun_light && can_flashlight)
+		var/state = "flight[gun_light.on? "_on":""]"	//Generic state.
+		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
+			state = gun_light.icon_state
+		var/mutable_appearance/flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', state)
+		flashlight_overlay.pixel_x = flight_x_offset
+		flashlight_overlay.pixel_y = flight_y_offset
+		add_overlay(flashlight_overlay)
+	if(bayonet && can_bayonet)
+		var/state = "bayonet"							//Generic state.
+		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
+			state = bayonet.icon_state
+		var/mutable_appearance/knife_overlay = mutable_appearance('icons/obj/guns/bayonets.dmi', state)
+		knife_overlay.pixel_x = knife_x_offset
+		knife_overlay.pixel_y = knife_y_offset
+		add_overlay(knife_overlay)
+
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
-		..()
+		if(bayonet)
+			bayonet.attack(M, user)
+			return
+		else
+			return ..()
 	else
 		return
 
@@ -305,8 +329,8 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			to_chat(user, "<span class='notice'>You attach \the [K] to the front of ]the [src].</span>")
-			update_icon()
 			bayonet = K
+			update_icon()
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(gun_light)
 			var/obj/item/device/flashlight/seclite/S = gun_light
