@@ -134,7 +134,7 @@
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+	while(locid <= 50)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
 		var/istart = 0
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
@@ -172,9 +172,9 @@
 	info_links = info
 	var/i = 0
 	for(i=1,i<=fields,i++)
+		if(i >= 50) break
 		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
-
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
