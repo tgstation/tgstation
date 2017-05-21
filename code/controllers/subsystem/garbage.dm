@@ -185,9 +185,6 @@ SUBSYSTEM_DEF(garbage)
 	if(!istype(D))
 		del(D)
 		return
-	if(!istype(D))
-		del(D)
-		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[D.type]"
 #endif
