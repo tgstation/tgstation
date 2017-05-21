@@ -1056,7 +1056,7 @@
 	playsound(T,'sound/effects/explosionfar.ogg', 200, 1)
 	for(var/mob/M in range(7,T))
 		shake_camera(M, 15, 1)
-	for(var/turf/F in circlerangeturfs(T, 2))
+	for(var/turf/F in RANGE_TURFS(2, T))
 		if(get_dist(F, T) > 1) //outer ring is lava, to help make the chasm more avoidable
 			F.TerraformTurf(/turf/open/floor/plating/lava/smooth/lava_land_surface)
 		else
