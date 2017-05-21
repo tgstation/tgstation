@@ -107,8 +107,8 @@ You can clear all active test merges using `Reset to Origin Branch` in the `Repo
 ### Resetting, Recompiling, and troubleshooting.
 * `Server` -> `Copy from Repo and Compile`
 	* Just recompiles the game code and stages it to apply next round
-* `Repository` -> `Reset to Origin Branch`
-	* Resets the git repo to the state of the last update operation (clearing any changes or test merges) (Does not update the server or resets `Static` folder)
+* `Server` -> `Reset and Recompile`
+	* Like the above but resets the git repo to the state of the last update operation (clearing any changes or test merges) (Does not reset `gamedata/` data/settings)
 	* Generally used to clear out test merges
 * `Server` -> `Initialize Game Folders`
 	* Requires the server not be running, rebuilds the staging A/B folders and then does `Copy from Repo and Compile`.
