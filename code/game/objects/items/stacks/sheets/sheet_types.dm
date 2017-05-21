@@ -52,6 +52,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("anvil", /obj/machinery/anvil, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("smelter", /obj/machinery/smelter, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("smith's hammer", /obj/item/weapon/smith_hammer, 2), \
 ))
 
 /obj/item/stack/sheet/metal
