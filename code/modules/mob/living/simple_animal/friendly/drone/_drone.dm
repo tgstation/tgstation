@@ -53,9 +53,13 @@
 	var/colour = "grey"	//Stored drone color, so we can go back when unhacked.
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
-	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
-	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-	"3. Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities, You must never actively work against these goals."
+	"<big>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</big>\n"+\
+	"Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.\n"+\
+	"Actions that constitute interference include, but are not limited to:\n"+\
+	"- Interacting with round critical objects (IDs, weapons, contraband, powersinks, bombs, etc.)\n"+\
+	"- Interacting with living beings (communication, attacking, healing, etc.)\n"+\
+	"- Interacting with non-living beings (dragging bodies, looting bodies, etc.)\n"+\
+	"These rules are at admin discretion and will be heavily enforced."
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
