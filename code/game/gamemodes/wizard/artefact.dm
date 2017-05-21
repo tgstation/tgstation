@@ -175,6 +175,7 @@
 			continue
 		var/mob/living/carbon/human/H = X
 		if(H.stat == DEAD)
+			dust(H)
 			spooky_scaries.Remove(X)
 			continue
 	listclearnulls(spooky_scaries)
