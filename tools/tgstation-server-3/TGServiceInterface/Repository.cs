@@ -103,16 +103,6 @@ namespace TGServiceInterface
 		[OperationContract]
 		string GenerateChangelog(out string error);
 
-		//Equivalent to running git commit -a -m '<message>' with the set git identity
-		//returns null on success, error on failure
-		[OperationContract]
-		string Commit(string message = "Automatic changelog compile, [ci skip]");
-
-		//pushes the current branch to origin with the set git credentials
-		//returns null on success, error on failure
-		[OperationContract]
-		string Push();
-
 		/// <summary>
 		/// Sets the path to the python 2.7 installation
 		/// </summary>

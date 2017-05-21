@@ -17,8 +17,6 @@ namespace TGControlPanel
 			Test,
 			Wait,
 			GenCL,
-			Commit,
-			Push,
 		}
 
 		RepoAction action;
@@ -96,8 +94,6 @@ namespace TGControlPanel
 				CommitterPasswordTextBox.Visible = true;
 				CommitterLoginTextBox.Visible = true;
 				RepoGenChangelogButton.Visible = true;
-				RepoCommitButton.Visible = true;
-				RepoPushButton.Visible = true;
 				RecloneButton.Visible = true;
 				ResetRemote.Visible = true;
 
@@ -181,12 +177,6 @@ namespace TGControlPanel
 					if(repoError != null)
 						repoError += ": " + result;
 					break;
-				case RepoAction.Commit:
-					repoError = Repo.Commit();
-					break;
-				case RepoAction.Push:
-					repoError = Repo.Push();
-					break;
 				default:
 					//reeee
 					return;
@@ -253,8 +243,6 @@ namespace TGControlPanel
 			CommitterPasswordTextBox.Visible = false;
 			CommitterLoginTextBox.Visible = false;
 			RepoGenChangelogButton.Visible = false;
-			RepoCommitButton.Visible = false;
-			RepoPushButton.Visible = false;
 			PythonPathLabel.Visible = false;
 			PythonPathText.Visible = false;
 			RecloneButton.Visible = false;
@@ -348,16 +336,6 @@ namespace TGControlPanel
 		private void RepoGenChangelogButton_Click(object sender, System.EventArgs e)
 		{
 			DoAsyncOp(RepoAction.GenCL, "Generating changelog...");
-		}
-
-		private void RepoCommitButton_Click(object sender, System.EventArgs e)
-		{
-			DoAsyncOp(RepoAction.Commit, "Committing changes...");
-		}
-
-		private void RepoPushButton_Click(object sender, System.EventArgs e)
-		{
-			DoAsyncOp(RepoAction.Push, "Pushing changes...");
 		}
 	}
 }

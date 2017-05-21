@@ -660,7 +660,7 @@ namespace TGServerService
 		}
 
 		//public api
-		public string Commit(string message = "Automatic changelog compile, [ci skip]")
+		string Commit(string message = "Automatic changelog compile, [ci skip]")
 		{
 			lock (RepoLock)
 			{
@@ -688,7 +688,7 @@ namespace TGServerService
 		}
 
 		//public api
-		public string Push()
+		string Push()
 		{
 			lock (RepoLock)
 			{

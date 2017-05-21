@@ -32,13 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.Panels = new System.Windows.Forms.TabControl();
             this.RepoPanel = new System.Windows.Forms.TabPage();
+            this.ResetRemote = new System.Windows.Forms.Button();
             this.RecloneButton = new System.Windows.Forms.Button();
             this.PythonPathText = new System.Windows.Forms.TextBox();
             this.PythonPathLabel = new System.Windows.Forms.Label();
-            this.RepoPushButton = new System.Windows.Forms.Button();
-            this.RepoCommitButton = new System.Windows.Forms.Button();
             this.RepoGenChangelogButton = new System.Windows.Forms.Button();
-            this.CommitterPasswordTextBox = new System.Windows.Forms.TextBox();
             this.CommitterLoginTextBox = new System.Windows.Forms.TextBox();
             this.CommitterPasswordTitle = new System.Windows.Forms.Label();
             this.CommiterLoginTitle = new System.Windows.Forms.Label();
@@ -169,7 +167,7 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.ResetRemote = new System.Windows.Forms.Button();
+            this.CommitterPasswordTextBox = new System.Windows.Forms.TextBox();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -211,8 +209,6 @@
             this.RepoPanel.Controls.Add(this.RecloneButton);
             this.RepoPanel.Controls.Add(this.PythonPathText);
             this.RepoPanel.Controls.Add(this.PythonPathLabel);
-            this.RepoPanel.Controls.Add(this.RepoPushButton);
-            this.RepoPanel.Controls.Add(this.RepoCommitButton);
             this.RepoPanel.Controls.Add(this.RepoGenChangelogButton);
             this.RepoPanel.Controls.Add(this.CommitterPasswordTextBox);
             this.RepoPanel.Controls.Add(this.CommitterLoginTextBox);
@@ -246,10 +242,22 @@
             this.RepoPanel.TabIndex = 0;
             this.RepoPanel.Text = "Repository";
             // 
+            // ResetRemote
+            // 
+            this.ResetRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResetRemote.Location = new System.Drawing.Point(722, 81);
+            this.ResetRemote.Name = "ResetRemote";
+            this.ResetRemote.Size = new System.Drawing.Size(140, 29);
+            this.ResetRemote.TabIndex = 33;
+            this.ResetRemote.Text = "Reset To Remote";
+            this.ResetRemote.UseVisualStyleBackColor = true;
+            this.ResetRemote.Visible = false;
+            this.ResetRemote.Click += new System.EventHandler(this.ResetRemote_Click);
+            // 
             // RecloneButton
             // 
             this.RecloneButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecloneButton.Location = new System.Drawing.Point(722, 282);
+            this.RecloneButton.Location = new System.Drawing.Point(722, 212);
             this.RecloneButton.Name = "RecloneButton";
             this.RecloneButton.Size = new System.Drawing.Size(140, 29);
             this.RecloneButton.TabIndex = 32;
@@ -279,30 +287,6 @@
             this.PythonPathLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.PythonPathLabel.Visible = false;
             // 
-            // RepoPushButton
-            // 
-            this.RepoPushButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RepoPushButton.Location = new System.Drawing.Point(722, 247);
-            this.RepoPushButton.Name = "RepoPushButton";
-            this.RepoPushButton.Size = new System.Drawing.Size(140, 29);
-            this.RepoPushButton.TabIndex = 29;
-            this.RepoPushButton.Text = "Push";
-            this.RepoPushButton.UseVisualStyleBackColor = true;
-            this.RepoPushButton.Visible = false;
-            this.RepoPushButton.Click += new System.EventHandler(this.RepoPushButton_Click);
-            // 
-            // RepoCommitButton
-            // 
-            this.RepoCommitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RepoCommitButton.Location = new System.Drawing.Point(722, 212);
-            this.RepoCommitButton.Name = "RepoCommitButton";
-            this.RepoCommitButton.Size = new System.Drawing.Size(140, 29);
-            this.RepoCommitButton.TabIndex = 28;
-            this.RepoCommitButton.Text = "Commit";
-            this.RepoCommitButton.UseVisualStyleBackColor = true;
-            this.RepoCommitButton.Visible = false;
-            this.RepoCommitButton.Click += new System.EventHandler(this.RepoCommitButton_Click);
-            // 
             // RepoGenChangelogButton
             // 
             this.RepoGenChangelogButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -314,17 +298,6 @@
             this.RepoGenChangelogButton.UseVisualStyleBackColor = true;
             this.RepoGenChangelogButton.Visible = false;
             this.RepoGenChangelogButton.Click += new System.EventHandler(this.RepoGenChangelogButton_Click);
-            // 
-            // CommitterPasswordTextBox
-            // 
-            this.CommitterPasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommitterPasswordTextBox.Location = new System.Drawing.Point(122, 256);
-            this.CommitterPasswordTextBox.Name = "CommitterPasswordTextBox";
-            this.CommitterPasswordTextBox.Size = new System.Drawing.Size(535, 20);
-            this.CommitterPasswordTextBox.TabIndex = 26;
-            this.CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
-            this.CommitterPasswordTextBox.UseSystemPasswordChar = true;
-            this.CommitterPasswordTextBox.Visible = false;
             // 
             // CommitterLoginTextBox
             // 
@@ -1883,17 +1856,16 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
-            // ResetRemote
+            // CommitterPasswordTextBox
             // 
-            this.ResetRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ResetRemote.Location = new System.Drawing.Point(722, 81);
-            this.ResetRemote.Name = "ResetRemote";
-            this.ResetRemote.Size = new System.Drawing.Size(140, 29);
-            this.ResetRemote.TabIndex = 33;
-            this.ResetRemote.Text = "Reset To Remote";
-            this.ResetRemote.UseVisualStyleBackColor = true;
-            this.ResetRemote.Visible = false;
-            this.ResetRemote.Click += new System.EventHandler(this.ResetRemote_Click);
+            this.CommitterPasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CommitterPasswordTextBox.Location = new System.Drawing.Point(122, 256);
+            this.CommitterPasswordTextBox.Name = "CommitterPasswordTextBox";
+            this.CommitterPasswordTextBox.Size = new System.Drawing.Size(535, 20);
+            this.CommitterPasswordTextBox.TabIndex = 26;
+            this.CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
+            this.CommitterPasswordTextBox.UseSystemPasswordChar = true;
+            this.CommitterPasswordTextBox.Visible = false;
             // 
             // Main
             // 
@@ -1997,12 +1969,9 @@
 		private System.Windows.Forms.Button UpdateMergeButton;
 		private System.Windows.Forms.Button UpdateHardButton;
 		private System.ComponentModel.BackgroundWorker FullUpdateWorker;
-		private System.Windows.Forms.TextBox CommitterPasswordTextBox;
 		private System.Windows.Forms.TextBox CommitterLoginTextBox;
 		private System.Windows.Forms.Label CommitterPasswordTitle;
 		private System.Windows.Forms.Label CommiterLoginTitle;
-		private System.Windows.Forms.Button RepoPushButton;
-		private System.Windows.Forms.Button RepoCommitButton;
 		private System.Windows.Forms.Button RepoGenChangelogButton;
 		private System.Windows.Forms.TabControl ConfigPanels;
 		private System.Windows.Forms.TabPage ConfigConfigPanel;
@@ -2074,6 +2043,7 @@
 		private System.Windows.Forms.TextBox PythonPathText;
 		private System.Windows.Forms.Label PythonPathLabel;
 		private System.Windows.Forms.Button ResetRemote;
+		private System.Windows.Forms.TextBox CommitterPasswordTextBox;
 	}
 }
 

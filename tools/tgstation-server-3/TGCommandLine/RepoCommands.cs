@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand(), new RepoCheckoutCommand(), new RepoResetCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand(), new RepoCheckoutCommand(), new RepoResetCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -168,49 +168,6 @@ namespace TGCommandLine
 		protected override string GetHelpText()
 		{
 			return "Compiles the html changelog";
-		}
-	}
-	class RepoCommitCommand : Command
-	{
-		public RepoCommitCommand()
-		{
-			Keyword = "commit";
-		}
-		public override ExitCode Run(IList<string> parameters)
-		{
-			string res;
-			if(parameters.Count > 1)
-				res = Server.GetComponent<ITGRepository>().Commit(parameters[0]);
-			else
-				res = Server.GetComponent<ITGRepository>().Commit();
-			Console.WriteLine(res ?? "Success");
-			return res == null ? ExitCode.Normal : ExitCode.ServerError;
-		}
-		protected override string GetArgumentString()
-		{
-			return "[message]";
-		}
-		protected override string GetHelpText()
-		{
-			return "Commits all current changes to the repository using the configured identity. By default, uses the automatic changelog compile message";
-		}
-	}
-	class RepoPushCommand : Command
-	{
-		public RepoPushCommand()
-		{
-			Keyword = "push";
-		}
-		public override ExitCode Run(IList<string> parameters)
-		{
-			var res = Server.GetComponent<ITGRepository>().Push();
-			Console.WriteLine(res ?? "Success");
-			return res == null ? ExitCode.Normal : ExitCode.ServerError;
-		}
-
-		protected override string GetHelpText()
-		{
-			return "Pushes commits to the origin branch using the configured credentials";
 		}
 	}
 	class RepoSetEmailCommand : Command
