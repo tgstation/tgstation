@@ -54,10 +54,13 @@ namespace TGServiceInterface
 		[OperationContract]
 		string Update(bool reset);
 
-		//Hard resets the current branch
-		//returns null on success, error message on failure
+		/// <summary>
+		/// Runs git reset --hard
+		/// </summary>
+		/// <param name="tracked">Changes command to git reset --hard origin/branch_name if true</param>
+		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
-		string Reset();
+		string Reset(bool tracked);
 
 		//Merges the pull request number if the remote is a github repository
 		//returns null on success, error message on failure

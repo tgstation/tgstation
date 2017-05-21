@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoCommitCommand(), new RepoPushCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand(), new RepoCheckoutCommand(), new RepoResetCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -43,6 +43,7 @@ namespace TGCommandLine
 			return "Clean up everything and clones the repo at git-url with optional branch name";
 		}
 	}
+
 	class RepoStatusCommand : Command
 	{
 		public RepoStatusCommand()
@@ -54,7 +55,21 @@ namespace TGCommandLine
 			var Repo = Server.GetComponent<ITGRepository>();
 			var busy = Repo.OperationInProgress();
 			if (!busy)
+			{
 				Console.WriteLine("Repo: Idle");
+				var head = Repo.GetHead(out string error);
+				if (head == null)
+					head = "Error: " + error;
+				var branch = Repo.GetBranch(out error);
+				if (branch == null)
+					branch = "Error: " + error;
+				var remote = Repo.GetRemote(out error);
+				if (remote == null)
+					remote = "Error: " + error;
+				Console.WriteLine("Remote: " + remote);
+				Console.WriteLine("Branch: " + branch);
+				Console.WriteLine("HEAD: " + head);
+			}
 			else
 			{
 				Console.WriteLine("Repo: Busy");
@@ -74,7 +89,29 @@ namespace TGCommandLine
 		}
 		protected override string GetHelpText()
 		{
-			return "Shows the busy status of the repo";
+			return "Shows the busy status of the repo, remote, branch, and HEAD information";
+		}
+	}
+
+	class RepoResetCommand : Command
+	{
+		public RepoResetCommand()
+		{
+			Keyword = "reset";
+		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var result = Server.GetComponent<ITGRepository>().Reset(parameters.Count > 0 && parameters[0].ToLower() == "--origin");
+			Console.WriteLine(result ?? "Success!");
+			return result == null ? ExitCode.Normal : ExitCode.ServerError;
+		}
+		protected override string GetArgumentString()
+		{
+			return "[--origin]";
+		}
+		protected override string GetHelpText()
+		{
+			return "Hard resets the repo. If a target is specified, the current branch is reset to that branch";
 		}
 	}
 
@@ -364,6 +401,24 @@ namespace TGCommandLine
 				foreach (var I in data)
 					Console.WriteLine(String.Format("{0} at commit {1}", I.Key, I.Value));
 			return ExitCode.Normal;
+		}
+	}
+	class RepoCheckoutCommand : Command
+	{
+		public RepoCheckoutCommand()
+		{
+			Keyword = "checkout";
+			RequiredParameters = 1;
+		}
+		protected override string GetHelpText()
+		{
+			return "Checks out the targeted object";
+		}
+		public override ExitCode Run(IList<string> parameters)
+		{
+			var res = Server.GetComponent<ITGRepository>().Checkout(parameters[0]);
+			Console.WriteLine(res ?? "Success");
+			return res == null ? ExitCode.Normal : ExitCode.ServerError;
 		}
 	}
 }

@@ -214,7 +214,7 @@ namespace TGServerService
 				try
 				{
 					error = null;
-					return branch ? Repo.Head.FriendlyName : Repo.Head.Tip.Sha; ;
+					return branch ? Repo.Head.FriendlyName : Repo.Head.Tip.Sha;
 				}
 				catch (Exception e)
 				{
@@ -228,7 +228,7 @@ namespace TGServerService
 		//public api
 		public string GetHead(out string error)
 		{
-			return GetShaOrBranch(out error, true);
+			return GetShaOrBranch(out error, false);
 		}
 
 		//public api
@@ -260,14 +260,14 @@ namespace TGServerService
 
 		//calls git reset --hard on HEAD
 		//requires RepoLock
-		string ResetNoLock()
+		string ResetNoLock(Branch targetBranch)
 		{
 			try
 			{
-				var result = LoadRepo();
-				if (result != null)
-					return result;
-				Repo.Reset(ResetMode.Hard);
+				if (targetBranch != null)
+					Repo.Reset(ResetMode.Hard, targetBranch.Tip);
+				else
+					Repo.Reset(ResetMode.Hard);
 				return null;
 			}
 			catch (Exception e)
@@ -293,7 +293,7 @@ namespace TGServerService
 						OnCheckoutProgress = HandleCheckoutProgress,
 					};
 					Commands.Checkout(Repo, sha, Opts);
-					var res = ResetNoLock();
+					var res = ResetNoLock(null);
 					SendMessage("REPO: Checkout complete!");
 					return res;
 				}
@@ -317,7 +317,7 @@ namespace TGServerService
 			switch (Result.Status)
 			{
 				case MergeStatus.Conflicts:
-					ResetNoLock();
+					ResetNoLock(null);
 					SendMessage("REPO: Merge conflicted, aborted.");
 					return "Merge conflict occurred.";
 				case MergeStatus.UpToDate:
@@ -339,6 +339,8 @@ namespace TGServerService
 				SendMessage(String.Format("REPO: Updating origin branch...({0})", reset ? "Hard Reset" : "Merge"));
 				try
 				{
+					if (Repo.Head == null || !Repo.Head.IsTracking)
+						return "Cannot update while not on a tracked branch";
 					string logMessage = "";
 					foreach (Remote R in Repo.Network.Remotes)
 					{
@@ -347,12 +349,10 @@ namespace TGServerService
 						fos.OnTransferProgress += HandleTransferProgress;
 						Commands.Fetch(Repo, R.Name, refSpecs, null, logMessage);
 					}
-
-					var originBranch = String.Format("origin/{0}", Repo.Head.FriendlyName);
+					var originBranch = Repo.Head.TrackedBranch;
 					if (reset)
 					{
-						Repo.Reset(ResetMode.Hard, originBranch);
-						var error = ResetNoLock();
+						var error = ResetNoLock(Repo.Head.TrackedBranch);
 						if (error == null)
 						{
 							DeletePRList();
@@ -362,7 +362,7 @@ namespace TGServerService
 							SendMessage("REPO: Update failed!");
 						return error;
 					}
-					return MergeBranch(originBranch);
+					return MergeBranch(originBranch.FriendlyName);
 				}
 				catch (Exception E)
 				{
@@ -430,11 +430,14 @@ namespace TGServerService
 		}
 
 		//public api
-		public string Reset()
+		public string Reset(bool trackedBranch)
 		{
 			lock (RepoLock)
 			{
-				return ResetNoLock();
+				var res = LoadRepo() ?? ResetNoLock(trackedBranch ? (Repo.Head.TrackedBranch ?? Repo.Head) : Repo.Head);
+				if (trackedBranch && res == null)
+					DeletePRList();
+				return res;
 			}
 		}
 
@@ -717,7 +720,6 @@ namespace TGServerService
 							})
 					};
 					Repo.Network.Push(Repo.Head, options);
-					DeletePRList();
 					return null;
 				}
 				catch (Exception e)

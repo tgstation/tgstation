@@ -99,6 +99,7 @@ namespace TGControlPanel
 				RepoCommitButton.Visible = true;
 				RepoPushButton.Visible = true;
 				RecloneButton.Visible = true;
+				ResetRemote.Visible = true;
 
 				CurrentRevisionLabel.Text = Repo.GetHead(out string error) ?? "Unknown";
 				RepoRemoteTextBox.Text = Repo.GetRemote(out error) ?? "Unknown";
@@ -165,7 +166,7 @@ namespace TGControlPanel
 					repoError = Repo.Update(false);
 					break;
 				case RepoAction.Reset:
-					repoError = Repo.Reset();
+					repoError = Repo.Reset(true);
 					break;
 				case RepoAction.Test:
 					repoError = Repo.MergePullRequest(TestPR);
@@ -257,6 +258,7 @@ namespace TGControlPanel
 			PythonPathLabel.Visible = false;
 			PythonPathText.Visible = false;
 			RecloneButton.Visible = false;
+			ResetRemote.Visible = false;
 
 			RepoPanel.UseWaitCursor = true;
 
@@ -321,10 +323,17 @@ namespace TGControlPanel
 		{
 			DoAsyncOp(RepoAction.Merge, "Merging origin branch...");
 		}
+
 		private void HardReset_Click(object sender, EventArgs e)
 		{
-			DoAsyncOp(RepoAction.Update, "Updating and resetting to origin branch...");
+			DoAsyncOp(RepoAction.Reset, "Resetting to origin branch...");
 		}
+		
+		private void ResetRemote_Click(object sender, EventArgs e)
+		{
+			DoAsyncOp(RepoAction.Update, "Updating and resetting to remote branch...");
+		}
+
 		private void TestMergeButton_Click(object sender, EventArgs e)
 		{
 			if (TestmergeSelector.Value == 0)

@@ -169,6 +169,7 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
+            this.ResetRemote = new System.Windows.Forms.Button();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -206,6 +207,7 @@
             // RepoPanel
             // 
             this.RepoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.RepoPanel.Controls.Add(this.ResetRemote);
             this.RepoPanel.Controls.Add(this.RecloneButton);
             this.RepoPanel.Controls.Add(this.PythonPathText);
             this.RepoPanel.Controls.Add(this.PythonPathLabel);
@@ -247,7 +249,7 @@
             // RecloneButton
             // 
             this.RecloneButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RecloneButton.Location = new System.Drawing.Point(722, 247);
+            this.RecloneButton.Location = new System.Drawing.Point(722, 282);
             this.RecloneButton.Name = "RecloneButton";
             this.RecloneButton.Size = new System.Drawing.Size(140, 29);
             this.RecloneButton.TabIndex = 32;
@@ -280,7 +282,7 @@
             // RepoPushButton
             // 
             this.RepoPushButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RepoPushButton.Location = new System.Drawing.Point(722, 212);
+            this.RepoPushButton.Location = new System.Drawing.Point(722, 247);
             this.RepoPushButton.Name = "RepoPushButton";
             this.RepoPushButton.Size = new System.Drawing.Size(140, 29);
             this.RepoPushButton.TabIndex = 29;
@@ -292,7 +294,7 @@
             // RepoCommitButton
             // 
             this.RepoCommitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RepoCommitButton.Location = new System.Drawing.Point(722, 177);
+            this.RepoCommitButton.Location = new System.Drawing.Point(722, 212);
             this.RepoCommitButton.Name = "RepoCommitButton";
             this.RepoCommitButton.Size = new System.Drawing.Size(140, 29);
             this.RepoCommitButton.TabIndex = 28;
@@ -304,7 +306,7 @@
             // RepoGenChangelogButton
             // 
             this.RepoGenChangelogButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RepoGenChangelogButton.Location = new System.Drawing.Point(722, 142);
+            this.RepoGenChangelogButton.Location = new System.Drawing.Point(722, 177);
             this.RepoGenChangelogButton.Name = "RepoGenChangelogButton";
             this.RepoGenChangelogButton.Size = new System.Drawing.Size(140, 29);
             this.RepoGenChangelogButton.TabIndex = 27;
@@ -364,7 +366,7 @@
             // TestmergeSelector
             // 
             this.TestmergeSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.TestmergeSelector.Location = new System.Drawing.Point(722, 116);
+            this.TestmergeSelector.Location = new System.Drawing.Point(722, 151);
             this.TestmergeSelector.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -473,7 +475,7 @@
             // MergePRButton
             // 
             this.MergePRButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.MergePRButton.Location = new System.Drawing.Point(722, 81);
+            this.MergePRButton.Location = new System.Drawing.Point(722, 116);
             this.MergePRButton.Name = "MergePRButton";
             this.MergePRButton.Size = new System.Drawing.Size(140, 29);
             this.MergePRButton.TabIndex = 11;
@@ -1881,6 +1883,18 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
+            // ResetRemote
+            // 
+            this.ResetRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResetRemote.Location = new System.Drawing.Point(722, 81);
+            this.ResetRemote.Name = "ResetRemote";
+            this.ResetRemote.Size = new System.Drawing.Size(140, 29);
+            this.ResetRemote.TabIndex = 33;
+            this.ResetRemote.Text = "Reset To Remote";
+            this.ResetRemote.UseVisualStyleBackColor = true;
+            this.ResetRemote.Visible = false;
+            this.ResetRemote.Click += new System.EventHandler(this.ResetRemote_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2059,6 +2073,7 @@
 		private System.Windows.Forms.Button RecloneButton;
 		private System.Windows.Forms.TextBox PythonPathText;
 		private System.Windows.Forms.Label PythonPathLabel;
+		private System.Windows.Forms.Button ResetRemote;
 	}
 }
 
