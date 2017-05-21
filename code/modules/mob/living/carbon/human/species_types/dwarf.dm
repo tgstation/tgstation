@@ -16,6 +16,7 @@
 	coldmod = 0.85
 	punchdamagehigh = 11
 	mutant_organs = list(/obj/item/organ/alcoholvessel)
+	mutanteyes = /obj/item/organ/eyes/night_vision
 
 /datum/species/dwarf/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
