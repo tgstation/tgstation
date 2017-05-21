@@ -12,7 +12,7 @@
 		explanation_text = text
 
 /datum/objective/proc/check_completion()
-	return completed
+	return TRUE
 
 /datum/objective/proc/is_unique_objective(possible_target)
 	for(var/datum/objective/O in owner.objectives)
