@@ -49,7 +49,7 @@
 /obj/item/weapon/paper/talisman/teleport
 	cultist_name = "Talisman of Teleportation"
 	cultist_desc = "A single-use talisman that will teleport a user to a random rune of the same keyword."
-	color = "#551A8B" // purple
+	color = RUNE_COLOR_TELEPORT
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
 	creation_time = 80

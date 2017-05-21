@@ -52,7 +52,7 @@
 
 /mob/living/simple_animal/hostile/stickman/Initialize(mapload, var/wizard_summoned)
 	..()
-	new /obj/effect/overlay/temp/paper_scatter(src)
+	new /obj/effect/temp_visual/paper_scatter(src)
 	summoned_by_wizard = wizard_summoned
 
 /mob/living/simple_animal/hostile/stickman/death()
