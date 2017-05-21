@@ -92,7 +92,7 @@ namespace TGServiceInterface
 		/// Updates the server fully with various options as a blocking operation
 		/// </summary>
 		/// <param name="updateType">How to handle the repository during the update</param>
-		/// <param name="push_changelog">true if the changelog should be pushed to git</param>
+		/// <param name="push_changelog_if_enabled">true if the changelog should be pushed to git</param>
 		/// <param name="testmerge_pr">If not zero, will testmerge the designated pull request</param>
 		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]

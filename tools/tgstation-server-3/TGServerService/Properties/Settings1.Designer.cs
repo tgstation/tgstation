@@ -266,5 +266,17 @@ namespace TGServerService.Properties {
                 this["ChatProviderEntropy"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AllowChangelogPush {
+            get {
+                return ((bool)(this["AllowChangelogPush"]));
+            }
+            set {
+                this["AllowChangelogPush"] = value;
+            }
+        }
     }
 }

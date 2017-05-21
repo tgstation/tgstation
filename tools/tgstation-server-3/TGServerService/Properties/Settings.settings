@@ -68,5 +68,8 @@
     <Setting Name="ChatProviderEntropy" Type="System.String" Scope="User">
       <Value Profile="(Default)">John Madden</Value>
     </Setting>
+    <Setting Name="AllowChangelogPush" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

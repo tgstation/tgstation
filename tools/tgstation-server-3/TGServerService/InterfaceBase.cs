@@ -34,7 +34,7 @@ namespace TGServerService
 		}
 
 		//one stop update
-		public string UpdateServer(TGRepoUpdateMethod updateType, bool push_changelog, ushort testmerge_pr)
+		public string UpdateServer(TGRepoUpdateMethod updateType, bool push_changelog_if_enabled, ushort testmerge_pr)
 		{
 			string res;
 			if (updateType != TGRepoUpdateMethod.None)
@@ -54,7 +54,7 @@ namespace TGServerService
 			if (res != null)
 				return res;
 
-			if (push_changelog)
+			if (push_changelog_if_enabled && Properties.Settings.Default.AllowChangelogPush)
 			{
 				res = Commit();
 				if (res != null)
