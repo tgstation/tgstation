@@ -298,4 +298,4 @@
 			if(GLOB.blood_target)
 				to_chat(B.current,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
 			B.current.client.images -= GLOB.blood_target_image
-	QDEL_NULL(GLOB.blood_target)
+	GLOB.blood_target = null
