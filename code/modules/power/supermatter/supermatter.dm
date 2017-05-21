@@ -123,6 +123,10 @@
 	var/takes_damage = 1
 	var/produces_gas = 1
 	var/obj/effect/countdown/supermatter/countdown
+	
+	//Shitty way of slowing down processing!
+	var/process_tick = 0
+	var/process_modifier = 4
 
 /obj/machinery/power/supermatter_shard/make_frozen_visual()
 	return
@@ -186,6 +190,11 @@
 		qdel(src)
 
 /obj/machinery/power/supermatter_shard/process_atmos()
+	if(process_tick >= process_modifier)
+		process_tick = 0
+	else
+		process_tick++
+		return
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
