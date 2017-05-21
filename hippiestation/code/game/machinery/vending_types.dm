@@ -469,6 +469,7 @@ MEGASEED SERVITOR
 		/obj/item/seeds/plump = 2,
 		/obj/item/seeds/reishi = 2,
 		/obj/item/seeds/cannabis = 3,
+		/obj/item/seeds/starthistle = 2,
 		/obj/item/seeds/random = 2
 		)
 	premium = list(
@@ -536,6 +537,15 @@ SECTECH
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/weapon/storage/fancy/donut_box = 2
 		)
+
+/obj/machinery/vending/security/pre_throw(obj/item/I)
+	if(istype(I, /obj/item/weapon/grenade))
+		var/obj/item/weapon/grenade/G = I
+		G.preprime()
+	else if(istype(I, /obj/item/device/flashlight))
+		var/obj/item/device/flashlight/F = I
+		F.on = TRUE
+		F.update_brightness()
 
 /*
 
@@ -725,7 +735,7 @@ CHOCOLATE
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
-    ..()
+    . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
     qdel(src)
@@ -778,6 +788,11 @@ CIGARETTE
 		/obj/item/clothing/mask/vape = 3,
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims = 3
 		)
+
+/obj/machinery/vending/cigarette/pre_throw(obj/item/I)
+	if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
+		L.set_lit(TRUE)
 
 /*
 
@@ -843,7 +858,7 @@ SODA
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
-    ..()
+    . = ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
     qdel(src)

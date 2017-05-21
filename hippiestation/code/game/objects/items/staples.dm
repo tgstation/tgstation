@@ -15,8 +15,8 @@
 	attack_verb = list("stapled")
 
 /obj/item/stack/staples/Initialize(loc, amount=0)
+	. = ..()
 	update_icon()
-	return ..()
 
 /obj/item/stack/staples/update_icon()
 	if(get_amount() <= 1)

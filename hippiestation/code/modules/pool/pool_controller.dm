@@ -32,8 +32,7 @@
 	resistance_flags = INDESTRUCTIBLE|UNACIDABLE
 
 /obj/machinery/poolcontroller/Initialize()
-	..()
-	LAZYINITLIST(linkedturfs)
+	. = ..()
 	wires = new /datum/wires/poolcontroller(src)
 	for(var/turf/open/pool/W in range(srange,src)) //Search for /turf/open/beach/water in the range of var/srange
 		LAZYADD(linkedturfs, W)
@@ -135,11 +134,6 @@
 		for(var/X in linkedturfs) //Check for pool-turfs linked to the controller.
 			var/turf/open/pool/W = X
 			for(var/mob/living/M in W) //Check for mobs in the linked pool-turfs.
-				if(M.layer != 5.1)
-					if(M.pixel_y <= initial(M.pixel_y))
-						M.pixel_y++
-					else
-						M.pixel_y--
 				switch(temperature) //Apply different effects based on what the temperature is set to.
 					if(5) //Scalding
 						M.bodytemperature = min(500, M.bodytemperature + 50) //heat mob at 35k(elvin) per cycle

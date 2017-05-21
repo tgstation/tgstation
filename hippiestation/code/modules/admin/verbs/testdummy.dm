@@ -5,9 +5,9 @@
 	registered_name = null
 	assignment = "General"
 
-/obj/item/weapon/card/id/admin/New()
+/obj/item/weapon/card/id/admin/Initialize()
+	. = ..()
 	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()+get_ert_access("commander")
-	..()
 
 /proc/spawntestdummy(var/mob/usr)
 	SSblackbox.inc("admin_secrets_fun_used",1)

@@ -31,7 +31,7 @@
 	..()
 
 /obj/structure/chair/noose/Initialize()
-	..()
+	. = ..()
 	pixel_y += 16 //Noose looks like it's "hanging" in the air
 	over = image(icon, "noose_overlay")
 	over.layer = FLY_LAYER

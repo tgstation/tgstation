@@ -28,6 +28,7 @@
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 	var/list/display_records
 	var/refill_count = 3
+	var/shoot_inventory_chance = 2
 
 	var/vendsound = 'hippiestation/sound/misc/vend.ogg'
 
@@ -60,7 +61,7 @@
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 /obj/machinery/vending/Initialize()
-	..()
+	. = ..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
 		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
@@ -446,7 +447,7 @@
 		speak(slogan)
 		last_slogan = world.time
 
-	if(shoot_inventory && prob(2))
+	if(shoot_inventory && prob(shoot_inventory_chance))
 		throw_item()
 
 
@@ -477,7 +478,7 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in product_records)
+	for(var/datum/data/vending_product/R in shuffle(product_records))
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
@@ -490,19 +491,21 @@
 	if(!throw_item)
 		return 0
 
+	pre_throw(throw_item)
+
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item] at [target]!</span>")
 	return 1
 
+/obj/machinery/vending/proc/pre_throw(obj/item/I)
+	return
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 0.7, check_range))
 		return TRUE

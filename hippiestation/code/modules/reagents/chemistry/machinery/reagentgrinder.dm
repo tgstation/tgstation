@@ -16,7 +16,7 @@
 	var/list/holdingitems
 
 /obj/machinery/reagentgrinder/Initialize()
-	..()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/reagentgrinder/Destroy()
@@ -105,7 +105,6 @@
 		return 0
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
-	LAZYINITLIST(holdingitems)
 	LAZYREMOVE(holdingitems, O)
 	qdel(O)
 
@@ -209,7 +208,7 @@
 	LAZYINITLIST(holdingitems)
 	if (usr.stat != 0)
 		return
-	if (LAZYLEN(holdingitems) == 0)
+	if (!LAZYLEN(holdingitems))
 		return
 	for(var/obj/item/O in holdingitems)
 		O.loc = src.loc
