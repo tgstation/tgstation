@@ -1,8 +1,14 @@
-/obj/item/clothing/suit/armor/riot/dwarf
+/obj/item/clothing/suit/armor/vest/dwarf
 	name = "dwarven armor"
 	desc = "Great for stopping sponges."
 	icon_state = "dwarf"
 	item_state = "dwarf"
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
+	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
+	strip_delay = 80
+	put_on_delay = 60
 	dwarf_only = TRUE
 	greyscale = TRUE
 

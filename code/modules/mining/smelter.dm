@@ -119,7 +119,7 @@
 	name = "shovel head"
 	desc = "A shovel head made of "
 	icon = 'icons/obj/blacksmithing.dmi'
-	icon_state = "pickaxe_head"
+	icon_state = "shovel_head"
 	mold_type = "digging"
 
 /obj/item/weapon/mold_result/post_smithing()
@@ -142,7 +142,7 @@
 	name = "unobtanium broadsword"
 	desc = "A broadsword made of unobtanium, you probably shouldn't be seeing this."
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "claymore"
 	item_state = "claymore"
 

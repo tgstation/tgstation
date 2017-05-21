@@ -73,9 +73,9 @@
 
 /datum/outfit/dorf
 	name = "Dwarf Standard"
-	uniform = /obj/item/clothing/under/dwarf //they're greys gettit
+	uniform = /obj/item/clothing/under/dwarf
 	shoes = /obj/item/clothing/shoes/dwarf
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 
 /*Misc Items + Crafting Parts*/
 /obj/item/weapon/reagent_containers/food/drinks/wooden_mug
