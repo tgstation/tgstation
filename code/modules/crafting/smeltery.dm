@@ -29,7 +29,7 @@
 
 /datum/crafting_recipe/smith_armor
 	name = "Smith Armor"
-	result = /obj/item/clothing/suit/armor/riot/dwarf
+	result = /obj/item/clothing/suit/armor/vest/dwarf
 	reqs = list(/obj/item/weapon/grown/log = 1,
 				/obj/item/weapon/mold_result/armor_plating = 1)
 	parts = list(/obj/item/weapon/mold_result/armor_plating = 1)

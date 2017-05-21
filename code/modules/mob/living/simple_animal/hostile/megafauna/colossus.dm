@@ -657,7 +657,7 @@ Difficulty: Very Hard
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
 	var/heal_power = 5

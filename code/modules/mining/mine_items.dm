@@ -300,31 +300,47 @@
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "airlock"
-	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = 0
 	glass = 1
+	var/expected_dir = SOUTH //we visually turn when shuttle rotated, but need to not turn for any other reason
+
+/obj/machinery/door/airlock/survival_pod/setDir(direction)
+	direction = expected_dir
+	..()
+
+/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
+	expected_dir = angle2dir(rotation+dir2angle(dir))
+	..()
 
 /obj/machinery/door/airlock/survival_pod/vertical
-	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
+	dir = EAST
+	expected_dir = EAST
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
-	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
 	anchored = 1
 	state = 1
 	mineral = "glass"
 	material = "glass"
+	var/expected_dir = SOUTH
+
+/obj/structure/door_assembly/door_assembly_pod/setDir(direction)
+	direction = expected_dir
+	..()
+
+/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
+	expected_dir = angle2dir(rotation+dir2angle(dir))
+	..()
 
 /obj/structure/door_assembly/door_assembly_pod/vertical
-	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
+	dir = EAST
+	expected_dir = EAST
 
 //Table
 /obj/structure/table/survival_pod
