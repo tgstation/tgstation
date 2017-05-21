@@ -350,7 +350,7 @@
 	modifier = 2
 	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
-	cost = 40
+	cost = 35
 
 /obj/item/borg/upgrade/modkit/indoors/modify_projectile(obj/item/projectile/kinetic/K)
 	K.pressure_decrease *= modifier
