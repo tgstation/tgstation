@@ -1324,7 +1324,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Kinetic Accelerator Pressure Mod"
 	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. Occupies 35% mod capacity."
 	item = /obj/item/borg/upgrade/modkit/indoors
-	cost = 7 //you need two for full damage, so total of 14 for maximum damage
+	cost = 8 //you need two for full damage, so total of 16 for maximum damage
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 
