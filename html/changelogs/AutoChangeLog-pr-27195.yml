@@ -1,0 +1,10 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Gang influence is now decentralized, each gangster has their own influence that they can increase by spraying (and protecting) their tags and new influence-enhancing bling."
+  - rscadd: "Gang uniforms are now created based on your gang's color and can be purchased by any gang member. They will increase the wearer's influence and provide protection, but will make it fairly obvious which gang you belong to."
+  - rscadd: "Gangs have access to a new surplus rifle; it is a semi-automatic rifle that is very bulky and has a very low rate of fire. Gang members can buy this gun for just 8 influence."
+  - rscadd: "Gangs have access to the new machine gun turret; it unleashes a volley of bullets with an extended view range. It does not run out of ammo, but a significant delay between volleys and its stationary nature leaves the gunner vulnerable to flanking and return fire. Holding down the trigger will allow you to aim the gun while firing. It will cost gangs 50 influence."
+  - rscadd: "The sawn-off improvised shotgun is now available to gangs for 6 influence. With buckshot shells being easy to produce or purchase, this gun gives the most \"bang for your buck\" but its single-shell capacity will leave you vulnerable during a pitched gunfight."
+  - rscadd: "The Wetwork boots give gangs access to a lightly armored noslip variant."
+  - tweak: "The armored gang outfits are now slightly more resistant to ballistic and bomb damage"
