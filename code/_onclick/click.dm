@@ -148,7 +148,9 @@
 /atom/proc/IsObscured()
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
-	var/turf/T = loc
+	var/turf/T = get_turf_pixel(src)
+	if(!T)
+		return FALSE
 	for(var/atom/movable/AM in T)
 		if(AM.flags & PREVENT_CLICK_UNDER && AM.density && AM.layer > layer)
 			return TRUE

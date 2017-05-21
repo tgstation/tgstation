@@ -1289,6 +1289,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/pie_cannon
+	name = "Banana Cream Pie Cannon"
+	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
+	cost = 10
+	item = /obj/item/weapon/pneumatic_cannon/pie/selfcharge
+	restricted_roles = list("Clown")
+	surplus = 0	//No fun unless you're the clown!
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
@@ -1304,6 +1312,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Curator")
 	limited_stock = 1 // please don't spam deadchat
+	
+/datum/uplink_item/role_restricted/modified_syringe_gun
+	name = "Modified Syringe Gun"
+	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	item = /obj/item/weapon/gun/syringe/dna
+	cost = 14
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 // Pointless
 /datum/uplink_item/badass
