@@ -324,12 +324,12 @@
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(world.time < user.next_click)
+	if(world.time < user.next_move)
 		return FALSE
 	if(ishuman(user) && Adjacent(user))
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
-		H.next_click = world.time + CLICK_CD_MELEE
+		H.changeNext_move(CLICK_CD_MELEE)
 	else
 		..()
 /*
