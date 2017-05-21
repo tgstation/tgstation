@@ -369,7 +369,7 @@
 		if(4 to 5)
 			myseed = new /obj/item/seeds/plump(src)
 		else
-			myseed = new /obj/item/seeds/weeds(src)
+			myseed = new /obj/item/seeds/starthistle(src)
 	age = 0
 	plant_health = myseed.endurance
 	lastcycle = world.time
