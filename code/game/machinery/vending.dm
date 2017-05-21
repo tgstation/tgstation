@@ -1152,6 +1152,27 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
+/obj/machinery/vending/toyliberationstation
+	name = "\improper Toy Weapon Vendor"
+	desc = "A ages 8 and up approved vendor that dispenses toys. If you were to find the right wires, you can unlock the adult mode setting!"
+	icon_state = "liberationstation"
+	req_access_txt = "1"
+	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them as presents!!"
+	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?"
+	vend_reply = "Come back for more!"
+	products = list(/obj/item/weapon/gun/ballistic/automatic/toy/unrestricted = 10,
+					/obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
+					/obj/item/weapon/gun/ballistic/shotgun/toy/unrestricted = 10,
+					/obj/item/toy/sword = 10, /obj/item/ammo_box/foambox = 20,
+					/obj/item/toy/foamblade = 10)
+	contraband = list(/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow = 10,   //Congrats, you unlocked the +18 setting!
+						/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted = 10,
+						/obj/item/weapon/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
+						/obj/item/ammo_box/foambox/riot = 20,
+						/obj/item/toy/katana = 10)
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE
