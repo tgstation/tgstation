@@ -610,7 +610,12 @@
 
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
-
+	if(istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if(C.dwarf_only)
+			if(!isdwarf(H))
+				world << "not dwarf"
+				return 0
 	switch(slot)
 		if(slot_hands)
 			if(H.get_empty_held_indexes())

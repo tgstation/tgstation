@@ -40,6 +40,7 @@
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 	var/greyscale = FALSE
 	var/my_clothing_icon = 'icons/mob/uniform.dmi'
+	var/dwarf_only = FALSE
 
 /obj/item/clothing/worn_overlays(isinhands = FALSE)
 	. = ..()

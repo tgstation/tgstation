@@ -57,8 +57,8 @@
 	name = "Strange Dorf Portal"
 	id = "dorf-man"
 	description = "A portal emitting other-worldly energies, strange pixelated images fade in and out from inside its blocky frame."
-	suffix = "lavaland_surface_dwarf.dmm"
-	cost = 20
+	suffix = "lavaland_surface_dorfwagon.dmm"
+	cost = 1
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/syndicate_base

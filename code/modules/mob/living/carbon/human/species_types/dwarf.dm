@@ -6,7 +6,6 @@
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	limbs_id = "dwarf"
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store) //only allowed to wear dwarf-only clothing due to unique size
 	face_y_offset = -3
 	hair_y_offset = -4
 	use_skintones = 1

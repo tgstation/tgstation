@@ -17,6 +17,12 @@
 
 
 /obj/item/organ/alcoholvessel/on_life()//alcohol usage
+	for(var/datum/reagent/R in owner.reagents.reagent_list)
+		if(istype(R, /datum/reagent/consumable/ethanol))
+			var/datum/reagent/consumable/ethanol/E = R
+			stored_alcohol += (E.boozepwr / 100)
+			if(stored_alcohol > max_alcohol)
+				stored_alcohol = max_alcohol
 	var/heal_amt = heal_rate
 	stored_alcohol -= alcohol_rate * 0.025
 	if(stored_alcohol > 400)
@@ -24,15 +30,17 @@
 		owner.adjustFireLoss(-heal_amt)
 		owner.adjustOxyLoss(-heal_amt)
 		owner.adjustCloneLoss(-heal_amt)
-	if(100 < stored_alcohol < 150 && prob(5))
-		to_chat(owner, "<span class='notice'>You feel like you could use a good brew.</span>")
-	if(75 < stored_alcohol < 100 && prob(5))
-		to_chat(owner, "<span class='notice'>A pint of ale would really hit hit the spot right now..</span>")
-	if(50 < stored_alcohol < 75 && prob(5))
-		to_chat(owner, "<span class='warning'>Your body aches, you need to get ahold of some booze...</span>")
-	if(25 < stored_alcohol < 50 && prob(5))
-		to_chat(owner, "<span class='danger'>Oh Armok, I need some brew!</span>")
-	if(stored_alcohol < 25 && prob(5))
-		to_chat(owner, "<span class='userdanger'>DAMNATION INCARNATE, WHY AM I CURSED WITH THIS DRY-SPELL? I MUST DRINK..</span>")
-		owner.adjustToxLoss(35)
+	if(prob(5))
+		switch(stored_alcohol)
+			if(0 to 24)
+				to_chat(owner, "<span class='userdanger'>DAMNATION INCARNATE, WHY AM I CURSED WITH THIS DRY-SPELL? I MUST DRINK..</span>")
+				owner.adjustToxLoss(35)
+			if(25 to 50)
+				to_chat(owner, "<span class='danger'>Oh Armok, I need some brew!</span>")
+			if(51 to 75)
+				to_chat(owner, "<span class='warning'>Your body aches, you need to get ahold of some booze...</span>")
+			if(76 to 100)
+				to_chat(owner, "<span class='notice'>A pint of ale would really hit hit the spot right now..</span>")
+			if(101 to 150)
+				to_chat(owner, "<span class='notice'>You feel like you could use a good brew.</span>")
 
