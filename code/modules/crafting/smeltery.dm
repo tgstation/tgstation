@@ -37,7 +37,7 @@
 	category = CAT_SMITH
 
 /datum/crafting_recipe/smith_helmet
-	name = "Smith Helmet
+	name = "Smith Helmet"
 	result = /obj/item/clothing/head/helmet/dwarf
 	reqs = list(/obj/item/weapon/grown/log = 1,
 				/obj/item/weapon/mold_result/helmet_plating = 1)
