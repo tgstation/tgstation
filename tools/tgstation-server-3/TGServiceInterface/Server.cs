@@ -96,7 +96,7 @@ namespace TGServiceInterface
 		/// <param name="testmerge_pr">If not zero, will testmerge the designated pull request</param>
 		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
-		string UpdateServer(TGRepoUpdateMethod updateType, bool push_changelog, ushort testmerge_pr = 0);
+		string UpdateServer(TGRepoUpdateMethod updateType, bool push_changelog_if_enabled, ushort testmerge_pr = 0);
 	}
 
 }

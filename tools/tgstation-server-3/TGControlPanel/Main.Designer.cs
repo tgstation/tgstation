@@ -37,6 +37,7 @@
             this.PythonPathText = new System.Windows.Forms.TextBox();
             this.PythonPathLabel = new System.Windows.Forms.Label();
             this.RepoGenChangelogButton = new System.Windows.Forms.Button();
+            this.CommitterPasswordTextBox = new System.Windows.Forms.TextBox();
             this.CommitterLoginTextBox = new System.Windows.Forms.TextBox();
             this.CommitterPasswordTitle = new System.Windows.Forms.Label();
             this.CommiterLoginTitle = new System.Windows.Forms.Label();
@@ -76,7 +77,6 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
-            this.GenCLCheckbox = new System.Windows.Forms.CheckBox();
             this.NudgePortSelector = new System.Windows.Forms.NumericUpDown();
             this.NudgePortLabel = new System.Windows.Forms.Label();
             this.ServerPathLabel = new System.Windows.Forms.Label();
@@ -167,7 +167,6 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.CommitterPasswordTextBox = new System.Windows.Forms.TextBox();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -298,6 +297,17 @@
             this.RepoGenChangelogButton.UseVisualStyleBackColor = true;
             this.RepoGenChangelogButton.Visible = false;
             this.RepoGenChangelogButton.Click += new System.EventHandler(this.RepoGenChangelogButton_Click);
+            // 
+            // CommitterPasswordTextBox
+            // 
+            this.CommitterPasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.CommitterPasswordTextBox.Location = new System.Drawing.Point(122, 256);
+            this.CommitterPasswordTextBox.Name = "CommitterPasswordTextBox";
+            this.CommitterPasswordTextBox.Size = new System.Drawing.Size(535, 20);
+            this.CommitterPasswordTextBox.TabIndex = 26;
+            this.CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
+            this.CommitterPasswordTextBox.UseSystemPasswordChar = true;
+            this.CommitterPasswordTextBox.Visible = false;
             // 
             // CommitterLoginTextBox
             // 
@@ -776,7 +786,6 @@
             // ServerPanel
             // 
             this.ServerPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
-            this.ServerPanel.Controls.Add(this.GenCLCheckbox);
             this.ServerPanel.Controls.Add(this.NudgePortSelector);
             this.ServerPanel.Controls.Add(this.NudgePortLabel);
             this.ServerPanel.Controls.Add(this.ServerPathLabel);
@@ -811,19 +820,6 @@
             this.ServerPanel.Size = new System.Drawing.Size(868, 366);
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
-            // 
-            // GenCLCheckbox
-            // 
-            this.GenCLCheckbox.AutoSize = true;
-            this.GenCLCheckbox.Font = new System.Drawing.Font("Verdana", 12F);
-            this.GenCLCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.GenCLCheckbox.Location = new System.Drawing.Point(299, 129);
-            this.GenCLCheckbox.Name = "GenCLCheckbox";
-            this.GenCLCheckbox.Size = new System.Drawing.Size(272, 22);
-            this.GenCLCheckbox.TabIndex = 36;
-            this.GenCLCheckbox.Text = "Commit and Push Changelogs";
-            this.GenCLCheckbox.UseVisualStyleBackColor = true;
-            this.GenCLCheckbox.CheckedChanged += new System.EventHandler(this.GenCLCheckbox_CheckedChanged);
             // 
             // NudgePortSelector
             // 
@@ -1856,17 +1852,6 @@
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
             // 
-            // CommitterPasswordTextBox
-            // 
-            this.CommitterPasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.CommitterPasswordTextBox.Location = new System.Drawing.Point(122, 256);
-            this.CommitterPasswordTextBox.Name = "CommitterPasswordTextBox";
-            this.CommitterPasswordTextBox.Size = new System.Drawing.Size(535, 20);
-            this.CommitterPasswordTextBox.TabIndex = 26;
-            this.CommitterPasswordTextBox.Text = "hunter2butseriouslyyoubetterfuckingrenamethis";
-            this.CommitterPasswordTextBox.UseSystemPasswordChar = true;
-            this.CommitterPasswordTextBox.Visible = false;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2038,7 +2023,6 @@
 		private System.Windows.Forms.CheckedListBox NegativePermissions;
 		private System.Windows.Forms.Label NegativePermissionsTitle;
 		private System.Windows.Forms.Label ConfigDisabledLabel;
-		private System.Windows.Forms.CheckBox GenCLCheckbox;
 		private System.Windows.Forms.Button RecloneButton;
 		private System.Windows.Forms.TextBox PythonPathText;
 		private System.Windows.Forms.Label PythonPathLabel;

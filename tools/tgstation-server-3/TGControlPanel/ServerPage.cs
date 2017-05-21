@@ -31,7 +31,6 @@ namespace TGControlPanel
 			ServerPathTextbox.KeyDown += ServerPathTextbox_KeyDown;
 			projectNameText.LostFocus += ProjectNameText_LostFocus;
 			projectNameText.KeyDown += ProjectNameText_KeyDown;
-			GenCLCheckbox.Checked = Properties.Settings.Default.UpdatesGenerateChangelogs;
 		}
 
 		private void ProjectNameText_KeyDown(object sender, KeyEventArgs e)
@@ -206,11 +205,6 @@ namespace TGControlPanel
 			UpdateProjectName();
 		}
 		
-		private void GenCLCheckbox_CheckedChanged(object sender, EventArgs e)
-		{
-			Properties.Settings.Default.UpdatesGenerateChangelogs = GenCLCheckbox.Checked;
-		}
-
 		void UpdateProjectName()
 		{
 			if (!updatingFields)
@@ -332,20 +326,19 @@ namespace TGControlPanel
 		private void FullUpdateWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
 		{
 			var Updater = Server.GetComponent<ITGServerUpdater>();
-			var GenCL = Properties.Settings.Default.UpdatesGenerateChangelogs;
 			switch (fuAction)
 			{
 				case FullUpdateAction.Testmerge:
 					updateError = Updater.UpdateServer(TGRepoUpdateMethod.None, false, (ushort)testmergePR);
 					break;
 				case FullUpdateAction.UpdateHard:
-					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Hard, GenCL);
+					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Hard, true);
 					break;
 				case FullUpdateAction.UpdateHardTestmerge:
-					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Hard, GenCL, (ushort)testmergePR);
+					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Hard, true, (ushort)testmergePR);
 					break;
 				case FullUpdateAction.UpdateMerge:
-					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Merge, GenCL, (ushort)testmergePR);
+					updateError = Updater.UpdateServer(TGRepoUpdateMethod.Merge, true, (ushort)testmergePR);
 					break;
 			}
 		}
