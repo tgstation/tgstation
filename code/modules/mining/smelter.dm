@@ -1,10 +1,10 @@
 /obj/machinery/smelter
 	name = "smelter"
 	desc = "An old Sendarian tool."
-	icon = 'icons/obj/blacksmithing.dmi'
+	icon = 'icons/obj/blacksmithing_64.dmi'
 	icon_state = "forge"
 	density = TRUE
-	anchored = FALSE
+	anchored = TRUE
 
 /obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
 	var/smelting_result = W.on_smelt()
