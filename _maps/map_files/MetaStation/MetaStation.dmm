@@ -88360,7 +88360,7 @@
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Xeno Maint APC";
+	name = "Test Chamber Maintenance";
 	pixel_x = 26;
 	pixel_y = 0
 	},
