@@ -182,13 +182,21 @@
 	icon_state = "supermatter_tongs"
 	toolspeed = 0.75
 	damtype = "fire"
-	var/obj/item/nuke_core/supermatter_sliver/sliver = null
+	var/obj/item/nuke_core/supermatter_sliver/sliver
 
 /obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
 		return
 	if(ismovableatom(O))
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		Consume(O)
+
+/obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
+	if(sliver)
+		sliver.forceMove(loc)
+		to_chat(usr, "<span class='notice'>\The [sliver] falls out of \the [src] as you throw them.</span>")
+		sliver = null
+	..()
 
 /obj/item/weapon/hemostat/supermatter/proc/Consume(atom/movable/AM, mob/user)
 	if(ismob(AM))
@@ -205,5 +213,5 @@
 	radiation_pulse(get_turf(user), 2, 4, 50, 1)
 	user.dust()
 	icon_state = "supermatter_tongs"
-	qdel(sliver)
+	QDEL_NULL(sliver)
 

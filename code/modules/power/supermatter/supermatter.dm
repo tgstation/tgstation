@@ -462,7 +462,7 @@
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(W, /obj/item/weapon/scalpel/supermatter))
-		playsound(loc, W.usesound, 100, 1)
+		playsound(src, W.usesound, 100, 1)
 		to_chat(user, "<span class='notice'>You carefully begin to scrape [src] with [W]...</span>")
 		if(do_after(user, 60*W.toolspeed,target=src))
 			to_chat(user, "<span class='notice'>You extract a sliver from [src]. [src] begins to react violently!</span>")
