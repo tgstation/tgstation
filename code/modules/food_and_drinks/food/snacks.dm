@@ -215,8 +215,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
-	if( name != initial(name) || desc != initial(desc) )
-		slice.name = "slice of [src]"
+	if(name != initial(name))
+		slice.name = "slice of [name]"
+	if(desc != initial(desc))
 		slice.desc = "[desc]"
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)

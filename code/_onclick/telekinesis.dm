@@ -13,7 +13,7 @@
 /atom/proc/attack_tk(mob/user)
 	if(user.stat)
 		return
-	new /obj/effect/overlay/temp/telekinesis(loc)
+	new /obj/effect/temp_visual/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	return
 
@@ -163,7 +163,7 @@
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
+	new /obj/effect/temp_visual/telekinesis(get_turf(focus))
 
 /obj/item/tk_grab/update_icon()
 	cut_overlays()

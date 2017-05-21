@@ -442,7 +442,7 @@
 			dat += "</table>"
 
 		for(var/datum/gang/G in SSticker.mode.gangs)
-			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: <a href='?_src_=holder;gangpoints=\ref[G]'>[G.points] Influence</a> | [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
+			dat += "<br><table cellspacing=5><tr><td><B>[G.name] Gang: [round((G.territory.len/GLOB.start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
 			for(var/datum/mind/N in G.bosses)
 				var/mob/M = N.current
 				if(!M)

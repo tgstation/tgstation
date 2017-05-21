@@ -28,7 +28,7 @@
 		if(sharpness)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
+			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
 				harvest(user)
 			return 1
 	return I.attack(src, user)

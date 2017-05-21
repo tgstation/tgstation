@@ -34,7 +34,7 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
 
@@ -52,6 +52,7 @@
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
 	GLOB.cult_narsie = src
+	deltimer(GLOB.blood_target_reset_timer)
 	GLOB.blood_target = src
 	resize(0.6)
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
@@ -59,7 +60,7 @@
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat != DEAD && player.loc.z == ZLEVEL_STATION && !iscultist(player) && isliving(player))
+		if(player.stat != DEAD && player.loc.z == ZLEVEL_STATION && !iscultist(player))
 			souls_needed[player] = TRUE
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
 	INVOKE_ASYNC(src, .proc/begin_the_end)
