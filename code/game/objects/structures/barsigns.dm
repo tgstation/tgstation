@@ -241,7 +241,7 @@
 /datum/barsign/thecoderbus
 	name = "The Coderbus"
 	icon = "thecoderbus"
-	desc = "A very controversial bar known for its wide variety of constantly-changing drinks."
+	desc = "The separation between the bar and station is absolute, we will not listen to your platitudes any longer!"
 
 
 /datum/barsign/theadminbus
