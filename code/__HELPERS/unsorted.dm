@@ -723,7 +723,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
 	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/icon/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
@@ -1416,24 +1416,3 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
-
-/proc/msglog_admins(text)
-	message_admins(text)
-	log_admin(text)
-
-/proc/trigger_centcom_recall()
-	if(SSshuttle.emergency.mode != SHUTTLE_CALL)
-		return
-
-	var/time = rand(600, 1200)
-	var/message = pick(GLOB.annoyed_admiral_messages)
-
-	message = input("Enter message from the on-call admiral to be put in the recall report.", "Annoyed Admiral Message", message) as text|null
-
-	if(!message)
-		return
-
-	message_admins("[key_name_admin(usr)] triggered a Centcom recall in [time/10] seconds, with the annoyed admiral message of: [message]")
-	log_game("[key_name(usr)] triggered a Centcom recall in [time/10] seconds, with the annoyed admiral message of: [message]")
-
-	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle/.proc/centcom_recall, SSshuttle.emergency.timer, message), time)
