@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Resonator fields now visually show how long they have until they burst."
+  - bugfix: "Hitting a legion skull with a resonator will now produce a field."
