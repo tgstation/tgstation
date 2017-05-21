@@ -88360,7 +88360,7 @@
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Test Chamber Maintenance";
+	name = "Test Chamber Maintenance APC";
 	pixel_x = 26;
 	pixel_y = 0
 	},
