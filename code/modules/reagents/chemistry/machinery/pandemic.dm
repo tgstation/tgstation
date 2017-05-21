@@ -9,13 +9,16 @@
 	use_power = TRUE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
-	var/temp_html = ""
 	var/wait
-	var/obj/item/weapon/reagent_containers/beaker = null
+	var/obj/item/weapon/reagent_containers/beaker
 
 /obj/machinery/computer/pandemic/Initialize()
 	. = ..()
 	update_icon()
+
+/obj/machinery/computer/pandemic/Destroy()
+	QDEL_NULL(beaker)
+	return ..()
 
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
 	if(!beaker || !beaker.reagents)
@@ -82,7 +85,7 @@
 /obj/machinery/computer/pandemic/proc/reset_replicator_cooldown()
 	wait = FALSE
 	update_icon()
-	playsound(src.loc, 'sound/machines/ping.ogg', 30, 1)
+	playsound(loc, 'sound/machines/ping.ogg', 30, 1)
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
