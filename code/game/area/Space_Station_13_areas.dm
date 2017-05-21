@@ -485,7 +485,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
-
+	
+/area/crew_quarters/rehab_dome
+	name = "Rehabilitation Dome"
+	icon_state = "Sleep"	
+	
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
@@ -494,7 +498,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Auxiliary Restrooms"
 	icon_state = "toilet"
 	
-		
 /area/crew_quarters/toilet/restrooms
 	name = "Restrooms"
 	icon_state = "toilet"
@@ -583,6 +586,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
  	name = "Library"
  	icon_state = "library"
  	flags = NONE
+	
+/area/library/lounge
+ 	name = "Library Lounge"
+ 	icon_state = "library"
 
 /area/library/abandoned_library
  	name = "Abandoned Library"
@@ -779,6 +786,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/teleporter
 	name = "Teleporter Room"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/cargo
+	name = "Cargo Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/docking
+	name = "Docking Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/research
+	name = "Research Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/security
+	name = "Security Quantum Pad"
 	icon_state = "teleporter"
 	music = "signal"
 

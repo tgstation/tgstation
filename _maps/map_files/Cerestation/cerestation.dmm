@@ -2802,9 +2802,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2818,9 +2816,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afS" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/machinery/turretid{
@@ -2831,9 +2827,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -2843,9 +2837,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afU" = (
 /obj/machinery/light{
 	dir = 1
@@ -2853,9 +2845,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afV" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-09"
@@ -2863,16 +2853,12 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afW" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "afX" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -3319,9 +3305,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "agQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3335,9 +3319,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "agR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3346,9 +3328,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "agS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3368,9 +3348,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "agT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3378,9 +3356,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "agU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -3393,9 +3369,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "agV" = (
 /obj/structure/sink{
 	icon_state = "sink";
@@ -3706,9 +3680,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ahD" = (
 /obj/machinery/door/airlock/hatch{
 	name = "AI Core";
@@ -3718,16 +3690,12 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ahE" = (
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ahF" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3992,9 +3960,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aii" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -4007,9 +3973,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aij" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/ai_status_display{
@@ -4018,9 +3982,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aik" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/stripes/line{
@@ -4030,9 +3992,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ail" = (
 /obj/structure/chair/stool,
 /obj/structure/sign/poster/official/work_for_a_future{
@@ -4317,9 +4277,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aiP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -4328,9 +4286,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aiQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -4338,9 +4294,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aiR" = (
 /turf/closed/wall,
 /area/quartermaster/sorting)
@@ -4658,9 +4612,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ajE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4668,9 +4620,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ajF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -4682,9 +4632,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ajG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -4696,9 +4644,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ajH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4998,16 +4944,12 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akp" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -5027,9 +4969,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5050,9 +4990,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aks" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5070,9 +5008,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5083,9 +5019,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aku" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5096,9 +5030,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5113,9 +5045,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -5130,9 +5060,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akx" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/unexplored{
@@ -5368,9 +5296,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -5378,9 +5304,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "akZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -5388,9 +5312,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "ala" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
@@ -5399,18 +5321,14 @@
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "alb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "alc" = (
 /turf/closed/mineral,
 /area/mine/unexplored{
@@ -5661,24 +5579,18 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "alI" = (
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "alJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "alK" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel{
@@ -6244,9 +6156,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "amE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -6263,9 +6173,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "amF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
@@ -6278,17 +6186,13 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "amG" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "amH" = (
 /obj/machinery/light{
 	dir = 4
@@ -6296,9 +6200,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "amI" = (
 /turf/closed/mineral/random/labormineral,
 /area/mine/unexplored{
@@ -6602,9 +6504,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "anp" = (
 /obj/machinery/ai_status_display{
 	pixel_x = 32
@@ -6612,9 +6512,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "anq" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 2
@@ -6623,9 +6521,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "anr" = (
 /obj/structure/cable/orange{
 	d2 = 2;
@@ -7148,9 +7044,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aoq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -7160,9 +7054,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aor" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -7595,9 +7487,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "apl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -7607,9 +7497,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "apm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -7619,9 +7507,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "apn" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 1
@@ -7630,9 +7516,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "apo" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating/asteroid,
@@ -8088,25 +7972,19 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aqk" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aql" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "aqm" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -18416,9 +18294,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aJw" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -18427,9 +18303,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aJx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -18891,9 +18765,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aKt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -18910,9 +18782,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aKu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -18929,9 +18799,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aKv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -18944,9 +18812,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aKw" = (
 /obj/machinery/door/airlock/glass_mining{
 	name = "Cargo Office";
@@ -19437,17 +19303,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aLr" = (
 /obj/machinery/quantumpad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aLs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -19467,9 +19329,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aLt" = (
 /obj/structure/chair{
 	dir = 4
@@ -20015,18 +19875,14 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aMo" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aMp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -20046,9 +19902,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aMq" = (
 /obj/structure/chair{
 	dir = 4
@@ -20667,9 +20521,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aNq" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20679,9 +20531,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aNr" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 8
@@ -20692,9 +20542,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aNs" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -20706,9 +20554,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aNt" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -20722,9 +20568,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aNu" = (
 /obj/structure/table,
 /obj/item/device/multitool,
@@ -20734,9 +20578,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aNv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
@@ -21148,9 +20990,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aOh" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -21165,9 +21005,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aOi" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -21176,9 +21014,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Cargo Quantum Pad"
-	})
+/area/teleporter/quantum/cargo)
 "aOj" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -23717,9 +23553,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aRT" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -23728,9 +23562,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aRU" = (
 /obj/machinery/door/airlock/glass{
 	name = "Security Quantum Pad"
@@ -23744,9 +23576,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aRV" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -23755,9 +23585,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aRW" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -24075,9 +23903,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aSz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -24088,9 +23914,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aSA" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -24106,9 +23930,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aSB" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	icon_state = "ast_warn";
@@ -24652,9 +24474,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -24667,9 +24487,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -24688,9 +24506,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTz" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -24912,17 +24728,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTU" = (
 /obj/machinery/quantumpad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -24931,9 +24743,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTW" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -24942,9 +24752,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aTX" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -25138,17 +24946,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aUq" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aUr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -25166,9 +24970,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aUs" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/structure/cable/orange{
@@ -25476,9 +25278,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "aUV" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -27038,16 +26838,12 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aXD" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aXE" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/unexplored{
@@ -27116,25 +26912,19 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aXP" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aXQ" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aXR" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/light{
@@ -27143,9 +26933,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aXS" = (
 /turf/closed/mineral,
 /area/mine/unexplored{
@@ -27213,9 +27001,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYc" = (
 /obj/structure/table/wood,
 /obj/item/seeds/apple,
@@ -27226,9 +27012,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYd" = (
 /obj/structure/table/wood,
 /obj/item/weapon/cultivator,
@@ -27238,17 +27022,13 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYe" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYf" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/airalarm{
@@ -27264,9 +27044,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYg" = (
 /turf/closed/mineral/random/labormineral,
 /area/mine/unexplored{
@@ -27323,9 +27101,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYn" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/camera{
@@ -27335,9 +27111,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYo" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/machinery/light{
@@ -27346,16 +27120,12 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYp" = (
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -27364,9 +27134,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYr" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/firealarm{
@@ -27377,9 +27145,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYs" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
@@ -27492,41 +27258,31 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYF" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYG" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYI" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYJ" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/sign/nosmoking_2{
@@ -27535,9 +27291,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aYK" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -27805,49 +27559,37 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZg" = (
 /turf/open/floor/plasteel/redblue{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZh" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZi" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZj" = (
 /mob/living/simple_animal/chicken/rabbit/normal,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZk" = (
 /obj/structure/flora/ausbushes/reedbush,
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -28117,26 +27859,20 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZJ" = (
 /obj/structure/sink/puddle,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZK" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "aZL" = (
 /turf/closed/mineral,
 /area/hallway/primary/central)
@@ -28347,18 +28083,14 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bah" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/machinery/light,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bai" = (
 /turf/open/floor/plating/asteroid,
 /area/hallway/primary/central)
@@ -28663,9 +28395,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "baK" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -28677,9 +28407,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "baL" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -28694,9 +28422,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "baM" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -28965,9 +28691,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -28975,9 +28699,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbo" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -28988,9 +28710,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbp" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -29002,9 +28722,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbq" = (
 /obj/machinery/light{
 	dir = 1
@@ -29019,9 +28737,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbr" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29218,9 +28934,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbN" = (
 /obj/machinery/door/airlock/glass{
 	name = "Rehabilitation Dome"
@@ -29228,16 +28942,12 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbO" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -29255,9 +28965,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bbQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29653,16 +29361,12 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bcz" = (
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bcA" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (SOUTHWEST)";
@@ -29670,9 +29374,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bcB" = (
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -29680,9 +29382,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bcC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
@@ -29695,9 +29395,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bcD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -30023,9 +29721,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdl" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -30034,9 +29730,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdm" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -30045,9 +29739,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdn" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -30056,9 +29748,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdo" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -30071,9 +29761,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -30085,9 +29773,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -30095,9 +29781,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdr" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTHEAST)";
@@ -30105,9 +29789,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bds" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -30122,9 +29804,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdt" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
@@ -30137,9 +29817,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
@@ -30156,9 +29834,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bdv" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -30525,25 +30201,19 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bec" = (
 /obj/structure/table/wood,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bed" = (
 /obj/structure/chair/stool,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bee" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -30552,9 +30222,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bef" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -30567,9 +30235,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "beg" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -30578,9 +30244,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "beh" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (SOUTHWEST)";
@@ -30959,9 +30623,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "beT" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/light{
@@ -30971,9 +30633,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "beU" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -30983,9 +30643,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "beV" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -30998,9 +30656,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "beW" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTHEAST)";
@@ -31494,9 +31150,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfS" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/airalarm{
@@ -31507,9 +31161,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfT" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/machinery/firealarm{
@@ -31520,9 +31172,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfU" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/sign/nosmoking_2{
@@ -31531,17 +31181,13 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfV" = (
 /obj/machinery/light,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfW" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -31556,9 +31202,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -31576,9 +31220,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -31588,9 +31230,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bfZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -31608,9 +31248,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "bga" = (
 /obj/structure/sign/securearea{
 	pixel_x = 32;
@@ -47427,17 +47065,13 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGE" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGF" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -47448,9 +47082,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGG" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
@@ -47458,24 +47090,18 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGH" = (
 /obj/structure/fireplace,
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGI" = (
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGJ" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -47486,9 +47112,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGK" = (
 /obj/structure/rack,
 /obj/item/weapon/grown/log,
@@ -47504,17 +47128,13 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGL" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bGM" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /obj/effect/turf_decal/delivery,
@@ -48456,17 +48076,13 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bIi" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bIj" = (
 /obj/structure/chair/comfy/black{
 	tag = "icon-comfychair (NORTH)";
@@ -48476,9 +48092,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bIk" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
@@ -48486,9 +48100,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bIl" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -49160,9 +48772,7 @@
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bJE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -49170,9 +48780,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bJF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -49180,9 +48788,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bJG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -49195,9 +48801,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bJH" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -49689,9 +49293,7 @@
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bKB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -49704,9 +49306,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bKC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -49719,9 +49319,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bKD" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -49731,9 +49329,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bKE" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/orange{
@@ -49744,9 +49340,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bKF" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/visible,
 /obj/machinery/meter,
@@ -50397,34 +49991,26 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bLQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bLR" = (
 /obj/structure/chair/office/dark,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bLS" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bLT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -50432,9 +50018,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bLU" = (
 /obj/structure/grille,
 /turf/closed/wall/r_wall{
@@ -51344,27 +50928,21 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bNo" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bNp" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/blue,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bNq" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin{
@@ -51375,9 +50953,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bNr" = (
 /obj/machinery/camera{
 	c_tag = "Library East";
@@ -51387,9 +50963,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bNs" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -51411,9 +50985,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bNt" = (
 /turf/open/floor/engine/n2,
 /area/atmos)
@@ -51914,9 +51486,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bOm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -51927,26 +51497,20 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bOn" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/pill_bottle/dice,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bOo" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bOp" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/cas,
@@ -51954,17 +51518,13 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bOq" = (
 /obj/machinery/photocopier,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bOr" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -52636,9 +52196,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bPt" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -52646,9 +52204,7 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bPu" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -52657,18 +52213,14 @@
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bPv" = (
 /obj/machinery/light,
 /obj/machinery/bookbinder,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bPw" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -53315,9 +52867,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bQB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -53326,9 +52876,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bQC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -53337,9 +52885,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bQD" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -53864,9 +53410,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bRD" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -53874,9 +53418,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bRE" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -54339,17 +53881,13 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bSB" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bSC" = (
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
@@ -54359,9 +53897,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bSD" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating/asteroid,
@@ -54714,9 +54250,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bTp" = (
 /obj/machinery/camera{
 	c_tag = "Library Explicits";
@@ -54726,9 +54260,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "bTq" = (
 /obj/structure/grille,
 /turf/open/floor/plating/asteroid,
@@ -63001,16 +62533,12 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cjv" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cjw" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -63019,9 +62547,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cjx" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -63387,9 +62913,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cka" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -63406,9 +62930,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "ckb" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -63426,9 +62948,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "ckc" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -63436,9 +62956,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "ckd" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -63446,9 +62964,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cke" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -63465,9 +62981,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "ckf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -63484,9 +62998,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "ckg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -63497,9 +63009,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "ckh" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -63976,17 +63486,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "ckS" = (
 /obj/machinery/quantumpad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "ckT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -63999,9 +63505,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "ckU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -64017,17 +63521,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "ckV" = (
 /obj/machinery/quantumpad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "ckW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -64047,9 +63547,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "ckX" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -64371,17 +63869,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "clA" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "clB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -64402,9 +63896,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "clC" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -64426,17 +63918,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "clD" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "clE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -64456,9 +63944,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "clF" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -64709,9 +64195,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cmd" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -64722,9 +64206,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cme" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -64735,9 +64217,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cmf" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 4
@@ -64745,18 +64225,14 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cmg" = (
 /obj/machinery/light/small,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cmh" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 8
@@ -64764,9 +64240,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cmi" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 4
@@ -64774,18 +64248,14 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmj" = (
 /obj/machinery/light/small,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmk" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 8
@@ -64793,9 +64263,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cml" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -64807,9 +64275,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmm" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -64820,9 +64286,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmn" = (
 /obj/structure/table,
 /obj/item/device/multitool,
@@ -64832,9 +64296,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmo" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating/astplate{
@@ -65076,9 +64538,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Research Quantum Pad"
-	})
+/area/teleporter/quantum/research)
 "cmQ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
@@ -65101,9 +64561,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmT" = (
 /obj/machinery/door/airlock/glass{
 	name = "Docking Quantum Pad"
@@ -65117,9 +64575,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 5
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmU" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -65128,9 +64584,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Docking Quantum Pad"
-	})
+/area/teleporter/quantum/docking)
 "cmV" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Aft Asteroid Maintenance";
@@ -76196,9 +75650,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/teleporter{
-	name = "Security Quantum Pad"
-	})
+/area/teleporter/quantum/security)
 "cFK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/circuit,
@@ -76215,9 +75667,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cFN" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -76226,9 +75676,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cFO" = (
 /obj/machinery/hydroponics/soil,
 /obj/structure/sign/poster/random{
@@ -76239,9 +75687,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cFP" = (
 /obj/machinery/hydroponics/soil,
 /obj/machinery/newscaster{
@@ -76250,9 +75696,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cFQ" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall{
@@ -76292,9 +75736,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cFV" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/newscaster{
@@ -76303,9 +75745,7 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cFW" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=EngineeringMiddle2";
@@ -76866,18 +76306,14 @@
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cHe" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cHf" = (
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white{
@@ -76985,9 +76421,7 @@
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/library{
-	name = "Lounge"
-	})
+/area/library/lounge)
 "cHp" = (
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel{
@@ -78126,9 +77560,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cJl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -78136,9 +77568,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cJm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -78205,9 +77635,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters{
-	name = "Rehabilitation Dome"
-	})
+/area/crew_quarters/rehab_dome)
 "cJu" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall{
@@ -79193,9 +78621,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cLs" = (
 /obj/structure/cable/orange{
 	d1 = 1;
