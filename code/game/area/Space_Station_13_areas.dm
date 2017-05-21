@@ -286,18 +286,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Port Asteroid Maintenance"
 	icon_state = "pmaint"
 	
-/area/maintenance/asteroid/solar/aft
-	name = "Aft Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
-	
-/area/maintenance/asteroid/solar/command
-	name = "Command Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
-	
-/area/maintenance/asteroid/solar/fore
-	name = "Fore Asteroid Solar Maintenance"
-	icon_state = "SolarcontrolP"
-	
 /area/maintenance/asteroid/starboard
 	name = "Starboard Asteroid Maintenance"
 	icon_state = "smaint"
@@ -666,6 +654,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	blob_allowed = FALSE
 	flags = NONE
 
+/area/solar/asteroid/aft
+	name = "Aft Asteroid Solar"
+	icon_state = "panelsA"
+	
+/area/solar/asteroid/command
+	name = "Command Asteroid Solar"
+	icon_state = "panelsA"
+	
+/area/solar/asteroid/fore
+	name = "Fore Asteroid Solar"
+	icon_state = "panelsA"
+	
 /area/solar/auxport
 	name = "Fore Port Solar Array"
 	icon_state = "panelsA"
@@ -680,7 +680,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/solar/aft
 	name = "Aft Solar Array"
-	icon_state = "aft"
+	icon_state = "yellow"
 
 /area/solar/starboard
 	name = "Aft Starboard Solar Array"
@@ -720,6 +720,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/maintenance/solars/port
 	name = "Port Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/asteroid/aft
+	name = "Aft Asteroid Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/asteroid/command
+	name = "Command Asteroid Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/asteroid/fore
+	name = "Fore Asteroid Solar Maintenance"
 	icon_state = "SolarcontrolP"
 	
 /area/maintenance/solars/port/aft
