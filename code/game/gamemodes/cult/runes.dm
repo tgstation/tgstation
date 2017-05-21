@@ -808,6 +808,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")
 		return
+	if(!isliving(cultist_to_summon))
+		user << "<span class='cultitalic'>[cultist_to_summon] is dead, only living souls may be summoned!</span>"
+		fail_invoke()
+		log_game("Summon Cultist rune failed - no target")
+		return
 	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of red light!</span>", \
 									  "<span class='cultitalic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
