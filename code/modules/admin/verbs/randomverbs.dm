@@ -386,9 +386,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 				if(L.name=="carpspawn")
 					ninja_spawn += L
-			new_character.equip_space_ninja()
-			new_character.internal = new_character.s_store
-			new_character.update_internals_hud_icon(1)
+			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
+			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
 				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc
@@ -586,7 +585,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
+		message_admins("[key_name_admin(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
 		SSblackbox.add_details("admin_verb","EM Pulse") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 		return
@@ -1194,3 +1193,16 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	message_admins(msg)
 	admin_ticket_log(target, msg)
 	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
+
+
+/client/proc/trigger_centcom_recall()
+	if(!holder)
+		return
+	var/message = pick(GLOB.admiral_messages)
+	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
+
+	if(!message)
+		return
+
+	message_admins("[key_name_admin(usr)] triggered a Centcom recall, with the admiral message of: [message]")
+	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")

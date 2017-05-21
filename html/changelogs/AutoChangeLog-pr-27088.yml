@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now buy double eswords from the uplink for 16 telecrystals. They cannot be bought below 25 players."
-  - rscdel: "You can no longer use two eswords to construct a double esword."

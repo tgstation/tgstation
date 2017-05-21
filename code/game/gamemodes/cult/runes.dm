@@ -24,7 +24,7 @@ To draw a rune, use an arcane tome.
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = LOW_OBJ_LAYER
-	color = "#FF0000"
+	color = RUNE_COLOR_RED
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
@@ -148,8 +148,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message("<span class='warning'>The markings pulse with a \
-		small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -192,7 +191,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "transforms paper into powerful magic talismans."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
-	color = "#0000FF"
+	color = RUNE_COLOR_TALISMAN
 
 /obj/effect/rune/imbue/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
@@ -247,7 +246,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
-	color = "#551A8B"
+	color = RUNE_COLOR_TELEPORT
 	req_keyword = TRUE
 	var/listkey
 
@@ -307,10 +306,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			A.forceMove(target)
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
+		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
 		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
 			user.forceMove(target)
+		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -322,7 +322,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
-	color = "#FFFFFF"
+	color = RUNE_COLOR_OFFER
 	req_cultists = 1
 	allow_excess_invokers = TRUE
 	rune_in_use = FALSE
@@ -345,7 +345,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	var/oldcolor = color
-	color = "#7D1717"
+	color = RUNE_COLOR_DARKRED
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 	var/is_convertable = is_convertable_to_cult(L)
@@ -410,7 +410,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	else
 		GLOB.sacrificed += sacrificial
 
-	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
+	new /obj/effect/temp_visual/cult/sac(get_turf(src))
 	for(var/M in invokers)
 		if(big_sac)
 			to_chat(M, "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>")
@@ -442,7 +442,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
 	icon = 'icons/effects/96x96.dmi'
-	color = "#7D1717"
+	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
@@ -479,14 +479,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
-		color = "#FF0000"
+		color = RUNE_COLOR_RED
 	SSticker.mode.eldergod = FALSE
-	deltimer(GLOB.blood_target_reset_timer)
-	GLOB.blood_target = new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
-	for(var/datum/mind/cult_mind in SSticker.mode.cult)
-		if(isliving(cult_mind.current))
-			var/mob/living/L = cult_mind.current
-			L.narsie_act()
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -507,7 +502,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	var/static/revives_used = 0
 
 /obj/effect/rune/raise_dead/examine(mob/user)
@@ -598,7 +593,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
 	allow_excess_invokers = 1
-	color = "#4D94FF"
+	color = RUNE_COLOR_EMP
 
 /obj/effect/rune/emp/invoke(var/list/invokers)
 	var/turf/E = get_turf(src)
@@ -628,7 +623,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "7"
-	color = "#7D1717"
+	color = RUNE_COLOR_DARKRED
 	rune_in_use = 0 //One at a time, please!
 	construct_invoke = 0
 	var/mob/living/affecting = null
@@ -654,9 +649,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/user = invokers[1]
 	..()
 	var/turf/T = get_turf(src)
-	rune_in_use = 1
+	rune_in_use = TRUE
 	affecting = user
-	user.color = "#7D1717"
+	user.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='warning'>[user] freezes statue-still, glowing an unearthly red.</span>", \
 						 "<span class='cult'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
 	user.ghostize(1)
@@ -664,7 +659,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!affecting)
 			visible_message("<span class='warning'>[src] pulses gently before falling dark.</span>")
 			affecting = null //In case it's assigned to a number or something
-			rune_in_use = 0
+			rune_in_use = FALSE
 			return
 		affecting.apply_damage(0.1, BRUTE)
 		if(!(user in T))
@@ -674,9 +669,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(user.key)
 			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around [user.p_them()] dimming.</span>", \
 								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
-			user.color = initial(user.color)
+			user.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
 			user.Weaken(3)
-			rune_in_use = 0
+			rune_in_use = FALSE
 			affecting = null
 			return
 		if(user.stat == UNCONSCIOUS)
@@ -684,14 +679,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 				var/mob/dead/observer/G = user.get_ghost()
 				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>")
 		if(user.stat == DEAD)
-			user.color = initial(user.color)
-			rune_in_use = 0
+			user.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
+			rune_in_use = FALSE
 			affecting = null
 			var/mob/dead/observer/G = user.get_ghost()
 			to_chat(G, "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>")
 			return
 		sleep(1)
-	rune_in_use = 0
+	rune_in_use = FALSE
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall
@@ -699,7 +694,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/density_timer
 	var/recharging = FALSE
@@ -758,7 +753,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE
-	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
+	add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
@@ -769,10 +764,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		shimmer.alpha = 60
 		shimmer.color = "#701414"
 		add_overlay(shimmer)
-		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+		add_atom_colour(RUNE_COLOR_RED, FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
-		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
+		add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
@@ -782,7 +777,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	req_cultists = 2
 	allow_excess_invokers = 1
 	icon_state = "5"
-	color = "#00FF00"
+	color = RUNE_COLOR_SUMMON
 
 /obj/effect/rune/summon/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
@@ -827,7 +822,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
 	invocation = "Dedo ol'btoh!"
 	icon_state = "4"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	light_color = LIGHT_COLOR_LAVA
 	req_cultists = 3
 	construct_invoke = 0
@@ -894,10 +889,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	construct_invoke = 0
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
+	var/ghost_limit = 5
+	var/ghosts = 0
 
-/obj/effect/rune/manifest/New(loc)
-	..()
+/obj/effect/rune/manifest/Initialize()
+	. = ..()
 	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
@@ -905,6 +902,16 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, "<span class='cultitalic'>You must be standing on [src]!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
+		return list()
+	if(user.has_status_effect(STATUS_EFFECT_SUMMONEDGHOST))
+		to_chat(user, "<span class='cultitalic'>Ghosts can't summon more ghosts!</span>")
+		fail_invoke()
+		log_game("Manifest rune failed - user is a ghost")
+		return list()
+	if(ghosts >= ghost_limit)
+		to_chat(user, "<span class='cultitalic'>You are sustaining too many ghosts to summon more!</span>")
+		fail_invoke()
+		log_game("Manifest rune failed - too many summoned ghosts")
 		return list()
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
@@ -927,8 +934,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
+	new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
+	new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 	..()
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+	ghosts++
+	playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+	user.apply_damage(10, BRUTE)
+	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)
 	var/obj/structure/emergency_shield/invoker/N = new(T)
@@ -937,16 +949,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 	SSticker.mode.add_cultist(new_human.mind, 0)
 	to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
 
-	while(user in T)
-		if(user.stat)
+	while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
+		if(user.stat || new_human.InCritical())
 			break
 		user.apply_damage(0.1, BRUTE)
-		sleep(3)
+		sleep(1)
 
 	qdel(N)
+	ghosts--
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.dropItemToGround(I)
+			new_human.dropItemToGround(I, TRUE)
 		new_human.dust()

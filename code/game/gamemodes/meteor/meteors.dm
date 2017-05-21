@@ -328,7 +328,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
 	if(.)
-		new /obj/effect/overlay/temp/revenant(get_turf(src))
+		new /obj/effect/temp_visual/revenant(get_turf(src))
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()

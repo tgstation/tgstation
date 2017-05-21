@@ -257,9 +257,9 @@
 		input_available = terminal.surplus()
 
 		if(inputting)
-			if(input_available > 0 && input_available >= input_level)		// if there's power available, try to charge
+			if(input_available > 0)		// if there's power available, try to charge
 
-				var/load = min((capacity-charge)/SMESRATE, input_level)		// charge at set rate, limited to spare capacity
+				var/load = min(min((capacity-charge)/SMESRATE, input_level), input_available)		// charge at set rate, limited to spare capacity
 
 				charge += load * SMESRATE	// increase the charge
 
@@ -269,7 +269,7 @@
 				inputting = 0		// stop inputting
 
 		else
-			if(input_attempt && input_available > 0 && input_available >= input_level)
+			if(input_attempt && input_available > 0)
 				inputting = 1
 	else
 		inputting = 0

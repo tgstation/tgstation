@@ -27,7 +27,7 @@
 	maxHealth = 200
 	health = 200
 	healable = 0
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
 	melee_damage_lower = 30
 	melee_damage_upper = 30

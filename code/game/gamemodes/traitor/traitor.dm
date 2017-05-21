@@ -201,11 +201,15 @@
 	return
 
 
+
 /datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
 	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
+		traitor.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
+		traitor.current.grant_language(/datum/language/codespeak)
 	else
 		equip_traitor(traitor.current)
+		traitor.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
 	SSticker.mode.update_traitor_icons_added(traitor)
 	return
 
@@ -408,4 +412,3 @@
 	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
 	traitorhud.leave_hud(traitor_mind.current)
 	set_antag_hud(traitor_mind.current, null)
-

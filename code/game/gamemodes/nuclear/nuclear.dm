@@ -93,7 +93,9 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
+		synd_mind.current.playsound_local('sound/ambience/antag/ops.ogg',100,0)
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
+
 	if(nuke)
 		nuke.r_code = nuke_code
 	return ..()
