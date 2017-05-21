@@ -101,6 +101,21 @@
 	crate_name = "internals crate"
 	crate_type = /obj/structure/closet/crate/internals
 
+/datum/supply_pack/emergency/Chaos
+	name = "Chaos Crate"
+	hidden = TRUE
+	cost = 2500
+	var/num_contained = 1
+	contains = list(/obj/item/weapon/grenade/clusterbuster/emp,
+	/obj/item/weapon/grenade/clusterbuster/smoke,
+	/obj/item/weapon/grenade/clusterbuster/metalfoam,
+	/obj/item/weapon/grenade/clusterbuster/inferno,
+	/obj/item/weapon/grenade/clusterbuster/teargas,
+	/obj/item/weapon/grenade/clusterbuster/facid)
+	crate_name = "emergency crate"
+	crate_type = /obj/structure/closet/crate/internals
+	dangerous = TRUE
+
 /datum/supply_pack/emergency/firefighting
 	name = "Firefighting Crate"
 	cost = 1000
