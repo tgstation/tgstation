@@ -68,12 +68,15 @@
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
 	if(istype(A,/obj/screen))
-		return 0
-	if(istype(A,/obj/singularity))
-		return 0
-	if(istype(A,/mob/living/simple_animal/hostile/morph))
-		return 0
-	return 1
+		return FALSE
+	else if(istype(A,/obj/singularity))
+		return FALSE
+	else if(istype(A,/mob/living/simple_animal/hostile/morph))
+		return FALSE
+	else if(istype(A, /obj) || istype(A, /mob))
+		return TRUE
+	else
+		return FALSE
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
