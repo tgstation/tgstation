@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator
 	name = "gravitational generator"
-	desc = "A device which produces a gravaton field when set up."
+	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	anchored = 1
 	density = 1
@@ -304,16 +304,17 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = 0
 	var/area/A = get_area(src)
-	if(on && SSticker.IsRoundInProgress()) // If we turned on and the game is live.
-		if(gravity_in_level() == 0)
-			alert = 1
-			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
-	else
-		if(gravity_in_level() == 1)
-			alert = 1
-			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
+	if(SSticker.IsRoundInProgress())
+		if(on) // If we turned on and the game is live.
+			if(gravity_in_level() == 0)
+				alert = 1
+				investigate_log("was brought online and is now producing gravity for this level.", "gravity")
+				message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
+		else
+			if(gravity_in_level() == 1)
+				alert = 1
+				investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
+				message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
 
 	update_icon()
 	update_list()

@@ -367,3 +367,9 @@
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
 	emagged_reagents = list("plasma")
+
+
+/obj/machinery/chem_dispenser/mutagensaltpeter
+	name = "mutagen and saltpeter dispenser"
+	desc = "Creates and dispenses mutagen and even saltpeter."
+	dispensable_reagents = list("mutagen", "saltpetre")

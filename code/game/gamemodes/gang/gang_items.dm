@@ -6,14 +6,12 @@
 	var/category
 	var/id
 
+
 /datum/gang_item/proc/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool, check_canbuy = TRUE)
 	if(check_canbuy && !can_buy(user, gang, gangtool))
 		return FALSE
 	var/real_cost = get_cost(user, gang, gangtool)
-	if(gang && real_cost)
-		gang.message_gangtools("A [get_name_display(user, gang, gangtool)] was purchased by [user.real_name] for [real_cost] Influence.")
-		log_game("A [id] was purchased by [key_name(user)] ([gang.name] Gang) for [real_cost] Influence.")
-	gang.points -= real_cost
+	gangtool.points -= real_cost
 	spawn_item(user, gang, gangtool)
 	return TRUE
 
@@ -25,7 +23,7 @@
 		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gang.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+	return gang && (gangtool.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return TRUE
@@ -78,23 +76,104 @@
 		gangtool.recall(user)
 
 
-/datum/gang_item/function/outfit
-	name = "Create Armored Gang Outfit"
-	id = "outfit"
+///////////////////
+//CLOTHING
+///////////////////
 
-/datum/gang_item/function/outfit/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gangtool && (gangtool.outfits > 0) && ..()
+/datum/gang_item/clothing
+	category = "Purchase Influence-Enhancing Clothes:"
 
-/datum/gang_item/function/outfit/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	if(gangtool && !gangtool.outfits)
-		return "(Restocking)"
-	return ..()
+/datum/gang_item/clothing/under
+	name = "Gang Uniform"
+	id = "under"
+	cost = 1
 
-/datum/gang_item/function/outfit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	if(gang && gang.gang_outfit(user, gangtool))
-		to_chat(user, "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>")
-		if(gangtool)
-			gangtool.outfits -= 1
+/datum/gang_item/clothing/under/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(gang.inner_outfit)
+		var/obj/item/O = new gang.inner_outfit(user.loc)
+		user.put_in_hands(O)
+		to_chat(user, "<span class='notice'> This is your gang's official uniform, wearing it will increase your influence")
+
+/datum/gang_item/clothing/suit
+	name = "Gang Armored Outerwear"
+	id = "suit"
+	cost = 1
+
+/datum/gang_item/clothing/suit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(gang.outer_outfit)
+		var/obj/item/O = new gang.outer_outfit(user.loc)
+		O.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
+		O.desc += " Tailored for the [gang.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
+		user.put_in_hands(O)
+		to_chat(user, "<span class='notice'> This is your gang's official outerwear, wearing it will increase your influence")
+
+
+/datum/gang_item/clothing/hat
+	name = "Pimp Hat"
+	id = "hat"
+	cost = 18
+	item_path = /obj/item/clothing/head/collectable/petehat/gang
+
+/obj/item/clothing/head/collectable/petehat/gang
+	name = "pimpin' hat"
+	desc = "The undisputed king of style."
+
+/datum/gang_item/clothing/mask
+	name = "Golden Death Mask"
+	id = "mask"
+	cost = 20
+	item_path = /obj/item/clothing/mask/gskull
+
+/obj/item/clothing/mask/gskull
+	name = "golden death mask"
+	icon_state = "gskull"
+	desc = "Strike terror, and envy, into the hearts of your enemies."
+
+
+/datum/gang_item/clothing/shoes
+	name = "Bling Boots"
+	id = "boots"
+	cost = 25
+	item_path = /obj/item/clothing/shoes/gang
+
+/obj/item/clothing/shoes/gang
+	name = "blinged-out boots"
+	desc = "Stand aside peasants."
+	icon_state = "bling"
+
+/datum/gang_item/clothing/neck
+	name = "Gold Necklace"
+	id = "necklace"
+	cost = 10
+	item_path = /obj/item/clothing/neck/necklace/dope
+
+
+/datum/gang_item/clothing/hands
+	name = "Decorative Brass Knuckles"
+	id = "hand"
+	cost = 12
+	item_path = /obj/item/clothing/gloves/gang
+
+/obj/item/clothing/gloves/gang
+	name = "braggadocio's brass knuckles"
+	desc = "Purely decorative, don't find out the hard way."
+	icon_state = "knuckles"
+	w_class = 3
+
+/datum/gang_item/clothing/belt
+	name = "Badass Belt"
+	id = "belt"
+	cost = 15
+	item_path = /obj/item/weapon/storage/belt/military/gang
+
+/obj/item/weapon/storage/belt/military/gang
+	name = "badass belt"
+	icon_state = "gangbelt"
+	item_state = "gang"
+	desc = "The belt buckle simply reads 'BAMF'."
+	storage_slots = 1
+
+
 
 ///////////////////
 //WEAPONS
@@ -177,12 +256,6 @@
 	id = "whetstone"
 	cost = 3
 	item_path = /obj/item/weapon/sharpener
-
-/datum/gang_item/equipment/necklace
-	name = "Gold Necklace"
-	id = "necklace"
-	cost = 1
-	item_path = /obj/item/clothing/neck/necklace/dope
 
 
 /datum/gang_item/equipment/emp

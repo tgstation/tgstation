@@ -6,7 +6,9 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface{
+	baseturf = /turf/open/floor/plating/asteroid
+	},
 /area/ruin/unpowered/no_grav)
 "d" = (
 /mob/living/simple_animal/hostile/flan/water,

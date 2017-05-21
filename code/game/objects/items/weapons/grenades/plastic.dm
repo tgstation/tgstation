@@ -18,6 +18,10 @@
 	plastic_overlay = mutable_appearance(icon, "[item_state]2")
 	..()
 
+/obj/item/weapon/grenade/plastic/Initialize(mapload)
+	. = ..()
+	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
+
 /obj/item/weapon/grenade/plastic/Destroy()
 	qdel(nadeassembly)
 	nadeassembly = null
