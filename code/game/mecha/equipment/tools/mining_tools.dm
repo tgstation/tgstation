@@ -119,12 +119,9 @@
 	if(!loc)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
-	if(scanning)
-		return
 	if(istype(loc,/obj/mecha/working) && scanning_time <= world.time)
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/list/L = list(mecha.occupant)
 		scanning_time = world.time + equip_cooldown
 		mineral_scan_pulse(get_turf(src))
