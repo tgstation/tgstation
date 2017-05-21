@@ -3,6 +3,7 @@ pull_requests:
 skip_branch_with_pr: true
 image: Visual Studio 2017
 configuration: Release
+clone_depth: 50
 artifacts:
 - path: TGS3.zip
   name: TGS3
