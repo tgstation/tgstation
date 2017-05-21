@@ -44,10 +44,11 @@
 
 /obj/item/clothing/worn_overlays(isinhands = FALSE)
 	. = ..()
-	if(greyscale)
-		var/mutable_appearance/A = mutable_appearance(my_clothing_icon, item_state)
-		A.color = color
-		. += A
+	if(!isinhands)
+		if(greyscale)
+			var/mutable_appearance/A = mutable_appearance(my_clothing_icon, item_state)
+			A.color = color
+			. += A
 /obj/item/clothing/New()
 	..()
 	if(ispath(pockets))
