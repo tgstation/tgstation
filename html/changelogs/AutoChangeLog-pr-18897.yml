@@ -1,0 +1,4 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - rscadd: "The Donor prompt for becoming an alien queen maid is now an action button instead, and can be toggled on and off."

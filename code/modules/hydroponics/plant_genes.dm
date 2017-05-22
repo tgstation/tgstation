@@ -202,7 +202,7 @@
 
 		if(M.slip(stun, weaken, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
-				T.on_slip(src, M)
+				T.on_slip(G, M)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.

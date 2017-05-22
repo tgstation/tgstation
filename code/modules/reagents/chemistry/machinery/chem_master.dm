@@ -17,7 +17,7 @@
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)
-	overlays += "waitlight"
+	add_overlay("waitlight")
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
 

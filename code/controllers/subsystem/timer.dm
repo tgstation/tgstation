@@ -36,7 +36,10 @@ var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer/proc/runevent(datum/timedevent/event)
 	set waitfor = 0
-	call(event.thingToCall, event.procToCall)(arglist(event.argList))
+	if(event.thingToCall == GLOBAL_PROC && istext(event.procToCall))
+		call("/proc/[event.procToCall]")(arglist(event.argList))
+	else
+		call(event.thingToCall, event.procToCall)(arglist(event.argList))
 
 /datum/subsystem/timer/Recover()
 	processing |= SStimer.processing
@@ -83,9 +86,8 @@ var/datum/subsystem/timer/SStimer
 			return hash_event.id
 	SStimer.hashes[event.hash] = event
 	if (wait <= 0)
-		spawn
-			SStimer.runevent(event)
-			SStimer.hashes -= event.hash
+		SStimer.runevent(event)
+		SStimer.hashes -= event.hash
 		return
 	// If we are unique (or we're not checking that), add the timer and return the id.
 	SStimer.processing += event

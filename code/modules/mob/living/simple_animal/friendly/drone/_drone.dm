@@ -9,6 +9,7 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
+#define CLOCKDRONE	"drone_clock"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
@@ -37,13 +38,15 @@
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
-	languages = DRONE
+	languages_spoken = DRONE
+	languages_understood = DRONE|HUMAN
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
+	faction = list("silicon")
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -82,8 +85,11 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	var/datum/action/generic/drone/select_filter/SF = new(src)
-	SF.Grant(src)
+	if(seeStatic)
+		var/datum/action/generic/drone/select_filter/SF = new(src)
+		SF.Grant(src)
+	else
+		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
 
 	handcrafting = new()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
@@ -195,9 +201,11 @@
 	return 1
 
 
-/mob/living/simple_animal/drone/canUseTopic()
-	if(stat)
-		return
+/mob/living/simple_animal/drone/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 

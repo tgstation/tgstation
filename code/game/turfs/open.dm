@@ -125,7 +125,7 @@
 				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		else
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
-		overlays += wet_overlay
+		add_overlay(wet_overlay)
 	HandleWet()
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)

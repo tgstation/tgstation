@@ -132,27 +132,27 @@ mob
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
 
 		// Testing icon file overlays (defaults to mob's state)
-		overlays += '_flat_demoIcons2.dmi'
+		add_overlay('_flat_demoIcons2.dmi')
 
 		// Testing icon_state overlays (defaults to mob's icon)
-		overlays += "white"
+		add_overlay("white")
 
 		// Testing dynamic icon overlays
 		var/icon/I = icon('old_or_unused.dmi', icon_state="aqua")
 		I.Shift(NORTH,16,1)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing dynamic image overlays
 		I=image(icon=I,pixel_x = -32, pixel_y = 32)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing object types (and layers)
-		overlays+=/obj/effect/overlayTest
+		add_overlay(/obj/effect/overlayTest)
 
 		loc = locate (10,10,1)
 	verb
@@ -182,7 +182,7 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -808,7 +808,7 @@ The _flatIcons list is a cache for generated icon files.
 				I.pixel_y--
 			if(4)
 				I.pixel_y++
-		overlays += I//And finally add the overlay.
+		add_overlay(I)//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -943,6 +943,27 @@ var/global/list/friendly_animal_types = list()
 		return J
 	return 0
 
+/atom/proc/cut_overlays()
+	overlays.Cut()
+	overlays += priority_overlays
+
+/atom/proc/add_overlay(image, priority = 0)
+	if(image in overlays)
+		return
+	var/list/new_overlays = overlays.Copy()
+	if(priority)
+		if(!priority_overlays)
+			priority_overlays = list()
+		priority_overlays += image
+		new_overlays += image
+	else
+		if(priority_overlays)
+			new_overlays -= priority_overlays
+			new_overlays += image
+			new_overlays += priority_overlays
+		else
+			new_overlays += image
+	overlays = new_overlays
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals

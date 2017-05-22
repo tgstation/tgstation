@@ -21,12 +21,14 @@ A small map intended for lowpop(40 players and less).
 		#include "map_files\generic\z7.dmm"
 		#include "map_files\generic\z8.dmm"
 		#include "map_files\generic\z9.dmm"
+		#include "map_files\generic\z10.dmm"
+		#include "map_files\generic\z11.dmm"
 
 		#define MAP_PATH "map_files/BirdStation"
 		#define MAP_FILE "BirdStation.dmm"
 		#define MAP_NAME "BirdboatStation"
 
-		#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
+		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES

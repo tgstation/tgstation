@@ -129,5 +129,3 @@
 		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
-
-	return

@@ -2,37 +2,40 @@
 "b" = (/turf/closed/mineral,/area/space)
 "c" = (/turf/closed/mineral/random/high_chance,/area/space)
 "d" = (/turf/open/floor/plating/asteroid/airless,/area/space)
-"e" = (/turf/closed/mineral/clown,/area/space)
-"f" = (/turf/open/floor/plating/asteroid,/area/space)
-"g" = (/obj/item/weapon/shard,/obj/item/weapon/paper{info = "Extraction was successful! The disguise was perfect, the clowns never knew what hit 'em! Once I get back to base with the bananium samples I'll be rich, I tell you! RICH!"},/turf/open/floor/plating/asteroid,/area/space)
-"h" = (/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/open/floor/plating,/area/space)
-"i" = (/turf/open/floor/plating/asteroid,/turf/closed/wall/shuttle{dir = 2; icon_state = "swall_f10"; layer = 2},/area/space)
-"j" = (/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/space)
-"k" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/mob_spawn/human/clown{brute_damage = 120; oxy_damage = 75},/turf/open/floor/plasteel/shuttle,/area/space)
-"l" = (/obj/structure/chair{dir = 1},/obj/item/weapon/storage/pod{pixel_x = -26},/turf/open/floor/plasteel/shuttle,/area/space)
-"m" = (/turf/open/floor/plating,/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/space)
-"n" = (/obj/machinery/door/airlock/shuttle{name = "Escape Pod Airlock"},/turf/open/floor/plasteel/shuttle,/area/space)
-"o" = (/turf/open/floor/plating,/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/space)
+"e" = (/turf/closed/mineral/clown,/area/ruin/unpowered)
+"f" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"g" = (/obj/item/weapon/shard,/obj/item/weapon/paper{info = "Extraction was successful! The disguise was perfect, the clowns never knew what hit 'em! Once I get back to base with the bananium samples I'll be rich, I tell you! RICH!"},/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"h" = (/obj/item/stack/sheet/mineral/bananium{amount = 15},/turf/open/floor/plating,/area/ruin/unpowered)
+"i" = (/turf/open/floor/plating/asteroid,/turf/closed/wall/shuttle{dir = 2;icon_state = "swall_f10";layer = 2},/area/ruin/unpowered)
+"j" = (/turf/closed/wall/shuttle{icon_state = "swall3";dir = 2},/area/ruin/unpowered)
+"k" = (/obj/structure/chair{dir = 1},/obj/item/weapon/shard,/obj/effect/mob_spawn/human/clown{brute_damage = 120;oxy_damage = 75},/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered)
+"l" = (/obj/structure/chair{dir = 1},/obj/item/weapon/storage/pod{pixel_x = -26},/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered)
+"m" = (/turf/open/floor/plating,/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/shuttle{icon_state = "swall_f5";dir = 2},/area/ruin/unpowered)
+"n" = (/obj/machinery/door/airlock/shuttle{name = "Escape Pod Airlock"},/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered)
+"o" = (/turf/open/floor/plating,/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/shuttle{icon_state = "swall_f9";dir = 2},/area/ruin/unpowered)
+"p" = (/turf/closed/mineral,/area/ruin/unpowered)
+"q" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered)
+"r" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaa
 aabbbaaaaaaaaaaaaaaa
 acccbbbbaaaaaaaaaaaa
-acccbbcbbbaaaaaabaaa
-abbbbbbbbbbaaaabbaaa
-abddbbbbbbcaaaabbbaa
-aadddbbbbbcaaaabbaaa
-aaadddddbaaaaabbbaaa
-aaaaadddbaaaaabbaaaa
-aaaaaaaaaaaaaabbaaaa
-aaaaaaaaaaaaccbbaaaa
-aaabaaaaaabbccbaaaaa
-aaabaaaaabbbebbaaaaa
-aabbbaaadbbeefbcaaaa
-aabbbaaaddbghibcaaaa
-abbbbaaaddbjkjbbaaaa
-abbaaaaaaabjljbaaaaa
+acccbbcbbbaaaaaapaaa
+abbbbbbbbbbaaaappaaa
+abddbbbbbbcaaaapppaa
+aadddbbbbbcaaaappaaa
+aaadddddbaaaaapppaaa
+aaaaadddbaaaaappaaaa
+aaaaaaaaaaaaaappaaaa
+aaaaaaaaaaaaqqppaaaa
+aaabaaaaaappqqpaaaaa
+aaabaaaaapppeppaaaaa
+aabbbaaarppeefpqaaaa
+aabbbaaarrpghipqaaaa
+abbbbaaarrpjkjppaaaa
+abbaaaaaaapjljpaaaaa
 aaaaabaaaaamnoaaaaaa
 aaabaaaaaaaaaaaaaaaa
 "}

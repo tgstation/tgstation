@@ -45,6 +45,6 @@
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/regenerate_icons()
-	overlays.Cut()
-	overlays += collar
-	overlays += pettag
+	cut_overlays()
+	add_overlay(collar)
+	add_overlay(pettag)

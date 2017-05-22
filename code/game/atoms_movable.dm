@@ -6,7 +6,8 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages = 0 //For say() and Hear()
+	var/languages_spoken = 0 //For say() and Hear()
+	var/languages_understood = 0
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -311,22 +312,18 @@
 
 /atom/movable/overlay/New()
 	verbs.Cut()
-	return
 
 /atom/movable/overlay/attackby(a, b, c)
 	if (src.master)
 		return src.master.attackby(a, b, c)
-	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
 	if (src.master)
 		return src.master.attack_paw(a, b, c)
-	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
-	return
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

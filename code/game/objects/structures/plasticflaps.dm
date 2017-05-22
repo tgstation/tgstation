@@ -9,7 +9,7 @@
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(istype(caller, /mob/living))
-		if(istype(caller,/mob/living/simple_animal/bot/mulebot))
+		if(istype(caller,/mob/living/simple_animal/bot))
 			return 1
 
 		var/mob/living/M = caller
@@ -33,7 +33,7 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(istype(A,/mob/living/simple_animal/bot/mulebot)) //mulebots can pass
+		if(istype(A,/mob/living/simple_animal/bot)) //Bots understand the secrets
 			return 1
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1

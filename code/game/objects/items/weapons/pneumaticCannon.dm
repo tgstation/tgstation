@@ -154,8 +154,8 @@
 	src.update_icons()
 
 /obj/item/weapon/pneumatic_cannon/proc/update_icons()
-	src.overlays.Cut()
+	src.cut_overlays()
 	if(!tank)
 		return
-	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
+	src.add_overlay(image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]"))
 	src.update_icon()

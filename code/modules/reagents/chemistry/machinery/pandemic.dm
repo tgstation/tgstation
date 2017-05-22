@@ -58,9 +58,9 @@
 	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
 
 	if(wait)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "waitlight"
+		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	if(..())

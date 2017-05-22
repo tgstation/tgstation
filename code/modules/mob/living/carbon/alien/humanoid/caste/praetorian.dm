@@ -41,6 +41,9 @@
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
+		if(new_xeno.client.prefs.unlock_content)
+			var/datum/action/innate/maid/M = new()
+			M.Grant(new_xeno)
 		return 1
 	else
 		user << "<span class='notice'>We already have an alive queen.</span>"

@@ -172,9 +172,17 @@ This file contains the arcane tome files.
 	var/entered_rune_name
 	var/list/possible_runes = list()
 	var/list/shields = list()
+	var/area/A = get_area(src)
+
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
+
+	if(Turf.z != ZLEVEL_STATION && Turf.z != ZLEVEL_MINING)
+		user << "<span class='warning'>The veil is not weak enough here."
+		return
+	if(istype(A, /area/shuttle))
+		user << "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>"
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
@@ -217,16 +225,10 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
-			var/area/A = get_area(src)
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
 					in lesser locations; the station is the prize!</span>"
-				return
-			if(istype(A, /area/shuttle))
-				user << "<span class='warning'>Interference from hyperspace \
-					engines prevents the Geometer from entering our world on \
-					a shuttle.</span>"
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")

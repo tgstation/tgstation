@@ -142,11 +142,13 @@
 
 /obj/structure/barricade/security/New()
 	..()
-	spawn(40)
-		icon_state = "barrier1"
-		density = 1
-		anchored = 1
-		visible_message("<span class='warning'>[src] deploys!</span>")
+	addtimer(src, "deploy", 40)
+
+/obj/structure/barricade/security/proc/deploy()
+	icon_state = "barrier1"
+	density = 1
+	anchored = 1
+	visible_message("<span class='warning'>[src] deploys!</span>")
 
 
 /obj/item/weapon/grenade/barrier

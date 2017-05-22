@@ -20,22 +20,22 @@
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	charge = maxcharge
 	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
 	desc = desc + ratingdesc
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
 	if(modified_var == "self_recharge")
 		if(self_recharge)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
-			SSobj.processing -= src
+			STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/stock_parts/cell/process()
@@ -45,13 +45,13 @@
 		return PROCESS_KILL
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
-	overlays.Cut()
+	cut_overlays()
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		overlays += image('icons/obj/power.dmi', "cell-o2")
+		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
 	else
-		overlays += image('icons/obj/power.dmi', "cell-o1")
+		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge

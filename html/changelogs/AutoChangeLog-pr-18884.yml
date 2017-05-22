@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscdel: "The default shuttle transit time is now 15 seconds."

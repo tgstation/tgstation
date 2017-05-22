@@ -1156,7 +1156,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 351.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -1173,7 +1172,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 351.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -2032,7 +2030,7 @@
 	name = "UO45 Central Hall"
 	})
 "do" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2785,7 +2783,6 @@
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -2971,7 +2968,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -3391,7 +3387,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -3709,7 +3704,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -3820,7 +3814,7 @@
 	name = "UO45 Central Hall"
 	})
 "fT" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3974,7 +3968,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -4214,7 +4207,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4559,7 +4551,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -4574,7 +4565,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4620,7 +4610,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6341,7 +6330,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6391,7 +6379,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -6685,7 +6672,7 @@
 	name = "UO45 Gateway"
 	})
 "kh" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8656,7 +8643,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -8756,7 +8742,7 @@
 	})
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -10565,11 +10551,7 @@
 	})
 "oZ" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
-	},
+/turf/open/floor/engine/air,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -10579,11 +10561,7 @@
 	frequency = 1441;
 	id_tag = "UO45_air_sensor"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
-	},
+/turf/open/floor/engine/air,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -10748,7 +10726,7 @@
 	name = "UO45 Research"
 	})
 "pl" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -10866,7 +10844,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -10886,7 +10863,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -10907,7 +10883,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11033,8 +11008,7 @@
 	},
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11048,8 +11022,7 @@
 	},
 /turf/open/floor/engine{
 	name = "air floor";
-	nitrogen = 10580;
-	oxygen = 2644
+	initial_gas_mix = "n2=10580;o2=2644"
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11313,7 +11286,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11421,8 +11393,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	nitrogen = 500;
-	temperature = 80
+	initial_gas_mix = "n2=500,TEMP=80"
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -11434,8 +11405,7 @@
 	},
 /turf/open/floor/plasteel/black{
 	name = "Server Walkway";
-	nitrogen = 500;
-	temperature = 80
+	initial_gas_mix = "n2=500,TEMP=80"
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -11673,7 +11643,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11693,7 +11662,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11713,7 +11681,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11961,8 +11928,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	nitrogen = 500;
-	temperature = 80
+	initial_gas_mix = "n2=500,TEMP=80"
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -11974,8 +11940,7 @@
 	},
 /turf/open/floor/plasteel/black{
 	name = "Server Walkway";
-	nitrogen = 500;
-	temperature = 80
+	initial_gas_mix = "n2=500,TEMP=80"
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -12245,7 +12210,7 @@
 	name = "UO45 Engineering"
 	})
 "rk" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -12505,8 +12470,7 @@
 	},
 /turf/open/floor/plasteel/black{
 	name = "Server Walkway";
-	nitrogen = 500;
-	temperature = 80
+	initial_gas_mix = "n2=500,TEMP=80"
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -13262,11 +13226,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/open/floor/engine/vacuum,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -13275,11 +13235,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/open/floor/engine/vacuum,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -13815,11 +13771,7 @@
 	frequency = 1441;
 	id = "UO45_mix_in"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/open/floor/engine/vacuum,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -13829,11 +13781,7 @@
 	frequency = 1441;
 	id_tag = "UO45_mix_sensor"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	nitrogen = 0.01;
-	oxygen = 0.01
-	},
+/turf/open/floor/engine/vacuum,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -14564,7 +14512,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -15306,11 +15253,7 @@
 	frequency = 1441;
 	id = "UO45_n2_in"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	nitrogen = 10000;
-	oxygen = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15327,11 +15270,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	nitrogen = 10000;
-	oxygen = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15342,11 +15281,7 @@
 	frequency = 1441;
 	id = "UO45_o2_in"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15363,11 +15298,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15428,7 +15359,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -15705,22 +15635,14 @@
 	id_tag = "UO45_n2_sensor"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	nitrogen = 10000;
-	oxygen = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
 	})
 "vE" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	nitrogen = 10000;
-	oxygen = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15731,22 +15653,14 @@
 	id_tag = "UO45_o2_sensor"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
 	})
 "vG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	nitrogen = 0;
-	oxygen = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15760,7 +15674,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -16092,7 +16005,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -16143,7 +16056,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17572,7 +17484,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17585,7 +17496,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17603,7 +17513,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17625,7 +17534,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17646,7 +17554,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17668,7 +17575,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17689,7 +17595,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17709,7 +17614,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17728,7 +17632,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17749,7 +17652,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17767,7 +17669,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17785,7 +17686,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17804,7 +17704,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17825,7 +17724,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17844,7 +17742,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17863,7 +17760,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17882,7 +17778,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17902,7 +17797,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17920,7 +17814,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17938,7 +17831,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17957,7 +17849,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17975,7 +17866,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17994,7 +17884,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18016,7 +17905,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18037,7 +17925,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18058,7 +17945,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18078,7 +17964,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18100,7 +17985,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18119,7 +18003,6 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
-	 = 
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;

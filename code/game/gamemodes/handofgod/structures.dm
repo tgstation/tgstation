@@ -275,7 +275,7 @@
 
 
 /obj/structure/divine/nexus/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/structure/divine/nexus/process()
@@ -287,7 +287,7 @@
 
 
 /obj/structure/divine/nexus/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -451,9 +451,7 @@
 		user << "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>"
 		user.reagents.add_reagent("godblood",20)
 	update_icons()
-	spawn(time_between_uses)
-		if(src)
-			update_icons()
+	addtimer(src, "update_icons", time_between_uses)
 
 
 /obj/structure/divine/healingfountain/update_icons()

@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork mobs sound like Ratvar chants if you do not serve Ratvar."
+  - rscadd: "When servants recite, they now talk in a strange voice that is more noticable."

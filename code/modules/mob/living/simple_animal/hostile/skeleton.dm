@@ -1,10 +1,9 @@
 /mob/living/simple_animal/hostile/skeleton
 	name = "reanimated skeleton"
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
-	icon = 'icons/mob/human.dmi'
-	icon_state = "skeleton_s"
-	icon_living = "skeleton_s"
-	icon_dead = "skeleton_dead"
+	icon_state = "skeleton"
+	icon_living = "skeleton"
+	icon_dead = "skeleton"
 	turns_per_move = 5
 	speak_emote = list("rattles")
 	emote_see = list("rattles")
@@ -36,7 +35,6 @@
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
 	desc = "The reanimated remains of some poor traveler."
-	icon = 'icons/mob/animal.dmi'
 	icon_state = "eskimo"
 	icon_living = "eskimo"
 	icon_dead = "eskimo_dead"
@@ -55,7 +53,6 @@
 /mob/living/simple_animal/hostile/skeleton/templar
 	name = "undead templar"
 	desc = "The reanimated remains of a holy templar knight."
-	icon = 'icons/mob/animal.dmi'
 	icon_state = "templar"
 	icon_living = "templar"
 	icon_dead = "templar_dead"

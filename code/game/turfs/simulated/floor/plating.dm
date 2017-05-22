@@ -175,6 +175,9 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
+/turf/open/floor/engine/cult/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
@@ -221,12 +224,12 @@
 	burn_stuff()
 	if(!processing)
 		processing = 1
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
 		processing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/make_plating()
 	return
@@ -298,11 +301,7 @@
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/plating/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plating/airless/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plating/warnplate/corner
-	icon_state = "warnplatecorner"
-/turf/open/floor/plating/airless/warnplate/corner
-	icon_state = "warnplatecorner"
+/turf/open/floor/plating/astplate
+	icon_state = "asteroidplating"
+/turf/open/floor/plating/airless/astplate
+	icon_state = "asteroidplating"

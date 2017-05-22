@@ -87,13 +87,13 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
+	current_button.cut_overlays()
 	if(button_icon && button_icon_state)
 		var/image/img
 		img = image(button_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
-		current_button.overlays += img
+		current_button.add_overlay(img)
 
 
 
@@ -123,17 +123,17 @@
 	return 1
 
 /datum/action/item_action/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
+	current_button.cut_overlays()
 
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
-		// of the item appereance
+		// of the item appearence
 		..(current_button)
 	else if(target)
 		var/obj/item/I = target
 		var/old = I.layer
 		I.layer = FLOAT_LAYER //AAAH
-		current_button.overlays += I
+		current_button.add_overlay(I)
 		I.layer = old
 
 /datum/action/item_action/toggle_light
@@ -277,7 +277,7 @@
 /datum/action/item_action/toggle_research_scanner/ApplyIcon(obj/screen/movable/action_button/current_button)
 	if(button_icon && button_icon_state)
 		var/image/img = image(button_icon, current_button, "scan_mode")
-		current_button.overlays += img
+		current_button.add_overlay(img)
 
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS

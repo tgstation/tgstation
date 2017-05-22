@@ -64,6 +64,8 @@
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
+			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
+			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -404,9 +406,10 @@
 						H.dna.features["ears"] = "Cat"
 					var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
 					var/obj/item/clothing/under/schoolgirl/I = new seifuku
-					var/list/honorifics = list(MALE = list("kun"), FEMALE = list("chan","tan"), NEUTER = list("san")) //John Robust -> Robust-kun
+					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
-					var/newname = "[names[2]]-[pick(honorifics[H.gender])]"
+					var/forename = names.len > 1 ? names[2] : names[1]
+					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
 					H.unEquip(H.w_uniform)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
@@ -572,6 +575,20 @@
 				CTF.TellGhost()
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+		if("masspurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_purrbation()
+			message_admins("[key_name_admin(usr)] has put everyone on \
+				purrbation!")
+			log_admin("[key_name(usr)] has put everyone on purrbation.")
+		if("massremovepurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_remove_purrbation()
+			message_admins("[key_name_admin(usr)] has removed everyone from \
+				purrbation.")
+			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
 		E.processing = 0

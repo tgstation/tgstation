@@ -84,7 +84,6 @@
 	investigate_log("has exploded.", "supermatter")
 	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 	qdel(src)
-	return
 
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/L = loc
@@ -262,7 +261,6 @@
 		return attack_hand(user)
 	else
 		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
-	return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user)
 	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
@@ -282,7 +280,6 @@
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(power/10)
-	return
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))

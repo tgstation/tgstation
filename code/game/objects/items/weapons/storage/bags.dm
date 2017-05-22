@@ -337,16 +337,16 @@
 			M.Weaken(2)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in contents)
-		overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
+		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
 
 /obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
+	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
 	. = ..()
 
 

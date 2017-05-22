@@ -45,6 +45,22 @@
 		owner = null
 	return ..()
 
+/obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+			if(!H.get_bodypart(body_zone))
+				if(H == user)
+					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
+					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
+				else
+					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
+					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
+				user.unEquip(src,1)
+				attach_limb(C)
+				return
+	..()
+
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
 		add_fingerprint(user)
@@ -208,12 +224,12 @@
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = get_limb_icon(1)
 	if(I)
 		I.pixel_x = px_x
 		I.pixel_y = px_y
-		overlays += I
+		add_overlay(I)
 
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped)

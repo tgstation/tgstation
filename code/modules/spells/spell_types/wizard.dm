@@ -316,7 +316,7 @@
 
 		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
 		targeteffect.icon_state = animation
-		AM.overlays += targeteffect
+		AM.add_overlay(targeteffect)
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 		addtimer(src, "remove_sparkles", 10, FALSE, AM, targeteffect)

@@ -8,7 +8,7 @@
 
 /obj/structure/chair/e_chair/New()
 	..()
-	overlays += image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1)
+	add_overlay(image('icons/obj/chairs.dmi', src, "echair_over", MOB_LAYER + 1))
 
 /obj/structure/chair/e_chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))

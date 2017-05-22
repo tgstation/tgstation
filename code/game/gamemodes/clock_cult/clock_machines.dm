@@ -34,13 +34,15 @@
 	if(active)
 		icon_state = active_icon
 		if(fast_process)
-			SSfastprocess.processing |= src
+			START_PROCESSING(SSfastprocess, src)
 		else
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 	else
 		icon_state = inactive_icon
-		SSfastprocess.processing -= src
-		SSobj.processing -= src
+		if(fast_process)
+			STOP_PROCESSING(SSfastprocess, src)
+		else
+			STOP_PROCESSING(SSobj, src)
 
 
 /obj/structure/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
@@ -103,6 +105,8 @@
 		if(target_apc.cell.use(50))
 			apcpower -= 50
 			amount -= 50
+			target_apc.update()
+			target_apc.update_icon()
 		else
 			apcpower = 0
 	if(amount)
@@ -110,6 +114,20 @@
 	else
 		return 1
 
+/obj/structure/clockwork/powered/proc/return_power(amount) //returns a given amount of power to all nearby sigils
+	if(amount <= 0)
+		return 0
+	var/list/sigils_in_range = list()
+	for(var/obj/effect/clockwork/sigil/transmission/T in range(1, src))
+		sigils_in_range |= T
+	if(!sigils_in_range.len)
+		return 0
+	while(amount >= 50)
+		for(var/S in sigils_in_range)
+			var/obj/effect/clockwork/sigil/transmission/T = S
+			if(amount >= 50 && T.modify_charge(-50))
+				amount -= 50
+	return 1
 
 
 /obj/structure/clockwork/powered/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
@@ -120,6 +138,8 @@
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
 	construction_value = 20
+	max_health = 150
+	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
 	var/stored_alloy = 0 //250W = 1 alloy
@@ -159,28 +179,21 @@
 		toggle()
 		return
 	for(var/atom/movable/M in range(5, src))
-		if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
-			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
+		if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder))
+			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
 			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
-		else if(istype(M, /mob/living/simple_animal/hostile/anima_fragment))
-			var/mob/living/simple_animal/hostile/anima_fragment/F = M
-			if(F.health == F.maxHealth || F.stat)
+		else if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+			var/mob/living/simple_animal/hostile/clockwork/W = M
+			if(W.health == W.maxHealth || W.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
-			F.adjustBruteLoss(-15)
-		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_reclaimer))
-			var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = M
-			if(R.health == R.maxHealth || R.stat)
-				continue
-			if(!try_use_power(mob_cost))
-				break
-			R.adjustBruteLoss(-15)
+			W.adjustBruteLoss(-15)
 		else if(istype(M, /obj/structure/clockwork))
 			var/obj/structure/clockwork/C = M
 			if(C.health == C.max_health)
@@ -199,7 +212,7 @@
 	return 1
 
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, be_close = 1))
+	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= 300)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
@@ -230,6 +243,8 @@
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
 	construction_value = 20
+	max_health = 80
+	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
 	var/mania_cost = 150
@@ -260,7 +275,7 @@
 	if(try_use_power(mania_cost))
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		for(var/mob/living/carbon/human/H in range(10, src))
-			if(!is_servant_of_ratvar(H))
+			if(!is_servant_of_ratvar(H) && !H.null_rod_check())
 				var/distance = get_dist(T, get_turf(H))
 				var/falloff_distance = (110) - distance * 10
 				var/sound_distance = falloff_distance * 0.4
@@ -335,7 +350,7 @@
 		toggle(0)
 
 /obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, be_close = 1))
+	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= mania_cost)
 			user << "<span class='warning'>[src] needs more power to function!</span>"
 			return 0
@@ -343,87 +358,154 @@
 
 
 
-/obj/structure/clockwork/powered/interdiction_lens //Interdiction lens: A powerful artifact that can massively disrupt electronics. Five-minute cooldown between uses.
+/obj/structure/clockwork/powered/interdiction_lens //Interdiction lens: A powerful artifact that constantly disrupts electronics but, if it fails to find something to disrupt, turns off.
 	name = "interdiction lens"
-	desc = "An ominous, double-pronged brass obelisk. There's a strange gemstone clasped between the pincers."
-	clockwork_desc = "A powerful obelisk that can devastate certain electronics. It needs to recharge between uses."
+	desc = "An ominous, double-pronged brass totem. There's a strange gemstone clasped between the pincers."
+	clockwork_desc = "A powerful totem that constantly disrupts nearby electronics and funnels power into nearby Sigils of Transmission."
 	icon_state = "interdiction_lens"
 	construction_value = 25
-	active_icon = "interdiction_lens_inactive"
+	active_icon = "interdiction_lens_active"
 	inactive_icon = "interdiction_lens"
 	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
 	break_sound = 'sound/effects/Glassbr3.ogg'
 	var/recharging = 0 //world.time when the lens was last used
-	var/recharge_time = 3000 //time, in deciseconds, the lens needs to recharge; 5 minutes by default
-	var/disrupt_cost = 3000 //how much power to use
+	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
+	var/disabled = FALSE //if it's actually usable
+	var/interdiction_range = 14 //how large an area it drains and disables in
+	var/disrupt_cost = 100 //how much power to use when disabling an object
 
 /obj/structure/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
-	user << "<span class='[recharging >= world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging >= world.time ? "has been breached by writhing tendrils of blackness that cover the obelisk" \
-	: "vibrates in place and thrums with power"]."
+	user << "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \
+	: "vibrates in place and thrums with power"].</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power to disrupt electronics."
+		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power for each nearby disruptable electronic.</span>"
+		user << "<span class='nezbere_small'>If it fails to both drain any power and disrupt any electronics, it will disable itself for [round(recharge_time/600, 1)] minutes.</span>"
+
+/obj/structure/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
+	..()
+	if(active)
+		SetLuminosity(4,2)
+	else
+		SetLuminosity(0)
 
 /obj/structure/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src))
-		disrupt(user)
+	if(user.canUseTopic(src, BE_CLOSE))
+		if(disabled)
+			user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
+			return 0
+		if(!total_accessable_power() >= disrupt_cost)
+			user << "<span class='warning'>[src] needs more power to function!</span>"
+			return 0
+		toggle(0, user)
 
 /obj/structure/clockwork/powered/interdiction_lens/process()
-	if(..() && recharging < world.time) //if we have power and have finished charging
-		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power.</span>")
-		flick("[initial(icon_state)]_recharged", src)
-		toggle()
+	if(recharging > world.time)
+		return
+	if(disabled)
+		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power!</span>")
+		flick("interdiction_lens_recharged", src)
+		disabled = FALSE
+		toggle(0)
+	else
+		var/successfulprocess = FALSE
+		var/power_drained = 0
+		var/list/atoms_to_test = list()
+		for(var/A in spiral_range_turfs(interdiction_range, src))
+			var/turf/T = A
+			for(var/M in T)
+				atoms_to_test |= M
 
-/obj/structure/clockwork/powered/interdiction_lens/proc/disrupt(mob/living/user)
-	if(!user || !is_servant_of_ratvar(user))
-		return 0
-	if(!total_accessable_power() >= disrupt_cost)
-		user << "<span class='warning'>[src] needs more power to function!</span>"
-		return 0
-	if(active || recharging >= world.time)
-		user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
-		return 0
-	user.visible_message("<span class='warning'>[user] places their hand on [src]' gemstone...</span>", "<span class='brass'>You place your hand on the gemstone...</span>")
-	var/target = input(user, "Power flows through you. Choose where to direct it.", "Interdiction Lens") as null|anything in list("Disrupt Telecommunications", "Disable Cameras", "Disable Cyborgs")
-	if(!user.canUseTopic(src) || !target)
-		user.visible_message("<span class='warning'>[user] pulls their hand back.</span>", "<span class='brass'>On second thought, maybe not right now.</span>")
-		return 0
-	if(!try_use_power(disrupt_cost))
-		user.visible_message("<span class='warning'>The len flickers once, but nothing happens.</span>", "<span class='heavy_brass'>The lens lacks the power to activate.</span>")
-		return 0
-	user.visible_message("<span class='warning'>Violet tendrils engulf [user]'s arm as the gemstone glows with furious energy!</span>", \
-	"<span class='heavy_brass'>A mass of violet tendrils cover your arm as [src] unleashes a blast of power!</span>")
-	user.notransform = TRUE
-	icon_state = "[initial(icon_state)]_active"
-	sleep(30)
-	switch(target)
-		if("Disrupt Telecommunications")
-			for(var/obj/machinery/telecomms/hub/H in telecomms_list)
-				for(var/mob/M in range(7, H))
-					M << "<span class='warning'>You sense a strange force pass through you...</span>"
-				H.visible_message("<span class='warning'>The lights on [H] flare a blinding yellow before falling dark!</span>")
-				H.emp_act(1)
-		if("Disable Cameras")
-			for(var/obj/machinery/camera/C in cameranet.cameras)
-				C.emp_act(1)
-			for(var/mob/living/silicon/ai/A in living_mob_list)
-				A << "<span class='userdanger'>Massive energy surge detected. All cameras offline.</span>"
-				A << 'sound/machines/warning-buzzer.ogg'
-		if("Disable Cyborgs")
-			for(var/mob/living/silicon/robot/R in living_mob_list) //Doesn't include AIs, for obvious reasons
-				if(is_servant_of_ratvar(R) || R.stat) //Doesn't affect already-offline cyborgs
-					continue
-				R.visible_message("<span class='warning'>[R] shuts down with no warning!</span>", \
-				"<span class='userdanger'>Massive emergy surge detected. All systems offline. Initiating reboot sequence..</span>")
-				playsound(R, 'sound/machines/warning-buzzer.ogg', 50, 1)
-				R.Weaken(30)
-	user.visible_message("<span class='warning'>The tendrils around [user]'s arm turn to an onyx black and wither away!</span>", \
-	"<span class='heavy_brass'>The tendrils around your arm turn a horrible black and sting your skin before they shrivel away.</span>")
-	user.notransform = FALSE
-	recharging = world.time + recharge_time
-	flick("[initial(icon_state)]_discharged", src)
-	toggle()
-	return 1
+			CHECK_TICK
+
+		for(var/M in atoms_to_test)
+			if(istype(M, /obj/machinery/power/apc))
+				var/obj/machinery/power/apc/A = M
+				if(A.cell && A.cell.charge)
+					successfulprocess = TRUE
+					playsound(A, "sparks", 50, 1)
+					flick("apc-spark", A)
+					power_drained += min(A.cell.charge, 100)
+					A.cell.charge = max(0, A.cell.charge - 100)
+					if(!A.cell.charge && !A.shorted)
+						A.shorted = 1
+						A.visible_message("<span class='warning'>The [A.name]'s screen blurs with static.</span>")
+					A.update()
+					A.update_icon()
+			else if(istype(M, /obj/machinery/power/smes))
+				var/obj/machinery/power/smes/S = M
+				if(S.charge)
+					successfulprocess = TRUE
+					power_drained += min(S.charge, 500)
+					S.charge = max(0, S.charge - 50000) //SMES units contain too much power and could run an interdiction lens basically forever, or provide power forever
+					if(!S.charge && !S.panel_open)
+						S.panel_open = TRUE
+						S.icon_state = "[initial(S.icon_state)]-o"
+						var/datum/effect_system/spark_spread/spks = new(get_turf(S))
+						spks.set_up(10, 0, get_turf(S))
+						spks.start()
+						S.visible_message("<span class='warning'>[S]'s panel flies open with a flurry of sparks.</span>")
+					S.update_icon()
+			else if(isrobot(M))
+				var/mob/living/silicon/robot/R = M
+				if(!is_servant_of_ratvar(R) && R.cell && R.cell.charge)
+					successfulprocess = TRUE
+					power_drained += min(R.cell.charge, 200)
+					R.cell.charge = max(0, R.cell.charge - 200)
+					R << "<span class='warning'>ERROR: Power loss detected!</span>"
+					var/datum/effect_system/spark_spread/spks = new(get_turf(R))
+					spks.set_up(3, 0, get_turf(R))
+					spks.start()
+
+			CHECK_TICK
+
+		if(!return_power(power_drained) || power_drained < 50) //failed to return power drained or too little power to return
+			successfulprocess = FALSE
+		if(try_use_power(disrupt_cost) && total_accessable_power() >= disrupt_cost) //if we can disable at least one object
+			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
+			for(var/M in atoms_to_test)
+				if(istype(M, /obj/machinery/light)) //cosmetic light flickering
+					var/obj/machinery/light/L = M
+					if(L.on)
+						playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
+						L.flicker(3)
+				else if(istype(M, /obj/machinery/camera))
+					var/obj/machinery/camera/C = M
+					if(C.isEmpProof() || !C.status)
+						continue
+					successfulprocess = TRUE
+					if(C.emped)
+						continue
+					if(!try_use_power(disrupt_cost))
+						break
+					C.emp_act(1)
+				else if(istype(M, /obj/item/device/radio))
+					var/obj/item/device/radio/O = M
+					successfulprocess = TRUE
+					if(O.emped || !O.on)
+						continue
+					if(!try_use_power(disrupt_cost))
+						break
+					O.emp_act(1)
+				else if(isliving(M) || istype(M, /obj/structure/closet) || istype(M, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
+					var/atom/movable/A = M
+					for(var/obj/item/device/radio/O in A.GetAllContents())
+						successfulprocess = TRUE
+						if(O.emped || !O.on)
+							continue
+						if(!try_use_power(disrupt_cost))
+							break
+						O.emp_act(1)
+
+				CHECK_TICK
+
+		if(!successfulprocess)
+			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
+			recharging = world.time + recharge_time
+			flick("interdiction_lens_discharged", src)
+			icon_state = "interdiction_lens_inactive"
+			SetLuminosity(2,1)
+			disabled = TRUE
 
 
 
@@ -435,6 +517,8 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	construction_value = 20
+	max_health = 200
+	health = 200
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
@@ -471,7 +555,7 @@
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
 				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(!input || !user.canUseTopic(src, be_close = 1))
+			if(!input || !user.canUseTopic(src, BE_CLOSE))
 				return
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
@@ -479,7 +563,7 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
+			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgvingr!")
 			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
 			if(gateway_active)
@@ -489,6 +573,8 @@
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
 			if(procure_gateway(user, 100, 5, 1))
-				user.say("Fcnpvny Tngrjnl, npgvingr!")
+				clockwork_say(user, "Fcnpvny Tngrjnl, npgvingr!")
+			else
+				return_power(gateway_cost)
 		if("Cancel")
 			return

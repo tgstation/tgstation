@@ -703,6 +703,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = rgb(255, 201, 49)
 	boozepwr = 35
 
+/datum/reagent/consumable/ethanol/hcider
+	name = "Hard Cider"
+	id = "hcider"
+	description = "Apple juice, for adults."
+	color = "#CD6839"
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 25
+
+
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"
 	id = "fetching_fizz"

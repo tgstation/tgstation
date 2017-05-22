@@ -84,7 +84,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		return
 
 	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
-	owner.overlays += overlay
+	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)

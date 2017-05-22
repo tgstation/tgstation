@@ -259,8 +259,18 @@
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
 		return
-
 	var/time_left = timeLeft(1)
+
+	// The emergency shuttle doesn't work like others so this
+	// ripple check is slightly different
+	if(!ripples.len && (time_left <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_ESCAPE)))
+		var/destination
+		if(mode == SHUTTLE_CALL)
+			destination = SSshuttle.getDock("emergency_home")
+		else if(mode == SHUTTLE_ESCAPE)
+			destination = SSshuttle.getDock("emergency_away")
+		create_ripples(destination)
+
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
@@ -278,10 +288,11 @@
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 				feedback_add_details("emergency_shuttle", src.name)
 
-				//Gangs only have one attempt left if the shuttle has docked with the station to prevent suffering from dominator delays
+				// Gangs only have one attempt left if the shuttle has
+				// docked with the station to prevent suffering from
+				// endless dominator delays
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-
+					if(G.is_dominating)
 						G.dom_attempts = 0
 					else
 						G.dom_attempts = min(1,G.dom_attempts)

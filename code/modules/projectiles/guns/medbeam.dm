@@ -18,7 +18,7 @@
 
 /obj/item/weapon/gun/medbeam/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/medbeam/dropped(mob/user)
 	..()
@@ -47,8 +47,7 @@
 	current_target = target
 	active = 1
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	spawn(0)
-		current_beam.Start()
+	addtimer(current_beam, "Start", 0)
 
 	feedback_add_details("gun_fired","[src.type]")
 
@@ -125,4 +124,4 @@
 
 /obj/item/weapon/gun/medbeam/mech/New()
 	..()
-	SSobj.processing -= src //Mech mediguns do not process until installed, and are controlled by the holder obj
+	STOP_PROCESSING(SSobj, src) //Mech mediguns do not process until installed, and are controlled by the holder obj

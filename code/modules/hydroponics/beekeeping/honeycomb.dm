@@ -20,14 +20,14 @@
 
 
 /obj/item/weapon/reagent_containers/honeycomb/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/honey
 	if(honey_color)
 		honey = image(icon = 'icons/obj/hydroponics/harvest.dmi', icon_state = "greyscale_honey")
 		honey.color = honey_color
 	else
 		honey = image(icon = 'icons/obj/hydroponics/harvest.dmi', icon_state = "honey")
-	overlays += honey
+	add_overlay(honey)
 
 
 /obj/item/weapon/reagent_containers/honeycomb/proc/set_reagent(reagent)

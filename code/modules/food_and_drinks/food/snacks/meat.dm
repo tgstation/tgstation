@@ -18,7 +18,7 @@
 	..()
 	var/image/I = new(icon, "rawcutlet_coloration")
 	I.color = filling_color
-	slice.overlays += I
+	slice.add_overlay(I)
 	slice.filling_color = filling_color
 	slice.name = "raw [name] cutlet"
 	slice.meat_type = name

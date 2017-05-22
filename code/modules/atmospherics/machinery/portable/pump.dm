@@ -33,11 +33,11 @@
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	icon_state = "psiphon:[on]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(holding)
-		overlays += "siphon-open"
+		add_overlay("siphon-open")
 	if(connected_port)
-		overlays += "siphon-connector"
+		add_overlay("siphon-connector")
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()

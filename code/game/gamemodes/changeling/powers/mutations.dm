@@ -150,7 +150,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5.0
 	force = 25
 	throwforce = 0 //Just to be on the safe side
@@ -162,9 +162,6 @@
 	..()
 	if(ismob(loc) && !silent)
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-
-/obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	qdel(src)
 
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
@@ -230,7 +227,7 @@
 /obj/item/weapon/shield/changeling
 	name = "shield-like mass"
 	desc = "A mass of tough, boney tissue. You can still see the fingers as a twisted pattern in the shield."
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "ling_shield"
 	block_chance = 50
@@ -241,9 +238,6 @@
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
 
 /obj/item/weapon/shield/changeling/hit_reaction()
 	if(remaining_uses < 1)
@@ -282,7 +276,7 @@
 	name = "flesh mass"
 	icon_state = "lingspacesuit"
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
-	flags = STOPSPRESSUREDMAGE | NODROP //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
+	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0) //No armor at all.
 
@@ -290,10 +284,7 @@
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-	SSobj.processing += src
-
-/obj/item/clothing/suit/space/changeling/dropped()
-	qdel(src)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
@@ -304,13 +295,9 @@
 	name = "flesh mass"
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
-	flags = STOPSPRESSUREDMAGE | NODROP //Again, no THICKMATERIAL.
+	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Again, no THICKMATERIAL.
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/obj/item/clothing/head/helmet/space/changeling/dropped()
-	qdel(src)
-
 
 /***************************************\
 |*****************ARMOR*****************|
@@ -335,7 +322,7 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
 	icon_state = "lingarmor"
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEJUMPSUIT
@@ -347,16 +334,10 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
-/obj/item/clothing/suit/armor/changeling/dropped()
-	qdel(src)
-
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE
-
-/obj/item/clothing/head/helmet/changeling/dropped()
-	qdel(src)

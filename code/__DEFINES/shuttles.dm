@@ -25,3 +25,7 @@
 #define UNLAUNCHED 0
 #define ENDGAME_LAUNCHED 1
 #define EARLY_LAUNCHED 2
+
+// Ripples, effects that signal a shuttle's arrival
+#define SHUTTLE_RIPPLE_TIME 100
+#define SHUTTLE_RIPPLE_FADEIN 50

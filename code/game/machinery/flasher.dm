@@ -148,13 +148,13 @@
 
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
-			overlays += "[base_state]-s"
+			add_overlay("[base_state]-s")
 			anchored = 1
 			power_change()
 			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
-			overlays.Cut()
+			cut_overlays()
 			anchored = 0
 			power_change()
 			remove_from_proximity_list(src, range)

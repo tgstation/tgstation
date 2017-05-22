@@ -1,5 +1,6 @@
 /obj
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -29,7 +30,7 @@
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
 
@@ -185,7 +186,7 @@
 		SSobj.burning += src
 		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
-			overlays += fire_overlay
+			add_overlay(fire_overlay)
 		return 1
 
 /obj/proc/burn()

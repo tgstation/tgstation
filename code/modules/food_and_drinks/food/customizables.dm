@@ -133,17 +133,17 @@
 			overlays.Cut(ingredients.len)
 			var/image/TOP = new(icon, "[icon_state]_top")
 			TOP.pixel_y = 2 * ingredients.len + 3
-			overlays += I
-			overlays += TOP
+			add_overlay(I)
+			add_overlay(TOP)
 			return
 		if(INGREDIENTS_FILL)
-			overlays.Cut()
+			cut_overlays()
 			I.color = filling_color
 		if(INGREDIENTS_LINE)
 			I.pixel_y = rand(-8,3)
 			I.pixel_x = I.pixel_y
 
-	overlays += I
+	add_overlay(I)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
@@ -262,12 +262,12 @@
 		ingMax = ingredients.len //can't add more ingredients after that
 		var/image/TOP = new(icon, "[BS.icon_state]")
 		TOP.pixel_y = 2 * ingredients.len + 3
-		overlays += TOP
+		add_overlay(TOP)
 		if(istype(BS, /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom))
 			var/image/O = new(icon, "[initial(BS.icon_state)]_filling")
 			O.color = BS.filling_color
 			O.pixel_y = 2 * ingredients.len + 3
-			overlays += O
+			add_overlay(O)
 		qdel(BS)
 		return
 	else
@@ -325,11 +325,11 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bowl/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(reagents && reagents.total_volume)
 		var/image/filling = image('icons/obj/food/soupsalad.dmi', "fullbowl")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 	else
 		icon_state = "bowl"
 

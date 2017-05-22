@@ -127,7 +127,7 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
@@ -176,7 +176,7 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
@@ -383,7 +383,6 @@
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
 			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-	return
 
 ////////////////////////////
 ///// Action processing ////
@@ -430,7 +429,6 @@
 		melee_can_hit = 0
 		spawn(melee_cooldown)
 			melee_can_hit = 1
-	return
 
 
 /obj/mecha/proc/range_action(atom/target)

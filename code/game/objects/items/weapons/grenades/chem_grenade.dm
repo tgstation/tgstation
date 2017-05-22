@@ -45,8 +45,7 @@
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
 
-			spawn(det_time)
-				prime()
+			addtimer(src, "prime", det_time)
 
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)

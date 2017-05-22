@@ -259,13 +259,15 @@
 /datum/chemical_reaction/slimefreeze/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
-	spawn(50)
-		if(holder && holder.my_atom)
-			playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-			for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
-				M.bodytemperature -= 240
-				M << "<span class='notice'>You feel a chill!</span>"
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
+	addtimer(src, "freeze", 50, FALSE, holder)
+/datum/chemical_reaction/slimefreeze/proc/freeze(datum/reagents/holder)
+	if(holder && holder.my_atom)
+		var/turf/T = get_turf(holder.my_atom)
+		playsound(T, 'sound/effects/phasein.ogg', 100, 1)
+		for(var/mob/living/M in range(T, 7))
+			M.bodytemperature -= 240
+			M << "<span class='notice'>You feel a chill!</span>"
 
 
 /datum/chemical_reaction/slimefireproof
@@ -307,12 +309,15 @@
 /datum/chemical_reaction/slimefire/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
-	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
-	spawn(50)
-		if(holder && holder.my_atom)
-			var/turf/open/T = get_turf(holder.my_atom)
-			if(istype(T))
-				T.atmos_spawn_air("plasma=50;TEMP=1000")
+	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
+	addtimer(src, "burn", 50, FALSE, holder)
+
+
+/datum/chemical_reaction/slimefire/proc/burn(datum/reagents/holder)
+	if(holder && holder.my_atom)
+		var/turf/open/T = get_turf(holder.my_atom)
+		if(istype(T))
+			T.atmos_spawn_air("plasma=50;TEMP=1000")
 
 //Yellow
 
@@ -501,9 +506,11 @@
 	message_admins("Slime Explosion reaction started at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	spawn(50)
-		if(holder && holder.my_atom)
-			explosion(get_turf(holder.my_atom), 1 ,3, 6)
+	addtimer(src, "boom", 50, FALSE, holder)
+
+/datum/chemical_reaction/slimeexplosion/proc/boom(datum/reagents/holder)
+	if(holder && holder.my_atom)
+		explosion(get_turf(holder.my_atom), 1 ,3, 6)
 
 //Light Pink
 /datum/chemical_reaction/slimepotion2

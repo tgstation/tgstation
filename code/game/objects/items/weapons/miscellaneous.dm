@@ -1,4 +1,3 @@
-
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"

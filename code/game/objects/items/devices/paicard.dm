@@ -12,7 +12,7 @@
 
 /obj/item/device/paicard/New()
 	..()
-	overlays += "pai-off"
+	add_overlay("pai-off")
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
@@ -105,30 +105,30 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-null"
+	src.add_overlay("pai-null")
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
-	src.overlays.Cut()
-	src.overlays += "pai-off"
+	src.cut_overlays()
+	src.add_overlay("pai-off")
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
-		src.overlays.Cut()
+		src.cut_overlays()
 		switch(emotion)
-			if(1) src.overlays += "pai-happy"
-			if(2) src.overlays += "pai-cat"
-			if(3) src.overlays += "pai-extremely-happy"
-			if(4) src.overlays += "pai-face"
-			if(5) src.overlays += "pai-laugh"
-			if(6) src.overlays += "pai-off"
-			if(7) src.overlays += "pai-sad"
-			if(8) src.overlays += "pai-angry"
-			if(9) src.overlays += "pai-what"
-			if(10) src.overlays += "pai-null"
+			if(1) src.add_overlay("pai-happy")
+			if(2) src.add_overlay("pai-cat")
+			if(3) src.add_overlay("pai-extremely-happy")
+			if(4) src.add_overlay("pai-face")
+			if(5) src.add_overlay("pai-laugh")
+			if(6) src.add_overlay("pai-off")
+			if(7) src.add_overlay("pai-sad")
+			if(8) src.add_overlay("pai-angry")
+			if(9) src.add_overlay("pai-what")
+			if(10) src.add_overlay("pai-null")
 
 /obj/item/device/paicard/proc/alertUpdate()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")

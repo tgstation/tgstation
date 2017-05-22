@@ -78,9 +78,9 @@
 	return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "scrub_welded"

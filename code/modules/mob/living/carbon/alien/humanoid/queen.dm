@@ -95,7 +95,6 @@
 			user << "<span class='noticealien'>Use the royal parasite on one of your children to promote her to Praetorian!</span>"
 	return 0
 
-
 /obj/item/queenpromote
 	name = "\improper royal parasite"
 	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
@@ -130,3 +129,36 @@
 /obj/item/queenpromote/attack_self(mob/user)
 	user << "<span class='noticealien'>You discard [src].</span>"
 	qdel(src)
+
+//:^)
+/datum/action/innate/maid
+	name = "Maidify"
+	button_icon_state = "alien_queen_maidify"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS|AB_CHECK_LYING
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/maid/Activate()
+	var/mob/living/carbon/alien/humanoid/royal/queen/A = owner
+	A.maidify()
+	active = TRUE
+
+/datum/action/innate/maid/Deactivate()
+	var/mob/living/carbon/alien/humanoid/royal/queen/A = owner
+	A.unmaidify()
+	active = FALSE
+
+
+
+/mob/living/carbon/alien/humanoid/royal/queen/proc/maidify()
+	name = "alien queen maid"
+	desc = "Lusty, Sexy"
+	icon_state = "alienqmaid"
+	caste = "qmaid"
+	update_icons()
+
+/mob/living/carbon/alien/humanoid/royal/queen/proc/unmaidify()
+	name = "alien queen"
+	desc = ""
+	icon_state = "alienq"
+	caste = "q"
+	update_icons()

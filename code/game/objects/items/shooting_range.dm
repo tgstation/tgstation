@@ -18,7 +18,7 @@
 	density = 0
 
 /obj/item/target/proc/removeOverlays()
-	overlays.Cut()
+	cut_overlays()
 
 /obj/item/target/Move()
 	..()
@@ -84,7 +84,7 @@
 				I.icon_state = "light_scorch"
 		else
 			I.icon_state = "dent"
-		overlays += I
+		add_overlay(I)
 		return
 	return -1
 

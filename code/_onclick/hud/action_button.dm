@@ -46,9 +46,9 @@
 	return
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/img = image(icon, src, hidden ? "show" : "hide")
-	overlays += img
+	add_overlay(img)
 	return
 
 

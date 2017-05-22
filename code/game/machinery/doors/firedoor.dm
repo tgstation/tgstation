@@ -105,15 +105,15 @@
 			flick("door_closing", src)
 
 /obj/machinery/door/firedoor/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(density)
 		icon_state = "door_closed"
 		if(welded)
-			overlays += "welded"
+			add_overlay("welded")
 	else
 		icon_state = "door_open"
 		if(welded)
-			overlays += "welded_open"
+			add_overlay("welded_open")
 
 /obj/machinery/door/firedoor/open()
 	. = ..()

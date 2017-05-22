@@ -108,8 +108,7 @@
 			user.reset_perspective(C)
 		watchers[user] = C
 		use_power(50)
-		spawn(5)
-			use_camera_console(user)
+		addtimer(src, "use_camera_console", 5, FALSE, user)
 	else
 		user.unset_machine()
 

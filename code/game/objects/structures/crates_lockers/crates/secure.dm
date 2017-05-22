@@ -9,11 +9,11 @@
 /obj/structure/closet/crate/secure/update_icon()
 	..()
 	if(broken)
-		overlays += "securecrateemag"
+		add_overlay("securecrateemag")
 	else if(locked)
-		overlays += "securecrater"
+		add_overlay("securecrater")
 	else
-		overlays += "securecrateg"
+		add_overlay("securecrateg")
 
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."

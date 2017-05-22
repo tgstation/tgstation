@@ -119,7 +119,7 @@
 			toggle = 1
 
 /obj/item/device/transfer_valve/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
@@ -128,13 +128,13 @@
 	icon_state = "valve"
 
 	if(tank_one)
-		overlays += "[tank_one.icon_state]"
+		add_overlay("[tank_one.icon_state]")
 	if(tank_two)
 		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
 		J.Shift(WEST, 13)
 		underlays += J
 	if(attached_device)
-		overlays += "device"
+		add_overlay("device")
 
 /obj/item/device/transfer_valve/proc/merge_gases()
 	tank_two.air_contents.volume += tank_one.air_contents.volume

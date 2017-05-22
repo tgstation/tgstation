@@ -25,9 +25,9 @@
 
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)

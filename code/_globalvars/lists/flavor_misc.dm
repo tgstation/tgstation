@@ -94,3 +94,63 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
 
 var/global/list/guitar_notes = flist("sound/guitar/")
+
+var/global/list/station_prefixes = list("", "Imperium", "Heretical", "Cuban",
+	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
+	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
+	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
+	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
+	"Automated", "Experimental", "Augmented")
+
+var/global/list/station_names = list("", "Stanford", "Dorf", "Alium",
+	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
+	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
+	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
+	"South", "Slant-ways", "Widdershins", "Rimward", "Expensive",
+	"Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork",
+	"Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist",
+	"Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist",
+	"Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon",
+	"System", "Mining", "Neckbeard", "Research", "Supply", "Military",
+	"Orbital", "Battle", "Science", "Asteroid", "Home", "Production",
+	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
+	"Robot", "Hats", "Pizza")
+
+var/global/list/station_suffixes = list("Station", "Frontier",
+	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
+	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
+	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
+	"Complex", "Base", "Facility", "Depot", "Outpost", "Installation",
+	"Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform",
+	"Construct", "Hangar", "Prison", "Center", "Port", "Waystation",
+	"Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object",
+	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
+	"Airstrip")
+
+var/global/list/greek_letters = list("Alpha", "Beta", "Gamma", "Delta",
+	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
+	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
+	"Chi", "Psi", "Omega")
+
+var/global/list/roman_numerals = list("I", "II", "III", "IV", "V", "VI",
+	"VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI",
+	"XVII", "XVIII", "XIX", "XX")
+
+var/global/list/phonetic_alphabet = list("Alpha", "Bravo", "Charlie",
+	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
+	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
+	"Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray",
+	"Yankee", "Zulu")
+
+var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
+	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
+	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+	"Eighteen", "Nineteen")
+
+/proc/generate_number_strings()
+	var/list/L
+	for(var/i in 1 to 99)
+		L += "[i]"
+	return L
+
+var/global/list/station_numerals = greek_letters + roman_numerals + phonetic_alphabet + numbers_as_words + generate_number_strings()

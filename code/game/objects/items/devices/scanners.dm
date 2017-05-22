@@ -25,7 +25,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
@@ -38,7 +38,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	scan()
 
@@ -80,15 +80,15 @@ MASS SPECTROMETER
 	materials = list(MAT_METAL=200)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
-	var/scanchems = 0
+	var/scanmode = 0
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
-	if(!scanchems)
+	if(!scanmode)
 		user << "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>"
-		scanchems = 1
+		scanmode = 1
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
-		scanchems = 0
+		scanmode = 0
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
@@ -104,9 +104,9 @@ MASS SPECTROMETER
 
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 
-	if(!scanchems)
+	if(scanmode == 0)
 		healthscan(user, M, mode)
-	else
+	else if(scanmode == 1)
 		chemscan(user, M)
 
 	add_fingerprint(user)

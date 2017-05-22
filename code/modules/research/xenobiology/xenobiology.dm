@@ -189,7 +189,8 @@
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages |= HUMAN
+		SM.languages_spoken |= HUMAN
+		SM.languages_understood |= HUMAN
 		SM.faction = user.faction
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
@@ -236,7 +237,8 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages = user.languages
+	SM.languages_spoken = user.languages_spoken
+	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
@@ -453,7 +455,7 @@
 
 /obj/effect/golemrune/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost

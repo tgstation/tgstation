@@ -8,9 +8,9 @@
 "h" = (/obj/item/stack/rods,/turf/open/floor/plating,/area/ruin/unpowered)
 "i" = (/turf/open/floor/plating/airless,/area/ruin/unpowered)
 "j" = (/obj/machinery/door/airlock,/turf/open/floor/plating,/area/ruin/unpowered)
-"k" = (/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/turf/open/floor/plating,/area/ruin/unpowered)
+"k" = (/obj/effect/spawner/lootdrop/maintenance{lootcount = 2;name = "2maintenance loot spawner"},/turf/open/floor/plating,/area/ruin/unpowered)
 "l" = (/obj/item/stack/cable_coil,/turf/open/floor/plating,/area/ruin/unpowered)
-"m" = (/obj/effect/spawner/lootdrop/maintenance{lootcount = 4; name = "4maintenance loot spawner"},/turf/open/floor/plating,/area/ruin/unpowered)
+"m" = (/obj/effect/spawner/lootdrop/maintenance{lootcount = 4;name = "4maintenance loot spawner"},/turf/open/floor/plating,/area/ruin/unpowered)
 
 (1,1,1) = {"
 aaaaaaaaabaaaaaaa

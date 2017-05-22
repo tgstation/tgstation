@@ -18,10 +18,10 @@
 
 /obj/item/device/geiger_counter/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/geiger_counter/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/device/geiger_counter/process()

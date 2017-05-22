@@ -8,7 +8,8 @@
 	see_in_dark = 0
 	see_invisible = 55
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	languages = HUMAN | MONKEY | ALIEN | ROBOT | SLIME | DRONE | SWARMER
+	languages_spoken = ALL
+	languages_understood = ALL
 	hud_possible = list(ANTAG_HUD)
 	mouse_opacity = 0 //can't be clicked
 

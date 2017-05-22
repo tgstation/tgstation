@@ -29,7 +29,7 @@
 /obj/item/weapon/gun/energy/gun/mini/update_icon()
 	..()
 	if(F && F.on)
-		overlays += "mini-light"
+		add_overlay("mini-light")
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"

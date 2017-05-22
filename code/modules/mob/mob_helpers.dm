@@ -408,11 +408,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					if(!alert_overlay)
 						var/old_layer = source.layer
 						source.layer = FLOAT_LAYER
-						A.overlays += source
+						A.add_overlay(source)
 						source.layer = old_layer
 					else
 						alert_overlay.layer = FLOAT_LAYER
-						A.overlays += alert_overlay
+						A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
@@ -445,8 +445,9 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /proc/offer_control(mob/M)
 	M << "Control of your mob has been offered to dead players."
-	log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-	message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+	if(usr)
+		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
+		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."

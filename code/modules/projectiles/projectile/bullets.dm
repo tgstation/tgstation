@@ -128,8 +128,8 @@
 
 /obj/item/projectile/bullet/honker
 	damage = 0
-	weaken = 5
-	stun = 5
+	weaken = 3
+	stun = 3
 	forcedodge = 1
 	nodamage = 1
 	hitsound = 'sound/items/bikehorn.ogg'

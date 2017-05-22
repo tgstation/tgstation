@@ -29,9 +29,9 @@
 
 	if(beaker)
 		if(attached)
-			overlays += "beakeractive"
+			add_overlay("beakeractive")
 		else
-			overlays += "beakeridle"
+			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
@@ -53,7 +53,7 @@
 					filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
-			overlays += filling
+			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
@@ -73,7 +73,7 @@
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			SSmachine.processing.Add(src)
+			START_PROCESSING(SSmachine, src)
 			update_icon()
 		else
 			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"

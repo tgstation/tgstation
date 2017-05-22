@@ -37,10 +37,10 @@
 
 /obj/item/device/multitool/ai_detect/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/multitool/ai_detect/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/device/multitool/ai_detect/process()

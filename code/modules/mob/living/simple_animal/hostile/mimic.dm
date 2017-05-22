@@ -149,7 +149,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon_living = icon_state
 		overlays = O.overlays
 		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
-		overlays += googly_eyes
+		add_overlay(googly_eyes)
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
 			destroy_objects = 1

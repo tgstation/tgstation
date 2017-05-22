@@ -376,7 +376,7 @@
 
 //Todo : cache these.
 /obj/item/weapon/reagent_containers/chemtank/proc/update_filling()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
@@ -391,7 +391,7 @@
 				filling.icon_state = "backpack100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
 	. = list()
@@ -413,13 +413,13 @@
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
 	on = 1
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns on.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns off.</span>"
 

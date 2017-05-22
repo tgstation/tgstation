@@ -46,7 +46,7 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = 3
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -61,10 +61,6 @@
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)
-
-/obj/item/weapon/gun/energy/chrono_gun/dropped()
-	..()
-	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
 	return
@@ -182,7 +178,7 @@
 		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))

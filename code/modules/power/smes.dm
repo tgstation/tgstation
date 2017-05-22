@@ -203,7 +203,7 @@
 
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		return
 
@@ -226,19 +226,19 @@
 		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
 
 	if(outputting)
-		overlays += smesImageCache[SMES_OUTPUTTING]
+		add_overlay(smesImageCache[SMES_OUTPUTTING])
 	else
-		overlays += smesImageCache[SMES_NOT_OUTPUTTING]
+		add_overlay(smesImageCache[SMES_NOT_OUTPUTTING])
 
 	if(inputting)
-		overlays += smesImageCache[SMES_INPUTTING]
+		add_overlay(smesImageCache[SMES_INPUTTING])
 	else
 		if(input_attempt)
-			overlays += smesImageCache[SMES_INPUT_ATTEMPT]
+			add_overlay(smesImageCache[SMES_INPUT_ATTEMPT])
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += smesImageCache[clevel]
+		add_overlay(smesImageCache[clevel])
 	return
 
 

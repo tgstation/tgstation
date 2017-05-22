@@ -760,8 +760,8 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
-	var/mob/M = usr
-	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
+	var/mob/living/M = usr
+	if(!istype(M) || usr.incapacitated() || usr.lying)
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)

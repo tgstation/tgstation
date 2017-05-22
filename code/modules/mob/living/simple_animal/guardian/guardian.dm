@@ -196,12 +196,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if(loc == summoner)
 			return 0
 		summoner.adjustBruteLoss(amount)
-		if(amount)
+		if(amount > 0)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
-		if(summoner.stat == UNCONSCIOUS)
-			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
+			if(summoner.stat == UNCONSCIOUS)
+				summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
+				summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
@@ -499,7 +499,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>

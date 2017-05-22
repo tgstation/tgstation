@@ -48,15 +48,15 @@
 
 /obj/machinery/plantgenes/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if((stat & (BROKEN|NOPOWER)))
 		icon_state = "dnamod-off"
 	else
 		icon_state = "dnamod"
 	if(seed)
-		overlays += "dnamod-dna"
+		add_overlay("dnamod-dna")
 	if(panel_open)
-		overlays += "dnamod-open"
+		add_overlay("dnamod-open")
 
 /obj/machinery/plantgenes/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "dnamod", "dnamod", I))
@@ -388,7 +388,7 @@
 
 /obj/item/weapon/disk/plantgene/New()
 	..()
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 

@@ -66,7 +66,7 @@
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
@@ -131,7 +131,7 @@
 	if(health<0)
 		visible_message("<span class='warning'>[src] breaks down!</span>")
 		icon_state = "forge_off"
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		broken = 1
 
 /obj/structure/academy_wizard_spawner/attackby(obj/item/weapon/W, mob/living/user, params)

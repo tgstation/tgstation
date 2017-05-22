@@ -80,7 +80,7 @@
 
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(using_irrigation)
-			user << "Unscrew the hoses first!"
+			user << "<span class='warning'>Disconnect the hoses first!</span>"
 		else if(default_deconstruction_crowbar(I, 1))
 			return
 	else
@@ -168,10 +168,12 @@
 				if(waterlevel <= 0)
 					adjustHealth(-rand(0,2) / rating)
 
-			// Sufficient water level and nutrient level = plant healthy
+			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
 			else if(waterlevel > 10 && nutrilevel > 0)
 				adjustHealth(rand(1,2) / rating)
-				if(prob(5))  //5 percent chance the weed population will increase
+				if(myseed && prob(myseed.weed_chance))
+					adjustWeeds(myseed.weed_rate)
+				else if(prob(5))  //5 percent chance the weed population will increase
 					adjustWeeds(1 / rating)
 
 //Toxins/////////////////////////////////////////////////////////////////
@@ -250,7 +252,7 @@
 
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
-	overlays.Cut()
+	cut_overlays()
 
 	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
@@ -296,19 +298,19 @@
 		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
 		I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][t_growthstate]")
 	I.layer = OBJ_LAYER + 0.01
-	overlays += I
+	add_overlay(I)
 
 /obj/machinery/hydroponics/proc/update_icon_lights()
 	if(waterlevel <= 10)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3"))
 	if(nutrilevel <= 2)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3"))
 	if(health <= (myseed.endurance / 2))
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3"))
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3"))
 	if(harvest)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3"))
 
 
 /obj/machinery/hydroponics/examine(user)
@@ -316,9 +318,9 @@
 	if(myseed)
 		user << "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>"
 		if (dead)
-			user << "<span class='warning'>It's dead.</span>"
+			user << "<span class='warning'>It's dead!</span>"
 		else if (harvest)
-			user << "<span class='green'>It's ready to harvest.</span>"
+			user << "<span class='info'>It's ready to harvest.</span>"
 		else if (health <= (myseed.endurance / 2))
 			user << "<span class='warning'>It looks unhealthy.</span>"
 	else
@@ -328,7 +330,7 @@
 		user << "<span class='info'>Water: [waterlevel]/[maxwater]</span>"
 		user << "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>"
 	else
-		user << "<span class='info'>It doesn't require any maintenance.</span>"
+		user << "<span class='info'>It doesn't require any water or nutrients.</span>"
 
 	if(weedlevel >= 5)
 		user << "<span class='warning'>[src] is filled with weeds!</span>"
@@ -345,7 +347,7 @@
 		qdel(myseed)
 		myseed = null
 	else
-		oldPlantName = "Empty tray"
+		oldPlantName = "empty tray"
 	switch(rand(1,18))		// randomly pick predominative weed
 		if(16 to 18)
 			myseed = new /obj/item/seeds/reishi(src)
@@ -370,7 +372,7 @@
 	weedlevel = 0 // Reset
 	pestlevel = 0 // Reset
 	update_icon()
-	visible_message("<span class='info'>[oldPlantName] overtaken by [myseed.plantname].</span>")
+	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
@@ -404,7 +406,7 @@
 
 	sleep(5) // Wait a while
 	update_icon()
-	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
+	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
 
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
@@ -424,9 +426,9 @@
 
 		sleep(5) // Wait a while
 		update_icon()
-		visible_message("<span class='warning'>The mutated weeds in [src] spawned a [myseed.plantname]!</span>")
+		visible_message("<span class='warning'>The mutated weeds in [src] spawn some [myseed.plantname]!</span>")
 	else
-		usr << "The few weeds in [src] seem to react, but only for a moment..."
+		usr << "<span class='warning'>The few weeds in [src] seem to react, but only for a moment...</span>"
 
 
 /obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
@@ -440,12 +442,12 @@
 
 /obj/machinery/hydroponics/proc/mutatepest()
 	if(pestlevel > 5)
-		visible_message("The pests seem to behave oddly...")
+		visible_message("<span class='warning'>The pests seem to behave oddly...</span>")
 		for(var/i=0, i<3, i++)
 			var/obj/effect/spider/spiderling/S = new(src.loc)
 			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
-		usr << "The pests seem to behave oddly, but quickly settle down..."
+		usr << "<span class='warning'>The pests seem to behave oddly, but quickly settle down...</span>"
 
 /obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S)
 	if(myseed)
@@ -463,13 +465,13 @@
 			if(41 to 65)
 				mutate()
 			if(21 to 41)
-				usr << "The plants don't seem to react..."
+				usr << "<span class='warning'>The plants don't seem to react...</span>"
 			if(11 to 20)
 				mutateweed()
 			if(1 to 10)
 				mutatepest()
 			else
-				usr << "Nothing happens..."
+				usr << "<span class='warning'>Nothing happens...</span>"
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
 	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
@@ -667,7 +669,7 @@
 			if(1   to 32)
 				mutatepest()
 			else
-				usr << "Nothing happens..."
+				usr << "<span class='warning'>Nothing happens...</span>"
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
@@ -803,7 +805,7 @@
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
 		if(using_irrigation)
-			user << "<span class='warning'>Unscrew the hoses first!</span>"
+			user << "<span class='warning'>Disconnect the hoses first!</span>"
 			return
 
 		if(!anchored && !isinspace())
@@ -848,7 +850,7 @@
 		if(myseed) //Could be that they're just using it as a de-weeder
 			qdel(myseed)
 			myseed = null
-		weedlevel = 0 //Side-effect of cleaning up those nasty weeds
+		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 		update_icon()
 
 	else
@@ -929,7 +931,7 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/shovel) && !istype(O, /obj/item/weapon/shovel/spade))
+	if(istype(O, /obj/item/weapon/shovel) && !istype(O, /obj/item/weapon/shovel/spade)) //Doesn't include spades because of uprooting plants
 		user << "<span class='notice'>You clear up [src]!</span>"
 		qdel(src)
 	else

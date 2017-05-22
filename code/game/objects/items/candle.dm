@@ -65,7 +65,7 @@
 			usr.visible_message(
 				"<span class='danger'>[usr] lights the [name].</span>")
 		SetLuminosity(CANDLE_LUMINOSITY)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		update_icon()
 
 

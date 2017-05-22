@@ -208,7 +208,6 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		else
 			user << "<span class='notice'>You carefully remove the poster from the wall.</span>"
 			roll_and_drop(user.loc, official)
-		return
 
 
 /obj/structure/sign/poster/attack_hand(mob/user)
@@ -277,4 +276,3 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 			user << "<span class='notice'>You place the poster!</span>"
 		else
 			D.roll_and_drop(temp_loc,D.official)
-		return

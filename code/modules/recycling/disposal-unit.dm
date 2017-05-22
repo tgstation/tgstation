@@ -399,7 +399,7 @@
 	update_icon()
 
 /obj/machinery/disposal/bin/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		mode = 0
 		flush = 0
@@ -407,7 +407,7 @@
 
 	// flush handle
 	if(flush)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle"))
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
@@ -415,13 +415,13 @@
 
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full"))
 
 	// charging and ready light
 	if(mode == 1)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
 	else if(mode == 2)
-		overlays += image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready")
+		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
 
 
 // timed process

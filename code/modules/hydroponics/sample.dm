@@ -33,7 +33,7 @@ var/list/chem_t4_reagents = list(
 	if(sample_color)
 		var/image/I = image(icon, icon_state = "sample-filling")
 		I.color = sample_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/seeds/sample/get_analyzer_text()
 	return " The DNA of this sample is damaged beyond recovery, it can't support life on it's own.\n*---------*"

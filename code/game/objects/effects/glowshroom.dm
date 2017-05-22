@@ -1,7 +1,12 @@
 //separate dm since hydro is getting bloated already
 
+var/list/blacklisted_glowshroom_turfs = typecacheof(list(
+	/turf/open/floor/plating/lava,
+	/turf/open/floor/plating/beach/water))
+
 /obj/effect/glowshroom
 	name = "glowshroom"
+	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
 	anchored = 1
 	opacity = 0
 	density = 0
@@ -23,6 +28,10 @@ obj/effect/glowshroom/glowcap
 /obj/effect/glowshroom/single
 	yield = 0
 
+/obj/effect/glowshroom/examine(mob/user)
+	. = ..()
+	user << "This is a [generation]\th generation [name]!"
+
 /obj/effect/glowshroom/New()
 	..()
 	SetLuminosity(round(potency/10))
@@ -42,23 +51,23 @@ obj/effect/glowshroom/glowcap
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "[base_icon_state]f"
 
-	spawn(delay)
-		Spread()
+	addtimer(src, "Spread", delay)
 
 /obj/effect/glowshroom/proc/Spread()
-	set background = BACKGROUND_ENABLED
-
-	for(var/i=1,i<=yield,i++)
+	for(var/i = 1 to yield)
 		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
-			var/spreadsIntoAdjacent = 0
+			var/spreadsIntoAdjacent = FALSE
 
 			if(prob(spreadIntoAdjacentChance))
-				spreadsIntoAdjacent = 1
+				spreadsIntoAdjacent = TRUE
 
 			for(var/turf/open/floor/earth in view(3,src))
+				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
+					continue
 				if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 					possibleLocs += earth
+				CHECK_TICK
 
 			if(!possibleLocs.len)
 				break
@@ -77,15 +86,15 @@ obj/effect/glowshroom/glowcap
 				continue
 
 			var/obj/effect/glowshroom/child = new type(newLoc)//The baby mushrooms have different stats :3
-			child.potency = max(potency+rand(-3,6), 0)
-			child.yield = max(yield+rand(-1,2), 0)
-			child.delay = max(delay+rand(-30,60), 0)
-			child.endurance = max(endurance+rand(-3,6), 1)
-			child.generation = generation+1
-			child.desc = "This is a [child.generation]\th generation [child.name]!"//I added this for testing, but I figure I'll leave it in.
+			child.potency = max(potency + rand(-3,6), 0)
+			child.yield = max(yield + rand(-1,2), 0)
+			child.delay = max(delay + rand(-30,60), 0)
+			child.endurance = max(endurance + rand(-3,6), 1)
+			child.generation = generation + 1
+
+			CHECK_TICK
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
-	set background = BACKGROUND_ENABLED
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
@@ -127,17 +136,12 @@ obj/effect/glowshroom/glowcap
 	switch(severity)
 		if(1)
 			qdel(src)
-			return
 		if(2)
-			if (prob(50))
+			if(prob(50))
 				qdel(src)
-				return
 		if(3)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
-				return
-		else
-	return
 
 /obj/effect/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

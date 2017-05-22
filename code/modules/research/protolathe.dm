@@ -112,7 +112,7 @@ Note: Must be placed west/left of and R&D console to function.
 			busy = 1
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
-			overlays += "protolathe_[stack_name]"
+			add_overlay("protolathe_[stack_name]")
 			sleep(10)
 			overlays -= "protolathe_[stack_name]"
 			busy = 0

@@ -11,7 +11,7 @@
 		..()
 		generateBrokers()
 		generateStocks()
-		SSobj.processing.Add(src)
+		START_PROCESSING(SSobj, src)
 
 /datum/stockMarket/proc/balanceLog(var/whose, var/net)
 	if (!(whose in balances))

@@ -91,12 +91,14 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/main/station/initialize()
 	setup_parts()
-	middle.overlays += "activated"
+	middle.add_overlay("activated")
 	update_list()
 
 //
 // Generator an admin can spawn
 //
+/obj/machinery/gravity_generator/main/station/admin
+	use_power = 0
 
 /obj/machinery/gravity_generator/main/station/admin/New()
 	..()
@@ -160,7 +162,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	for(var/obj/machinery/gravity_generator/M in parts)
 		if(!(M.stat & BROKEN))
 			M.set_broken()
-	middle.overlays.Cut()
+	middle.cut_overlays()
 	charge_count = 0
 	breaker = 0
 	set_power()
@@ -351,9 +353,9 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 			if(overlay_state != current_overlay)
 				if(middle)
-					middle.overlays.Cut()
+					middle.cut_overlays()
 					if(overlay_state)
-						middle.overlays += overlay_state
+						middle.add_overlay(overlay_state)
 					current_overlay = overlay_state
 
 

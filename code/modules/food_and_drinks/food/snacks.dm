@@ -209,14 +209,14 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
 		I.color = S.filling_color
 
-	overlays += I
+	add_overlay(I)
 
 // initialize_cooked_food() is called when microwaving the food
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency = 1)

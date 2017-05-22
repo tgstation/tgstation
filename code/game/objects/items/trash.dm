@@ -64,5 +64,6 @@
 	name = "crushed can"
 	icon_state = "cola"
 	burn_state = FIRE_PROOF
+
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

@@ -15,10 +15,10 @@
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/singularityhammer/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/twohanded/singularityhammer/process()

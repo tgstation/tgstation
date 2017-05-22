@@ -20,27 +20,6 @@
 		qdel(F)
 	return 1
 
-/proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
-	if(specific_component_id)
-		clockwork_component_cache[specific_component_id]++
-	else
-		var/component_to_generate = get_weighted_component_id()
-		clockwork_component_cache[component_to_generate]++
-
-/proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab) //returns a chosen component id based on the lowest amount of that component
-	if(storage_slab)
-		return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["belligerent_eye"] + storage_slab.stored_components["belligerent_eye"]), 1), \
-			"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["vanguard_cogwheel"] + storage_slab.stored_components["vanguard_cogwheel"]), 1), \
-			"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["guvax_capacitor"] + storage_slab.stored_components["guvax_capacitor"]), 1), \
-			"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["replicant_alloy"] + storage_slab.stored_components["replicant_alloy"]), 1), \
-			"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["hierophant_ansible"] + storage_slab.stored_components["hierophant_ansible"]), 1)))
-
-	return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["belligerent_eye"], 1), \
-		"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["vanguard_cogwheel"], 1), \
-		"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["guvax_capacitor"], 1), \
-		"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["replicant_alloy"], 1), \
-		"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["hierophant_ansible"], 1)))
-
 //allows a mob to select a target to gate to
 /atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)
 	var/list/possible_targets = list()
@@ -76,7 +55,7 @@
 		return 0
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!target || !invoker.canUseTopic(src, be_close = 1))
+	if(!target || !invoker.canUseTopic(src, BE_CLOSE))
 		return 0
 	var/istargetobelisk = istype(target, /obj/structure/clockwork/powered/clockwork_obelisk)
 	if(istargetobelisk)
@@ -84,13 +63,80 @@
 		time_duration *= 2
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/powered/clockwork_obelisk) ? src.loc : get_step(invoker, invoker.dir))
-	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? target.loc : get_step(target, target.dir))
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/powered/clockwork_obelisk) ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned
 	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
 	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return 1
+
+/proc/scripture_unlock_check(scripture_tier) //check if the selected scripture tier is unlocked
+	var/servants = 0
+	var/unconverted_ai_exists = FALSE
+	for(var/mob/living/M in living_mob_list)
+		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+			servants++
+	for(var/mob/living/silicon/ai/ai in living_mob_list)
+		if(!is_servant_of_ratvar(ai) && ai.client)
+			unconverted_ai_exists = TRUE
+	switch(scripture_tier)
+		if(SCRIPTURE_DRIVER)
+			return 1
+		if(SCRIPTURE_SCRIPT)
+			if(servants >= 5 && clockwork_caches)
+				return 1 //5 or more non-brain servants and any number of clockwork caches
+		if(SCRIPTURE_APPLICATION)
+			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50)
+				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 50 CV
+		if(SCRIPTURE_REVENANT)
+			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
+				return 1 //10 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
+		if(SCRIPTURE_JUDGEMENT)
+			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100 && !unconverted_ai_exists)
+				return 1 //10 or more non-brain servants, 3+ clockwork caches, at least 100 CV, and there are no living, non-servant ais
+	return 0
+
+/proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
+	if(specific_component_id)
+		clockwork_component_cache[specific_component_id]++
+	else
+		var/component_to_generate = get_weighted_component_id()
+		clockwork_component_cache[component_to_generate]++
+
+/proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab) //returns a chosen component id based on the lowest amount of that component
+	if(storage_slab)
+		return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["belligerent_eye"] + storage_slab.stored_components["belligerent_eye"]), 1), \
+			"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["vanguard_cogwheel"] + storage_slab.stored_components["vanguard_cogwheel"]), 1), \
+			"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["guvax_capacitor"] + storage_slab.stored_components["guvax_capacitor"]), 1), \
+			"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["replicant_alloy"] + storage_slab.stored_components["replicant_alloy"]), 1), \
+			"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["hierophant_ansible"] + storage_slab.stored_components["hierophant_ansible"]), 1)))
+
+	return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["belligerent_eye"], 1), \
+		"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["vanguard_cogwheel"], 1), \
+		"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["guvax_capacitor"], 1), \
+		"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["replicant_alloy"], 1), \
+		"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["hierophant_ansible"], 1)))
+
+/proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
+	// When servants invoke ratvar's power, they speak in ways that non
+	// servants do not comprehend.
+	// Our ratvarian chants are stored in their ratvar forms
+
+	var/list/spans = list(SPAN_ROBOT)
+
+	var/old_languages_spoken = AM.languages_spoken
+	AM.languages_spoken = ALL // Everyone understands
+	// In that no one does.
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!whisper)
+			L.say(message, "clock", spans)
+		else
+			L.whisper(message)
+	else
+		AM.say(message)
+	AM.languages_spoken = old_languages_spoken
 
 /*
 

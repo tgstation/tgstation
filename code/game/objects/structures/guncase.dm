@@ -26,13 +26,13 @@
 	update_icon()
 
 /obj/structure/guncase/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/i = contents.len, i >= 1, i--)
-		overlays += image(icon = src.icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) )
+		add_overlay(image(icon = src.icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) ))
 	if(open)
-		overlays += "[icon_state]_open"
+		add_overlay("[icon_state]_open")
 	else
-		overlays += "[icon_state]_door"
+		add_overlay("[icon_state]_door")
 
 /obj/structure/guncase/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user) || isalien(user))

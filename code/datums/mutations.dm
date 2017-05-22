@@ -236,11 +236,13 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
-		spawn(90)
-			owner.jitteriness = 10
+		addtimer(src, "jitter_less", 90, FALSE, owner)
+
+/datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
+	if(owner)
+		owner.jitteriness = 10
 
 /datum/mutation/human/bad_dna
-
 	name = "Unstable DNA"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
@@ -261,7 +263,6 @@
 	on_losing(owner)
 
 /datum/mutation/human/cough
-
 	name = "Cough"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
@@ -272,7 +273,6 @@
 		owner.emote("cough")
 
 /datum/mutation/human/dwarfism
-
 	name = "Dwarfism"
 	quality = POSITIVE
 	get_chance = 15
@@ -311,7 +311,6 @@
 	owner.disabilities &= ~CLUMSY
 
 /datum/mutation/human/tourettes
-
 	name = "Tourettes Syndrome"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
@@ -332,7 +331,6 @@
 		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
 
 /datum/mutation/human/nervousness
-
 	name = "Nervousness"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
@@ -342,7 +340,6 @@
 		owner.stuttering = max(10, owner.stuttering)
 
 /datum/mutation/human/deaf
-
 	name = "Deafness"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
@@ -358,7 +355,6 @@
 	owner.disabilities &= ~DEAF
 
 /datum/mutation/human/blind
-
 	name = "Blindness"
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"

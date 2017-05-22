@@ -112,7 +112,7 @@
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-//Clockwork floor: Slowly heals conventional damage on nearby servants.
+//Clockwork floor: Slowly heals toxin damage on nearby servants.
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
@@ -126,24 +126,35 @@
 	clockwork_construction_value++
 
 /turf/open/floor/clockwork/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_construction_value--
 	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/clockwork/process()
 	if(!healservants())
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)
 		if(L.stat == DEAD || !is_servant_of_ratvar(L))
 			continue
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
+		var/swapdamage = FALSE
+		if(L.has_dna()) //if has_dna() is true they're at least carbon
+			var/mob/living/carbon/C = L
+			if(TOXINLOVER in C.dna.species.specflags)
+				swapdamage = TRUE
+		if(isanimal(L))
+			var/mob/living/simple_animal/A = L
+			if(A.damage_coeff[TOX] < 0)
+				swapdamage = TRUE
+		if(swapdamage) //they'd take damage, we need to swap it
+			L.adjustToxLoss(3)
+		else
+			L.adjustToxLoss(-3)
 		. = 1
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)

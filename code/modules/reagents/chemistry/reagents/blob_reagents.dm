@@ -539,7 +539,7 @@
 /datum/reagent/blob/adaptive_nexuses/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
-		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
+		PoolOrNew(/obj/effect/overlay/temp/purple_sparkles, get_turf(M))
 		var/points = rand(5, 10)
 		O.add_points(points)
 		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"

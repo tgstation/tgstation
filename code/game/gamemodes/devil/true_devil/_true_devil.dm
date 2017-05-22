@@ -17,7 +17,8 @@
 	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
-	languages = ALL //The devil speaks all languages meme
+	languages_spoken = ALL //The devil speaks all languages meme
+	languages_understood = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
@@ -90,9 +91,11 @@
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
 
-/mob/living/carbon/true_devil/canUseTopic()
-	if(stat)
-		return
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 /mob/living/carbon/true_devil/assess_threat()

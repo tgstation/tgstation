@@ -134,8 +134,7 @@
 				on = !on
 
 				if(on)
-					spawn()
-						magnetic_process()
+					addtimer(src, "magnetic_process", 0)
 
 
 

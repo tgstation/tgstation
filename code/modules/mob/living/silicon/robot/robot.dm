@@ -718,8 +718,7 @@
 			if (prob(85))
 				Stun(2)
 				step(src,get_dir(M,src))
-				spawn(5)
-					step(src,get_dir(M,src))
+				addtimer(src, "step", 5, FALSE, src, get_dir(M, src))
 				add_logs(M, src, "pushed")
 				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
@@ -809,44 +808,44 @@
 	return update_icons()
 
 /mob/living/silicon/robot/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
+				add_overlay("eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]") //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("toiletbot")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("engiborg")
-				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("janiborg")
-				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("minerborg","ashborg")
-				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 				state_name = "minerborg"
 			if("peaceborg")
-				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")
-				overlays += "eyes-syndie_bloodhound"
+				add_overlay("eyes-syndie_bloodhound")
 			else
-				overlays += "eyes"
+				add_overlay("eyes")
 				state_name = "serviceborg"
 		if(lamp_intensity > 2)
-			overlays += "eyes-[state_name]-lights"
+			add_overlay("eyes-[state_name]-lights")
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-opencover +w"
+			add_overlay("ov-opencover +w")
 		else if(cell)
-			overlays += "ov-opencover +c"
+			add_overlay("ov-opencover +c")
 		else
-			overlays += "ov-opencover -c"
+			add_overlay("ov-opencover -c")
 
 	update_fire()
 

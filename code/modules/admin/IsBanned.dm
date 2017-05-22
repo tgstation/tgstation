@@ -99,7 +99,6 @@
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			return .
 
-
 	. = ..()	//default pager ban stuff
 	if (.)
 		//byond will not trigger isbanned() for "global" host bans,

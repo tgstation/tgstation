@@ -106,14 +106,14 @@
 	name = "\improper [name] packet"
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	icon_state = initial(icon_state)
 	if(!contents.len)
 		icon_state += "_empty"
 	else
-		overlays += "[icon_state]_open"
+		add_overlay("[icon_state]_open")
 		for(var/c = contents.len, c >= 1, c--)
-			overlays += image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1))
+			add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1)))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
@@ -211,9 +211,9 @@
 	spawn_type = /obj/item/weapon/rollingpaper
 
 /obj/item/weapon/storage/fancy/rollingpapers/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!contents.len)
-		overlays += "[icon_state]_empty"
+		add_overlay("[icon_state]_empty")
 	return
 
 /////////////
@@ -232,10 +232,10 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/update_icon()
-	overlays.Cut()
-	overlays += "[icon_state]_open"
+	cut_overlays()
+	add_overlay("[icon_state]_open")
 	for(var/c = contents.len, c >= 1, c--)
-		overlays += image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1))
+		add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba

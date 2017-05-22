@@ -120,7 +120,7 @@
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	air_contents = null
 
 /obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
@@ -136,13 +136,13 @@
 	var/mob/living/carbon/human/H = loc.loc
 	tank = H.s_store
 	air_contents = tank.air_contents
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/turn_off()
 	tank = null
 	air_contents = null
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/process()

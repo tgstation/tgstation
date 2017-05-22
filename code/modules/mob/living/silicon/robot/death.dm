@@ -3,7 +3,7 @@
 	robogibs(loc, viruses)
 
 /mob/living/silicon/robot/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-r")
+	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-r"))
 
 
 /mob/living/silicon/robot/dust()
@@ -15,7 +15,7 @@
 	new /obj/effect/decal/remains/robot(loc)
 
 /mob/living/silicon/robot/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-r")
+	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-r"))
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)

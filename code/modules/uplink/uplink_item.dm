@@ -633,6 +633,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/stealthy_tools/chameleon/nuke
+	cost = 6
+	exclude_modes = list()
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -710,6 +716,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/device/flashlight/emp
 	cost = 2
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/cutouts
+	name = "Adaptive Cardboard Cutouts"
+	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
+	crayon for changing their appearances."
+	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
+	cost = 1
+	surplus = 20
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
@@ -909,7 +923,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			powerful burst of radiation, which, after a short delay, can incapitate all but the most protected \
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
-	item = /obj/item/device/rad_laser
+	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod

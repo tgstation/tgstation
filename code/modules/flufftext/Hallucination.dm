@@ -58,6 +58,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	invisibility = INVISIBILITY_OBSERVER
 	var/mob/living/carbon/target = null
 
+/obj/effect/hallucination/proc/wake_and_restore()
+	target.hal_screwyhud = 0
+	target.SetSleeping(0)
+
 /obj/effect/hallucination/simple
 	var/image_icon = 'icons/mob/alien.dmi'
 	var/image_state = "alienh_pounce"
@@ -72,7 +76,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	target = T
 	current_image = GetImage()
 	if(target.client) target.client.images |= current_image
-	return
 
 /obj/effect/hallucination/simple/proc/GetImage()
 	var/image/I = image(image_icon,loc,image_state,image_layer,dir=src.dir)
@@ -101,7 +104,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
 	Show()
-	return
 
 /obj/effect/hallucination/simple/Destroy()
 	if(target.client) target.client.images.Remove(current_image)
@@ -132,7 +134,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	flood_turfs += get_turf(src.loc)
 	if(target.client) target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/hallucination/fake_flood/process()
 	if(next_expand <= world.time)
@@ -153,7 +155,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target.client.images |= flood_images
 
 /obj/effect/hallucination/fake_flood/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	qdel(flood_turfs)
 	flood_turfs = list()
 	if(target.client)
@@ -170,7 +172,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/xeno/New(loc,var/mob/living/carbon/T)
 	..()
 	name = "alien hunter ([rand(1, 1000)])"
-	return
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
@@ -236,9 +237,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = 1
 		target.SetSleeping(20)
-		spawn(rand(50,100))
-			target.hal_screwyhud = 0
-			target.SetSleeping(0)
+		addtimer(src, "wake_and_restore", rand(50, 100))
 
 /obj/effect/hallucination/battle
 
@@ -379,7 +378,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
 	src.health -= P.force
-	return
 
 /obj/effect/fake_attacker/Crossed(mob/M, somenumber)
 	if(M == my_target)
@@ -391,11 +389,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/fake_attacker/New(loc,var/mob/living/carbon/T)
 	..()
 	my_target = T
-	spawn(300)
-		qdel(src)
+	QDEL_IN(src, 300)
 	step_away(src,my_target,2)
-	spawn(0)
-		attack_loop()
+	addtimer(src, "attack_loop", 0)
 
 
 /obj/effect/fake_attacker/proc/updateimage()
@@ -457,9 +453,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
 	target << I
-	spawn(300)
-		qdel(O)
-	return
+	QDEL_IN(O, 300)
 
 var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
@@ -518,13 +512,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				person = H
 		people += H
 	if(person) //Basic talk
-		target << target.compose_message(person,person.languages,pick(speak_messages),null,person.get_spans())
+		target << target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
 	else // Radio talk
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
+		target << target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans())
 	qdel(src)
 
 /obj/effect/hallucination/message
@@ -664,8 +658,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halitem.icon_state = "flashbang1"
 							halitem.name = "Flashbang"
 					if(client) client.screen += halitem
-					spawn(rand(100,250))
-						qdel(halitem)
+					QDEL_IN(halitem, rand(100, 250))
 		if("dangerflash")
 			//Flashes of danger
 			//src << "Danger Flash"

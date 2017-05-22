@@ -128,7 +128,7 @@
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
-	overlays.Cut()
+	cut_overlays()
 
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)

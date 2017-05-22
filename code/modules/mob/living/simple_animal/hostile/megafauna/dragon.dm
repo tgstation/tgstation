@@ -93,15 +93,18 @@
 
 /obj/effect/overlay/temp/target/New()
 	..()
-	spawn()
-		var/turf/T = get_turf(src)
-		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		var/obj/effect/overlay/temp/fireball/F = new(src.loc)
-		animate(F, pixel_z = 0, time = 12)
-		sleep(12)
-		explosion(T, 0, 0, 1, 0, 0, 0, 1)
-		qdel(F)
-		qdel(src)
+	addtimer(src, "fall", 0)
+
+/obj/effect/overlay/temp/target/proc/fall()
+	var/turf/T = get_turf(src)
+	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
+	var/obj/effect/overlay/temp/fireball/F = PoolOrNew(/obj/effect/overlay/temp/fireball,src.loc)
+	F.pixel_z = 500
+	animate(F, pixel_z = 0, time = 12)
+	sleep(12)
+	explosion(T, 0, 0, 1, 0, 0, 0, 1)
+	qdel(F)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -127,7 +130,7 @@
 	visible_message("<span class='danger'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
-			new /obj/effect/overlay/temp/target(turf)
+			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
@@ -136,20 +139,23 @@
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
 	for(var/d in attack_dirs)
-		spawn(0)
-			var/turf/E = get_edge_target_turf(src, d)
-			var/range = 10
-			for(var/turf/open/J in getline(src,E))
-				if(!range)
-					break
-				range--
-				PoolOrNew(/obj/effect/hotspot,J)
-				J.hotspot_expose(700,50,1)
-				for(var/mob/living/L in J)
-					if(L != src)
-						L.adjustFireLoss(20)
-						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
-				sleep(1)
+		addtimer(src, "fire_wall", 0, FALSE, d)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(d)
+	var/turf/E = get_edge_target_turf(src, d)
+	var/range = 10
+	for(var/turf/open/J in getline(src,E))
+		if(!range)
+			break
+		range--
+		PoolOrNew(/obj/effect/hotspot,J)
+		J.hotspot_expose(700,50,1)
+		for(var/mob/living/L in J)
+			if(L != src)
+				L.adjustFireLoss(20)
+				L << "<span class='danger'>You're hit by the drake's \
+					fire breath!</span>"
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat || swooping)
@@ -181,7 +187,7 @@
 	else
 		tturf = get_turf(src)
 	forceMove(tturf)
-	new/obj/effect/overlay/temp/dragon_swoop(tturf)
+	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)

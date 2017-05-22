@@ -6,7 +6,8 @@
 	w_class = 2
 	flags = HEAR
 	slot_flags = SLOT_BELT
-	languages = ALL //this is a translator, after all.
+	languages_spoken = ALL //this is a translator, after all.
+	languages_understood = ALL //this is a translator, after all.
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
@@ -257,7 +258,7 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	overlays += "ribbonoverlay"
+	add_overlay("ribbonoverlay")
 	ruined = 1
 
 

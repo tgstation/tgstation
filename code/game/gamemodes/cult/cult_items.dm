@@ -272,9 +272,8 @@
 /obj/item/device/shuttle_curse
 	name = "cursed orb"
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state ="bluespace"
-	color = "#ff0000"
+	icon = 'icons/obj/cult.dmi'
+	icon_state ="shuttlecurse"
 	var/global/curselimit = 0
 
 /obj/item/device/shuttle_curse/attack_self(mob/user)

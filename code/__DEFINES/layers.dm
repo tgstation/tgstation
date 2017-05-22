@@ -39,6 +39,7 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
 #define AREA_LAYER 10

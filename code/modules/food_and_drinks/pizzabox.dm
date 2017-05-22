@@ -52,26 +52,26 @@
 			desc = "[desc] The [boxes.len ? "top box" : "box"]'s tag reads: [box.boxtag]"
 
 	// Icon/Overlays
-	overlays.Cut()
+	cut_overlays()
 	if(open)
 		icon_state = "pizzabox_open"
 		if(pizza)
 			icon_state = "pizzabox_messy"
 			var/image/pizzaimg = image(pizza.icon, icon_state = pizza.icon_state)
 			pizzaimg.pixel_y = -3
-			overlays += pizzaimg
+			add_overlay(pizzaimg)
 		if(bomb)
 			bomb.icon_state = "pizzabomb_[bomb_active ? "active" : "inactive"]"
 			var/image/bombimg = image(bomb.icon, icon_state = bomb.icon_state)
 			bombimg.pixel_y = 5
-			overlays += bombimg
+			add_overlay(bombimg)
 	else
 		icon_state = "pizzabox[boxes.len + 1]"
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(box.boxtag != "")
 			var/image/tagimg = image(icon, icon_state = "pizzabox_tag")
 			tagimg.pixel_y = boxes.len * 3
-			overlays += tagimg
+			add_overlay(tagimg)
 
 /obj/item/pizzabox/attack_self(mob/user)
 	if(boxes.len > 0)
@@ -80,7 +80,7 @@
 	if(open && !bomb_defused)
 		audible_message("<span class='warning'>\icon[src] *beep*</span>")
 		bomb_active = TRUE
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	update_icon()
 
 /obj/item/pizzabox/attack_hand(mob/user)
@@ -196,7 +196,7 @@
 	return
 
 /obj/item/pizzabox/proc/unprocess()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	qdel(wires)
 	wires = null
 	update_icon()

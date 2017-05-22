@@ -388,7 +388,7 @@ BLIND     // can't see anything
 			I.pixel_x += 8
 			I.pixel_y -= 8
 			I.layer = FLOAT_LAYER
-			overlays += I
+			add_overlay(I)
 
 
 			if(istype(loc, /mob/living/carbon/human))

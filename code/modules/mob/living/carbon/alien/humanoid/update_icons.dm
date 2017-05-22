@@ -1,8 +1,8 @@
 
 /mob/living/carbon/alien/humanoid/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 	if(stat == DEAD)
 		//If we mostly took damage from fire
