@@ -53,7 +53,7 @@
 		to_chat(user, "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 		return TRUE
 	var/operation_time = 100
-	if(proselytizer.speed_multiplier > 0)
+	if(!GLOB.ratvar_awakens && proselytizer.speed_multiplier > 0) //if ratvar isn't awake, this always takes 10 seconds
 		operation_time /= proselytizer.speed_multiplier
 	return list("operation_time" = operation_time, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
