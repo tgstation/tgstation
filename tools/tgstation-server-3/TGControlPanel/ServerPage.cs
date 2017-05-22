@@ -116,6 +116,7 @@ namespace TGControlPanel
 			UpdateHardButton.Visible = RepoExists;
 			UpdateMergeButton.Visible = RepoExists;
 			UpdateTestmergeButton.Visible = RepoExists;
+			ResetTestmerge.Visible = RepoExists;
 
 			var DM = Server.GetComponent<ITGCompiler>();
 			var DD = Server.GetComponent<ITGDreamDaemon>();
@@ -145,8 +146,8 @@ namespace TGControlPanel
 			if (error != null)
 			{
 				updatingFields = false;
-				MessageBox.Show("Error (I will try and recover): " + error);
 				NudgePortSelector.Value = 4567;
+				MessageBox.Show("Error (I will try and recover): " + error);
 			}
 			else
 			{
