@@ -225,7 +225,7 @@
 	color = "#ffb366" // light orange
 	invocation = "Lo'Nab Na'Dm!"
 	creation_time = 60
-	var/duration = 1200
+	var/duration = 1000
 	var/list/targets = list()
 	var/list/cultists = list()
 
@@ -235,7 +235,7 @@
 	for(var/datum/mind/B in SSticker.mode.cult)
 		world << "Targeting B for cult list"
 		cultists += B.current.client
-	for(var/mob/living/carbon/human/T in range(14, get_turf(src)))
+	for(var/mob/living/carbon/human/T in range(12, get_turf(src)))
 		if(!iscultist(T) && T.client)
 			world << "Targeting [T]"
 			targets += T.client
