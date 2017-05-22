@@ -377,6 +377,10 @@
 	icon_state = "sleeper"
 	flavour_text = "You are a beach bum!"
 
+/obj/effect/mob_spawn/human/beach/equip(mob/living/carbon/human/H)
+	..()
+	H.dna.add_mutation(STONER)
+
 /////////////////Officers+Nanotrasen Security//////////////////////
 
 /obj/effect/mob_spawn/human/bridgeofficer
