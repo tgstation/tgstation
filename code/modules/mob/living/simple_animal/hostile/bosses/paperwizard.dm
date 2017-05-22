@@ -8,7 +8,7 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "paperwizard"
 	ranged = 1
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	minimum_distance = 3
 	retreat_distance = 3
 	obj_damage = 0
