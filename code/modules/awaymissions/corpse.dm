@@ -98,11 +98,31 @@
 	var/id_access_list = null	//Allows you to manually add access to an ID card.
 
 	var/husk = null
+	//these vars are for lazy mappers to override parts of the outfit
+	//these cannot be null by default, or mappers cannot set them to null if they want nothing in that slot
+	var/uniform = -1
+	var/r_hand = -1
+	var/l_hand = -1
+	var/suit = -1
+	var/shoes = -1
+	var/gloves = -1
+	var/ears = -1
+	var/glasses = -1
+	var/mask = -1
+	var/head = -1
+	var/belt = -1
+	var/r_pocket = -1
+	var/l_pocket = -1
+	var/back = -1
+	var/id = -1
 
 /obj/effect/mob_spawn/human/Initialize()
 	. = ..()
 	if(ispath(outfit))
 		outfit = new outfit()
+	if(!outfit)
+		outfit = new /datum/outfit
+
 
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)
@@ -111,6 +131,11 @@
 		H.Drain()
 
 	if(outfit)
+		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id")
+		for(var/slot in slots)
+			var/T = vars[slot]
+			if(!isnum(T))
+				outfit.vars[slot] = T
 		H.equipOutfit(outfit)
 		if(disable_pda)
 			// We don't want corpse PDAs to show up in the messenger list.
