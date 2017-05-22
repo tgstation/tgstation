@@ -11573,9 +11573,7 @@
 "azq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "azr" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
@@ -11693,9 +11691,7 @@
 /area/ai_monitored/storage/eva)
 "azF" = (
 /turf/closed/wall,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "azG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -12096,15 +12092,11 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAy" = (
 /obj/machinery/power/smes{
 	charge = 0
@@ -12224,9 +12216,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAL" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -12278,14 +12268,10 @@
 "aAP" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/grass,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAQ" = (
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12305,23 +12291,17 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAT" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAU" = (
 /obj/structure/sink{
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aAV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12480,9 +12460,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aBn" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -12559,9 +12537,7 @@
 "aBv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aBw" = (
 /obj/item/seeds/apple,
 /obj/item/seeds/banana,
@@ -12577,9 +12553,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aBx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -12642,9 +12616,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aBH" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -12683,9 +12655,7 @@
 "aBM" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aBN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -13237,9 +13207,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aDb" = (
 /obj/structure/table,
 /obj/item/weapon/wirecutters,
@@ -13295,9 +13263,7 @@
 "aDg" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aDh" = (
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
@@ -14024,9 +13990,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aEG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side{
@@ -14068,9 +14032,7 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aEM" = (
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
@@ -14540,9 +14502,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aFO" = (
 /obj/machinery/camera{
 	c_tag = "Garden";
@@ -14555,17 +14515,13 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aFP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aFQ" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
@@ -15416,9 +15372,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 5
 	},
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aHA" = (
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /obj/item/weapon/reagent_containers/spray/pestspray{
@@ -15437,9 +15391,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 9
 	},
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aHB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -16042,9 +15994,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aIT" = (
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/structure/table/glass,
@@ -16062,9 +16012,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aIU" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -16652,16 +16600,12 @@
 	name = "Garden"
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aKn" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating,
-/area/hallway/secondary/construction{
-	name = "\improper Garden"
-	})
+/area/hydroponics/garden)
 "aKo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/side{
@@ -20207,9 +20151,7 @@
 /area/shuttle/syndicate)
 "aTq" = (
 /turf/closed/wall,
-/area/security/vacantoffice{
-	name = "Vacant Office A"
-	})
+/area/security/vacantoffice/a)
 "aTr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
@@ -23749,9 +23691,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice{
-	name = "Vacant Office A"
-	})
+/area/security/vacantoffice/a)
 "bbJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -56908,14 +56848,10 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/meter,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "ctZ" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cua" = (
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -56970,9 +56906,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuf" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cug" = (
 /obj/machinery/ai_status_display{
 	pixel_y = -32
@@ -56989,15 +56923,11 @@
 /obj/item/weapon/crowbar/red,
 /obj/item/clothing/head/welding,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cui" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuj" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -57022,9 +56952,7 @@
 "cum" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cun" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
@@ -57034,9 +56962,7 @@
 /turf/open/floor/plating{
 	icon_plating = "warnplate"
 	},
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuo" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/firealarm{
@@ -57047,9 +56973,7 @@
 	dir = 2
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cup" = (
 /obj/structure/showcase{
 	density = 0;
@@ -57069,9 +56993,7 @@
 /turf/open/floor/plating{
 	icon_plating = "warnplate"
 	},
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuq" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 0;
@@ -57082,9 +57004,7 @@
 /turf/open/floor/plating{
 	icon_plating = "warnplate"
 	},
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cur" = (
 /obj/structure/showcase{
 	density = 0;
@@ -57163,17 +57083,13 @@
 /turf/open/floor/plating{
 	icon_plating = "warnplate"
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuw" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
 	icon_plating = "warnplate"
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cux" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
@@ -57195,18 +57111,14 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuy" = (
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuA" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -57229,9 +57141,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuB" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -57250,16 +57160,12 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
 	},
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuC" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuD" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -57340,9 +57246,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 1
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -57350,18 +57254,14 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuJ" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuK" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -57390,9 +57290,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuL" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57404,9 +57302,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuM" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -57423,9 +57319,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuN" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57437,9 +57331,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57452,9 +57344,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57531,9 +57421,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuU" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57559,9 +57447,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuW" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -57578,9 +57464,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuX" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -57597,9 +57481,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cuY" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -57607,9 +57489,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cuZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -57617,9 +57497,7 @@
 	},
 /mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/plasteel/darkblue/corner,
-/area/ai_monitored/turret_protected/AIsatextAS{
-	name = "AI Satellite Atmospherics"
-	})
+/area/ai_monitored/turret_protected/aisat/atmos)
 "cva" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
@@ -57696,9 +57574,7 @@
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 8
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cvh" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -57706,9 +57582,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cvi" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -57716,19 +57590,13 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFP{
-	name = "AI Satellite Service"
-	})
+/area/ai_monitored/turret_protected/aisat/service)
 "cvj" = (
 /turf/closed/wall,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvk" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvl" = (
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
@@ -57739,15 +57607,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvo" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -57761,9 +57625,7 @@
 	req_one_access_txt = "65"
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvp" = (
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
@@ -57778,9 +57640,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvr" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -57790,30 +57650,22 @@
 "cvs" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvu" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvv" = (
 /turf/closed/wall,
 /area/ai_monitored/turret_protected/ai)
 "cvw" = (
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvx" = (
 /obj/effect/landmark/tripai,
 /obj/item/device/radio/intercom{
@@ -57848,9 +57700,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -57859,9 +57709,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvA" = (
 /obj/effect/landmark/tripai,
 /obj/item/device/radio/intercom{
@@ -57896,9 +57744,7 @@
 /obj/item/weapon/crowbar/red,
 /obj/item/weapon/wrench,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -57906,21 +57752,15 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvD" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvE" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvF" = (
 /obj/structure/lattice,
 /obj/machinery/camera{
@@ -57943,9 +57783,7 @@
 	dir = 8
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvH" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -57953,9 +57791,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvI" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -57970,9 +57806,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvJ" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4;
@@ -57983,9 +57817,7 @@
 	dir = 4
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvK" = (
 /obj/structure/lattice,
 /obj/machinery/camera{
@@ -58005,9 +57837,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvM" = (
 /obj/machinery/camera/motion{
 	c_tag = "MiniSat Core Hallway";
@@ -58019,9 +57849,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvN" = (
 /obj/structure/sign/securearea{
 	pixel_x = -32;
@@ -58033,9 +57861,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -58051,17 +57877,13 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvR" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -58069,17 +57891,13 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -58089,9 +57907,7 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvU" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
@@ -58104,9 +57920,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvV" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -58114,9 +57928,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -58124,22 +57936,16 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvX" = (
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cvZ" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -58147,9 +57953,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cwa" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
@@ -58159,9 +57963,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cwb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -58169,9 +57971,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cwc" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -58184,9 +57984,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cwd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -58203,9 +58001,7 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cwe" = (
 /obj/structure/sign/securearea,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -58318,9 +58114,7 @@
 "cwq" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cwr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -60716,9 +60510,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/area/ai_monitored/turret_protected/aisat/hallway)
 "cBT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{

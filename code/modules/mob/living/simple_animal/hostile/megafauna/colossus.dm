@@ -123,8 +123,9 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.martial_art && prob(H.martial_art.deflection_chance))
-			. = TRUE
+		if(H.mind)
+			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(GLOB.diagonals)
@@ -657,7 +658,7 @@ Difficulty: Very Hard
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
 	var/heal_power = 5

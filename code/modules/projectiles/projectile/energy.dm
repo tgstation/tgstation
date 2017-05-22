@@ -5,6 +5,8 @@
 	damage_type = BURN
 	flag = "energy"
 
+/obj/item/projectile/energy/chameleon
+	nodamage = TRUE
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"

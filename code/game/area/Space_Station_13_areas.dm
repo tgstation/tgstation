@@ -117,6 +117,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
 	icon_state = "fpmaint"
+	
+/area/maintenance/department/chapel
+	name = "Chapel Maintenance"
+	icon_state = "fpmaint"
+	
+/area/maintenance/department/chapel/monastery
+	name = "Monastery Maintenance"
+	icon_state = "fpmaint"
+	
+/area/maintenance/department/security
+	name = "Security Maintenance"
+	icon_state = "fpmaint"
+	
+/area/maintenance/department/security/brig
+	name = "Brig Maintenance"
+	icon_state = "fpmaint"
 
 /area/maintenance/fpmaint
 	name = "EVA Maintenance"
@@ -161,6 +177,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/maintcentral
 	name = "Bridge Maintenance"
 	icon_state = "maintcentral"
+	
+/area/maintenance/maintcentral/central
+	name = "Central Maintenance"
+	icon_state = "maintcentral"
 
 /area/maintenance/fore
 	name = "Fore Maintenance"
@@ -168,6 +188,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/starboard
 	name = "Starboard Maintenance"
+	icon_state = "smaint"
+	
+/area/maintenance/starboard/central
+	name = "Central Starboard Maintenance"
 	icon_state = "smaint"
 
 /area/maintenance/starboard/aft_starboard_maintenance
@@ -181,17 +205,97 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/port
 	name = "Locker Room Maintenance"
 	icon_state = "pmaint"
+	
+/area/maintenance/port/central
+	name = "Central Port Maintenance"
+	icon_state = "pmaint"
 
 /area/maintenance/aft
 	name = "Engineering Maintenance"
 	icon_state = "amaint"
+	
+/area/maintenance/aft/xeno_maint
+	name = "Xenobiology Maintenance"
+	icon_state = "xenomaint"
 
 /area/maintenance/aft/Aft_Maintenance
 	name = "Aft Maintenance"
 	icon_state = "amaint"
+	
+/area/maintenance/asteroid/aft/science
+	name = "Aft Maintenance"
+	icon_state = "amaint"
+	
+/area/maintenance/asteroid/aft/arrivals
+	name = "Aft Maintenance"
+	icon_state = "amaint"
+	
+/area/maintenance/asteroid/central
+	name = "Central Asteroid Maintenance"
+	icon_state = "maintcentral"
+	
+/area/maintenance/asteroid/disposal/east
+	name = "Eastern External Waste Belt"
+	icon_state = "disposal"
+	
+/area/maintenance/asteroid/disposal/north
+	name = "Northern External Waste Belt"
+	icon_state = "disposal"
+	
+/area/maintenance/asteroid/disposal/southeast
+	name = "South-Eastern Disposal"
+	icon_state = "disposal"
+	
+/area/maintenance/asteroid/disposal/southwest
+	name = "South-Western Disposal"
+	icon_state = "disposal"
+	
+/area/maintenance/asteroid/fore/cargo_west
+	name = "Fore Asteroid Maintenance"
+	icon_state = "fmaint"
+	
+/area/maintenance/asteroid/fore/cargo_south
+	name = "Fore Asteroid Maintenance"
+	icon_state = "fmaint"
+	
+/area/maintenance/asteroid/fore/com_west
+	name = "Fore Asteroid Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/asteroid/fore/com_north
+	name = "Fore Asteroid Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/asteroid/fore/com_east
+	name = "Fore Asteroid Maintenance"
+	icon_state = "fmaint"
+
+/area/maintenance/asteroid/fore/com_south
+	name = "Fore Asteroid Maintenance"
+	icon_state = "fmaint"	
+	
+/area/maintenance/asteroid/port/neast
+	name = "Port Asteroid Maintenance"
+	icon_state = "pmaint"
+	
+/area/maintenance/asteroid/port/east
+	name = "Port Asteroid Maintenance"
+	icon_state = "pmaint"
+	
+/area/maintenance/asteroid/port/west
+	name = "Port Asteroid Maintenance"
+	icon_state = "pmaint"
+	
+/area/maintenance/asteroid/starboard
+	name = "Starboard Asteroid Maintenance"
+	icon_state = "smaint"
 
 /area/maintenance/storage
 	name = "Atmospherics"
+	icon_state = "green"
+	
+/area/maintenance/storage/tcom_storage
+	name = "Telecoms Storage"
 	icon_state = "green"
 
 /area/maintenance/incinerator
@@ -216,7 +320,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/starboard
 	name = "Starboard Primary Hallway"
 	icon_state = "hallS"
-
+	
+/area/hallway/primary/starboard/aft
+	name = "Starboard Quarter Primary Hallway"
+	icon_state = "hallS"
+	
+/area/hallway/primary/starboard/fore
+	name = "Starboard Bow Primary Hallway"
+	icon_state = "hallS"
+	
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -232,7 +344,51 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/exit
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
+	
+/area/hallway/secondary/exit/departure_lounge
+	name = "Departure Lounge"
+	icon_state = "escape"
 
+/area/hallway/secondary/bridges/cargo_ai
+	name = "Cargo-AI-Command Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/bridges/com_engi
+	name = "Command-Engineering Bridge"
+	icon_state = "yellow"
+
+/area/hallway/secondary/bridges/com_serv
+	name = "Command-Service Bridge"
+	icon_state = "yellow"	
+	
+/area/hallway/secondary/bridges/dock_med
+	name = "Docking-Medical Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/bridges/engi_med
+	name = "Engineering-Medical Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/bridges/med_cargo
+	name = "Medical-Cargo Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/bridges/sci_dock
+	name = "Science-Docking Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/bridges/serv_engi
+	name = "Service-Engineering Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/bridges/serv_sci
+	name = "Service-Science Bridge"
+	icon_state = "yellow"
+	
+/area/hallway/secondary/command
+	name = "Command Hallway"
+	icon_state = "bridge"
+	
 /area/hallway/secondary/construction
 	name = "Construction Area"
 	icon_state = "construction"
@@ -240,6 +396,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
 	icon_state = "entry"
+	
+/area/hallway/secondary/service
+	name = "Service Hallway"
+	icon_state = "Sleep"
 
 //Command
 
@@ -253,6 +413,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "meeting"
 	music = null
 
+/area/bridge/meeting_room/council
+	name = "Council Chamber"
+	icon_state = "meeting"
+	music = null
+	
+/area/bridge/showroom/corporate
+	name = "Corporate Showroom"
+	icon_state = "showroom"
+	music = null
+	
 /area/crew_quarters/captain
 	name = "Captain's Office"
 	icon_state = "captain"
@@ -260,6 +430,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/captain/captains_quarters
 	name = "Captain's Quarters"
 	icon_state = "captain"
+	
+/area/crew_quarters/chief
+	name = "Chief Engineer's Office"
+	icon_state = "head_quarters"
+	
+/area/crew_quarters/chief/private
+	name = "Chief Engineer's Private Quarters"
+	icon_state = "head_quarters"
 
 /area/crew_quarters/courtroom
 	name = "Courtroom"
@@ -272,9 +450,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/hor
 	name = "Research Director's Office"
 	icon_state = "head_quarters"
-
-/area/crew_quarters/chief
-	name = "Chief Engineer's Office"
+	
+/area/crew_quarters/hor/private
+	name = "Research Director's Private Quarters"
 	icon_state = "head_quarters"
 
 /area/mint
@@ -295,9 +473,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
-
+	
+/area/crew_quarters/rehab_dome
+	name = "Rehabilitation Dome"
+	icon_state = "Sleep"	
+	
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
+	icon_state = "toilet"
+	
+/area/crew_quarters/toilet/auxiliary
+	name = "Auxiliary Restrooms"
+	icon_state = "toilet"
+	
+/area/crew_quarters/toilet/restrooms
+	name = "Restrooms"
 	icon_state = "toilet"
 
 /area/crew_quarters/sleep
@@ -323,6 +513,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
+	
+/area/crew_quarters/lounge
+	name = "Lounge"
+	icon_state = "yellow"
 
 /area/crew_quarters/locker/locker_toilet
 	name = "Locker Toilets"
@@ -331,13 +525,25 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
+	
+/area/crew_quarters/fitness/recreation
+	name = "Recreation Area"
+	icon_state = "fitness"
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
+	
+/area/crew_quarters/cafeteria/lunchroom
+	name = "Lunchroom"
+	icon_state = "cafeteria"
 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
+	icon_state = "kitchen"
+	
+/area/crew_quarters/kitchen/backroom
+	name = "Kitchen Coldroom"
 	icon_state = "kitchen"
 
 /area/crew_quarters/bar
@@ -359,11 +565,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "Theatre"
+	
+/area/crew_quarters/theatre/abandoned
+	name = "Abandoned Theatre"
+	icon_state = "Theatre"
 
 /area/library
  	name = "Library"
  	icon_state = "library"
  	flags = NONE
+	
+/area/library/lounge
+ 	name = "Library Lounge"
+ 	icon_state = "library"
 
 /area/library/abandoned_library
  	name = "Abandoned Library"
@@ -377,6 +591,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/chapel/main
 	name = "Chapel"
+	
+/area/chapel/main/monastery
+	name = "Monastery"
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -399,6 +616,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engineering"
 	icon_state = "engine"
 
+/area/engine/atmospherics_engine
+	name = "Atmospherics Engine"
+	icon_state = "blue"
+	
 /area/engine/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine"
@@ -407,13 +628,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chief Engineer's office"
 	icon_state = "engine_control"
 
-/area/engine/secure_construction
-	name = "Secure Construction Area"
-	icon_state = "engine"
-
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "blue"
+	
+/area/engine/secure_construction
+	name = "Secure Construction Area"
+	icon_state = "engine"
+	
+/area/engine/storage
+	name = "Engineering Storage"
+	icon_state = "engine"
+
+/area/engine/transit_tube
+	name = "Transit Tube"
+	icon_state = "engine"
+	
 
 //Solars
 
@@ -424,30 +654,110 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	blob_allowed = FALSE
 	flags = NONE
 
+/area/solar/asteroid/aft
+	name = "Aft Asteroid Solar"
+	icon_state = "panelsA"
+	
+/area/solar/asteroid/command
+	name = "Command Asteroid Solar"
+	icon_state = "panelsA"
+	
+/area/solar/asteroid/fore
+	name = "Fore Asteroid Solar"
+	icon_state = "panelsA"
+	
 /area/solar/auxport
-		name = "Fore Port Solar Array"
-		icon_state = "panelsA"
+	name = "Fore Port Solar Array"
+	icon_state = "panelsA"
 
 /area/solar/auxstarboard
-		name = "Fore Starboard Solar Array"
-		icon_state = "panelsA"
+	name = "Fore Starboard Solar Array"
+	icon_state = "panelsA"
 
 /area/solar/fore
-		name = "Fore Solar Array"
-		icon_state = "yellow"
+	name = "Fore Solar Array"
+	icon_state = "yellow"
 
 /area/solar/aft
-		name = "Aft Solar Array"
-		icon_state = "aft"
+	name = "Aft Solar Array"
+	icon_state = "yellow"
 
 /area/solar/starboard
-		name = "Aft Starboard Solar Array"
-		icon_state = "panelsS"
+	name = "Aft Starboard Solar Array"
+	icon_state = "panelsS"
+	
+/area/solar/starboard/starboard
+	name = "Starboard Solar Array"
+	icon_state = "panelsS"
+
+/area/solar/starboard/aft
+	name = "Starboard Quarter Solar Array"
+	icon_state = "panelsS"
+	
+/area/solar/starboard/fore
+	name = "Starboard Bow Solar Array"
+	icon_state = "panelsS"
 
 /area/solar/port
-		name = "Aft Port Solar Array"
-		icon_state = "panelsP"
+	name = "Aft Port Solar Array"
+	icon_state = "panelsP"
+	
+/area/solar/port/port
+	name = "Port Solar Array"
+	icon_state = "panelsP"
 
+/area/solar/port/aft
+	name = "Port Quarter Solar Array"
+	icon_state = "panelsP"
+	
+/area/solar/port/fore
+	name = "Port Bow Solar Array"
+	icon_state = "panelsP"
+	
+/area/maintenance/solars
+	name = "Solar Maintenance"
+	icon_state = "yellow"
+	
+/area/maintenance/solars/port
+	name = "Port Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/asteroid/aft
+	name = "Aft Asteroid Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/asteroid/command
+	name = "Command Asteroid Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/asteroid/fore
+	name = "Fore Asteroid Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/port/aft
+	name = "Starboard Quarter Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/port/fore
+	name = "Starboard Bow Solar Maintenance"
+	icon_state = "SolarcontrolP"
+	
+/area/maintenance/solars/starboard
+	name = "Starboard Solar Maintenance"
+	icon_state = "SolarcontrolS"
+	
+	
+/area/maintenance/solars/starboard/aft
+	name = "Starboard Quarter Solar Maintenance"
+	icon_state = "SolarcontrolS"
+	
+/area/maintenance/solars/starboard/fore
+	name = "Starboard Bow Solar Maintenance"
+	icon_state = "SolarcontrolS"
+	
+
+	
+	
 /area/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
 	icon_state = "SolarcontrolA"
@@ -490,6 +800,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
+	
+/area/teleporter/quantum/cargo
+	name = "Cargo Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/docking
+	name = "Docking Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/research
+	name = "Research Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
+	
+/area/teleporter/quantum/security
+	name = "Security Quantum Pad"
+	icon_state = "teleporter"
+	music = "signal"
 
 /area/gateway
 	name = "Gateway"
@@ -528,6 +858,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
+	
+/area/medical/medbay3/aft
+	name = "Medbay Aft"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
 
 /area/medical/abandoned_medbay
 	name = "Abandoned Medbay"
@@ -537,9 +872,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/patients_rooms
 	name = "Patients' Rooms"
 	icon_state = "patients"
+	
+/area/medical/patients_rooms/room_a
+	name = "Patient Room A"
+	icon_state = "patients"
+	
+/area/medical/patients_rooms/room_b
+	name = "Patient Room B"
+	icon_state = "patients"
 
 /area/medical/cmo
 	name = "Chief Medical Officer's office"
+	icon_state = "CMO"
+	
+/area/medical/cmo/private
+	name = "Chief Medical Officer's Private Quarters"
 	icon_state = "CMO"
 
 /area/medical/robotics
@@ -613,6 +960,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/processing
 	name = "Labor Shuttle Dock"
 	icon_state = "sec_prison"
+	
+/area/security/processing/cremation
+	name = "Security Crematorium"
+	icon_state = "sec_prison"
 
 /area/security/warden
 	name = "Brig Control"
@@ -624,6 +975,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/hos
 	name = "Head of Security's Office"
+	icon_state = "sec_hos"
+	
+/area/security/hos/private
+	name = "Head of Security's Private Quarters"
 	icon_state = "sec_hos"
 
 /area/security/detectives_office
@@ -643,7 +998,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/transfer
 	name = "Transfer Centre"
 	icon_state = "armory"
-
 
 /area/security/nuke_storage
 	name = "Vault"
@@ -676,9 +1030,25 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/checkpoint/science
 	name = "Security Post - Science"
 	icon_state = "checkpoint1"
+	
+/area/security/checkpoint/science/research
+	name = "Security Post - Research Division"
+	icon_state = "checkpoint1"	
+	
+/area/security/checkpoint/customs
+	name = "Customs"
+	icon_state = "bridge"
 
 /area/security/vacantoffice
 	name = "Vacant Office"
+	icon_state = "security"
+	
+/area/security/vacantoffice/a
+	name = "Vacant Office A"
+	icon_state = "security"
+	
+/area/security/vacantoffice/b
+	name = "Vacant Office B"
 	icon_state = "security"
 
 /area/security/vacantoffice2
@@ -713,8 +1083,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Quartermaster's Office"
 	icon_state = "quart"
 
+/area/quartermaster/qm/private
+	name = "Quartermaster's Private Quarters"
+	icon_state = "quart"
+
 /area/quartermaster/miningdock
 	name = "Mining Dock"
+	icon_state = "mining"
+	
+/area/quartermaster/miningdock/abandoned
+	name = "Abandoned Mining Dock"
 	icon_state = "mining"
 
 /area/quartermaster/miningoffice
@@ -738,8 +1116,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Hydroponics"
 	icon_state = "hydro"
 
-/area/hydroponics/Abandoned_Garden
+/area/hydroponics/garden/abandoned
 	name = "Abandoned Garden"
+	icon_state = "hydro"
+	
+/area/hydroponics/garden/monastery
+	name = "Monastery Garden"
+	icon_state = "hydro"
+	
+/area/hydroponics/garden
+	name = "Garden"
 	icon_state = "hydro"
 
 //Toxins
@@ -772,7 +1158,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/toxins/misc_lab
 	name = "Testing Lab"
 	icon_state = "toxmisc"
-
+	
+/area/toxins/misc_lab/range
+	name = "Research Testing Range"
+	icon_state = "toxmisc"
+	
 /area/toxins/server
 	name = "Research Division Server Room"
 	icon_state = "server"
@@ -842,6 +1232,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/mining_construction
 	name = "Auxillary Base Construction"
 	icon_state = "yellow"
+	
+/area/mining_construction/closet
+	name = "Auxiliary Closet Construction"
+	icon_state = "yellow"
 
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
@@ -910,6 +1304,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
+	icon_state = "ai"
+	
+/area/ai_monitored/turret_protected/aisat/atmos
+	name = "AI Satellite Atmos"
+	icon_state = "ai"
+	
+	/area/ai_monitored/turret_protected/aisat/atmos
+	name = "AI Satellite Atmos"
+	icon_state = "ai"
+	
+/area/ai_monitored/turret_protected/aisat/service
+	name = "AI Satellite Service"
+	icon_state = "ai"
+	
+/area/ai_monitored/turret_protected/aisat/hallway
+	name = "AI Satellite Hallway"
 	icon_state = "ai"
 
 /area/aisat
