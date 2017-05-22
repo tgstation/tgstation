@@ -41,13 +41,10 @@
 
 
 /obj/item/clothing/mask/vape/vapormask
-<<<<<<< HEAD
 	name = "vaporizing breath mask"
 	desc = "A breath mask with an integrated chemical vaporizer. A label reads \"Warning: Do not fill with flammable materials.\""
-=======
 	name = "Vaporizing Breath Mask"
 	desc = "A breath mask with an integrated chemical vaporizer."
->>>>>>> parent of 80edf7c617... Add Synaptizine and put the masks into the engineer's lockers."
 	icon_state = "vapor" 
 	item_state = "vapor"
 	chem_volume = 50 //Lower capacity than a regular vape
@@ -60,10 +57,6 @@
 	. = ..() //I have no idea what this line does but apparently Initialize() is supposed to have it.
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE)
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 80edf7c617... Add Synaptizine and put the masks into the engineer's lockers."
 
 /obj/item/clothing/mask/vape/vapormask/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers) && (O.container_type & OPENCONTAINER))
