@@ -392,11 +392,11 @@
 //Indoors
 /obj/item/borg/upgrade/modkit/indoors
 	name = "decrease pressure penalty"
-	desc = "Increases the damage a kinetic accelerator does in a high pressure environment."
+	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in a high pressure environment."
 	modifier = 2
 	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
-	cost = 40
+	cost = 35
 
 /obj/item/borg/upgrade/modkit/indoors/modify_projectile(obj/item/projectile/kinetic/K)
 	K.pressure_decrease *= modifier
