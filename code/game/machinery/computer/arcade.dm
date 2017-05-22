@@ -1061,6 +1061,7 @@
 	outfit = /datum/outfit/orionsecurity
 
 /datum/outfit/orionsecurity
+	name = "Orion Spaceport Security"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
