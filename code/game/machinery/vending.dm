@@ -1158,7 +1158,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "liberationstation"
 	req_access_txt = "1"
 	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them to HoPs for all access!;Give them to HoS to get perma briged!"
-	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?"
+	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?;Make your next murder FUN!"
 	vend_reply = "Come back for more!"
 	products = list(/obj/item/weapon/gun/ballistic/automatic/toy/unrestricted = 10,
 					/obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
