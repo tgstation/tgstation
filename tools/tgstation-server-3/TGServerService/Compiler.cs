@@ -118,7 +118,7 @@ namespace TGServerService
 		//what is says on the tin
 		TGCompilerStatus IsInitialized()
 		{
-			if (File.Exists(GameDirB + LibMySQLFile))	//its a good tell, jim
+			if (File.Exists(GameDirLive + LibMySQLFile))	//its a good tell, jim
 				return TGCompilerStatus.Initialized;
 			return TGCompilerStatus.Uninitialized;
 		}
@@ -178,44 +178,8 @@ namespace TGServerService
 					CleanGameFolder();
 					Program.DeleteDirectory(GameDir);
 
-					Directory.CreateDirectory(GameDirA + "/.git/logs");
-
-					bool repobusy_check = false;
-					if (!Monitor.TryEnter(RepoLock))
-						repobusy_check = true;
-
-					if (!repobusy_check)
-					{
-						if (RepoBusy)
-							repobusy_check = true;
-						else
-							RepoBusy = true;
-						Monitor.Exit(RepoLock);
-					}
-					
-					if (repobusy_check)
-						lock (CompilerLock)
-						{
-							lastCompilerError = "Unable to lock repository!";
-							compilerCurrentStatus = TGCompilerStatus.Uninitialized;
-							return;
-						}
-					try
-					{
-						Program.CopyDirectory(RepoPath, GameDirA, copyExcludeList);
-						//just the tip
-						const string HeadFile = "/.git/logs/HEAD";
-						File.Copy(RepoPath + HeadFile, GameDirA + HeadFile);
-					}
-					finally
-					{
-						lock (RepoLock)
-						{
-							RepoBusy = false;
-						}
-					}
-
-					Program.CopyDirectory(GameDirA, GameDirB);
+					Directory.CreateDirectory(GameDirA);
+					Directory.CreateDirectory(GameDirB);
 
 					CreateSymlink(GameDirA + "/data", StaticDataDir);
 					CreateSymlink(GameDirB + "/data", StaticDataDir);
@@ -225,6 +189,8 @@ namespace TGServerService
 
 					CreateSymlink(GameDirA + LibMySQLFile, StaticDirs + LibMySQLFile);
 					CreateSymlink(GameDirB + LibMySQLFile, StaticDirs + LibMySQLFile);
+
+					CreateSymlink(GameDirLive, GameDirA);
 
 					SendMessage("DM: Symlinks set up!");
 					lock (CompilerLock)
@@ -331,7 +297,7 @@ namespace TGServerService
 				if (File.Exists(resurrectee + LibMySQLFile))
 					File.Delete(resurrectee + LibMySQLFile);
 
-				Program.DeleteDirectory(resurrectee);
+				Program.DeleteDirectory(resurrectee, true);
 
 				Directory.CreateDirectory(resurrectee + "/.git/logs");
 
