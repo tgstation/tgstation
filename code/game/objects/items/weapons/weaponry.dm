@@ -189,12 +189,12 @@
 
 /obj/item/weapon/katana
 	name = "katana"
-	desc = "Woefully underpowered in D20"
+	desc = "Despite being an important cultural icon, the katana was a symbol of extreme conservatism in medieval Japan, with the design remaining static for over 900 years. Although for some reason being idolized in the 21st century, in actuality it was extremely ineffective on the battlefield."
 	icon_state = "katana"
 	item_state = "katana"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 40
+	force = 10
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
