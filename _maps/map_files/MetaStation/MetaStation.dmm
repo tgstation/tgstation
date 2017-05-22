@@ -9575,7 +9575,7 @@
 /area/maintenance/fore)
 "arB" = (
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -9586,7 +9586,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
@@ -9597,7 +9597,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -9608,7 +9608,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arG" = (
 /obj/structure/closet,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -10484,7 +10484,7 @@
 	},
 /obj/item/weapon/lighter,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asU" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/airalarm{
@@ -10492,7 +10492,7 @@
 	},
 /obj/item/clothing/under/assistantformal,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asV" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -10511,13 +10511,13 @@
 	on = 1
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asX" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -10526,7 +10526,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asY" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -10538,7 +10538,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asZ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -10549,7 +10549,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ata" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -10573,7 +10573,7 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atb" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/airalarm{
@@ -10581,7 +10581,7 @@
 	},
 /obj/item/clothing/under/suit_jacket/burgundy,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atc" = (
 /obj/structure/dresser,
 /obj/machinery/newscaster{
@@ -10589,7 +10589,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atd" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -11130,7 +11130,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aue" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -11139,14 +11139,14 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aug" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin3";
@@ -11156,7 +11156,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auh" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -11166,7 +11166,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aui" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -11179,7 +11179,7 @@
 	},
 /obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auj" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -11187,7 +11187,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auk" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin4";
@@ -11197,14 +11197,14 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aul" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aum" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -11212,10 +11212,10 @@
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aun" = (
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auo" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
@@ -11736,7 +11736,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avm" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -11754,7 +11754,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -11767,19 +11767,19 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avq" = (
 /obj/item/weapon/cigbutt,
 /obj/effect/turf_decal/stripes/line{
@@ -12570,7 +12570,7 @@
 	},
 /obj/structure/dresser,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awD" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/airalarm{
@@ -12578,7 +12578,7 @@
 	},
 /obj/item/clothing/under/suit_jacket/tan,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -12596,7 +12596,7 @@
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awF" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -12608,7 +12608,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awG" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -12628,7 +12628,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awH" = (
 /obj/machinery/newscaster{
 	pixel_x = 0;
@@ -12637,7 +12637,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/paper,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awI" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
@@ -13121,14 +13121,14 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axF" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin2";
@@ -13138,7 +13138,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axG" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13147,7 +13147,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axH" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -13159,7 +13159,7 @@
 	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axI" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin5";
@@ -13169,14 +13169,14 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axK" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -13185,7 +13185,7 @@
 	},
 /obj/machinery/light/small,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axL" = (
 /obj/item/weapon/caution,
 /obj/effect/turf_decal/stripes/line{
@@ -13769,7 +13769,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ayO" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -13785,7 +13785,7 @@
 	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ayP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13797,7 +13797,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ayQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -14449,7 +14449,7 @@
 "aAd" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/barber,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAe" = (
 /obj/structure/table,
 /obj/item/clothing/under/suit_jacket/female{
@@ -14476,7 +14476,7 @@
 /obj/item/clothing/neck/tie/black,
 /obj/item/clothing/under/lawyer/blacksuit,
 /turf/open/floor/plasteel/barber,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -14485,7 +14485,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAg" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -14503,7 +14503,7 @@
 	icon_state = "pipe-j2"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAh" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -14519,7 +14519,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -15226,7 +15226,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aBx" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -15239,7 +15239,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aBy" = (
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -15264,7 +15264,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aBz" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -15278,7 +15278,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aBA" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -15290,7 +15290,7 @@
 	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aBB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/pods{
@@ -15300,7 +15300,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aBC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15884,14 +15884,14 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCD" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCE" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -15900,14 +15900,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCG" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -15917,14 +15917,14 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCH" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
 	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCI" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -15936,7 +15936,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCJ" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -15957,7 +15957,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCK" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/airalarm{
@@ -15965,7 +15965,7 @@
 	},
 /obj/item/clothing/under/suit_jacket/navy,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCM" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -16658,36 +16658,36 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aDY" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aDZ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/pill_bottle/dice,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEa" = (
 /obj/structure/table,
 /obj/item/weapon/storage/crayons,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEb" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEc" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEd" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin6";
@@ -16697,25 +16697,25 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEe" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEg" = (
 /obj/machinery/light/small,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aEh" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/airalarm{
@@ -17384,24 +17384,24 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFk" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/floorgrime,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFl" = (
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFm" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
@@ -17411,7 +17411,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFp" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/firealarm{
@@ -18235,14 +18235,14 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGH" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -18250,7 +18250,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGJ" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -18264,7 +18264,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -18273,7 +18273,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGL" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 2
@@ -18281,7 +18281,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGM" = (
 /obj/machinery/door/airlock{
 	id_tag = "Cabin7";
@@ -18291,7 +18291,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGN" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -18310,12 +18310,12 @@
 	on = 1
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGP" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/under/assistantformal,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aGQ" = (
 /obj/structure/table,
 /obj/item/stack/rods{
@@ -18839,7 +18839,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHN" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -18847,7 +18847,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -18855,7 +18855,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -18877,7 +18877,7 @@
 	},
 /obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel/vault,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHS" = (
 /obj/machinery/button/door{
 	id = "Cabin7";
@@ -18897,13 +18897,13 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHT" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHU" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
@@ -18912,7 +18912,7 @@
 	},
 /obj/item/weapon/paper,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHV" = (
 /obj/structure/closet,
 /obj/item/weapon/storage/box/donkpockets,
@@ -19704,17 +19704,17 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aJf" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aJg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aJh" = (
 /turf/closed/wall,
 /area/hydroponics/garden)
@@ -20153,13 +20153,13 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aKn" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aKo" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -20170,7 +20170,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aKp" = (
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /obj/item/weapon/reagent_containers/spray/pestspray{
@@ -25684,7 +25684,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /turf/open/floor/plasteel/vault,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aUY" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/delivery,
@@ -36982,7 +36982,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "boT" = (
 /obj/machinery/door/window/southleft{
 	base_state = "left";
@@ -89165,7 +89165,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/barber,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "dhB" = (
 /obj/item/clothing/glasses/meson,
 /obj/structure/closet/crate,
@@ -89221,7 +89221,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "dhG" = (
 /obj/structure/cable/yellow{
 	d1 = 4;

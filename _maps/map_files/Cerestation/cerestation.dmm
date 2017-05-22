@@ -7359,7 +7359,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "aoW" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -7781,21 +7781,21 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "apO" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "apP" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "apQ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -7808,7 +7808,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "apR" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/purple,
@@ -7816,7 +7816,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "apS" = (
 /obj/machinery/camera/motion{
 	c_tag = "Bridge Maintenance Eastl";
@@ -8154,7 +8154,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "aqG" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
@@ -8162,7 +8162,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "aqH" = (
 /obj/structure/sign/poster/random{
 	name = "random official poster";
@@ -8172,7 +8172,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "aqI" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
@@ -8180,7 +8180,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "aqJ" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/purple,
@@ -8188,7 +8188,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "aqK" = (
 /obj/machinery/camera{
 	c_tag = "Fore Asteroid Maintenance APCs 2";
@@ -8681,7 +8681,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "arF" = (
 /obj/machinery/light_switch{
 	pixel_x = -25
@@ -8695,7 +8695,7 @@
 	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "arG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -8706,7 +8706,7 @@
 	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "arH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -8717,7 +8717,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "arI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -8733,7 +8733,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "arJ" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -8751,7 +8751,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "arK" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -9119,12 +9119,12 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "asB" = (
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "asC" = (
 /obj/machinery/light{
 	dir = 4
@@ -9132,7 +9132,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "asD" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -9141,7 +9141,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "asE" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -9646,7 +9646,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "atG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -9657,7 +9657,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "atH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -9670,7 +9670,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "atI" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTHEAST)";
@@ -9678,7 +9678,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "atJ" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTHWEST)";
@@ -9686,7 +9686,7 @@
 	dir = 9;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "atK" = (
 /obj/structure/cable/orange{
 	d2 = 4;
@@ -9706,7 +9706,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "atL" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -10173,7 +10173,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "auK" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/green,
@@ -10185,7 +10185,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "auL" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/red,
@@ -10197,7 +10197,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "auM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -10854,28 +10854,28 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "avU" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/yellow,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "avV" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/green,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "avW" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/red,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "avX" = (
 /obj/structure/cable/orange{
 	d2 = 4;
@@ -10894,7 +10894,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "avY" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -11404,7 +11404,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "axc" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -12016,14 +12016,14 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "ayg" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "ayh" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
@@ -12031,14 +12031,14 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "ayi" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/purple,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "ayj" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -12756,7 +12756,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "azD" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
@@ -12764,7 +12764,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "azE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/orange,
@@ -12772,7 +12772,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "azF" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/purple,
@@ -12780,7 +12780,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "azG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -13518,7 +13518,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aAZ" = (
 /obj/machinery/light_switch{
 	pixel_x = -25
@@ -13531,7 +13531,7 @@
 	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13541,7 +13541,7 @@
 	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13551,7 +13551,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13566,7 +13566,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBd" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -13583,7 +13583,7 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBe" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
@@ -13934,12 +13934,12 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBO" = (
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBP" = (
 /obj/machinery/light{
 	dir = 4
@@ -13947,7 +13947,7 @@
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBQ" = (
 /obj/machinery/status_display{
 	density = 0;
@@ -13956,7 +13956,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aBR" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet{
@@ -14694,7 +14694,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aDn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -14705,7 +14705,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aDo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -14718,7 +14718,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aDp" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTHEAST)";
@@ -14726,7 +14726,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aDq" = (
 /turf/open/floor/plasteel/neutral/side{
 	tag = "icon-neutral (NORTHWEST)";
@@ -14734,12 +14734,12 @@
 	dir = 9;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aDr" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aDs" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall{
@@ -15492,7 +15492,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aEx" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/green,
@@ -15504,7 +15504,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aEy" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/red,
@@ -15516,7 +15516,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aEz" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall{
@@ -16328,14 +16328,14 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aFW" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/yellow,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aFX" = (
 /obj/machinery/light/small,
 /obj/structure/sign/poster/random{
@@ -16346,21 +16346,21 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aFY" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/green,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aFZ" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/red,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_male)
+/area/crew_quarters/dorms/male)
 "aGa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -75293,7 +75293,7 @@
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/crew_quarters/sleep_female)
+/area/crew_quarters/dorms/female)
 "cFs" = (
 /obj/machinery/status_display{
 	density = 0;

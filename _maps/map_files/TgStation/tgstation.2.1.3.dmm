@@ -7512,7 +7512,7 @@
 "apY" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "apZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -7527,7 +7527,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aqb" = (
 /obj/structure/rack{
 	dir = 8;
@@ -7629,7 +7629,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aql" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -7686,13 +7686,13 @@
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aqo" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aqp" = (
 /obj/structure/rack{
 	dir = 1
@@ -8015,7 +8015,7 @@
 /area/lawoffice)
 "arf" = (
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -8034,7 +8034,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arj" = (
 /turf/closed/wall,
 /area/crew_quarters/fitness)
@@ -8044,7 +8044,7 @@
 	},
 /obj/structure/closet/secure_closet/personal/cabinet,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "arl" = (
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2";
@@ -8410,7 +8410,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ase" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -8430,7 +8430,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asg" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -8438,7 +8438,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 9
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ash" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -8479,7 +8479,7 @@
 "ask" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asl" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -8495,7 +8495,7 @@
 	on = 1
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
@@ -8518,7 +8518,7 @@
 "asp" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asq" = (
 /obj/machinery/camera{
 	c_tag = "Fitness Room"
@@ -8580,7 +8580,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asv" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -8689,7 +8689,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "asM" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -8817,7 +8817,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atf" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -8829,7 +8829,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atg" = (
 /obj/machinery/door/airlock{
 	id_tag = "Dorm4";
@@ -8839,13 +8839,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ath" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ati" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -8853,7 +8853,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -8862,7 +8862,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atk" = (
 /obj/machinery/camera{
 	c_tag = "Auxillary Mining Base";
@@ -8887,7 +8887,7 @@
 /area/shuttle/auxillary_base)
 "atm" = (
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -9091,7 +9091,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "atR" = (
 /obj/effect/landmark/carpspawn,
 /obj/structure/lattice,
@@ -9250,13 +9250,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aul" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aum" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -9277,7 +9277,7 @@
 "aun" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auo" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9297,7 +9297,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -9369,7 +9369,7 @@
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aux" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -9378,7 +9378,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -9522,7 +9522,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auS" = (
 /obj/machinery/requests_console{
 	department = "Crew Quarters";
@@ -9537,7 +9537,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auT" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -9557,7 +9557,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -9570,7 +9570,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "auX" = (
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
@@ -9646,7 +9646,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avh" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -9708,7 +9708,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -9716,7 +9716,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avn" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -9724,7 +9724,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avo" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -9780,13 +9780,13 @@
 "avt" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 5
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avv" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -9796,7 +9796,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avw" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/side{
@@ -9870,7 +9870,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avH" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -9973,7 +9973,7 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "avS" = (
 /obj/item/weapon/wrench,
 /turf/open/floor/plating,
@@ -10216,7 +10216,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awp" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -10224,7 +10224,7 @@
 	},
 /obj/item/weapon/storage/pill_bottle/dice,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awq" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -10233,10 +10233,10 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awr" = (
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aws" = (
 /obj/structure/table/wood,
 /obj/item/weapon/coin/silver,
@@ -10244,26 +10244,26 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awu" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "awv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aww" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/floorgrime,
@@ -10884,24 +10884,24 @@
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axM" = (
 /obj/structure/table/wood,
 /obj/item/device/paicard,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axN" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axO" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axP" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck{
@@ -10912,7 +10912,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axQ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -10974,7 +10974,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axW" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -10992,7 +10992,7 @@
 	pressure_checks = 1
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "axY" = (
 /turf/open/floor/plasteel/green/side{
 	dir = 4
@@ -11415,7 +11415,7 @@
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ayW" = (
 /turf/closed/wall,
 /area/ai_monitored/storage/eva)
@@ -11450,7 +11450,7 @@
 "aza" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "azb" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -11458,7 +11458,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "azc" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -11466,7 +11466,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "azd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -11477,10 +11477,10 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 6
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aze" = (
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "azf" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel,
@@ -11821,7 +11821,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "azU" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -11846,7 +11846,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "azW" = (
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -11888,7 +11888,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAc" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
@@ -11900,7 +11900,7 @@
 	pixel_y = -25
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAe" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -11914,14 +11914,14 @@
 "aAf" = (
 /obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAg" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAh" = (
 /turf/closed/wall,
 /area/crew_quarters/toilet)
@@ -11930,7 +11930,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 6
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12337,7 +12337,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aAY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -12813,7 +12813,7 @@
 	on = 1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aCe" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/item/weapon/bikehorn/rubberducky,
@@ -13489,7 +13489,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aDH" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
@@ -13532,7 +13532,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aDL" = (
 /obj/structure/sink{
 	icon_state = "sink";
@@ -14196,7 +14196,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFe" = (
 /obj/machinery/camera{
 	c_tag = "Dormitory South";
@@ -14209,7 +14209,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aFf" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -15353,7 +15353,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHx" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile{
@@ -15453,7 +15453,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHI" = (
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
@@ -15550,7 +15550,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "aHU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -23513,7 +23513,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "bbm" = (
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -28233,7 +28233,7 @@
 "blU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "blV" = (
 /obj/machinery/light/small,
 /turf/open/floor/plating,

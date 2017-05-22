@@ -63994,7 +63994,7 @@
 /area/crew_quarters/locker)
 "cvP" = (
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cvQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -64839,7 +64839,7 @@
 "cxt" = (
 /obj/structure/dresser,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxu" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/light{
@@ -64858,7 +64858,7 @@
 /obj/item/clothing/under/blacktango,
 /obj/item/clothing/head/bowler,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxv" = (
 /obj/structure/table/wood,
 /obj/item/device/radio/intercom{
@@ -64870,7 +64870,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxw" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
@@ -64878,7 +64878,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxx" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
@@ -64890,7 +64890,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxy" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
@@ -64903,11 +64903,11 @@
 /obj/item/clothing/under/kilt,
 /obj/item/clothing/head/beret,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxz" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxA" = (
 /obj/structure/bed,
 /obj/machinery/light{
@@ -64918,7 +64918,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxB" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket{
@@ -64945,7 +64945,7 @@
 	},
 /obj/item/clothing/under/rank/curator/treasure_hunter,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cxC" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -65659,12 +65659,12 @@
 /area/crew_quarters/locker)
 "cyT" = (
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cyU" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/black,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cyV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder,
@@ -65673,16 +65673,16 @@
 	},
 /obj/item/weapon/razor,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cyW" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cyX" = (
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cyY" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/red,
@@ -65691,10 +65691,10 @@
 	pixel_x = -32
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cyZ" = (
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cza" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -66594,7 +66594,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cAL" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -66604,12 +66604,12 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cAM" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cAN" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
@@ -66617,13 +66617,13 @@
 	pixel_x = -32
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cAO" = (
 /obj/structure/chair/office/dark{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cAP" = (
 /obj/structure/table,
 /obj/item/weapon/folder,
@@ -67262,23 +67262,23 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cCf" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cCg" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cCh" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cCi" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
@@ -67292,14 +67292,14 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cCj" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cCk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -67866,7 +67866,7 @@
 	name = "Cabin 1"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cDq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -67874,7 +67874,7 @@
 	name = "Cabin 2"
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cDr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -67882,7 +67882,7 @@
 	name = "Cabin 3"
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cDs" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -68297,7 +68297,7 @@
 	icon_state = "arrival";
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEm" = (
 /obj/structure/cable/white{
 	icon_state = "1-4"
@@ -68306,7 +68306,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEn" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68319,7 +68319,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEo" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68329,7 +68329,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEp" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -68345,7 +68345,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEq" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68356,7 +68356,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEr" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68370,7 +68370,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEs" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68382,7 +68382,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEt" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68393,7 +68393,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEu" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68409,7 +68409,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEv" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68421,7 +68421,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEw" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable/white{
@@ -68437,7 +68437,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cEx" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -69405,31 +69405,31 @@
 	icon_state = "arrival";
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cFX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cFY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cFZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGa" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGb" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -69438,10 +69438,10 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGc" = (
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
@@ -69450,24 +69450,24 @@
 	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGe" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGf" = (
 /obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGg" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/neutral,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cGh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -69993,7 +69993,7 @@
 	icon_state = "arrival";
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	icon_state = "intact";
@@ -70003,7 +70003,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHp" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -70013,7 +70013,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -70023,7 +70023,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -70039,7 +70039,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHs" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -70056,7 +70056,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -70068,7 +70068,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHu" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -70078,7 +70078,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHv" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
@@ -70101,7 +70101,7 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -70110,7 +70110,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -70119,7 +70119,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHy" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -70129,7 +70129,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -70145,7 +70145,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cHA" = (
 /obj/machinery/light_switch{
 	pixel_x = -26;
@@ -70658,7 +70658,7 @@
 	name = "Cabin 4"
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cIN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -70666,7 +70666,7 @@
 	name = "Cabin 5"
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cIO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
@@ -70674,7 +70674,7 @@
 	name = "Cabin 6"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cIP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -71585,7 +71585,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cKL" = (
 /obj/machinery/button/door{
 	id = "Dorm5";
@@ -71597,7 +71597,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cKM" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -71609,7 +71609,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cKN" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/blue,
@@ -71624,7 +71624,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cKO" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
@@ -71634,7 +71634,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cKP" = (
 /obj/machinery/vending/cola/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -72244,7 +72244,7 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/clown,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cMk" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/briefcase{
@@ -72257,7 +72257,7 @@
 	},
 /obj/item/weapon/cane,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cMl" = (
 /obj/structure/chair/office/dark{
 	dir = 1
@@ -72266,7 +72266,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cMm" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -72277,7 +72277,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cMn" = (
 /obj/machinery/vending/snack/random,
 /obj/structure/extinguisher_cabinet{
@@ -73154,16 +73154,16 @@
 	pixel_x = -32
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cNT" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cNU" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/mime,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cNV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/donut_box,
@@ -74111,7 +74111,7 @@
 	},
 /obj/item/device/paicard,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cPN" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket/letterman_nanotrasen,
@@ -74119,7 +74119,7 @@
 /obj/item/clothing/under/maid,
 /obj/item/clothing/head/kitty,
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cPO" = (
 /obj/structure/bed,
 /obj/machinery/light,
@@ -74128,7 +74128,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cPP" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket{
@@ -74142,7 +74142,7 @@
 	},
 /obj/item/clothing/under/lawyer/female,
 /turf/open/floor/carpet,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cPQ" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/light,
@@ -74159,14 +74159,14 @@
 /obj/item/clothing/under/redeveninggown,
 /obj/item/clothing/head/rabbitears,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cPR" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
 /turf/open/floor/plasteel/grimy,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "cPS" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -105495,7 +105495,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "eci" = (
 /obj/machinery/button/door{
 	id = "Dorm4";
@@ -105507,7 +105507,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/dorms)
 "ecj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/hydrofloor,

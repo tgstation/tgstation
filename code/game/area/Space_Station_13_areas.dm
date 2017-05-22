@@ -513,9 +513,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/crew_quarters/dorms
 //	/area/crew_quarters
+//	/area/crew_quarters/sleep
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
+	
+/area/crew_quarters/dorms/male
+//	/area/crew_quarters/sleep_male
+	name = "Male Dorm"
+	icon_state = "Sleep"
+	
+/area/crew_quarters/dorms/female
+//	/area/crew_quarters/sleep_female
+	name = "Female Dorm"
+	icon_state = "Sleep"
 	
 /area/crew_quarters/rehab_dome
 	name = "Rehabilitation Dome"
@@ -534,28 +545,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Locker Toilets"
 	icon_state = "toilet"
 	
-/area/crew_quarters/toilet/restrooms
-	name = "Restrooms"
+/area/crew_quarters/toilet/female
+//	/area/crew_quarters/sleep_female/toilet_female
+	name = "Female Toilets"
 	icon_state = "toilet"
-
-/area/crew_quarters/sleep
-	name = "Dormitories"
-	icon_state = "Sleep"
-
-/area/crew_quarters/sleep_male
-	name = "Male Dorm"
-	icon_state = "Sleep"
-
-/area/crew_quarters/sleep_male/toilet_male
+	
+/area/crew_quarters/toilet/male
+//	/area/crew_quarters/sleep_male/toilet_male
 	name = "Male Toilets"
 	icon_state = "toilet"
-
-/area/crew_quarters/sleep_female
-	name = "Female Dorm"
-	icon_state = "Sleep"
-
-/area/crew_quarters/sleep_female/toilet_female
-	name = "Female Toilets"
+	
+/area/crew_quarters/toilet/restrooms
+	name = "Restrooms"
 	icon_state = "toilet"
 
 /area/crew_quarters/locker
@@ -565,11 +566,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/lounge
 	name = "Lounge"
 	icon_state = "yellow"
-
-										
-						
-					  
-
+	
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
