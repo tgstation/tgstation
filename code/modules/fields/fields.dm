@@ -28,7 +28,6 @@
 	var/square_depth_up = 0
 	var/square_depth_down = 0
 	//Processing
-	var/requires_processing = FALSE
 	var/process_inner_turfs = FALSE	//Don't do this unless it's absolutely necessary
 	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
 	var/setup_edge_turfs = FALSE	//Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
@@ -40,11 +39,7 @@
 	var/list/turf/field_turfs_new = list()
 	var/list/turf/edge_turfs_new = list()
 
-/datum/proximity_monitor/advanced/New()
-	SSfields.register_new_field(src)
-
 /datum/proximity_monitor/advanced/Destroy()
-	SSfields.unregister_field(src)
 	full_cleanup()
 	return ..()
 
