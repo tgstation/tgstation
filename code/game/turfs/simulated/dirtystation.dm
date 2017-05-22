@@ -92,7 +92,7 @@
 				new /obj/effect/decal/cleanable/vomit/old(src)
 		return
 
-	if(istype(A, /area/science))
+	if(istype(A, /area/science) || istype(A, /area/crew_quarters/heads/hor))
 		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return

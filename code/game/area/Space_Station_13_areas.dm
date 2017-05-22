@@ -213,7 +213,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "fpmaint"
 	
 /area/maintenance/central
-//	/area/maintenance/maintcentral/central
+//	/area/maintenance/maintcentral
 	name = "Central Maintenance"
 	icon_state = "maintcentral"
 	
@@ -726,14 +726,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Fore Asteroid Solar"
 	icon_state = "panelsA"
 	
-/area/solar/auxport
-	name = "Port Bow Auxiliary Solar Array"
-	icon_state = "panelsA"
-	
-/area/solar/auxstarboard
-	name = "Starboard Bow Auxiliary Solar Array"
-	icon_state = "panelsA"
-	
 /area/solar/fore
 	name = "Fore Solar Array"
 	icon_state = "yellow"
@@ -741,6 +733,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/solar/aft
 	name = "Aft Solar Array"
 	icon_state = "yellow"
+	
+/area/solar/aux/port
+//	/area/solar/auxport
+	name = "Port Bow Auxiliary Solar Array"
+	icon_state = "panelsA"
+	
+/area/solar/aux/starboard
+//	/area/solar/auxstarboard
+	name = "Starboard Bow Auxiliary Solar Array"
+	icon_state = "panelsA"
 	
 /area/solar/starboard
 	name = "Starboard Solar Array"
@@ -1240,6 +1242,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/science/research/abandoned
 //	/area/medical/research/abandoned
+//	/area/medical/research/abandoned_research_lab
 	name = "Abandoned Research Lab"
 	icon_state = "medresearch"
 
@@ -1351,9 +1354,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "yellow"
 
 /area/construction/storage
-//	/area/construction/Storage
 	name = "Construction Site Storage"
 	icon_state = "yellow"
+	
+/area/construction/storage/wing
+//	/area/construction/Storage
+	name = "Storage Wing"
+	icon_state = "yellow"
+	
 
 //AI
 /area/ai_monitored/security/armory
