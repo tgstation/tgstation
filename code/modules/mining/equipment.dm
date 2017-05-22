@@ -169,7 +169,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	item_state = "resonator"
-	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It can also be activated without a target to create a field at the user's location, to act as a delayed time trap. It's more effective in a vacuum."
+	desc = "A handheld device that creates small fields of energy that resonate until they detonate, crushing rock. It's more effective in a vacuum."
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
@@ -188,18 +188,6 @@
 	fieldlimit = 6
 	quick_burst_mod = 1
 
-/obj/item/weapon/resonator/proc/CreateResonance(target, creator)
-	var/turf/T = get_turf(target)
-	var/obj/effect/resonance/R = locate(/obj/effect/resonance) in T
-	if(R)
-		R.resonance_damage *= quick_burst_mod
-		R.burst()
-		return
-	if(fields.len < fieldlimit)
-		playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
-		var/obj/effect/resonance/RE = new(T, creator, burst_time, src)
-		fields += RE
-
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
 		burst_time = 30
@@ -208,63 +196,92 @@
 		burst_time = 50
 		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>")
 
-/obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
-	if(proximity_flag)
-		if(!check_allowed_items(target, 1))
-			return
+/obj/item/weapon/resonator/proc/CreateResonance(target, mob/user)
+	var/turf/T = get_turf(target)
+	var/obj/effect/temp_visual/resonance/R = locate(/obj/effect/temp_visual/resonance) in T
+	if(R)
+		R.damage_multiplier = quick_burst_mod
+		R.burst()
+		return
+	if(LAZYLEN(fields) < fieldlimit)
+		new /obj/effect/temp_visual/resonance(T, user, src, burst_time)
 		user.changeNext_move(CLICK_CD_MELEE)
-		CreateResonance(target, user)
 
-/obj/effect/resonance
+/obj/item/weapon/resonator/pre_attackby(atom/target, mob/user, params)
+	if(check_allowed_items(target, 1))
+		CreateResonance(target, user)
+	return TRUE
+
+/obj/effect/temp_visual/resonance
 	name = "resonance field"
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
-	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
-	anchored = TRUE
-	mouse_opacity = 0
+	duration = 50
 	var/resonance_damage = 20
+	var/damage_multiplier = 1
 	var/creator
 	var/obj/item/weapon/resonator/res
 
-/obj/effect/resonance/New(loc, set_creator, timetoburst, set_resonator)
-	..()
+/obj/effect/temp_visual/resonance/Initialize(mapload, set_creator, set_resonator, set_duration)
+	duration = set_duration
+	. = ..()
 	creator = set_creator
 	res = set_resonator
-	check_pressure()
-	addtimer(CALLBACK(src, .proc/burst), timetoburst)
+	if(res)
+		res.fields += src
+	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
+	transform = matrix()*0.75
+	animate(src, transform = matrix()*1.5, time = duration)
+	deltimer(timerid)
+	timerid = addtimer(CALLBACK(src, .proc/burst), duration, TIMER_STOPPABLE)
 
-/obj/effect/resonance/Destroy()
+/obj/effect/temp_visual/resonance/Destroy()
 	if(res)
 		res.fields -= src
+		res = null
+	creator = null
 	. = ..()
 
-/obj/effect/resonance/proc/check_pressure()
-	var/turf/proj_turf = get_turf(src)
+/obj/effect/temp_visual/resonance/proc/check_pressure(turf/proj_turf)
+	if(!proj_turf)
+		proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
+	resonance_damage = initial(resonance_damage)
 	if(pressure < 50)
 		name = "strong [initial(name)]"
-		resonance_damage = 60
+		resonance_damage *= 3
 	else
 		name = initial(name)
-		resonance_damage = initial(resonance_damage)
+	resonance_damage *= damage_multiplier
 
-/obj/effect/resonance/proc/burst()
-	check_pressure()
+/obj/effect/temp_visual/resonance/proc/burst()
 	var/turf/T = get_turf(src)
-	playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+	new /obj/effect/temp_visual/resonance_crush(T)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled(creator)
+	check_pressure(T)
+	playsound(T,'sound/weapons/resonator_blast.ogg',50,1)
 	for(var/mob/living/L in T)
 		if(creator)
 			add_logs(creator, L, "used a resonator field on", "resonator")
 		to_chat(L, "<span class='userdanger'>[src] ruptured with you in it!</span>")
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
+
+/obj/effect/temp_visual/resonance_crush
+	icon_state = "shield1"
+	layer = ABOVE_ALL_MOB_LAYER
+	duration = 4
+
+/obj/effect/temp_visual/resonance_crush/Initialize()
+	. = ..()
+	transform = matrix()*1.5
+	animate(src, transform = matrix()*0.1, alpha = 50, time = 4)
 
 /**********************Facehugger toy**********************/
 
@@ -510,79 +527,66 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
-	var/charged = 1
-	var/charge_time = 16
-	var/atom/mark = null
-	var/mutable_appearance/marked_underlay
+	var/charged = TRUE
+	var/charge_time = 14
 
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
+	nodamage = TRUE
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 6
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
 	log_override = TRUE
+	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+
+/obj/item/projectile/destabilizer/Destroy()
+	hammer_synced = null
+	return ..()
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
-	if(hammer_synced)
-		if(hammer_synced.mark == target)
-			return ..()
-		if(isliving(target))
-			if(hammer_synced.mark && hammer_synced.marked_underlay)
-				hammer_synced.mark.underlays -= hammer_synced.marked_underlay
-				hammer_synced.marked_underlay = null
-			var/mob/living/L = target
-			if(L.mob_size >= MOB_SIZE_LARGE)
-				hammer_synced.mark = L
-				hammer_synced.marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
-				hammer_synced.marked_underlay.pixel_x = -L.pixel_x
-				hammer_synced.marked_underlay.pixel_y = -L.pixel_y
-				L.underlays += hammer_synced.marked_underlay
-		var/target_turf = get_turf(target)
-		if(ismineralturf(target_turf))
-			var/turf/closed/mineral/M = target_turf
-			new /obj/effect/temp_visual/kinetic_blast(M)
-			M.gets_drilled(firer)
+	if(isliving(target))
+		var/mob/living/L = target
+		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		CM.hammer_synced = hammer_synced
+	var/target_turf = get_turf(target)
+	if(ismineralturf(target_turf))
+		var/turf/closed/mineral/M = target_turf
+		new /obj/effect/temp_visual/kinetic_blast(M)
+		M.gets_drilled(firer)
 	..()
 
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
-		var/turf/proj_turf = get_turf(src)
+		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
 			return
-		var/datum/gas_mixture/environment = proj_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure > 50)
-			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-			return
-		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(user.loc)
-		D.preparePixelProjectile(target,get_turf(target), user)
+		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(proj_turf)
+		D.preparePixelProjectile(target, get_turf(target), user)
 		D.hammer_synced = src
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 		D.fire()
-		charged = 0
+		charged = FALSE
 		icon_state = "mining_hammer1_uncharged"
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
-	if(proximity_flag && target == mark && isliving(target))
+	if(proximity_flag && isliving(target))
 		var/mob/living/L = target
+		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
+			return
 		new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
-		mark = 0
-		if(L.mob_size >= MOB_SIZE_LARGE)
-			L.underlays -= marked_underlay
-			QDEL_NULL(marked_underlay)
-			var/backstab_dir = get_dir(user, L)
-			var/def_check = L.getarmor(type = "bomb")
-			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				L.apply_damage(80, BRUTE, blocked = def_check)
-				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
-			else
-				L.apply_damage(50, BRUTE, blocked = def_check)
+		var/backstab_dir = get_dir(user, L)
+		var/def_check = L.getarmor(type = "bomb")
+		if((user.dir & backstab_dir) && (L.dir & backstab_dir))
+			L.apply_damage(80, BRUTE, blocked = def_check)
+			playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+		else
+			L.apply_damage(50, BRUTE, blocked = def_check)
 
 /obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
 	if(!charged)
-		charged = 1
+		charged = TRUE
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)

@@ -115,7 +115,7 @@
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
 	speed = 3
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
@@ -126,7 +126,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -218,7 +218,7 @@
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
 	attacktext = "rams"
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
@@ -272,7 +272,7 @@
 
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

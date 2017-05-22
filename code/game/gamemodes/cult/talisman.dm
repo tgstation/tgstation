@@ -79,7 +79,7 @@
 	if(is_blocked_turf(target, TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear with a sharp crack!</span>", \
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
 	"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
 	user.forceMove(target)
 	target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
