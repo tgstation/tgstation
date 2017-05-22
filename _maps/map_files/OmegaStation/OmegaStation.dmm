@@ -7153,17 +7153,13 @@
 	})
 "alg" = (
 /turf/closed/wall/r_wall,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "alh" = (
 /obj/structure/cable/white,
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "ali" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "teleportershutters";
@@ -7176,9 +7172,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "alj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -7196,9 +7190,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "alk" = (
 /obj/structure/cable/white,
 /obj/structure/grille,
@@ -7737,9 +7729,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "alZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -7751,17 +7741,13 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "ama" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amb" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -7776,9 +7762,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amc" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/cable/white{
@@ -7790,9 +7774,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amd" = (
 /obj/structure/cable/white{
 	tag = "icon-0-8";
@@ -7801,9 +7783,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "ame" = (
 /obj/structure/cable/white{
 	tag = "icon-0-4";
@@ -8293,18 +8273,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amV" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/belt/utility,
@@ -8313,9 +8289,7 @@
 /obj/item/device/gps,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amW" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -8328,23 +8302,17 @@
 /turf/open/floor/plasteel{
 	tag = "icon-warning (EAST)"
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amX" = (
 /obj/machinery/teleport/hub,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amY" = (
 /obj/structure/sign/electricshock,
 /turf/closed/wall/r_wall,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "amZ" = (
 /obj/machinery/vending/snack,
 /obj/structure/sign/nanotrasen{
@@ -8835,24 +8803,18 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "anM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "anN" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "anO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -8864,9 +8826,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "anP" = (
 /obj/machinery/teleport/station,
 /obj/machinery/light{
@@ -8878,9 +8838,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "anQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -9425,16 +9383,12 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "aoG" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "aoH" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -9450,9 +9404,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-warning (EAST)"
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "aoI" = (
 /obj/machinery/computer/teleporter,
 /obj/machinery/newscaster{
@@ -9461,9 +9413,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "aoJ" = (
 /obj/machinery/droneDispenser,
 /obj/effect/decal/cleanable/dirt,
@@ -9471,9 +9421,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aoK" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -9490,9 +9438,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aoL" = (
 /obj/structure/rack,
 /obj/item/weapon/crowbar/red,
@@ -9509,17 +9455,13 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aoM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aoN" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold (NORTH)";
@@ -9611,9 +9553,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aoT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9625,9 +9565,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aoU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (SOUTHWEST)";
@@ -9641,9 +9579,7 @@
 /turf/open/floor/plasteel/caution{
 	dir = 1
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aoV" = (
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
@@ -9652,9 +9588,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aoW" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt,
@@ -10206,9 +10140,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "apL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/status_display{
@@ -10218,9 +10150,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "apM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
@@ -10234,9 +10164,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "apN" = (
 /obj/machinery/status_display{
 	pixel_y = -32
@@ -10249,9 +10177,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "apO" = (
 /obj/machinery/shieldwallgen,
 /obj/effect/decal/cleanable/dirt,
@@ -10265,9 +10191,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/teleporter{
-	name = "\improper Teleporter Room"
-	})
+/area/teleporter)
 "apP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -10276,9 +10200,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "apQ" = (
 /obj/structure/cable/white{
 	tag = "icon-2-4";
@@ -10292,9 +10214,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "apR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -10306,9 +10226,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "apS" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -10326,9 +10244,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "apT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -10398,9 +10314,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "apZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -10408,9 +10322,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aqa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -10422,9 +10334,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aqb" = (
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
@@ -10435,9 +10345,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aqc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/tank/jetpack/carbondioxide{
@@ -11026,9 +10934,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aqZ" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -11038,9 +10944,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "ara" = (
 /turf/closed/wall,
 /area/crew_quarters/bar{
@@ -11129,16 +11033,12 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "arh" = (
 /obj/structure/girder,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "ari" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/extinguisher_cabinet{
@@ -11734,9 +11634,7 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "arW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -11754,9 +11652,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "arX" = (
 /obj/structure/cable/white{
 	tag = "icon-2-4";
@@ -11776,9 +11672,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "arY" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -11788,9 +11682,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "arZ" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -11800,9 +11692,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "asa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -11815,9 +11705,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "asb" = (
 /obj/structure/cable/white{
 	tag = "icon-2-8";
@@ -11837,9 +11725,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "asc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -11848,9 +11734,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "asd" = (
 /obj/machinery/computer/slot_machine,
 /obj/machinery/light_switch{
@@ -11926,9 +11810,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "asl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -11938,9 +11820,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "asm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -11953,9 +11833,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "asn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -11965,9 +11843,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aso" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -11978,9 +11854,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "asp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -11990,9 +11864,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "asq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12003,9 +11875,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "asr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/loadingarea{
@@ -12484,15 +12354,11 @@
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "atc" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "atd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -12501,9 +12367,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "ate" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -12608,9 +12472,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "atp" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (WEST)";
@@ -13056,9 +12918,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "atW" = (
 /obj/effect/landmark/blobstart,
 /obj/structure/cable/white{
@@ -13070,9 +12930,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "atX" = (
 /obj/structure/table/wood,
 /obj/item/device/camera_film{
@@ -13249,9 +13107,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "auo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/status_display{
@@ -13687,9 +13543,7 @@
 "auY" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "auZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -13882,9 +13736,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "avt" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold (WEST)";
@@ -14346,14 +14198,10 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "awe" = (
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "awf" = (
 /obj/structure/table/wood,
 /obj/item/device/camera,
@@ -14570,9 +14418,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "awy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/device/radio/intercom{
@@ -14907,9 +14753,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "axf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -15264,9 +15108,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "axM" = (
 /obj/structure/table/wood,
 /obj/item/weapon/lipstick/random{
@@ -15384,9 +15226,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "axV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/newscaster{
@@ -15709,9 +15549,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "ayE" = (
 /obj/structure/table/wood,
 /obj/item/device/instrument/violin,
@@ -15828,9 +15666,7 @@
 /area/crew_quarters/bar)
 "ayP" = (
 /turf/closed/wall,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "ayQ" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -15838,9 +15674,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "ayR" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
@@ -15864,25 +15698,19 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "ayS" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "ayT" = (
 /obj/structure/girder,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "ayU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light{
@@ -16354,9 +16182,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "azN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -16365,9 +16191,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "azO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -16378,27 +16202,21 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "azP" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "azQ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "azR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -16410,9 +16228,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "azS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -17014,9 +16830,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aAU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -17028,9 +16842,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aAV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17047,9 +16859,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aAW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -17064,9 +16874,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aAX" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable/white{
@@ -17082,9 +16890,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aAY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17578,9 +17384,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aBV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/clipboard,
@@ -18301,9 +18105,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aDc" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
@@ -19528,9 +19330,7 @@
 	},
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aFh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (WEST)";
@@ -19946,9 +19746,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aFN" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -20345,18 +20143,14 @@
 "aGy" = (
 /obj/structure/sign/nanotrasen,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGz" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGA" = (
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
@@ -20367,9 +20161,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGB" = (
 /obj/structure/mopbucket,
 /obj/effect/decal/cleanable/dirt,
@@ -20381,15 +20173,11 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGC" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGD" = (
 /obj/structure/cable/white{
 	tag = "icon-0-2";
@@ -20405,9 +20193,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20418,9 +20204,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -20431,9 +20215,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -20444,9 +20226,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -20461,9 +20241,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20478,9 +20256,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -20495,9 +20271,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -20510,9 +20284,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20526,9 +20298,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -20541,9 +20311,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aGN" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21174,9 +20942,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -21191,9 +20957,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21217,9 +20981,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -21237,9 +20999,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21253,9 +21013,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHK" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21270,9 +21028,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHL" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (EAST)";
@@ -21288,9 +21044,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aHM" = (
 /turf/closed/wall,
 /area/hydroponics)
@@ -21411,9 +21165,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aHY" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -21825,9 +21577,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aIF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -21837,9 +21587,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aIG" = (
 /obj/item/weapon/crowbar/red,
 /obj/item/weapon/cultivator,
@@ -22552,9 +22300,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aJN" = (
 /obj/machinery/seed_extractor,
 /obj/machinery/status_display{
@@ -22755,9 +22501,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aKg" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
@@ -23258,9 +23002,7 @@
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aKU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -23271,9 +23013,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aKV" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/stripes/line{
@@ -23889,9 +23629,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aMj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -23907,9 +23645,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-warning (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aMk" = (
 /obj/machinery/plantgenes,
 /obj/machinery/status_display{
@@ -24039,9 +23775,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aMw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -24054,9 +23788,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aMx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -24066,9 +23798,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aMy" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -24559,9 +24289,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aNo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -24574,9 +24302,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aNp" = (
 /obj/structure/table/glass,
 /obj/structure/extinguisher_cabinet{
@@ -24701,9 +24427,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aNB" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24714,9 +24438,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aNC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -24728,9 +24450,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aND" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -24747,9 +24467,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aNE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -24759,9 +24477,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aNF" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -25114,9 +24830,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Central Port Maintenance"
-	})
+/area/maintenance/port/central)
 "aOh" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -25232,9 +24946,7 @@
 "aOt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aOu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -25253,9 +24965,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/starboard{
-	name = "Central Starboard Maintenance"
-	})
+/area/maintenance/starboard/central)
 "aOv" = (
 /obj/machinery/computer/message_monitor,
 /obj/machinery/newscaster{
@@ -25395,9 +25105,7 @@
 /area/engine/engineering)
 "aOH" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aOI" = (
 /obj/structure/cable/white{
 	tag = "icon-2-4";
@@ -25408,9 +25116,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aOJ" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -25420,9 +25126,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aOK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -25436,9 +25140,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aOL" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -25453,9 +25155,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aOM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -25471,9 +25171,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aON" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -25492,9 +25190,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aOO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -26267,9 +25963,7 @@
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -26284,9 +25978,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet,
@@ -26303,9 +25995,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPR" = (
 /obj/structure/girder,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -26314,9 +26004,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
@@ -26329,9 +26017,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPT" = (
 /obj/structure/rack,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
@@ -26345,9 +26031,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -26361,17 +26045,13 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aPW" = (
 /obj/machinery/vending/snack,
 /obj/machinery/firealarm{
@@ -26914,9 +26594,7 @@
 "aQU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aQV" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -26926,9 +26604,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aQW" = (
 /turf/closed/wall,
 /area/library)
@@ -27414,9 +27090,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aRT" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
@@ -28051,9 +27725,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aTc" = (
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -28565,9 +28237,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aUc" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -29447,9 +29117,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aVN" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/bag/books,
@@ -30162,9 +29830,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aXe" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -31032,9 +30698,7 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -31047,9 +30711,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYB" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -31062,9 +30724,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYC" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -31075,9 +30735,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -31089,9 +30747,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -31105,9 +30761,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYF" = (
 /obj/structure/cable/white{
 	tag = "icon-2-8";
@@ -31120,9 +30774,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aYG" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/fire{
@@ -31403,16 +31055,12 @@
 "aZo" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZp" = (
 /obj/structure/table/wood,
 /obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZq" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/black,
@@ -31426,9 +31074,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZr" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/briefcase{
@@ -31441,16 +31087,12 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -31462,9 +31104,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZu" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
@@ -31516,26 +31156,20 @@
 	dir = 8;
 	heat_capacity = 1e+006
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
@@ -31552,9 +31186,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (SOUTHWEST)";
@@ -31562,9 +31194,7 @@
 	dir = 10
 	},
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "aZC" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/brute{
@@ -32009,16 +31639,12 @@
 /area/maintenance/starboard)
 "baj" = (
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bak" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/black,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bal" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -32029,17 +31655,13 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bam" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "ban" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -32054,9 +31676,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bao" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -32070,15 +31690,11 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bap" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "baq" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/syndicatefake,
@@ -32086,14 +31702,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bar" = (
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bas" = (
 /obj/structure/dresser,
 /obj/effect/decal/cleanable/dirt,
@@ -32103,9 +31715,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bat" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/o2{
@@ -32528,25 +32138,19 @@
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbd" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/black,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbe" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbf" = (
 /obj/structure/cable/white{
 	tag = "icon-1-4";
@@ -32557,9 +32161,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbg" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -32569,9 +32171,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -32583,9 +32183,7 @@
 	},
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbi" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -32598,9 +32196,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -32613,9 +32209,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -32629,9 +32223,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/clipboard,
@@ -32640,16 +32232,12 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbn" = (
 /obj/machinery/vending/autodrobe{
 	req_access_txt = "0"
@@ -32658,9 +32246,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbo" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -32677,9 +32263,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbp" = (
 /obj/machinery/light{
 	dir = 8
@@ -32992,22 +32576,16 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbR" = (
 /turf/open/floor/wood,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbS" = (
 /turf/open/floor/wood{
 	tag = "icon-wood-broken6";
 	icon_state = "wood-broken6"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (NORTHEAST)";
@@ -33015,9 +32593,7 @@
 	dir = 5
 	},
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
@@ -33035,9 +32611,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbV" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -33046,9 +32620,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
@@ -33067,9 +32639,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	tag = "icon-intact (NORTHWEST)";
@@ -33077,15 +32647,11 @@
 	dir = 9
 	},
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbY" = (
 /obj/machinery/computer/security/telescreen/entertainment,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bbZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
@@ -33100,15 +32666,11 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bca" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcb" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -33117,9 +32679,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcc" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -33127,9 +32687,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcd" = (
 /obj/item/weapon/retractor,
 /obj/item/weapon/hemostat,
@@ -33393,42 +32951,30 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcG" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcH" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/wood,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcI" = (
 /turf/open/floor/wood{
 	tag = "icon-wood-broken2";
 	icon_state = "wood-broken2"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcJ" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcK" = (
 /obj/machinery/computer/slot_machine,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcL" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/dirt,
@@ -33436,9 +32982,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -33446,9 +32990,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcN" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -33457,9 +32999,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcO" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -33468,29 +33008,21 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcP" = (
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcR" = (
 /obj/structure/table/wood,
 /obj/item/device/instrument/guitar,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -33505,9 +33037,7 @@
 /obj/effect/landmark/blobstart,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcT" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -33530,9 +33060,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bcU" = (
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/surgicaldrill{
@@ -33943,27 +33471,21 @@
 /obj/structure/table/wood,
 /obj/item/weapon/storage/briefcase,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdE" = (
 /obj/structure/chair/stool/bar,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdF" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood{
 	tag = "icon-wood-broken5";
 	icon_state = "wood-broken5"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdG" = (
 /obj/structure/chair/stool/bar,
 /obj/effect/landmark/revenantspawn,
@@ -33971,9 +33493,7 @@
 	tag = "icon-wood-broken2";
 	icon_state = "wood-broken2"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdH" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/syndicate{
@@ -33985,9 +33505,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdI" = (
 /obj/structure/table/wood,
 /obj/item/weapon/wrench,
@@ -34003,9 +33521,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -34013,9 +33529,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdK" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -34028,9 +33542,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdL" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -34039,9 +33551,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdM" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -34049,9 +33559,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdN" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/justice,
@@ -34069,9 +33577,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -34081,9 +33587,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdP" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/dirt,
@@ -34091,9 +33595,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bdQ" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/machinery/airalarm{
@@ -34446,9 +33948,7 @@
 /obj/item/weapon/storage/pill_bottle,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bev" = (
 /obj/machinery/computer/slot_machine,
 /obj/effect/decal/cleanable/dirt,
@@ -34459,9 +33959,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bew" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -34481,9 +33979,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bex" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/blood/random,
@@ -34495,18 +33991,14 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bey" = (
 /obj/structure/table/wood,
 /obj/item/weapon/newspaper,
 /obj/item/clothing/head/bowler,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bez" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -34514,9 +34006,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beA" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
@@ -34524,9 +34014,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beB" = (
 /obj/machinery/door/window{
 	dir = 8;
@@ -34535,9 +34023,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/bar,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beC" = (
 /obj/structure/table/wood,
 /obj/item/weapon/lipstick/random{
@@ -34552,9 +34038,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beD" = (
 /obj/structure/cable/white{
 	tag = "icon-1-2";
@@ -34567,9 +34051,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -34736,9 +34218,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beS" = (
 /obj/structure/cable/white{
 	tag = "icon-2-8";
@@ -34759,9 +34239,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -34774,9 +34252,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -34789,9 +34265,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beV" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -34812,9 +34286,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beW" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -34829,9 +34301,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beX" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -34843,9 +34313,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beY" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -34861,9 +34329,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "beZ" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -34876,9 +34342,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -34897,9 +34361,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfb" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -34913,9 +34375,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfc" = (
 /obj/structure/cable/white{
 	tag = "icon-2-8";
@@ -34926,17 +34386,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/corner,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/airalarm{
@@ -35275,9 +34731,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfE" = (
 /obj/structure/cable/white{
 	tag = "icon-1-4";
@@ -35290,9 +34744,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/plasteel/neutral,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfF" = (
 /obj/structure/cable/white{
 	tag = "icon-4-8";
@@ -35301,9 +34753,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
@@ -35312,9 +34762,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -35329,9 +34777,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bfI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
@@ -35639,15 +35085,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bgd" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/maintenance/fpmaint2/port_maintenance)
 "bge" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold (WEST)";
@@ -36017,9 +35459,7 @@
 "bgN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -36037,14 +35477,10 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgP" = (
 /turf/closed/wall,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgQ" = (
 /obj/structure/sign/directions/engineering{
 	dir = 1;
@@ -36058,9 +35494,7 @@
 	pixel_y = -8
 	},
 /turf/closed/wall,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgR" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -36073,9 +35507,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -36092,28 +35524,20 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgT" = (
 /obj/machinery/ai_status_display,
 /turf/closed/wall,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgV" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -36126,9 +35550,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgX" = (
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Supply department is.";
@@ -36146,9 +35568,7 @@
 	pixel_y = 8
 	},
 /turf/closed/wall,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bgY" = (
 /obj/machinery/light{
 	dir = 8
@@ -36433,9 +35853,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -36450,9 +35868,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/arrival,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -36461,9 +35877,7 @@
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -36480,9 +35894,7 @@
 	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/arrival,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -36491,15 +35903,11 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/arrival,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -36509,9 +35917,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhG" = (
 /obj/machinery/light{
 	dir = 1
@@ -36520,17 +35926,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/arrival,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhI" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -36538,9 +35940,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold (EAST)";
@@ -36548,15 +35948,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/arrival,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhL" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
@@ -36572,9 +35968,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bhM" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -36875,9 +36269,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biq" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable/white{
@@ -36888,9 +36280,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bir" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36906,9 +36296,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bis" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36929,9 +36317,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bit" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -36946,9 +36332,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36961,9 +36345,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36975,9 +36357,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36986,9 +36366,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bix" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36996,9 +36374,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -37011,9 +36387,7 @@
 /turf/open/floor/plasteel/arrival{
 	dir = 1
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -37022,9 +36396,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster{
@@ -37038,9 +36410,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biB" = (
 /obj/structure/sign/biohazard,
 /turf/closed/wall/r_wall,
@@ -37285,9 +36655,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -37304,9 +36672,7 @@
 /turf/open/floor/plasteel{
 	tag = "icon-plasteel_warn_side (EAST)"
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "biW" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -37470,18 +36836,14 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjp" = (
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
@@ -37628,18 +36990,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjD" = (
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 10
@@ -37735,9 +37093,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjN" = (
 /obj/structure/shuttle/engine/propulsion{
 	tag = "icon-propulsion (NORTH)";
@@ -37870,9 +37226,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjV" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -37891,9 +37245,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjW" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
@@ -37916,17 +37268,13 @@
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bjZ" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
@@ -38060,17 +37408,13 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bki" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkj" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -38079,9 +37423,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -38093,9 +37435,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkl" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (EAST)";
@@ -38106,9 +37446,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkm" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrival Shuttle Airlock";
@@ -38177,9 +37515,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bku" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light{
@@ -38187,9 +37523,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkv" = (
 /obj/structure/chair{
 	dir = 4
@@ -38218,16 +37552,12 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkz" = (
 /obj/machinery/vending/cola,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkA" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
@@ -38238,16 +37568,12 @@
 /obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkC" = (
 /obj/item/device/radio/beacon,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkD" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -38265,9 +37591,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkF" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
@@ -38371,9 +37695,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkT" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
@@ -38404,9 +37726,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkX" = (
 /obj/machinery/status_display{
 	pixel_x = 32
@@ -38419,9 +37739,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bkY" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -38451,16 +37769,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "blc" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bld" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/blue,
@@ -38709,9 +38023,7 @@
 	dir = 1;
 	heat_capacity = 1e+006
 	},
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "blx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -38723,9 +38035,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "bly" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -38739,9 +38049,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "blz" = (
 /obj/structure/frame/computer,
 /obj/machinery/camera{
@@ -41038,9 +40346,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "btl" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -41050,9 +40356,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry{
-	name = "Arrivals"
-	})
+/area/hallway/secondary/entry)
 "btm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{

@@ -124,7 +124,7 @@ Difficulty: Medium
 	target.visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(9,get_turf(target)))
 		if(prob(11))
-			new /obj/effect/overlay/temp/target(turf)
+			new /obj/effect/temp_visual/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
@@ -179,7 +179,7 @@ Difficulty: Medium
 		negative = FALSE
 	else if(target.x == initial_x) //if their x is the same, pick a direction
 		negative = prob(50)
-	var/obj/effect/overlay/temp/dragon_flight/F = new /obj/effect/overlay/temp/dragon_flight(loc, negative)
+	var/obj/effect/temp_visual/dragon_flight/F = new /obj/effect/temp_visual/dragon_flight(loc, negative)
 
 	negative = !negative //invert it for the swoop down later
 
@@ -208,7 +208,7 @@ Difficulty: Medium
 				if(L.stat == DEAD)
 					break //target is dead and we're on em, slam they
 		if(fire_rain)
-			new /obj/effect/overlay/temp/target(loc, flame_hit)
+			new /obj/effect/temp_visual/target(loc, flame_hit)
 		forceMove(get_step(src, get_dir(src, target)))
 		if(loc == get_turf(target))
 			if(!fire_rain)
@@ -228,8 +228,8 @@ Difficulty: Medium
 	else
 		if(IsInRange(x, initial_x - DRAKE_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
 			negative = TRUE
-	new /obj/effect/overlay/temp/dragon_flight/end(loc, negative)
-	new /obj/effect/overlay/temp/dragon_swoop(loc)
+	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
+	new /obj/effect/temp_visual/dragon_swoop(loc)
 	animate(src, transform = oldtransform, time = 5)
 	sleep(5)
 	swooping &= ~SWOOP_INVULNERABLE
@@ -271,7 +271,7 @@ Difficulty: Medium
 	invisibility = 100
 
 
-/obj/effect/overlay/temp/fireball
+/obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"
@@ -281,28 +281,28 @@ Difficulty: Medium
 	duration = 9
 	pixel_z = DRAKE_SWOOP_HEIGHT
 
-/obj/effect/overlay/temp/fireball/Initialize()
+/obj/effect/temp_visual/fireball/Initialize()
 	. = ..()
 	animate(src, pixel_z = 0, time = duration)
 
-/obj/effect/overlay/temp/target
+/obj/effect/temp_visual/target
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
 	duration = 9
 
-/obj/effect/overlay/temp/target/ex_act()
+/obj/effect/temp_visual/target/ex_act()
 	return
 
-/obj/effect/overlay/temp/target/Initialize(mapload, list/flame_hit)
+/obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fall, flame_hit)
 
-/obj/effect/overlay/temp/target/proc/fall(list/flame_hit)
+/obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Fireball.ogg', 80, 1)
-	new /obj/effect/overlay/temp/fireball(T)
+	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
@@ -320,7 +320,7 @@ Difficulty: Medium
 		else
 			L.adjustFireLoss(10) //if we've already hit them, do way less damage
 
-/obj/effect/overlay/temp/dragon_swoop
+/obj/effect/temp_visual/dragon_swoop
 	name = "certain death"
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
@@ -331,7 +331,7 @@ Difficulty: Medium
 	color = "#FF0000"
 	duration = 5
 
-/obj/effect/overlay/temp/dragon_flight
+/obj/effect/temp_visual/dragon_flight
 	icon = 'icons/mob/lavaland/dragon.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -339,11 +339,11 @@ Difficulty: Medium
 	duration = 10
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/dragon_flight/Initialize(mapload, negative)
+/obj/effect/temp_visual/dragon_flight/Initialize(mapload, negative)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/flight, negative)
 
-/obj/effect/overlay/temp/dragon_flight/proc/flight(negative)
+/obj/effect/temp_visual/dragon_flight/proc/flight(negative)
 	if(negative)
 		animate(src, pixel_x = -DRAKE_SWOOP_HEIGHT*0.10, pixel_z = DRAKE_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	else
@@ -355,12 +355,12 @@ Difficulty: Medium
 	else
 		animate(src, pixel_x = DRAKE_SWOOP_HEIGHT, pixel_z = DRAKE_SWOOP_HEIGHT, time = 7)
 
-/obj/effect/overlay/temp/dragon_flight/end
+/obj/effect/temp_visual/dragon_flight/end
 	pixel_x = DRAKE_SWOOP_HEIGHT
 	pixel_z = DRAKE_SWOOP_HEIGHT
 	duration = 5
 
-/obj/effect/overlay/temp/dragon_flight/end/flight(negative)
+/obj/effect/temp_visual/dragon_flight/end/flight(negative)
 	if(negative)
 		pixel_x = -DRAKE_SWOOP_HEIGHT
 		animate(src, pixel_x = -16, pixel_z = 0, time = 5)

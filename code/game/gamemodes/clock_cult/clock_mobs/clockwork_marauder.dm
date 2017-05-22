@@ -150,7 +150,7 @@
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 	if(GLOB.ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
-		new /obj/effect/overlay/temp/heal(host.loc, "#AF0AAF")
+		new /obj/effect/temp_visual/heal(host.loc, "#AF0AAF")
 		host.heal_ordered_damage(4, damage_heal_order)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

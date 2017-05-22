@@ -5,6 +5,8 @@
 	damage_type = BURN
 	flag = "energy"
 
+/obj/item/projectile/energy/chameleon
+	nodamage = TRUE
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"
@@ -133,7 +135,7 @@
 	damage = 20
 	damage_type = CLONE
 	irradiate = 10
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
@@ -162,7 +164,7 @@
 /obj/item/projectile/energy/tesla
 	name = "tesla bolt"
 	icon_state = "tesla_projectile"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	var/chain
 
 /obj/item/projectile/energy/tesla/fire(setAngle)

@@ -14,7 +14,7 @@
 	selected_target[1] = null
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	if(selected_target[1] && over_object.IsAutoclickable())
+	if(selected_target[1] && over_object && over_object.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 

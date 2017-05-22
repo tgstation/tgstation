@@ -2,7 +2,8 @@
 //Gang War Game Mode
 
 GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
-GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple"))
+GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple", "white"))
+GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/obj/item/clothing/suit/jacket/leather/overcoat,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/jacket/miljacket,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/pirate,/obj/item/clothing/suit/poncho,/obj/item/clothing/suit/apron/overalls,/obj/item/clothing/suit/jacket/letterman))
 
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
@@ -164,6 +165,8 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
+		if(is_in_gang(gangster_mind.current, G.name) && !(gangster_mind in get_gang_bosses()))
+			return 3
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
@@ -193,6 +196,10 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
+	for(var/obj/O in gangster_mind.current.contents)
+		if(istype(O, /obj/item/device/gangtool/soldier))
+			qdel(O)
+
 	if(!gang)
 		return 0
 

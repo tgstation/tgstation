@@ -83,6 +83,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 	reverseRange(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
+		testing("Shutdown [ss.name] subsystem")
 		ss.Shutdown()
 
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
@@ -139,6 +140,7 @@ GLOBAL_VAR_INIT(CURRENT_TICKLIMIT, TICK_LIMIT_RUNNING)
 		if(FireHim)
 			Master.subsystems += new BadBoy.type	//NEW_SS_GLOBAL will remove the old one
 		subsystems = Master.subsystems
+		current_runlevel = Master.current_runlevel
 		StartProcessing(10)
 	else
 		to_chat(world, "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>")

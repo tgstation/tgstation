@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - balance: "Monkeys can be weakened by stamina loss"
