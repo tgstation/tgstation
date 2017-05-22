@@ -202,7 +202,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrivals North Maintenance"
 	icon_state = "fpmaint"
 
-/area/maintenance/port/port2
+/area/maintenance/aft
+//	/area/maintenance/aft/Aft_Maintenance // old aft maint path was engi maint
+	name = "Aft Maintenance"
+	icon_state = "amaint"
+	
+/area/maintenance/port
 //	/area/maintenance/fpmaint2/port_maintenance
 	name = "Port Maintenance"
 	icon_state = "fpmaint"
@@ -242,10 +247,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //	/area/maintenance/fpmaint2/aft_port_maintenance
 	name = "Port Quarter Maintenance"
 	icon_state = "fpmaint"
-	
-/area/maintenance/aft/Aft_Maintenance
-	name = "Aft Maintenance"
-	icon_state = "amaint"
 	
 /area/maintenance/disposal
 	name = "Waste Disposal"
@@ -445,13 +446,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Captain's Office"
 	icon_state = "captain"
 
-/area/crew_quarters/heads/captain/captains_quarters
+/area/crew_quarters/heads/captain/private
 //	/area/crew_quarters/captain/captains_quarters
 	name = "Captain's Quarters"
 	icon_state = "captain"
 	
 /area/crew_quarters/heads/chief
 //	/area/crew_quarters/chief
+//	/area/engine/chiefs_office
 	name = "Chief Engineer's Office"
 	icon_state = "engine_control"
 	
@@ -673,6 +675,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine"
 	
 /area/engine/atmos
+//	/area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
  	flags = NONE
@@ -724,11 +727,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "panelsA"
 	
 /area/solar/auxport
-	name = "Port Bow Solar Array"
+	name = "Port Bow Auxiliary Solar Array"
 	icon_state = "panelsA"
 	
 /area/solar/auxstarboard
-	name = "Starboard Bow Solar Array"
+	name = "Starboard Bow Auxiliary Solar Array"
 	icon_state = "panelsA"
 	
 /area/solar/fore
@@ -740,15 +743,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "yellow"
 	
 /area/solar/starboard
-//	/area/solar/starboard/starboard
 	name = "Starboard Solar Array"
 	icon_state = "panelsS"
 	
 /area/solar/starboard/aft
-	name = "Starboard Quarter Solar Array"
-	icon_state = "panelsS"
-	
-/area/solar/starboard/aft2
 //	/area/solar/starboard
 	name = "Starboard Quarter Solar Array"
 	icon_state = "panelsS"
@@ -757,15 +755,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Starboard Bow Solar Array"
 	icon_state = "panelsS"
 	
-/area/solar/port/port
+/area/solar/port
 	name = "Port Solar Array"
 	icon_state = "panelsP"
 	
 /area/solar/port/aft
-	name = "Port Quarter Solar Array"
-	icon_state = "panelsP"
-	
-/area/solar/port/aft2
 //	/area/solar/port
 	name = "Port Quarter Solar Array"
 	icon_state = "panelsP"
@@ -819,22 +813,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/maintenance/solars/aux/port/fore
 //	/area/maintenance/auxsolarport
-	name = "Port Bow Solar Maintenance"
+	name = "Port Bow Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 	
 /area/maintenance/solars/aux/port/aft
 //	/area/maintenance/portsolar
-	name = "Port Quarter Solar Maintenance"
+	name = "Port Quarter Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolP"
 
 /area/maintenance/solars/aux/starboard/port/aft
 //	/area/maintenance/starboardsolar
-	name = "Starboard Quarter Solar Maintenance"
+	name = "Starboard Quarter Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolS"
 
 /area/maintenance/solars/aux/starboard/port/aft
 //	/area/maintenance/auxsolarstarboard
-	name = "Starboard Bow Solar Maintenance"
+	name = "Starboard Bow Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 
 /area/assembly/assembly_line //Derelict Assembly Line
@@ -917,7 +911,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
 	
-/area/medical/medbay/aft	
+/area/medical/medbay/aft
 //	/area/medical/medbay3/aft
 	name = "Medbay Aft"
 	icon_state = "medbay3"
