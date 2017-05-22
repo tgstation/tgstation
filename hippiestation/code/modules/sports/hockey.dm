@@ -21,7 +21,7 @@
 	toggle_stick()
 
 /obj/item/weapon/hockeypack/Initialize()
-	..()
+	. = ..()
 	packstick = make_stick()
 
 /obj/item/weapon/hockeypack/verb/toggle_stick()
@@ -121,13 +121,10 @@
 	return
 
 /obj/item/weapon/twohanded/hockeystick/Initialize(parent_pack)
-	..()
+	. = ..()
 	if(check_pack_exists(parent_pack, src))
 		pack = parent_pack
 		loc = pack
-
-	return
-
 
 /obj/item/weapon/twohanded/hockeystick/attack(mob/living/target, mob/living/user) //Sure it's the powerfist code, right down to the sound effect. Gonna be fun though.
 

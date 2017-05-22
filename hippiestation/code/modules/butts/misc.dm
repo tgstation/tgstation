@@ -14,7 +14,7 @@
 	icon_state = "butt"
 
 /obj/effect/immovablerod/butt/Initialize()
-	..()
+	. = ..()
 	SpinAnimation(24,-1)
 
 /obj/item/clothing/proc/checkbuttuniform(mob/user)

@@ -14,7 +14,7 @@
 	var/list/speech_list = list("butt.", "butts.", "ass.", "fart.", "assblast usa", "woop get an ass inspection", "woop") //Hilarious.
 
 /mob/living/simple_animal/bot/buttbot/Initialize()
-	..()
+	. = ..()
 	if(xeno)
 		icon_state = "buttbot_xeno"
 		speech_list = list("hissing butts", "hiss hiss motherfucker", "nice trophy nerd", "butt", "woop get an alien inspection")

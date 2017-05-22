@@ -32,13 +32,13 @@
 	item_state = "noodleyellow"
 
 /obj/item/toy/poolnoodle/red/Initialize()
-	..()
+	. = ..()
 	color = "#ff4c4c"
 
 /obj/item/toy/poolnoodle/blue/Initialize()
-	..()
+	. = ..()
 	color = "#3232ff"
 
 /obj/item/toy/poolnoodle/yellow/Initialize()
-	..()
+	. = ..()
 	color = "#ffff66"

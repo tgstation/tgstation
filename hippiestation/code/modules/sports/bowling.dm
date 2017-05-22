@@ -34,7 +34,7 @@
 	var/pro_wielded = FALSE
 
 /obj/item/weapon/bowling/Initialize()
-	..()
+	. = ..()
 	color = pick("white","green","yellow","purple")
 
 /obj/item/weapon/bowling/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)

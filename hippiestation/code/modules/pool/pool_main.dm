@@ -186,18 +186,16 @@
 //What happens if you don't drop in it like a good person would, you fool.
 /turf/open/pool/Exited(atom/A, turf/NL)
 	..()
-	if(ismob(A) && !istype(NL, /turf/open/pool))
+	if(!istype(NL, /turf/open/pool) && isliving(A))
 		var/mob/living/M = A
 		M.swimming = FALSE
-		M.pixel_y = initial(M.pixel_y)
 
 /turf/open/pool/Entered(atom/A, turf/OL)
 	..()
-	if(!has_gravity(src)) //Fairly important
-		return
-	if(ismob(A))
+	if(isliving(A))
 		var/mob/living/M = A
-		src.filled ? wash_mob(M) : null
+		if(!M.mob_has_gravity())
+			return
 		if(!M.swimming)
 			if(locate(/obj/structure/pool/ladder) in M.loc)
 				M.swimming = TRUE
@@ -205,6 +203,7 @@
 			if(iscarbon(M))
 				var/mob/living/carbon/H = M
 				if(filled)
+					wash_mob(H)
 					if (H.wear_mask && H.wear_mask.flags & MASKCOVERSMOUTH)
 						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
 											"<span class='userdanger'>You fall in the water!</span>")
@@ -245,6 +244,7 @@
 					H.swimming = TRUE
 					playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
 		else if(filled)
+			wash_mob(M)
 			M.adjustStaminaLoss(1)
 			playsound(src, pick('hippiestation/sound/effects/water_wade1.ogg','hippiestation/sound/effects/water_wade2.ogg','hippiestation/sound/effects/water_wade3.ogg','hippiestation/sound/effects/water_wade4.ogg'), 20, 1)
 			return

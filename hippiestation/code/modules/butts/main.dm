@@ -40,7 +40,7 @@
 	storage_slots = 4
 
 /obj/item/organ/butt/Initialize()
-	..()
+	. = ..()
 	inv = new(src)
 	inv.max_w_class = max_w_class
 	inv.storage_slots = storage_slots
