@@ -111,6 +111,8 @@
 		total_paper++
 		update_icon()
 	else if(istype(I, /obj/item/weapon/pen))
+		if(bin_pen)
+			return
 		var/obj/item/weapon/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
