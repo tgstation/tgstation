@@ -428,11 +428,15 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		to_chat(C, "<span class='userdanger'>That was a really dumb idea.</span>")
+		investigate_log("has been tk attacked by [user].", "supermatter")
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart("head")
 		rip_u.dismember(BURN) //nice try jedi
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
-	return attack_hand(user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		investigate_log("has been attacked with a paw by [user].", "supermatter")
+		return attack_hand(user)
 
 
 /obj/machinery/power/supermatter_shard/attack_robot(mob/user)
@@ -445,15 +449,18 @@
 	to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
-	if(!istype(user))
-		return
-	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
-		"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
-		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(!istype(user))
+			return
+		user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
+			"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
+			"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
 
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		investigate_log("has been punched by [user].", "supermatter")
 
-	Consume(user)
+		Consume(user)
 
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
@@ -470,6 +477,7 @@
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		investigate_log("has been attacked by [user] with \the [W].", "supermatter")
 
 		radiation_pulse(get_turf(src), 1, 1, 150, 1)
 
@@ -486,6 +494,7 @@
 		return
 
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+	investigate_log("has been bumped by [AM].", "supermatter")
 
 	Consume(AM)
 
