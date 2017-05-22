@@ -44,6 +44,8 @@
 					oldmag.update_icon()
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
+
+				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
 				chamber_round()
 				A.update_icon()
 				update_icon()
