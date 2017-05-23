@@ -34,6 +34,8 @@
 /obj/item/weapon/gun/energy/e_gun/stun
 	name = "tactical energy gun"
 	desc = "Military issue energy gun, is able to fire stun rounds."
+	icon_state = "energytac"
+	item_state = "energy"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/e_gun/mini/practice_phaser
