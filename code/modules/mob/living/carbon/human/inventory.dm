@@ -141,11 +141,13 @@
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+	var/index = get_held_index_of_item(I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
 		return
-
+	if(index && dna.species.mutanthands)
+		put_in_hand(new dna.species.mutanthands(), index)
 	if(I == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.

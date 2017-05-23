@@ -3,6 +3,7 @@
 	GLOB.dead_mob_list -= src
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
+	GLOB.mob_directory -= tag
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -22,13 +23,19 @@
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
-	..()
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
+	. = ..()
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -69,7 +76,7 @@
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && ear_deaf)//Hearing related
+		if(type & 2 && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -285,14 +292,14 @@
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/overlay/temp/point))
+	if(istype(A, /obj/effect/temp_visual/point))
 		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
 		return 0
 
-	new /obj/effect/overlay/temp/point(A,invisibility)
+	new /obj/effect/temp_visual/point(A,invisibility)
 
 	return 1
 
@@ -323,12 +330,14 @@
 	changeNext_move(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
-		visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		if(!supress_message)
+			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
 	AM.pulledby = src
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	if(!supress_message)
+		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
@@ -343,6 +352,8 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
+	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+		return
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -558,6 +569,7 @@
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
+		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		stat(null, "Station Time: [worldtime2text()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
@@ -565,7 +577,6 @@
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
-
 
 	if(client && client.holder)
 		if(statpanel("MC"))
@@ -588,6 +599,8 @@
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			GLOB.cameranet.stat_entry()
+		if(statpanel("Tickets"))
+			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -731,7 +744,6 @@
 	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
-
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
@@ -957,10 +969,6 @@
 			set_eye_damage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
-		if("ear_deaf")
-			setEarDamage(-1, var_value)
-		if("ear_damage")
-			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
@@ -999,3 +1007,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/verb/open_language_menu()
+	set name = "Open Language Menu"
+	set category = "IC"
+
+	var/datum/language_holder/H = get_language_holder()
+	H.open_language_menu(usr)

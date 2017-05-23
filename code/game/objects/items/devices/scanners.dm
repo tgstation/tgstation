@@ -28,9 +28,14 @@ MASS SPECTROMETER
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
-	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
-	I.alpha = 128
-	flick_overlay_view(I, pipe, 8)
+	if(ismob(loc))
+		var/mob/M = loc
+		var/image/I = new(loc = get_turf(pipe))
+		var/mutable_appearance/MA = new(pipe)
+		MA.alpha = 128
+		I.appearance = MA
+		if(M.client)
+			flick_overlay(I, list(M.client), 8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
@@ -46,21 +51,8 @@ MASS SPECTROMETER
 			if(O.level != 1)
 				continue
 
-			var/mob/living/L = locate() in O
-
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
-				O.invisibility = 0
-				if(L)
-					flick_sonar(O)
-				spawn(10)
-					if(O && O.loc)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = INVISIBILITY_MAXIMUM
-			else
-				if(L)
-					flick_sonar(O)
-
+				flick_sonar(O)
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"

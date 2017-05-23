@@ -8,11 +8,11 @@
 /mob/camera/aiEye/remote/xenobio/Initialize()
 	var/area/A = get_area(loc)
 	allowed_area = A.name
-	..()
+	. = ..()
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == allowed_area || istype(new_area, /area/toxins/xenobiology ))
+	if(new_area && new_area.name == allowed_area || istype(new_area, /area/science/xenobiology ))
 		return ..()
 	else
 		return

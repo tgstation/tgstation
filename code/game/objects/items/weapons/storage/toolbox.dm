@@ -21,15 +21,15 @@
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
-		else if(prob(1))
-			latches = "triple_latch"
+			if(prob(1))
+				latches = "triple_latch"
 	update_icon()
 
 /obj/item/weapon/storage/toolbox/update_icon()
 	..()
 	cut_overlays()
 	if(has_latches)
-		add_overlay(image('icons/obj/storage.dmi', "[latches]"))
+		add_overlay(latches)
 
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)

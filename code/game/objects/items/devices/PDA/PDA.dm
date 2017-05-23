@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
-	var/image/photo = null //Scanned photo
+	var/icon/photo //Scanned photo
 
 	var/list/contained_item = list(/obj/item/weapon/pen, /obj/item/toy/crayon, /obj/item/weapon/lipstick, /obj/item/device/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
@@ -82,22 +82,24 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/device/pda/update_icon()
 	cut_overlays()
+	var/mutable_appearance/overlay = new()
+	overlay.pixel_x = overlays_x_offset
 	if(id)
-		var/image/I = image(icon_state = "id_overlay", pixel_x = overlays_x_offset)
-		add_overlay(I)
+		overlay.icon_state = "id_overlay"
+		add_overlay(new /mutable_appearance(overlay))
 	if(inserted_item)
-		var/image/I = image(icon_state = "insert_overlay", pixel_x = overlays_x_offset)
-		add_overlay(I)
+		overlay.icon_state = "insert_overlay"
+		add_overlay(new /mutable_appearance(overlay))
 	if(fon)
-		var/image/I = image(icon_state = "light_overlay", pixel_x = overlays_x_offset)
-		add_overlay(I)
+		overlay.icon_state = "light_overlay"
+		add_overlay(new /mutable_appearance(overlay))
 	if(pai)
 		if(pai.pai)
-			var/image/I = image(icon_state = "pai_overlay", pixel_x = overlays_x_offset)
-			add_overlay(I)
+			overlay.icon_state = "pai_overlay"
+			add_overlay(new /mutable_appearance(overlay))
 		else
-			var/image/I = image(icon_state = "pai_off_overlay", pixel_x = overlays_x_offset)
-			add_overlay(I)
+			overlay.icon_state = "pai_off_overlay"
+			add_overlay(new /mutable_appearance(overlay))
 
 /obj/item/device/pda/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -633,7 +635,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
-	add_overlay(image(icon, icon_alert))
+	add_overlay(icon_alert)
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in GLOB.player_list)

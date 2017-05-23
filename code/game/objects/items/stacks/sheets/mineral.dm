@@ -29,6 +29,7 @@ Mineral Sheets
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 2, 4, 20), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Breakdown into sand", /obj/item/weapon/ore/glass, 1, one_per_turf = 0, on_floor = 1), \
 /*	new/datum/stack_recipe("sandstone wall", ???), \
@@ -154,14 +155,15 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma sheets ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma sheets ignited by [key_name(user)] in ([x],[y],[z])")
-		fire_act()
+		var/turf/T = get_turf(src)
+		message_admins("Plasma sheets ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma sheets ignited by [key_name(user)] in [COORD(T)]")
+		fire_act(W.is_hot())
 	else
 		return ..()
 
 /obj/item/stack/sheet/mineral/plasma/fire_act(exposed_temperature, exposed_volume)
-	atmos_spawn_air("plasma=[amount*10];TEMP=1000")
+	atmos_spawn_air("plasma=[amount*10];TEMP=[exposed_temperature]")
 	qdel(src)
 
 /*
@@ -305,7 +307,6 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	force = 1
 	throwforce = 2
 	origin_tech = "materials=1"
-	sheettype = "snow"
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
 	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
@@ -334,11 +335,19 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /*
  * Adamantine
  */
+GLOBAL_LIST_INIT(adamantine_recipes, list(
+	new /datum/stack_recipe("incomplete servant golem shell", /obj/item/golem_shell/servant, req_amount=1, res_amount=1),
+	))
+
 /obj/item/stack/sheet/mineral/adamantine
 	name = "adamantine"
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
 	origin_tech = "materials=4"
+
+/obj/item/stack/sheet/mineral/adamantine/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.adamantine_recipes
+	..()
 
 /*
  * Mythril

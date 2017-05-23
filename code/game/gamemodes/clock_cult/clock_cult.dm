@@ -46,7 +46,7 @@ Credit where due:
 ///////////
 
 /proc/is_servant_of_ratvar(mob/living/M)
-	return istype(M) && M.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 
 /proc/is_eligible_servant(mob/living/M)
 	if(!istype(M))
@@ -65,17 +65,21 @@ Credit where due:
 	return FALSE
 
 /proc/add_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/update_type = /datum/antagonist/clockcultist
+	if(!L || !L.mind)
+		return
+	var/update_type = ANTAG_DATUM_CLOCKCULT
 	if(silent)
-		update_type = /datum/antagonist/clockcultist/silent
-	. = L.gain_antag_datum(update_type)
+		update_type = ANTAG_DATUM_CLOCKCULT_SILENT
+	. = L.mind.add_antag_datum(update_type)
 
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
-	var/datum/antagonist/clockcultist/clock_datum = L.has_antag_datum(/datum/antagonist/clockcultist, TRUE)
+	if(!L || !L.mind)
+		return
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 	if(!clock_datum)
 		return FALSE
-	clock_datum.silent_update = silent
-	clock_datum.on_remove()
+	clock_datum.silent = silent
+	clock_datum.on_removal()
 	return TRUE
 
 ///////////////
@@ -142,6 +146,7 @@ Credit where due:
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	to_chat(M, greeting_text)
+	M.playsound_local('sound/ambience/antag/ClockCultAlr.ogg',100,0)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
@@ -194,7 +199,7 @@ Credit where due:
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			feedback_set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
+			SSblackbox.set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
 		else
 			var/half_victory = FALSE
 			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
@@ -203,10 +208,10 @@ Credit where due:
 			if(half_victory)
 				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
 				was successfully constructed!</b></span>"
-				feedback_set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
+				SSblackbox.set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				feedback_set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
+				SSblackbox.set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
 		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
 		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"

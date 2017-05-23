@@ -278,13 +278,13 @@
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 5.56x45mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	origin_tech = "combat=6;engineering=3;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/mm556x45
+	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 	var/cover_open = 0
@@ -333,10 +333,7 @@
 
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
-	. = ..()
-	if(.)
-		return
-	if(!cover_open)
+	if(!cover_open && istype(A, mag_type))
 		to_chat(user, "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>")
 		return
 	..()
@@ -379,6 +376,30 @@
 	origin_tech = "combat=7;syndicate=6"
 
 
+
+// Old Semi-Auto Rifle //
+
+/obj/item/weapon/gun/ballistic/automatic/surplus
+	name = "Surplus Rifle"
+	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
+	origin_tech = "combat=3;materials=2"
+	icon_state = "surplus"
+	item_state = "moistnugget"
+	weapon_weight = WEAPON_HEAVY
+	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	fire_delay = 30
+	burst_size = 1
+	can_unsuppress = 1
+	can_suppress = 1
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = SLOT_BACK
+	actions_types = list()
+
+/obj/item/weapon/gun/ballistic/automatic/surplus/update_icon()
+	if(magazine)
+		icon_state = "surplus"
+	else
+		icon_state = "surplus-e"
 
 
 // Laser rifle (rechargeable magazine) //

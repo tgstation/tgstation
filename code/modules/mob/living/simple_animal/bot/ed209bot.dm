@@ -9,7 +9,7 @@
 	maxHealth = 100
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	obj_damage = 60
-	environment_smash = 2 //Walls can't stop THE LAW
+	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/device/encryptionkey/headset_sec
@@ -358,7 +358,7 @@ Auto Patrol[]"},
 
 	var/obj/item/weapon/ed209_assembly/Sa = new /obj/item/weapon/ed209_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.add_overlay(image('icons/mob/aibots.dmi', "hs_hole"))
+	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
@@ -390,9 +390,7 @@ Auto Patrol[]"},
 			if(lasercolor == "r")
 				new /obj/item/clothing/suit/redtag(Tsec)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
@@ -446,7 +444,7 @@ Auto Patrol[]"},
 	if(severity==2 && prob(70))
 		..(severity-1)
 	else
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 		var/list/mob/living/carbon/targets = new
 		for(var/mob/living/carbon/C in view(12,src))
 			if(C.stat==2)

@@ -2,10 +2,11 @@
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
-	init_order = 13
+	init_order = INIT_ORDER_TICKER
 
 	priority = 200
-	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
@@ -19,6 +20,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/login_music							//music played in pregame lobby
 	var/round_end_sound						//music/jingle played when the world reboots
+	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -60,7 +62,8 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_start_events
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
-	var/list/music = list('sound/ambience/title1.ogg','sound/ambience/title3.ogg','sound/ambience/title4.ogg','sound/misc/i_did_not_grief_them.ogg','sound/ambience/miles.ogg','sound/ambience/viklund.ogg','sound/ambience/fingerspit.ogg')//file2list(ROUND_START_MUSIC_LIST, "\n")
+	load_mode()
+	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")//var/list/music = list('sound/ambience/title1.ogg','sound/ambience/title3.ogg','sound/ambience/title4.ogg','sound/misc/i_did_not_grief_them.ogg','sound/ambience/miles.ogg','sound/ambience/viklund.ogg','sound/ambience/fingerspit.ogg')//file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -105,6 +108,7 @@ SUBSYSTEM_DEF(ticker)
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
+				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
 					fire()
 
@@ -112,6 +116,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -123,6 +128,7 @@ SUBSYSTEM_DEF(ticker)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
+				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -199,8 +205,6 @@ SUBSYSTEM_DEF(ticker)
 
 	transfer_characters()	//transfer keys to the new mobs
 
-	Master.RoundStart()	//let the party begin...
-	
 	for(var/I in round_start_events)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
@@ -213,6 +217,7 @@ SUBSYSTEM_DEF(ticker)
 	world << sound('sound/AI/welcome.ogg')
 
 	current_state = GAME_STATE_PLAYING
+	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	if(SSevents.holidays)
 		to_chat(world, "<font color='blue'>and...</font>")
@@ -238,7 +243,7 @@ SUBSYSTEM_DEF(ticker)
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
-	if(current_state < GAME_STATE_PLAYING)
+	if(!HasRoundStarted())
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()
@@ -276,7 +281,7 @@ SUBSYSTEM_DEF(ticker)
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
-			if( mode && !override )
+			if(mode && !override )
 				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
@@ -286,6 +291,17 @@ SUBSYSTEM_DEF(ticker)
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("cult")
+					cinematic.icon_state = null
+					flick("intro_cult",cinematic)
+					sleep(25)
+					world << sound('sound/magic/enter_blood.ogg')
+					sleep(28)
+					world << sound('sound/machines/terminal_off.ogg')
+					sleep(20)
+					flick("station_corrupted",cinematic)
+					world << sound('sound/effects/ghost.ogg')
+					actually_blew_up = FALSE
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
@@ -334,6 +350,13 @@ SUBSYSTEM_DEF(ticker)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
+				if("cult") //Station nuked (nuke,explosion,summary)
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					flick("station_explode_fade_red",cinematic)
+					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
+					cinematic.icon_state = "summary_cult"
 				if("no_core") //Nuke failed to detonate as it had no core
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -590,38 +613,22 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
-	if(SSgarbage.didntgc.len || SSgarbage.sleptDestroy.len)
-		var/dellog = ""
-		for(var/path in SSgarbage.didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-			if(path in SSgarbage.sleptDestroy)
-				dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-				SSgarbage.sleptDestroy -= path
-		for(var/path in SSgarbage.sleptDestroy)
-			dellog += "Path : [path] \n"
-			dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-		log_world(dellog)
-
-	CHECK_TICK
-
 	//Collects persistence features
 	SSpersistence.CollectData()
 
 	sleep(50)
 	if(mode.station_was_nuked)
-		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+		Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 	else
-		world.Reboot("Round ended.", "end_proper", "proper completion")
+		Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
 	if(selected_tip)
 		m = selected_tip
 	else
-		var/list/randomtips = file2list("config/tips.txt")
-		var/list/memetips = file2list("config/sillytips.txt")
+		var/list/randomtips = world.file2list("strings/tips.txt")
+		var/list/memetips = world.file2list("strings/sillytips.txt")
 		if(randomtips.len && prob(95))
 			m = pick(randomtips)
 		else if(memetips.len)
@@ -667,11 +674,11 @@ SUBSYSTEM_DEF(ticker)
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
+/datum/controller/subsystem/ticker/proc/HasRoundStarted()
+	return current_state >= GAME_STATE_PLAYING
 
-/world/proc/has_round_started()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
+/datum/controller/subsystem/ticker/proc/IsRoundInProgress()
+	return current_state == GAME_STATE_PLAYING
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
@@ -774,3 +781,69 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
+
+/datum/controller/subsystem/ticker/proc/load_mode()
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")
+
+/datum/controller/subsystem/ticker/proc/save_mode(the_mode)
+	var/F = file("data/mode.txt")
+	fdel(F)
+	F << the_mode
+
+/datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
+	set waitfor = FALSE
+	round_end_sound_sent = FALSE
+	round_end_sound = fcopy_rsc(the_sound)
+	for(var/thing in GLOB.clients)
+		var/client/C = thing
+		if (!C)
+			continue
+		C.Export("##action=load_rsc", round_end_sound)
+	round_end_sound_sent = TRUE
+
+/datum/controller/subsystem/ticker/proc/Reboot(reason, feedback_c, feedback_r, delay)
+	set waitfor = FALSE
+	if(usr && !check_rights(R_SERVER, TRUE))
+		return
+
+	if(!delay)
+		delay = config.round_end_countdown * 10
+
+	if(delay_end)
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
+		return
+	
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+
+	var/start_wait = world.time
+	UNTIL(round_end_sound_sent && (world.time - start_wait) > (delay * 2))	//don't wait forever
+	sleep(delay - (world.time - start_wait))
+
+	if(delay_end)
+		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
+		return
+	
+	SSblackbox.set_details("[feedback_c]","[feedback_r]")
+
+	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+
+	world.Reboot()
+
+/datum/controller/subsystem/ticker/Shutdown()
+	if(!round_end_sound)
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
+
+	world << sound(round_end_sound)

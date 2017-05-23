@@ -1,23 +1,9 @@
-//checks if a file exists and contains text
-//returns text as a string if these conditions are met
-/proc/return_file_text(filename)
-	if(fexists(filename) == 0)
-		throw EXCEPTION("return_file_text(): File not found")
-		return
-
-	var/text = file2text(filename)
-	if(!text)
-		throw EXCEPTION("return_file_text(): File empty")
-		return
-
-	return text
-
 //Sends resource files to client cache
 /client/proc/getFiles()
 	for(var/file in args)
 		src << browse_rsc(file)
 
-/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list(".txt",".log",".htm"))
+/client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list(".txt",".log",".htm", ".html"))
 	var/path = root
 
 	for(var/i=0, i<max_iterations, i++)

@@ -191,7 +191,7 @@
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack	
 
 /mob/proc/get_jetpack()
 	return

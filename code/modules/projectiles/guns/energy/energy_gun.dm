@@ -31,6 +31,11 @@
 	if(gun_light && gun_light.on)
 		add_overlay("mini-light")
 
+/obj/item/weapon/gun/energy/e_gun/stun
+	name = "tactical energy gun"
+	desc = "Military issue energy gun, is able to fire stun rounds."
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+
 /obj/item/weapon/gun/energy/e_gun/mini/practice_phaser
 	name = "practice phaser"
 	desc = "A modified version of the basic phaser gun, this one fires less concentrated energy bolts designed for target practice."

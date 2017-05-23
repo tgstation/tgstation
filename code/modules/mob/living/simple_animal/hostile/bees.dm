@@ -31,7 +31,7 @@
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = 2
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -49,7 +49,6 @@
 	var/idle = 0
 	var/isqueen = FALSE
 	var/icon_base = "bee"
-	var/static/list/bee_icons = list()
 
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
@@ -91,24 +90,15 @@
 	if(beegent && beegent.color)
 		col = beegent.color
 
-	var/image/base
-	if(!bee_icons["[icon_base]_base"])
-		bee_icons["[icon_base]_base"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_base")
-	base = bee_icons["[icon_base]_base"]
-	add_overlay(base)
+	add_overlay("[icon_base]_base")
 
-	var/image/greyscale
-	if(!bee_icons["[icon_base]_grey_[col]"])
-		bee_icons["[icon_base]_grey_[col]"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_grey")
-	greyscale = bee_icons["[icon_base]_grey_[col]"]
-	greyscale.color = col
-	add_overlay(greyscale)
+	var/static/mutable_appearance/greyscale_overlay
+	greyscale_overlay = greyscale_overlay || mutable_appearance('icons/mob/bees.dmi')
+	greyscale_overlay.icon_state = "[icon_base]_grey"
+	greyscale_overlay.color = col
+	add_overlay(greyscale_overlay)
 
-	var/image/wings
-	if(!bee_icons["[icon_base]_wings"])
-		bee_icons["[icon_base]_wings"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_wings")
-	wings = bee_icons["[icon_base]_wings"]
-	add_overlay(wings)
+	add_overlay("[icon_base]_wings")
 
 
 //We don't attack beekeepers/people dressed as bees//Todo: bee costume
@@ -143,6 +133,7 @@
 		loc = BB
 		target = null
 		wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
+		return //no don't attack the goddamm box
 	else
 		. = ..()
 		if(. && beegent && isliving(target))

@@ -133,12 +133,12 @@
 	var/appears_dead = 0
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		appears_dead = 1
-		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
-			if(suiciding)
-				msg += "<span class='warning'>[t_He] appear[p_s()] to have commited suicide... there is no hope of recovery.</span>\n"
-			if(hellbound)
-				msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
-			msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
+		if(suiciding)
+			msg += "<span class='warning'>[t_He] appear[p_s()] to have committed suicide... there is no hope of recovery.</span>\n"
+		if(hellbound)
+			msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
+		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
+		if(getorgan(/obj/item/organ/brain))
 			if(!key)
 				var/foundghost = 0
 				if(mind)
@@ -150,9 +150,10 @@
 							break
 				if(!foundghost)
 					msg += " and [t_his] soul has departed"
-			msg += "...</span>\n"
-		else if(get_bodypart("head")) //Brain is gone, doesn't matter if they are AFK or present. Check for head first tho. Decapitation has similar message.
-			msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
+		msg += "...</span>\n"
+
+	if(get_bodypart("head") && !getorgan(/obj/item/organ/brain))
+		msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 

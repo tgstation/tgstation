@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/blob/blob_act(obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
-			var/obj/effect/overlay/temp/heal/H = new /obj/effect/overlay/temp/heal(get_turf(src)) //hello yes you are being healed
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src)) //hello yes you are being healed
 			if(overmind)
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
@@ -91,7 +91,7 @@
 	melee_damage_lower = 2
 	melee_damage_upper = 4
 	obj_damage = 20
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
@@ -179,11 +179,11 @@
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
-		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
+		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
 		if(overmind)
-			I.color = overmind.blob_reagent_datum.complementary_color
+			blob_head_overlay.color = overmind.blob_reagent_datum.complementary_color
 		color = initial(color)//looks better.
-		add_overlay(I)
+		add_overlay(blob_head_overlay)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"

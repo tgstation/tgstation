@@ -39,7 +39,7 @@
 
 	SSreligion.holy_weapon_type = holy_weapon.type
 
-	feedback_set_details("chaplain_weapon","[choice]")
+	SSblackbox.set_details("chaplain_weapon","[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -71,7 +71,7 @@
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+		. += mutable_appearance('icons/effects/effects.dmi', shield_icon, MOB_LAYER + 0.01)
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
@@ -214,7 +214,7 @@
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	var/mob/dead/observer/theghost = null
 
 	if(LAZYLEN(candidates))

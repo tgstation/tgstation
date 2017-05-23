@@ -18,7 +18,7 @@
 	//	flags = CONDUCT
 
 /obj/structure/lattice/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			QDEL_IN(LAT, 0)
@@ -102,8 +102,8 @@
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
-	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	return

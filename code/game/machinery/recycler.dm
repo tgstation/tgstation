@@ -109,16 +109,19 @@
 		eat(AM)
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	var/list/to_eat = list(AM0)
+	var/list/to_eat
 	if(istype(AM0, /obj/item))
-		to_eat += AM0.GetAllContents()
+		to_eat = AM0.GetAllContents()
+	else
+		to_eat = list(AM0)
+
 	var/items_recycled = 0
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/device/mmi/as_mmi = AM
-		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain)
+		var/brain_holder = istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /mob/living/brain)
 		if(isliving(AM) || brain_holder)
 			if(emagged)
 				if(!brain_holder)

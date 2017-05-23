@@ -23,7 +23,7 @@
 <th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th>
 <th style='width:375px;'>PERMISSIONS</th>
-<th style='width:100%;'>VERB-OVERRIDES</th>
+
 </tr>
 "}
 
@@ -48,7 +48,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=900x500")
+	usr << browse(output,"window=editrights;size=700x500")
 
 /datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
 	if(config.admin_legacy_system)
@@ -105,7 +105,7 @@
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 

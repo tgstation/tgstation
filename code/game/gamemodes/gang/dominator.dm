@@ -1,3 +1,6 @@
+#define DOM_BLOCKED_SPAM_CAP 6
+#define DOM_REQUIRED_TURFS 30
+
 /obj/machinery/dominator
 	name = "dominator"
 	desc = "A visibly sinister device. Looks like you can break it if you hit it enough."
@@ -13,8 +16,19 @@
 	var/datum/gang/gang
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
+	var/spam_prevention = DOM_BLOCKED_SPAM_CAP //first message is immediate
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
+
+/proc/dominator_excessive_walls(atom/A)
+	var/open = 0
+	for(var/turf/T in view(3, A))
+		if(!isclosedturf(T))
+			open++
+	if(open < DOM_REQUIRED_TURFS)
+		return TRUE
+	else
+		return FALSE
 
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
@@ -24,7 +38,7 @@
 	set_light(2)
 	GLOB.poi_list |= src
 	spark_system = new
-	spark_system.set_up(5, 1, src)
+	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
@@ -48,6 +62,16 @@
 	if(gang && gang.is_dominating)
 		var/time_remaining = gang.domination_time_remaining()
 		if(time_remaining > 0)
+			if(dominator_excessive_walls(src))
+				gang.domination_timer += 20
+				playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
+					spam_prevention++
+				else
+					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
+					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
+					spam_prevention = 0
+				return
 			. = TRUE
 			playsound(loc, 'sound/items/timer.ogg', 10, 0)
 			if(!warned && (time_remaining < 180))
@@ -129,9 +153,8 @@
 		set_broken()
 	GLOB.poi_list.Remove(src)
 	gang = null
-	qdel(spark_system)
-	qdel(countdown)
-	countdown = null
+	QDEL_NULL(spark_system)
+	QDEL_NULL(countdown)
 	STOP_PROCESSING(SSmachines, src)
 	return ..()
 

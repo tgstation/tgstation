@@ -396,7 +396,7 @@
 						remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
 
 					for(var/P in C.results)
-						feedback_add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
+						SSblackbox.add_details("chemical_reaction", "[P]|[cached_results[P]*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(P, cached_results[P]*multiplier, null, chem_temp)
 
@@ -453,14 +453,14 @@
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
+		if(M.reagents.has_reagent("morphine"))
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
 /datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
 			M.status_flags &= ~GOTTAGOFAST

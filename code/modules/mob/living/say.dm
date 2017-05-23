@@ -167,17 +167,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	spans += get_spans()
 
 	if(language)
-		var/datum/language/L = GLOB.language_datums[language]
-		if(!istype(L))
-			L = new language
-			GLOB.language_datums[language] = L
-
+		var/datum/language/L = GLOB.language_datum_instances[language]
 		spans |= L.spans
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
 
-	var/radio_return = radio(message, message_mode, spans)
+	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
@@ -228,9 +224,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
-		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
-			listening |= M
-			the_dead[M] = TRUE
+		if(M.stat != DEAD) //not dead, not important
+			continue
+		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
+			continue
+		if(get_dist(M, src) > 7 || M.z != z) //they're out of range of normal hearing
+			if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+				continue
+			if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				continue
+		listening |= M
+		the_dead[M] = TRUE
 
 	var/eavesdropping
 	var/eavesrendered
@@ -300,13 +304,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return GLOB.department_radio_keys[key_symbol]
 
 /mob/living/proc/get_message_language(message)
-	var/static/list/langlist
-	if(!langlist)
-		langlist = subtypesof(/datum/language)
-
 	if(copytext(message, 1, 2) == ",")
 		var/key = copytext(message, 2, 3)
-		for(var/ld in langlist)
+		for(var/ld in GLOB.all_languages)
 			var/datum/language/LD = ld
 			if(initial(LD.key) == key)
 				return LD
@@ -415,30 +415,26 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 3
 	return 0
 
-/mob/living/say_quote(input, list/spans, message_mode)
-	var/tempinput = attach_spans(input, spans)
+/mob/living/say_mod(input, message_mode)
 	if(message_mode == MODE_WHISPER)
-		return "[verb_whisper], \"[tempinput]\""
-	if(message_mode == MODE_WHISPER_CRIT)
-		return "[verb_whisper] in [p_their()] last breath, \"[tempinput]\""
-	if (stuttering)
-		return "stammers, \"[tempinput]\""
-	if (getBrainLoss() >= 60)
-		return "gibbers, \"[tempinput]\""
+		. = verb_whisper
+	else if(message_mode == MODE_WHISPER_CRIT)
+		. = "[verb_whisper] in [p_their()] last breath"
+	else if(stuttering)
+		. = "stammers"
+	else if(getBrainLoss() >= 60)
+		. = "gibbers"
+	else
+		. = ..()
 
-	return ..()
+/mob/living/whisper(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	say("#[message]", bubble_type, spans, sanitize, language)
 
-/mob/living/get_default_language()
-	if(selected_default_language)
-		if(has_language(selected_default_language))
-			return selected_default_language
-		else
-			selected_default_language = null
+/mob/living/get_language_holder(shadow=TRUE)
+	if(mind && shadow)
+		// Mind language holders shadow mob holders.
+		. = mind.get_language_holder()
+		if(.)
+			return .
 
 	. = ..()
-
-/mob/living/proc/open_language_menu(mob/user)
-	language_menu.ui_interact(user)
-
-/mob/living/whisper(message as text)
-	say("#[message]")

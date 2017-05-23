@@ -88,7 +88,7 @@
 	pixel_y = -20
 
 /obj/structure/flora/tree/jungle/Initialize()
-	icon_state = "[icon_state][rand(1, 3)]"
+	icon_state = "[icon_state][rand(1, 6)]"
 	..()
 
 //grass
@@ -262,7 +262,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
-	user.add_alt_appearance("sneaking_mission", I, GLOB.player_list)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	..()
 
 /obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)

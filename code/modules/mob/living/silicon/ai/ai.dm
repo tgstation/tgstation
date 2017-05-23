@@ -238,7 +238,7 @@
 	else if(icontype == "Angel")
 		icon_state = "ai-angel"
 	//else
-			//usr <<"You can only change your display once!"
+			//to_chat(usr, "You can only change your display once!")
 			//return
 
 /mob/living/silicon/ai/Stat()
@@ -351,7 +351,7 @@
 	if(isAI(usr))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			src	 << "Wireless control is disabled!"
+			to_chat(src, "Wireless control is disabled!")
 			return
 	SSshuttle.cancelEvac(src)
 	return

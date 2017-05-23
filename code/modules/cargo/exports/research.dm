@@ -22,4 +22,4 @@
 		if(!V)
 			continue
 		var/datum/tech/tech = V
-		techLevels[tech.id] = tech.level
+		techLevels[tech.id] = max(techLevels[tech.id], tech.level)

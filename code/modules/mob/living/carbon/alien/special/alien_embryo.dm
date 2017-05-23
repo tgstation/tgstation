@@ -69,7 +69,7 @@
 
 	bursting = TRUE
 
-	var/list/candidates = pollCandidates("Do you want to play as an alien larva that will burst out of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
+	var/list/candidates = pollGhostCandidates("Do you want to play as an alien larva that will burst out of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, POLL_IGNORE_ALIEN_LARVA)
 
 	if(QDELETED(src) || QDELETED(owner))
 		return
@@ -81,7 +81,7 @@
 
 	var/mob/dead/observer/ghost = pick(candidates)
 
-	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
+	var/mutable_appearance/overlay = mutable_appearance('icons/mob/alien.dmi', "burst_lie")
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)

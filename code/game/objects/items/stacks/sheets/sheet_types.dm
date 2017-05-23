@@ -71,12 +71,14 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	qdel(src)
 
 /obj/item/stack/sheet/metal/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
+
+/obj/item/stack/sheet/metal/twenty
+	amount = 20
 
 /obj/item/stack/sheet/metal/five
 	amount = 5
@@ -139,7 +141,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("picture frame", /obj/item/weapon/picture_frame, 1, time = 10),\
+	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
@@ -283,12 +285,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
@@ -319,13 +324,12 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	turf_type = /turf/open/floor/clockwork
 
 /obj/item/stack/tile/brass/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes
-	..()
+	. = ..()
 	pixel_x = 0
 	pixel_y = 0
 
@@ -361,7 +365,10 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	origin_tech = "materials=2;biotech=2"
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
-	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40)))
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40), \
+	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"

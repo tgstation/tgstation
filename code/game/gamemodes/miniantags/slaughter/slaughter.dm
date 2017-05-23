@@ -27,7 +27,7 @@
 	maxHealth = 200
 	health = 200
 	healable = 0
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -92,7 +92,7 @@
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
-			user <<"<span class='warning'>...and you don't feel any different.</span>"
+			to_chat(user, "<span class='warning'>...and you don't feel any different.</span>")
 			qdel(src)
 			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \

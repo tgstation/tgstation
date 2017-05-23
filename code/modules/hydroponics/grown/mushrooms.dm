@@ -307,5 +307,5 @@
 	. = ..()
 	if(.)
 		message_admins("Shadowshroom planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
-		investigate_log("was planted by [key_name(user)] at [COORD(user)]", "botany")
+		investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
 

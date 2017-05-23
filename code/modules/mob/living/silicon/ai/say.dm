@@ -154,7 +154,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.client && !M.ear_deaf && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(M.client && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						M << voice
@@ -165,11 +165,9 @@
 
 #endif
 
-/mob/living/silicon/ai/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, OMNITONGUE))
-		. = has_language(dt)
-	else if(is_servant_of_ratvar(src))
+/mob/living/silicon/ai/could_speak_in_language(datum/language/dt)
+	if(is_servant_of_ratvar(src))
 		// Ratvarian AIs can only speak Ratvarian
-		. = ispath(dt, /datum/language/ratvar) && has_language(dt)
+		. = ispath(dt, /datum/language/ratvar)
 	else
 		. = ..()

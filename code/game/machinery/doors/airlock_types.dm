@@ -25,6 +25,12 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
 
+/obj/machinery/door/airlock/maintenance/external
+	name = "external airlock access"
+	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_mai
+	normal_integrity = 250
+
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
@@ -357,7 +363,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = 1
 	aiControlDisabled = 1
-	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
+	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 
 /obj/machinery/door/airlock/cult/New()
@@ -374,7 +380,7 @@
 		new openingoverlaytype(loc)
 		return 1
 	else
-		new /obj/effect/overlay/temp/cult/sac(loc)
+		new /obj/effect/temp_visual/cult/sac(loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
@@ -401,7 +407,7 @@
 	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult/unruned
-	openingoverlaytype = /obj/effect/overlay/temp/cult/door/unruned
+	openingoverlaytype = /obj/effect/temp_visual/cult/door/unruned
 
 /obj/machinery/door/airlock/cult/unruned/friendly
 	friendly = TRUE
@@ -432,8 +438,8 @@
 /obj/machinery/door/airlock/clockwork/New()
 	..()
 	var/turf/T = get_turf(src)
-	new /obj/effect/overlay/temp/ratvar/door(T)
-	new /obj/effect/overlay/temp/ratvar/beam/door(T)
+	new /obj/effect/temp_visual/ratvar/door(T)
+	new /obj/effect/temp_visual/ratvar/beam/door(T)
 	change_construction_value(5)
 
 /obj/machinery/door/airlock/clockwork/Destroy()

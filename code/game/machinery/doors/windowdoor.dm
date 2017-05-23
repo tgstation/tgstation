@@ -129,8 +129,6 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if(!SSticker || !SSticker.mode)
-		return 0
 	if(!forced)
 		if(!hasPower())
 			return 0
@@ -330,7 +328,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()

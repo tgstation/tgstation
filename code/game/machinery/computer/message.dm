@@ -419,7 +419,7 @@
 									to_chat(H, "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
 								log_pda("[usr]/([usr.ckey]) (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
-								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
 						//Sender is faking as someone who exists
 						else
 							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
@@ -432,7 +432,7 @@
 									to_chat(H, "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
 								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
-								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+								customrecepient.add_overlay(mutable_appearance('icons/obj/pda.dmi', "pda-r"))
 						//Finally..
 						ResetMessage()
 
@@ -455,14 +455,16 @@
 	name = "monitor decryption key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/New()
+/obj/item/weapon/paper/monitorkey/Initialize()
 	..()
-	spawn(10)
-		if(GLOB.message_servers)
-			for(var/obj/machinery/message_server/server in GLOB.message_servers)
-				if(!isnull(server))
-					if(!isnull(server.decryptkey))
-						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-						info_links = info
-						add_overlay("paper_words")
-						break
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/monitorkey/LateInitialize()
+	if(GLOB.message_servers)
+		for(var/obj/machinery/message_server/server in GLOB.message_servers)
+			if(!isnull(server))
+				if(!isnull(server.decryptkey))
+					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					info_links = info
+					add_overlay("paper_words")
+					break

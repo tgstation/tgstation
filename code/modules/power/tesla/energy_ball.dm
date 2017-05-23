@@ -40,6 +40,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
+/obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
+	. = ..()
+	if(!is_miniball)
+		set_light(10, 7, "#EEEEFF")
+
 /obj/singularity/energy_ball/ex_act(severity, target)
 	return
 
@@ -53,6 +58,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		qdel(EB)
 
 	. = ..()
+
+/obj/singularity/energy_ball/admin_investigate_setup()
+	if(istype(loc, /obj/singularity/energy_ball))
+		return
+	..()
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -117,7 +127,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 /obj/singularity/energy_ball/proc/new_mini_ball()
 	if(!loc)
 		return
-	var/obj/singularity/energy_ball/EB = new(loc)
+	var/obj/singularity/energy_ball/EB = new(loc, 0, TRUE)
 
 	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
 	var/icon/I = icon(icon,icon_state,dir)
@@ -203,7 +213,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !L.tesla_ignore)
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !HAS_SECONDARY_FLAG(L, TESLA_IGNORE))
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist

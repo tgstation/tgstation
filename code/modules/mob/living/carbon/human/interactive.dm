@@ -277,7 +277,7 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-			BP.change_bodypart_status(BODYPART_ROBOTIC)
+			BP.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 	update_icons()
 	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
@@ -809,13 +809,13 @@
 	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
 		return /area/medical
 	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
-		return /area/toxins
+		return /area/science
 	if(T.title == "Head of Security" || T.title == "Warden" || T.title == "Security Officer" || T.title == "Detective")
 		return /area/security
 	if(T.title == "Botanist")
 		return /area/hydroponics
 	else
-		return pick(/area/hallway,/area/crew_quarters)
+		return pick(/area/hallway,/area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)

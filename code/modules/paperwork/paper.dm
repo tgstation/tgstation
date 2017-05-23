@@ -26,7 +26,7 @@
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
-	var/fields		//Amount of user created fields
+	var/fields = 0	//Amount of user created fields
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
@@ -44,8 +44,8 @@
 	..()
 
 
-/obj/item/weapon/paper/New()
-	..()
+/obj/item/weapon/paper/Initialize()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	update_icon()
@@ -74,10 +74,10 @@
 			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
-			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>"), "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 		else
-			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"), "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
 		to_chat(user, "<span class='notice'>It is too far away.</span>")
@@ -123,10 +123,10 @@
 	else //cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
 	if(dist < 2)
-		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>"), "window=[name]")
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 	else
-		usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>"), "window=[name]")
+		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 
 
@@ -134,7 +134,7 @@
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	while(locid <= 50)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
 		var/istart = 0
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
@@ -170,11 +170,10 @@
 
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
-	var/i = 0
-	for(i=1,i<=fields,i++)
-		if(i >= 50) break
+	for(var/i in 1 to min(fields, 15))
 		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
@@ -253,7 +252,7 @@
 
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
-	user << browse({"<HTML><HEAD><TITLE>Pen Help</TITLE></HEAD>
+	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
 	<BODY>
 		<b><center>Crayon&Pen commands</center></b><br>
 		<br>
@@ -279,6 +278,9 @@
 	if(usr.stat || usr.restrained())
 		return
 
+	if(href_list["help"])
+		openhelp(usr)
+		return
 	if(href_list["write"])
 		var/id = href_list["write"]
 		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
@@ -303,7 +305,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 			i.on_write(src,usr)
-			usr << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>"), "window=[name]") // Update the window
+			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
 			update_icon()
 
 
@@ -318,7 +320,7 @@
 
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if(user.is_literate())
-			user << browse(sanitize_russian("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>"), "window=[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
 			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
@@ -333,11 +335,9 @@
 			return
 
 		stamps += "<img src=large_[P.icon_state].png>"
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
+		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
-
-		stampoverlay.icon_state = "paper_[P.icon_state]"
 
 		LAZYADD(stamped, P.icon_state)
 		add_overlay(stampoverlay)

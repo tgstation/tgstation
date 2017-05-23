@@ -12,6 +12,7 @@
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	flags = PREVENT_CLICK_UNDER
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -229,8 +230,6 @@
 		return 1
 	if(operating)
 		return
-	if(!SSticker || !SSticker.mode)
-		return 0
 	operating = 1
 	do_animate("opening")
 	set_opacity(0)
@@ -285,6 +284,7 @@
 
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
+		L.visible_message("<span class='warning'>[src] closes on [L], crushing them!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")

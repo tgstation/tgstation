@@ -45,7 +45,7 @@
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			obj_damage = 0
-			environment_smash = 0
+			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255
 			incorporeal_move = 1

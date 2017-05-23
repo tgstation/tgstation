@@ -70,9 +70,7 @@
 	var/list/status_effects //a list of all status effects the mob has
 
 	var/list/implants = null
-	var/tesla_ignore = FALSE
 
 	var/datum/riding/riding_datum
 
 	var/datum/language/selected_default_language
-	var/datum/language_menu/language_menu

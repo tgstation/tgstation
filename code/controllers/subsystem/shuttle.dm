@@ -3,8 +3,9 @@
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 10
-	init_order = 3
+	init_order = INIT_ORDER_SHUTTLE
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -46,7 +47,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
-	if(!emergency)
+	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
@@ -208,15 +209,33 @@ SUBSYSTEM_DEF(shuttle)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
-		if(SEC_LEVEL_GREEN)
-			emergency.request(null, 2, signal_origin, html_decode(emergency_reason), 0)
-		if(SEC_LEVEL_BLUE)
-			emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
+			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
 		else
-			emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1) // There is a serious threat we gotta move no time to give them five minutes.
+			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle.")
+	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+
+/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
+	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
+		return
+	emergency.cancel(/area/centcom)
+
+	if(!admiral_message)
+		admiral_message = pick(GLOB.admiral_messages)
+	var/intercepttext = "<font size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</font><hr>\
+						To whom it may concern:<br><br>\
+						We have taken note of the situation upon [station_name()] and have come to the \
+						conclusion that it does not warrant the abandonment of the station.<br>\
+						If you do not agree with our opinion we suggest that you open a direct \
+						line with us and explain the nature of your crisis.<br><br>\
+						<i>This message has been automatically generated based upon readings from long \
+						range diagnostic tools. To assure the quality of your request every finalized report \
+						is reviewed by an on-call rear admiral.<br>\
+						<b>Rear Admiral's Notes:</b> \
+						[admiral_message]"
+	print_command_report(intercepttext, announce = TRUE)
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -272,7 +291,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
-			emergency.request(null, 2.5)
+			emergency.request(null, set_coefficient = 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
@@ -506,3 +525,13 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
+
+
+/datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
+	var/area/current = get_area(A)
+	if(istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit))
+		return TRUE
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return TRUE
+

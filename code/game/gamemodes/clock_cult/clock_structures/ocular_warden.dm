@@ -17,8 +17,8 @@
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
-/obj/structure/destructible/clockwork/ocular_warden/New()
-	..()
+/obj/structure/destructible/clockwork/ocular_warden/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/clockwork/ocular_warden/Destroy()
@@ -87,7 +87,7 @@
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
-			new /obj/effect/overlay/temp/ratvar/ocular_warden(get_turf(target))
+			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)

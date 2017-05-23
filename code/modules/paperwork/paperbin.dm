@@ -15,7 +15,7 @@
 	var/obj/item/weapon/pen/bin_pen
 
 /obj/item/weapon/paper_bin/Initialize(mapload)
-	..()
+	. = ..()
 	if(!mapload)
 		return
 	var/obj/item/weapon/pen/P = locate(/obj/item/weapon/pen) in src.loc
@@ -110,7 +110,7 @@
 		papers.Add(P)
 		total_paper++
 		update_icon()
-	else if(istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen) && !bin_pen)
 		var/obj/item/weapon/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
@@ -135,7 +135,7 @@
 		icon_state = "[initial(icon_state)]"
 	cut_overlays()
 	if(bin_pen)
-		add_overlay(image(icon=bin_pen.icon,icon_state=bin_pen.icon_state))
+		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
 
 /obj/item/weapon/paper_bin/construction
 	name = "construction paper bin"

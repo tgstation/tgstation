@@ -20,7 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_languages = list(/datum/language/common, /datum/language/machine)
+	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon" , "turret")
@@ -140,9 +140,6 @@
 
 	//Gives a HUD view to player bots that use a HUD.
 	activate_data_hud()
-
-	grant_language(/datum/language/common)
-	grant_language(/datum/language/machine)
 
 
 /mob/living/simple_animal/bot/update_canmove()
@@ -290,23 +287,19 @@
 				to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 		else
 			if(W.force) //if force is non-zero
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
+				do_sparks(5, TRUE, src)
 			..()
 
 /mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(5, 1, src)
-			s.start()
+			do_sparks(5, TRUE, src)
 	return ..()
 
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	new /obj/effect/overlay/temp/emp(loc)
+	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
@@ -804,7 +797,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
-	..()
+	. = ..()
 	owner = loc
 	if(!istype(owner))
 		qdel(src)

@@ -17,9 +17,9 @@
 /obj/structure/destructible/clockwork/wall_gear/displaced
 	anchored = FALSE
 
-/obj/structure/destructible/clockwork/wall_gear/New()
-	..()
-	new /obj/effect/overlay/temp/ratvar/gear(get_turf(src))
+/obj/structure/destructible/clockwork/wall_gear/Initialize()
+	. = ..()
+	new /obj/effect/temp_visual/ratvar/gear(get_turf(src))
 
 /obj/structure/destructible/clockwork/wall_gear/emp_act(severity)
 	return

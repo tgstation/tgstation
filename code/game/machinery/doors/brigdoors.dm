@@ -184,7 +184,7 @@
 	if(maptext)
 		maptext = ""
 	cut_overlays()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=state))
+	add_overlay(mutable_appearance('icons/obj/status_display.dmi', state))
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
@@ -212,6 +212,11 @@
 	if(..())
 		return
 	. = TRUE
+	
+	if(!allowed(usr))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		return FALSE
+
 	switch(action)
 		if("time")
 			var/value = text2num(params["adjust"])

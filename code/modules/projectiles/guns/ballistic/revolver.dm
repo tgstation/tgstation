@@ -344,6 +344,16 @@
 		slung = 0
 		update_icon()
 
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
+	name = "sawn-off improvised shotgun"
+	desc = "A single-shot shotgun, better not miss"
+	icon_state = "ishotgun"
+	item_state = "gun"
+	w_class = WEIGHT_CLASS_NORMAL
+	sawn_state = SAWN_OFF
+	slot_flags = SLOT_BELT
+
+
 /obj/item/weapon/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = 0
 

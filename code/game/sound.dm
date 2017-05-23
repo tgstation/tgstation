@@ -23,10 +23,10 @@
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, channel, pressure_affected)
 
-/atom/proc/playsound_direct(soundin, vol as num, vary,  frequency, falloff, surround = TRUE, channel = 0, pressure_affected = FALSE)
-	playsound_local(get_turf(src), soundin, vol, vary, frequency, falloff, surround, channel)
+/mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
+	if(!client || !can_hear())
+		return
 
-/atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
@@ -76,14 +76,9 @@
 
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
-		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+		S.falloff = falloff || FALLOFF_SOUNDS
 
 	src << S
-
-/mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
-	if(!client || ear_deaf > 0)
-		return
-	..()
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used

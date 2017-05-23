@@ -42,6 +42,7 @@
 	However, all the inhabitants seem to do is grow drugs and guns."
 	suffix = "lavaland_surface_seed_vault.dmm"
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ash_walker
 	name = "Ash Walker Nest"
@@ -128,13 +129,6 @@
 	description = "Turns out that keeping your abductees unconcious is really important. Who knew?"
 	suffix = "lavaland_surface_ufo_crash.dmm"
 	cost = 5
-
-/datum/map_template/ruin/lavaland/ww_vault
-	name = "Wishgranter Vault"
-	id = "ww-vault"
-	description = "Scrawled on the large double doors is both a message and a warning: 'meat grinder requires sacri...'. You're not so sure about this anymore."
-	suffix = "lavaland_surface_ww_vault.dmm"
-	cost = 20
 
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"

@@ -206,7 +206,7 @@
 				toggle_all_ctf(user)
 		return
 
-	if(SSticker.current_state < GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
@@ -433,7 +433,7 @@
 
 /obj/item/projectile/beam/ctf/red
 	icon_state = "laser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 // BLUE TEAM GUNS
 
@@ -448,7 +448,7 @@
 
 /obj/item/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
 /datum/outfit/ctf
 	name = "CTF"

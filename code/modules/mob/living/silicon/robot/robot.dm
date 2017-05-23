@@ -38,7 +38,7 @@
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
-	var/image/eye_lights
+	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
@@ -602,7 +602,7 @@
 		else
 			add_overlay("ov-opencover -c")
 	if(hat)
-		var/image/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
+		var/mutable_appearance/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
@@ -1116,7 +1116,7 @@
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
 	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 

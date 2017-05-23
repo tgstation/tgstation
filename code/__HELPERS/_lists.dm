@@ -228,18 +228,6 @@
 		i--
 	return L[i]
 
-/*
- * Sorting
- */
-/*
-//Reverses the order of items in the list
-/proc/reverselist(list/input)
-	var/list/output = list()
-	for(var/i = input.len; i >= 1; i--)
-		output += input[i]
-	return output
-*/
-
 //Randomize: Return the list in a random order
 /proc/shuffle(list/L)
 	if(!L)
@@ -469,6 +457,7 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
 /* Definining a counter as a series of key -> numeric value entries
 
