@@ -19929,6 +19929,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/fragile,
 /obj/item/clothing/head/helmet/space/fragile,
+/obj/item/weapon/pickaxe,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -53069,6 +53070,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/weapon/pickaxe,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -90074,6 +90076,20 @@
 	},
 /area/hallway/primary/fore)
 "dkq" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/fragile,
+/obj/item/clothing/head/helmet/space/fragile,
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/fore)
+"dkr" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/asteroid/port/west)
+"dks" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
@@ -90084,7 +90100,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/port)
-"dkr" = (
+"dkt" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
@@ -90095,7 +90111,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/starboard)
-"dks" = (
+"dku" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
@@ -90106,7 +90122,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/medbay/central)
-"dkt" = (
+"dkv" = (
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
@@ -99487,7 +99503,7 @@ aXK
 aXK
 dij
 dio
-dip
+dkr
 aXK
 aXr
 aXr
@@ -103818,7 +103834,7 @@ aSs
 aMk
 aMk
 aMk
-aUJ
+dkq
 aKp
 aKp
 aKp
@@ -107715,7 +107731,7 @@ bjt
 bjt
 baF
 baF
-dkq
+dks
 aYV
 brH
 bti
@@ -126236,7 +126252,7 @@ bFy
 bHe
 bIC
 bJU
-dkt
+dkv
 bMk
 bNC
 bOD
@@ -134957,7 +134973,7 @@ abC
 aZq
 bmP
 aZq
-dkr
+dkt
 bzM
 bso
 aZq
@@ -139074,7 +139090,7 @@ bqO
 bsy
 bob
 bob
-dks
+dku
 bwI
 byS
 bzT
