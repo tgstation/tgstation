@@ -172,11 +172,11 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

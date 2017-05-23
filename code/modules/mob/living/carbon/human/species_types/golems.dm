@@ -406,7 +406,7 @@
 		else
 			reactive_teleport(H)
 
-/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
+/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		reactive_teleport(H)
@@ -490,7 +490,7 @@
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 
-/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
+/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
@@ -664,7 +664,7 @@
 		return
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
-	new /obj/effect/overlay/temp/mummy_animation(get_turf(src))
+	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
 	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	sleep(20)

@@ -257,7 +257,7 @@
 	selection_type = "view"
 	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
-	var/sparkle_path = /obj/effect/overlay/temp/gravpush
+	var/sparkle_path = /obj/effect/temp_visual/gravpush
 
 	action_icon_state = "repulse"
 
@@ -300,7 +300,7 @@
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	sparkle_path = /obj/effect/overlay/temp/dir_setting/tailsweep
+	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 

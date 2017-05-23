@@ -109,7 +109,11 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		return call(target, procname)(arglist(arguments))
 
 /proc/IsAdminAdvancedProcCall()
+#ifdef TESTING
+	return FALSE
+#else
 	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
+#endif
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"

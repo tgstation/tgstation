@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/login_music							//music played in pregame lobby
 	var/round_end_sound						//music/jingle played when the world reboots
+	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -61,6 +62,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_start_events
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
+	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
@@ -616,9 +618,9 @@ SUBSYSTEM_DEF(ticker)
 
 	sleep(50)
 	if(mode.station_was_nuked)
-		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+		Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 	else
-		world.Reboot("Round ended.", "end_proper", "proper completion")
+		Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -779,3 +781,69 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
+
+/datum/controller/subsystem/ticker/proc/load_mode()
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")
+
+/datum/controller/subsystem/ticker/proc/save_mode(the_mode)
+	var/F = file("data/mode.txt")
+	fdel(F)
+	F << the_mode
+
+/datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
+	set waitfor = FALSE
+	round_end_sound_sent = FALSE
+	round_end_sound = fcopy_rsc(the_sound)
+	for(var/thing in GLOB.clients)
+		var/client/C = thing
+		if (!C)
+			continue
+		C.Export("##action=load_rsc", round_end_sound)
+	round_end_sound_sent = TRUE
+
+/datum/controller/subsystem/ticker/proc/Reboot(reason, feedback_c, feedback_r, delay)
+	set waitfor = FALSE
+	if(usr && !check_rights(R_SERVER, TRUE))
+		return
+
+	if(!delay)
+		delay = config.round_end_countdown * 10
+
+	if(delay_end)
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
+		return
+	
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+
+	var/start_wait = world.time
+	UNTIL(round_end_sound_sent && (world.time - start_wait) > (delay * 2))	//don't wait forever
+	sleep(delay - (world.time - start_wait))
+
+	if(delay_end)
+		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
+		return
+	
+	SSblackbox.set_details("[feedback_c]","[feedback_r]")
+
+	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+
+	world.Reboot()
+
+/datum/controller/subsystem/ticker/Shutdown()
+	if(!round_end_sound)
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
+
+	world << sound(round_end_sound)
