@@ -49,9 +49,8 @@ Contains:
 	icon_state = "heavy"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 100, acid = 100)
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 50, acid = 50)
 	strip_delay = 120
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
