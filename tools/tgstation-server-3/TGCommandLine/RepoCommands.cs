@@ -26,9 +26,10 @@ namespace TGCommandLine
 		}
 		public override ExitCode Run(IList<string> parameters)
 		{
-			if (!Server.GetComponent<ITGRepository>().Setup(parameters[0], parameters.Count > 1 ? parameters[1] : "master"))
+			var res = Server.GetComponent<ITGRepository>().Setup(parameters[0], parameters.Count > 1 ? parameters[1] : "master");
+			if (res != null)
 			{
-				Console.WriteLine("Error: Repo is busy!");
+				Console.WriteLine("Error: " + res);
 				return ExitCode.ServerError;
 			}
 			Console.WriteLine("Setting up repo. This will take a while...");

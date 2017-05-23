@@ -1,4 +1,5 @@
 ﻿using LibGit2Sharp;
+using LibGit2Sharp.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +20,8 @@ namespace TGServerService
 		const string RepoConfig = RepoPath + "/config";
 		const string RepoData = RepoPath + "/data";
 		const string RepoErrorUpToDate = "Already up to date!";
-
+		const string SSHPushRemote = "ssh_push_target";
+		const string PrivateKeyPath = "repository_private_key.txt";
 		const string PRJobFile = "prtestjob.json";
 
 		object RepoLock = new object();
@@ -143,11 +145,17 @@ namespace TGServerService
 						BranchName = BranchName,
 						RecurseSubmodules = true,
 						OnTransferProgress = HandleTransferProgress,
-						OnCheckoutProgress = HandleCheckoutProgress
+						OnCheckoutProgress = HandleCheckoutProgress,
+						CredentialsProvider = GenerateGitCredentials,
 					};
+
 					Repository.Clone(RepoURL, RepoPath, Opts);
 					currentProgress = -1;
 					LoadRepo();
+
+					//create an ssh remote for pushing with public keys
+					Repo.Network.Remotes.Add(SSHPushRemote, RepoURL.Replace("git://", "ssh://").Replace("https://", "ssh://"));
+
 					lock (configLock)
 					{
 						Program.CopyDirectory(RepoConfig, StaticConfigDir);
@@ -179,23 +187,28 @@ namespace TGServerService
 
 		//kicks off the cloning thread
 		//public api
-		public bool Setup(string RepoURL, string BranchName)
+		public string Setup(string RepoURL, string BranchName)
 		{
 			lock (RepoLock)
 			{
 				if (RepoBusy)
-					return false;
-				if (!CompilerIdleNoLock())
-					return false;
+					return "Repo is busy!";
+				lock (CompilerLock)
+				{
+					if (!CompilerIdleNoLock())
+						return "Compiler is running!";
+				}
 				if (DaemonStatus() != TGDreamDaemonStatus.Offline)
-					return false;
+					return "DreamDaemon is running!";
+				if (RepoURL.Contains("ssh://") && !SSHAuth())
+					return String.Format("SSH url specified but {0} does not exist in the server directory!", PrivateKeyPath);
 				RepoBusy = true;
 				Cloning = true;
 				new Thread(new ParameterizedThreadStart(Clone))
 				{
 					IsBackground = true //make sure we don't hold up shutdown
 				}.Start(new TwoStrings { a = RepoURL, b = BranchName });
-				return true;
+				return null;
 			}
 		}
 
@@ -249,7 +262,7 @@ namespace TGServerService
 					return null;
 				}
 				error = null;
-				return Repo.Network.Remotes.First().Url;
+				return Repo.Network.Remotes["origin"].Url;
 			}
 			catch (Exception e)
 			{
@@ -342,13 +355,13 @@ namespace TGServerService
 					if (Repo.Head == null || !Repo.Head.IsTracking)
 						return "Cannot update while not on a tracked branch";
 					string logMessage = "";
-					foreach (Remote R in Repo.Network.Remotes)
-					{
-						IEnumerable<string> refSpecs = R.FetchRefSpecs.Select(X => X.Specification);
-						var fos = new FetchOptions();
-						fos.OnTransferProgress += HandleTransferProgress;
-						Commands.Fetch(Repo, R.Name, refSpecs, null, logMessage);
-					}
+
+					var R = Repo.Network.Remotes["origin"];
+					IEnumerable<string> refSpecs = R.FetchRefSpecs.Select(X => X.Specification);
+					var fos = new FetchOptions();
+					fos.OnTransferProgress += HandleTransferProgress;
+					Commands.Fetch(Repo, R.Name, refSpecs, null, logMessage);
+
 					var originBranch = Repo.Head.TrackedBranch;
 					if (reset)
 					{
@@ -485,7 +498,7 @@ namespace TGServerService
 				try
 				{
 					//only supported with github
-					var remoteUrl = Repo.Network.Remotes.First().Url;
+					var remoteUrl = Repo.Network.Remotes["origin"].Url;
 					if (!remoteUrl.Contains("github.com"))
 						return "Only supported with Github based repositories.";
 
@@ -696,30 +709,13 @@ namespace TGServerService
 				if (result != null)
 					return result;
 
-				var Config = Properties.Settings.Default;
 				try
 				{
-					byte[] plaintext;
-					try
-					{
-						plaintext = ProtectedData.Unprotect(Convert.FromBase64String(Config.CredentialCyphertext), Convert.FromBase64String(Config.CredentialEntropy), DataProtectionScope.CurrentUser);
-					}
-					catch 
-					{
-						return "Git password decryption failed! Did you set one?";
-					}
-
 					var options = new PushOptions()
 					{
-						CredentialsProvider = new LibGit2Sharp.Handlers.CredentialsHandler(
-						(url, usernameFromUrl, types) =>
-							new UsernamePasswordCredentials()
-							{
-								Username = Config.CredentialUsername,
-								Password = Encoding.UTF8.GetString(plaintext)
-							})
+						CredentialsProvider = GenerateGitCredentials,
 					};
-					Repo.Network.Push(Repo.Head, options);
+					Repo.Network.Push(Repo.Network.Remotes[SSHAuth() ? SSHPushRemote : "origin"], "refs/heads/" + Repo.Head.CanonicalName, options);
 					return null;
 				}
 				catch (Exception e)
@@ -727,6 +723,38 @@ namespace TGServerService
 					return e.ToString();
 				}
 			}
+		}
+
+		bool SSHAuth()
+		{
+			return File.Exists(PrivateKeyPath);
+		}
+
+		Credentials GenerateGitCredentials(string url, string usernameFromUrl, SupportedCredentialTypes types)
+		{
+			var Config = Properties.Settings.Default;
+			if (SSHAuth())
+				return new SshUserKeyCredentials()
+				{
+					Username = Config.CredentialUsername,
+					PublicKey = PrivateKeyPath,
+				};
+
+			string plaintext;
+			try
+			{
+				plaintext = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(Config.CredentialCyphertext), Convert.FromBase64String(Config.CredentialEntropy), DataProtectionScope.CurrentUser));
+			}
+			catch
+			{
+				throw new Exception("Git password decryption failed! Did you set one?");
+			}
+
+			return new UsernamePasswordCredentials()
+			{
+				Username = Config.CredentialUsername,
+				Password = plaintext,
+			};
 		}
 
 		//public api

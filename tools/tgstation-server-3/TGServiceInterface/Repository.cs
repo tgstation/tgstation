@@ -20,13 +20,17 @@ namespace TGServiceInterface
 		//check if the repository is valid, if not Setup must be called
 		[OperationContract]
 		bool Exists();
-
-		//Deletes whatever may be left over and clones the repo at remote and checks out branch master
-		//Will backup and delete config and data dirs
-		//runs asyncronously
-		//returns true if the operation started, false if the repo was busy
+		
+		/// <summary>
+		/// Deletes whatever may be left over and clones the repo at remote and checks out branch master
+		/// Will move config and data dirs to a backup location if they exist
+		/// runs asyncronously
+		/// </summary>
+		/// <param name="remote">The address of the repo to clone. If ssh protocol is used, repository_private_key.txt must exist in the server directory.</param>
+		/// <param name="branch">The branch of the repo to checkout</param>
+		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
-		bool Setup(string remote, string branch = "master");
+		string Setup(string remote, string branch = "master");
 
 		//returns the sha of the current HEAD
 		//if null, error will contain the error

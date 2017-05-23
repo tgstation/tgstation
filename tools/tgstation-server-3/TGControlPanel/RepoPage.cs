@@ -171,7 +171,7 @@ namespace TGControlPanel
 
 			switch (action) {
 				case RepoAction.Clone:
-					repoError = Repo.Setup(CloneRepoURL, CheckoutBranch) ? null : "The repository is currently undergoing an operation. Please wait for it to complete.";
+					repoError = Repo.Setup(CloneRepoURL, CheckoutBranch);
 					break;
 				case RepoAction.Checkout:
 					repoError = Repo.Checkout(CheckoutBranch);
