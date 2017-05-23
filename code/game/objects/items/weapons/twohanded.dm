@@ -712,7 +712,7 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18					//Same as regular spear. This is a utility weapon.
-	throwforce = 24						//And that utility is throwing. 24 so it takes 5 hits instead of 4.
+	throwforce = 20						//Same again. May be lowered if spamming it is an issue.
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 0	//If you somehow embed this, it's not going to hurt.
 	armour_penetration = 15				//Same as Bone Spear
@@ -721,18 +721,9 @@
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored", "lanced") //Added lanced for flavour.
 	sharpness = IS_SHARP
 	var/maxdist = 16
-	var/throw_cooldown = 0				//Should equate to half a second. Not supposed to be varedited.
 
 /obj/item/weapon/twohanded/skybulge/update_icon()
 	icon_state = "sky_bulge[wielded]"
-
-/obj/item/weapon/twohanded/skybulge/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)  //Throw cooldown and offhand-proofing.
-	if(throw_cooldown > world.time)
-		var/mob/user = thrownby
-		user.put_in_hands(src)
-		return
-	unwield(src)
-	..()
 
 /obj/item/weapon/twohanded/skybulge/throw_impact(atom/target) //Praise be the ratvar spear for showing me how to use this proc.
 	var/turf/turfhit = get_turf(target)
@@ -748,6 +739,5 @@
 			if (loc != landing)
 				return
 			user.forceMove(landing)
-	throw_cooldown = world.time + 5				//Half a second between throws.
 	user.put_in_hands(src)
 	playsound(src, 'sound/weapons/laser2.ogg', 20, 1)
