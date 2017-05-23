@@ -201,7 +201,7 @@ namespace TGServerService
 		{
 			lock (IRCLock)
 			{
-				return irc.IsConnected;
+				return irc != null && irc.IsConnected;
 			}
 		}
 		//public api
