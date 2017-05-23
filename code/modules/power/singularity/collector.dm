@@ -46,7 +46,9 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			var/fuel = loaded_tank.air_contents.gases["plasma"]
+			var/fuel
+			if(loaded_tank)
+				fuel = loaded_tank.air_contents.gases["plasma"]
 			fuel = fuel ? fuel[MOLES] : 0
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
@@ -89,8 +91,14 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 		W.forceMove(src)
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
-		if(loaded_tank && !locked)
+		if(loaded_tank)
+			if(locked)
+				to_chat(user, "<span class='warning'>The controls are locked!</span>")
+				return 1
 			eject()
+			return 1
+		else
+			to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 0)
