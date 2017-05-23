@@ -69,9 +69,10 @@
 
 /mob/living/simple_animal/hostile/morph/Initialize()
 	. = ..()
+	blacklist_typecache = list()
 	blacklist_typecache |= typecacheof(list(/obj/screen))
 	blacklist_typecache |= typecacheof(list(/obj/singularity))
-	blacklist_typecache |= typecacheof(list(mob/living/simple_animal/hostile/morph))
+	blacklist_typecache |= typecacheof(list(/mob/living/simple_animal/hostile/morph))
 	blacklist_typecache |= typecacheof(list(/obj/effect))
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
