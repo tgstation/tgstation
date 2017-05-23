@@ -411,7 +411,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return

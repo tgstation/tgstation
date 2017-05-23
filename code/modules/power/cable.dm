@@ -131,7 +131,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
-		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		investigate_log("was cut by [key_name(usr, usr.client)] in [get_area(T)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
 
