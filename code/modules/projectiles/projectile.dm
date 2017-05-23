@@ -135,7 +135,7 @@
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
 		return
-	if(check_ricochet() && check_ricochet_flag(A) && ricochets < max_ricochets)
+	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
 			return FALSE
@@ -181,7 +181,7 @@
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
 	if(HAS_SECONDARY_FLAG(A, PROJECTILE_RICOCHET))
 		return TRUE
-	return FALSe
+	return FALSE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
