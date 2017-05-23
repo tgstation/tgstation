@@ -52,6 +52,12 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
 #define TESLA_IGNORE "tesla_ignore"
 
+// RICOCHET_WALL makes projectiles deflect off that wall. Only works on closed turfs.
+#define PROJECTILE_RICOCHET "ricochet_wall"
+
+// REFLECTIVE_WALL above but only beam projectiles
+#define PROJECTILE_REFLECT "reflective_wall"
+
 //turf-only flags
 #define NOJAUNT		1
 #define UNUSED_TRANSIT_TURF 2

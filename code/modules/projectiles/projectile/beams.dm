@@ -11,6 +11,16 @@
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = LIGHT_COLOR_RED
+	ricochets_max = 50	//Honk!
+	ricochet_chance = 80
+
+/obj/item/projectile/beam/check_ricochet(atom/A)
+	. = ..()
+	. = (. | (HAS_SECONDARY_FLAG(A, PROJECTILE_REFLECT)))
+	if(. && prob(ricochet_chance))
+		return TRUE
+	else
+		return FALSE
 
 /obj/item/projectile/beam/laser
 

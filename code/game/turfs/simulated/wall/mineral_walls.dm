@@ -179,6 +179,10 @@
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)
 
+/turf/closed/wall/mineral/titanium/Initialize()
+	. = ..()
+	SET_SECONDARY_FLAG(src, PROJECTILE_RICOCHET)
+
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"
