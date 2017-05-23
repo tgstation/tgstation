@@ -3,6 +3,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
+	layer = HIGH_OBJ_LAYER
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
@@ -213,12 +214,12 @@
 	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
-		BS = newstruct.alerts.Find("bloodsense")
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
-		BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	newstruct.clear_alert("bloodsense")
+	BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
 	if(BS)
 		BS.Cviewer = newstruct
 	newstruct.cancel_camera()

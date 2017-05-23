@@ -794,9 +794,6 @@
 	return 1
 
 /mob/living/carbon/proc/update_stamina()
-	return
-
-/mob/living/carbon/human/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
@@ -804,6 +801,9 @@
 			Weaken(5)
 			setStaminaLoss(health - 2)
 	update_health_hud()
+
+/mob/living/carbon/alien/update_stamina()
+	return
 
 /mob/living/proc/owns_soul()
 	if(mind)

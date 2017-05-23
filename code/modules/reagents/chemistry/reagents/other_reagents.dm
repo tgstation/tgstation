@@ -378,7 +378,7 @@
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> [M.p_their()] their arms.")
+				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
 	if(prob(10))
 		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
 	..()

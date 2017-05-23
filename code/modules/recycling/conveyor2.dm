@@ -104,11 +104,12 @@
 	if(!operating)
 		return
 	use_power(100)
-
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)
+	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+
+/obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
-		if(A.loc == loc)
+		if((A.loc == loc) && A.has_gravity())
 			A.ConveyorMove(movedir)
 
 // attack with item, place item on conveyor

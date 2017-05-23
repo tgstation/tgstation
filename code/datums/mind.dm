@@ -50,7 +50,8 @@
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
-
+	var/datum/martial_art/martial_art
+	var/static/default_martial_art = new/datum/martial_art
 	var/miming = 0 // Mime's vow of silence
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state

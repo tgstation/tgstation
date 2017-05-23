@@ -114,13 +114,6 @@
 #define SNPC_MARTYR 3
 #define SNPC_PSYCHO 4
 
-//Individual logging defines
-#define INDIVIDUAL_ATTACK_LOG "Attack log"
-#define INDIVIDUAL_SAY_LOG "Say log"
-#define INDIVIDUAL_EMOTE_LOG "Emote log"
-#define INDIVIDUAL_OOC_LOG "OOC log"
-#define INDIVIDUAL_SHOW_ALL_LOG "All logs"
-
 #define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
