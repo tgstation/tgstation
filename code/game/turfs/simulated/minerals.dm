@@ -436,7 +436,7 @@
 		activated_overlay.icon_state = "rock_Gibtonite_inactive"
 		add_overlay(activated_overlay)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
-		stage = GIBTONITE_INERT
+		stage = GIBTONITE_STABLE
 		if(det_time < 0)
 			det_time = 0
 		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
@@ -451,7 +451,7 @@
 		mineralAmt = 0
 		stage = GIBTONITE_DETONATE
 		explosion(bombturf,1,2,5, adminlog = 0)
-	if(stage == GIBTONITE_INERT) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
+	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
 		if(det_time <= 0)
 			G.quality = 3
