@@ -1147,6 +1147,10 @@
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
 /turf/open/floor/plasteel{
 	dir = 2
 	},
@@ -1343,6 +1347,13 @@
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	dir = 2
 	},
@@ -1360,6 +1371,13 @@
 	},
 /obj/effect/turf_decal/bot{
 	dir = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel{
 	dir = 2
@@ -54402,6 +54420,10 @@
 	},
 /obj/effect/turf_decal/bot{
 	dir = 2
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel{
 	dir = 2
@@ -114113,11 +114135,11 @@ btp
 cbv
 ccq
 bns
-cjD
-cjD
-cjD
-cjD
-cnj
+aof
+aof
+aof
+aof
+amw
 aaa
 aaa
 aaa
@@ -114370,13 +114392,13 @@ ckS
 bky
 ccq
 cds
-cjD
+aof
 ckt
 cly
 cmw
-cnj
-cnj
-cnj
+amw
+amw
+amw
 aaa
 aaa
 aaf
@@ -114884,13 +114906,13 @@ cbg
 bTr
 cct
 cdu
-cjG
+aqx
 cku
 clz
 cmx
-cnj
-cnj
-cnj
+amw
+amw
+amw
 aaa
 aaa
 aaf
@@ -115141,11 +115163,11 @@ bky
 bky
 bky
 bky
-cjD
-cjD
-cjD
-cjD
-cnj
+aof
+aof
+aof
+aof
+amw
 aaa
 aaa
 aaa
