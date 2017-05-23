@@ -14,6 +14,7 @@
 
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
+	desc = "This beanie is superior to all others. This beanie is art. You could sell this for millions, probably."
 	icon_state = "beanie"
 	color = "#D91414" //Red
 
