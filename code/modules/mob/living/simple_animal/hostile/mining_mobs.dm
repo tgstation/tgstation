@@ -307,14 +307,14 @@
 			qdel(src)
 	..()
 
-/obj/item/organ/hivelord_core/Insert()
+/obj/item/organ/hivelord_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	. = ..()
 	if(!preserved && !inert)
 		preserved(TRUE)
-		visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
+		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
 
-/obj/item/organ/hivelord_core/Remove()
-	if(!inert)
+/obj/item/organ/hivelord_core/Remove(mob/living/carbon/M, special = 0)
+	if(!inert && !special)
 		owner.visible_message("<span class='notice'>[src] goes inert as it's removed.</span>")
 		go_inert()
 	return ..()
