@@ -227,7 +227,6 @@
 				update_icon()
 
 
-
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -1001,6 +1000,16 @@
 /obj/item/gun_control/CanItemAutoclick()
 	return 1
 
+/obj/item/gun_control/attack_obj(obj/O, mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	O.attacked_by(src, user)
+
+/obj/item/gun_control/attack(mob/living/M, mob/living/user)
+	user.lastattacked = M
+	M.lastattacker = user
+	M.attacked_by(src, user)
+	add_fingerprint(user)
+
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
 	..()
 	var/obj/machinery/manned_turret/E = user.buckled
@@ -1074,7 +1083,7 @@
 	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
-	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-10, 10))
+	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-9, 9))
 	P.fire()
 
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
