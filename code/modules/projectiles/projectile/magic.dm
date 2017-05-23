@@ -351,7 +351,7 @@
 
 /obj/item/projectile/magic/aoe/Range()
 	if(proxdet)
-		for(mob/living/L in range(1, get_turf(src)))
+		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer)
 				Bump(L, TRUE)
 	..()
