@@ -6,12 +6,12 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 "Yellow" = LIGHT_COLOR_YELLOW,
 "Lime" = LIGHT_COLOR_SLIME_LAMP,
 "Olive" = LIGHT_COLOR_GREEN,
-"Jade" = LIGHT_COLOR_CYAN,
+"Jade" = LIGHT_COLOR_BLUEGREEN,
 "Teal" = LIGHT_COLOR_LIGHT_CYAN,
 "Cobalt" = LIGHT_COLOR_BLUE,
-"Blue" = LIGHT_COLOR_BLUE,
-"Indigo" = LIGHT_COLOR_LAVENDER,
-"Violet" = LIGHT_COLOR_PURPLE,
+"Blue" = LIGHT_COLOR_DARK_BLUE,
+"Indigo" = LIGHT_COLOR_PURPLE,
+"Violet" = LIGHT_COLOR_LAVENDER,
 "Fuchsia" = LIGHT_COLOR_PINK))
 
 /obj/item/stack/marker_beacon
@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
 
 /obj/item/stack/marker_beacon/update_icon()
-	icon_state = "[initial(icon_state)][lowertext(picked_color)]-on"
+	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)
 	if(!isturf(user.loc))
