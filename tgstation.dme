@@ -14,7 +14,6 @@
 
 // BEGIN_INCLUDE
 #include "_maps\basemap.dm"
-#include "_maps\loadallmaps.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
@@ -42,6 +41,7 @@
 #include "code\__DEFINES\language.dm"
 #include "code\__DEFINES\layers.dm"
 #include "code\__DEFINES\lighting.dm"
+#include "code\__DEFINES\logging.dm"
 #include "code\__DEFINES\machines.dm"
 #include "code\__DEFINES\maps.dm"
 #include "code\__DEFINES\math.dm"
@@ -295,7 +295,11 @@
 #include "code\datums\helper_datums\icon_snapshot.dm"
 #include "code\datums\helper_datums\teleport.dm"
 #include "code\datums\helper_datums\topic_input.dm"
+#include "code\datums\martial\boxing.dm"
+#include "code\datums\martial\cqc.dm"
 #include "code\datums\martial\krav_maga.dm"
+#include "code\datums\martial\plasma_fist.dm"
+#include "code\datums\martial\sleeping_carp.dm"
 #include "code\datums\martial\wrestling.dm"
 #include "code\datums\ruins\lavaland.dm"
 #include "code\datums\ruins\space.dm"

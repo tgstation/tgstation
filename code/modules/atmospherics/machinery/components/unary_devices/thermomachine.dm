@@ -173,7 +173,7 @@
 		if("power")
 			on = !on
 			use_power = 1 + on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")
 			var/target = params["target"]
@@ -190,7 +190,7 @@
 				. = TRUE
 			if(.)
 				target_temperature = Clamp(target, min_temperature, max_temperature)
-				investigate_log("was set to [target_temperature] K by [key_name(usr)]", "atmos")
+				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer

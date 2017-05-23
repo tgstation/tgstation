@@ -36,7 +36,8 @@
 	//initialise organs
 	create_internal_organs()
 
-	martial_art = default_martial_art
+	if(mind)
+		mind.martial_art = mind.default_martial_art
 
 	handcrafting = new()
 
@@ -410,7 +411,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return

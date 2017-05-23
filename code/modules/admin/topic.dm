@@ -285,7 +285,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		trigger_centcom_recall()
+		usr.client.trigger_centcom_recall()
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
@@ -1515,17 +1515,6 @@
 			return
 
 		usr.client.cmd_admin_animalize(M)
-
-	else if(href_list["gangpoints"])
-		var/datum/gang/G = locate(href_list["gangpoints"]) in SSticker.mode.gangs
-		if(G)
-			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
-			if(!newpoints)
-				return
-			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-			log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-			G.points = newpoints
-			G.message_gangtools("Your gang now has [G.points] influence.")
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
