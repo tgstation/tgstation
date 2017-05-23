@@ -55,9 +55,9 @@
 	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
 	var/keyname = key
-	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+//	if(prefs.unlock_content)
+//		if(prefs.toggles & MEMBER_PUBLIC)
+	keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -101,8 +101,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+//		if(!is_content_unlocked())
+		return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
@@ -117,8 +117,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "Preferences"
 
 	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
+//		if(!is_content_unlocked())
+		return
 
 		prefs.ooccolor = initial(prefs.ooccolor)
 		prefs.save_preferences()

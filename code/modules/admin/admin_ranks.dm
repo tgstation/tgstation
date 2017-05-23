@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(admin_ranks)								//list of all admin_rank datums
 GLOBAL_PROTECT(admin_ranks)
-
+/*
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = 0
@@ -125,14 +125,14 @@ GLOBAL_PROTECT(admin_ranks)
 
 			previous_rights = R.rights
 	else
-		if(!SSdbcore.Connect())
+		if(!dbcon.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
 			GLOB.world_game_log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admin_ranks()
 			return
 
-		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
+		var/DBQuery/query_load_admin_ranks = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
 		if(!query_load_admin_ranks.Execute())
 			return
 		while(query_load_admin_ranks.NextRow())
@@ -154,7 +154,7 @@ GLOBAL_PROTECT(admin_ranks)
 			msg += "\t\t[rights]\n"
 	testing(msg)
 	#endif
-
+*/
 
 /proc/load_admins(target = null)
 	//clear the datums references
@@ -200,14 +200,14 @@ GLOBAL_PROTECT(admin_ranks)
 				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
-		if(!GLOB.dbcon.Connect())
+		if(!dbcon.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			GLOB.world_game_log << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
 			return
 
-		var/DBQuery/query_load_admins = GLOB.dbcon.NewQuery("SELECT ckey, rank, flags FROM [format_table_name("admin")]")
+		var/DBQuery/query_load_admins = dbcon.NewQuery("SELECT ckey, rank, flags FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())
 			return
 		while(query_load_admins.NextRow())
@@ -254,7 +254,7 @@ GLOBAL_PROTECT(admin_ranks)
 	remove_admin_verbs()
 	holder.associate(src)
 #endif
-
+/*
 /datum/admins/proc/edit_rights_topic(list/href_list)
 	if(!check_rights(R_PERMISSIONS))
 		message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
@@ -374,10 +374,11 @@ GLOBAL_PROTECT(admin_ranks)
 	edit_admin_permissions()
 
 /datum/admins/proc/updateranktodb(ckey,newrank)
-	if(!SSdbcore.Connect())
+	if(!dbcon.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
-	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	var/DBQuery/query_admin_rank_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
 	query_admin_rank_update.Execute()
+*/

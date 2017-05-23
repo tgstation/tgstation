@@ -209,11 +209,11 @@ var/list/datum/donator/donators = list()
 
 proc/load_donator(ckey)
 	var/DBConnection/dbcon2 = new()
-	dbcon2.doConnect("dbi:mysql:forum2:[GLOB.sqladdress]:[GLOB.sqlport]","[GLOB.sqlfdbklogin]","[GLOB.sqlfdbkpass]") //pidorasy
+	dbcon2.doConnect("dbi:mysql:forum2:[global.sqladdress]:[global.sqlport]","[global.sqlfdbklogin]","[global.sqlfdbkpass]") //pidorasy
 
 	if(!dbcon2.IsConnected())
 //		world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donator([ckey])."
-		GLOB.diary << "Failed to connect to database in load_donator([ckey])."
+		world.log << "Failed to connect to database in load_donator([ckey])."
 		return 0
 
 	var/DBQuery/query = dbcon2.NewQuery("SELECT round(sum) FROM Z_donators WHERE byond='[ckey]'")

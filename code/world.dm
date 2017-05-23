@@ -54,11 +54,11 @@
 
 /world/proc/SetRoundID()
 	if(config.sql_enabled)
-		if(SSdbcore.Connect())
+		if(dbcon.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
+			var/DBQuery/query_feedback_create_round = dbcon.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
 			query_feedback_create_round.Execute()
-			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
+			var/DBQuery/query_feedback_max_id = dbcon.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
 			query_feedback_max_id.Execute()
 			if(query_feedback_max_id.NextRow())
 				GLOB.round_id = query_feedback_max_id.item[1]
@@ -82,7 +82,7 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
-	
+
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
@@ -224,7 +224,7 @@
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
-	log_world("World rebooted at [time_stamp()]"); 
+	log_world("World rebooted at [time_stamp()]");
 	..()
 
 /world/proc/load_motd()

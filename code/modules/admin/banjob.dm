@@ -4,10 +4,10 @@
 		return 0
 
 	if(!M.client) //no cache. fallback to a DBQuery
-		if(!GLOB.dbcon.Connect())
+		if(!dbcon.Connect())
 			return 0
 
-		var/DBQuery/query_jobban_check_ban = GLOB.dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[sanitizeSQL(rank)]'")
+		var/DBQuery/query_jobban_check_ban = dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[sanitizeSQL(rank)]'")
 		if(!query_jobban_check_ban.warn_execute())
 			return
 		if(query_jobban_check_ban.NextRow())
@@ -28,10 +28,10 @@
 	if(C && istype(C))
 		C.jobbancache = list()
 
-		if(!GLOB.dbcon.Connect())
+		if(!dbcon.Connect())
 			return FALSE
 
-		var/DBQuery/query_jobban_build_cache = GLOB.dbcon.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query_jobban_build_cache = dbcon.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_jobban_build_cache.warn_execute())
 			return
 		while(query_jobban_build_cache.NextRow())
