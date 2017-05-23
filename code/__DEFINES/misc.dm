@@ -402,8 +402,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
-<<<<<<< HEAD
-=======
+
 
 #define NO_FIELD 0
 #define FIELD_TURF 1
@@ -414,4 +413,4 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
->>>>>>> 1755cd64f3... Gibtonite now uses defines (#27545)
+
