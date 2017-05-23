@@ -36,6 +36,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/alcoholvessel/dwarf
+		dwarf = H.getorganslot("dwarf_organ")
+		if(dwarf)
+			if(dwarf.stored_alcohol < dwarf.max_alcohol)
+				dwarf.stored_alcohol += boozepwr * 0.01
+				return ..() || .
+
 		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 	return ..() || .
@@ -70,6 +77,30 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				S.success_multiplier = max(0.10*power_multiplier, S.success_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 	return ..()
+
+/datum/reagent/consumable/ethanol/customizable
+	name = "Ale"
+	id = "customizable_ale"
+	description = "An alcoholic beverage brewed by hand.."
+	color = "#664300" // rgb: 102, 67, 0
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 0 // filled out by brewing
+	taste_description = "ale"
+	glass_name = "glass of ale"
+	glass_desc = "A glass of ale. You feel a fey mood coming on just looking at it."
+	var/datum/reagents/contained_reagents
+
+/datum/reagent/consumable/ethanol/customizable/New()
+	. ..()
+	contained_reagents = new/datum/reagents(10000)
+
+/datum/reagent/consumable/ethanol/customizable/on_mob_life(mob/living/M)
+	..()
+	for(var/R in contained_reagents.reagent_list)
+		var/datum/reagent/RA = R
+		RA.volume = volume
+		RA.on_mob_life(M)
+
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
