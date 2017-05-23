@@ -124,7 +124,6 @@
 	var/produces_gas = 1
 	var/obj/effect/countdown/supermatter/countdown
 	
-	//Shitty way of slowing down processing!
 	var/process_tick = 0
 	var/process_modifier = 4	//MUST BE POWER OF 2
 
