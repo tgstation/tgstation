@@ -24,7 +24,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
-	var/change_position_cooldown = 10
+	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
