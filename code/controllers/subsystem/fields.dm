@@ -1,9 +1,9 @@
-
 SUBSYSTEM_DEF(fields)
 	name = "Fields"
 	wait = 2
 	priority = 40
-	flags = SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING | SS_NO_FIRE
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	var/list/datum/proximity_monitor/advanced/running = list()
 	var/list/datum/proximity_monitor/advanced/currentrun = list()
 
