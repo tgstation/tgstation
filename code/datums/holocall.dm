@@ -45,7 +45,7 @@
 	user.reset_perspective()
 	if(user.client)
 		for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-			user.client.images -= chunk.obscured
+			chunk.remove(eye)
 	user.remote_control = null
 	QDEL_NULL(eye)
 	
