@@ -71,6 +71,13 @@
 	M.mind.objectives += O
 	LAZYADD(spawned_mobs, M)
 
+/obj/machinery/migrant_spawner/attackby(obj/item/weapon/W, mob/user, params)
+	if(isdwarf(user))
+		to_chat(user, "You wouldn't dare.")
+		return
+	else
+		..()
+
 /datum/outfit/dorf
 	name = "Dwarf Standard"
 	uniform = /obj/item/clothing/under/dwarf
