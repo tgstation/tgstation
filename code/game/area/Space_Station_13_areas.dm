@@ -248,6 +248,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Port Quarter Maintenance"
 	icon_state = "fpmaint"
 	
+/area/maintenance/port/fore
+	name = "Port Bow Maintenance"
+	icon_state = "fpmaint"
+	
 /area/maintenance/disposal
 	name = "Waste Disposal"
 	icon_state = "disposal"
