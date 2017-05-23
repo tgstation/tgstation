@@ -101,14 +101,25 @@
       </Component>
     </ComponentGroup>
     <ComponentGroup Id="Gitx86Components" Directory="x86Folder">
-
       <Component Id="LibGit2Sharpx86">
-        <File Source="$(var.TGServerService.TargetDir)lib\win32\x86\git2-a5cf255.dll" Id="LibGit2Sharpx86dll"/>
+        <File Source="$(var.TGServerService.TargetDir)lib\win32\x86\git2-ssh-baa87df.dll" Id="LibGit2Sharpx86dll"/>
+      </Component>
+      <Component Id="LibGit2Sharpx86SSH">
+        <File Source="$(var.TGServerService.TargetDir)lib\win32\x86\libssh2.dll" Id="LibGit2Sharpx86SSHdll"/>
+      </Component>
+      <Component Id="LibGit2Sharpx86Z">
+        <File Source="$(var.TGServerService.TargetDir)lib\win32\x86\zlib.dll" Id="LibGit2Sharpx86Zdll"/>
       </Component>
     </ComponentGroup>
     <ComponentGroup Id="Gitx64Components" Directory="x64Folder">
       <Component Id="LibGit2Sharpx64">
-        <File Source="$(var.TGServerService.TargetDir)lib\win32\x64\git2-a5cf255.dll" Id="LibGit2Sharpx64dll" />
+        <File Source="$(var.TGServerService.TargetDir)lib\win32\x64\git2-ssh-baa87df.dll" Id="LibGit2Sharpx64dll" />
+      </Component>
+      <Component Id="LibGit2Sharpx64SSH">
+        <File Source="$(var.TGServerService.TargetDir)lib\win32\x64\libssh2.dll" Id="LibGit2Sharpx64SSHdll"/>
+      </Component>
+      <Component Id="LibGit2Sharpx64Z">
+        <File Source="$(var.TGServerService.TargetDir)lib\win32\x64\zlib.dll" Id="LibGit2Sharpx64Zdll"/>
       </Component>
     </ComponentGroup>
   </Fragment>
