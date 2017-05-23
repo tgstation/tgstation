@@ -42,7 +42,7 @@
 
 /obj/item/clothing/mask/vape/vapormask
 	name = "vaporizing breath mask"
-	desc = "A breath mask with an integrated chemical vaporizer. A label reads \"In case of hallucinations, put mask on and inhale deeply. Warning: Do not fill with flammable materials.\""
+	desc = "A breath mask with an integrated chemical vaporizer. A label reads \"Warning: Do not fill with flammable materials.\""
 	actions_types = list(/datum/action/item_action/toggle_vaporizer)
 	icon_state = "vapor" 
 	item_state = "vapor"
@@ -56,7 +56,7 @@
 	. = ..() //I have no idea what this line does but apparently Initialize() is supposed to have it.
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE)
-	reagents.add_reagent("synaptizine", 25)
+
 
 
 /obj/item/clothing/mask/vape/vapormask/proc/togglevape()

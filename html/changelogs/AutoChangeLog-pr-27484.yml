@@ -1,0 +1,6 @@
+author: "Joan, Repukan"
+delete-after: True
+changes: 
+  - rscadd: "Traitor miners can now buy up to 2 KA Pressure Mods for 5 TC each."
+  - balance: "KA Pressure Mods now only take up 35 mod capacity each, allowing traitor miners to use 2 and have space for 1 other mod."
+  - rscdel: "R&D can no longer build KA Pressure Mods."

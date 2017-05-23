@@ -19,7 +19,7 @@
 /obj/machinery/meter/Initialize(mapload)
 	. = ..()
 	SSair.atmos_machinery += src
-	if (mapload && !target)
+	if (!target)
 		target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()

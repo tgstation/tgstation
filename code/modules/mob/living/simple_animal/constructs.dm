@@ -115,7 +115,7 @@
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
 	speed = 3
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
@@ -126,7 +126,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -218,7 +218,7 @@
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
 	attacktext = "rams"
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
@@ -272,7 +272,7 @@
 
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult
@@ -386,7 +386,6 @@
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
-	var/tracking = FALSE
 	var/mob/living/simple_animal/hostile/construct/harvester/the_construct
 
 /datum/action/innate/seek_prey/Grant(var/mob/living/C)
@@ -396,12 +395,10 @@
 /datum/action/innate/seek_prey/Activate()
 	if(GLOB.cult_narsie == null)
 		return
-	if(tracking)
+	if(the_construct.seeking)
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"
-		tracking = FALSE
 		the_construct.seeking = FALSE
-		the_construct.master = GLOB.cult_narsie
 		to_chat(the_construct, "<span class='cultitalic'>You are now tracking Nar'Sie, return to reap the harvest!</span>")
 		return
 	else
@@ -413,7 +410,6 @@
 			return
 		desc = "Activate to track Nar'Sie!"
 		button_icon_state = "sintouch"
-		tracking = TRUE
 		the_construct.seeking = TRUE
 
 

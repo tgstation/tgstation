@@ -33,6 +33,7 @@
 	var/process_edge_turfs = FALSE	//Don't do this either unless it's absolutely necessary, you can just track what things are inside manually or on the initial setup.
 	var/setup_edge_turfs = FALSE	//Setup edge turfs/all field turfs. Set either or both to ON when you need it, it's defaulting to off unless you do to save CPU.
 	var/setup_field_turfs = FALSE
+	var/use_host_turf = FALSE		//For fields from items carried on mobs to check turf instead of loc...
 
 	var/list/turf/field_turfs = list()
 	var/list/turf/edge_turfs = list()
@@ -90,8 +91,19 @@
 	for(var/turf/T in field_turfs)
 		cleanup_field_turf(T)
 
+/datum/proximity_monitor/advanced/proc/check_movement()
+	if(!use_host_turf)
+		if(host.loc != last_host_loc)
+			last_host_loc = host.loc
+			return TRUE
+	else
+		if(get_turf(host) != last_host_loc)
+			last_host_loc = get_turf(host)
+			return TRUE
+	return FALSE
+
 /datum/proximity_monitor/advanced/proc/recalculate_field(ignore_movement_check = FALSE)	//Call every time the field moves (done automatically if you use update_center) or a setup specification is changed.
-	if(!(ignore_movement_check || ((host.loc != last_host_loc) && (field_shape != FIELD_NO_SHAPE))))
+	if(!(ignore_movement_check || check_movement()) && (field_shape != FIELD_NO_SHAPE))
 		return
 	update_new_turfs()
 	var/list/turf/needs_setup = field_turfs_new.Copy()
@@ -173,7 +185,6 @@
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
 	if(!istype(host))
 		return FALSE
-	last_host_loc = host.loc
 	var/turf/center = get_turf(host)
 	field_turfs_new = list()
 	edge_turfs_new = list()

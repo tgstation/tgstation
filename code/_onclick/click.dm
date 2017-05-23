@@ -92,7 +92,7 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(A.IsObscured())
+	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
 	if(istype(loc,/obj/mecha))
@@ -148,7 +148,9 @@
 /atom/proc/IsObscured()
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
-	var/turf/T = loc
+	var/turf/T = get_turf_pixel(src)
+	if(!T)
+		return FALSE
 	for(var/atom/movable/AM in T)
 		if(AM.flags & PREVENT_CLICK_UNDER && AM.density && AM.layer > layer)
 			return TRUE
@@ -323,9 +325,11 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user))
+		if(world.time < user.next_move)
+			return FALSE
 		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.martial_art)
-		H.next_click = world.time + CLICK_CD_MELEE
+		H.dna.species.grab(H, src, H.mind.martial_art)
+		H.changeNext_move(CLICK_CD_MELEE)
 	else
 		..()
 /*
@@ -444,6 +448,7 @@
 		C.swap_hand()
 	else
 		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
 	. = 1
