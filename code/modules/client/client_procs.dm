@@ -158,7 +158,7 @@ GLOBAL_LIST(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogin(src)
 
 	//Admin Authorisation
-	var/localhost_addresses = list("127.0.0.1", "::1")
+	var/localhost_addresses = list()
 	if(address && (address in localhost_addresses))
 		var/datum/admins/localhost_holder = new("!localhost!", 65535, ckey)
 		localhost_holder.associate(src)
@@ -264,11 +264,11 @@ GLOBAL_LIST(external_rsc_urls)
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
 	add_verbs_from_config()
-	set_client_age_from_db(tdata)
-	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
-	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
+	set_client_age_from_db()
+
+	if (isnum(player_age) && player_age == -1) //first connection
 		player_age = 0
-	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
+	if (isnum(player_age) && player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
@@ -284,14 +284,16 @@ GLOBAL_LIST(external_rsc_urls)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
 				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
-	else if (isnum(cached_player_age) && cached_player_age < config.notify_new_player_age)
-		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
-	if(config.use_account_age_for_jobs && account_age >= 0)
-		player_age = account_age
-	if(account_age >= 0 && account_age < config.notify_new_player_account_age)
-		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
-		if (config.irc_first_connection_alert)
-			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
+
+		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
+
+	else if (isnum(player_age) && player_age < config.notify_new_player_age)
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
+
+	if(!IsGuestKey(key) && dbcon.IsConnected())
+		findJoinDate()
+
+	sync_client_with_db(tdata)
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 
@@ -386,70 +388,67 @@ GLOBAL_LIST(external_rsc_urls)
 /client/Destroy()
 	return QDEL_HINT_HARDDEL_NOW
 
-/client/proc/set_client_age_from_db(connectiontopic)
+/client/proc/set_client_age_from_db()
 	if (IsGuestKey(src.key))
 		return
+
 	if(!dbcon.Connect())
 		return
+
 	var/sql_ckey = sanitizeSQL(src.ckey)
-	var/DBQuery/query_get_related_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
-	query_get_related_ip.Execute()
+
+	var/DBQuery/query_get_client_age = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	if(!query_get_client_age.Execute())
+		return
+
+	while(query_get_client_age.NextRow())
+		player_age = text2num(query_get_client_age.item[2])
+		return
+
+	//no match mark it as a first connection for use in client/New()
+	player_age = -1
+
+
+/client/proc/sync_client_with_db(connectiontopic)
+	if (IsGuestKey(src.key))
+		return
+
+	if (!dbcon.Connect())
+		return
+
+	var/sql_ckey = sanitizeSQL(ckey)
+
+	var/DBQuery/query_get_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
+	query_get_ip.Execute()
 	related_accounts_ip = ""
-	while(query_get_related_ip.NextRow())
-		related_accounts_ip += "[query_get_related_ip.item[1]], "
-	var/DBQuery/query_get_related_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
-	if(!query_get_related_cid.Execute())
+	while(query_get_ip.NextRow())
+		related_accounts_ip += "[query_get_ip.item[1]], "
+
+	var/DBQuery/query_get_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
+	if(!query_get_cid.Execute())
 		return
 	related_accounts_cid = ""
-	while (query_get_related_cid.NextRow())
-		related_accounts_cid += "[query_get_related_cid.item[1]], "
+	while (query_get_cid.NextRow())
+		related_accounts_cid += "[query_get_cid.item[1]], "
+
 	var/admin_rank = "Player"
 	if (src.holder && src.holder.rank)
 		admin_rank = src.holder.rank
 	else
 		if (check_randomizer(connectiontopic))
 			return
-	var/sql_ip = sanitizeSQL(address)
-	var/sql_computerid = sanitizeSQL(computer_id)
+
+	var/sql_ip = sanitizeSQL(src.address)
+	var/sql_computerid = sanitizeSQL(src.computer_id)
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
-	var/new_player
-	var/DBQuery/query_client_in_db = dbcon.NewQuery("SELECT 1 FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	if(!query_client_in_db.Execute())
+
+
+	var/DBQuery/query_log_player = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	if(!query_log_player.Execute())
 		return
-	if(!query_client_in_db.NextRow())
-		new_player = 1
-		account_join_date = sanitizeSQL(findJoinDate())
-		var/DBQuery/query_add_player = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
-		if(!query_add_player.Execute())
-			return
-		if(!account_join_date)
-			account_join_date = "Error"
-			account_age = -1
-	var/DBQuery/query_get_client_age = dbcon.NewQuery("SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	if(!query_get_client_age.Execute())
-		return
-	if(query_get_client_age.NextRow())
-		player_join_date = query_get_client_age.item[1]
-		player_age = text2num(query_get_client_age.item[2])
-		if(!account_join_date)
-			account_join_date = query_get_client_age.item[3]
-			account_age = text2num(query_get_client_age.item[4])
-			if(!account_age)
-				account_join_date = sanitizeSQL(findJoinDate())
-				if(!account_join_date)
-					account_age = -1
-				else
-					var/DBQuery/query_datediff = dbcon.NewQuery("SELECT DATEDIFF(Now(),[account_join_date])")
-					if(!query_datediff.Execute())
-						return
-					if(query_datediff.NextRow())
-						account_age = text2num(query_datediff.item[1])
-	if(!new_player)
-		var/DBQuery/query_log_player = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
-		if(!query_log_player.Execute())
-			return
-	if(!account_join_date)
-		account_join_date = "Error"
+
+	//Logging player access
+
 	var/DBQuery/query_log_connection = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 

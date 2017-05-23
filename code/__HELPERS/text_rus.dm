@@ -53,7 +53,7 @@ JSON на выходе - строго ASCII, строки закодированы в Unicode, все Unicode-символ
 /proc/strip_macros(t)
 	t = replacetext(t, "\proper", "")
 	t = replacetext(t, "\improper", "")
-	t = replacetext(t, "	 я!", "	")
+	t = replacetext(t, "я!", "")
 	return t
 
 // Меняет "я" на код, попутно срезая макросы.
