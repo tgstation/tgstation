@@ -1052,15 +1052,15 @@
 	else
 		cooldown = world.time + cooldown_duration
 		warned = FALSE
-		INVOKE_ASYNC(src, /obj/machinery/manned_turret/.proc/volley)
+		INVOKE_ASYNC(src, /obj/machinery/manned_turret/.proc/volley, user)
 
-/obj/machinery/manned_turret/proc/volley()
+/obj/machinery/manned_turret/proc/volley(mob/user)
 	target_turf = get_turf(target)
 	for(var/i in 1 to number_of_shots)
-		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper), i*rate_of_fire)
+		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 
-/obj/machinery/manned_turret/proc/fire_helper()
+/obj/machinery/manned_turret/proc/fire_helper(mob/user)
 	if(!src)
 		return
 	var/turf/targets_from = get_turf(src)
@@ -1069,7 +1069,7 @@
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	P.current = targets_from
 	P.starting = targets_from
-	P.firer = src
+	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
 	P.yo = target.y - targets_from.y + rand(-1,1)
