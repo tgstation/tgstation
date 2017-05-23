@@ -44,8 +44,8 @@
 	..()
 
 
-/obj/item/weapon/paper/New()
-	..()
+/obj/item/weapon/paper/Initialize()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	update_icon()
