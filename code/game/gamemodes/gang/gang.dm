@@ -92,6 +92,52 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			modePlayer += boss_mind
 
 
+	//turn off sec and captain
+	SSjob.DisableJob(/datum/job/captain)
+	SSjob.DisableJob(/datum/job/hos)
+	SSjob.DisableJob(/datum/job/warden)
+	SSjob.DisableJob(/datum/job/detective)
+	SSjob.DisableJob(/datum/job/officer)
+	SSjob.DisableJob(/datum/job/ai)
+	SSjob.DisableJob(/datum/job/cyborg)
+
+
+	SSticker.OnRoundstart(CALLBACK(src, .proc/gangpocalypse))
+
+	return 1
+
+/datum/game_mode/gang/proc/gangpocalypse()
+	set waitfor = FALSE
+	..(FALSE, FALSE)
+	var/list/bosses = list()
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			bosses += boss_mind
+			//var/msg = "<span class='danger'>You are a local leader for the [G.name] gang, with security gone this station is ripe for the taking!"
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
+			G.add_gang_hud(boss_mind)
+			equip_gang(boss_mind.current,G)
+			modePlayer += boss_mind
+	sleep(50)
+	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
+	sleep(60)
+	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")
+	explosion(target_armory, 7, 14, 28, 30, TRUE, TRUE)
+	explosion(target_equipment, 7, 14, 28, 30, TRUE, TRUE)
+
+	for(var/mob/living/M in GLOB.player_list)
+		if(M in get_all_gangsters())
+			continue
+		vigilize(M)
+
+/datum/game_mode/gang/proc/vigilize(mob/living/M)
+	var/datum/objective/escape/E = new
+	E.owner = M.mind
+	M.mind.objectives += E
+	to_chat(M, "<FONT size=3><u>You are a Vigilante!</u><br> Nanotrasen has given you, and all loyal crew, authority to eliminate gang activity aboard the station.<br> You have been equipped with a reverse-engineered gangtool that will allow you to gain influence for destroying gang equipment.<br> Prevent the gangs from taking over the station!</FONT>")
+	M.mind.announce_objectives()
+
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind

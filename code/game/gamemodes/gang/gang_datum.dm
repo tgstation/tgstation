@@ -8,7 +8,6 @@
 	var/list/datum/mind/gangsters = list() //gang B Members
 	var/list/datum/mind/bosses = list() //gang A Bosses
 	var/list/obj/item/device/gangtool/gangtools = list()
-	var/style
 	var/fighting_style = "normal"
 	var/list/territory = list()
 	var/list/territory_new = list()
@@ -162,6 +161,7 @@
 		else
 			reg_category_list[G.category] = list(G)
 
+
 /datum/gang/proc/add_gang_hud(datum/mind/recruit_mind)
 	ganghud.join_hud(recruit_mind.current)
 	SSticker.mode.set_antag_hud(recruit_mind.current, ((recruit_mind in bosses) ? "gang_boss" : "gangster"))
@@ -237,54 +237,46 @@
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
 	var/sbonus = sqrt(LAZYLEN(territory))  // Bonus given to soldier's for the gang's total territory
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
-	if(is_dominating)
-		var/seconds_remaining = domination_time_remaining()
-		var/new_time = max(180, seconds_remaining - (territory.len * 2))
-		if(new_time < seconds_remaining)
-			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories.<BR>"
-			set_domination_time(new_time)
-		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
-	else
-		for(var/obj/item/device/gangtool/G in gangtools)
-			var/pmessage = message
-			var/points_new = 0
-			if(istype(G, /obj/item/device/gangtool/soldier))
-				points_new = max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(G.tags)/2) // Soldier points
-				pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
-			else
-				points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
-				pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
-			G.points += points_new
-			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
-			var/points_newer = 0
-			var/static/inner = inner_outfit
-			var/static/outer = outer_outfit
-			if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
-				for(var/obj/C in ganger.contents)
-					if(C.type == inner_outfit)
+	for(var/obj/item/device/gangtool/G in gangtools)
+		var/pmessage = message
+		var/points_new = 0
+		if(istype(G, /obj/item/device/gangtool/soldier))
+			points_new = max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(G.tags)/2) // Soldier points
+			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
+		else
+			points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
+			pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
+		G.points += points_new
+		var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
+		var/points_newer = 0
+		var/static/inner = inner_outfit
+		var/static/outer = outer_outfit
+		if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
+			for(var/obj/C in ganger.contents)
+				if(C.type == inner_outfit)
+					points_newer += 2
+					continue
+				if(C.type == outer_outfit)
+					points_newer += 2
+					continue
+				switch(C.type)
+					if(/obj/item/clothing/neck/necklace/dope)
 						points_newer += 2
-						continue
-					if(C.type == outer_outfit)
-						points_newer += 2
-						continue
-					switch(C.type)
-						if(/obj/item/clothing/neck/necklace/dope)
-							points_newer += 2
-						if(/obj/item/clothing/head/collectable/petehat/gang)
-							points_newer += 4
-						if(/obj/item/clothing/shoes/gang)
-							points_newer += 6
-						if(/obj/item/clothing/mask/gskull)
-							points_newer += 5
-						if(/obj/item/clothing/gloves/gang)
-							points_newer += 3
-						if(/obj/item/weapon/storage/belt/military/gang)
-							points_newer += 4
-			if(points_newer)
-				G.points += points_newer
-				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
-			pmessage += "You now have <b>[G.points] influence</b>.<BR>"
-			to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
+					if(/obj/item/clothing/head/collectable/petehat/gang)
+						points_newer += 4
+					if(/obj/item/clothing/shoes/gang)
+						points_newer += 6
+					if(/obj/item/clothing/mask/gskull)
+						points_newer += 5
+					if(/obj/item/clothing/gloves/gang)
+						points_newer += 3
+					if(/obj/item/weapon/storage/belt/military/gang)
+						points_newer += 4
+		if(points_newer)
+			G.points += points_newer
+			pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
+		pmessage += "You now have <b>[G.points] influence</b>.<BR>"
+		to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
 
 
 //Multiverse
