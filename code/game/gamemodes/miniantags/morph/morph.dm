@@ -35,6 +35,7 @@
 	var/morphed = 0
 	var/atom/movable/form = null
 	var/morph_time = 0
+	var/list/blacklist_typecache
 
 	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
@@ -66,17 +67,15 @@
 		return //we hide medical hud while morphed
 	..()
 
+/mob/living/simple_animal/hostile/morph/Initialize()
+	. = ..()
+	blacklist_typecache |= typecacheof(list(/obj/screen))
+	blacklist_typecache |= typecacheof(list(/obj/singularity))
+	blacklist_typecache |= typecacheof(list(mob/living/simple_animal/hostile/morph))
+	blacklist_typecache |= typecacheof(list(/obj/effect))
+
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
-	if(istype(A,/obj/screen))
-		return FALSE
-	else if(istype(A,/obj/singularity))
-		return FALSE
-	else if(istype(A,/mob/living/simple_animal/hostile/morph))
-		return FALSE
-	else if(isobj(A) || ismob(A))
-		return TRUE
-	else
-		return FALSE
+	return !is_type_in_typecache(A.type, blacklist_typecache)
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
