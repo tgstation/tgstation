@@ -41,12 +41,24 @@
 	light_range = 2
 	light_power = 3
 	light_color = LIGHT_COLOR_FLARE
+	var/remove_speed = 15
 
 /obj/structure/marker_beacon/attack_hand(mob/living/user)
 	to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
-	if(do_after(user, 20, target = src))
+	if(do_after(user, remove_speed, target = src))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			qdel(src) //otherwise delete us
+
+/obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/marker_beacon))
+		var/obj/item/stack/marker_beacon/M = I
+		to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
+		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
+			M.add(1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			qdel(src)
+	else
+		return ..()
