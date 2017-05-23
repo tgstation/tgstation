@@ -19064,6 +19064,9 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
+/obj/machinery/keycard_auth{
+	pixel_x = -24
+	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -140803,7 +140806,7 @@ aaa
 aaa
 aaa
 aiT
-dkn
+dkm
 akA
 ald
 alO
