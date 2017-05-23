@@ -194,7 +194,7 @@ namespace TGServerService
 					
 					lock (CompilerLock)
 					{
-						compilerCurrentStatus = TGCompilerStatus.Initialized;
+						compilerCurrentStatus = TGCompilerStatus.Compiling;
 					}
 				}
 				catch (ThreadAbortException)
@@ -216,6 +216,7 @@ namespace TGServerService
 			{
 				return;
 			}
+			CompileImpl();
 		}		
 
 		//Returns the A or B dir in which the game is NOT running
