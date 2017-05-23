@@ -76,7 +76,7 @@
 			return FIELD_TURF
 	return NO_FIELD
 
-/proc/return_fields_on_turf(turf/T)
+/proc/return_fields_on_turf(turf/T)	//Only works if a field sets up turf objects on all turfs.
 	var/list/ret = list()
 	fro(var/obj/effect/abstract/proximity_checker/advanced/part in T)
 		if(T.parent)
