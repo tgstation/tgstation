@@ -17,15 +17,6 @@
     <Setting Name="CommitterEmail" Type="System.String" Scope="User">
       <Value Profile="(Default)">tgstation-server@users.noreply.github.com</Value>
     </Setting>
-    <Setting Name="CredentialUsername" Type="System.String" Scope="User">
-      <Value Profile="(Default)">tgstation-server</Value>
-    </Setting>
-    <Setting Name="CredentialEntropy" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Insufficient data for meaningful answer</Value>
-    </Setting>
-    <Setting Name="CredentialCyphertext" Type="System.String" Scope="User">
-      <Value Profile="(Default)">correcthorsebatterystaple</Value>
-    </Setting>
     <Setting Name="ServerDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:/tgstation-server-3</Value>
     </Setting>
@@ -67,12 +58,6 @@
     </Setting>
     <Setting Name="ChatProviderEntropy" Type="System.String" Scope="User">
       <Value Profile="(Default)">John Madden</Value>
-    </Setting>
-    <Setting Name="AllowChangelogPush" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="CommitStageRestriction" Type="System.String" Scope="User">
-      <Value Profile="(Default)">html/*</Value>
     </Setting>
   </Settings>
 </SettingsFile>

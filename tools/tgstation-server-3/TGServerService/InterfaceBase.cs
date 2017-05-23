@@ -65,7 +65,7 @@ namespace TGServerService
 			if (res != null)
 				return res;
 
-			if (push_changelog_if_enabled && Properties.Settings.Default.AllowChangelogPush)
+			if (push_changelog_if_enabled && SSHAuth())
 			{
 				res = Commit();
 				if (res != null)

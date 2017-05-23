@@ -9,7 +9,7 @@ namespace TGCommandLine
 		public RepoCommand()
 		{
 			Keyword = "repo";
-			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoSetCredentialsCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand(), new RepoCheckoutCommand(), new RepoResetCommand() };
+			Children = new Command[] { new RepoSetupCommand(), new RepoUpdateCommand(), new RepoChangelogCommand(), new RepoPythonPathCommand(), new RepoSetEmailCommand(), new RepoSetNameCommand(), new RepoMergePRCommand(), new RepoListPRsCommand(), new RepoStatusCommand(), new RepoListBackupsCommand(), new RepoCheckoutCommand(), new RepoResetCommand() };
 		}
 		protected override string GetHelpText()
 		{
@@ -233,40 +233,6 @@ namespace TGCommandLine
 		protected override string GetHelpText()
 		{
 			return "Set the path to the folder containing the python 2.7 installation";
-		}
-	}
-	class RepoSetCredentialsCommand : Command
-	{
-		public RepoSetCredentialsCommand()
-		{
-			Keyword = "set-credentials";
-		}
-		public override ExitCode Run(IList<string> parameters)
-		{
-			Console.WriteLine("Enter username:");
-			var user = Console.ReadLine();
-			if (user.Length == 0)
-			{
-				Console.WriteLine("Invalid username!");
-				return ExitCode.BadCommand;
-			}
-			Console.WriteLine("Enter password:");
-			var pass = Program.ReadLineSecure();
-			if (pass.Length == 0)
-			{
-				Console.WriteLine("Invalid password!");
-				return ExitCode.BadCommand;
-			}
-			Server.GetComponent<ITGRepository>().SetCredentials(user, pass);
-			return ExitCode.Normal;
-		}
-		protected override string GetArgumentString()
-		{
-			return "<path>";
-		}
-		protected override string GetHelpText()
-		{
-			return "Set the credentials used for pushing commits";
 		}
 	}
 

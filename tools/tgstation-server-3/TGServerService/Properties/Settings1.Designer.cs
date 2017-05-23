@@ -85,42 +85,6 @@ namespace TGServerService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tgstation-server")]
-        public string CredentialUsername {
-            get {
-                return ((string)(this["CredentialUsername"]));
-            }
-            set {
-                this["CredentialUsername"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Insufficient data for meaningful answer")]
-        public string CredentialEntropy {
-            get {
-                return ((string)(this["CredentialEntropy"]));
-            }
-            set {
-                this["CredentialEntropy"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("correcthorsebatterystaple")]
-        public string CredentialCyphertext {
-            get {
-                return ((string)(this["CredentialCyphertext"]));
-            }
-            set {
-                this["CredentialCyphertext"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:/tgstation-server-3")]
         public string ServerDirectory {
             get {
@@ -264,30 +228,6 @@ namespace TGServerService.Properties {
             }
             set {
                 this["ChatProviderEntropy"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AllowChangelogPush {
-            get {
-                return ((bool)(this["AllowChangelogPush"]));
-            }
-            set {
-                this["AllowChangelogPush"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("html/*")]
-        public string CommitStageRestriction {
-            get {
-                return ((string)(this["CommitStageRestriction"]));
-            }
-            set {
-                this["CommitStageRestriction"] = value;
             }
         }
     }

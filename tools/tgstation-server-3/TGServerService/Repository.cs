@@ -21,8 +21,11 @@ namespace TGServerService
 		const string RepoData = RepoPath + "/data";
 		const string RepoErrorUpToDate = "Already up to date!";
 		const string SSHPushRemote = "ssh_push_target";
+		const string UsernamePath = "repository_username.txt";
 		const string PrivateKeyPath = "repository_private_key.txt";
 		const string PRJobFile = "prtestjob.json";
+		const string CommitPathSpec = "html/*";
+		const string CommitMessage = "Automatic changelog compile, [ci skip]";
 
 		object RepoLock = new object();
 		bool RepoBusy = false;
@@ -153,7 +156,7 @@ namespace TGServerService
 					currentProgress = -1;
 					LoadRepo();
 
-					//create an ssh remote for pushing with public keys
+					//create an ssh remote for pushing
 					Repo.Network.Remotes.Add(SSHPushRemote, RepoURL.Replace("git://", "ssh://").Replace("https://", "ssh://"));
 
 					lock (configLock)
@@ -201,7 +204,7 @@ namespace TGServerService
 				if (DaemonStatus() != TGDreamDaemonStatus.Offline)
 					return "DreamDaemon is running!";
 				if (RepoURL.Contains("ssh://") && !SSHAuth())
-					return String.Format("SSH url specified but {0} does not exist in the server directory!", PrivateKeyPath);
+					return String.Format("SSH url specified but {0} or {1} does not exist in the server directory!", PrivateKeyPath, UsernamePath);
 				RepoBusy = true;
 				Cloning = true;
 				new Thread(new ParameterizedThreadStart(Clone))
@@ -357,7 +360,10 @@ namespace TGServerService
 
 					var R = Repo.Network.Remotes["origin"];
 					IEnumerable<string> refSpecs = R.FetchRefSpecs.Select(X => X.Specification);
-					var fos = new FetchOptions();
+					var fos = new FetchOptions()
+					{
+						CredentialsProvider = GenerateGitCredentials,
+					};
 					fos.OnTransferProgress += HandleTransferProgress;
 					Commands.Fetch(Repo, R.Name, refSpecs, null, logMessage);
 
@@ -637,39 +643,7 @@ namespace TGServerService
 		}
 
 		//public api
-		public string GetCredentialUsername()
-		{
-			lock (RepoLock)
-			{
-				return Properties.Settings.Default.CredentialUsername;
-			}
-		}
-
-		//public api
-		public void SetCredentials(string username, string password)
-		{
-			lock (RepoLock)
-			{
-				byte[] plaintext = Encoding.UTF8.GetBytes(password);
-
-				// Generate additional entropy (will be used as the Initialization vector)
-				byte[] entropy = new byte[20];
-				using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-				{
-					rng.GetBytes(entropy);
-				}
-
-				byte[] ciphertext = ProtectedData.Protect(plaintext, entropy, DataProtectionScope.CurrentUser);
-
-				var Config = Properties.Settings.Default;
-				Config.CredentialUsername = username;
-				Config.CredentialEntropy = Convert.ToBase64String(entropy, 0, entropy.Length);
-				Config.CredentialCyphertext = Convert.ToBase64String(ciphertext, 0, ciphertext.Length);
-			}
-		}
-
-		//public api
-		string Commit(string message = "Automatic changelog compile, [ci skip]")
+		string Commit()
 		{
 			lock (RepoLock)
 			{
@@ -679,13 +653,13 @@ namespace TGServerService
 				try
 				{
 					// Stage the file
-					Commands.Stage(Repo, Properties.Settings.Default.CommitStageRestriction);
+					Commands.Stage(Repo, CommitPathSpec);
 
 					// Create the committer's signature and commit
 					var authorandcommitter = MakeSig();
 
 					// Commit to the repository
-					Repo.Commit(message, authorandcommitter, authorandcommitter);
+					Repo.Commit(CommitMessage, authorandcommitter, authorandcommitter);
 					DeletePRList();
 					return null;
 				}
@@ -707,11 +681,14 @@ namespace TGServerService
 
 				try
 				{
+					if (!SSHAuth())
+						return String.Format("Either {0} or {1} is missing from the server directory. Unable to push!", PrivateKeyPath, UsernamePath);
+
 					var options = new PushOptions()
 					{
 						CredentialsProvider = GenerateGitCredentials,
 					};
-					Repo.Network.Push(Repo.Network.Remotes[SSHAuth() ? SSHPushRemote : "origin"], "refs/heads/" + Repo.Head.CanonicalName, options);
+					Repo.Network.Push(Repo.Network.Remotes[SSHPushRemote], "refs/heads/" + Repo.Head.CanonicalName, options);
 					return null;
 				}
 				catch (Exception e)
@@ -723,33 +700,15 @@ namespace TGServerService
 
 		bool SSHAuth()
 		{
-			return File.Exists(PrivateKeyPath);
+			return File.Exists(PrivateKeyPath) && File.Exists(UsernamePath);
 		}
 
 		Credentials GenerateGitCredentials(string url, string usernameFromUrl, SupportedCredentialTypes types)
 		{
-			var Config = Properties.Settings.Default;
-			if (SSHAuth())
-				return new SshUserKeyCredentials()
-				{
-					Username = Config.CredentialUsername,
-					PublicKey = PrivateKeyPath,
-				};
-
-			string plaintext;
-			try
+			return new SshUserKeyCredentials()
 			{
-				plaintext = Encoding.UTF8.GetString(ProtectedData.Unprotect(Convert.FromBase64String(Config.CredentialCyphertext), Convert.FromBase64String(Config.CredentialEntropy), DataProtectionScope.CurrentUser));
-			}
-			catch
-			{
-				throw new Exception("Git password decryption failed! Did you set one?");
-			}
-
-			return new UsernamePasswordCredentials()
-			{
-				Username = Config.CredentialUsername,
-				Password = plaintext,
+				Username = File.ReadAllText(UsernamePath).Trim(),
+				PublicKey = PrivateKeyPath,
 			};
 		}
 

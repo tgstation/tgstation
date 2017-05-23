@@ -91,14 +91,6 @@ namespace TGServiceInterface
 		[OperationContract]
 		void SetCommitterEmail(string newEmail);
 
-		//Gets the username of the current git credentials
-		[OperationContract]
-		string GetCredentialUsername();
-
-		//Sets the git remote credentials
-		[OperationContract]
-		void SetCredentials(string username, string password);
-
 		/// <summary>
 		/// Updates the html changelog
 		/// </summary>

@@ -298,17 +298,16 @@ namespace TGServerService
 
 				var copy = di1.Root.FullName != di2.Root.FullName;
 
+				if (copy && File.Exists(PrivateKeyPath))
+					return String.Format("Unable to perform a cross drive server move with the {0}. Copy aborted!", PrivateKeyPath);
+
 				new_location = di2.FullName;
 
 				while (di2.Parent != null)
-				{
 					if (di2.Parent.FullName == di1.FullName)
-					{
 						return "Cannot move to child of current directory!";
-					}
-					else di2 = di2.Parent;
-				}
-
+					else
+						di2 = di2.Parent;
 
 				if (!Monitor.TryEnter(RepoLock))
 					return "Repo locked!";
