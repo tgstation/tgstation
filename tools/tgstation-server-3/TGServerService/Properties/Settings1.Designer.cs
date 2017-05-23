@@ -278,5 +278,17 @@ namespace TGServerService.Properties {
                 this["AllowChangelogPush"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("html/*")]
+        public string CommitStageRestriction {
+            get {
+                return ((string)(this["CommitStageRestriction"]));
+            }
+            set {
+                this["CommitStageRestriction"] = value;
+            }
+        }
     }
 }

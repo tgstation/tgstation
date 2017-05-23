@@ -670,7 +670,7 @@ namespace TGServerService
 				try
 				{
 					// Stage the file
-					Commands.Stage(Repo, "html/*");
+					Commands.Stage(Repo, Properties.Settings.Default.CommitStageRestriction);
 
 					// Create the committer's signature and commit
 					var authorandcommitter = MakeSig();

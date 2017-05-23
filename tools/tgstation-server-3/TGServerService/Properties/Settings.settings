@@ -71,5 +71,8 @@
     <Setting Name="AllowChangelogPush" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="CommitStageRestriction" Type="System.String" Scope="User">
+      <Value Profile="(Default)">html/*</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
