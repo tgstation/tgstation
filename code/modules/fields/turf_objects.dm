@@ -75,3 +75,10 @@
 		if(O.parent == F)
 			return FIELD_TURF
 	return NO_FIELD
+
+/proc/return_fields_on_turf(turf/T)
+	var/list/ret = list()
+	fro(var/obj/effect/abstract/proximity_checker/advanced/part in T)
+		if(T.parent)
+			ret |= T.parent
+	return ret
