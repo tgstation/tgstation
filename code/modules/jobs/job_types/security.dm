@@ -37,7 +37,7 @@ Head of Security
 	jobtype = /datum/job/hos
 
 	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/device/pda/heads/hos
+	belt = /obj/item/weapon/gun/projectile/automatic/pistol/APS
 	ears = /obj/item/device/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -48,7 +48,7 @@ Head of Security
 	suit_store = /obj/item/weapon/gun/energy/e_gun
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1, /obj/item/device/pda/heads/hos)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
