@@ -92,7 +92,7 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(A.IsObscured())
+	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
 	if(istype(loc,/obj/mecha))
@@ -446,6 +446,7 @@
 		C.swap_hand()
 	else
 		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
 	. = 1
