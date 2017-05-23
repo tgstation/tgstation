@@ -362,28 +362,23 @@
 /**********************Mining Scanners**********************/
 
 /obj/item/device/mining_scanner
-	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
+	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
 	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/cooldown = 0
+	var/cooldown = 35
+	var/current_cooldown = 0
 	origin_tech = "engineering=1;magnets=1"
 
 /obj/item/device/mining_scanner/attack_self(mob/user)
 	if(!user.client)
 		return
-	if(!cooldown)
-		cooldown = TRUE
-		addtimer(CALLBACK(src, .proc/clear_cooldown), 40)
-		var/list/mobs = list()
-		mobs |= user
-		mineral_scan_pulse(mobs, get_turf(user))
-
-/obj/item/device/mining_scanner/proc/clear_cooldown()
-	cooldown = FALSE
+	if(current_cooldown <= world.time)
+		current_cooldown = world.time + cooldown
+		mineral_scan_pulse(get_turf(user))
 
 
 //Debug item to identify all ore spread quickly
@@ -396,7 +391,7 @@
 	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear meson scanners for optimal results. This one has an extended range."
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. This one has an extended range."
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
@@ -404,77 +399,47 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
-	var/on_cooldown = 0
+	var/current_cooldown = 0
 	var/range = 7
-	var/meson = TRUE
 	origin_tech = "engineering=3;magnets=3"
-
-/obj/item/device/t_scanner/adv_mining_scanner/material
-	meson = FALSE
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results. This one has an extended range."
 
 /obj/item/device/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear meson scanners for optimal results."
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	range = 4
 	cooldown = 50
 
-/obj/item/device/t_scanner/adv_mining_scanner/lesser/material
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
-	meson = FALSE
-
 /obj/item/device/t_scanner/adv_mining_scanner/scan()
-	if(!on_cooldown)
-		on_cooldown = 1
-		spawn(cooldown)
-			on_cooldown = 0
+	if(current_cooldown <= world.time)
+		current_cooldown = world.time + cooldown
 		var/turf/t = get_turf(src)
-		var/list/mobs = recursive_mob_check(t, 1,0,0)
-		if(!mobs.len)
-			return
-		if(meson)
-			mineral_scan_pulse(mobs, t, range)
-		else
-			mineral_scan_pulse_material(mobs, t, range)
+		mineral_scan_pulse(t, range)
 
-//For use with mesons
-/proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
+/proc/mineral_scan_pulse(turf/T, range = world.view)
 	var/list/minerals = list()
 	for(var/turf/closed/mineral/M in range(range, T))
 		if(M.scan_state)
 			minerals += M
-	if(minerals.len)
-		for(var/mob/user in mobs)
-			if(user.client)
-				var/client/C = user.client
-				for(var/turf/closed/mineral/M in minerals)
-					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = FLASH_LAYER)
-					I.plane = FULLSCREEN_PLANE
-					C.images += I
-					spawn(30)
-						if(C)
-							C.images -= I
-
-//For use with material scanners
-/proc/mineral_scan_pulse_material(list/mobs, turf/T, range = world.view)
-	var/list/minerals = list()
-	for(var/turf/closed/mineral/M in range(range, T))
-		if(M.scan_state)
-			minerals += M
-	if(minerals.len)
+	if(LAZYLEN(minerals))
 		for(var/turf/closed/mineral/M in minerals)
+			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
+			if(oldC)
+				qdel(oldC)
 			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
 
 /obj/effect/temp_visual/mining_overlay
+	plane = FULLSCREEN_PLANE
 	layer = FLASH_LAYER
-	icon = 'icons/turf/smoothrocks.dmi'
-	anchored = 1
-	mouse_opacity = 0
-	duration = 30
-	pixel_x = -4
-	pixel_y = -4
+	icon = 'icons/effects/ore_visuals.dmi'
+	appearance_flags = 0 //to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
+	duration = 35
+	pixel_x = -224
+	pixel_y = -224
+
+/obj/effect/temp_visual/mining_overlay/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = duration, easing = EASE_IN)
 
 
 /**********************Xeno Warning Sign**********************/
