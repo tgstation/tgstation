@@ -32,11 +32,12 @@
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	// blacksmithing vars
-	var/attack_force = 5 //-self-explanatory
-	var/penetration_value = 0 //-armour_penetration
-	var/sharp_result = FALSE //-if the molded reagent comes out sharp
-	var/pick_speed = 40 //-how fast the reagent would mine
-	var/produce_type = /obj/item/weapon/ore/slag //-what the reagent produces if used in a mold
+	var/attack_force = 5 //self-explanatory
+	var/penetration_value = 0 //armour_penetration
+	var/sharp_result = FALSE //if the molded reagent comes out sharp
+	var/pick_speed = 40 //how fast the reagent would mine
+	var/blunt_damage = FALSE //if the reagant would make a good blunt weapon
+	var/produce_type = /obj/item/weapon/ore/slag //what the reagent produces if used in a mold
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

@@ -27,7 +27,7 @@
 			LAZYREMOVE(spawned_mobs, i)
 			continue
 		var/mob/living/M = i
-		if(M.stat == DEAD) //adding timer to dead dwarfs
+		if(M.stat == DEAD || !M.key) //adding timer to dead/ghosted dwarfs
 			add_dorf_timer(M)
 
 /obj/machinery/migrant_spawner/attack_ghost(mob/user)

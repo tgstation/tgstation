@@ -83,15 +83,23 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/material_type = "unobtanium" //these are mostly for the smelt-crafting and whatever custom shenanigans for var-editing
 	var/mold_type = "blob" //determines what the resulting item is used for and gives appropriate stats
-	var/pickaxe_speed = 0
+	var/pickaxe_speed = 0 //how fast it digs
 	var/metal_force = 0
-	var/attack_amt = 0
+	var/attack_amt = 0 //how much it hurts to be hit by it
+	var/blunt_bonus = FALSE //determines if the reagent used for the part has a bonus for blunt materials (uranium, ect)
 
 /obj/item/weapon/mold_result/blade
 	name = "blade"
 	desc = "A blade made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "sword_blade"
+	mold_type = "offensive"
+
+/obj/item/weapon/mold_result/hammer_head
+	name = "hammer head"
+	desc = "A hammer head made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "hammer_head"
 	mold_type = "offensive"
 
 /obj/item/weapon/mold_result/armor_plating
@@ -134,6 +142,8 @@
 		pickaxe_speed = smelted_material.pick_speed
 	if(smelted_material.sharp_result)
 		sharpness = IS_SHARP
+	if(smelted_material.blunt_damage)
+		blunt_bonus = TRUE
 
 
 ////////////////////////// Smithed Items///////////////////////
@@ -159,6 +169,40 @@
 		desc = "A broadsword made of [B.material_type]."
 		armour_penetration = B.armour_penetration
 		sharpness = B.sharpness
+
+/*Warhammer*/
+/obj/item/weapon/twohanded/smithed_warhammer
+	name = "unobtanium warhammer"
+	desc = "A warhammer made of unobtanium, you probably shouldn't be seeing this."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "sledgehammer"
+	item_state = "sledgehammer"
+	force = 11
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = SLOT_BACK
+	throw_speed = 4
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+
+/obj/item/weapon/twohanded/smithed_warhammer/CheckParts(list/parts_list)
+	..()
+	var/obj/item/weapon/mold_result/hammer_head/M = locate() in contents
+	if(M)
+		var/image/I = image('icons/obj/blacksmithing.dmi', "hammer_head")
+		I.color = M.color
+		smelted_material = new M.smelted_material.type()
+		add_overlay(I)
+		name = "[M.material_type] warhammer"
+		if(M.blunt_bonus = TRUE)// club'em real good
+			force = M.attack_amt * 2
+			force_unwielded = M.attack_amt * 2
+			force_wielded = M.attack_amt * 4
+		else
+			force = M.attack_amt * 0.75
+			force_unwielded = M.attack_amt * 0.75
+			force_wielded = M.attack_amt * 2
+		desc = "A warhammer made of [M.material_type]."
+		armour_penetration = M.armour_penetration * 3 //haha what armor??
+		sharpness = M.sharpness
 
 /*Pickaxe*/
 /obj/item/weapon/pickaxe/smithed_pickaxe
@@ -199,7 +243,10 @@
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()
 		name = "[S.material_type] shovel"
-		force = S.attack_amt * 0.8 //probably not the best idea for a weapon but it'd probably still work
+		if(S.blunt_bonus = TRUE)// a shovel is essentially a blunt object
+			force = S.attack_amt * 1.25
+		else
+			force = S.attack_amt * 0.75
 		digspeed = S.pickaxe_speed * 0.5 //gotta DIG FAST
 		desc = "A shovel with a [S.material_type] head."
 		armour_penetration = S.armour_penetration * 0.5

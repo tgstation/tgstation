@@ -9,10 +9,8 @@
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	strip_delay = 80
 	put_on_delay = 60
-	dwarf_only = TRUE
-	greyscale = TRUE
 
-/obj/item/clothing/suit/armor/riot/dwarf/CheckParts(list/parts_list)
+/obj/item/clothing/suit/armor/vest/dwarf/CheckParts(list/parts_list)
 	..()
 	var/obj/item/weapon/mold_result/armor_plating/S = locate() in contents
 	if(S)
@@ -32,7 +30,6 @@
 	icon_state = "dwarf"
 	item_state = "dwarf"
 	item_color = "dwarf"
-	dwarf_only = TRUE
 
 /obj/item/clothing/shoes/dwarf
 	name = "dwarf shoes"
@@ -40,7 +37,6 @@
 	item_color = "dwarf"
 	item_state = "dwarf"
 	desc = "A pair of dwarven boots."
-	dwarf_only = TRUE
 
 /obj/item/clothing/gloves/dwarf
 	desc = "Great for holding pickaxes."
@@ -48,15 +44,12 @@
 	icon_state = "dwarf"
 	item_color = "dwarf"
 	item_state = "dwarf"
-	dwarf_only = TRUE
 
 /obj/item/clothing/head/helmet/dwarf
 	name = "dwarven helm"
 	desc = "Protects the head from tantrums."
 	icon_state = "dwarf"
 	item_state = "dwarf"
-	dwarf_only = TRUE
-	greyscale = TRUE
 
 /obj/item/clothing/head/helmet/dwarf/CheckParts(list/parts_list)
 	..()

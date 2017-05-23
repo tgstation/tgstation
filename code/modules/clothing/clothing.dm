@@ -25,6 +25,8 @@
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/list/species_clothing_blacklist //If you're in this list, you can't wear it
+	var/list/species_clothing_whitelist //If you're not in this list, you can't wear it
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
@@ -38,17 +40,8 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
-	var/greyscale = FALSE
 	var/my_clothing_icon = 'icons/mob/uniform.dmi'
-	var/dwarf_only = FALSE
 
-/obj/item/clothing/worn_overlays(isinhands = FALSE)
-	. = ..()
-	if(!isinhands)
-		if(greyscale)
-			var/mutable_appearance/A = mutable_appearance(my_clothing_icon, item_state)
-			A.color = color
-			. += A
 /obj/item/clothing/New()
 	..()
 	if(ispath(pockets))
@@ -141,17 +134,11 @@
 
 /obj/item/clothing/equipped(mob/user, slot)
 	..()
-
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
 		for(var/variable in user_vars_to_edit)
 			if(variable in user.vars)
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
-	if(greyscale)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.regenerate_icons()
-
 
 /obj/item/clothing/examine(mob/user)
 	..()

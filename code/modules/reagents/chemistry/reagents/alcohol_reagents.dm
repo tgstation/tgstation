@@ -36,13 +36,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/alcoholvessel/dwarf
-		dwarf = H.getorganslot("dwarf_organ")
-		if(dwarf)
-			if(dwarf.stored_alcohol < dwarf.max_alcohol)
-				dwarf.stored_alcohol += boozepwr * 0.01
-				return ..() || .
-
 		if(H.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
 			H.drunkenness = max((H.drunkenness + (sqrt(volume) * boozepwr * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 	return ..() || .

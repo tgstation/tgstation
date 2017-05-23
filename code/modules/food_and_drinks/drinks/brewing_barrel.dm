@@ -17,7 +17,7 @@
 		return FALSE
 	if(!brewing_result)
 		return ..()
-	if(user.drop_item())
+	if(user.temporarilyRemoveItemFromInventory(W))
 		seedify(W)
 		brewables += list(brewing_result)
 		already_brewing += W.type
