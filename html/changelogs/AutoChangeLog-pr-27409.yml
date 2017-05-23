@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Nanotrasen has taken a lower bid for their meson suppliers, and meson scanners will no longer display terrain layouts while on the planet."
+  - tweak: "However, they have discovered that, with some tweaks, mineral scanners will no longer actually require you to be wearing mesons."
+  - tweak: "The cheaper mesons will not completely remove reliance on light."
