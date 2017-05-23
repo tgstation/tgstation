@@ -133,6 +133,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 	var/list/implants = null
+	var/list/organs = null
 
 	var/backpack = /obj/item/weapon/storage/backpack
 	var/satchel  = /obj/item/weapon/storage/backpack/satchel
@@ -188,3 +189,8 @@
 		for(var/implant_type in implants)
 			var/obj/item/weapon/implant/I = new implant_type(H)
 			I.implant(H, null, silent=TRUE)
+
+	if(organs)
+		for(var/organ_type in organs)
+			var/obj/item/organ/O = new organ_type(H)
+			O.Insert(H, drop_if_replaced=FALSE)

@@ -41,6 +41,7 @@ Chief Medical Officer
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	organs = list(/obj/item/organ/cyberimp/eyes/hud/medical)
 
 /*
 Medical Doctor
