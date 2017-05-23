@@ -1067,13 +1067,14 @@
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
+	var/distance = get_dist(targets_from, target_turf)
 	P.current = targets_from
 	P.starting = targets_from
 	P.firer = src
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
-	P.yo = target.y - targets_from.y + rand(-1,1)
-	P.xo = target.x - targets_from.x + rand(-1,1)
+	P.yo = target.y - targets_from.y + (rand(-1,1)*(distance/10))
+	P.xo = target.x - targets_from.x + (rand(-1,1)*(distance/10))
 	P.fire()
 
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
