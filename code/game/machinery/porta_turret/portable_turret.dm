@@ -1054,7 +1054,7 @@
 	else
 		cooldown = world.time + cooldown_duration
 		warned = FALSE
-		INVOKE_ASYNC(src, /obj/machinery/manned_turret/.proc/volley, user)
+		volley(user)
 
 /obj/machinery/manned_turret/proc/volley(mob/user)
 	target_turf = get_turf(target)
