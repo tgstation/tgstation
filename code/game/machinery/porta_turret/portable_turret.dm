@@ -1006,7 +1006,7 @@
 	var/obj/machinery/manned_turret/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
 	user.setDir(E.dir)
-	mouseparams = params
+	E.mouseparams = params
 	switch(E.dir)
 		if(NORTH)
 			E.layer = BELOW_MOB_LAYER
