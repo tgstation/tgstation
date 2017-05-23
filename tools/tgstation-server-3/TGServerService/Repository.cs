@@ -25,7 +25,6 @@ namespace TGServerService
         const string PrivateKeyPath = "RepoKey/private_key.txt";
         const string PublicKeyPath = "RepoKey/public_key.txt";
         const string PRJobFile = "prtestjob.json";
-		const string CommitPathSpec = "html/*";
 		const string CommitMessage = "Automatic changelog compile, [ci skip]";
 
 		object RepoLock = new object();
@@ -654,7 +653,8 @@ namespace TGServerService
 				try
 				{
 					// Stage the file
-					Commands.Stage(Repo, CommitPathSpec);
+					Commands.Stage(Repo, "html/changelog.html");
+					Commands.Stage(Repo, "html/changelogs");
 
 					// Create the committer's signature and commit
 					var authorandcommitter = MakeSig();
