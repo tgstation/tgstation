@@ -14,6 +14,7 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	resistance_flags = 0
 
+
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
 
@@ -61,8 +62,10 @@
 
 /obj/item/clothing/mask/vape/vapormask/proc/togglevape()
 	if(src.isprocessing)
+		to_chat(src.loc, "<span class='notice'>You turn \the [src] off.</span>")
 		itstimetostop()
 	else
+		to_chat(src.loc, "<span class='notice'>You turn \the [src] on.</span>")
 		itstimetovape()
 
 

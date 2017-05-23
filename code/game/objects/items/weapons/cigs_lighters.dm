@@ -728,11 +728,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			itstimetovape()
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
+		..()
 
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(slot_wear_mask) == src)
 		itstimetostop()
+		..()
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
 	if(reagents.total_volume)
