@@ -63,6 +63,7 @@
 			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
+			<A href='?src=\ref[src];secrets=schoolgirl'>Japanese Animes Mode</A><BR>
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
@@ -524,6 +525,23 @@
 				B.facial_hair_style = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
+
+		if("schoolgirl")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","SG")
+			for(var/obj/item/clothing/under/W in world)
+				W.can_adjust = 0
+				W.icon_state = "schoolgirl"
+				W.item_state = "w_suit"
+				W.item_color = "schoolgirl"
+				if(istype(W.loc,/mob/living/carbon/human))
+					var/mob/living/carbon/human/H = W.loc
+					H.gender = FEMALE
+					H.regenerate_icons()
+			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
+			world << sound('sound/AI/animes.ogg')
 
 		if("onlyone")
 			if(!check_rights(R_FUN))
