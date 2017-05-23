@@ -1444,6 +1444,7 @@
 #include "code\modules\mining\ores_coins.dm"
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mining\shelters.dm"
+#include "code\modules\mining\equipment\marker_beacons.dm"
 #include "code\modules\mining\laborcamp\laborshuttle.dm"
 #include "code\modules\mining\laborcamp\laborstacker.dm"
 #include "code\modules\mining\lavaland\ash_flora.dm"
