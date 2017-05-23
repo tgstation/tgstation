@@ -21,7 +21,6 @@ namespace TGServerService
 		const string RepoData = RepoPath + "/data";
 		const string RepoErrorUpToDate = "Already up to date!";
 		const string SSHPushRemote = "ssh_push_target";
-		const string UsernamePath = "RepoKey/username.txt";
         const string PrivateKeyPath = "RepoKey/private_key.txt";
         const string PublicKeyPath = "RepoKey/public_key.txt";
         const string PRJobFile = "prtestjob.json";
@@ -204,7 +203,7 @@ namespace TGServerService
 				if (DaemonStatus() != TGDreamDaemonStatus.Offline)
 					return "DreamDaemon is running!";
 				if (RepoURL.Contains("ssh://") && !SSHAuth())
-					return String.Format("SSH url specified but one of {0}, {2}, or {1} does not exist in the server directory!", PrivateKeyPath, UsernamePath, PublicKeyPath);
+					return String.Format("SSH url specified but either {0} or {1} does not exist in the server directory!", PrivateKeyPath, PublicKeyPath);
 				RepoBusy = true;
 				Cloning = true;
 				new Thread(new ParameterizedThreadStart(Clone))
@@ -365,7 +364,7 @@ namespace TGServerService
 						CredentialsProvider = GenerateGitCredentials,
 					};
 					fos.OnTransferProgress += HandleTransferProgress;
-					Commands.Fetch(Repo, R.Name, refSpecs, null, logMessage);
+					Commands.Fetch(Repo, R.Name, refSpecs, fos, logMessage);
 
 					var originBranch = Repo.Head.TrackedBranch;
 					if (reset)
@@ -683,13 +682,13 @@ namespace TGServerService
 				try
 				{
 					if (!SSHAuth())
-						return String.Format("On of {0}, {2}, or {1} is missing from the server directory. Unable to push!", PrivateKeyPath, UsernamePath, PublicKeyPath);
+						return String.Format("Either {0} or {1} is missing from the server directory. Unable to push!", PrivateKeyPath, PublicKeyPath);
 
 					var options = new PushOptions()
 					{
 						CredentialsProvider = GenerateGitCredentials,
 					};
-					Repo.Network.Push(Repo.Network.Remotes[SSHPushRemote], "refs/heads/" + Repo.Head.CanonicalName, options);
+					Repo.Network.Push(Repo.Network.Remotes[SSHPushRemote], Repo.Head.CanonicalName, options);
 					return null;
 				}
 				catch (Exception e)
@@ -701,7 +700,7 @@ namespace TGServerService
 
 		bool SSHAuth()
 		{
-			return File.Exists(PrivateKeyPath) && File.Exists(UsernamePath) && File.Exists(PublicKeyPath);
+			return File.Exists(PrivateKeyPath) && File.Exists(PublicKeyPath);
 		}
 
 		Credentials GenerateGitCredentials(string url, string usernameFromUrl, SupportedCredentialTypes types)
