@@ -313,6 +313,7 @@
             // TestMergeListLabel
             // 
             this.TestMergeListLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.TestMergeListLabel.HorizontalScrollbar = true;
             this.TestMergeListLabel.Items.AddRange(new object[] {
             "None"});
             this.TestMergeListLabel.Location = new System.Drawing.Point(122, 260);
