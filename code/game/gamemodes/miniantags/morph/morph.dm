@@ -35,7 +35,11 @@
 	var/morphed = 0
 	var/atom/movable/form = null
 	var/morph_time = 0
-	var/static/list/blacklist_typecache = typecacheof(list(/obj/screen, /obj/singularity, /mob/living/simple_animal/hostile/morph, /obj/effect))
+	var/static/list/blacklist_typecache = typecacheof(list( \
+	/obj/screen, \
+	/obj/singularity, \
+	/mob/living/simple_animal/hostile/morph, \
+	/obj/effect))
 	
 	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
