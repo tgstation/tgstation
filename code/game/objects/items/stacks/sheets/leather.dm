@@ -226,6 +226,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 /obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/MW)
 	..()
-	var/obj/item/stack/sheet/leather/L = new(MW)
+	var/obj/item/stack/sheet/leather/L = new(loc)
 	L.amount = amount
 	qdel(src)
