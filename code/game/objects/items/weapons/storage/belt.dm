@@ -247,10 +247,10 @@
 		)
 
 /obj/item/weapon/storage/belt/military
-	name = "military belt"
-	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
-	icon_state = "militarybelt"
-	item_state = "military"
+	name = "chest rig"
+	desc = "A set of tactical webbing worn by Syndicate boarding parties."
+	icon_state = "explorer1"
+	item_state = "explorer1"
 	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/abductor
