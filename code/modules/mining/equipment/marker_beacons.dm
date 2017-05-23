@@ -8,6 +8,10 @@
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
 
+/obj/item/stack/marker_beacon/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Use in-hand to place a [singular_name].</span>"
+
 /obj/item/stack/marker_beacon/ten //miners start with 10 of these
 	amount = 10
 
