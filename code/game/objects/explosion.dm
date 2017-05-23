@@ -15,7 +15,7 @@
 	var/orig_heavy_range = heavy_impact_range
 	var/orig_light_range = light_impact_range
 
-	if(!ignorecap && epicenter.z != ZLEVEL_MINING)
+	if(!ignorecap)
 		//Clamp all values to MAX_EXPLOSION_RANGE
 		devastation_range = min(GLOB.MAX_EX_DEVESTATION_RANGE, devastation_range)
 		heavy_impact_range = min(GLOB.MAX_EX_HEAVY_RANGE, heavy_impact_range)
