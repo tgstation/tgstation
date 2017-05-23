@@ -1,0 +1,8 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "Added a sexy new icon for the harvester's AOE conversion spell"
+  - bugfix: "Fixed construct's forcewall being invisible"
+  - bugfix: "Fixed cult constructs \"Locate Master\" and \"Locate Prey\" not functioning"
+  - bugfix: "Fixed spell action buttons not showing their actual availability status"
+  - tweak: "Changed the duration of a few frames for the new Cult ending"

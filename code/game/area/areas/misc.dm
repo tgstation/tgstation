@@ -115,6 +115,10 @@
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
+	
+/area/prison/execution_room
+	name = "Prisoner Education Chamber"
+	icon_state = "armory"
 
 /area/prison/cell_block/A
 	name = "Prison Cell Block A"

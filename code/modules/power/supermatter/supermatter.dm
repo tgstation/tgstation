@@ -53,8 +53,8 @@
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter_shard"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -74,7 +74,7 @@
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 900
 
-	var/emergency_issued = 0
+	var/emergency_issued = FALSE
 
 	var/explosion_power = 12
 	var/temp_factor = 30
@@ -116,12 +116,12 @@
 	var/common_channel = null
 
 	//for logging
-	var/has_been_powered = 0
-	var/has_reached_emergency = 0
+	var/has_been_powered = FALSE
+	var/has_reached_emergency = FALSE
 
 	// For making hugbox supermatter
-	var/takes_damage = 1
-	var/produces_gas = 1
+	var/takes_damage = TRUE
+	var/produces_gas = TRUE
 	var/obj/effect/countdown/supermatter/countdown
 
 /obj/machinery/power/supermatter_shard/make_frozen_visual()
@@ -385,7 +385,7 @@
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
-		return 0	// This stops people from being able to really power up the supermatter
+		return FALSE	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [Proj] fired by [Proj.firer]", "supermatter")
@@ -394,10 +394,10 @@
 		if(!has_been_powered)
 			investigate_log("has been powered for the first time.", "supermatter")
 			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
-			has_been_powered = 1
+			has_been_powered = TRUE
 	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
-	return 0
+	return FALSE
 
 /obj/machinery/power/supermatter_shard/singularity_act()
 	var/gain = 100
@@ -409,7 +409,7 @@
 			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
 			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
-	return(gain)
+	return gain
 
 /obj/machinery/power/supermatter_shard/blob_act(obj/structure/blob/B)
 	if(B && !isspaceturf(loc)) //does nothing in space
@@ -450,7 +450,7 @@
 	user.visible_message("<span class='danger'>\The [user] reaches out and touches \the [src], inducing a resonance... [user.p_their()] body starts to glow and bursts into flames before flashing into ash.</span>",\
 		"<span class='userdanger'>You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-
+	investigate_log("has been attacked (hand) by [user]", "supermatter")
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
 	Consume(user)
@@ -464,11 +464,11 @@
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
 		return
 	if(user.drop_item(W))
-		Consume(W)
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
-
+		investigate_log("has been attacked ([W]) by [user]", "supermatter")
+		Consume(W)
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 
 		radiation_pulse(get_turf(src), 1, 1, 150, 1)
@@ -517,15 +517,15 @@
 // When you wanna make a supermatter shard for the dramatic effect, but
 // don't want it exploding suddenly
 /obj/machinery/power/supermatter_shard/hugbox
-	takes_damage = 0
-	produces_gas = 0
+	takes_damage = FALSE
+	produces_gas = FALSE
 
 /obj/machinery/power/supermatter_shard/crystal
 	name = "supermatter crystal"
 	desc = "A strangely translucent and iridescent crystal."
 	base_icon_state = "darkmatter"
 	icon_state = "darkmatter"
-	anchored = 1
+	anchored = TRUE
 	gasefficency = 0.15
 	explosion_power = 35
 

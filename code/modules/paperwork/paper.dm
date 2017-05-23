@@ -26,7 +26,7 @@
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
-	var/fields		//Amount of user created fields
+	var/fields = 0	//Amount of user created fields
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
