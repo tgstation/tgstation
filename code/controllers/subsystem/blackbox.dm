@@ -1,7 +1,8 @@
 SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
-	flags = SS_NO_TICK_CHECK
+	flags = SS_NO_TICK_CHECK | SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/msg_common = list()
 	var/list/msg_science = list()

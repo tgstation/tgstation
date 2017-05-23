@@ -98,13 +98,16 @@ Station Engineer
 	pda_slot = slot_l_store
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
 
-/datum/outfit/job/engineer/rig
+/datum/outfit/job/engineer/gloved
+	name = "Station Engineer (Gloves)"
+	gloves = /obj/item/clothing/gloves/color/yellow
+
+/datum/outfit/job/engineer/gloved/rig
 	name = "Station Engineer (Hardsuit)"
 
 	mask = /obj/item/clothing/mask/breath
 	suit = /obj/item/clothing/suit/space/hardsuit/engine
 	suit_store = /obj/item/weapon/tank/internals/oxygen
-	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
 	internals_slot = slot_s_store
 

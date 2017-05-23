@@ -19,7 +19,7 @@
 		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/weapon/hivelordstabilizer,									400),
 		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core,													400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule,										400),
-		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,									500),
+		new /datum/data/mining_equipment("GAR Meson Scanners",	/obj/item/clothing/glasses/meson/gar,									500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,								600),

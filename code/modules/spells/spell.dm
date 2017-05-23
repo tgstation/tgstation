@@ -203,7 +203,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				charge_counter-- //returns the charge if the targets selecting fails
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
-
+	if(action)
+		action.UpdateButtonIcon()
 	return 1
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
@@ -249,16 +250,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
-	if(action)
-		action.UpdateButtonIcon()
 	recharging = TRUE
-	if(action)
-		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/process()
 	if(recharging && charge_type == "recharge" && (charge_counter < charge_max))
 		charge_counter += 2	//processes 5 times per second instead of 10.
 		if(charge_counter >= charge_max)
+			action.UpdateButtonIcon()
 			charge_counter = charge_max
 			recharging = FALSE
 
@@ -276,6 +274,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	else
 		cast(targets,user=user)
 	after_cast(targets)
+	if(action)
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets)
 	if(overlay)
@@ -332,6 +332,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			charge_counter++
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
+	if(action)
+		action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	if (!istype(target))

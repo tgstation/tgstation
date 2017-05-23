@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(events)
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
 	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/crew_quarters/heads/chief)
 
 	//Need to locate() as it's just a list of paths.
 	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas))

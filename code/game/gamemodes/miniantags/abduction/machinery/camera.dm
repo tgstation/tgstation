@@ -75,7 +75,7 @@
 	if(C.client)
 		C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			C.client.images -= chunk.obscured
+			chunk.remove(remote_eye)
 	C.remote_control = null
 	C.unset_machine()
 	Remove(C)
