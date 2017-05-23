@@ -278,7 +278,10 @@
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
-	owner.revive(full_heal = 1)
+	if(inert)
+		to_chat(owner, "<span class='notice'>[src] breaks down as it tries to activate.</span>")
+	else
+		owner.revive(full_heal = 1)
 	qdel(src)
 
 /obj/item/organ/hivelord_core/on_life()
@@ -305,6 +308,18 @@
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
+
+/obj/item/organ/hivelord_core/Insert()
+	. = ..()
+	if(!preserved && !inert)
+		preserved(TRUE)
+		visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
+
+/obj/item/organ/hivelord_core/Remove()
+	if(!inert)
+		owner.visible_message("<span class='notice'>[src] goes inert as it's removed.</span>")
+		go_inert()
+	return ..()
 
 /obj/item/organ/hivelord_core/prepare_eat()
 	return null
