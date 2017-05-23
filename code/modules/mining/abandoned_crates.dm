@@ -186,6 +186,17 @@
 		return
 	attack_hand(user)
 
+/obj/structure/closet/crate/secure/loot/bullet_act(obj/item/projectile/P)
+	if(prob(2)) //parent has 1000 health, 20 damage weapon has 36% chance of getting the loot.
+		boom()
+	..()
+
+/obj/structure/closet/crate/secure/loot/ex_act(severity, target)
+	if(prob(90)) //anti-tamper mechanisms full of explosives don't like being near explosions, who knew?
+		boom()
+	..()
+
+
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
 		if(istype(W, /obj/item/weapon/card/emag))
