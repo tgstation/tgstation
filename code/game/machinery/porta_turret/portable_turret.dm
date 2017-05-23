@@ -998,11 +998,13 @@
 		qdel(src)
 
 /obj/item/gun_control/CanItemAutoclick()
-	return 1
+	return TRUE
 
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user)
 	..()
 	var/obj/machinery/manned_turret/E = user.buckled
+	if(world.time < E.cooldown)
+		return
 	E.setDir(get_dir(E,targeted_atom))
 	user.setDir(E.dir)
 	switch(E.dir)
