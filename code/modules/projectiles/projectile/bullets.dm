@@ -279,6 +279,14 @@
 		target.ex_act(rand(1,2))
 	return ..()
 
+/obj/item/projectile/bullet/sniper/gang
+	speed = 0		//360 alwaysscope.
+	damage = 60
+	stun = 0
+	weaken = 0
+	dismemberment = 20
+	armour_penetration = 45
+	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0
