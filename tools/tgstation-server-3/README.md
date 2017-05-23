@@ -32,8 +32,8 @@ This process is identical to the above steps in command line mode. You can alway
 1. `irc nick TGS3Test`
 1. `irc setup-auth NickServ "id hunter2"` Yes this is the real password, please use it only for testing
 1. `chat enable`
-1. `repo set-name tgstation-server`
-1. `repo set-email tgstation-server@users.noreply.github.com`
+1. `repo set-name tgstation-server` These two lines specify the changelog's committer identity. They are not mirrored in the GUI
+1. `repo set-email tgstation-server@tgstation13.org`
 1. `repo set-credentials` And follow the prompts
 1. `dm project-name tgstation`
 1. `repo python-path C:\Python27`
@@ -60,6 +60,9 @@ This process is identical to the above steps in command line mode. You can alway
 	* This contains the actual git repository, all changes in here will be overwritten during update operations, the configured branch will always be forced to track from live.
 	* On the first update of the day, the current code state is saved to a branch called `backup-YYYY-MM-DD` before updating, to make local reverts easy.
 	* Following update operations on the same day do not make branches because I was too lazy to detect such edge cases.
+
+* `RepoKey/`
+	* This contains ssh key information for automatic changelog pushing. 
 
 * `BYOND/`
 	* This contains the actual BYOND installation the server uses
@@ -124,6 +127,12 @@ You can clear all active test merges using `Reset to Origin Branch` in the `Repo
 ### Viewing Server Logs
 * Logs are stored in the Windows event viewer under `Windows Logs` -> `Application`. You'll need to filter this list for `TG Station Server`
 * You can also import the custom view `View TGS3 Logs.xml` in this folder to have them automatically filtered
+
+### Enabling upstream changelog generation
+* The repository will automatically create an ssh version of the initial origin remote and can optionally push generated changelogs to your git through it
+* The repository can only authenticate using ssh public key authentication
+* To enable this feature, simply create `public_key.txt` and `private_key.txt` in a folder called RepoKey in the server directory
+* The service will be able to read these files regardless of their permissions, so the responsibility is on you to set their ACL's so they can't be read by those that shouldn't
 
 ## CONTRIBUTING
 
