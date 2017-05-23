@@ -337,7 +337,6 @@ namespace TGServerService
 					SendMessage("REPO: Merge already up to date!");
 					return RepoErrorUpToDate;
 			}
-			SendMessage(String.Format("REPO: Branch {0} successfully {1}!", branchname, Result.Status == MergeStatus.FastForward ? "fast-forwarded" : "merged"));
 			return null;
 		}
 
@@ -367,10 +366,7 @@ namespace TGServerService
 					{
 						var error = ResetNoLock(Repo.Head.TrackedBranch);
 						if (error == null)
-						{
 							DeletePRList();
-							SendMessage("REPO: Update complete!");
-						}
 						else
 							SendMessage("REPO: Update failed!");
 						return error;

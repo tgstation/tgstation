@@ -191,8 +191,7 @@ namespace TGServerService
 					CreateSymlink(GameDirB + LibMySQLFile, StaticDirs + LibMySQLFile);
 
 					CreateSymlink(GameDirLive, GameDirA);
-
-					SendMessage("DM: Symlinks set up!");
+					
 					lock (CompilerLock)
 					{
 						compilerCurrentStatus = TGCompilerStatus.Initialized;
@@ -284,7 +283,7 @@ namespace TGServerService
 					compilerCurrentStatus = TGCompilerStatus.Initialized;
 					return;
 				}
-				SendMessage("DM: Updating from repository...");
+				SendMessage("DM: Compiling...");
 				var resurrectee = GetStagingDir();
 
 				//clear out the syms first
@@ -379,8 +378,7 @@ namespace TGServerService
 								return;
 							canCancelCompilation = true;
 						}
-
-						SendMessage("DM: Compiling...");
+						
 						DM.Start();
 						DM.WaitForExit();
 
