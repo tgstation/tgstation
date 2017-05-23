@@ -244,7 +244,7 @@
 	name = "\improper DNA injector"
 	icon_state = "syringeproj"
 	var/obj/item/weapon/dnainjector/injector
-	
+
 /obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
@@ -280,13 +280,11 @@
 	return ..()
 
 /obj/item/projectile/bullet/sniper/gang
-	speed = 0		//360 alwaysscope.
-	damage = 60
-	stun = 0
-	weaken = 0
-	dismemberment = 20
+	damage = 55
+	stun = 1
+	weaken = 1
+	dismemberment = 15
 	armour_penetration = 45
-	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0

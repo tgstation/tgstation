@@ -131,6 +131,9 @@
 	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
 	icon_state = ".50"
 
+/obj/item/ammo_casing/point50/gang
+	desc = "A black market .50 bullet casing."
+	projectile_type = /obj/item/projectile/bullet/sniper/gang
 
 
 /// SAW ROUNDS

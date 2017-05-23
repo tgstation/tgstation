@@ -262,6 +262,12 @@
 	origin_tech = "combat=6;syndicate=3"
 	max_ammo = 5
 
+/obj/item/ammo_box/magazine/sniper_rounds/gang
+	name = "black market sniper rounds (.50)"
+	icon_state = ".50mag"
+	origin_tech = "combat=6;syndicate=2"
+	ammo_type = /obj/item/ammo_casing/point50/gang
+
 
 //// SAW MAGAZINES
 
