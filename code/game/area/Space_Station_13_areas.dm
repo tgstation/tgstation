@@ -791,11 +791,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "SolarcontrolP"
 	
 /area/maintenance/solars/port/aft
-	name = "Starboard Quarter Solar Maintenance"
+	name = "Port Quarter Solar Maintenance"
 	icon_state = "SolarcontrolP"
 	
 /area/maintenance/solars/port/fore
-	name = "Starboard Bow Solar Maintenance"
+	name = "Port Bow Solar Maintenance"
 	icon_state = "SolarcontrolP"
 	
 /area/maintenance/solars/starboard
@@ -810,22 +810,31 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Starboard Bow Solar Maintenance"
 	icon_state = "SolarcontrolS"
 	
-/area/maintenance/solars/aux/port/fore
-//	/area/maintenance/auxsolarport
-	name = "Port Bow Auxiliary Solar Maintenance"
+/area/maintenance/solars/aux/port
+	name = "Port Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
 	
 /area/maintenance/solars/aux/port/aft
 //	/area/maintenance/portsolar
 	name = "Port Quarter Auxiliary Solar Maintenance"
-	icon_state = "SolarcontrolP"
+	icon_state = "SolarcontrolA"
+	
+/area/maintenance/solars/aux/port/fore
+//	/area/maintenance/auxsolarport
+	name = "Port Bow Auxiliary Solar Maintenance"
+	icon_state = "SolarcontrolA"
+	
+/area/maintenance/solars/aux/starboard
+	name = "Starboard Auxiliary Solar Maintenance"
+	icon_state = "SolarcontrolA"
 
-/area/maintenance/solars/aux/starboard/port/aft
+/area/maintenance/solars/aux/starboard/aft
 //	/area/maintenance/starboardsolar
+//	/area/maintenance/solars/aux/starboard/port/aft
 	name = "Starboard Quarter Auxiliary Solar Maintenance"
-	icon_state = "SolarcontrolS"
+	icon_state = "SolarcontrolA"
 
-/area/maintenance/solars/aux/starboard/port/aft
+/area/maintenance/solars/aux/starboard/fore
 //	/area/maintenance/auxsolarstarboard
 	name = "Starboard Bow Auxiliary Solar Maintenance"
 	icon_state = "SolarcontrolA"
