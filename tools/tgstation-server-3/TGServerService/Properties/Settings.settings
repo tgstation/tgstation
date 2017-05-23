@@ -15,7 +15,7 @@
       <Value Profile="(Default)">tgstation-server</Value>
     </Setting>
     <Setting Name="CommitterEmail" Type="System.String" Scope="User">
-      <Value Profile="(Default)">tgstation-server@users.noreply.github.com</Value>
+      <Value Profile="(Default)">tgstation-server@tgstation13.org</Value>
     </Setting>
     <Setting Name="ServerDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:/tgstation-server-3</Value>

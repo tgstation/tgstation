@@ -73,7 +73,7 @@ namespace TGServerService.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tgstation-server@users.noreply.github.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("tgstation-server@tgstation13.org")]
         public string CommitterEmail {
             get {
                 return ((string)(this["CommitterEmail"]));
