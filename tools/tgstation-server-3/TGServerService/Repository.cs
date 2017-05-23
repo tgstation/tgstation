@@ -21,9 +21,10 @@ namespace TGServerService
 		const string RepoData = RepoPath + "/data";
 		const string RepoErrorUpToDate = "Already up to date!";
 		const string SSHPushRemote = "ssh_push_target";
-		const string UsernamePath = "repository_username.txt";
-		const string PrivateKeyPath = "repository_private_key.txt";
-		const string PRJobFile = "prtestjob.json";
+		const string UsernamePath = "RepoKey/username.txt";
+        const string PrivateKeyPath = "RepoKey/private_key.txt";
+        const string PublicKeyPath = "RepoKey/public_key.txt";
+        const string PRJobFile = "prtestjob.json";
 		const string CommitPathSpec = "html/*";
 		const string CommitMessage = "Automatic changelog compile, [ci skip]";
 
@@ -204,7 +205,7 @@ namespace TGServerService
 				if (DaemonStatus() != TGDreamDaemonStatus.Offline)
 					return "DreamDaemon is running!";
 				if (RepoURL.Contains("ssh://") && !SSHAuth())
-					return String.Format("SSH url specified but {0} or {1} does not exist in the server directory!", PrivateKeyPath, UsernamePath);
+					return String.Format("SSH url specified but one of {0}, {2}, or {1} does not exist in the server directory!", PrivateKeyPath, UsernamePath, PublicKeyPath);
 				RepoBusy = true;
 				Cloning = true;
 				new Thread(new ParameterizedThreadStart(Clone))
@@ -682,7 +683,7 @@ namespace TGServerService
 				try
 				{
 					if (!SSHAuth())
-						return String.Format("Either {0} or {1} is missing from the server directory. Unable to push!", PrivateKeyPath, UsernamePath);
+						return String.Format("On of {0}, {2}, or {1} is missing from the server directory. Unable to push!", PrivateKeyPath, UsernamePath, PublicKeyPath);
 
 					var options = new PushOptions()
 					{
@@ -700,15 +701,23 @@ namespace TGServerService
 
 		bool SSHAuth()
 		{
-			return File.Exists(PrivateKeyPath) && File.Exists(UsernamePath);
+			return File.Exists(PrivateKeyPath) && File.Exists(UsernamePath) && File.Exists(PublicKeyPath);
 		}
 
 		Credentials GenerateGitCredentials(string url, string usernameFromUrl, SupportedCredentialTypes types)
 		{
-			return new SshUserKeyCredentials()
-			{
-				Username = File.ReadAllText(UsernamePath).Trim(),
-				PublicKey = PrivateKeyPath,
+			var user = usernameFromUrl ?? "git";
+			if (types == SupportedCredentialTypes.UsernameQuery)
+				return new UsernameQueryCredentials()
+				{
+					Username = user,
+				};
+            return new SshUserKeyCredentials()
+            {
+                Username = user,
+                PrivateKey = PrivateKeyPath,
+                PublicKey = PublicKeyPath,
+                Passphrase = "",
 			};
 		}
 
