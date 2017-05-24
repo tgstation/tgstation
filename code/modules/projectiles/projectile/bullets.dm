@@ -287,8 +287,7 @@
 	armour_penetration = 25
 
 /obj/item/projectile/bullet/sniper/gang/sleeper
-	damage = 2
-	stamina = 60 
+	nodamage = 1
 	stun = 0
 	weaken = 0
 	dismemberment = 0
@@ -298,8 +297,10 @@
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.drowsyness += 6
-		if(L.health < 50)
+		if(L.health < 55)
 			L.Sleeping(25)
+		else
+			L.adjustStaminaLoss(55)
 	return ..()
 
 /obj/item/projectile/bullet/sniper/soporific
