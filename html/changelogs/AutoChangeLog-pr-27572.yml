@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "Boxstation armoury weapon racks now have glass panes to help prevent the weapons easily flying out of a breached hull."

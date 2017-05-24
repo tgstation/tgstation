@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - tweak: "Changes to production of Nanotrasen Auto Rifle armour piercing bullets have now made AP bullets better able to penetrate armour, but at the cost of the amount of possible damage the bullet can do to soft targets."

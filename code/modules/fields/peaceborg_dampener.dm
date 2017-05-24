@@ -3,7 +3,6 @@
 //Only use square radius for this!
 /datum/proximity_monitor/advanced/peaceborg_dampener
 	name = "\improper Hyperkinetic Dampener Field"
-	requires_processing = TRUE
 	setup_edge_turfs = TRUE
 	setup_field_turfs = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
@@ -22,9 +21,14 @@
 	use_host_turf = TRUE
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/New()
+	START_PROCESSING(SSfields, src)
 	tracked = list()
 	staging = list()
 	..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
+	STOP_PROCESSING(SSfields, src)
+	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
 	if(!istype(projector))
