@@ -16,15 +16,15 @@ REVIVAL_BRAIN_LIFE -1
 
 ## RENAMING ###
 
-##Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
+## Activate to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
 #RENAME_CYBORG
 
 ## OOC DURING ROUND ###
-##Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
+## Deactivate this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
 ## EMOJI ###
-##Comment this out if you want to disable emojis
+## Deactivate this out if you want to disable emojis
 EMOJIS
 
 ## MOB MOVEMENT ###
@@ -50,10 +50,10 @@ ANIMAL_DELAY 0
 
 
 ## NAMES ###
-## If uncommented this adds a random surname to a player's name if they only specify one name.
+## If activated this adds a random surname to a player's name if they only specify one name.
 #HUMANS_NEED_SURNAMES
 
-## If uncommented, this forces all players to use random names !and appearances!.
+## If activated, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
 
 
@@ -69,7 +69,7 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 ## GAME MODES ###
 
-## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
+## Activate to not send a roundstart intercept report. Gamemodes may override this.
 #NO_INTERCEPT_REPORT
 
 ## Probablities for game modes chosen in 'secret' and 'random' modes.
@@ -142,7 +142,7 @@ MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
 
-## Uncomment for overrides of the minimum / maximum number of players in a round type. 
+## Activate for overrides of the minimum / maximum number of players in a round type. 
 ## If you set any of these occasionally check to see if you still need them as the modes
 ## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
 ## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
@@ -217,11 +217,11 @@ SECURITY_SCALING_COEFF 8
 ## Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2
 
-## Uncomment to prohibit jobs that start with loyalty
+## Activate to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
 #PROTECT_ROLES_FROM_ANTAGONIST
 
-## Uncomment to prohibit assistants from becoming most antagonists.
+## Activate to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
@@ -230,11 +230,11 @@ TRAITOR_OBJECTIVES_AMOUNT 2
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
 
-## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
+## Activate to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
 #SHOW_GAME_TYPE_ODDS
 
 ## RANDOM EVENTS ###
-## Comment this to disable random events during the round.
+## Deactivate this to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
 ## Multiplier for earliest start time of dangerous events.
@@ -252,11 +252,11 @@ EVENTS_MIN_PLAYERS_MUL 1
 ALLOW_AI
 
 ## Secborg ###
-## Uncomment to prevent the security cyborg module from being chosen
+## Deactivate to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
 ## Peacekeeper Borg ###
-## Uncomment to prevent the peacekeeper cyborg module from being chosen
+## Activate to prevent the peacekeeper cyborg module from being chosen
 #DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###
@@ -270,34 +270,34 @@ GATEWAY_DELAY 18000
 
 ## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
 ## This is useful for accomodating both low and high population rounds on the same server.
-## Comment out or set to 0 to disable this automatic toggle.
+## Deactivate or set to 0 to disable this automatic toggle.
 MINIMAL_ACCESS_THRESHOLD 20
 
-## Comment this out if you wish to use the setup where jobs have more access.
+## Deactivate this if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
 ## This option is ignored if MINIMAL_ACCESS_THRESHOLD is used.
 #JOBS_HAVE_MINIMAL_ACCESS
 
-## Uncomment to give assistants maint access.
+## Activate to give assistants maint access.
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
-## Uncoment to give security maint access. Note that if you comment JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
 #SECURITY_HAS_MAINT_ACCESS
 
-## Uncomment to give everyone maint access.
+## Activate to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
 
-## Comment this to make security officers spawn in departmental security posts
+## Deactivate this to make security officers spawn in departmental security posts
 SEC_START_BRIG
 
 
 ## GHOST INTERACTION ###
-## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
+## Activate to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
 
 ## NON-VOCAL SILICONS ###
-## Uncomment to stop the AI, or cyborgs, from having vocal communication.
+## Activate to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI
 #SILENT_BORG
 
@@ -310,7 +310,7 @@ SEC_START_BRIG
 
 ## ROUNDSTART SILICON LAWS ###
 ## This controls what the AI's laws are at the start of the round.
-## Set to 0/commented for "off", silicons will just start with Asimov.
+## Set to 0/deactivate for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
@@ -383,13 +383,13 @@ LAW_WEIGHT buildawall,0
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
 
-## Uncomment to give players the choice of their species before they join the game
+## Activate to give players the choice of their species before they join the game
 JOIN_WITH_MUTANT_RACE
 
 
 ## Roundstart Races
 ##-------------------------------------------------------------------------------------------
-## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
+## Activating races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
 
 ## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
 ROUNDSTART_RACES human
@@ -422,17 +422,17 @@ ROUNDSTART_RACES plasmaman
 
 ##-------------------------------------------------------------------------------------------
 
-## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
+## Activate to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS
 
 ## Assistant slot cap. Set to -1 for unlimited.
 ASSISTANT_CAP -1
 
-## Starlight for exterior walls and breaches. Uncomment for starlight!
+## Starlight for exterior walls and breaches. Activate for starlight!
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
 #STARLIGHT
 
-## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
+## Activate to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
@@ -444,14 +444,14 @@ MIDROUND_ANTAG_TIME_CHECK 60
 MIDROUND_ANTAG_LIFE_CHECK 0.7
 
 ##Limit Spell Choices##
-## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
+## Activate to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
 
 #NO_SUMMON_GUNS
 #NO_SUMMON_MAGIC
 #NO_SUMMON_EVENTS
 
-##Comment for "normal" explosions, which ignore obstacles
-##Uncomment for explosions that react to doors and walls
+## Deactivate for "normal" explosions, which ignore obstacles
+## Activate for explosions that react to doors and walls
 REACTIONARY_EXPLOSIONS
 
 ## Configure the bomb cap
