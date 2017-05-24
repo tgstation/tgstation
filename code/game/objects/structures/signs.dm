@@ -246,6 +246,12 @@
 	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
 
+/obj/structure/sign/xeno_warning_mining
+	name = "DANGEROUS ALIEN LIFE"
+	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "xeno_warning"
+
 /obj/structure/sign/enginesafety
 	name = "\improper ENGINEERING SAFETY"
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
