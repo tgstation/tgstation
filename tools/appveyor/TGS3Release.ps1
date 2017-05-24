@@ -10,3 +10,9 @@ Add-Type -assembly "system.io.compression.filesystem"
 $destination_md5sha = $Env:APPVEYOR_BUILD_FOLDER + "\MD5-SHA1.txt"
 
 & fciv -both $destination > $destination_md5sha
+
+$HeadMessage = git log-1 --pretty=%B | Out-String
+
+if($HeadMessage -contains "[TGSDeploy]"){
+    $env:TGSDeploy = "Do it."
+}

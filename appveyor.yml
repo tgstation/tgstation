@@ -18,7 +18,7 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-  - ps: "tools/appveyor/ZipTGS3Release.ps1"
+  - ps: "tools/appveyor/TGS3Release.ps1"
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
   description: 'The /tg/station server suite'
@@ -29,4 +29,4 @@ deploy:
   draft: false
   prerelease: false
   on:
-    appveyor_repo_tag: true
+    TGSDeploy: "Do it."
