@@ -148,9 +148,6 @@
 			// Shuttle timer, in seconds
 
 		return list2params(s)
-	
-	else if("adminmsg" in input)
-		return "New command format: <Server IRC Nick> ahelp <Regular parameters>"
 
 	else if("announce" in input)
 		if(!key_valid)
