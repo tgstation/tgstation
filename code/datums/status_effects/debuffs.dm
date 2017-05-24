@@ -183,8 +183,7 @@
 		marked_underlay.pixel_y = -owner.pixel_y
 		owner.underlays += marked_underlay
 		return TRUE
-	else 
-		return FALSE
+	return FALSE
 
 /datum/status_effect/crusher_mark/Destroy()
 	hammer_synced = null
