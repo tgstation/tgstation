@@ -17,9 +17,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
 
-/datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/draconic)
-
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
