@@ -38,7 +38,7 @@
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 	var/list/mutant_organs = list()		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
-	var/list/armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0) //species innate armor
+	var/list/armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0) //species innate armor
 	var/brutemod = 1	// multiplier for brute damage
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
@@ -795,6 +795,9 @@
 		H.reagents.del_reagent(chem.id)
 		return 1
 	return 0
+
+/datum/species/proc/delete_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	return
 
 /datum/species/proc/handle_speech(message, mob/living/carbon/human/H)
 	return message

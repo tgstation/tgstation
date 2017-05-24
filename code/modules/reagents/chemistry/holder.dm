@@ -441,6 +441,10 @@
 			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
 				R.on_mob_delete(M)
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.dna && H.dna.species)
+						H.dna.species.delete_chemicals(R, H)
 			qdel(R)
 			reagent_list -= R
 			update_total()

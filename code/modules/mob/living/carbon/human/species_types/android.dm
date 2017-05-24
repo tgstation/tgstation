@@ -4,7 +4,7 @@
 	say_mod = "states"
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOBLOOD,VIRUSIMMUNE,RADIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
 	meat = null
-	armor = list(melee = 10, bullet = 10, laser = 0, energy = -10, bomb = 30, bio = 100, rad = 100, fire = 100, acid = 0)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 0, "energy" = -10, "bomb" = 30, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	damage_overlay_type = "synth"
 	mutanttongue = /obj/item/organ/tongue/robot
 	limbs_id = "synth"

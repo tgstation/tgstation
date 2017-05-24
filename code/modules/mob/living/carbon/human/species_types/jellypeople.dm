@@ -8,7 +8,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
-	armor = list(melee = 0, bullet = 0, laser = 30, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 0, acid = 0) //jelly absorbs shockwaves and electric shocks
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 30, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0) //jelly absorbs shockwaves and electric shocks
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)

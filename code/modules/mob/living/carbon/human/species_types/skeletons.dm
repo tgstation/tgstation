@@ -5,7 +5,7 @@
 	say_mod = "rattles"
 	blacklisted = 1
 	sexes = 0
-	armor = list(melee = -40, bullet = -40, laser = -20, energy = 10, bomb = -40, bio = 100, rad = 100, fire = 100, acid = 0)
+	armor = list("melee" = -40, "bullet" = -40, "laser" = -20, "energy" = 10, "bomb" = -40, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
@@ -20,9 +20,11 @@
 			return 2
 	return 0
 
-/datum/species/skeleton/spec_life(mob/living/carbon/human/H)
+/datum/species/skeleton/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "milk") //strong bones and calcium
+		armor = list("melee" = 10, "bullet" = 10, "laser" = 0, "energy" = 10, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	..()
-	if(H.has_reagent("milk")) //strong bones and calcium
-		armor = list(melee = 10, bullet = 10, laser = 0, energy = 10, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 0)
-	else
-		armor = initial(armor)
+
+/datum/species/skeleton/delete_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "milk")
+		armor = list("melee" = -40, "bullet" = -40, "laser" = -20, "energy" = 10, "bomb" = -40, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
