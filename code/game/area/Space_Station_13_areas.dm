@@ -16,10 +16,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/engine/supermatter
-	name = "Supermatter Engine"
-	icon_state = "engine_sm"
-
 /area/ai_monitored	//stub defined ai_monitored.dm
 
 /area/ai_monitored/turret_protected
@@ -459,47 +455,52 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //	/area/crew_quarters/chief
 //	/area/engine/chiefs_office
 	name = "Chief Engineer's Office"
-	icon_state = "engine_control"
+	icon_state = "ce_office"
 	
 /area/crew_quarters/heads/chief/private
 //	/area/crew_quarters/chief/private
 	name = "Chief Engineer's Private Quarters"
-	icon_state = "head_quarters"
+	icon_state = "ce_private"
 	
 /area/crew_quarters/heads/cmo
 //	/area/medical/cmo
 	name = "Chief Medical Officer's Office"
-	icon_state = "CMO"
+	icon_state = "cmo_office"
 	
 /area/crew_quarters/heads/cmo/private
 //	/area/medical/cmo/private
 	name = "Chief Medical Officer's Private Quarters"
-	icon_state = "CMO"
+	icon_state = "cmo_private"
 
 /area/crew_quarters/heads/hop
 //	/area/crew_quarters/heads
 	name = "Head of Personnel's Office"
-	icon_state = "head_quarters"
+	icon_state = "hop_office"
+	
+/area/crew_quarters/heads/hop/private
+//	/area/crew_quarters/heads
+	name = "Head of Personnel's Private Quarters"
+	icon_state = "hop_private"
 	
 /area/crew_quarters/heads/hos
 //	/area/security/hos
 	name = "Head of Security's Office"
-	icon_state = "sec_hos"
+	icon_state = "hos_office"
 	
 /area/crew_quarters/heads/hos/private
 //	/area/security/hos/private
 	name = "Head of Security's Private Quarters"
-	icon_state = "sec_hos"
+	icon_state = "hos_private"
 	
 /area/crew_quarters/heads/hor
 //	/area/crew_quarters/hor
 	name = "Research Director's Office"
-	icon_state = "head_quarters"
+	icon_state = "rd_office"
 	
 /area/crew_quarters/heads/hor/private
 //	/area/crew_quarters/hor/private
 	name = "Research Director's Private Quarters"
-	icon_state = "head_quarters"
+	icon_state = "rd_private"
 
 /area/mint
 	name = "Mint"
@@ -683,15 +684,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
-	icon_state = "blue"
+	icon_state = "atmos_engine"
+	
+/area/engine/supermatter
+	name = "Supermatter Engine"
+	icon_state = "engine_sm"
 	
 /area/engine/break_room
 	name = "Engineering Foyer"
-	icon_state = "engine"
+	icon_state = "engine_foyer"
 	
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
-	icon_state = "blue"
+	icon_state = "grav_gen"
 	
 /area/engine/secure_construction
 	name = "Secure Construction Area"
@@ -699,11 +704,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/engine/storage
 	name = "Engineering Storage"
-	icon_state = "engine"
+	icon_state = "engi_storage"
 	
 /area/engine/transit_tube
 	name = "Transit Tube"
-	icon_state = "engine"
+	icon_state = "transit_tube"
 	
 	
 //Solars
@@ -1042,7 +1047,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/transfer
 	name = "Transfer Centre"
-	icon_state = "armory"
+	icon_state = "execution_room"
 
 /area/security/nuke_storage
 	name = "Vault"
@@ -1157,7 +1162,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/hydroponics/garden
 	name = "Garden"
-	icon_state = "hydro"
+	icon_state = "garden"
 	
 /area/hydroponics/garden/abandoned
 	name = "Abandoned Garden"
