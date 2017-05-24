@@ -286,6 +286,22 @@
 	dismemberment = 15
 	armour_penetration = 25
 
+/obj/item/projectile/bullet/sniper/gang/sleeper
+	damage = 2
+	stamina = 60 
+	stun = 0
+	weaken = 0
+	dismemberment = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/gang/sleeper/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.drowsyness += 6
+		if(L.health < 50)
+			L.Sleeping(25)
+	return ..()
+
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0
 	nodamage = 1
