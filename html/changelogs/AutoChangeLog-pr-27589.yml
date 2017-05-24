@@ -1,0 +1,6 @@
+author: "Joan, WJohnston"
+delete-after: True
+changes: 
+  - rscadd: "Adds marker beacons to mining as a vendible item. They can be bought in stacks of 1, 10, and 30 at a rate of 10 points per beacon."
+  - rscadd: "Miners start with a stack of 10 in their backpack, and the Extraction and Rescue Kit contains a stack of 30."
+  - rscadd: "Marker beacons come in a large selection of colors and simply light up a small area when placed, but are useful as a path marker or to indicate dangers."
