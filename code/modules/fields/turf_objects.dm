@@ -80,5 +80,5 @@
 	var/list/ret = list()
 	for(var/obj/effect/abstract/proximity_checker/advanced/part in T)
 		if(part.parent)
-			ret |= part.parent
+			ret[part.parent] = TRUE
 	return ret
