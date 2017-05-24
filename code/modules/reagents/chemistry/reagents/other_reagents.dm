@@ -803,8 +803,10 @@
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
 	taste_description = "iron"
-
+	produce_type = /obj/item/stack/sheet/metal
 	color = "#C8A5DC" // rgb: 200, 165, 220
+	attack_force = 15
+	pick_speed = 40
 
 /datum/reagent/iron/on_mob_life(mob/living/M)
 	if(iscarbon(M))
@@ -828,6 +830,9 @@
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
 	taste_description = "expensive metal"
+	produce_type = /obj/item/stack/sheet/mineral/gold
+	attack_force = 1
+	pick_speed = 30
 
 /datum/reagent/silver
 	name = "Silver"
@@ -836,6 +841,9 @@
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
+	produce_type = /obj/item/stack/sheet/mineral/silver
+	attack_force = 2
+	pick_speed = 35
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!isliving(M))
@@ -844,6 +852,32 @@
 		M.reagents.add_reagent("toxin", reac_volume)
 	..()
 
+/datum/reagent/diamond
+	name = "Diamond"
+	id = "diamond"
+	description = "A girl's best friend."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_description = "your wallet dying inside"
+	produce_type = /obj/item/stack/sheet/mineral/diamond
+	attack_force = 15
+	pick_speed = 8
+	penetration_value = 25
+	sharp_result = TRUE
+
+/datum/reagent/adamantine
+	name = "Adamantine"
+	id = "adamantine"
+	description = "STRIKE THE EARTH"
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_description = "demons"
+	produce_type = /obj/item/stack/sheet/mineral/adamantine
+	attack_force = 20
+	pick_speed = 3
+	penetration_value = 40
+	sharp_result = TRUE
+
 /datum/reagent/uranium
 	name ="Uranium"
 	id = "uranium"
@@ -851,6 +885,9 @@
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
+	produce_type = /obj/item/stack/sheet/mineral/uranium
+	attack_force = 2
+	pick_speed = 15
 
 /datum/reagent/uranium/on_mob_life(mob/living/M)
 	M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)

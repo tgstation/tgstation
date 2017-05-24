@@ -17,7 +17,8 @@
 		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
-		/datum/language/ratvar
+		/datum/language/ratvar,
+		/datum/language/dwarvish
 	))
 
 /obj/item/organ/tongue/get_spans()

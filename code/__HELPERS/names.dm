@@ -9,6 +9,9 @@
 /proc/plasmaman_name()
 	return "[pick(GLOB.plasmaman_names)] \Roman[rand(1,99)]"
 
+/proc/dwarf_name()
+	return "[pick(GLOB.dwarf_first)] [pick(GLOB.dwarf_last)]"
+
 /proc/church_name()
 	var/static/church_name
 	if (church_name)

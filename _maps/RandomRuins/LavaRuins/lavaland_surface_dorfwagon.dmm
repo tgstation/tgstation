@@ -1,0 +1,45 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/high_chance/volcanic,/area/mine/explored)
+"c" = (/turf/closed/wall{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/mine/explored)
+"d" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"e" = (/obj/machinery/smelter{layer = 4.4},/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"f" = (/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"g" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"h" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"i" = (/obj/structure/glowshroom/single,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"j" = (/mob/living/simple_animal/pet/cat{gender = "female"},/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"k" = (/turf/closed/wall/mineral/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"l" = (/obj/machinery/migrant_spawner,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"m" = (/obj/structure/rack,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/ore,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"n" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"o" = (/obj/structure/table/wood,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/wheat,/obj/item/seeds/wheat,/obj/item/seeds/wheat,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"p" = (/turf/closed/wall{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"q" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"r" = (/obj/structure/mineral_door/iron,/obj/structure/fans/tiny/invisible,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"s" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"t" = (/obj/structure/rack,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/weapon/shovel,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"u" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/obj/item/weapon/shovel/spade,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants/portaseeder,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"v" = (/mob/living/simple_animal/cow,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"w" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"x" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"y" = (/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"z" = (/obj/structure/sink/puddle{name = "magic puddle"},/turf/open/floor/plating/asteroid{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/awaymission)
+"A" = (/obj/item/stack/sheet/mineral/clay,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+"B" = (/mob/living/simple_animal/chicken,/turf/open/floor/plating/asteroid/basalt,/area/awaymission)
+
+(1,1,1) = {"
+aabbbbbbbbbbbbaaa
+abbbcccbbbbbbbbaa
+abbcdefbfbffgbbba
+bbbhfffifffffjbba
+bbffffkkkkkkfffbb
+bbfflfkmnnokfffbb
+pppiffnnnnqkffibb
+rfsfffktnnukffbbb
+pppbffkkkkkkfbbba
+bbbvwffffxxfffbba
+bbyzyyfffffffAbba
+bbbvyyBBffibbbbba
+abbbbbbbbbbbbbbaa
+aaabbbbbbbbbaaaaa
+"}

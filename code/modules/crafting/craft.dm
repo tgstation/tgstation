@@ -6,6 +6,7 @@
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
+				CAT_SMITH,
 				CAT_BREAD,
 				CAT_BURGER,
 				CAT_CAKE,

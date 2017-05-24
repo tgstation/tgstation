@@ -50,6 +50,8 @@
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
+	if(smelted_material)
+		smelted_material.reaction_mob(M, TOUCH, 30)
 
 
 //the equivalent of the standard version of attack() but for object targets.

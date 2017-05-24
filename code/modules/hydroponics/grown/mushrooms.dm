@@ -22,12 +22,14 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
 	filling_color = "#FF4500"
+	booze_power = 30
 
 
 // Fly Amanita
@@ -55,6 +57,7 @@
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
 	filling_color = "#FF0000"
+	booze_power = 70
 
 
 // Destroying Angel
@@ -84,6 +87,7 @@
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
 	filling_color = "#C0C0C0"
+	booze_power = 75
 
 
 // Liberty Cap
@@ -109,6 +113,7 @@
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
 	filling_color = "#DAA520"
+	booze_power = 45
 
 
 // Plump Helmet
@@ -132,9 +137,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = /obj/item/seeds/plump
 	name = "plump-helmet"
-	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
+	desc = "<I>Plumus Hellmus</I>: The only way to keep a fortress from exploding."
 	icon_state = "plumphelmet"
 	filling_color = "#9370DB"
+	booze_power = 55
 
 
 // Walking Mushroom
@@ -200,6 +206,7 @@
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 	filling_color = "#FFA500"
+	booze_power = 40
 
 
 // Glowshroom
@@ -231,6 +238,7 @@
 	filling_color = "#00FA9A"
 	var/effect_path = /obj/structure/glowshroom
 	origin_tech = "biotech=4;plasmatech=6"
+	booze_power = 85
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
@@ -278,6 +286,7 @@
 	filling_color = "#00FA9A"
 	effect_path = /obj/structure/glowshroom/glowcap
 	origin_tech = "biotech=4;powerstorage=6;plasmatech=4"
+	booze_power = 100 // charge those dwarven batteries
 
 
 //Shadowshroom
@@ -302,6 +311,7 @@
 	icon_state = "shadowshroom"
 	effect_path = /obj/structure/glowshroom/shadowshroom
 	origin_tech = "biotech=4;plasmatech=4;magnets=4"
+	booze_power = 1
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/shadowshroom/attack_self(mob/user)
 	. = ..()

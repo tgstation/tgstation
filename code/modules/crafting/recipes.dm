@@ -445,6 +445,13 @@
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/brewbarrel
+	name = "Brewing barrel"
+	time = 60
+	reqs = list(/obj/item/weapon/grown/log = 5)
+	result = /obj/machinery/brewing_barrel
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
 	result = /obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
