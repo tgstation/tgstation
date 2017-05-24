@@ -19,7 +19,7 @@ build:
   verbosity: minimal
 after_build:
   - ps: "tools/appveyor/TGS3Release.ps1"
-  - ps: if($env:APPVEYOR_REPO_COMMIT_MESSAGE -match "\[TGSDeploy]\"){$env:TGSDeploy = "Do it."}
+  - ps: if($env:APPVEYOR_REPO_COMMIT_MESSAGE -match "\[TGSDeploy\]"){$env:TGSDeploy = "Do it."}
   - ps: $env:TGSVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$env:APPVEYOR_BUILD_FOLDER/tools/tgstation-server-3/TGServerService/bin/Release/TGServerService.exe").FileVersion
 deploy:
   release: "tgstation-server-v$(TGSVersion)"
