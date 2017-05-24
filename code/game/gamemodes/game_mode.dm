@@ -81,7 +81,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	if(SSticker && SSticker.mode)
-		var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (game_mode) VALUES ([SSticker.mode]) WHERE id = [GLOB.round_id]")
+		var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET game_mode = '[SSticker.mode]'WHERE id = [GLOB.round_id]")
 		query_round_game_mode.Execute()
 	if(GLOB.revdata.commit)
 		SSblackbox.set_details("revision","[GLOB.revdata.commit]")

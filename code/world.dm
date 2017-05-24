@@ -58,10 +58,10 @@
 			log_world("Database connection established.")
 			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON('[world.internet_address]'), '[world.port]')")
 			query_round_start.Execute()
-			var/datum/DBQuery/query_round_max_id = SSdbcore.NewQuery("SELECT MAX(id) FROM [format_table_name("round")]")
-			query_round_max_id.Execute()
-			if(query_round_max_id.NextRow())
-				GLOB.round_id = query_round_max_id.item[1]
+			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
+			query_round_last_id.Execute()
+			if(query_round_last_id.NextRow())
+				GLOB.round_id = query_round_last_id.item[1]
 		else
 			log_world("Your server failed to establish a connection with the database.")
 
