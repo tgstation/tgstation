@@ -1,4 +1,3 @@
-
 /mob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
@@ -180,8 +179,6 @@
 			mob.throwing.finalize(FALSE)
 
 	for(var/obj/O in mob)
-		O.on_mob_move(direct, src)
-	for(var/obj/O in mob.held_items)
 		O.on_mob_move(direct, src)
 
 	return .
