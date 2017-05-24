@@ -215,7 +215,6 @@
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
 	cost = 6
-	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
 	name = "Box of Buckshot"
@@ -246,6 +245,14 @@
 	id = "sniper_ammo"
 	cost = 15
 	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang
+
+
+/datum/gang_item/weapon/ammo/sleeper_ammo
+	name = "Illicit Tranquilizer Cartridges"
+	id = "sniper_ammo"
+	cost = 15
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang/sleeper
+
 
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
