@@ -731,9 +731,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			The next person to use that airlock will trigger an explosion, knocking them down and destroying \
 			the airlock maintenance panel."
 	item = /obj/item/device/doorCharge
-	cost = 2
-	surplus = 10
-	exclude_modes = list(/datum/game_mode/nuclear)
+	cost = 4
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
 
 // Stealth Items
 /datum/uplink_item/stealthy_tools
