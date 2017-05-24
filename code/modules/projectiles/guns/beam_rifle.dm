@@ -20,7 +20,7 @@
 	zoom_amt = 20
 	zoom_out_amt = 23
 	weapon_weight = WEAPON_HEAVY
-	w_class = WEIGHT_CLASS_LARGE
+	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	var/hipfire_inaccuracy = 2
 	var/hipfire_recoil = 10
