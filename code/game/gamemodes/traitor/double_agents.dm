@@ -199,7 +199,7 @@
 				if(objective.stolen)
 					var/fail_msg = "<span class='userdanger'>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </span>"
 					if(traitored)
-						if(owner.license_to_kill)
+						if(owner.licence_to_kill)
 							fail_msg += "<span class='userdanger'> You no longer have permission to die. </span>"
 						else
 							fail_msg += "<span class='userdanger'> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</span>"
