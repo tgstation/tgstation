@@ -1,16 +1,16 @@
 /*****************Marker Beacons**************************/
 GLOBAL_LIST_INIT(marker_beacon_colors, list(
 "Random" = FALSE,//not a true color, will pick a random color
-"Red" = LIGHT_COLOR_FLARE,
-"Orange" = LIGHT_COLOR_ORANGE,
+"Burgundy" = LIGHT_COLOR_FLARE,
+"Bronze" = LIGHT_COLOR_ORANGE,
 "Yellow" = LIGHT_COLOR_YELLOW,
 "Lime" = LIGHT_COLOR_SLIME_LAMP,
 "Olive" = LIGHT_COLOR_GREEN,
 "Jade" = LIGHT_COLOR_BLUEGREEN,
 "Teal" = LIGHT_COLOR_LIGHT_CYAN,
-"Cobalt" = LIGHT_COLOR_BLUE,
-"Blue" = LIGHT_COLOR_DARK_BLUE,
-"Indigo" = LIGHT_COLOR_PURPLE,
+"Cerulean" = LIGHT_COLOR_BLUE,
+"Indigo" = LIGHT_COLOR_DARK_BLUE,
+"Purple" = LIGHT_COLOR_PURPLE,
 "Violet" = LIGHT_COLOR_LAVENDER,
 "Fuchsia" = LIGHT_COLOR_PINK))
 
@@ -72,6 +72,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "marker"
 	layer = BELOW_OPEN_DOOR_LAYER
+	armor = list(melee = 50, bullet = 75, laser = 75, energy = 75, bomb = 25, bio = 100, rad = 100, fire = 25, acid = 0)
+	obj_integrity = 50
+	max_integrity = 50
 	anchored = TRUE
 	light_range = 2
 	light_power = 3
@@ -82,6 +85,13 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	. = ..()
 	picked_color = set_color
 	update_icon()
+
+/obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/obj/item/stack/marker_beacon/M = new /obj/item/stack/marker_beacon(loc)
+		M.picked_color = picked_color
+		M.update_icon()
+	qdel(src)
 
 /obj/structure/marker_beacon/examine(mob/user)
 	..()
@@ -97,6 +107,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
 	if(do_after(user, remove_speed, target = src))
 		var/obj/item/stack/marker_beacon/M = new(loc)
+		M.picked_color = picked_color
+		M.update_icon()
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
