@@ -265,9 +265,14 @@
 /obj/item/ammo_box/magazine/sniper_rounds/gang
 	name = "black market sniper rounds (.50)"
 	icon_state = ".50mag"
-	origin_tech = "combat=6;syndicate=2"
+	origin_tech = "combat=6"
 	ammo_type = /obj/item/ammo_casing/point50/gang
 
+/obj/item/ammo_box/magazine/sniper_rounds/gang
+	name = "illegally modified tranquilizer round"
+	icon_state = "soporific"
+	origin_tech = "combat=6"
+	ammo_type = /obj/item/ammo_casing/point50/gang/sleeper
 
 //// SAW MAGAZINES
 
