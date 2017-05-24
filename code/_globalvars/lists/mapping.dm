@@ -6,6 +6,7 @@
 GLOBAL_LIST_INIT(cardinal, list( NORTH, SOUTH, EAST, WEST ))
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+GLOBAL_LIST_INIT(atmos_dirs, list(NORTH, SOUTH, EAST, WEST, UP, DOWN)) //not diagonals, as they'll be covered by our neighbours
 
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
