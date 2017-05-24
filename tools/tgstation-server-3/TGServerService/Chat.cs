@@ -181,7 +181,8 @@ namespace TGServerService
 				return CollectionToArray(Properties.Settings.Default.ChatChannels);
 			}
 		}
-		//public api
+
+		//what it says on the tin
 		string[] CollectionToArray(StringCollection sc)
 		{
 			string[] strArray = new string[sc.Count];

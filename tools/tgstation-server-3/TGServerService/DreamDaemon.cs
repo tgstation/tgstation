@@ -10,10 +10,8 @@ namespace TGServerService
 	//It's not possible to actually click it while starting it in CL mode, so in order to change visibility etc. It restarts the process when the round ends
 	partial class TGStationServer : ITGDreamDaemon
 	{
-
 		const int DDHangStartTime = 60;
 		const int DDBadStartTime = 10;
-		const int DDRestartMaxRetries = 5;
 
 		Process Proc;
 
@@ -147,7 +145,7 @@ namespace TGServerService
 					else
 						RestartInProgress = false;
 				}
-				var retries = DDRestartMaxRetries;
+				var retries = 0;
 				while (true)
 				{
 					var starttime = DateTime.Now;
@@ -163,21 +161,15 @@ namespace TGServerService
 							return;
 
 						if ((DateTime.Now - starttime).Seconds < DDBadStartTime)
-						{
-							if (retries == 0)
-							{
-								SendMessage("DD: DEFCON 0: Watchdog unable to restart server!");
-								TGServerService.WriteLog("Watchdog failed to restart server! Shutting down!", EventLogEntryType.Error);
-								return;
-							}
-
-							SendMessage(String.Format("DD: DEFCON {0}: Watchdog server startup failed!", retries));
-
-							--retries;
+						{							
+							++retries;
+							var sleep_time = (int)Math.Min(Math.Pow(2, retries), 3600);	//max of one hour
+							SendMessage(String.Format("DD: Watchdog server startup failed! Retrying in {0} seconds...", sleep_time));
+							Thread.Sleep(sleep_time * 1000);
 						}
 						else
 						{
-							retries = DDRestartMaxRetries;
+							retries = 0;
 							SendMessage("DD: DreamDaemon crashed or exited! Rebooting...");
 						}
 					}
@@ -211,7 +203,7 @@ namespace TGServerService
 					currentPort = 0;
 					AwaitingShutdown = false;
 					if (!RestartInProgress)
-						SendMessage("DD: Watchdog exiting...");
+						SendMessage("DD: Server stopped, watchdog exiting...");
 				}
 			}
 		}
