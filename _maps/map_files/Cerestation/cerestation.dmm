@@ -68229,6 +68229,9 @@
 	density = 0;
 	layer = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -68577,6 +68580,9 @@
 	},
 /area/science/mixing)
 "ctp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	tag = "icon-whitepurplecorner (NORTH)";
 	icon_state = "whitepurplecorner";
@@ -68586,12 +68592,14 @@
 /area/science/mixing)
 "ctq" = (
 /obj/effect/landmark/start/scientist,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/science/mixing)
 "ctr" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Toxins Mixing";
 	dir = 9;
@@ -68599,6 +68607,9 @@
 	network = list("SS13","RD")
 	},
 /obj/structure/closet/bombcloset,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (EAST)";
 	icon_state = "whitepurple";
@@ -69078,23 +69089,19 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/whitepurple/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/science/mixing)
 "cuv" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/whitepurple/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/science/mixing)
 "cuw" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	tag = "icon-whitepurplecorner (EAST)";
 	icon_state = "whitepurplecorner";
@@ -69114,10 +69121,10 @@
 	},
 /area/science/mixing)
 "cuy" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/closet/wardrobe/science_white,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1
+	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTHEAST)";
 	icon_state = "whitepurple";
@@ -69752,6 +69759,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (EAST)";
 	icon_state = "whitepurple";
@@ -69783,13 +69791,13 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (WEST)";
@@ -70501,6 +70509,7 @@
 /area/science/mixing)
 "cwo" = (
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (EAST)";
 	icon_state = "whitepurple";
@@ -70517,6 +70526,7 @@
 	},
 /area/science/mixing)
 "cwq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (WEST)";
 	icon_state = "whitepurple";
@@ -70874,6 +70884,7 @@
 	req_access = null;
 	req_access_txt = "30"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71336,6 +71347,15 @@
 	},
 /area/science/server)
 "cxR" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 120;
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71343,6 +71363,14 @@
 "cxS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10
+	},
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'SERVER ROOM'.";
+	name = "SERVER ROOM";
+	pixel_y = 32
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71352,6 +71380,12 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_y = 23
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -71423,6 +71457,7 @@
 /area/crew_quarters/heads/hor)
 "cyb" = (
 /obj/machinery/portable_atmospherics/scrubber/huge/movable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71762,12 +71797,19 @@
 	name = "Server Room";
 	req_access_txt = "30"
 	},
+/obj/machinery/atmospherics/pipe/manifold/general/hidden{
+	icon_state = "manifold";
+	dir = 8
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/science/server)
 "cyI" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 10
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71782,6 +71824,10 @@
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -72162,6 +72208,11 @@
 	dir = 1;
 	icon_state = "camera";
 	network = list("SS13","RD")
+	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1;
+	on = 1;
+	target_temperature = 80
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -77935,9 +77986,6 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (SOUTHWEST)";
 	icon_state = "whitepurple";
@@ -77946,9 +77994,6 @@
 	},
 /area/science/mixing)
 "cKw" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	tag = "icon-whitepurplecorner (WEST)";
 	icon_state = "whitepurplecorner";
@@ -81792,17 +81837,17 @@
 	},
 /area/science/storage)
 "cSm" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
 /obj/machinery/camera{
 	c_tag = "Toxins Storage";
 	dir = 9;
 	icon_state = "camera";
 	network = list("SS13","RD")
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90153,6 +90198,82 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/engineering)
+"dkw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/mixing)
+"dkx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/mixing)
+"dky" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/mixing)
+"dkz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/mixing)
+"dkA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/whitepurple/side{
+	tag = "icon-whitepurple (WEST)";
+	icon_state = "whitepurple";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/mixing)
+"dkB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/mixing)
+"dkC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/server)
+"dkD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 140;
+	on = 1;
+	pressure_checks = 0
+	},
+/turf/open/floor/circuit{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/server)
+"dkE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/science/server)
 
 (1,1,1) = {"
 aaa
@@ -100894,7 +101015,7 @@ cpo
 cqi
 crh
 crh
-cpo
+dkw
 cyb
 cyb
 cSm
@@ -101151,10 +101272,10 @@ cpo
 cqj
 crh
 cse
-cpo
+dkx
 cxg
 cxg
-cSn
+cxg
 cSs
 cpo
 cpo
@@ -101408,7 +101529,7 @@ cpo
 cqk
 cri
 cqk
-cpo
+dky
 ctm
 cua
 cKv
@@ -101665,7 +101786,7 @@ cpo
 cql
 crj
 csf
-cpo
+dkz
 ctn
 cub
 cuu
@@ -102179,7 +102300,7 @@ cpo
 cqm
 crl
 csg
-crl
+dkA
 ctp
 crm
 cKw
@@ -102437,9 +102558,9 @@ cKu
 crm
 cKu
 crm
-crm
-crm
 cSo
+crm
+crm
 cvp
 cwk
 cpo
@@ -102696,7 +102817,7 @@ csh
 csK
 ctq
 crm
-cSo
+crm
 cvq
 cwl
 cpo
@@ -102959,7 +103080,7 @@ cwm
 cpo
 cxR
 cxU
-cxR
+dkD
 cxd
 cSM
 djR
@@ -103216,7 +103337,7 @@ cwn
 cpo
 cxS
 cyH
-cxS
+dkE
 cxd
 cSN
 cAB
@@ -103470,7 +103591,7 @@ cpp
 cuy
 cvs
 cwo
-cpo
+dkB
 cxT
 cyI
 czq
@@ -103985,7 +104106,7 @@ cuA
 cvu
 cwq
 cxc
-cxU
+dkC
 cyK
 czs
 cxd
