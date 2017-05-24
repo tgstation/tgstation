@@ -28,6 +28,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 		chamber_round(0)
@@ -45,6 +46,7 @@
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
+		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
