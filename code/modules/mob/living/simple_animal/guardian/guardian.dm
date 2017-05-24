@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -175,9 +175,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
-				new /obj/effect/overlay/temp/guardian/phase/out(loc)
+				new /obj/effect/temp_visual/guardian/phase/out(loc)
 				forceMove(summoner.loc)
-				new /obj/effect/overlay/temp/guardian/phase(loc)
+				new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
-		new /obj/effect/overlay/temp/guardian/phase(loc)
+		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
 		return TRUE
 	return FALSE
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
-	new /obj/effect/overlay/temp/guardian/phase/out(loc)
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10

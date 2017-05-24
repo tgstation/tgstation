@@ -723,7 +723,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
 	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/icon/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
@@ -1215,7 +1215,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, GLOB.CURRENT_TICKLIMIT))
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 

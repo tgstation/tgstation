@@ -177,13 +177,13 @@
 					var/turf/mobloc = get_turf(B.current)
 					switch(i)
 						if(1)
-							new /obj/effect/overlay/temp/cult/sparks(mobloc, B.current.dir)
+							new /obj/effect/temp_visual/cult/sparks(mobloc, B.current.dir)
 							playsound(mobloc, "sparks", 50, 1)
 						if(2)
-							new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, B.current.dir)
+							new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, B.current.dir)
 							playsound(mobloc, "sparks", 75, 1)
 						if(3)
-							new /obj/effect/overlay/temp/dir_setting/cult/phase(mobloc, B.current.dir)
+							new /obj/effect/temp_visual/dir_setting/cult/phase(mobloc, B.current.dir)
 							playsound(mobloc, "sparks", 100, 1)
 						if(4)
 							playsound(mobloc, 'sound/magic/exit_blood.ogg', 100, 1)
@@ -193,7 +193,7 @@
 									var/obj/item/device/soulstone/S = B.current.loc
 									S.release_shades(owner)
 								B.current.setDir(SOUTH)
-								new /obj/effect/overlay/temp/cult/blood(final)
+								new /obj/effect/temp_visual/cult/blood(final)
 								addtimer(CALLBACK(B.current, /mob/.proc/reckon, final), 10)
 		else
 			return
@@ -201,7 +201,7 @@
 	Remove(owner)
 
 /mob/proc/reckon(turf/final)
-	new /obj/effect/overlay/temp/cult/blood/out(get_turf(src))
+	new /obj/effect/temp_visual/cult/blood/out(get_turf(src))
 	forceMove(final)
 
 /datum/action/innate/cult/master/finalreck/proc/chant(chant_number)
@@ -298,4 +298,5 @@
 			if(GLOB.blood_target)
 				to_chat(B.current,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
 			B.current.client.images -= GLOB.blood_target_image
-	QDEL_NULL(GLOB.blood_target)
+	QDEL_NULL(GLOB.blood_target_image)
+	GLOB.blood_target = null

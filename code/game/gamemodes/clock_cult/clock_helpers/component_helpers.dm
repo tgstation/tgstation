@@ -124,15 +124,15 @@
 /proc/get_component_animation_type(id)
 	switch(id)
 		if(BELLIGERENT_EYE)
-			return /obj/effect/overlay/temp/ratvar/component
+			return /obj/effect/temp_visual/ratvar/component
 		if(VANGUARD_COGWHEEL)
-			return /obj/effect/overlay/temp/ratvar/component/cogwheel
+			return /obj/effect/temp_visual/ratvar/component/cogwheel
 		if(GEIS_CAPACITOR)
-			return /obj/effect/overlay/temp/ratvar/component/capacitor
+			return /obj/effect/temp_visual/ratvar/component/capacitor
 		if(REPLICANT_ALLOY)
-			return /obj/effect/overlay/temp/ratvar/component/alloy
+			return /obj/effect/temp_visual/ratvar/component/alloy
 		if(HIEROPHANT_ANSIBLE)
-			return /obj/effect/overlay/temp/ratvar/component/ansible
+			return /obj/effect/temp_visual/ratvar/component/ansible
 		else
 			return null
 

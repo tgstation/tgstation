@@ -1,3 +1,4 @@
+
 /mob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
 		return 1
@@ -244,12 +245,12 @@
 				L.loc = locate(locx,locy,mobloc.z)
 				var/limit = 2//For only two trailing shadows.
 				for(var/turf/T in getline(mobloc, L.loc))
-					new /obj/effect/overlay/temp/dir_setting/ninja/shadow(T, L.dir)
+					new /obj/effect/temp_visual/dir_setting/ninja/shadow(T, L.dir)
 					limit--
 					if(limit<=0)
 						break
 			else
-				new /obj/effect/overlay/temp/dir_setting/ninja/shadow(mobloc, L.dir)
+				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
@@ -297,8 +298,12 @@
 			return A
 		else
 			var/atom/movable/AM = A
-			if(AM == buckled) //Kind of unnecessary but let's just be sure
+			if(AM == buckled)
 				continue
+			if(ismob(AM))
+				var/mob/M = AM
+				if(M.buckled)
+					continue
 			if(!AM.CanPass(src) || AM.density)
 				if(AM.anchored)
 					return AM

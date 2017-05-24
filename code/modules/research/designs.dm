@@ -249,16 +249,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/borg/upgrade/modkit/range
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 
-/datum/design/superaccelerator
-	name = "Kinetic Accelerator Pressure Mod"
-	desc = "A modification kit which allows Kinetic Accelerators to do more damage while indoors."
-	id = "indoormod"
-	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
-	build_path = /obj/item/borg/upgrade/modkit/indoors
-	category = list("Mining Designs", "Cyborg Upgrade Modules")
-
 /datum/design/hyperaccelerator
 	name = "Kinetic Accelerator Mining AoE Mod"
 	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."

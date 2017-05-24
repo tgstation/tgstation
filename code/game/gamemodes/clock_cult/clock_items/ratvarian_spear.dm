@@ -96,13 +96,13 @@
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown) //can't attack until we're done impaling
 		if(target)
-			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
 			target.Stun(2) //brief stun
 			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
-				var/obj/effect/overlay/temp/dir_setting/bloodsplatter/B = new /obj/effect/overlay/temp/dir_setting/bloodsplatter(T, get_dir(target, user))
+				var/obj/effect/temp_visual/dir_setting/bloodsplatter/B = new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, get_dir(target, user))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
@@ -151,5 +151,5 @@
 			T = get_turf(src)
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
-			new /obj/effect/overlay/temp/ratvar/spearbreak(T)
+			new /obj/effect/temp_visual/ratvar/spearbreak(T)
 		qdel(src)

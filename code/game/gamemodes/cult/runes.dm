@@ -410,7 +410,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	else
 		GLOB.sacrificed += sacrificial
 
-	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
+	new /obj/effect/temp_visual/cult/sac(get_turf(src))
 	for(var/M in invokers)
 		if(big_sac)
 			to_chat(M, "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>")

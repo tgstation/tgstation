@@ -101,7 +101,7 @@
 		var/turf/T = get_turf(src)
 		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
 		log_game("Emitter deleted at [COORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]","singulo")
+		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -124,13 +124,13 @@
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
 				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
 				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
-				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
+				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			else
 				src.active = 1
 				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
-				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]","singulo")
+				investigate_log("turned <font color='green'>on</font> by [key_name(user)] at [get_area(src)]", INVESTIGATE_SINGULO)
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
@@ -171,12 +171,12 @@
 			if(!powered)
 				powered = 1
 				update_icon()
-				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]","singulo")
+				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 		else
 			if(powered)
 				powered = 0
 				update_icon()
-				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 				log_game("Emitter lost power in ([x],[y],[z])")
 			return
 		if(charge <=80)
