@@ -590,7 +590,12 @@
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+	var/area/currentarea = get_area(src)
+	if(!currentturf)
+		. = FALSE
+	else if(istype(currentarea, /area/shuttle/arrival) && currentturf.z == ZLEVEL_CENTCOM)
+		. = FALSE
+	else if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
 		. = TRUE
 
 
