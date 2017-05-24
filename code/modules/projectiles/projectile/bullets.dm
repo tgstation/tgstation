@@ -284,7 +284,7 @@
 	stun = 1
 	weaken = 1
 	dismemberment = 15
-	armour_penetration = 45
+	armour_penetration = 25
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0
