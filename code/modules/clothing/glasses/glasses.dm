@@ -60,23 +60,17 @@
 		to_chat(user, "<span class='warning'>Due to [picked_excuse], these Meson Scanners will not be able to display terrain layouts in this area.</span>")
 
 /obj/item/clothing/glasses/meson/proc/toggle_mode(mob/user)
-	if(vision_flags & SEE_TURFS)
-		mesons_on = FALSE
-		vision_flags &= ~SEE_TURFS
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(picked_excuse)
-				to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
-			if(H.glasses == src)
-				H.update_sight()
-	else if(!(vision_flags & SEE_TURFS))
-		mesons_on = TRUE
-		vision_flags |= SEE_TURFS
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			to_chat(H, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
-			if(H.glasses == src)
-				H.update_sight()
+	vision_flags ^= SEE_TURFS
+	mesons_on = (vision_flags & SEE_TURFS)? TRUE : FALSE
+
+	if(iscarbon(user)) //only carbons can wear glasses
+		var/mob/living/carbon/C = user
+		if(!mesons_on)
+			to_chat(C, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
+		else if(picked_excuse)
+			to_chat(C, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+		if(C.glasses == src)
+			C.update_sight()
 
 /obj/item/clothing/glasses/meson/process()
 	var/turf/T = get_turf(src)
