@@ -9,24 +9,18 @@ namespace TGServiceInterface
 	/// </summary>
 	public enum TGConfigType
 	{
+		/// <summary>
+		/// dbconfig.txt
+		/// </summary>
 		Database,
+		/// <summary>
+		/// game_options.txt
+		/// </summary>
 		Game,
+		/// <summary>
+		/// config.txt
+		/// </summary>
 		General,
-	}
-
-	/// <summary>
-	/// Single line string configuration to edit
-	/// </summary>
-	public enum TGStringConfig{
-		Admin_NickNames,
-		Silicon_Laws,
-		SillyTips,
-		Whitelist,
-		AwayMissions,
-		LavaRuinBlacklist,
-		SpaceRuinBlacklist,
-		ShuttleBlacklist,
-		ExternalRSCURLs,
 	}
 
 	/// <summary>

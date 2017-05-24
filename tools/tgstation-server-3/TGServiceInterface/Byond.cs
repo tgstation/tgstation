@@ -7,12 +7,30 @@ namespace TGServiceInterface
 	/// </summary>
 	public enum TGByondStatus
 	{
-		Idle,	//no byond update in progress
-		Starting,	//Preparing to update
-		Downloading,	//byond downloading
-		Staging,	//byond unzipping
-		Staged,	//byond ready, waiting for dream daemon reboot
-		Updating,	//applying update
+		/// <summary>
+		/// No byond update in progress
+		/// </summary>
+		Idle,
+		/// <summary>
+		/// Preparing to update
+		/// </summary>
+		Starting,
+		/// <summary>
+		/// Revision is downloading
+		/// </summary>
+		Downloading,
+		/// <summary>
+		/// Revision is deflating
+		/// </summary>
+		Staging,
+		/// <summary>
+		/// Revision is ready and waiting for DreamDaemon reboot
+		/// </summary>
+		Staged,
+		/// <summary>
+		/// Revision is being applied
+		/// </summary>
+		Updating,
 	}
 
 	/// <summary>
@@ -20,9 +38,18 @@ namespace TGServiceInterface
 	/// </summary>
 	public enum TGByondVersion
 	{
-		Latest, //The highest version from http://www.byond.com/download/build/LATEST/
-		Staged,	//The version in the staging directory
-		Installed,	//The installed version
+		/// <summary>
+		/// The highest version from http://www.byond.com/download/build/LATEST/
+		/// </summary>
+		Latest,
+		/// <summary>
+		/// The version in the staging directory
+		/// </summary>
+		Staged,
+		/// <summary>
+		/// The installed version
+		/// </summary>
+		Installed,
 	}
 
 	/// <summary>

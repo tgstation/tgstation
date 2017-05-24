@@ -293,10 +293,7 @@ namespace TGCommandLine
 				Console.WriteLine("None!");
 			else
 				foreach (var I in data)
-				{
-					var innerDick = I.Value;
-					Console.WriteLine(String.Format("#{0}: {2} by {3} at commit {1}", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]));
-				}
+					Console.WriteLine(String.Format("#{0}: {2} by {3} at commit {1}", I.Number, I.Sha, I.Title, I.Author));
 			return ExitCode.Normal;
 		}
 	}

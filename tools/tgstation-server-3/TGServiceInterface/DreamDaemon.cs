@@ -7,36 +7,66 @@ namespace TGServiceInterface
 	/// </summary>
 	public enum TGDreamDaemonStatus
 	{
+		/// <summary>
+		/// Server is not running
+		/// </summary>
 		Offline,
+		/// <summary>
+		/// Server is being rebooted
+		/// </summary>
 		HardRebooting,
+		/// <summary>
+		/// Server is running
+		/// </summary>
 		Online,
 	}
 
 	/// <summary>
-	/// DD's security level
+	/// DreamDaemon's security level
 	/// </summary>
 	public enum TGDreamDaemonSecurity
 	{
-		Trusted = 0,    //default config
+		/// <summary>
+		/// Server is unrestricted in terms of file access and shell commands
+		/// </summary>
+		Trusted = 0,
+		/// <summary>
+		/// Server will not be able to run shell commands or access files outside it's working directory
+		/// </summary>
 		Safe,
+		/// <summary>
+		/// Server will not be able to run shell commands or access anything but temporary files
+		/// </summary>
 		Ultrasafe
 	}
 
 	/// <summary>
-	/// DD's visibility
+	/// DreamDaemon's hub visibility
 	/// </summary>
 	public enum TGDreamDaemonVisibility
 	{
+		/// <summary>
+		/// Server will be visible on the hub
+		/// </summary>
 		Public,
+		/// <summary>
+		/// Server will not be visible on the hub to anyone but the host's friends. Since the service does not have a BYOND account, this is effectively the same as Invisible
+		/// </summary>
 		Private,
+		/// <summary>
+		/// Server will not be visible on the hub
+		/// </summary>
 		Invisible = 2,  //default config
 	}
 
+	/// <summary>
+	/// Interface for managing the actual BYOND game server
+	/// </summary>
 	[ServiceContract]
 	public interface ITGDreamDaemon
 	{
 		/// <summary>
-		/// Gets the status of DD
+		/// Gets the status of DreamDaemon
 		/// </summary>
 		/// <returns>The appropriate TGDreamDaemonStatus</returns>
 		[OperationContract]

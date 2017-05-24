@@ -10,7 +10,13 @@ namespace TGServiceInterface
 	/// </summary>
 	public enum TGChatProvider
 	{
+		/// <summary>
+		/// IRC chat provider
+		/// </summary>
 		IRC = 0,
+		/// <summary>
+		/// Discord chat provider
+		/// </summary>
 		Discord,
 	}
 
@@ -35,6 +41,11 @@ namespace TGServiceInterface
 					DataFields.Add(null);
 		}
 
+		/// <summary>
+		/// Constructs a TGChatSetupInfo from a data list
+		/// </summary>
+		/// <param name="DeserializedData">The data</param>
+		/// <param name="provider">The chat provider</param>
 		public TGChatSetupInfo(IList<string> DeserializedData, TGChatProvider provider)
 		{
 			DataFields = DeserializedData;
@@ -42,13 +53,13 @@ namespace TGServiceInterface
 		}
 
 		/// <summary>
-		/// Should only be checked
+		/// The type of provider
 		/// </summary>
 		[DataMember]
 		public TGChatProvider Provider { get; protected set; }
 
 		/// <summary>
-		/// Raw access to the data, should not be used
+		/// Raw access to the underlying data
 		/// </summary>
 		[DataMember]
 		public IList<string> DataFields { get; protected set; }
@@ -68,7 +79,7 @@ namespace TGServiceInterface
 		const int FieldsLen = 5;
 
 		/// <summary>
-		/// Construct IRC setup info from optional generic info
+		/// Construct IRC setup info from optional generic info. Defaults to TGS3 on rizons IRC server
 		/// </summary>
 		/// <param name="baseInfo">Optional generic info</param>
 		public TGIRCSetupInfo(TGChatSetupInfo baseInfo = null) : base(baseInfo, FieldsLen)
@@ -127,13 +138,20 @@ namespace TGServiceInterface
 	{
 		const int BotTokenIndex = 0;
 		const int FieldsLen = 1;
+		/// <summary>
+		/// Construct Discord setup info from optional generic info. Default is not a valid discord bot tokent
+		/// </summary>
+		/// <param name="baseInfo">Optional generic info</param>
 		public TGDiscordSetupInfo(TGChatSetupInfo baseInfo = null) : base(baseInfo, FieldsLen)
 		{
 			Provider = TGChatProvider.Discord;
 			if (baseInfo == null)
-				BotToken = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";	//needless to say, this is fake
+				BotToken = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 		}
 
+		/// <summary>
+		/// The Discord bot token to use. See https://discordapp.com/developers/applications/me for registering bot accounts
+		/// </summary>
 		public string BotToken
 		{
 			get { return DataFields[BotTokenIndex]; }
@@ -186,6 +204,9 @@ namespace TGServiceInterface
 		string SendMessage(string msg, bool adminOnly = false);
 	}
 
+	/// <summary>
+	/// Interface for handling chat bot
+	/// </summary>
 	[ServiceContract]
 	public interface ITGChat : ITGChatBase
 	{
@@ -195,12 +216,17 @@ namespace TGServiceInterface
 		/// <returns></returns>
 		[OperationContract]
 		TGChatSetupInfo ProviderInfo();
-
-		//Get channels we are set to connect to, includes the admin channel
+		/// <summary>
+		/// Get channels we are set to connect to, includes the admin channel
+		/// </summary>
+		/// <returns>An array of channels</returns>
 		[OperationContract]
 		string[] Channels();
 
-		//Get the admin channel
+		/// <summary>
+		/// Get the channel from which secure commands can be sent
+		/// </summary>
+		/// <returns>The name of the channel</returns>
 		[OperationContract]
 		string AdminChannel();
 

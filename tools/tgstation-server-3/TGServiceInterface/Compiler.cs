@@ -7,9 +7,21 @@ namespace TGServiceInterface
 	/// </summary>
 	public enum TGCompilerStatus
 	{
+		/// <summary>
+		/// Game folder is broken or does not exist
+		/// </summary>
 		Uninitialized,
+		/// <summary>
+		/// Game folder is being created
+		/// </summary>
 		Initializing,
+		/// <summary>
+		/// Game folder is setup, does not imply the dmb is compiled
+		/// </summary>
 		Initialized,
+		/// <summary>
+		/// Game is being compiled
+		/// </summary>
 		Compiling,
 	}
 

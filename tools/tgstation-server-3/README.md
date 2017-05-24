@@ -137,6 +137,6 @@ You can clear all active test merges using `Reset to Origin Branch` in the `Repo
 
 ## CONTRIBUTING
 
-IF YOU MAKE ANY CHANGES TO THE CODE, BE SURE TO BUMP THE VERSION NUMBERS IN ALL 4 "AssemblyInfo.cs"s AND ON LINE 3 OF TGServiceInstaller/Product.wxs
-
-My recommendation is bump the revision number per test release, the minor version per PR, and the major version if you rewrite the whole thing.
+* IF YOU MAKE ANY CHANGES TO THE CODE, BE SURE TO BUMP THE VERSION NUMBERS IN ALL 4 "AssemblyInfo.cs"s AND ON LINE 3 OF TGServiceInstaller/Product.wx
+* My recommendation is bump the revision number per test release, the minor version per PR, and the major version if you rewrite the whole thing.
+* To have auto deployment to github releases work, put `[TGSDeploy]` somewhere in your pull request title

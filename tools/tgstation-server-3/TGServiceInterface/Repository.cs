@@ -1,23 +1,75 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace TGServiceInterface
 {
-	//for managing the code repository
-	//note, the only way to run git clean on the repo is to run Setup again
+	/// <summary>
+	/// Information about a pull request
+	/// </summary>
+	[DataContract]
+	public class PullRequestInfo
+	{
+		/// <summary>
+		/// Construct a PullRequestInfo
+		/// </summary>
+		/// <param name="number">The PR number</param>
+		/// <param name="author">The PR's author</param>
+		/// <param name="title">The PR's title</param>
+		/// <param name="sha">The commit the PR was merged locally at</param>
+		public PullRequestInfo(int number, string author, string title, string sha)
+		{
+			Number = number;
+			Author = author;
+			Title = title;
+			Sha = sha;
+		}
+
+		/// <summary>
+		/// The PR number
+		/// </summary>
+		[DataMember]
+		public int Number { get; private set; }
+		/// <summary>
+		/// The PR's author
+		/// </summary>
+		[DataMember]
+		public string Author { get; private set; }
+		/// <summary>
+		/// The PR's title
+		/// </summary>
+		[DataMember]
+		public string Title { get; private set; }
+		/// <summary>
+		/// The commit the PR was merged locally at
+		/// </summary>
+		[DataMember]
+		public string Sha { get; private set; }
+	}
+	/// <summary>
+	/// Interface for managing the code repository
+	/// </summary>
 	[ServiceContract]
 	public interface ITGRepository
 	{
-		//returns true if something is using the repo
-		//calls are serialized, so calling a git operation function if this is true will cause it to block until the previous operation completes
+		/// <summary>
+		/// If the repo is currently undergoing an operation
+		/// </summary>
+		/// <returns>true if the repo is busy, false otherwise</returns>
 		[OperationContract]
 		bool OperationInProgress();
 
-		//returns the current progress of a setup, update, or checkout operation
+		/// <summary>
+		/// Gets the progress of repository operations, not all operations are supported
+		/// </summary>
+		/// <returns>A value between 0 and 100 representing the progress of the current operation or -1 if the operation cannot be monitored</returns>
 		[OperationContract]
 		int CheckoutProgress();
 
-		//check if the repository is valid, if not Setup must be called
+		/// <summary>
+		/// Check if the repository is valid, if not Setup must be called
+		/// </summary>
+		/// <returns>true if the repository is valid, false otherwise</returns>
 		[OperationContract]
 		bool Exists();
 		
@@ -32,29 +84,43 @@ namespace TGServiceInterface
 		[OperationContract]
 		string Setup(string remote, string branch = "master");
 
-		//returns the sha of the current HEAD
-		//if null, error will contain the error
+		/// <summary>
+		/// Gets the sha of the current HEAD
+		/// </summary>
+		/// <param name="error">null on success, error message on failure</param>
+		/// <returns>The sha of the current HEAD on success, null on failure</returns>
 		[OperationContract]
 		string GetHead(out string error);
-
-		//returns the name of the current branch
-		//if null, error will contain the error
+		
+		/// <summary>
+		/// Gets the name of the current branch
+		/// </summary>
+		/// <param name="error">null on success, error message on failure</param>
+		/// <returns>The name of the current branch on success, null on failure</returns>
 		[OperationContract]
 		string GetBranch(out string error);
-
-		//returns the url of the current origin
-		//if null, error will contain the error
+		
+		/// <summary>
+		/// Gets the url of the current origin
+		/// </summary>
+		/// <param name="error">null on success, error message on failure</param>
+		/// <returns>The url of the current origin on success, null on failure</returns>
 		[OperationContract]
 		string GetRemote(out string error);
-
-		//hard checks outW the passed branch or sha
-		//returns null on success, error message on failure
+		
+		/// <summary>
+		/// Hard checks out the passed object name
+		/// </summary>
+		/// <param name="branchorsha">The branch, commit, or tag to checkout</param>
+		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
-		string Checkout(string branchorsha);
+		string Checkout(string objectName);
 
-		//Fetches the origin and merges it into the current branch
-		//if reset is true a hard reset is performed to the origin branch instead
-		//returns null on success, error message on failure
+		/// <summary>
+		/// Fetches the origin and merges it into the current branch
+		/// </summary>
+		/// <param name="reset">If true, the operation will perform a hard reset instead of a merge</param>
+		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
 		string Update(bool reset);
 
@@ -65,29 +131,51 @@ namespace TGServiceInterface
 		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
 		string Reset(bool tracked);
-
-		//Merges the pull request number if the remote is a github repository
-		//returns null on success, error message on failure
+		
+		/// <summary>
+		/// Merges the target pull request into the current branch if the remote is a github repository
+		/// </summary>
+		/// <param name="PRnumber">The github pull request number in the remote repository</param>
+		/// <returns>null on success, error message on failure</returns>
 		[OperationContract]
 		string MergePullRequest(int PRnumber);
 
 		//Returns a list of PR# -> Sha of the currently merged pull requests
 		//returns null on failure and error will be set
-		[OperationContract]
-		IDictionary<string, IDictionary<string, string>> MergedPullRequests(out string error);
 
-		//Gets the name of the current git committer
+		/// <summary>
+		/// Get the currently merged pull requests. Note that switching branches will delete this list and switching back won't restore it
+		/// </summary>
+		/// <param name="error">null on success, error message on failure</param>
+		/// <returns>A list of PullRequestInfo</returns>
+		[OperationContract]
+		IList<PullRequestInfo> MergedPullRequests(out string error);
+
+		/// <summary>
+		/// Gets the name of the configured git committer
+		/// </summary>
+		/// <returns>The name of the configured git committer</returns>
 		[OperationContract]
 		string GetCommitterName();
 
-		//Sets the name of the current git committer
+		/// <summary>
+		/// Sets the name of the configured git committer
+		/// </summary>
+		/// <param name="newName">The name to set</param>
 		[OperationContract]
 		void SetCommitterName(string newName);
-		//Gets the name of the current git email
+
+		/// <summary>
+		/// Gets the email of the configured git committer
+		/// </summary>
+		/// <returns>The email of the configured git committer</returns>
 		[OperationContract]
 		string GetCommitterEmail();
 
-		//Sets the name of the current git email
+		/// <summary>
+		/// Sets the email of the configured git committer
+		/// </summary>
+		/// <param name="newEmail">The email to set</param>
 		[OperationContract]
 		void SetCommitterEmail(string newEmail);
 

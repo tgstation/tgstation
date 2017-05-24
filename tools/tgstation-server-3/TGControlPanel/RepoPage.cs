@@ -134,10 +134,7 @@ namespace TGControlPanel
 						TestMergeListLabel.Items.Add("None");
 					else
 						foreach (var I in PRs)
-						{
-							var innerDick = I.Value;
-							TestMergeListLabel.Items.Add(String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Key, innerDick["commit"], innerDick["title"], innerDick["author"]));
-						}
+							TestMergeListLabel.Items.Add(String.Format("#{0}: {2} by {3} at commit {1}\r\n", I.Number, I.Sha, I.Title, I.Author));
 				else
 					TestMergeListLabel.Items.Add("Unknown");
 			}

@@ -50,14 +50,14 @@ namespace TGServiceInterface
 		}
 	}
 
-	//Internal
+	/// <summary>
+	/// Interface for checking server status
+	/// </summary>
 	[ServiceContract]
 	public interface ITGStatusCheck
 	{
 		/// <summary>
-		/// Literally does nothing on the server end
-		/// But if the call completes, you can be sure you are connected
-		/// Here because WCF won't throw until you try until you actually use the API
+		/// Does nothing on the server end, but if the call completes, you can be sure you are connected. WCF won't throw until you try until you actually use the API
 		/// </summary>
 		[OperationContract]
 		void VerifyConnection();
