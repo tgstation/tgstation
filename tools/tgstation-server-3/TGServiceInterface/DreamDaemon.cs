@@ -75,9 +75,10 @@ namespace TGServiceInterface
 		/// <summary>
 		/// Returns a human readable string of the current server status
 		/// </summary>
+		/// <param name="includeMetaInfo">If true, the status will include the server's current visibility and security levels</param>
 		/// <returns>A human readable string of the current server status</returns>
 		[OperationContract]
-		string StatusString(bool includeMetaInfo = true);
+		string StatusString(bool includeMetaInfo);
 
 		/// <summary>
 		/// Check if a call to Start will fail

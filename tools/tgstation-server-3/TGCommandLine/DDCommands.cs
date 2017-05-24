@@ -119,7 +119,7 @@ namespace TGCommandLine
 
 		public override ExitCode Run(IList<string> parameters)
 		{
-			Console.WriteLine(Server.GetComponent<ITGDreamDaemon>().StatusString());
+			Console.WriteLine(Server.GetComponent<ITGDreamDaemon>().StatusString(true));
 			return ExitCode.Normal;
 		}
 	}

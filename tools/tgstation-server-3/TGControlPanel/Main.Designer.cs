@@ -70,6 +70,10 @@
             this.MajorVersionNumeric = new System.Windows.Forms.NumericUpDown();
             this.UpdateProgressBar = new System.Windows.Forms.ProgressBar();
             this.ServerPanel = new System.Windows.Forms.TabPage();
+            this.VisibilitySelector = new System.Windows.Forms.ComboBox();
+            this.VisibilityTitle = new System.Windows.Forms.Label();
+            this.SecuritySelector = new System.Windows.Forms.ComboBox();
+            this.SecurityTitle = new System.Windows.Forms.Label();
             this.ResetTestmerge = new System.Windows.Forms.Button();
             this.NudgePortSelector = new System.Windows.Forms.NumericUpDown();
             this.NudgePortLabel = new System.Windows.Forms.Label();
@@ -161,10 +165,6 @@
             this.WorldStatusChecker = new System.ComponentModel.BackgroundWorker();
             this.WorldStatusTimer = new System.Windows.Forms.Timer(this.components);
             this.FullUpdateWorker = new System.ComponentModel.BackgroundWorker();
-            this.SecurityTitle = new System.Windows.Forms.Label();
-            this.SecuritySelector = new System.Windows.Forms.ComboBox();
-            this.VisibilityTitle = new System.Windows.Forms.Label();
-            this.VisibilitySelector = new System.Windows.Forms.ComboBox();
             this.Panels.SuspendLayout();
             this.RepoPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TestmergeSelector)).BeginInit();
@@ -734,6 +734,60 @@
             this.ServerPanel.TabIndex = 2;
             this.ServerPanel.Text = "Server";
             // 
+            // VisibilitySelector
+            // 
+            this.VisibilitySelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.VisibilitySelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.VisibilitySelector.FormattingEnabled = true;
+            this.VisibilitySelector.Items.AddRange(new object[] {
+            "Public",
+            "Private",
+            "Invisible"});
+            this.VisibilitySelector.Location = new System.Drawing.Point(566, 136);
+            this.VisibilitySelector.Name = "VisibilitySelector";
+            this.VisibilitySelector.Size = new System.Drawing.Size(121, 21);
+            this.VisibilitySelector.TabIndex = 40;
+            this.VisibilitySelector.SelectedIndexChanged += new System.EventHandler(this.VisibilitySelector_SelectedIndexChanged);
+            // 
+            // VisibilityTitle
+            // 
+            this.VisibilityTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.VisibilityTitle.AutoSize = true;
+            this.VisibilityTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.VisibilityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.VisibilityTitle.Location = new System.Drawing.Point(474, 139);
+            this.VisibilityTitle.Name = "VisibilityTitle";
+            this.VisibilityTitle.Size = new System.Drawing.Size(86, 18);
+            this.VisibilityTitle.TabIndex = 39;
+            this.VisibilityTitle.Text = "Visibility:";
+            this.VisibilityTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SecuritySelector
+            // 
+            this.SecuritySelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SecuritySelector.FormattingEnabled = true;
+            this.SecuritySelector.Items.AddRange(new object[] {
+            "Trusted",
+            "Safe",
+            "Ultrasafe"});
+            this.SecuritySelector.Location = new System.Drawing.Point(136, 136);
+            this.SecuritySelector.Name = "SecuritySelector";
+            this.SecuritySelector.Size = new System.Drawing.Size(121, 21);
+            this.SecuritySelector.TabIndex = 38;
+            this.SecuritySelector.SelectedIndexChanged += new System.EventHandler(this.SecuritySelector_SelectedIndexChanged);
+            // 
+            // SecurityTitle
+            // 
+            this.SecurityTitle.AutoSize = true;
+            this.SecurityTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SecurityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
+            this.SecurityTitle.Location = new System.Drawing.Point(44, 139);
+            this.SecurityTitle.Name = "SecurityTitle";
+            this.SecurityTitle.Size = new System.Drawing.Size(80, 18);
+            this.SecurityTitle.TabIndex = 37;
+            this.SecurityTitle.Text = "Security:";
+            this.SecurityTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ResetTestmerge
             // 
             this.ResetTestmerge.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -747,7 +801,7 @@
             // 
             // NudgePortSelector
             // 
-            this.NudgePortSelector.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudgePortSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NudgePortSelector.Location = new System.Drawing.Point(806, 60);
             this.NudgePortSelector.Maximum = new decimal(new int[] {
             65535,
@@ -771,7 +825,7 @@
             // 
             // NudgePortLabel
             // 
-            this.NudgePortLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NudgePortLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NudgePortLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NudgePortLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
             this.NudgePortLabel.Location = new System.Drawing.Point(745, 45);
@@ -804,7 +858,7 @@
             // 
             // CompileCancelButton
             // 
-            this.CompileCancelButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.CompileCancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CompileCancelButton.Enabled = false;
             this.CompileCancelButton.Location = new System.Drawing.Point(737, 302);
             this.CompileCancelButton.Name = "CompileCancelButton";
@@ -837,7 +891,6 @@
             // 
             // PortLabel
             // 
-            this.PortLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PortLabel.AutoSize = true;
             this.PortLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PortLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
@@ -850,7 +903,6 @@
             // 
             // PortSelector
             // 
-            this.PortSelector.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PortSelector.Location = new System.Drawing.Point(59, 60);
             this.PortSelector.Maximum = new decimal(new int[] {
             65535,
@@ -999,6 +1051,7 @@
             // 
             // AutostartCheckbox
             // 
+            this.AutostartCheckbox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AutostartCheckbox.AutoSize = true;
             this.AutostartCheckbox.Font = new System.Drawing.Font("Verdana", 12F);
             this.AutostartCheckbox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
@@ -1775,60 +1828,6 @@
             // FullUpdateWorker
             // 
             this.FullUpdateWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FullUpdateWorker_DoWork);
-            // 
-            // SecurityTitle
-            // 
-            this.SecurityTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SecurityTitle.AutoSize = true;
-            this.SecurityTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SecurityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.SecurityTitle.Location = new System.Drawing.Point(44, 139);
-            this.SecurityTitle.Name = "SecurityTitle";
-            this.SecurityTitle.Size = new System.Drawing.Size(80, 18);
-            this.SecurityTitle.TabIndex = 37;
-            this.SecurityTitle.Text = "Security:";
-            this.SecurityTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // SecuritySelector
-            // 
-            this.SecuritySelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SecuritySelector.FormattingEnabled = true;
-            this.SecuritySelector.Items.AddRange(new object[] {
-            "Trusted",
-            "Safe",
-            "Ultrasafe"});
-            this.SecuritySelector.Location = new System.Drawing.Point(136, 136);
-            this.SecuritySelector.Name = "SecuritySelector";
-            this.SecuritySelector.Size = new System.Drawing.Size(121, 21);
-            this.SecuritySelector.TabIndex = 38;
-            this.SecuritySelector.SelectedIndexChanged += new System.EventHandler(this.SecuritySelector_SelectedIndexChanged);
-            // 
-            // VisibilityTitle
-            // 
-            this.VisibilityTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.VisibilityTitle.AutoSize = true;
-            this.VisibilityTitle.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VisibilityTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
-            this.VisibilityTitle.Location = new System.Drawing.Point(474, 139);
-            this.VisibilityTitle.Name = "VisibilityTitle";
-            this.VisibilityTitle.Size = new System.Drawing.Size(86, 18);
-            this.VisibilityTitle.TabIndex = 39;
-            this.VisibilityTitle.Text = "Visibility:";
-            this.VisibilityTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // VisibilitySelector
-            // 
-            this.VisibilitySelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.VisibilitySelector.FormattingEnabled = true;
-            this.VisibilitySelector.Items.AddRange(new object[] {
-            "Public",
-            "Private",
-            "Invisible"});
-            this.VisibilitySelector.Location = new System.Drawing.Point(566, 136);
-            this.VisibilitySelector.Name = "VisibilitySelector";
-            this.VisibilitySelector.Size = new System.Drawing.Size(121, 21);
-            this.VisibilitySelector.TabIndex = 40;
-            this.VisibilitySelector.SelectedIndexChanged += new System.EventHandler(this.VisibilitySelector_SelectedIndexChanged);
             // 
             // Main
             // 

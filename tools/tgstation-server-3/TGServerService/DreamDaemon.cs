@@ -391,9 +391,9 @@ namespace TGServerService
 		}
 
 		//public api
-		public string StatusString(bool includeMetaInfo = true)
+		public string StatusString(bool includeMetaInfo)
 		{
-			var visSecStr = " (Vis: {0}, Sec: {1})";
+			const string visSecStr = " (Vis: {0}, Sec: {1})";
 			string res;
 			var ds = DaemonStatus();
 			switch (ds)
@@ -405,18 +405,19 @@ namespace TGServerService
 					res = "REBOOTING";
 					break;
 				case TGDreamDaemonStatus.Online:
-					lock (watchdogLock)
-					{
-						visSecStr = String.Format(visSecStr, VisibilityWord(true), SecurityWord(true));
-					}
-					res = SendCommand(SCIRCCheck) + visSecStr;
+					res = SendCommand(SCIRCCheck);
+					if (includeMetaInfo)
+						lock (watchdogLock)
+						{
+							res += String.Format(visSecStr, VisibilityWord(true), SecurityWord(true));
+						}
 					break;
 				default:
-					res = "NULL AND ERRORS" + String.Format(visSecStr, VisibilityWord(), SecurityWord());
+					res = "NULL AND ERRORS";
 					break;
 			}
-			if (includeMetaInfo)
-				res += String.Format(visSecStr, VisibilityWord(ds == TGDreamDaemonStatus.Online), SecurityWord(ds == TGDreamDaemonStatus.Online));
+			if (includeMetaInfo && ds != TGDreamDaemonStatus.Online)
+				res += String.Format(visSecStr, VisibilityWord(), SecurityWord());
 			return res;
 		}
 

@@ -272,7 +272,7 @@ namespace TGControlPanel
 			if (!Server.GetComponent<ITGRepository>().Exists())
 				DDStatusString = "NOT INSTALLED";
 			else
-				DDStatusString = Server.GetComponent<ITGDreamDaemon>().StatusString();
+				DDStatusString = Server.GetComponent<ITGDreamDaemon>().StatusString(true);
 		}
 
 		private void WorldStatusTimer_Tick(object sender, System.EventArgs e)
