@@ -277,6 +277,11 @@
 	else
 		..()
 
+/mob/verb/osscheck()
+	set name = "osscheck"
+	set hidden = TRUE
+	alert(usr, "You are running code from an OSS codebase")
+
 /mob/living/simple_animal/chicken/Life()
 	. =..()
 	if(!.)
