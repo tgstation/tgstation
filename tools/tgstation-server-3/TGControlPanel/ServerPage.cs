@@ -142,6 +142,9 @@ namespace TGControlPanel
 			if (!projectNameText.Focused)
 				projectNameText.Text = DM.ProjectName();
 
+			VisibilitySelector.SelectedIndex = (int)DD.VisibilityLevel();
+			SecuritySelector.SelectedIndex = (int)DD.SecurityLevel();
+
 			var val = Config.NudgePort(out string error);
 			if (error != null)
 			{
@@ -375,6 +378,20 @@ namespace TGControlPanel
 		{
 			if (!updatingFields)
 				Server.GetComponent<ITGConfig>().SetNudgePort((ushort)NudgePortSelector.Value);
+		}
+
+		private void SecuritySelector_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!updatingFields)
+				if (!Server.GetComponent<ITGDreamDaemon>().SetSecurityLevel((TGDreamDaemonSecurity)SecuritySelector.SelectedIndex))
+					MessageBox.Show("Security change will be applied after next server reboot.");
+		}
+
+		private void VisibilitySelector_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (!updatingFields)
+				if(!Server.GetComponent<ITGDreamDaemon>().SetVisibility((TGDreamDaemonVisibility)VisibilitySelector.SelectedIndex))
+					MessageBox.Show("Visibility change will be applied after next server reboot.");
 		}
 	}
 }

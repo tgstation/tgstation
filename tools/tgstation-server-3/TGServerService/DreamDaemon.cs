@@ -329,17 +329,53 @@ namespace TGServerService
 		}
 
 		//public api
-		public void SetVisibility(TGDreamDaemonVisibility NewVis)
+		public TGDreamDaemonVisibility VisibilityLevel()
 		{
-			Properties.Settings.Default.ServerVisiblity = (int)NewVis;
-			RequestRestart();
+			lock (watchdogLock)
+			{
+				return (TGDreamDaemonVisibility)Properties.Settings.Default.ServerVisiblity;
+			}
 		}
 
 		//public api
-		public void SetSecurityLevel(TGDreamDaemonSecurity level)
+		public bool SetVisibility(TGDreamDaemonVisibility NewVis)
 		{
-			Properties.Settings.Default.ServerSecurity = (int)level;
-			RequestRestart();
+			var Config = Properties.Settings.Default;
+			var visInt = (int)NewVis;
+			bool needReboot;
+			lock (watchdogLock)
+			{
+				needReboot = Config.ServerVisiblity != visInt;
+				Config.ServerVisiblity = visInt;
+			}
+			if (needReboot)
+				RequestRestart();
+			return DaemonStatus() != TGDreamDaemonStatus.Online;
+		}
+
+		//public api
+		public TGDreamDaemonSecurity SecurityLevel()
+		{
+			lock (watchdogLock)
+			{
+				return (TGDreamDaemonSecurity)Properties.Settings.Default.ServerSecurity;
+			}
+		}
+
+		//public api
+		public bool SetSecurityLevel(TGDreamDaemonSecurity level)
+		{
+			var Config = Properties.Settings.Default;
+			var secInt = (int)level;
+			bool needReboot;
+			lock (watchdogLock)
+			{
+				needReboot = Config.ServerSecurity != secInt;
+				Config.ServerSecurity = secInt;
+			}
+			if (needReboot)
+				RequestRestart();
+			return DaemonStatus() != TGDreamDaemonStatus.Online;
 		}
 
 		//public api
@@ -354,6 +390,7 @@ namespace TGServerService
 			Properties.Settings.Default.DDAutoStart = on;
 		}
 
+		//public api
 		public string StatusString(bool includeMetaInfo = true)
 		{
 			var visSecStr = " (Vis: {0}, Sec: {1})";

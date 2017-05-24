@@ -123,21 +123,37 @@ namespace TGServiceInterface
 		void RequestStop();
 
 		/// <summary>
+		/// Get the configured (not running) security level
+		/// </summary>
+		/// <returns>The configured (not running) security level</returns>
+		[OperationContract]
+		TGDreamDaemonSecurity SecurityLevel();
+
+		/// <summary>
 		/// Sets the security level of the server. Requires reboot to apply
 		/// Implies a call to RequestRestart()
 		/// note that anything higher than Trusted will disable interop from DD
 		/// </summary>
 		/// <param name="level">The new security level</param>
+		/// <returns>True if the change was immediately applied, false if a graceful restart was queued</returns>
 		[OperationContract]
-		void SetSecurityLevel(TGDreamDaemonSecurity level);
+		bool SetSecurityLevel(TGDreamDaemonSecurity level);
+
+		/// <summary>
+		/// Get the configured (not running) visibility level
+		/// </summary>
+		/// <returns>The configured (not running) visibility level</returns>
+		[OperationContract]
+		TGDreamDaemonVisibility VisibilityLevel();
 
 		/// <summary>
 		/// Sets the visiblity level of the server. Requires reboot to apply
 		/// Implies a call to RequestRestart()
 		/// </summary>
 		/// <param name="vis">The new visibility level</param>
+		/// <returns>True if the change was immediately applied, false if a graceful restart was queued</returns>
 		[OperationContract]
-		void SetVisibility(TGDreamDaemonVisibility vis);
+		bool SetVisibility(TGDreamDaemonVisibility vis);
 
 		/// <summary>
 		/// Get the configured port. Not necessarily the running port if it has since changed
