@@ -9,8 +9,6 @@ artifacts:
   name: TGS3
 - path: MD5-SHA1.txt
   name: MD5SHA1
-environment:
-  TGSDeploy: "No"
 install:
   - choco install fciv
 before_build:
@@ -21,9 +19,10 @@ build:
   verbosity: minimal
 after_build:
   - ps: "tools/appveyor/TGS3Release.ps1"
-  - ps: if($env:APPVEYOR_REPO_COMMIT_MESSAGE -like '*[TGSDeploy]*'){$env:TGSDeploy = "Do it."}
+  - ps: if($env:APPVEYOR_REPO_COMMIT_MESSAGE -match "\[TGSDeploy]\"){$env:TGSDeploy = "Do it."}
+  - ps: $env:TGSVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$env:APPVEYOR_BUILD_FOLDER/tools/tgstation-server-3/TGServerService/bin/Release/TGServerService.exe").FileVersion
 deploy:
-  release: "/tg/station Server"
+  release: "tgstation-server-v$(TGSVersion)"
   description: 'The /tg/station server suite'
   provider: GitHub
   auth_token:
