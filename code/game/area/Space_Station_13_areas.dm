@@ -1166,7 +1166,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/hydroponics/garden/abandoned
 	name = "Abandoned Garden"
-	icon_state = "hydro"
+	icon_state = "abandoned_garden"
 	
 /area/hydroponics/garden/monastery
 	name = "Monastery Garden"
