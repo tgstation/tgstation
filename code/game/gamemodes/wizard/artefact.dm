@@ -353,7 +353,7 @@
 		if("animu")
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)
+			/*M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)*/
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl/red(M), slot_w_uniform)
 			M.put_in_hands_or_del(sword)
 

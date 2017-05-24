@@ -120,7 +120,7 @@
 /obj/effect/spawner/lootdrop/minor/kittyears_or_rabbitears
 	name = "kitty ears or rabbit ears spawner"
 	loot = list(
-		/obj/item/clothing/head/kitty = 1,
+		/*obj/item/clothing/head/kitty = 1,*/
 		/obj/item/clothing/head/rabbitears = 1)
 
 /obj/effect/spawner/lootdrop/minor/pirate_or_bandana

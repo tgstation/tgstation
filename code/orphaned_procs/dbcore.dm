@@ -39,6 +39,7 @@
 */
 
 var/DBConnection/dbcon = new()
+var/DBConnection/dbcon2 = new()
 
 DBConnection
 	var/_db_con // This variable contains a reference to the actual database connection.

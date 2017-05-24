@@ -54,10 +54,23 @@
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
+	var/donator_icon = ""
+	if(holder)
+		if(holder.fakekey && is_donator(holder.fakekey))
+			donator_icon = "<img style='width:9px;height:9px;' class=icon src=\ref['icons/donator.dmi'] iconstate='[holder.fakekey]'>"
+		else if(is_donator(key))
+			donator_icon = "<img style='width:9px;height:9px;' class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
+	else if(is_donator(key))
+		donator_icon = "<img style='width:9px;height:9px;' class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
+
 	var/keyname = key
-//	if(prefs.unlock_content)
+	load_donator(ckey)
+	var/datum/donator/D = donators[ckey]
+	if(D && D.maxmoney >= 400)
 //		if(prefs.toggles & MEMBER_PUBLIC)
-	keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+//		if(holder.fakekey && is_donator(holder.fakekey))
+//			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[donator_icon][keyname]</font>"
+		keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[donator_icon][keyname]</font>"
 
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -176,3 +189,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		to_chat(src, "You can't ignore yourself.")
 		return
 	ignore_key(selection)
+
+/proc/is_donator(var/key as text)
+	if(key in donator_icons)
+		return 1
+	return 0
+
+var/list/donator_icons = icon_states('icons/donator.dmi')

@@ -208,12 +208,12 @@ var/list/datum/donator/donators = list()
 	var/category = "Debug"
 
 proc/load_donator(ckey)
-	var/DBConnection/dbcon2 = new()
-	dbcon2.doConnect("dbi:mysql:forum2:[global.sqladdress]:[global.sqlport]","[global.sqlfdbklogin]","[global.sqlfdbkpass]") //pidorasy
+//	var/DBConnection/dbcon2 = new()
+//	dbcon2.doConnect("dbi:mysql:forum2:[global.sqladdress]:[global.sqlport]","[global.sqlfdbklogin]","[global.sqlfdbkpass]") //pidorasy
 
 	if(!dbcon2.IsConnected())
 //		world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donator([ckey])."
-		world.log << "Failed to connect to database in load_donator([ckey])."
+//		world.log << "Failed to connect to database in load_donator([ckey])."
 		return 0
 
 	var/DBQuery/query = dbcon2.NewQuery("SELECT round(sum) FROM Z_donators WHERE byond='[ckey]'")
@@ -221,7 +221,7 @@ proc/load_donator(ckey)
 	while(query.NextRow())
 		var/money = round(text2num(query.item[1]))
 		new /datum/donator(ckey, money)
-	dbcon2.Disconnect()
+//	dbcon2.Disconnect()
 	return 1
 
 proc/build_prizes_list()

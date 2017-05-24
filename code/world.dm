@@ -64,6 +64,10 @@
 				GLOB.round_id = query_feedback_max_id.item[1]
 		else
 			log_world("Your server failed to establish a connection with the database.")
+		if(dbcon2.doConnect("dbi:mysql:forum2:[global.sqladdress]:[global.sqlport]","[global.sqlfdbklogin]","[global.sqlfdbkpass]"))
+			log_world("Donations database connection established.")
+		else
+			log_world("ACHTUNG! DONATES HAVE BEEN STOLEN!")
 
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
