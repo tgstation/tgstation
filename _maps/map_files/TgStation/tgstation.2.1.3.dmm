@@ -447,7 +447,7 @@
 	},
 /obj/machinery/power/tracker,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "abt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -779,7 +779,7 @@
 	},
 /obj/machinery/power/tracker,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "abY" = (
 /obj/structure/grille,
 /turf/open/space,
@@ -793,7 +793,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "aca" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -980,7 +980,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "acy" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/random,
@@ -1224,12 +1224,12 @@
 	name = "Port Auxiliary Solar Array"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "acW" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "acX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -1457,12 +1457,12 @@
 	name = "Port Auxiliary Solar Array"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adt" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adu" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1482,7 +1482,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "adv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1496,7 +1496,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "adw" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -1504,7 +1504,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "adx" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -1512,11 +1512,11 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "ady" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "adz" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1536,7 +1536,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "adA" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -1550,7 +1550,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "adB" = (
 /obj/structure/sign/securearea{
 	pixel_x = 32;
@@ -1711,7 +1711,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adT" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1731,11 +1731,11 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adU" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adV" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -1743,7 +1743,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adW" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1763,7 +1763,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adX" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -1771,7 +1771,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adY" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1785,7 +1785,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "adZ" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -1793,7 +1793,7 @@
 	name = "Port Auxiliary Solar Array"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "aea" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
@@ -2127,7 +2127,7 @@
 	name = "Port Auxiliary Solar Array"
 	},
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "aeH" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
@@ -4504,7 +4504,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/port)
+/area/solar/port/fore)
 "ajr" = (
 /obj/machinery/computer/gulag_teleporter_computer,
 /turf/open/floor/plasteel,
@@ -4777,7 +4777,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "ajW" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -4790,7 +4790,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "ajX" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
@@ -5093,7 +5093,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "akC" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/structure/reagent_dispensers/peppertank{
@@ -5418,7 +5418,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "alh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5431,7 +5431,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "ali" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -5714,7 +5714,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/aux/starboard)
+/area/solar/starboard/fore)
 "alO" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -5734,10 +5734,10 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "alR" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "alS" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -5748,7 +5748,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "alT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5761,7 +5761,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "alU" = (
 /turf/closed/wall,
 /area/maintenance/arrivals/north)
@@ -6001,12 +6001,12 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "amw" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "amx" = (
 /obj/structure/chair{
 	dir = 1
@@ -6018,7 +6018,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "amz" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -6029,7 +6029,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "amA" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6037,7 +6037,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "amB" = (
 /obj/structure/chair{
 	dir = 4
@@ -6336,7 +6336,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "anf" = (
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
@@ -6356,7 +6356,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "anh" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -6364,7 +6364,7 @@
 	},
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "ani" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -6377,7 +6377,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "anj" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
 	icon_state = "manifold";
@@ -6585,7 +6585,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "anI" = (
 /obj/machinery/door/airlock/engineering{
 	icon_state = "door_closed";
@@ -6599,7 +6599,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/fore)
+/area/maintenance/solars/port/fore)
 "anJ" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	icon_state = "intact";
@@ -6780,7 +6780,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "aof" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aog" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6793,7 +6793,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aoh" = (
 /obj/machinery/power/solar_control{
 	id = "auxsolareast";
@@ -6805,7 +6805,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aoi" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
@@ -6819,7 +6819,7 @@
 	},
 /obj/item/device/multitool,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aoj" = (
 /obj/machinery/camera{
 	c_tag = "Fore Port Solar Access"
@@ -7087,13 +7087,13 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aoN" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aoO" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -7104,7 +7104,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aoP" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -7375,7 +7375,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "apA" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -7388,7 +7388,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "apB" = (
 /obj/machinery/camera{
 	c_tag = "Fore Starboard Solars";
@@ -7400,7 +7400,7 @@
 	},
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "apC" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/crew_quarters/bar)
@@ -7790,7 +7790,7 @@
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aqx" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -7799,7 +7799,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "aqy" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -49901,12 +49901,12 @@
 /area/maintenance/department/science)
 "cfw" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cfx" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating/airless,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cfy" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/winterboots,
@@ -50407,7 +50407,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cgB" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -50415,7 +50415,7 @@
 	},
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cgC" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -50428,7 +50428,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cgD" = (
 /obj/machinery/camera{
 	c_tag = "Aft Port Solar Access";
@@ -50448,7 +50448,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cgF" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable{
@@ -51029,7 +51029,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "chO" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -51043,7 +51043,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "chP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -51056,7 +51056,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "chQ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51070,7 +51070,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "chR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51078,7 +51078,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "chS" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Aft Port Solar Access";
@@ -51090,7 +51090,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "chT" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -51564,7 +51564,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "ciR" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -51578,10 +51578,10 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "ciS" = (
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "ciT" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -51883,7 +51883,7 @@
 /area/maintenance/department/science)
 "cjD" = (
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cjE" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -51903,7 +51903,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cjG" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -51912,7 +51912,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cjH" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -52218,7 +52218,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "ckt" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -52231,7 +52231,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cku" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -52239,7 +52239,7 @@
 	},
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "ckv" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -52725,7 +52725,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cly" = (
 /obj/structure/chair/stool,
 /obj/machinery/camera{
@@ -52734,7 +52734,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "clz" = (
 /obj/machinery/power/terminal{
 	icon_state = "term";
@@ -52748,7 +52748,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "clA" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -53092,7 +53092,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cmw" = (
 /obj/machinery/power/solar_control{
 	id = "starboardsolar";
@@ -53104,7 +53104,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cmx" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -53115,7 +53115,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cmy" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -53454,7 +53454,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cnk" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -53469,7 +53469,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cnl" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -53743,7 +53743,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cnL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54559,7 +54559,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "cpj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -55296,7 +55296,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "cqK" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -55513,7 +55513,7 @@
 "crk" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crl" = (
 /obj/structure/table,
 /obj/item/device/taperecorder{
@@ -55650,7 +55650,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crC" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -55670,7 +55670,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crD" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -55678,7 +55678,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crE" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -55698,7 +55698,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crF" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -55706,7 +55706,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -55720,7 +55720,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crH" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -56060,7 +56060,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "csF" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
@@ -56224,7 +56224,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "csZ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -56234,7 +56234,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "cta" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
@@ -56453,7 +56453,7 @@
 /obj/structure/cable,
 /obj/machinery/power/tracker,
 /turf/open/floor/plasteel/airless/solarpanel,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "ctC" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity West";
@@ -58561,7 +58561,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/fore)
 "cxO" = (
 /obj/machinery/door/airlock/glass{
 	name = "Emergency Shuttle Infirmary"
@@ -58909,7 +58909,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/port/aft)
+/area/maintenance/solars/port/aft)
 "cyL" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -59018,7 +59018,7 @@
 	req_access_txt = "10; 13"
 	},
 /turf/open/floor/plating,
-/area/maintenance/solars/aux/starboard/port/aft)
+/area/maintenance/solars/starboard/aft)
 "cyV" = (
 /obj/machinery/door/window,
 /turf/open/floor/mineral/titanium/purple,
@@ -64614,6 +64614,386 @@
 "cMP" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"cMQ" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMR" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMS" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMT" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMU" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMV" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMW" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMX" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMY" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cMZ" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNa" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNb" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNc" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNd" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNe" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNf" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNg" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNh" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNi" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNj" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNk" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNl" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNm" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNn" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNo" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNp" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNq" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNr" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNs" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNt" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNu" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNv" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNw" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNx" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNy" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNz" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNA" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNB" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cNC" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
+"cND" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "starboardsolar";
+	name = "Starboard Solar Array"
+	},
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/solar/starboard/aft)
 
 (1,1,1) = {"
 aaa
@@ -113118,17 +113498,17 @@ aaa
 aaa
 aaS
 aaa
-crj
+cMQ
 crB
-crS
+cNa
 aaa
 crj
 crB
 crS
 aaa
-crj
+cNk
 crB
-crS
+cNu
 aaa
 aaS
 aaa
@@ -113375,17 +113755,17 @@ aaa
 aaa
 aba
 aaf
-crj
+cMR
 crC
-crS
+cNb
 aaa
 crj
 crC
 crS
 aaa
-crj
+cNl
 crC
-crS
+cNv
 aaf
 aaS
 aaa
@@ -113632,17 +114012,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMS
 crC
-crS
+cNc
 aaf
 crj
 crC
 crS
 aaf
-crj
+cNm
 crC
-crS
+cNw
 aaa
 aaS
 aaa
@@ -113889,17 +114269,17 @@ aaf
 aaf
 aaf
 aaf
-crj
+cMT
 crC
-crS
+cNd
 aaa
 crj
 crC
 crS
 aaa
-crj
+cNn
 crC
-crS
+cNx
 aaf
 aaf
 aaa
@@ -114146,17 +114526,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMU
 crC
-crS
+cNe
 aaa
 crj
 crC
 crS
 aaa
-crj
+cNo
 crC
-crS
+cNy
 aaa
 aaf
 aaS
@@ -115174,17 +115554,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMV
 crE
-crS
+cNf
 aaa
 crj
 crE
 crS
 aaa
-crj
+cNp
 crE
-crS
+cNz
 aaa
 aaf
 aaS
@@ -115431,17 +115811,17 @@ aaf
 aaf
 aaf
 aaf
-crj
+cMW
 crE
-crS
+cNg
 aaa
 crj
 crE
 crS
 aaa
-crj
+cNq
 crE
-crS
+cNA
 aaf
 aaf
 aaa
@@ -115688,17 +116068,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMX
 crE
-crS
+cNh
 aaf
 crj
 crE
 crS
 aaf
-crj
+cNr
 crE
-crS
+cNB
 aaa
 aaS
 aaa
@@ -115945,17 +116325,17 @@ aaf
 aaf
 aaf
 aaf
-crj
+cMY
 crE
-crS
+cNi
 aaa
 crj
 crE
 crS
 aaa
-crj
+cNs
 crE
-crS
+cNC
 aaf
 aaS
 aaa
@@ -116202,17 +116582,17 @@ aaa
 aaa
 aba
 aaa
-crj
+cMZ
 crG
-crS
+cNj
 aaa
 crj
 crG
 crS
 aaa
-crj
+cNt
 crG
-crS
+cND
 aaa
 aaS
 aaa
