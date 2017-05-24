@@ -60,23 +60,19 @@
 		to_chat(user, "<span class='warning'>Due to [picked_excuse], these Meson Scanners will not be able to display terrain layouts in this area.</span>")
 
 /obj/item/clothing/glasses/meson/proc/toggle_mode(mob/user)
-	if(vision_flags & SEE_TURFS)
-		mode = TRUE
-		vision_flags &= ~SEE_TURFS
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(picked_excuse)
-				to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
-			if(H.glasses == src)
-				H.update_sight()
-	else if(!(vision_flags & SEE_TURFS))
-		mode = FALSE
-		vision_flags |= SEE_TURFS
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
+	mode = (vision_flags & SEE_TURFS)? TRUE : FALSE
+	vision_flags ^= SEE_TURFS
+
+	//I have no idea why only humans are checked for update_sight() with default behavior doing nothing
+	//Please contact ChangelingRain if you would like to know more
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(mode && picked_excuse)
+			to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+		else if(!mode)
 			to_chat(H, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
-			if(H.glasses == src)
-				H.update_sight()
+		if(H.glasses == src)
+			H.update_sight()
 
 /obj/item/clothing/glasses/meson/process()
 	var/turf/T = get_turf(src)
