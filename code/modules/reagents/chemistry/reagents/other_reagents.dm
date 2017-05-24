@@ -160,6 +160,12 @@
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
+	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
+		var/obj/item/stack/sheet/hairlesshide/HH = O
+		var/obj/item/stack/sheet/wetleather/WL = new(get_turf(HH))
+		WL.amount = HH.amount
+		qdel(HH)
+
 /*
  *	Water reaction to a mob
  */
@@ -367,11 +373,15 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/N = M
-		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
+		N.hair_style = "Spiky"
+		N.facial_hair_style = "Shaved"
+		N.facial_hair_color = "000"
+		N.hair_color = "000"
+		if(!(HAIR in N.dna.species.species_traits)) //No hair? No problem!
+			N.dna.species.species_traits += HAIR
+		if(N.dna.species.use_skintones)
 			N.skin_tone = "orange"
-			N.hair_style = "Spiky"
-			N.hair_color = "000"
-		if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
 		N.regenerate_icons()
 		if(prob(7))
@@ -380,7 +390,7 @@
 			else
 				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
 	if(prob(10))
-		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
+		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."))
 	..()
 	return
 
@@ -1126,7 +1136,7 @@
 /datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)
 		M.drowsyness += max(round(reac_volume, 1), 2)
-		
+
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/M)
 	M.drowsyness += 2
 	if(ishuman(M))

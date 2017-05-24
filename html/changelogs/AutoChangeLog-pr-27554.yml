@@ -1,0 +1,4 @@
+author: "QualityVan"
+delete-after: True
+changes: 
+  - bugfix: "Inserted legion cores no longer work if they went inert before implanting"
