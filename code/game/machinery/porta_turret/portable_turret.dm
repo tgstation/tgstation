@@ -553,6 +553,7 @@
 	use_power = 0
 	has_cover = 0
 	scan_range = 9
+	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
@@ -569,6 +570,8 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
+	max_integrity = 40
+	integrity_failure = 20
 	obj_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
