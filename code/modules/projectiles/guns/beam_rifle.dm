@@ -260,6 +260,7 @@
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 20
 	var/impact_structure_damage = 50
+	var/turf/last_turf
 
 /obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
 	if(isclosedturf(target) && ++wall_pierce < wall_pierce_amount)
@@ -270,12 +271,20 @@
 		return FALSE
 	. = ..()
 
+/obj/item/projectile/beam/beam_rifle/Range()
+	..()
+	last_turf = get_turf(src)
+
+/obj/item/projectile/beam/beam_rifle/prehit(atom/target)
+	..()
+	last_turf = get_turf(target)
+
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
 	var/turf/impact_turf
-	if(target)
+	if(!QDELETED(target))
 		impact_turf = get_turf(target)
 	else
-		impact_turf = get_turf(src)
+		impact_turf = last_turf
 	if(isturf(target) && ++wall_pierce < wall_pierce_amount)
 		if(prob(wall_devastate))
 			target.ex_act(2)
