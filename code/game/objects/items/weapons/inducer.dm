@@ -1,4 +1,4 @@
-//Tool for recharging APCs, Borgs, Mechs, Space Heaters, Ninja Suits. SMES, energy guns, stun batons, etc. 
+//Tool for recharging APCs, Borgs, Mechs, Space Heaters, Ninja Suits. SMES, energy guns, stun batons, etc.
 //Basically anything with a power-cell.
 
 /obj/item/weapon/inducer
@@ -25,7 +25,7 @@
 	var/totransfer = max(cell.charge,powertransfer)
 	target.charge = min(target.charge + totransfer, target.capacity)
 	cell.use(totransfer)
-	
+
 
 /obj/item/weapon/inducer/Attack(/obj/target, /mob/user)
 	if(user.A_INTENT == INTENT_HARM)
@@ -42,7 +42,7 @@
 	if(!cell.charge)
 		to_chat(user, "<span class='warning'> The [src]'s battery is dead!</span>")
 		return
-	
+
 	if(istype(target,/obj/item/weapon/stock_parts/cell))
 		visible_message("[user] starts charging the [target] with the [src].")
 		if(do_after(user, 10)) // Taking a bare cell is faster
@@ -52,7 +52,7 @@
 			induce(target)
 			visible_message("[user] recharges the [target]!")
 			return
-	
+
 	if(istype(target,/obj/machinery/power/apc) || istype(target,/obj/machinery/space_heater) || istype(target,/obj/mecha) || istype(target, /obj/item/weapon/inducer))
 		if (target == src)
 			to_chat(user,"<span class='warning'> The [src] can't charge itself!")
@@ -65,7 +65,7 @@
 			induce(target.cell)
 			visible_message("[user] recharges the [target]!")
 			return
-	
+
 	if(istype(target,/obj/machinery/power/SMES))
 		visible_message("[user] starts charging the [target] with the [src].")
 		if(do_after(user, 20))
@@ -75,7 +75,7 @@
 			induce(target)
 			visible_message("[user] recharges the [target]!")
 			return
-	
+
 	if(istype(target,/obj/item/weapon/gun/energy))
 		visible_message("[user] starts charging the [target] with the [src].")
 	 	if(do_after(user, 40)) //Recharging energy guns should be slower, probably.
@@ -85,7 +85,7 @@
 			induce(target.power_supply)
 			visible_message("[user] recharges the [target]!")
 			return
-	
+
 	if(istype(target,/obj/item/clothing/suit/space/space_ninja))
 		visible_message("[user] starts charging the [target] with the [src].")
 		if(do_after(user, 40) ) //Same with ninja suits.
@@ -97,7 +97,7 @@
 			return
 
 	if(istype(target,/obj/item/weapon/melee/baton) | istype(target,/obj/item/weapon/defibrillator))
-		visible_message("[user] starts charging the [target] with the [src].
+		visible_message("[user] starts charging the [target] with the [src].")
 		if(do_after(user, 40) )
 			if(target.bcell.charge == target.bcell.maxcharge)
 				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
@@ -105,8 +105,8 @@
 			induce(target.bcell)
 			visible_message("[user] recharges the [target]!")
 			return
-	
-	
+
+
 	if(istype(target, /obj/item/machinery/chem_dispenser))
 		if(target.energy = target.max_energy)
 			to_chat(user, "<span class='warning'> The [target] is fully charged!")
@@ -123,7 +123,7 @@
 	..()
 
 	/obj/item/weapon/inducer/Attack(/mob/living/target, /mob/user)
-	
+
 	if(user.A_INTENT == INTENT_HARM)
 		return ..()
 
