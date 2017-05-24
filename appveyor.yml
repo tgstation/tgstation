@@ -18,7 +18,6 @@ build:
   parallel: true
   verbosity: minimal
 after_build:
-  - ps: ls | Write-Host
   - ps: "tools/appveyor/TGS3Release.ps1"
 deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
