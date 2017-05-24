@@ -7,25 +7,34 @@
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	origin_tech = "materials=3;magnets=3;engineering=3;plasmatech=3"
 
-	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
+	mode = FALSE	//FALSE - regular mesons mode	TRUE - t-ray mode
 	var/range = 1
 
-/obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
+/obj/item/clothing/glasses/meson/engine/toggle_mode(mob/user, voluntary)
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING && mode)
+		if(picked_excuse)
+			to_chat(user, "<span class='warning'>Due to [picked_excuse], the [name] cannot currently be swapped to \[Meson] mode.</span>")
+		return
 	mode = !mode
 
 	if(mode)
-		START_PROCESSING(SSobj, src)
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
 		lighting_alpha = null
-		to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
+		if(voluntary)
+			to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
+		else
+			to_chat(user, "<span class='warning'>The goggles abruptly toggle to \[T-Ray] mode!</span>")
 	else
-		STOP_PROCESSING(SSobj, src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-		to_chat(loc, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
+		if(voluntary)
+			to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
+		else
+			to_chat(user, "<span class='warning'>The goggles abruptly toggle to \[Meson] mode!</span>")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -37,8 +46,14 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
+	toggle_mode(user, TRUE)
+
 /obj/item/clothing/glasses/meson/engine/process()
 	if(!mode)
+		var/turf/T = get_turf(src)
+		if(T && T.z == ZLEVEL_MINING)
+			toggle_mode(loc)
 		return
 
 	if(!ishuman(loc))
@@ -47,7 +62,6 @@
 	var/mob/living/carbon/human/user = loc
 	if(user.glasses != src)
 		return
-
 	scan()
 
 /obj/item/clothing/glasses/meson/engine/proc/scan()
@@ -89,12 +103,16 @@
 	icon_state = "trayson-tray_off"
 	origin_tech = "materials=3;magnets=2;engineering=2"
 
-	mode = 1
-	var/on = 0
+	mode = TRUE
+	var/on = FALSE
 	vision_flags = 0
 	darkness_view = 2
 	invis_view = SEE_INVISIBLE_LIVING
 	range = 2
+
+/obj/item/clothing/glasses/meson/engine/tray/Initialize()
+	. = ..()
+	picked_excuse = null
 
 /obj/item/clothing/glasses/meson/engine/tray/process()
 	if(!on)
@@ -108,15 +126,10 @@
 		if(user.glasses == src)
 			user.update_inv_glasses()
 
-/obj/item/clothing/glasses/meson/engine/tray/attack_self(mob/user)
+/obj/item/clothing/glasses/meson/engine/tray/toggle_mode(mob/user, voluntary)
 	on = !on
 
-	if(on)
-		START_PROCESSING(SSobj, src)
-		to_chat(user, "<span class='notice'>You turn the goggles on.</span>")
-	else
-		STOP_PROCESSING(SSobj, src)
-		to_chat(user, "<span class='notice'>You turn the goggles off.</span>")
+	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [on ? "on":"off"][voluntary ? ".":"!"]</span>")
 
 	update_icon()
 	for(var/X in actions)

@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/process()
 	if(loaded_tank)
 		if(!loaded_tank.air_contents.gases["plasma"])
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 			eject()
 		else
 			loaded_tank.air_contents.gases["plasma"][MOLES] -= 0.001*drainratio
@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
 			var/fuel = loaded_tank.air_contents.gases["plasma"]
 			fuel = fuel ? fuel[MOLES] : 0
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")

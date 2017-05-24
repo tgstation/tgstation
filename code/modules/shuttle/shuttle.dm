@@ -404,7 +404,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/overlay/temp/ripple(t, animate_time)
+		ripples += new /obj/effect/temp_visual/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -764,6 +764,6 @@
 	if(T in block(T0,T1))
 		return TRUE
 	return FALSE
-	
+
 
 #undef DOCKING_PORT_HIGHLIGHT

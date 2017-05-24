@@ -23,7 +23,7 @@
 	attacktext = "attacks"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
 

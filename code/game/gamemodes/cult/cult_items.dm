@@ -204,7 +204,7 @@
 	if(current_charges)
 		owner.visible_message("<span class='danger'>\The [attack_text] is deflected in a burst of blood-red sparks!</span>")
 		current_charges--
-		new /obj/effect/overlay/temp/cult/sparks(get_turf(owner))
+		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
 			owner.update_inv_wear_suit()
@@ -356,14 +356,14 @@
 		if(uses <= 0)
 			icon_state ="shifter_drained"
 		playsound(mobloc, "sparks", 50, 1)
-		new /obj/effect/overlay/temp/dir_setting/cult/phase/out(mobloc, C.dir)
+		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
 		C.forceMove(destination)
 		if(pulled)
 			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
 
-		new /obj/effect/overlay/temp/dir_setting/cult/phase(destination, C.dir)
+		new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
 		playsound(destination, "sparks", 50, 1)
 
@@ -375,8 +375,8 @@
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 1
-	icon_state = "torch-on"
-	item_state = "torch-on"
+	icon_state = "torch"
+	item_state = "torch"
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null

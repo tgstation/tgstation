@@ -12,6 +12,7 @@
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	flags = PREVENT_CLICK_UNDER
 
 	var/secondsElectrified = 0
 	var/shockedby = list()

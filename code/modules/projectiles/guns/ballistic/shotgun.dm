@@ -20,6 +20,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 
@@ -191,6 +192,14 @@
 	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/weapon/gun/ballistic/shotgun/automatic/combat/compact
+	name = "compact combat shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	icon_state = "cshotgunc"
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	w_class = WEIGHT_CLASS_BULKY
 
 //Dual Feed Shotgun
 

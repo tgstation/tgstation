@@ -4,7 +4,7 @@
 	faction = list("jungle")
 	weather_immunities = list("acid")
 	obj_damage = 30
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = 450
 	response_help = "pokes"

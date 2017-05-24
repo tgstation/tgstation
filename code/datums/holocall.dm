@@ -30,6 +30,7 @@
 		var/obj/machinery/holopad/H = I
 		if(!QDELETED(H) && H.is_operational())
 			dialed_holopads += H
+			H.say("Incoming call.")
 			LAZYADD(H.holo_calls, src)
 
 	if(!dialed_holopads.len)
@@ -41,12 +42,16 @@
 
 //cleans up ALL references :)
 /datum/holocall/Destroy()
-	QDEL_NULL(eye)
-
 	user.reset_perspective()
+	if(user.client)
+		for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
+			chunk.remove(eye)
+	user.remote_control = null
+	QDEL_NULL(eye)
 	
 	user = null
-	hologram.HC = null
+	if(hologram)
+		hologram.HC = null
 	hologram = null
 	calling_holopad.outgoing_call = null
 
