@@ -160,6 +160,12 @@
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
+	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
+		var/obj/item/stack/sheet/hairlesshide/HH = O
+		var/obj/item/stack/sheet/wetleather/WL = new(get_turf(HH))
+		WL.amount = HH.amount
+		qdel(HH)
+
 /*
  *	Water reaction to a mob
  */
@@ -1130,7 +1136,7 @@
 /datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == VAPOR)
 		M.drowsyness += max(round(reac_volume, 1), 2)
-		
+
 /datum/reagent/nitrous_oxide/on_mob_life(mob/living/M)
 	M.drowsyness += 2
 	if(ishuman(M))
