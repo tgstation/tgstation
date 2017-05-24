@@ -416,7 +416,7 @@ namespace TGServerService
 					break;
 			}
 			if (includeMetaInfo)
-				return res +String.Format(visSecStr, VisibilityWord(ds == TGDreamDaemonStatus.Online), SecurityWord(ds == TGDreamDaemonStatus.Online));
+				res += String.Format(visSecStr, VisibilityWord(ds == TGDreamDaemonStatus.Online), SecurityWord(ds == TGDreamDaemonStatus.Online));
 			return res;
 		}
 
