@@ -132,6 +132,7 @@ You can clear all active test merges using `Reset to Origin Branch` in the `Repo
 * The repository will automatically create an ssh version of the initial origin remote and can optionally push generated changelogs to your git through it
 * The repository can only authenticate using ssh public key authentication
 * To enable this feature, simply create `public_key.txt` and `private_key.txt` in a folder called RepoKey in the server directory
+* The private key must be in `-----BEGIN RSA PRIVATE KEY-----` format and the public key must be in `ssh-rsa` format. See github guidelines for setting this up here: https://help.github.com/articles/connecting-to-github-with-ssh/
 * The service will be able to read these files regardless of their permissions, so the responsibility is on you to set their ACL's so they can't be read by those that shouldn't
 
 ## CONTRIBUTING
