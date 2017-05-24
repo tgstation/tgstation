@@ -19,3 +19,10 @@
 			"<span class='userdanger'>The [P.name] passes between [H]'s bones, missing [H.p_them()]!</span>")
 			return 2
 	return 0
+
+/datum/species/skeleton/spec_life(mob/living/carbon/human/H)
+	..()
+	if(H.has_reagent("milk")) //strong bones and calcium
+		armor = list(melee = 10, bullet = 10, laser = 0, energy = 10, bomb = 0, bio = 100, rad = 100, fire = 100, acid = 0)
+	else
+		armor = initial(armor)
