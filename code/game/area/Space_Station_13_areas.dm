@@ -405,7 +405,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/hallway/secondary/command
 	name = "Command Hallway"
-	icon_state = "bridge"
+	icon_state = "bridge_hallway"
 	
 /area/hallway/secondary/construction
 	name = "Construction Area"
@@ -1111,11 +1111,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/quartermaster/sorting
 	name = "Delivery Office"
-	icon_state = "quartstorage"
+	icon_state = "cargo_delivery"
 	
 /area/quartermaster/warehouse
 	name = "Warehouse"
-	icon_state = "quartstorage"
+	icon_state = "cargo_warehouse"
 	
 ////////////WORK IN PROGRESS//////////
 	
@@ -1125,7 +1125,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 /area/quartermaster/storage
 	name = "Cargo Bay"
-	icon_state = "quartstorage"
+	icon_state = "cargo_bay"
 	
 /area/quartermaster/qm
 	name = "Quartermaster's Office"
@@ -1375,7 +1375,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/construction/storage/wing
 //	/area/construction/Storage
 	name = "Storage Wing"
-	icon_state = "yellow"
+	icon_state = "storage_wing"
 	
 
 //AI
