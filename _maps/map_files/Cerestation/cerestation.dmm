@@ -7967,6 +7967,7 @@
 /turf/open/space,
 /area/space)
 "aqi" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -7975,12 +7976,14 @@
 	},
 /area/ai_monitored/turret_protected/aisat/hallway)
 "aqj" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ai_monitored/turret_protected/aisat/hallway)
 "aqk" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -14425,7 +14428,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -14810,15 +14812,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge";
-	layer = 2.6;
 	name = "Emergency Blast Door"
-	},
-/obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = null;
-	name = "Bridge";
-	req_access_txt = "0";
-	req_one_access = null;
-	req_one_access_txt = "19;41"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -14843,18 +14837,17 @@
 	},
 /area/bridge)
 "aDx" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/poddoor/preopen{
-	id = "bridge";
-	layer = 2.6;
-	name = "Emergency Blast Door"
-	},
 /obj/machinery/door/airlock/glass_command{
 	cyclelinkeddir = null;
 	name = "Bridge";
 	req_access_txt = "0";
 	req_one_access = null;
 	req_one_access_txt = "19;41"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge";
+	name = "Emergency Blast Door"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -18874,6 +18867,7 @@
 	name = "Cargo Desk";
 	req_one_access_txt = "50;48"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21029,6 +21023,7 @@
 "aOf" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21052,6 +21047,7 @@
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35530,6 +35526,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "medp1"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35552,6 +35549,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "medp1"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35562,6 +35560,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "medp2"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35583,6 +35582,7 @@
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "medp2"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35853,6 +35853,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
 	name = "Primary Tool Storage"
 	},
@@ -42630,6 +42631,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white/side{
 	tag = "icon-whitehall (EAST)";
 	icon_state = "whitehall";
@@ -43197,6 +43199,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white/side{
 	tag = "icon-whitehall (EAST)";
 	icon_state = "whitehall";
@@ -43278,16 +43281,17 @@
 	},
 /area/medical/medbay/central)
 "bzV" = (
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = "medmain";
-	name = "Medbay";
-	req_access_txt = "5"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass_medical{
+	id_tag = "medmain";
+	name = "Medbay";
+	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -44118,13 +44122,14 @@
 	},
 /area/medical/medbay/central)
 "bBl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "medmain";
 	name = "Medbay";
 	req_access_txt = "5"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -64102,6 +64107,7 @@
 "cmc" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -68550,8 +68556,10 @@
 	},
 /area/science/mixing)
 "ctn" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10;
+	pixel_x = 0;
+	initialize_directions = 10
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTH)";
@@ -68561,10 +68569,6 @@
 	},
 /area/science/mixing)
 "cto" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer";
-	dir = 8
-	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTH)";
 	icon_state = "whitepurple";
@@ -69767,7 +69771,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_research{
 	name = "Toxins Lab";
 	req_access_txt = "8"
@@ -74990,7 +74993,6 @@
 	layer = 2.6;
 	name = "Emergency External Blast Doors"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -78330,13 +78332,6 @@
 /area/maintenance/asteroid/fore/com_north)
 "cLm" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = null;
-	name = "Bridge";
-	req_access_txt = "19";
-	req_one_access = null;
-	req_one_access_txt = "0"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge";
 	layer = 2.6;
@@ -78355,13 +78350,6 @@
 /area/bridge)
 "cLn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass_command{
-	cyclelinkeddir = null;
-	name = "Bridge";
-	req_access_txt = "19";
-	req_one_access = null;
-	req_one_access_txt = "0"
-	},
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge";
 	layer = 2.6;
@@ -121845,11 +121833,11 @@ aGi
 aCa
 aIt
 aJq
-aDv
+cLm
 aLc
 aMa
 aJq
-aDv
+cLm
 aPe
 aQj
 aQR
@@ -122359,11 +122347,11 @@ aGk
 aHh
 ayx
 aJs
-aDx
+cLn
 aLe
 aMc
 aJs
-aDx
+cLn
 aPg
 aQj
 aQR
@@ -141618,9 +141606,9 @@ aov
 aov
 aoz
 arc
-arX
+arg
 any
-auc
+arg
 avm
 aoz
 aov
@@ -142132,9 +142120,9 @@ aoz
 aoz
 aoz
 arc
-arY
+asa
 aoz
-aud
+asa
 avm
 aoz
 aoz
@@ -142389,9 +142377,9 @@ aoA
 aoA
 aoA
 are
-arZ
+arf
 aoA
-aue
+arf
 avn
 aoA
 aoA
