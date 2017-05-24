@@ -44,6 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
+	var/licence_to_kill = FALSE //Used for double agents
 
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
