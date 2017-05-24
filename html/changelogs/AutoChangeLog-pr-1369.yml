@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "ERT Sec Tactical Energy Guns now have a unique sprite."
