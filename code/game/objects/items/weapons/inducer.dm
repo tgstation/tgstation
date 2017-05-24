@@ -44,10 +44,10 @@
 		return
 	
 	if(istype(target,/obj/item/weapon/stock_parts/cell))
-		visible_message("[user] starts charging the [target] with the [src]."
-		if(do_after(user, 10) ) // Taking a bare cell is faster
+		visible_message("[user] starts charging the [target] with the [src].")
+		if(do_after(user, 10, targets = target)) // Taking a bare cell is faster
 			if(target.charge == target.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target)
 			visible_message("[user] recharges the [target]!")
@@ -57,27 +57,27 @@
 		if (target == src)
 			to_chat(user,"<span class='warning'> The [src] can't charge itself!")
 			return
-		visible_message("[user] starts charging the [target] with the [src]."
+		visible_message("[user] starts charging the [target] with the [src].")
 		if(do_after(user, 20, targets = target) )
 			if(target.cell.charge == target.cell.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target.cell)
 			visible_message("[user] recharges the [target]!")
 			return
 	
 	if(istype(target,/obj/machinery/power/SMES)
-		visible_message("[user] starts charging the [target] with the [src]."
-		if(do_after(user, 20, targets = target) )
+		visible_message("[user] starts charging the [target] with the [src].")
+		if(do_after(user, 20, targets = target))
 		if(target.charge == target.capacity)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target)
 			visible_message("[user] recharges the [target]!")
 			return
 	
 	if(istype(target,/obj/item/weapon/gun/energy)
-		visible_message("[user] starts charging the [target] with the [src].
+		visible_message("[user] starts charging the [target] with the [src].")
 	 	if(do_after(user, 40, targets = target) ) //Recharging energy guns should be slower, probably.
 			if(target.power_supply.charge == target.power_supply.maxcharge)
 				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
@@ -87,7 +87,7 @@
 			return
 	
 	if(istype(target,/obj/item/clothing/suit/space/space_ninja)		
-		visible_message("[user] starts charging the [target] with the [src].
+		visible_message("[user] starts charging the [target] with the [src].")
 		if(do_after(user, 40, targets = target) ) //Same with ninja suits.
 			if(target.cell.charge == target.cell.maxcharge)
 				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
