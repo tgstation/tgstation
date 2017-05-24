@@ -167,23 +167,14 @@
 				underlay_appearance.icon = fixed_underlay["icon"]
 				underlay_appearance.icon_state = fixed_underlay["icon_state"]
 		else
-			var/turf/T = get_step(src, turn(adjacencies, 180))
-			if(T && (T.density || T.smooth))
+			var/turned_adjacency = turn(adjacencies, 180)
+			var/turf/T = get_step(src, turned_adjacency)
+			if(!T.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
 				T = get_step(src, turn(adjacencies, 135))
-				if(T && (T.density || T.smooth))
+				if(!T.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
 					T = get_step(src, turn(adjacencies, 225))
-
-			if(isspaceturf(T) && !istype(T, /turf/open/space/transit))
-				underlay_appearance.icon = 'icons/turf/space.dmi'
-				underlay_appearance.icon_state = SPACE_ICON_STATE
-				underlay_appearance.plane = PLANE_SPACE
-			else if(T && !T.density && !T.smooth)
-				underlay_appearance.icon = T.icon
-				underlay_appearance.icon_state = T.icon_state
-			else if(baseturf && !initial(baseturf.density) && !initial(baseturf.smooth))
-				underlay_appearance.icon = initial(baseturf.icon)
-				underlay_appearance.icon_state = initial(baseturf.icon_state)
-			else
+			//if all else fails, ask our own turf
+			if(!T.get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency) && !get_smooth_underlay_icon(underlay_appearance, src, turned_adjacency))
 				underlay_appearance.icon = DEFAULT_UNDERLAY_ICON
 				underlay_appearance.icon_state = DEFAULT_UNDERLAY_ICON_STATE
 		underlays = U
