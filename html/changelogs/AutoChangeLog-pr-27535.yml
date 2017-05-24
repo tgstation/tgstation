@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "Many Ballistic weapons now have new sounds related to reloading or placing bullets into magazines."
