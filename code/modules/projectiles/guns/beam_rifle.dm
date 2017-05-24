@@ -281,7 +281,7 @@
 			target.ex_act(2)
 		return FALSE
 	. = ..()
-	if(isobj(target))
+	if(!QDELETED(target) && isobj(target))
 		var/obj/objtarget = target
 		objtarget.take_damage(impact_structure_damage, BURN, "energy", FALSE)
 	if(aoe_mob_range || aoe_structure_range || aoe_fire_range)
