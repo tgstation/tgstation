@@ -13,8 +13,7 @@ namespace TGServerService
 	//handles talking between the world and us
 	partial class TGStationServer
 	{
-		QueuedLock topicLock = new QueuedLock();
-
+		object topicLock = new object();
 		const int CommsKeyLen = 64;
 		string serviceCommsKey; //regenerated every DD restart
 
@@ -110,9 +109,9 @@ namespace TGServerService
 						{
 							var returnedData = new byte[512];
 							topicSender.Receive(returnedData);
-							var raw_string = Encoding.ASCII.GetString(returnedData);
+							var raw_string = Encoding.ASCII.GetString(returnedData).TrimEnd(new char[] { (char)0 }).Trim();
 							if (raw_string.Length > 6)
-								returnedString = raw_string.Substring(5, raw_string.Length - 6);
+								returnedString = raw_string.Substring(5, raw_string.Length - 6).Trim();
 						}
 						catch
 						{

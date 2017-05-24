@@ -92,7 +92,6 @@
     <Compile Include="InterfaceBase.cs" />
     <Compile Include="IRC.cs" />
     <Compile Include="Interop.cs" />
-    <Compile Include="QueuedLock.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

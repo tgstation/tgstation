@@ -407,10 +407,14 @@ namespace TGServerService
 				case TGDreamDaemonStatus.Online:
 					res = SendCommand(SCIRCCheck);
 					if (includeMetaInfo)
+					{
+						string secandvis;
 						lock (watchdogLock)
 						{
-							res += String.Format(visSecStr, VisibilityWord(true), SecurityWord(true));
+							secandvis = String.Format(visSecStr, VisibilityWord(true), SecurityWord(true));
 						}
+						res += secandvis;
+					}
 					break;
 				default:
 					res = "NULL AND ERRORS";
