@@ -45,7 +45,7 @@
 	
 	if(istype(target,/obj/item/weapon/stock_parts/cell))
 		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 10, targets = target)) // Taking a bare cell is faster
+		if(do_after(user, 10)) // Taking a bare cell is faster
 			if(target.charge == target.maxcharge)
 				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
@@ -53,12 +53,12 @@
 			visible_message("[user] recharges the [target]!")
 			return
 	
-	if(istype(target,/obj/machinery/power/apc) | istype(target,/obj/machinery/space_heater) | istype(target,/obj/mecha) | istype(target, /obj/item/weapon/inducer))
+	if(istype(target,/obj/machinery/power/apc) || istype(target,/obj/machinery/space_heater) || istype(target,/obj/mecha) || istype(target, /obj/item/weapon/inducer))
 		if (target == src)
 			to_chat(user,"<span class='warning'> The [src] can't charge itself!")
 			return
 		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 20, targets = target) )
+		if(do_after(user, 20) )
 			if(target.cell.charge == target.cell.maxcharge)
 				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
@@ -66,31 +66,31 @@
 			visible_message("[user] recharges the [target]!")
 			return
 	
-	if(istype(target,/obj/machinery/power/SMES)
+	if(istype(target,/obj/machinery/power/SMES))
 		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 20, targets = target))
-		if(target.charge == target.capacity)
+		if(do_after(user, 20))
+			if(target.charge == target.capacity)
 				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target)
 			visible_message("[user] recharges the [target]!")
 			return
 	
-	if(istype(target,/obj/item/weapon/gun/energy)
+	if(istype(target,/obj/item/weapon/gun/energy))
 		visible_message("[user] starts charging the [target] with the [src].")
-	 	if(do_after(user, 40, targets = target) ) //Recharging energy guns should be slower, probably.
+	 	if(do_after(user, 40)) //Recharging energy guns should be slower, probably.
 			if(target.power_supply.charge == target.power_supply.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target.power_supply)
 			visible_message("[user] recharges the [target]!")
 			return
 	
-	if(istype(target,/obj/item/clothing/suit/space/space_ninja)		
+	if(istype(target,/obj/item/clothing/suit/space/space_ninja))
 		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 40, targets = target) ) //Same with ninja suits.
+		if(do_after(user, 40) ) //Same with ninja suits.
 			if(target.cell.charge == target.cell.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target.cell)
 			visible_message("[user] recharges the [target]!")
@@ -98,23 +98,23 @@
 
 	if(istype(target,/obj/item/weapon/melee/baton) | istype(target,/obj/item/weapon/defibrillator))
 		visible_message("[user] starts charging the [target] with the [src].
-		if(do_after(user, 40, targets = target) )
+		if(do_after(user, 40) )
 			if(target.bcell.charge == target.bcell.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			induce(target.bcell)
 			visible_message("[user] recharges the [target]!")
 			return
 	
 	
-	if(istype(target, /obj/item/machinery/chem_dispenser)
+	if(istype(target, /obj/item/machinery/chem_dispenser))
 		if(target.energy = target.max_energy)
-			to_chat(user, "<span class='warning'> The [target] is fully charged!"
+			to_chat(user, "<span class='warning'> The [target] is fully charged!")
 			return
 		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 20, targets = target) )
+		if(do_after(user, 20) )
 			if(target.energy = target.max_energy)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>"
+				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
 				return
 			target.energy += 10;
 			cell.use(powertransfer)
@@ -142,10 +142,10 @@
 
 	if(istype(target, /mob/living/silicon/robot)
 		if(target.cell.charge == target.cell.maxcharge)
-		visible_message("[user] starts charging [target]'s power cell with the [src]."
-		if(do_after(user, 20, targets = target) )
+		visible_message("[user] starts charging [target]'s power cell with the [src].")
+		if(do_after(user, 20, target) )
 			if(target.cell.charge == target.cell.maxcharge)
-				to_chat(user, "<span class='notice'>[target]'s power cell is fully charged!</span>"
+				to_chat(user, "<span class='notice'>[target]'s power cell is fully charged!</span>")
 				return
 			induce(target.cell)
 			visible_message("[user] recharges [target]'s power cell!")
