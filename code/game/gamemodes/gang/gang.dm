@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
 	var/datum/gang_points/gang_points
+	var/forced_shuttle = FALSE
 
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
@@ -261,6 +262,19 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		gang_bosses += G.bosses
 	return gang_bosses
 
+/datum/game_mode/proc/shuttle_check()
+	if(forced_shuttle)
+		return
+	var/alive = 0
+	for(var/mob/living/L in GLOB.player_list)
+		if(L.stat != DEAD)
+			alive++
+	if(alive < LAZYLEN(GLOB.joined_player_list) * 0.4)
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+		forced_shuttle = TRUE
+		if(SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4))
+			SSshuttle.emergency.request(null, set_coefficient = 0.4)
+
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
 
@@ -319,6 +333,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	if(world.time > next_point_time)
 		next_point_time = world.time + next_point_interval
+		SSticker.mode.shuttle_check()
+
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time
