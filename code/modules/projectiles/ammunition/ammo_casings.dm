@@ -135,6 +135,10 @@
 	desc = "A black market .50 bullet casing."
 	projectile_type = /obj/item/projectile/bullet/sniper/gang
 
+/obj/item/ammo_casing/point50/gang/sleeper
+	desc = "Am illegally modified tranquilizer round."
+	projectile_type = /obj/item/projectile/bullet/sniper/gang/sleeper
+
 
 /// SAW ROUNDS
 
