@@ -9,6 +9,8 @@ artifacts:
   name: TGS3
 - path: MD5-SHA1.txt
   name: MD5SHA1
+environment:
+  TGSDeploy: "No"
 install:
   - choco install fciv
 before_build:
