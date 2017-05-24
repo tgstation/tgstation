@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Battleship Raven's bridge blast doors not working."
