@@ -1,7 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define UPLOAD_LIMIT		5242880	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
 #define LIMITER_SIZE	5
 #define CURRENT_SECOND	1
