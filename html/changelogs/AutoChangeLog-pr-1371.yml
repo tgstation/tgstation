@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "Sketchin alternative magazines (Armour Piercing, Hollow Point, Incendiary) now have unique sprites to better identify them."
