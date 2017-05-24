@@ -63,7 +63,7 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear, /obj/item/weapon/twohanded/bonespear, /obj/item/organ/hivelord_core/legion, /obj/item/weapon/kitchen/knife/combat/bone, /obj/item/weapon/kitchen/knife/combat/survival)
 	armor = list(melee = 35, bullet = 10, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 60, acid = 60) //a fair alternative to bone armor, requiring alternative materials and gaining a suit slot
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/goliath
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/head/hooded/cloakhood/goliath
 	name = "goliath cloak hood"
