@@ -1,0 +1,5 @@
+author: "QualityVan"
+delete-after: True
+changes: 
+  - rscadd: "Hairless hides now become wet when exposed to water"
+  - rscadd: "You can microwave wet leather to dry it"
