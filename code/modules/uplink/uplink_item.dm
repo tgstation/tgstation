@@ -916,6 +916,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
+	item = item = /obj/item/weapon/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
