@@ -270,8 +270,9 @@
 	id = "sand golem"
 	fixed_mut_color = "ffdc8f"
 	meat = /obj/item/weapon/ore/glass //this is sand
-	armor = list(melee = 80, bullet = 0, laser = 0, energy = 0, bomb = -100, bio = 100, rad = 100, fire = 0, acid = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = -100, bio = 100, rad = 100, fire = 0, acid = 0)
 	burnmod = 3 //melts easily
+	brutemod = 0.25
 	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
 	attack_sound = 'sound/effects/shovel_dig.ogg'
 	prefix = "Sand"
