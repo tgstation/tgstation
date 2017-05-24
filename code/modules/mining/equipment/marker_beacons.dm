@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	if(use(1))
 		to_chat(user, "<span class='notice'>You activate and anchor [amount ? "a":"the"] [singular_name] in place.</span>")
 		playsound(user, 'sound/machines/click.ogg', 50, 1)
-		var/obj/structure/marker_beacon/M = new /obj/structure/marker_beacon(user.loc, picked_color)
+		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
 /obj/item/stack/marker_beacon/AltClick(mob/user)
@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	if(!in_range(src, user))
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
+	if(user.incapacitated() || !in_range(src, user))
+		return
 	if(input_color)
 		picked_color = input_color
 		update_icon()
@@ -88,7 +90,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
-		var/obj/item/stack/marker_beacon/M = new /obj/item/stack/marker_beacon(loc)
+		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
 		M.update_icon()
 	qdel(src)
@@ -133,6 +135,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	if(!in_range(src, user))
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
+	if(user.incapacitated() || !in_range(src, user))
+		return
 	if(input_color)
 		picked_color = input_color
 		update_icon()
