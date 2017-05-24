@@ -375,8 +375,8 @@
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
 	w_class = WEIGHT_CLASS_SMALL
 	brightness_on = 1
-	icon_state = "torch-on"
-	item_state = "torch-on"
+	icon_state = "torch"
+	item_state = "torch"
 	color = "#ff0000"
 	on_damage = 15
 	slot_flags = null
