@@ -10,7 +10,3 @@ Add-Type -assembly "system.io.compression.filesystem"
 $destination_md5sha = $Env:APPVEYOR_BUILD_FOLDER + "\MD5-SHA1.txt"
 
 & fciv -both $destination > $destination_md5sha
-
-if($env:APPVEYOR_REPO_COMMIT_MESSAGE -contains "[TGSDeploy]"){
-    $env:TGSDeploy = "Do it."
-}
