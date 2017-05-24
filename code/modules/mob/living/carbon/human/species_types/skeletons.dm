@@ -5,7 +5,7 @@
 	say_mod = "rattles"
 	blacklisted = 1
 	sexes = 0
-	armor = list("melee" = -40, "bullet" = -40, "laser" = -20, "energy" = 10, "bomb" = -40, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
+	armor = list("melee" = -30, "bullet" = -30, "laser" = -15, "energy" = 10, "bomb" = -30, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
