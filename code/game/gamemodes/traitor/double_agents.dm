@@ -173,7 +173,7 @@
 			if(!objective.check_completion())
 				traitored = FALSE
 				return
-		if(owner.special_role == TRAITOR_AGENT_ROLE)
+		if(owner.licence_to_kill)
 			to_chat(owner.current,"<span class='userdanger'> All the loyalist agents are dead, and no more is required of you. Die a glorious death, agent. </span>")
 		else
 			to_chat(owner.current,"<span class='userdanger'> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</span>")
@@ -199,7 +199,7 @@
 				if(objective.stolen)
 					var/fail_msg = "<span class='userdanger'>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </span>"
 					if(traitored)
-						if(owner.special_role == TRAITOR_AGENT_ROLE)
+						if(owner.license_to_kill)
 							fail_msg += "<span class='userdanger'> You no longer have permission to die. </span>"
 						else
 							fail_msg += "<span class='userdanger'> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</span>"
@@ -249,6 +249,7 @@
 		//Optional traitor objective
 		if(prob(PROB_ACTUAL_TRAITOR))
 			traitor.special_role = TRAITOR_AGENT_ROLE
+			traitor.licence_to_kill = TRUE
 			forge_single_objective(traitor)	
 
 	else
@@ -301,7 +302,7 @@
 
 /datum/game_mode/traitor/internal_affairs/greet_traitor(datum/mind/traitor)
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	if(traitor.special_role == TRAITOR_AGENT_ROLE)
+	if(traitor.licence_to_kill)
 		to_chat(traitor.current, "<span class='userdanger'>You are the [TRAITOR_AGENT_ROLE].</span>")
 		to_chat(traitor.current, "<span class='userdanger'>Your target has been framed for [crime], and you have been tasked with eliminating them to prevent them defending themselves in court.</span>")
 		to_chat(traitor.current, "<B><font size=5 color=red>Any damage you cause will be a further embarrassment to Nanotrasen, so you have no limits on collateral damage.</font></B>")
