@@ -53,7 +53,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
-	armour_penetration = 75
+	armour_penetration = 25
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
 	attack_verb = list("slashed", "cut")
