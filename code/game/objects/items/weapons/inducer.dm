@@ -14,7 +14,10 @@
 
 /obj/item/weapon/inducer/Initialize()
 	. = ..()
-	cell = new cell_type
+	if(cell_type)
+		cell = new cell_type
+	else
+		cell = null
 
 /obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target)
 	var/totransfer = min(cell.charge,powertransfer)
@@ -27,7 +30,7 @@
 	return cell
 
 /obj/item/weapon/inducer/emp_act(severity)
-	..(severity)
+	..()
 	if(cell)
 		cell.emp_act(severity)
 
@@ -142,24 +145,22 @@
 	..()
 
 
-/obj/item/weapon/inducer/attack_hand(mob/user)
-	if(usr == user && opened && (!issilicon(user)) && user.is_holding(src))
+/obj/item/weapon/inducer/attack_self(mob/user)
+	if(opened)
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
-			src.cell = null
+			cell = null
 			update_icon()
-			user.visible_message("[user] removes the power cell from [src]!",\
+			user.visible_message("[user] removes the power cell from \the [src]!",\
 								  "<span class='notice'>You remove the power cell.</span>")
-	else
-		..()
 
 
 /obj/item/weapon/inducer/examine(mob/living/M)
 	..()
 	if(cell)
-		to_chat(M, "<span class='notice'>The [src]'s display shows: [src.cell.charge]W</span>")
+		to_chat(M, "<span class='notice'>The [src]'s display shows: [src.cell.charge] W</span>")
 	else
 		to_chat(M,"<span class='notice'>The [src]'s display is dark.</span>")
 	if(opened)
@@ -170,25 +171,25 @@
 	update_overlays()
 
 /obj/item/weapon/inducer/proc/update_overlays()
-	if(!opened)
-		return
-	else if(!cell)
-		add_overlay("inducer-nobat")
-	else
-		add_overlay("inducer-bat")
+	if(opened)
+		if(!cell)
+			add_overlay("inducer-nobat")
+		else
+			add_overlay("inducer-bat")
+
 	if(blood_DNA)
-		add_blood(blood_DNA)
+		add_blood_overlay()
+
 
 
 /obj/item/weapon/inducer/sci
 	icon_state = "inducer-sci"
 	item_state = "inducer-sci"
+	desc = "A tool for inductively charging internal power cells. This one has a science color scheme."
+	cell_type = null
 
 /obj/item/weapon/inducer/sci/Initialize()
 	. = ..()
-	desc += " This one has a science color scheme."
-	qdel(cell)
-	cell = null
 	opened = TRUE
 	update_icon()
 
