@@ -1,13 +1,13 @@
-## Server name: This appears at the top of the screen in-game and in the BYOND hub. Activate and replace 'tgstation' with the name of your choice.
+## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
 # SERVERNAME tgstation
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
 
-## Station name: The name of the station as it is referred to in-game. If deactivated, the game will generate a random name instead.
+## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
 STATIONNAME Space Station 13
 
-## Put on byond hub: activate this to put your server on the byond hub.
+## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
@@ -16,20 +16,20 @@ LOBBY_COUNTDOWN 120
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
 
-## Deactivate this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
 ADMIN_LEGACY_SYSTEM
 
-## Deactivate this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
+## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
 
-## Activate this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
+## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
 #USE_AGE_RESTRICTION_FOR_JOBS
 
-## Activate this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
 #USE_ACCOUNT_AGE_FOR_JOBS
 
 ## log OOC channel
@@ -124,10 +124,10 @@ HOSTEDBY Yournamehere
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
 # GUEST_JOBBAN
 
-## Activate this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
+## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
-## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+## Comment this out to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
 CHECK_RANDOMIZER
 
 ## IPINTEL:
@@ -143,10 +143,10 @@ CHECK_RANDOMIZER
 ## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
 #IPINTEL_DOMAIN check.getipintel.net
 
-## Activate to allow web client connections
+## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
 
-## Activate to restrict web client connections to byond members
+## Uncomment to restrict web client connections to byond members
 ## This makes for a nice pay gate to cut down on ban evading, as the webclient's cid system isn't that great
 ## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
 #WEBCLIENT_ONLY_BYOND_MEMBERS
@@ -182,17 +182,17 @@ CHECK_RANDOMIZER
 ##Toggle for having jobs load up from the .txt
 # LOAD_JOBS_FROM_TXT
 
-## Activate this to forbid admins from possessing the singularity.
+## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Activate to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
-## Activate to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
+## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
 
-## Activate to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
+## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
 ## Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
@@ -221,24 +221,24 @@ TICKLAG 0.5
 ## Password for the hub page
 #MEDAL_HUB_PASSWORD
 
-## Activate this to let players see their own notes (they can still be set by admins only)
+## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
 
 ##Note: all population caps can be used with each other if desired.
 
-## Activate for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
+## Uncomment for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
 #SOFT_POPCAP 100
 
 ## Message for soft cap
 SOFT_POPCAP_MESSAGE Be warned that the server is currently serving a high number of users, consider using alternative game servers.
 
-## Activate for 'hard' population caps, players will not be allowed to spawn if the living crew exceeds the listed number, though they may still observe or wait for the living crew to decrease in size.
+## Uncomment for 'hard' population caps, players will not be allowed to spawn if the living crew exceeds the listed number, though they may still observe or wait for the living crew to decrease in size.
 #HARD_POPCAP 150
 
 ## Message for hard cap
 HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers.
 
-## Activate for 'extreme' population caps, players will not be allowed to join the server if living crew exceeds the listed number.
+## Uncomment for 'extreme' population caps, players will not be allowed to join the server if living crew exceeds the listed number.
 #EXTREME_POPCAP 200
 
 ## Message for extreme cap
@@ -267,7 +267,7 @@ PANIC_SERVER_ADDRESS byond://address:port
 ##Name of the place to send people rejected by the bunker
 PANIC_SERVER_NAME [Put the name here]
 
-## Activate to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
+## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
 
 ## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
@@ -276,7 +276,7 @@ AUTOCONVERT_NOTES
 ## Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
 ANNOUNCE_ADMIN_LOGOUT
 
-## Activate to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
+## Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
 #ANNOUNCE_ADMIN_LOGIN
 
 ## Map rotation
@@ -295,11 +295,11 @@ ALLOW_MAP_VOTING 1
 #MAPROTATIONCHANCEDELTA 0.75
 
 ## AUTOADMIN
-## Activate to automatically give that admin rank to all players
+## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN Game Admin
 
 ## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by activating this config if you are running a production server.
+## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
 #GENERATE_MINIMAPS
 
 ## CLIENT VERSION CONTROL
