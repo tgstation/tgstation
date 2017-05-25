@@ -238,6 +238,7 @@
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
 	damage = 6
+	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 
