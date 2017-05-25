@@ -4,6 +4,7 @@
 	desc = "A tool for inductively charging internal power cells."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
+	item_state = "inducer-engi"
 	origin_tech = "engineering=4;magnets=4;powerstorage=4"
 	force = 7
 	var/powertransfer = 1000
@@ -40,6 +41,12 @@
 		return A.cell
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/A = target
+		return A.cell
+	if(istype(target, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/A = target
+		return A
+	if(istype(target, /obj/item/weapon/defibrillator))
+		var/obj/item/weapon/defibrillator/A = target
 		return A.cell
 	if(istype(target, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/A = target
@@ -80,10 +87,12 @@
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
 			opened = TRUE
 			update_icon()
+			return
 		else
 			to_chat(user, "<span class='notice'>You close the battery comparment.</span>")
 			opened = FALSE
 			update_icon()
+			return
 	if(istype(W,/obj/item/weapon/stock_parts/cell))
 		if(opened)
 			if(!cell)
@@ -92,9 +101,37 @@
 				to_chat(user, "<span class='notice'>You insert the [W] into \the [src].</span>")
 				cell = W
 				update_icon()
+				return
 			else
 				to_chat(user, "<span class='notice'>The [src] already has \the [cell] installed!</span>")
+				return
+
+	var/obj/item/weapon/stock_parts/cell/C = get_cell(W)
+	if(C)
+		user.visible_message("[user] starts recharging the [W] with \the [src]",\
+							"<span class='notice'> You start recharging the [W] with \the [src]</span>")
+		if(do_after(user, 60, target = W, progress = 1)) //Charging items like this is slower because I know someone will bite my head off otherwise.
+			induce(C)
+			user.visible_message("[user] recharged the [W]!",\
+								 "<span class='notice'> You recharged the [W]!</span>")
+			return
+
 	..()
+
+/obj/item/weapon/inducer/attack(mob/M, mob/user)
+	var/obj/item/weapon/stock_parts/cell/C = get_cell(M)
+	if(C)
+		user.visible_message("[user] starts recharging [M] with \the [src]",\
+							"<span class='notice'> You start recharging [M] with \the [src]</span>")
+		if(do_after(user, 10, target = M, progress = 1)) //Charging borgs is fast, since they can have high capacity cells inside.
+			induce(C)
+			user.visible_message("[user] recharged [M]!",\
+								 "<span class='notice'> You recharged [M]!</span>")
+			return
+		else
+			return //so you don't accidentally attack the borg you're recharging
+	..()
+
 
 /obj/item/weapon/inducer/attack_hand(mob/user)
 	if(usr == user && opened && (!issilicon(user)) && user.is_holding(src))
@@ -108,6 +145,7 @@
 								  "<span class='notice'>You remove the power cell.</span>")
 	else
 		..()
+
 
 /obj/item/weapon/inducer/examine(mob/living/M)
 	..()
@@ -129,10 +167,13 @@
 		add_overlay("inducer-nobat")
 	else
 		add_overlay("inducer-bat")
+	if(blood_DNA)
+		add_blood(blood_DNA)
 
 
 /obj/item/weapon/inducer/sci
 	icon_state = "inducer-sci"
+	item_state = "inducer-sci"
 
 /obj/item/weapon/inducer/sci/Initialize()
 	. = ..()
