@@ -3645,7 +3645,7 @@
 "agB" = (
 /obj/machinery/power/solar_control{
 	id = "foreport";
-	name = "Fore Port Solar Control";
+	name = "Port Bow Solar Control";
 	track = 0
 	},
 /obj/structure/cable{
@@ -4555,7 +4555,7 @@
 "ail" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Fore Port Solar APC";
+	name = "Port Bow Solar APC";
 	pixel_x = -25;
 	pixel_y = 3
 	},
@@ -5052,7 +5052,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
-	name = "Fore Port Solar Access";
+	name = "Port Bow Solar Access";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -8443,7 +8443,7 @@
 "apn" = (
 /obj/machinery/power/solar_control{
 	id = "forestarboard";
-	name = "Fore Starboard Solar Control";
+	name = "Starboard Bow Solar Control";
 	track = 0
 	},
 /obj/structure/cable{
@@ -9747,7 +9747,7 @@
 "arT" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Fore Starboard Solar APC";
+	name = "Starboard Bow Solar APC";
 	pixel_x = -25;
 	pixel_y = 3
 	},
@@ -10667,7 +10667,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/engineering{
-	name = "Fore Starboard Solar Access";
+	name = "Starboard Bow Solar Access";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -53843,7 +53843,7 @@
 /area/maintenance/solars/port/aft)
 "bTo" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Aft Port Solar Access";
+	name = "Port Quarter Solar Access";
 	req_access_txt = "10"
 	},
 /obj/structure/cable/yellow{
@@ -54683,7 +54683,7 @@
 "bUN" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Aft Port Solar APC";
+	name = "Port Quarter Solar APC";
 	pixel_x = -26;
 	pixel_y = 3
 	},
@@ -56130,7 +56130,7 @@
 "bXt" = (
 /obj/machinery/power/solar_control{
 	id = "aftport";
-	name = "Aft Port Solar Control";
+	name = "Port Quarter Solar Control";
 	track = 0
 	},
 /obj/structure/cable{
@@ -78080,7 +78080,7 @@
 /area/maintenance/solars/starboard/aft)
 "cKQ" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Aft Starboard Solar Access";
+	name = "Starboard Quarter Solar Access";
 	req_access_txt = "10"
 	},
 /obj/structure/cable/yellow{
@@ -78639,7 +78639,7 @@
 "cLM" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Aft Starboard Solar APC";
+	name = "Starboard Quarter Solar APC";
 	pixel_x = 0;
 	pixel_y = 24
 	},
@@ -79477,7 +79477,7 @@
 "cNq" = (
 /obj/machinery/power/solar_control{
 	id = "aftstarboard";
-	name = "Aft Starboard Solar Control";
+	name = "Starboard Quarter Solar Control";
 	track = 0
 	},
 /obj/structure/cable,

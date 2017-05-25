@@ -5726,7 +5726,7 @@
 "alQ" = (
 /obj/machinery/power/solar_control{
 	id = "auxsolareast";
-	name = "Fore Port Solar Control";
+	name = "Port Bow Solar Control";
 	track = 0
 	},
 /obj/structure/cable{
@@ -6347,7 +6347,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Fore Port Solar APC";
+	name = "Port Bow Solar APC";
 	pixel_x = -25;
 	pixel_y = 3
 	},
@@ -6590,7 +6590,7 @@
 /obj/machinery/door/airlock/engineering{
 	icon_state = "door_closed";
 	locked = 0;
-	name = "Fore Port Solar Access";
+	name = "Port Bow Solar Access";
 	req_access_txt = "10"
 	},
 /obj/structure/cable{
@@ -6797,7 +6797,7 @@
 "aoh" = (
 /obj/machinery/power/solar_control{
 	id = "auxsolareast";
-	name = "Fore Starboard Solar Control";
+	name = "Starboard Bow Solar Control";
 	track = 0
 	},
 /obj/structure/cable{
@@ -7383,7 +7383,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Fore Starboard Solar APC";
+	name = "Starboard Bow Solar APC";
 	pixel_x = -25;
 	pixel_y = 3
 	},
@@ -7786,7 +7786,7 @@
 /obj/machinery/door/airlock/engineering{
 	icon_state = "door_closed";
 	locked = 0;
-	name = "Fore Starboard Solar Access";
+	name = "Starboard Bow Solar Access";
 	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
@@ -51133,7 +51133,7 @@
 /area/maintenance/solars/port/aft)
 "chS" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Aft Port Solar Access";
+	name = "Port Quarter Solar Access";
 	req_access_txt = "10"
 	},
 /obj/structure/cable{
@@ -51611,7 +51611,7 @@
 "ciQ" = (
 /obj/machinery/power/solar_control{
 	id = "portsolar";
-	name = "Aft Port Solar Control";
+	name = "Port Quarter Solar Control";
 	track = 0
 	},
 /obj/structure/cable,
@@ -51620,7 +51620,7 @@
 "ciR" = (
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "Aft Port Solar APC";
+	name = "Port Quarter Solar APC";
 	pixel_x = 23;
 	pixel_y = 2
 	},
@@ -51945,7 +51945,7 @@
 /area/maintenance/starboard/aft)
 "cjF" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Aft Starboard Solar Access";
+	name = "Starboard Quarter Solar Access";
 	req_access_txt = "10"
 	},
 /obj/structure/cable{
@@ -52274,7 +52274,7 @@
 "ckt" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Aft Starboard Solar APC";
+	name = "Starboard Quarter Solar APC";
 	pixel_x = -26;
 	pixel_y = 3
 	},
@@ -53148,7 +53148,7 @@
 "cmw" = (
 /obj/machinery/power/solar_control{
 	id = "starboardsolar";
-	name = "Aft Starboard Solar Control";
+	name = "Starboard Quarter Solar Control";
 	track = 0
 	},
 /obj/structure/cable{
