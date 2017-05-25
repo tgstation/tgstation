@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - balance: "Swapped how far plasma cutter blasts go when going through rock and in open air. This means blasts through air will go 4/5 tiles, but will mine 7/10 tiles, for normal/advanced plasma cutters, respectively."

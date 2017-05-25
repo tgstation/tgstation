@@ -23,7 +23,8 @@ SUBSYSTEM_DEF(dbcore)
 	var/failed_connections = 0
 
 /datum/controller/subsystem/dbcore/PreInit()
-	_db_con = _dm_db_new_con()
+	if(!_db_con)
+		_db_con = _dm_db_new_con()
 
 /datum/controller/subsystem/dbcore/Recover()
 	_db_con = SSdbcore._db_con

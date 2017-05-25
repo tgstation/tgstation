@@ -28,8 +28,8 @@
 	damage = 10
 
 /obj/item/projectile/bullet/armourpiercing
-	damage = 17
-	armour_penetration = 10
+	damage = 15
+	armour_penetration = 40
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -244,7 +244,7 @@
 	name = "\improper DNA injector"
 	icon_state = "syringeproj"
 	var/obj/item/weapon/dnainjector/injector
-	
+
 /obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target

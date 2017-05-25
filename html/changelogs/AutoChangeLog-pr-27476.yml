@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "There is now a buffer zone between the mining base and lavaland where megafauna will not spawn."
-  - tweak: "Ruins will no longer spawn directly in front of the mining base."

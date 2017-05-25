@@ -19,12 +19,17 @@
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
-	if(. && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment))
+	if(.)
+		collect_ore()
+	update_pressure()
+
+/obj/mecha/working/ripley/proc/collect_ore()
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment)
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 		if(ore_box)
-			for(var/obj/item/weapon/ore/ore in get_turf(src))
-				ore.Move(ore_box)
-	update_pressure()
+			for(var/obj/item/weapon/ore/ore in range(1, src))
+				if(ore.Adjacent(src) && ((get_dir(src, ore) & dir) || ore.loc == loc)) //we can reach it and it's in front of us? grab it!
+					ore.forceMove(ore_box)
 
 /obj/mecha/working/ripley/Destroy()
 	for(var/i=1, i <= hides, i++)

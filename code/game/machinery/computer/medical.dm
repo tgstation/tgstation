@@ -292,7 +292,7 @@
 				src.temp = text("Are you sure you wish to delete all records?<br>\n\t<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
 
 			else if(href_list["del_all2"])
-				investigate_log("[usr.name] ([usr.key]) has deleted all medical records.", "records")
+				investigate_log("[usr.name] ([usr.key]) has deleted all medical records.", INVESTIGATE_RECORDS)
 				GLOB.data_core.medical.Cut()
 				src.temp = "All records deleted."
 
@@ -458,7 +458,7 @@
 					src.temp = text("Are you sure you wish to delete the record (Medical Portion Only)?<br>\n\t<A href='?src=\ref[];temp=1;del_r2=1'>Yes</A><br>\n\t<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
 
 			else if(href_list["del_r2"])
-				investigate_log("[usr.name] ([usr.key]) has deleted the medical records for [active1.fields["name"]].", "records")
+				investigate_log("[usr.name] ([usr.key]) has deleted the medical records for [active1.fields["name"]].", INVESTIGATE_RECORDS)
 				if(active2)
 					qdel(active2)
 					active2 = null
