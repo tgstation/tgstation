@@ -35,7 +35,7 @@
 							cooldown(G)
 						if(2)
 							new /obj/item/device/gangtool/soldier(M)
-							M.Paralyse(5)
+							M.Paralyse(3)
 							cooldown(G)
 						if(1)
 							to_chat(user, "<span class='warning'>This mind is resistant to recruitment!</span>")
@@ -46,7 +46,7 @@
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
 	set waitfor = FALSE
-	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
+	var/cooldown_time = 300+(200*gang.gangsters) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
 
 	cooldown = 1
 	icon_state = "pen_blink"

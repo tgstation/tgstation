@@ -83,6 +83,34 @@
 	user.put_in_inactive_hand(O)
 	return
 
+/obj/item/weapon/twohanded/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	. = ..()
+
+	if(. && !istype(src, /obj/item/weapon/twohanded/offhand))
+		block_animation(owner)
+
+
+/obj/item/weapon/twohanded/proc/block_animation(mob/living/carbon/human/owner)
+	var/atom/A = owner
+	var/image/I
+	I = image(src.icon, A, src.icon_state, A.layer + 0.1)
+
+	// Scale the icon.
+	I.transform *= 0.75
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	var/list/matrices = list()
+	for(var/i in 1 to 5)
+		var/matrix/M = matrix(I.transform)
+		M.Turn(60*i)
+		matrices += M
+	var/matrix/last = matrix(I.transform)
+	matrices += last
+	flick_overlay(I, GLOB.clients, 18)
+	animate(I, alpha = 175, I.transform = matrices[1], pixel_x = 0, pixel_y = 0, pixel_z = -12, time = 3)
+	for(var/i in 1 to 5) //2 because 1 is covered above
+		animate(I.transform = matrices[i], time = 3)
+
+
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
@@ -629,6 +657,29 @@
 		W.break_wall()
 		return 1
 	..()
+
+/obj/item/weapon/twohanded/pitchfork/gangfork
+	icon_state = "gangfork0"
+	name = "hardened pitchfork"
+	desc = "A favorite among lynch mobs."
+	force = 10
+	throw_speed = 4
+	throwforce = 24
+	w_class = WEIGHT_CLASS_BULKY
+	force_unwielded = 10
+	force_wielded = 24
+	armour_penetration = 15
+	block_chance = 40
+	attack_verb = list("attacked", "impaled", "pierced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 50, acid = 30)
+
+/obj/item/weapon/twohanded/pitchfork/gangfork/update_icon()
+	icon_state = "gangfork[wielded]"
+
 
 //HF blade
 

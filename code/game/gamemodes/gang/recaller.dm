@@ -231,7 +231,7 @@
 		return 0
 	if(gang && (user.mind in gang.bosses))	//If it's already registered, only let the gang's bosses use this
 		return 1
-	else if(user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
+	else if(istype(src, /obj/item/device/gangtool/soldier) && user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
 		return 1
 	return 0
 
@@ -251,7 +251,7 @@
 	gang = user.mind.gang_datum
 	gang.gangtools += src
 	var/datum/action/innate/gang/tool/GT = new
-	GT.Grant(user, src, gang)
+	GT.Grant(user, src)
 
 /obj/item/device/gangtool/soldier/attack_self(mob/user)
 	if (!can_use(user))
@@ -322,10 +322,14 @@
 	button_icon_state = "bolt_action"
 	var/obj/item/device/gangtool/soldier/GT
 
-/datum/action/innate/gang/tool/Grant(mob/user, obj/reg, datum/gang/G)
+/datum/action/innate/gang/tool/Grant(mob/user, obj/reg)
 	. = ..()
 	GT = reg
-	button.color = G.color
+
+/datum/action/innate/gang/tool/New()
+	. = ..()
+	var/GC = owner.mind.gang_datum.color
+	src.button.color = GC
 
 /datum/action/innate/gang/tool/Activate()
 	GT.attack_self(owner)

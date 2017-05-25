@@ -29,6 +29,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	var/turf/target_armory
+	var/turf/target_equipment
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -39,6 +41,25 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+		//for blowing up the armory
+	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			target_armory = pick(get_area_turfs(A))
+			if(target_armory)
+				break
+
+	//also need to find 1 sec closet to hit the equipment room
+	for(var/area/security/main/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			var/obj/structure/closet/secure_closet/security/C = locate() in A
+			if(C)
+				target_equipment = get_turf(C)
+				break
+
+	if(!target_armory || !target_equipment)
+		message_admins("No armory/equipment room detected, unable to start gang!")
+		return FALSE
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -94,6 +115,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	//turn off sec and captain
 	SSjob.DisableJob(/datum/job/captain)
+	SSjob.DisableJob(/datum/job/hop)
 	SSjob.DisableJob(/datum/job/hos)
 	SSjob.DisableJob(/datum/job/warden)
 	SSjob.DisableJob(/datum/job/detective)
@@ -121,22 +143,52 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			modePlayer += boss_mind
 	sleep(50)
 	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
-	sleep(60)
+	sleep(70)
 	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")
-	explosion(target_armory, 7, 14, 28, 30, TRUE, TRUE)
-	explosion(target_equipment, 7, 14, 28, 30, TRUE, TRUE)
+	sleep(30)
+	explosion(target_armory, 10, 16, 28, 30, TRUE, TRUE)
+	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
 
 	for(var/mob/living/M in GLOB.player_list)
 		if(M in get_all_gangsters())
 			continue
 		vigilize(M)
 
-/datum/game_mode/gang/proc/vigilize(mob/living/M)
+/proc/gangtest()
+	var/turf/target_armory
+	var/turf/target_equipment
+	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			target_armory = pick(get_area_turfs(A))
+			if(target_armory)
+				break
+	//also need to find 1 sec closet to hit the equipment room
+	for(var/area/security/main/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			var/obj/structure/closet/secure_closet/security/C = locate() in A
+			if(C)
+				target_equipment = get_turf(C)
+				break
+
+	if(!target_armory || !target_equipment)
+		message_admins("No armory/equipment room detected, unable to start gang!")
+		return FALSE
+	sleep(50)
+	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
+	sleep(60)
+	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")
+	explosion(target_armory, 10, 16, 28, 30, TRUE, TRUE)
+	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
+	for(var/mob/living/M in GLOB.player_list)
+		vigilize(M)
+
+/proc/vigilize(mob/living/M)
 	var/datum/objective/escape/E = new
 	E.owner = M.mind
 	M.mind.objectives += E
-	to_chat(M, "<FONT size=3><u>You are a Vigilante!</u><br> Nanotrasen has given you, and all loyal crew, authority to eliminate gang activity aboard the station.<br> You have been equipped with a reverse-engineered gangtool that will allow you to gain influence for destroying gang equipment.<br> Prevent the gangs from taking over the station!</FONT>")
+	to_chat(M, "<FONT size=3><u><b>You are a Vigilante!</b></u><br> Nanotrasen has given you, and all loyal crew, authority to eliminate gang activity aboard the station.<br> You possess a reverse-engineered gangtool that rewards influence for destroying gang equipment.<br> You will also receive influence for keeping the station free of gang tags.<br><b>Prevent gangs from taking over the station!<b></FONT>")
 	M.mind.announce_objectives()
+	new /obj/item/device/vigilante_tool(M)
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
@@ -232,7 +284,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	gangster_mind.current.log_message("<font color='red'>Has been converted to the [G.name] Gang!</font>", INDIVIDUAL_ATTACK_LOG)
 	gangster_mind.special_role = "[G.name] Gangster"
-
+	for(var/obj/O in gangster_mind.current.contents)
+		if(istype(O, /obj/item/device/vigilante_tool))
+			qdel(O)
+	for(var/datum/action/innate/vigilante_tool/VA in gangster_mind.current.actions)
+		VA.Remove(gangster_mind.current)
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
@@ -242,9 +298,12 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
-	for(var/obj/O in gangster_mind.current.contents)
+	var/mob/living/gangster = gangster_mind.current
+	for(var/obj/O in gangster.contents)
 		if(istype(O, /obj/item/device/gangtool/soldier))
 			qdel(O)
+	for(var/datum/action/innate/gang/GA in gangster.actions)
+		GA.Remove(gangster)
 
 	if(!gang)
 		return 0
@@ -378,4 +437,4 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = TRUE
-
+			SSticker.mode.auto_declare_completion_gang(G)

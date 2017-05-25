@@ -68,6 +68,14 @@
 	name = "Recall Emergency Shuttle"
 	id = "recall"
 
+/datum/gang_item/function/implant
+	name = "Influence-Enhancing Mindshield"
+	id = "mindshield"
+
+/datum/gang_item/function/implant/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	var/obj/item/weapon/implant/mindshield/MS = new()
+	MS.implant(user, user, 0)
+
 /datum/gang_item/function/recall/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return isboss(user, gang)
 
@@ -187,6 +195,18 @@
 /datum/gang_item/weapon/ammo/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return "&nbsp;&#8627;" + ..() //this is pretty hacky but it looks nice on the popup
 
+/datum/gang_item/weapon/hatchet
+	name = "Heavy Hatchet"
+	id = "hatchet"
+	cost = 3
+	item_path = /obj/item/weapon/hatchet/heavy
+
+/obj/item/weapon/hatchet/heavy
+	name = "heavy hatchet"
+	desc = "A very sharp axe blade upon a short fibremetal handle; this one has additional weight for a greater impact."
+	force = 15
+	w_class = WEIGHT_CLASS_SMALL
+
 /datum/gang_item/weapon/shuriken
 	name = "Shuriken"
 	id = "shuriken"
@@ -199,11 +219,26 @@
 	cost = 5
 	item_path = /obj/item/weapon/switchblade
 
-/datum/gang_item/weapon/surplus
+/datum/gang_item/weapon/pitchfork
+	name = "Premium Pitchfork"
+	id = "switchblade"
+	cost = 10
+	item_path = /obj/item/weapon/twohanded/pitchfork/gangfork
+
+/datum/gang_item/weapon/surgood
 	name = "Surplus Rifle"
 	id = "surplus"
 	cost = 8
 	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
+
+/datum/gang_item/weapon/surplus
+	name = "Surplus Rifle"
+	id = "surplus"
+	cost = 8
+	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus/gang
+
+/obj/item/weapon/gun/ballistic/automatic/surplus/gang
+	name = "Smuggled Surplus Rifle"
 
 /datum/gang_item/weapon/ammo/surplus_ammo
 	name = "Surplus Rifle Ammo"
@@ -217,7 +252,7 @@
 	cost = 6
 	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
-/datum/gang_item/weapon/ammo/improvised_ammo
+/datum/gang_item/weapon/ammo/buckshot_ammo
 	name = "Box of Buckshot"
 	id = "buckshot"
 	cost = 5
@@ -232,8 +267,23 @@
 /datum/gang_item/weapon/ammo/pistol_ammo
 	name = "10mm Ammo"
 	id = "pistol_ammo"
-	cost = 10
+	cost = 12
 	item_path = /obj/item/ammo_box/magazine/m10mm
+
+/datum/gang_item/weapon/pump
+	name = "Pump Shotgun"
+	id = "pump"
+	cost = 35
+	item_path = /obj/item/weapon/gun/ballistic/shotgun/lethal
+
+/datum/gang_item/weapon/riot
+	name = "Riot Shotgun"
+	id = "riot"
+	cost = 30 // Vigilante only so cheaper than the gang's despite being better
+	item_path = /obj/item/weapon/gun/ballistic/shotgun/riot/lethal
+
+/obj/item/weapon/gun/ballistic/shotgun/riot/lethal
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
 
 /datum/gang_item/weapon/sniper
 	name = ".50cal Sniper Rifle"
@@ -247,6 +297,34 @@
 	cost = 15
 	item_path = /obj/item/ammo_box/magazine/sniper_rounds
 
+/datum/gang_item/weapon/auto
+	name = "Auto Rifle"
+	id = "auto"
+	cost = 25
+	item_path = /obj/item/weapon/gun/ballistic/automatic/wt550
+
+/datum/gang_item/weapon/ammo/auto_ammo
+	name = "Standard Auto Rifle Ammo"
+	id = "saber_ammo"
+	cost = 10
+	item_path = /obj/item/ammo_box/magazine/wt550m9
+
+/datum/gang_item/weapon/ammo/auto_ammo_AP
+	name = "Armor-Piercing Auto Rifle Ammo"
+	id = "saber_ammo"
+	cost = 16
+	item_path = /obj/item/ammo_box/magazine/wt550m9/wtap/elite
+
+/obj/item/ammo_box/magazine/wt550m9/wtap/elite
+	ammo_type = /obj/item/ammo_casing/c46x30mmap/elite
+
+/obj/item/ammo_casing/c46x30mmap/elite
+	projectile_type =/obj/item/projectile/bullet/armourpiercing/elite
+
+/obj/item/projectile/bullet/armourpiercing/elite
+	damage = 20
+	armour_penetration = 50
+
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
 	id = "MG"
@@ -258,7 +336,7 @@
 	name = "Uzi SMG"
 	id = "uzi"
 	cost = 60
-	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
+	item_path = /obj/item/ammo_box/magazine/smgm9mm
 
 
 /datum/gang_item/weapon/ammo/uzi_ammo
@@ -267,6 +345,42 @@
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
 
+/datum/gang_item/weapon/cluster
+	name = "Experimental Cluster Rocket Launcher"
+	id = "cluster"
+	cost = 80
+	item_path = /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/HE
+		desc = "A single-use cluster rocket launcher."
+		name = "cluster rocket launcher"
+		mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher/HE
+
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/HE/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+	if(!do_after(user, 30, target = src))
+		return
+	. = ..()
+
+/obj/item/ammo_box/magazine/internal/rocketlauncher/HE
+	ammo_type = /obj/item/ammo_casing/caseless/a84mm/HE
+
+/obj/item/ammo_casing/caseless/a84mm/HE
+	desc = "An 84mm HE rocket."
+	projectile_type = /obj/item/projectile/bullet/HE_rocket
+
+/obj/item/projectile/bullet/HE_rocket
+	name = "84mm cluster rocket"
+	desc = "You're about to have much bigger problems"
+	icon_state= "atrocket"
+	damage = 60
+	armour_penetration = 100
+	dismemberment = 100
+	var/explosions = 5
+
+/obj/item/projectile/bullet/HE_rocket/on_hit(atom/target, blocked=0)
+	explosion(target, 0, 0, 5, 6)
+
+
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -274,12 +388,30 @@
 /datum/gang_item/equipment
 	category = "Purchase Equipment:"
 
+/datum/gang_item/equipment/brutepatch
+	name = "Styptic Patch"
+	id = "brute"
+	cost = 4
+	item_path = /obj/item/weapon/reagent_containers/pill/patch/styptic
 
 /datum/gang_item/equipment/spraycan
 	name = "Territory Spraycan"
 	id = "spraycan"
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
+
+
+/datum/gang_item/equipment/soap
+	name = "Influential Soap"
+	id = "soap"
+	cost = 4
+	item_path = /obj/item/weapon/soap/vigilante
+
+/datum/gang_item/equipment/sechuds
+	name = "SecHud Sunglasses"
+	id = "sechuds"
+	cost = 2
+	item_path = /obj/item/clothing/glasses/hud/security/sunglasses
 
 /datum/gang_item/equipment/sharpener
 	name = "Sharpener"
@@ -300,6 +432,15 @@
 	cost = 7
 	item_path = /obj/item/weapon/grenade/plastic/c4
 
+
+/datum/gang_item/equipment/shield
+	name = "Telescopic Shield"
+	id = "shield"
+	cost = 10
+	item_path = /obj/item/weapon/shield/riot/tele
+
+/obj/item/weapon/shield/riot/tele
+
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
@@ -312,31 +453,51 @@
 	cost = 12
 	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
 
-/datum/gang_item/equipment/implant_breaker
-	name = "Implant Breaker"
-	id = "implant_breaker"
-	cost = 10
-	item_path = /obj/item/weapon/implanter/gang
-	spawn_msg = "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
+/datum/gang_item/equipment/gangbreaker
+	name = "Gangbreaker Implant"
+	id = "gangbreaker"
+	cost = 20
+	item_path = /obj/item/weapon/implanter/mindshield
+	spawn_msg = "<span class='notice'>Nanotrasen has provided you with a prototype mindshield implant that will both break a gang's control over a person and shield them from further conversion attempts.Gang bosses are immune.</b></u></span>"
 
-/datum/gang_item/equipment/implant_breaker/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+/datum/gang_item/equipment/recruiter
+	name = "Advanced Recruitment Implant"
+	id = "recruitment"
+	cost = 20
+	item_path = /obj/item/weapon/implanter/gang
+	spawn_msg = "<span class='notice'>The <b>Advanced Recruitment Implant</b> is a single-use device that is guaranteed to convert anyone into your gang, only rival gang bosses are immune.</b></u></span>"
+
+/datum/gang_item/equipment/recruiter/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(item_path)
 		var/obj/item/O = new item_path(user.loc, gang) //we need to override this whole proc for this one argument
 		user.put_in_hands(O)
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
-		
+
 /datum/gang_item/equipment/wetwork_boots
 	name = "Wetwork boots"
 	id = "wetwork"
 	cost = 20
 	item_path = /obj/item/clothing/shoes/combat/gang
-	
+
 /obj/item/clothing/shoes/combat/gang
 	name = "Wetwork boots"
 	desc = "A gang's best hitmen are prepared for anything."
 	permeability_coefficient = 0.01
 	flags = NOSLIP
+
+/datum/gang_item/equipment/bulletproof_armor
+	name = "Bulletproof Armor"
+	id = "BPA"
+	cost = 20
+	item_path = /obj/item/clothing/suit/armor/bulletproof
+
+/datum/gang_item/equipment/bulletproof_helmet
+	name = "Bulletproof Helmet"
+	id = "BPH"
+	cost = 12
+	item_path = /obj/item/clothing/head/helmet/alt
+
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"

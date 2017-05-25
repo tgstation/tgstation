@@ -1,6 +1,6 @@
 /obj/item/device/vigilante_tool
-	name = "reverse-engineered device"
-	desc = "A strange device of sorts. Hard to really make out what it actually does if you don't know how to operate it."
+	name = "Vigilant's Companion"
+	desc = "A reverse-engineered gang tool designed by Nanotrasen to encourage crew to resist gang activity."
 	icon_state = "gangtool-white"
 	item_state = "walkietalkie"
 	throwforce = 0
@@ -9,30 +9,34 @@
 	throw_range = 7
 	flags = CONDUCT
 	origin_tech = "programming=5;bluespace=2"
-	var/datum/gang/gang //Which gang uses this?
+//	var/datum/gang/gang
 	var/points = 0
 	var/list/tags = list()
 	var/vig_item_list
 	var/vig_category_list
 	var/static/gang = "Vigilante"
 	var/static/list/vigilante_items = list(
-	  	/datum/gang_item/weapon/shuriken,
-		/datum/gang_item/weapon/switchblade,
-		/datum/gang_item/weapon/improvised,
-		/datum/gang_item/weapon/ammo/improvised_ammo,
-		/datum/gang_item/weapon/surplus,
+		/datum/gang_item/function/implant,
+		/datum/gang_item/weapon/hatchet,
+		/datum/gang_item/weapon/pitchfork,
+		/datum/gang_item/weapon/surgood,
 		/datum/gang_item/weapon/ammo/surplus_ammo,
-		/datum/gang_item/weapon/sniper,
-		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/riot,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
+		/datum/gang_item/weapon/auto,
+		/datum/gang_item/weapon/ammo/auto_ammo,
+		/datum/gang_item/weapon/ammo/auto_ammo_AP,
 		/datum/gang_item/equipment/sharpener,
-		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/sharpener,
-		/datum/gang_item/equipment/frag,
-		/datum/gang_item/equipment/stimpack,
-		/datum/gang_item/equipment/implant_breaker
+		/datum/gang_item/equipment/brutepatch,
+		/datum/gang_item/equipment/shield,
+		/datum/gang_item/equipment/bulletproof_armor,
+		/datum/gang_item/equipment/bulletproof_helmet,
+		/datum/gang_item/equipment/gangbreaker
 		)
 
-/obj/item/device/vigilante_tool/New()
+/obj/item/device/vigilante_tool/New(mob/user)
+	var/datum/action/innate/vigilante_tool/VT = new
+	VT.Grant(user, src)
 	vig_item_list = list()
 	vig_category_list = list()
 	for(var/V in vigilante_items)
@@ -42,7 +46,7 @@
 		if(Cat)
 			Cat += G
 		else
-			reg_category_list[G.category] = list(G)
+			vig_category_list[G.category] = list(G)
 
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
@@ -50,10 +54,11 @@
 		return
 	var/dat
 	dat += "Your Influence: <B>[points]</B><br>"
+	dat += "<center><a href='?src=\ref[src];destroy=TRUE'><B>DESTROY HELD CONTRABAND</a></center></B><br>"
 	dat += "<hr>"
-	for(var/cat in vig_category_lis)
+	for(var/cat in vig_category_list)
 		dat += "<b>[cat]</b><br>"
-		for(var/V in gang.boss_category_list[cat])
+		for(var/V in vig_category_list[cat])
 			var/datum/gang_item/G = V
 			var/cost = G.get_cost_display(user, gang, src)
 			if(cost)
@@ -77,32 +82,31 @@
 
 
 /obj/item/device/vigilante_tool/Topic(href, href_list)
-	if(!can_use(usr))
-		return
 	if(href_list["purchase"])
-		var/datum/gang_item/G = gang.reg_item_list[href_list["purchase"]]
+		var/datum/gang_item/G = vig_item_list[href_list["purchase"]]
 		if(G && G.can_buy(usr, gang, src))
 			G.purchase(usr, gang, src, FALSE)
+	if(href_list["destroy"])
+		if(do_after(usr, 50, target = get_turf(usr)))
+			world << "Good job"
 	attack_self(usr)
 
 
 
 
 
-
-
-/datum/action/innate/vigilante/tool
+/datum/action/innate/vigilante_tool
 	name = "Vigilante's Reverse-Engineered Gangtool"
 	desc = "An implanted tool that lets you purchase gear"
 	background_icon_state = "bg_default_on"
 	button_icon_state = "bolt_action"
-	var/obj/item/device/vigilante_tool = VT
+	var/obj/item/device/vigilante_tool/VT
 
-/datum/action/innate/gang/tool/Grant(mob/user, obj/reg)
+/datum/action/innate/vigilante_tool/Grant(mob/user, obj/reg)
 	. = ..()
 	VT = reg
 
 
-/datum/action/innate/vigilante/tool/Activate()
+/datum/action/innate/vigilante_tool/Activate()
 	VT.attack_self(owner)
 

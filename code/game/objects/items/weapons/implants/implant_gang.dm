@@ -21,7 +21,7 @@
 				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
 	return dat
 
-/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = 1)
 	if(..())
 		for(var/obj/item/weapon/implant/I in target.implants)
 			if(I != src)
@@ -32,17 +32,21 @@
 
 		var/success
 		if(target.mind in SSticker.mode.get_gangsters())
-			if(SSticker.mode.remove_gangster(target.mind,0,1))
-				success = 1	//Was not a gang boss, convert as usual
+			if(SSticker.mode.remove_gangster(target.mind))
+				success = 1     //Was not a gang boss, convert as usual
 		else
 			success = 1
 
 		if(ishuman(target))
 			if(!success)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
-
-		qdel(src)
-		return 0
+				return 1
+			else
+				var/datum/gang/G = user.mind.gang_datum
+				SSticker.mode.add_gangster(target.mind,G)
+				new /obj/item/device/gangtool/soldier(target)
+				target.Paralyse(3)
+				return 1
 
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"
