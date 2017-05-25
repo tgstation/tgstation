@@ -373,7 +373,7 @@
 	id = /obj/item/weapon/card/id
 
 //UEG Marine
-/obj/effect/mob_spawn/human/marine/
+/obj/effect/mob_spawn/human/marine
 	name = "marine cryostasis sleeper"
 	desc = "A humming sleeper with a occupant inside. Desperatly attempting to revive the occupant despite its low power state."
 	mob_name = "a earth marine"
@@ -388,8 +388,8 @@
 
 /obj/effect/mob_spawn/human/marine/Initialize(mapload)
 	. = ..()
-	var/arrpee = rand(1,4)
-	switch(arrpee)
+	var/lorpee = rand(1,4)
+	switch(lorpee)
 		if(1)
 			flavour_text += "Your ship intercepted a distress call from a long range space station. As the Inheritor moved into investigate, suddenly and without warning the ship was being \
 			assaulted by a massive lovecraftian nightmare, you heard the name 'Nar-Sie' being uttered by the barely Human flesh monsters and constructs that poured out of every crack that was \
@@ -420,4 +420,3 @@
 /obj/effect/mob_spawn/human/marine/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
-
