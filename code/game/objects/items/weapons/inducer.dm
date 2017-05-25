@@ -210,4 +210,9 @@
 /obj/item/weapon/inducer/sci/Initialize()
 	. = ..()
 	desc += " This one has a science color scheme."
+	qdel(cell)
+	cell = null
+	opened = TRUE
+	update_icon()
+
 
