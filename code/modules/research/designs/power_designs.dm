@@ -75,7 +75,7 @@
 	req_tech = list("powerstorage" = 4, "materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2700, MAT_GLASS = 1060)
-	build_path = /obj/item/weapon/inducer
+	build_path = /obj/item/weapon/inducer/sci
 	category = list("Misc","Power Designs")
 
 

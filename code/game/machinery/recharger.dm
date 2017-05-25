@@ -110,8 +110,8 @@
 	if(charging)
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
-			if(E.power_supply.charge < E.power_supply.maxcharge)
-				E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+			if(E.cell.charge < E.cell.maxcharge)
+				E.cell.give(E.cell.chargerate * recharge_coeff)
 				E.recharge_newshot()
 				use_power(250 * recharge_coeff)
 				using_power = 1
@@ -119,8 +119,8 @@
 
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
-			if(B.bcell)
-				if(B.bcell.give(B.bcell.chargerate * recharge_coeff))
+			if(B.cell)
+				if(B.cell.give(B.cell.chargerate * recharge_coeff))
 					use_power(200 * recharge_coeff)
 					using_power = 1
 
@@ -152,13 +152,13 @@
 	if(!(stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
-			if(E.power_supply)
-				E.power_supply.emp_act(severity)
+			if(E.cell)
+				E.cell.emp_act(severity)
 
 		else if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
-			if(B.bcell)
-				B.bcell.charge = 0
+			if(B.cell)
+				B.cell.charge = 0
 	..()
 
 

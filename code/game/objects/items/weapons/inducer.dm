@@ -2,16 +2,18 @@
 /obj/item/weapon/inducer
 	name = "inducer"
 	desc = "A tool for inductively charging internal power cells."
-	icon = "icons/obj/tools.dmi"
-	icon_state = "inducer"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "inducer-engi"
 	origin_tech = "engineering=4;magnets=4;powerstorage=4"
 	force = 7
 	var/powertransfer = 1000
 	var/opened = FALSE
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell
+	var/canrecharge = list(/obj/machinery/power/apc = 20, /obj/item/weapon/gun/energy = 60)
 
 /obj/item/weapon/inducer/Initialize()
+	. = ..()
 	src.cell = new cell_type
 
 /obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target)
@@ -20,8 +22,8 @@
 	cell.use(transferred)
 
 
-/obj/item/weapon/inducer/Attack(atom/target, mob/living/user)
-	if(user.A_INTENT == INTENT_HARM)
+/obj/item/weapon/inducer/attack_obj(obj/target, mob/living/carbon/user)
+	if(user.a_intent == INTENT_HARM)
 		return ..()
 
 	if(!user.IsAdvancedToolUser())
@@ -36,98 +38,40 @@
 		to_chat(user, "<span class='warning'> The [src]'s battery is dead!</span>")
 		return
 
-	if(istype(target,/obj/item/weapon/stock_parts/cell))
-		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 10)) // Taking a bare cell is faster
-			if(target.charge == target.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
-				return
-			induce(target)
-			visible_message("[user] recharges the [target]!")
-			return
-
-	if(istype(target,/obj/machinery/power/apc) || istype(target,/obj/machinery/space_heater) || istype(target,/obj/mecha) || istype(target, /obj/item/weapon/inducer))
-		if (target == src)
-			to_chat(user,"<span class='warning'> The [src] can't charge itself!")
-			return
-		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 20) )
-			if(target.cell.charge == target.cell.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
-				return
-			induce(target.cell)
-			visible_message("[user] recharges the [target]!")
-			return
-
-	if(istype(target,/obj/item/weapon/gun/energy))
-		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 40)) //Recharging energy guns should be slower, probably.
-			if(target.power_supply.charge == target.power_supply.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
-				return
-			induce(target.power_supply)
-			visible_message("[user] recharges the [target]!")
-			return
-
-	if(istype(target,/obj/item/clothing/suit/space/space_ninja))
-		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 40) ) //Same with ninja suits.
-			if(target.cell.charge == target.cell.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
-				return
-			induce(target.cell)
-			visible_message("[user] recharges the [target]!")
-			return
-
-	if(istype(target,/obj/item/weapon/melee/baton) || istype(target,/obj/item/weapon/defibrillator))
-		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 40) )
-			if(target.bcell.charge == target.bcell.maxcharge)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
-				return
-			induce(target.bcell)
-			visible_message("[user] recharges the [target]!")
-			return
-
-
-	if(istype(target, /obj/item/machinery/chem_dispenser))
-		if(target.energy = target.max_energy)
-			to_chat(user, "<span class='warning'> The [target] is fully charged!")
-			return
-		visible_message("[user] starts charging the [target] with the [src].")
-		if(do_after(user, 20) )
-			if(target.energy = target.max_energy)
-				to_chat(user, "<span class='warning'> The [target] is fully charged!</span>")
-				return
-			target.energy += 10;
-			cell.use(powertransfer)
-			visible_message("[user] recharges the [target]!")
-			return
-
-	if(istype(target, /mob/living/silicon/robot))
-		if(target.cell.charge == target.cell.maxcharge)
-		visible_message("[user] starts charging [target]'s power cell with the [src].")
-		if(do_after(user, 20, target) )
-			if(target.cell.charge == target.cell.maxcharge)
-				to_chat(user, "<span class='notice'>[target]'s power cell is fully charged!</span>")
-				return
-			induce(target.cell)
-			visible_message("[user] recharges [target]'s power cell!")
-			return
+	for(var/atom/A in target.contents)
+		if(istype(A, /obj/item/weapon/stock_parts/cell))
+			for(var/atom/rechargable in canrecharge)
+				if(istype(target, rechargable))
+					var/obj/item/weapon/stock_parts/cell/C = A
+					if(do_after(user, canrecharge[rechargable]))
+						induce(C)
+						return
 	..()
 
 /obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/screwdriver))
-	if(!opened)
-		to_chat(user, "You unscrew the battery compartment.")
-		opened = TRUE
-		update_icon()
-	else
-		to_chat(user, "You close the battery comparment.")
-		update_icon()
+		if(!opened)
+			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
+			opened = TRUE
+			update_icon()
+		else
+			to_chat(user, "<span class='notice'>You close the battery comparment.</span>")
+			opened = FALSE
+			update_icon()
+	if(istype(W,/obj/item/weapon/stock_parts/cell))
+		if(opened)
+			if(!cell)
+				if(!user.transferItemToLoc(W, src))
+					return
+				to_chat(user, "<span class='notice'>You insert the [W] into \the [src].</span>")
+				cell = W
+				update_icon()
+			else
+				to_chat(user, "<span class='notice'>The [src] already has \the [cell] installed!</span>")
+	..()
 
 /obj/item/weapon/inducer/attack_hand(mob/user)
-	if(usr == user && opened && (!issilicon(user)))
+	if(usr == user && opened && (!issilicon(user)) && user.is_holding(src))
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
@@ -136,6 +80,8 @@
 			update_icon()
 			user.visible_message("[user.name] removes the power cell from [src.name]!",\
 								  "<span class='notice'>You remove the power cell.</span>")
+	else
+		..()
 
 /obj/item/weapon/inducer/examine(mob/living/M)
 	..()
@@ -147,12 +93,22 @@
 		to_chat(M,"<span class='notice'>The [src]'s battery compartment is open.</span>")
 
 /obj/item/weapon/inducer/update_icon()
-	if(!opened)
-		icon_state = "inducer"
-	else
-		if(!cell)
-			icon_state = "inducer-nobat"
-		else
-			icon_state = "inducer-bat"
+	cut_overlays()
+	update_overlays()
 
+/obj/item/weapon/inducer/proc/update_overlays()
+	if(!opened)
+		return
+	else if(!cell)
+		add_overlay("inducer-nobat")
+	else
+		add_overlay("inducer-bat")
+
+
+/obj/item/weapon/inducer/sci
+	icon_state = "inducer-sci"
+
+/obj/item/weapon/inducer/sci/Initialize()
+	. = ..()
+	desc += " This one has a science color scheme."
 
