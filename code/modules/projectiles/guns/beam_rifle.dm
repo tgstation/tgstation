@@ -201,6 +201,8 @@
 	var/impact_structure_damage = 50
 	var/projectile_damage = 40
 	var/projectile_stun = 0
+	var/structure_piercing = 2
+	var/structure_bleed_coeff = 0.7
 
 /obj/item/ammo_casing/energy/beam_rifle/proc/sync_stats()
 	var/obj/item/weapon/gun/energy/beam_rifle/BR = loc
@@ -218,6 +220,8 @@
 	projectile_damage = BR.projectile_damage
 	projectile_stun = BR.projectile_stun
 	delay = BR.delay
+	structure_piercing = BR.structure_piercing
+	structure_bleed_coeff = BR.structure_bleed_coeff
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	var/obj/item/projectile/beam/beam_rifle/hitscan/HS_BB = BB
@@ -234,8 +238,8 @@
 	HS_BB.aoe_structure_range = Clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
-	HS_BB.structure_pierce_amoutn = structure_piercing
-	HS_BB.structure_bleed_coeff = strcuture_bleed_coeff
+	HS_BB.structure_pierce_amount = structure_piercing
+	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	. = ..(target, user, quiet, zone_override)
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
@@ -286,7 +290,7 @@
 				impact_structure_damage *= structure_bleed_coeff
 				var/d_m = aoe_structure_damage + impact_structure_damage
 				var/dealt = d_o - d_m
-				O.take_damage(dealt, BURN, "energy", false)
+				O.take_damage(dealt, BURN, "energy", FALSE)
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/Range()
@@ -320,7 +324,9 @@
 			if(prob(aoe_fire_chance))
 				new /obj/effect/hotspot(impact_turf)
 		for(var/obj/O in range(aoe_structure_range, impact_turf))
-			if(isturf(O.loc))	//Only damage stuff on the floor
+			if(istype(O, /obj/item))	//Only structures.
+				continue
+			if(isturf(O.loc))
 				O.take_damage(aoe_structure_damage, BURN, "energy", FALSE)
 	playsound(get_turf(target), 'sound/effects/explosion3.ogg', 100, 1)
 
