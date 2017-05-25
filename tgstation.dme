@@ -2125,5 +2125,4 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
-#include "C:\Users\Steelpoint\Desktop\backup.dm"
 // END_INCLUDE
