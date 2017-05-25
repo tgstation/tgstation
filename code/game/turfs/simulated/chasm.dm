@@ -111,6 +111,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	light_range = 1.9 //slightly less range than lava
+	light_power = 0.65 //less bright, too
+	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep

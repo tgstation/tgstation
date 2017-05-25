@@ -3,7 +3,6 @@
 //Only use square radius for this!
 /datum/proximity_monitor/advanced/peaceborg_dampener
 	name = "\improper Hyperkinetic Dampener Field"
-	requires_processing = TRUE
 	setup_edge_turfs = TRUE
 	setup_field_turfs = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
@@ -15,14 +14,21 @@
 	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
 	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
 	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
+	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
 	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/item/projectile/tracked
 	var/list/obj/item/projectile/staging
+	use_host_turf = TRUE
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/New()
+	START_PROCESSING(SSfields, src)
 	tracked = list()
 	staging = list()
 	..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
+	STOP_PROCESSING(SSfields, src)
+	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
 	if(!istype(projector))
@@ -71,6 +77,8 @@
 			return southeast_corner
 		if(SOUTHWEST)
 			return southwest_corner
+		else
+			return generic_edge
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/proc/capture_projectile(obj/item/projectile/P, track_projectile = TRUE)
 	if(P in tracked)

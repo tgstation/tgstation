@@ -25,7 +25,7 @@
 	//The code below here isn't exactly optimal, but because of the individual decals that each area uses it's still applicable.
 
 				//high dirt - 1/3
-	if(istype(A, /area/toxins/test_area) || istype(A, /area/mine/production) || istype(A, /area/mine/living_quarters) || istype(A, /area/mine/north_outpost) || istype(A, /area/mine/west_outpost) || istype(A, /area/wreck) || istype(A, /area/derelict) || istype(A, /area/djstation))
+	if(istype(A, /area/science/test_area) || istype(A, /area/mine/production) || istype(A, /area/mine/living_quarters) || istype(A, /area/mine/north_outpost) || istype(A, /area/mine/west_outpost) || istype(A, /area/wreck) || istype(A, /area/derelict) || istype(A, /area/djstation))
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
 		return
 
@@ -46,7 +46,7 @@
 				new /obj/effect/decal/cleanable/dirt(src)
 		return
 
-	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/locker/locker_toilet))
+	if(istype(A, /area/crew_quarters/toilet) || istype(A, /area/crew_quarters/toilet/locker))
 		if(prob(40))
 			if(prob(90))
 				new /obj/effect/decal/cleanable/vomit/old(src)
@@ -79,7 +79,7 @@
 				new /obj/effect/decal/cleanable/flour(src)
 		return
 
-	if(istype(A, /area/medical))	//Kept clean, but chance of blood
+	if(istype(A, /area/medical) || !istype(A, /area/science/robotics))	//Kept clean, but chance of blood
 		if(prob(66))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
@@ -92,7 +92,7 @@
 				new /obj/effect/decal/cleanable/vomit/old(src)
 		return
 
-	if(istype(A, /area/toxins))
+	if(istype(A, /area/science) || istype(A, /area/crew_quarters/heads/hor))
 		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return

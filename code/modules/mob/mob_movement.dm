@@ -295,8 +295,12 @@
 			return A
 		else
 			var/atom/movable/AM = A
-			if(AM == buckled) //Kind of unnecessary but let's just be sure
+			if(AM == buckled)
 				continue
+			if(ismob(AM))
+				var/mob/M = AM
+				if(M.buckled)
+					continue
 			if(!AM.CanPass(src) || AM.density)
 				if(AM.anchored)
 					return AM

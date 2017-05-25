@@ -44,6 +44,8 @@
 					oldmag.update_icon()
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
+
+				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
 				chamber_round()
 				A.update_icon()
 				update_icon()
@@ -300,6 +302,10 @@
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
+	if(cover_open)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
 	update_icon()
 
 
@@ -330,6 +336,7 @@
 		magazine = null
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
 
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
@@ -376,6 +383,30 @@
 	origin_tech = "combat=7;syndicate=6"
 
 
+
+// Old Semi-Auto Rifle //
+
+/obj/item/weapon/gun/ballistic/automatic/surplus
+	name = "Surplus Rifle"
+	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
+	origin_tech = "combat=3;materials=2"
+	icon_state = "surplus"
+	item_state = "moistnugget"
+	weapon_weight = WEAPON_HEAVY
+	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
+	fire_delay = 30
+	burst_size = 1
+	can_unsuppress = 1
+	can_suppress = 1
+	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = SLOT_BACK
+	actions_types = list()
+
+/obj/item/weapon/gun/ballistic/automatic/surplus/update_icon()
+	if(magazine)
+		icon_state = "surplus"
+	else
+		icon_state = "surplus-e"
 
 
 // Laser rifle (rechargeable magazine) //

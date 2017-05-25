@@ -171,14 +171,6 @@ Credit where due:
 		return TRUE
 	return FALSE
 
-/datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
-	if(!L || !istype(L) || !L.mind)
-		return 0
-	var/datum/mind/M = L.mind
-	to_chat(M.current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
-	M.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>"
-	return 1
-
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station

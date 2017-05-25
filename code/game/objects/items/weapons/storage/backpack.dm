@@ -69,7 +69,7 @@
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
-		investigate_log("has become a singularity. Caused by [user.key]","singulo")
+		investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))

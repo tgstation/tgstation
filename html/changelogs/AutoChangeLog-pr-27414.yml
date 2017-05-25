@@ -1,0 +1,4 @@
+author: "Oldman Robustin"
+delete-after: True
+changes: 
+  - tweak: "Gang mode now calls a 4 minute unrecallable shuttle once 60% of the crew is dead"
