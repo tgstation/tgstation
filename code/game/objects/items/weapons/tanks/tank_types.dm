@@ -37,6 +37,27 @@
 	dog_fashion = null
 
 
+//Rebreather
+/obj/item/weapon/tank/internals/rebreather
+	name = "rebreather tank"
+	desc = "A high-tech machine that uses electricity to recycle exhaled gases into breathable ones. The rebreather only kicks in when its pressure is 100kPa or less."
+	icon_state = "oxygen"
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
+	dog_fashion = /datum/dog_fashion/back
+	var/species = 1
+
+/obj/item/weapon/tank/internals/rebreather/process()
+	if(air_contents)
+		if(air_contents.return_pressure() <= 100)
+			if(species == 1)//Humans, Lizardmen, Flymen
+				air_contents.assert_gas("o2")
+				air_contents.gases["o2"][MOLES] = air_contents.gases["o2"][MOLES] + 1 //1 mole is about 32kPa in a tank this size.
+			if(species == 2)//Plasmamen
+				air_contents.assert_gas("plasma")
+				air_contents.gases["plasma"][MOLES] = air_contents.gases["plasma"][MOLES] + 1
+
+
 /*
  * Anesthetic
  */
