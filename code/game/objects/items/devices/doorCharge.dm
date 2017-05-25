@@ -36,8 +36,7 @@
 /obj/item/device/doorCharge/Destroy()
 	if(istype(loc, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = loc
-		if(A.charge == src)
-			A.charge = null
+		A.charge = null
 	return ..()
 
 /obj/item/device/doorCharge/examine(mob/user)

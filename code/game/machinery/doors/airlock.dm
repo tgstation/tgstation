@@ -71,8 +71,7 @@
 	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
-	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
-	var/detonated = 0
+	var/obj/item/device/doorCharge/charge //If applied, causes an explosion upon opening the door
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/AirlockClose.ogg'
 	var/doorDeni = 'sound/machines/DeniedBeep.ogg' // i'm thinkin' Deni's
@@ -201,9 +200,7 @@
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
-	if(charge)
-		qdel(charge)
-		charge = null
+	qdel(charge)
 	if(electronics)
 		qdel(electronics)
 		electronics = null
@@ -547,9 +544,6 @@
 			to_chat(user, "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>")
 	if(emagged)
 		to_chat(user, "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>")
-		return
-	if(detonated)
-		to_chat(user, "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>")
 		return
 
 	//Separate interface for the AI.
@@ -1090,9 +1084,6 @@
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
 	if(istype(C, /obj/item/weapon/screwdriver))
-		if(panel_open && detonated)
-			to_chat(user, "<span class='warning'>[src] has no maintenance panel!</span>")
-			return
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
 		playsound(src.loc, C.usesound, 50, 1)
@@ -1110,11 +1101,8 @@
 			return
 		if(emagged)
 			return
-		if(charge && !detonated)
+		if(charge)
 			to_chat(user, "<span class='warning'>There's already a charge hooked up to this door!</span>")
-			return
-		if(detonated)
-			to_chat(user, "<span class='warning'>The maintenance panel is destroyed!</span>")
 			return
 		to_chat(user, "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
 		user.drop_item()
@@ -1250,12 +1238,11 @@
 	if(!forced)
 		if(!hasPower() || wires.is_cut(WIRE_OPEN))
 			return 0
-	if(charge && !detonated)
+	if(charge)
 		panel_open = 1
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
 		charge.Detonate()
-		detonated = TRUE
 		return
 	if(forced < 2)
 		if(emagged)
