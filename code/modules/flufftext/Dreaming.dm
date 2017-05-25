@@ -7,7 +7,10 @@
 		"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
 		"a hat","the Luna","a ruined station","a planet","plasma","air","the medical bay","the bridge","blinking lights",
 		"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
-		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying"
+		"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying", "a room full of soft, moist eye-balls.",
+		"your family's childhood spaceship", "a college buddy", "your hands falling off and spurting blood everywhere", "a huge cave full of leeches",
+		"rockets blasting off", "rain made of your own tears", "the hidden places where I should go, and I knew that I went to before they even told me",
+		"decrepit men dwelling in a maintenance shaft", "talking pizzas", "plummeting through a chasm - forever", "drinking at the bar", "the innocence of a young clown"
 		)
 	for(var/i = rand(1,4),i > 0, i--)
 		var/dream_image = pick(dreams)
