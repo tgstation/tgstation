@@ -33,7 +33,9 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	sterile = 1
+	sterile = 0
+	MIN_IMPREGNATION_TIME = 3000
+	MAX_IMPREGNATION_TIME = 6000
 
 /obj/item/clothing/mask/facehugger/dead
 	icon_state = "facehugger_dead"
