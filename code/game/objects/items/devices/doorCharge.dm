@@ -29,7 +29,8 @@
 	explosion(T, 0, 1, 0)
 	for(var/mob/living/carbon/human/H in orange(2, T))
 		H.Weaken(8)
-		H.apply_damage(60, BRUTE, "chest")
+		H.apply_damage(40, BRUTE)
+		H.apply_damage(30, BURN)
 	qdel(src)
 
 /obj/item/device/doorCharge/Destroy()
