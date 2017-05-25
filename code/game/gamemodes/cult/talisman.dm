@@ -257,9 +257,9 @@
 			var/construct = pick("floating","artificer","behemoth")
 			var/image/B = non_human_images[construct]
 			if(!B)
-    			B = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
-   				B.override = TRUE
-    			non_human_images[construct] = B
+				B = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
+				B.override = TRUE
+				non_human_images[construct] = B
 			send_visions(B, targets, duration)
 	qdel(src)
 
