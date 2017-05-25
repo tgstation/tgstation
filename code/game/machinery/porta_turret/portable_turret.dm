@@ -227,7 +227,6 @@
 				update_icon()
 
 
-
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -947,6 +946,7 @@
 	var/atom/target
 	var/turf/target_turf
 	var/warned = FALSE
+	var/mouseparams
 
 //BUCKLE HOOKS
 
@@ -990,8 +990,8 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON
+	flags = ABSTRACT | NODROP | NOBLUDGEON
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/New(obj/machinery/manned_turret/MT)
@@ -1003,11 +1003,22 @@
 /obj/item/gun_control/CanItemAutoclick()
 	return 1
 
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user)
+/obj/item/gun_control/attack_obj(obj/O, mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	O.attacked_by(src, user)
+
+/obj/item/gun_control/attack(mob/living/M, mob/living/user)
+	user.lastattacked = M
+	M.lastattacker = user
+	M.attacked_by(src, user)
+	add_fingerprint(user)
+
+/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
 	..()
 	var/obj/machinery/manned_turret/E = user.buckled
 	E.setDir(get_dir(E,targeted_atom))
 	user.setDir(E.dir)
+	E.mouseparams = params
 	switch(E.dir)
 		if(NORTH)
 			E.layer = BELOW_MOB_LAYER
@@ -1055,15 +1066,15 @@
 	else
 		cooldown = world.time + cooldown_duration
 		warned = FALSE
-		INVOKE_ASYNC(src, /obj/machinery/manned_turret/.proc/volley)
+		volley(user)
 
-/obj/machinery/manned_turret/proc/volley()
+/obj/machinery/manned_turret/proc/volley(mob/user)
 	target_turf = get_turf(target)
 	for(var/i in 1 to number_of_shots)
-		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper), i*rate_of_fire)
+		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 
-/obj/machinery/manned_turret/proc/fire_helper()
+/obj/machinery/manned_turret/proc/fire_helper(mob/user)
 	if(!src)
 		return
 	var/turf/targets_from = get_turf(src)
@@ -1072,11 +1083,10 @@
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	P.current = targets_from
 	P.starting = targets_from
-	P.firer = src
+	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
-	P.yo = target.y - targets_from.y + rand(-1,1)
-	P.xo = target.x - targets_from.x + rand(-1,1)
+	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-9, 9))
 	P.fire()
 
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
