@@ -38,14 +38,13 @@
 		to_chat(user, "<span class='warning'> The [src]'s battery is dead!</span>")
 		return
 
-	for(var/atom/A in target.contents)
-		if(istype(A, /obj/item/weapon/stock_parts/cell))
-			for(var/atom/rechargable in canrecharge)
-				if(istype(target, rechargable))
-					var/obj/item/weapon/stock_parts/cell/C = A
-					if(do_after(user, canrecharge[rechargable]))
-						induce(C)
-						return
+	for(var/rechargable in canrecharge)
+		if(istype(target, rechargable))
+			var/rechargable/I = target
+			var/obj/item/weapon/stock_parts/cell/C = I.cell
+			if(do_after(user, canrecharge[rechargable]))
+				induce(C)
+				return
 	..()
 
 /obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
