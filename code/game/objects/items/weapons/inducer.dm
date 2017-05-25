@@ -63,17 +63,20 @@
 		return
 
 	if(!cell)
-		to_chat(user, "<span class='warning'> The [src] doesn't have a power cell installed!</span>")
+		to_chat(user, "<span class='warning'>The [src] doesn't have a power cell installed!</span>")
 		return
 
 	if(!cell.charge)
-		to_chat(user, "<span class='warning'> The [src]'s battery is dead!</span>")
+		to_chat(user, "<span class='warning'>The [src]'s battery is dead!</span>")
 		return
 
 	var/obj/item/weapon/stock_parts/cell/C = get_cell(O)
 	if(C)
+		if(C.charge == C.maxcharge)
+			to_chat(user, "<span class='notice'>The [O] is fully charged!</span>")
+			return
 		user.visible_message("[user] starts recharging the [O] with \the [src]",\
-							"<span class='notice'> You start recharging the [O] with \the [src]</span>")
+							"<span class='notice'>You start recharging the [O] with \the [src]</span>")
 		if(do_after(user, 20, target = O, progress = 1))
 			induce(C)
 			user.visible_message("[user] recharged the [O]!",\
@@ -106,30 +109,59 @@
 				to_chat(user, "<span class='notice'>The [src] already has \the [cell] installed!</span>")
 				return
 
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to use \the [src]!</span>")
+		return
+
+	if(!cell)
+		to_chat(user, "<span class='warning'>The [src] doesn't have a power cell installed!</span>")
+		return
+
+	if(!cell.charge)
+		to_chat(user, "<span class='warning'>The [src]'s battery is dead!</span>")
+		return
+
 	var/obj/item/weapon/stock_parts/cell/C = get_cell(W)
 	if(C)
+		if(C.charge == C.maxcharge)
+			to_chat(user, "<span class='notice'>The [W] is fully charged!</span>")
+			return
 		user.visible_message("[user] starts recharging the [W] with \the [src]",\
-							"<span class='notice'> You start recharging the [W] with \the [src]</span>")
+							"<span class='notice'>You start recharging the [W] with \the [src]</span>")
 		if(do_after(user, 60, target = W, progress = 1)) //Charging items like this is slower because I know someone will bite my head off otherwise.
 			induce(C)
 			user.visible_message("[user] recharged the [W]!",\
-								 "<span class='notice'> You recharged the [W]!</span>")
+								 "<span class='notice'>You recharged the [W]!</span>")
 			return
 
 	..()
 
 /obj/item/weapon/inducer/attack(mob/M, mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to use \the [src]!</span>")
+		return
+
+	if(!cell)
+		to_chat(user, "<span class='warning'>The [src] doesn't have a power cell installed!</span>")
+		return
+
+	if(!cell.charge)
+		to_chat(user, "<span class='warning'>The [src]'s battery is dead!</span>")
+		return
+
 	var/obj/item/weapon/stock_parts/cell/C = get_cell(M)
 	if(C)
+		if(C.charge == C.maxcharge)
+			to_chat(user, "<span class='notice'>[M] is fully charged!</span>")
+			return
+
 		user.visible_message("[user] starts recharging [M] with \the [src]",\
-							"<span class='notice'> You start recharging [M] with \the [src]</span>")
+							"<span class='notice'>You start recharging [M] with \the [src]</span>")
 		if(do_after(user, 10, target = M, progress = 1)) //Charging borgs is fast, since they can have high capacity cells inside.
 			induce(C)
 			user.visible_message("[user] recharged [M]!",\
-								 "<span class='notice'> You recharged [M]!</span>")
-			return
-		else
-			return //so you don't accidentally attack the borg you're recharging
+								 "<span class='notice'>You recharged [M]!</span>")
+		return
 	..()
 
 
