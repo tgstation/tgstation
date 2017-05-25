@@ -85,31 +85,20 @@
 
 /obj/item/weapon/twohanded/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
-
 	if(. && !istype(src, /obj/item/weapon/twohanded/offhand))
 		block_animation(owner)
 
 
 /obj/item/weapon/twohanded/proc/block_animation(mob/living/carbon/human/owner)
 	var/atom/A = owner
-	var/image/I
-	I = image(src.icon, A, src.icon_state, A.layer + 0.1)
+	var/image/I = image(src.icon, A, src.icon_state, A.layer + 0.1)
+	I.iSpinner()
 
-	// Scale the icon.
-	I.transform *= 0.75
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	var/list/matrices = list()
-	for(var/i in 1 to 5)
-		var/matrix/M = matrix(I.transform)
-		M.Turn(60*i)
-		matrices += M
-	var/matrix/last = matrix(I.transform)
-	matrices += last
-	flick_overlay(I, GLOB.clients, 18)
-	animate(I, alpha = 175, I.transform = matrices[1], pixel_x = 0, pixel_y = 0, pixel_z = -12, time = 3)
-	for(var/i in 1 to 5) //2 because 1 is covered above
-		animate(I.transform = matrices[i], time = 3)
-
+/image/proc/iSpinner()
+	transform *= 0.6
+	flick_overlay(src, GLOB.clients, 100)
+	for(var/n in 1 to 4)
+		animate(src, alpha = 120, transform = turn(transform, 90), time = 4)
 
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()

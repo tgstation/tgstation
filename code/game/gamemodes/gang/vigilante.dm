@@ -19,13 +19,15 @@
 		/datum/gang_item/function/implant,
 		/datum/gang_item/weapon/hatchet,
 		/datum/gang_item/weapon/pitchfork,
+		/datum/gang_item/weapon/improvised,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/surgood,
 		/datum/gang_item/weapon/ammo/surplus_ammo,
-		/datum/gang_item/weapon/riot,
-		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/auto,
 		/datum/gang_item/weapon/ammo/auto_ammo,
 		/datum/gang_item/weapon/ammo/auto_ammo_AP,
+		/datum/gang_item/weapon/riot,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/brutepatch,
 		/datum/gang_item/equipment/shield,
@@ -87,11 +89,26 @@
 		if(G && G.can_buy(usr, gang, src))
 			G.purchase(usr, gang, src, FALSE)
 	if(href_list["destroy"])
-		if(do_after(usr, 50, target = get_turf(usr)))
-			world << "Good job"
+		Destroy_Contraband(usr)
 	attack_self(usr)
 
-
+/obj/item/device/vigilante_tool/proc/Destroy_Contraband(mob/living/user)
+	playsound(get_turf(loc), 'sound/items/poster_being_created.ogg', 50, 1)
+	var/obj/I = user.get_active_held_item()
+	var/value
+	if(!I)
+		to_chat(user, "<span class='notice'> No item detected")
+		return
+	switch(I.type)
+		if(/obj/item/weapon/gun/ballistic/automatic/pistol)
+			value = 20
+		else
+			to_chat(user, "<span class='notice'> No contraband detected")
+			return
+	if(do_after(usr, 50, target = user))
+		if(I)
+			points += value
+			qdel(I)
 
 
 

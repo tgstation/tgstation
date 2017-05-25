@@ -316,6 +316,7 @@
 	item_path = /obj/item/ammo_box/magazine/wt550m9/wtap/elite
 
 /obj/item/ammo_box/magazine/wt550m9/wtap/elite
+	desc = "An upgrade from previous armor-piercing ammunition; it provides additional piercing without sacrificing damage."
 	ammo_type = /obj/item/ammo_casing/c46x30mmap/elite
 
 /obj/item/ammo_casing/c46x30mmap/elite
@@ -346,18 +347,18 @@
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
 
 /datum/gang_item/weapon/cluster
-	name = "Experimental Cluster Rocket Launcher"
-	id = "cluster"
+	name = "High Explosive Rocket Launcher"
+	id = "launcher"
 	cost = 80
 	item_path = /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE
 
 /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE
-		desc = "A single-use cluster rocket launcher."
-		name = "cluster rocket launcher"
+		desc = "A single-use HE rocket launcher designed to neutralize enemies of the corporation without causing critical damage to the station."
+		name = "High Explosive Rocket Launcher"
 		mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher/HE
 
 /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
-	if(!do_after(user, 30, target = src))
+	if(!do_after(user, 30, target = user))
 		return
 	. = ..()
 
@@ -375,11 +376,24 @@
 	damage = 60
 	armour_penetration = 100
 	dismemberment = 100
-	var/explosions = 5
+	var/cluster_explosions = 5
 
 /obj/item/projectile/bullet/HE_rocket/on_hit(atom/target, blocked=0)
-	explosion(target, 0, 0, 5, 6)
+	explosion(target, 0, 0, 3, 4)
+	addtimer(CALLBACK(src, .proc/cluster, target), 15)
+	return 1
 
+/obj/item/projectile/bullet/HE_rocket/proc/cluster(atom/target)
+	var/list/turfs = list()
+	for(var/turf/T in view(target, 6))
+		if(get_dist(target, T) >= 5)
+			turfs += T
+	for(var/i in 1 to cluster_explosions)
+		var/turf/boom = pick(turfs)
+		explosion(boom, 0, 0, 2, 2)
+		turfs -= boom
+		if(!turfs.len)
+			return
 
 ///////////////////
 //EQUIPMENT
