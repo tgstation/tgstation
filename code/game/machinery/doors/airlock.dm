@@ -200,7 +200,7 @@
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
-	qdel(charge)
+	qdel(charge)	//will null itself in it's Destroy
 	if(electronics)
 		qdel(electronics)
 		electronics = null
