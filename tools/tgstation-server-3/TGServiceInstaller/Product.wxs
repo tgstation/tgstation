@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-  <Product Id="*" Name="TG Station Server" Language="1033" Version="3.0.76.0" Manufacturer="/tg/station 13" UpgradeCode="663badae-ddca-4aa9-8f3f-3b7b20332eac">
+  <Product Id="*" Name="TG Station Server" Language="1033" Version="3.0.77.0" Manufacturer="/tg/station 13" UpgradeCode="663badae-ddca-4aa9-8f3f-3b7b20332eac">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
