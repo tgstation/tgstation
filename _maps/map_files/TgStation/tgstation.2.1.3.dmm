@@ -7320,6 +7320,7 @@
 /area/maintenance/fore/secondary)
 "apv" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Fitness Maitenance";
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -8040,6 +8041,7 @@
 /area/maintenance/department/crew_quarters/dorms)
 "arh" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Dormitories Maintenance";
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -11525,6 +11527,7 @@
 /area/crew_quarters/fitness)
 "azi" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Garden Maintenace";
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12658,7 +12661,7 @@
 /area/security/checkpoint/checkpoint2)
 "aBL" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Garden Maintenance";
+	name = "Tool Storage Maintenance";
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -23983,6 +23986,7 @@
 /area/crew_quarters/toilet/locker)
 "bcu" = (
 /obj/machinery/door/airlock/maintenance{
+	name = "Locker Room Maintenance";
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -32495,10 +32499,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buG" = (
-/obj/machinery/door/airlock/research{
-	name = "Genetics Research";
-	req_access_txt = "9"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -32510,6 +32510,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/research{
+	name = "Genetics Research Access";
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -98143,7 +98146,7 @@ amY
 amY
 ajp
 aoG
-cSB
+cSA
 aqe
 arf
 aqo
@@ -98400,7 +98403,7 @@ amZ
 amZ
 anW
 aoH
-cSC
+cSA
 aqe
 arf
 asm
@@ -98657,7 +98660,7 @@ amY
 amY
 anV
 ajo
-cSD
+cSA
 aqe
 arf
 ari
