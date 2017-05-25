@@ -7274,7 +7274,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Aft Maintenance APC";
+	name = "Fore Maintenance APC";
 	pixel_y = 24
 	},
 /obj/structure/disposalpipe/segment{
@@ -10072,7 +10072,7 @@
 "awd" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "EVA Maintenance APC";
+	name = "Fore Maintenance APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
