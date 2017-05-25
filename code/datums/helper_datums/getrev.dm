@@ -11,8 +11,7 @@
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
-	var/testlen = max(testmerge.len - 1, 0)
-	
+
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
