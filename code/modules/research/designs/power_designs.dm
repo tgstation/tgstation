@@ -76,7 +76,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/inducer/sci
-	category = list("Misc","Power Designs")
+	category = list("Power Designs")
 
 
 /datum/design/board/pacman
