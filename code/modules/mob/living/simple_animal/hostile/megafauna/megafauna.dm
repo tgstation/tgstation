@@ -58,6 +58,9 @@
 				grant_achievement(medal_type,score_type)
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
