@@ -70,8 +70,10 @@
 
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
+	if(!owner.revive(full_heal = TRUE))
+		return
+
 	owner.grab_ghost()
-	owner.revive(full_heal = TRUE)
 	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	owner.do_jitter_animation(living_transformation_time * 10)
