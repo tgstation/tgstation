@@ -56,6 +56,17 @@
 	var/projectile_stun = 0
 	var/delay = 40
 
+/obj/item/weapon/gun/energy/beam_rifle/debug
+	delay = 0
+	cell_type = /obj/item/weapon/stock_parts/cell/infinite
+	aiming_time = 0
+	recoil = 0
+	scoped_recoil = 0
+	hipfire_recoil = 0
+	hipfire_inaccuracy = 0
+	scoped_inaccuracy = 0
+	noscope = 1
+
 /obj/item/weapon/gun/energy/beam_rifle/New()
 	..()
 	START_PROCESSING(SSfastprocess, src)
@@ -223,9 +234,11 @@
 	structure_piercing = BR.structure_piercing
 	structure_bleed_coeff = BR.structure_bleed_coeff
 
-/obj/item/ammo_casing/energy/beam_rifle/hitscan/ready_proj(atom/target, mob/living/user, quiet, zone_override)
+/obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override)
+	. = ..(target, user, quiet, zone_override)
 	var/obj/item/projectile/beam/beam_rifle/hitscan/HS_BB = BB
-	if(!HS_BB)
+	if(!istype(HS_BB))
+		world << "Projectile sync failed"
 		return
 	HS_BB.damage = projectile_damage
 	HS_BB.stun = projectile_stun
@@ -240,7 +253,7 @@
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
-	. = ..(target, user, quiet, zone_override)
+	world << "Successful projectile sync"
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
@@ -272,17 +285,21 @@
 	var/aoe_mob_damage = 0
 	var/impact_structure_damage = 0
 	var/turf/last_turf
+	var/halt = FALSE			//Projectile code is horrible enough that I need to use this to halt movement..
 
 /obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
-	if(isclosedturf(target) && ++wall_pierce < wall_pierce_amount)
+	if(isclosedturf(target) && (++wall_pierce < wall_pierce_amount))
+		world << "Piercing [target]"
 		var/turf/closed/C = target
 		if(prob(wall_devastate))
 			C.ex_act(2)
 		loc = target
+		permutated += target
 		return FALSE
 	if(ismovableatom(target) && !ismob(target))
 		var/atom/movable/AM = target
-		if(AM.density && ++structure_pierce < structure_pierce_amount)
+		if(AM.density && (++structure_pierce < structure_pierce_amount) && !AM.CanPass(src, get_turf(AM)))
+			world << "Piercing [AM]"
 			if(isobj(AM))
 				var/obj/O = AM
 				var/d_o = aoe_structure_damage + impact_structure_damage
@@ -291,8 +308,10 @@
 				var/d_m = aoe_structure_damage + impact_structure_damage
 				var/dealt = d_o - d_m
 				O.take_damage(dealt, BURN, "energy", FALSE)
-		loc = get_turf(target)
-		return FALSE
+			loc = get_turf(target)
+			permutated += target
+			return FALSE
+	halt = TRUE
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/Range()
@@ -304,16 +323,12 @@
 	last_turf = get_turf(target)
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+	halt = TRUE
 	var/turf/impact_turf
 	if(!QDELETED(target))
 		impact_turf = get_turf(target)
 	else
 		impact_turf = last_turf
-	if(isturf(target) && ++wall_pierce < wall_pierce_amount)
-		if(prob(wall_devastate))
-			target.ex_act(2)
-		return FALSE
-	. = ..()
 	if(!QDELETED(target) && isobj(target))
 		var/obj/objtarget = target
 		objtarget.take_damage(impact_structure_damage, BURN, "energy", FALSE)
@@ -331,6 +346,7 @@
 			if(isturf(O.loc))
 				O.take_damage(aoe_structure_damage, BURN, "energy", FALSE)
 	playsound(get_turf(target), 'sound/effects/explosion3.ogg', 100, 1)
+	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
@@ -345,7 +361,11 @@
 	var/next_run = world.time
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
+	var/safety = 0	//The code works fine, but... just in case...
 	while(loc)
+		if(halt || (++safety > (range * 3)))	//If it's looping for way, way too long...
+			world << "Debug: Projectile killed with safety [safety] and halt [halt]"
+			break	//Kill!
 		if((!( current ) || loc == current))
 			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 		if(!Angle)
@@ -427,7 +447,7 @@
 
 /obj/effect/temp_visual/projectile_beam/New(time = 5, angle_override, p_x, p_y, color_override)
 	duration = time
-	if(!angle_override||!p_x||!p_y)
+	if(isnull(angle_override)||isnull(p_x)||isnull(p_y))		//Remie, !thing returns yes on 0, and sometimes the angle will be 0 or the pixel x/y will be 0..
 		qdel(src)
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
