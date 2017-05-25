@@ -239,7 +239,7 @@
 			targets += T.client
 			AH.remove_hud_from(T)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, T), duration)
-			if(A == null)
+			if(!A)
 				A = image('icons/effects/effects.dmi',T,"bloodsparkles", ABOVE_MOB_LAYER)
 				A.override = FALSE
 			send_visions(A, cultists, duration)
@@ -250,7 +250,7 @@
 		if(L.z != UZ)
 			continue
 		if(ishuman(L))
-			if(A == null)
+			if(!A)
 				A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
 				A.override = TRUE
 			send_visions(A, targets, duration)
@@ -264,16 +264,12 @@
 			send_visions(B, targets, duration)
 	qdel(src)
 
-/proc/remove_visions(image/I, list/show_to)
-	for(var/client/C in show_to)
-		C.images -= I
-
 /proc/send_visions(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		if(C.mob == I.loc)
 			continue
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_visions, I, show_to), duration)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_images_from_clients, I, show_to), duration)
 
 /proc/hudFix(mob/living/carbon/human/target)
 	if(!target || !target.client)
