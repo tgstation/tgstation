@@ -388,7 +388,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access_list = list(GLOB.access_cent_captain)
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -403,7 +403,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access_list = list(GLOB.access_cent_captain)
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
@@ -415,8 +415,8 @@
 	helmet = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
-	id_job = "Private Security Force"
-	id_access_list = list(GLOB.access_cent_specops)
+	id_job = "Private Security Officer"
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE
@@ -426,6 +426,16 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/nanotrasensoldier/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Private Security Officer"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	faction = "nanotrasenprivate"
+	flavour_text = "You are a Nanotrasen Private Security Officer!"
 
 /////////////////Spooky Undead//////////////////////
 
