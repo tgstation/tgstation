@@ -20,6 +20,10 @@
 /obj/item/projectile/bullet/weakbullet3
 	damage = 20
 
+/obj/item/projectile/bullet/carbinebullet
+	damage = 20
+	range = 5
+
 /obj/item/projectile/bullet/toxinbullet
 	damage = 15
 	damage_type = TOX
@@ -244,7 +248,7 @@
 	name = "\improper DNA injector"
 	icon_state = "syringeproj"
 	var/obj/item/weapon/dnainjector/injector
-	
+
 /obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target

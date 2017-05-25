@@ -173,6 +173,57 @@
 	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
+/obj/effect/mob_spawn/human/marine
+	name = "marine cryostasis sleeper"
+	desc = "A humming sleeper with an occupant inside. The pod is attempting to revive the occupant but power failure is delaying the waking procedure."
+	mob_name = "a earth marine"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	objectives = "Escape this planet and attempt to reach civilization"
+	implants = list(/obj/item/weapon/implant/mindshield)
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a United Earth Government Marine. You were stationed onboard the UESS Inheritor, a Destroyer. As the stasis alarms ring in your head\
+	you attempt to recall the horrible events that forced you and your squadmates to abandon ship inside a troop transport... "
+
+/obj/effect/mob_spawn/human/marine/New()
+	var/arrpee = rand(1,4)
+	switch(arrpee)
+		if(1)
+			flavour_text += "Your ship intercepted a distress call from a long range space station. As the Inheritor moved into investigate, suddenly and without warning the ship was being \
+			assaulted by a massive lovecraftian nightmare, you heard the name 'Nar-Sie' being uttered by the barely Human flesh monsters and constructs that poured out of every crack that was \
+			torn into the ship by the monster. With most of the crew dead, you and your squad retreat to the hanger bay, rescued a group of pilots and attempted to flee onboard the only functional \
+			troop transport. Your attempt to fly away is halted when Nar-Sie somehow was able to start attempting to drag the transport into her grasp. In one final desperate move, the pilots \
+			turn the ship around and ram it directly into Nar-Sie's head, her screams somehow echo throughout the transport as she releases her grasp on the transport, unfortuantly taking half \
+			the engines with her. Your final thoughts are panic as you quickly dive into your cyrosleep pod, hoping you'll survive the crash landing.</b>"
+		if(2)
+			flavour_text += "Panic and paranoia ran high as a group of changelings somehow infiltrated the Inheritor. Utterly unprepared to deal with this threat, the crew tore itself apart. \
+			In a final desperate move to end the changeling threat, the ship's Commander activated the Inheritor's self destruct sequence and remotly shut down all escape pods. You and you're \
+			squadmates, who were already on the brink of a psychological breakdown, make a run for the last remaining troop transport. You arrive to discover the Changelings had a similar plan \
+			, with minutes until the ship explodes, the changelings abandoned any pretense of subtly and revealed their true forms. After a intense gun fight you and your squad are able to board \
+			the transport. However as you take off, one of the surviving Changelings is able to plant a explosive charge on your engines. The explosion disables your ship, and you get caught in a \
+			nearby planets gravity well. The crew are forced into cyro sleep, as you're last thoughts are hoping to god none of your squadmates are secretly changelings.</b>"
+		if(3)
+			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Earth military ship. However, the Inheritor had run a large \
+			series of anti-piracy raids in your assigned sector, so crippling that every pirate in the local sector network formed a massive fleet in a attempt to destroy the Inheritor. The \
+			Inheritor won against all odds, but it was a pyrrhic victory as the Inheritor was byond repair. The acting Commander ordered all hands to abandon ship before it was scuttled. You and \
+			your remaining squad members were assigned to troop transport 5. Unbestknown to you or your pilots, your fuel tanks had suffered a massive leak during the fighting, leaving you with \
+			minimal fuel, thus your pilots had no choice but to land at a nearby planet. Strapping into your cyro chamber, you can only hope that the pilots could land this thing safely.</b>"
+		if(4)
+			flavour_text += "The Inheritor was assigned to a high level covert recon mission of the Nanotrasen Space Station 13. Stipulation of the Nanotrasen - United Earth Government \
+			plasma mining contract was that Nanotrasen were to be limited to mining only a orbital gas giant and its orbiting moons. Earth Intelligence recieved information that Nanotrasen may \
+			have broken this condition by launching a illiegal mining operation to a orbiting planet in the same system. You and your squad were dispatched in a recon transport to attempt to \
+			fly over the planet and locate any hidden Nanotrasen mining bases. About two hours into the recon mission, a giant, dragon like, creature swooped up and took a large part of your engine \
+			with it. With insufficent engines to leave the planet's atmosphere, the crew were ordered into cyrostasis as the pilots attempted a emergency landing.</b>"
+
+	..()
+
+/obj/effect/mob_spawn/human/marine/Destroy()
+	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
+	return ..()
+
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
 /obj/effect/mob_spawn/human/hermit
 	name = "malfunctioning cryostasis sleeper"
@@ -348,4 +399,6 @@
 	else
 		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
 		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
+
+
 

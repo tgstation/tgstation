@@ -79,6 +79,30 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+	//United Earth Government Marine Armour
+/obj/item/clothing/head/helmet/space/hardsuit/ueg
+	name = "UEG Marine Helmet"
+	desc = "An armoured, pressurised, military helmet used as standard issue among UEG Marines."
+	icon_state = "ueghelm"
+	item_state = "ueghelm"
+	armor = list(melee = 50, bullet = 50, laser = 30, energy = 30, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
+	strip_delay = 120
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	actions_types = list()
+
+/obj/item/clothing/head/helmet/space/hardsuit/ueg/attack_self(mob/user)
+	return
+
+/obj/item/clothing/suit/space/hardsuit/ueg
+	name = "UEG Marine Armour"
+	desc = "Modified MK.II SWAT Armour. Used by United Earth Government Marines in ship to ship action."
+	icon_state = "uegarmor"
+	item_state = "uegarmor"
+	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
+	armor = list(melee = 50, bullet = 50, laser = 30, energy = 30, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
+	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ueg
 
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
