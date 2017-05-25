@@ -10,7 +10,6 @@
 	var/opened = FALSE
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/canrecharge = list(/obj/machinery/power/apc = 20, /obj/item/weapon/gun/energy = 60)
 
 /obj/item/weapon/inducer/Initialize()
 	. = ..()
@@ -21,6 +20,30 @@
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
 
+/obj/item/weapon/inducer/proc/get_cell(atom/target)
+	if(istype(target, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/A = target
+		return A.cell
+	if(istype(target, /obj/item/weapon/gun/energy))
+		var/obj/item/weapon/gun/energy/A = target
+		return A.cell
+	if(istype(target, /obj/item/weapon/melee/baton))
+		var/obj/item/weapon/melee/baton/A = target
+		return A.cell
+	if(istype(target, /obj/item/clothing/suit/space/space_ninja))
+		var/obj/item/clothing/suit/space/space_ninja/A = target
+		return A.cell
+	if(istype(target, /obj/machinery/space_heater))
+		var/obj/machinery/space_heater/A = target
+		return A.cell
+	if(istype(target, /obj/mecha))
+		var/obj/mecha/A = target
+		return A.cell
+	if(istype(target, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/A = target
+		return A.cell
+
+	return null
 
 /obj/item/weapon/inducer/attack_obj(obj/target, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
@@ -38,13 +61,15 @@
 		to_chat(user, "<span class='warning'> The [src]'s battery is dead!</span>")
 		return
 
-	for(var/rechargable in canrecharge)
-		if(istype(target, rechargable))
-			var/rechargable/I = target
-			var/obj/item/weapon/stock_parts/cell/C = I.cell
-			if(do_after(user, canrecharge[rechargable]))
-				induce(C)
-				return
+	var/obj/item/weapon/stock_parts/cell/C = get_cell(target)
+	if(C)
+		user.visible_message("[user] starts recharging the [target] with \the [src]",\
+							"<span class='notice'> You start recharging the [target] with \the [src]</span>")
+		if(do_after(user, 20, target = C))
+			induce(C)
+			user.visible_message("[user] recharged the [target]!",\
+								 "<span class='notice'> You recharged the [target]!</span>")
+			return
 	..()
 
 /obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
@@ -77,7 +102,7 @@
 			cell.updateicon()
 			src.cell = null
 			update_icon()
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
+			user.visible_message("[user] removes the power cell from [src]!",\
 								  "<span class='notice'>You remove the power cell.</span>")
 	else
 		..()
