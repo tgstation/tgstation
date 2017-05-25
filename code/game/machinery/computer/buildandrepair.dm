@@ -174,7 +174,7 @@
 /obj/item/weapon/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
-	origin_tech = "programming=3;bio=3"
+	origin_tech = "programming=3;biotech=3"
 /obj/item/weapon/circuitboard/computer/base_construction
 	name = "circuit board (Aux Mining Base Construction Console)"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction
