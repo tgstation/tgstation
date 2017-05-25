@@ -55,9 +55,8 @@
 	else if(isbrain(current) || isclockmob(current))
 		to_chat(current, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	..()
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult))
-		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		C.present_tasks(owner) //Memorize the objectives
+	to_chat(current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
+	owner.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>" //Memorize the objectives
 
 /datum/antagonist/clockcult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
