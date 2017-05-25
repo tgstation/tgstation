@@ -16,9 +16,11 @@
 	src.cell = new cell_type
 
 /obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target)
-	var/totransfer = max(cell.charge,powertransfer)
+	var/totransfer = min(cell.charge,powertransfer)
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
+	cell.updateicon()
+	target.updateicon()
 
 /obj/item/weapon/inducer/proc/get_cell(atom/target)
 	if(istype(target, /obj/machinery/power/apc))
@@ -45,7 +47,7 @@
 
 	return null
 
-/obj/item/weapon/inducer/attack_obj(obj/target, mob/living/carbon/user)
+/obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 
@@ -61,14 +63,14 @@
 		to_chat(user, "<span class='warning'> The [src]'s battery is dead!</span>")
 		return
 
-	var/obj/item/weapon/stock_parts/cell/C = get_cell(target)
+	var/obj/item/weapon/stock_parts/cell/C = get_cell(O)
 	if(C)
-		user.visible_message("[user] starts recharging the [target] with \the [src]",\
-							"<span class='notice'> You start recharging the [target] with \the [src]</span>")
-		if(do_after(user, 20, target = C))
+		user.visible_message("[user] starts recharging the [O] with \the [src]",\
+							"<span class='notice'> You start recharging the [O] with \the [src]</span>")
+		if(do_after(user, 20, target = O, progress = 1))
 			induce(C)
-			user.visible_message("[user] recharged the [target]!",\
-								 "<span class='notice'> You recharged the [target]!</span>")
+			user.visible_message("[user] recharged the [O]!",\
+								 "<span class='notice'> You recharged the [O]!</span>")
 			return
 	..()
 
