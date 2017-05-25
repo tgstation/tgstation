@@ -54,6 +54,7 @@
 	var/impact_structure_damage = 60
 	var/projectile_damage = 35
 	var/projectile_stun = 0
+	var/projectile_setting_pierce = TRUE
 	var/delay = 40
 
 /obj/item/weapon/gun/energy/beam_rifle/debug
@@ -66,6 +67,10 @@
 	hipfire_inaccuracy = 0
 	scoped_inaccuracy = 0
 	noscope = 1
+
+/obj/item/weapon/gun/energy/beam_rifle/attack_self(mob/user)
+	projectile_setting_pierce = !projectile_setting_pierce
+	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 
 /obj/item/weapon/gun/energy/beam_rifle/New()
 	..()
@@ -214,11 +219,13 @@
 	var/projectile_stun = 0
 	var/structure_piercing = 2
 	var/structure_bleed_coeff = 0.7
+	var/do_pierce = TRUE
 
 /obj/item/ammo_casing/energy/beam_rifle/proc/sync_stats()
 	var/obj/item/weapon/gun/energy/beam_rifle/BR = loc
 	if(!BR)
 		stack_trace("Beam rifle syncing error")
+	do_pierce = BR.projectile_setting_pierce
 	wall_pierce_amount = BR.wall_pierce_amount
 	wall_devastate = BR.wall_devastate
 	aoe_structure_range = BR.aoe_structure_range
@@ -253,6 +260,7 @@
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
+	HS_BB.do_pierce = do_pierce
 	world << "Successful projectile sync"
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
@@ -274,6 +282,7 @@
 	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
 	var/structure_bleed_coeff = 0
 	var/structure_pierce = 0
+	var/do_pierce = TRUE
 	var/wall_pierce_amount = 0
 	var/wall_pierce = 0
 	var/wall_devastate = 0
@@ -284,68 +293,57 @@
 	var/aoe_mob_range = 0
 	var/aoe_mob_damage = 0
 	var/impact_structure_damage = 0
-	var/turf/last_turf
-	var/halt = FALSE			//Projectile code is horrible enough that I need to use this to halt movement..
+	var/halt = FALSE				//Used to kill projectile because projectile code is a shit.
 
-/obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
-	if(isclosedturf(target) && (++wall_pierce < wall_pierce_amount))
-		world << "Piercing [target]"
-		var/turf/closed/C = target
-		if(prob(wall_devastate))
-			C.ex_act(2)
-		loc = target
-		permutated += target
+/obj/item/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
+	set waitfor = FALSE
+	new /obj/effect/temp_visual/explosion/fast(epicenter)
+	for(var/mob/living/L in range(aoe_mob_range, epicenter))		//handle aoe mob damage
+		L.adjustFireLoss(aoe_mob_damage)
+		to_chat(L, "<span class='userdanger'>\the [src] sears you!</span>")
+	for(var/turf/T in range(aoe_fire_range, epicenter))		//handle aoe fire
+		if(prob(aoe_fire_chance))
+			new /obj/effect/hotspot(T)
+	for(var/obj/O in range(aoe_structure_range, epicenter))
+		if(!istype(O, /obj/item))
+			O.take_damage(aoe_structure_damage, BURN, "energy", FALSE)
+
+/obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
+	if(!do_pierce)
 		return FALSE
-	if(ismovableatom(target) && !ismob(target))
+	if(isclosedturf(target))
+		if(wall_pierce++ < wall_pierce_amount)
+			loc = target
+			if(prob(wall_devastate))
+				target.ex_act(2)
+			return TRUE
+	if(ismovableatom(target))
 		var/atom/movable/AM = target
-		if(AM.density && (++structure_pierce < structure_pierce_amount) && !AM.CanPass(src, get_turf(AM)))
-			world << "Piercing [AM]"
-			if(isobj(AM))
-				var/obj/O = AM
-				var/d_o = aoe_structure_damage + impact_structure_damage
-				aoe_structure_damage *= structure_bleed_coeff
-				impact_structure_damage *= structure_bleed_coeff
-				var/d_m = aoe_structure_damage + impact_structure_damage
-				var/dealt = d_o - d_m
-				O.take_damage(dealt, BURN, "energy", FALSE)
-			loc = get_turf(target)
-			permutated += target
-			return FALSE
-	halt = TRUE
-	. = ..()
+		if(AM.density && !AM.CanPass(src, get_turf(target) && !ismob(AM))
+			if(structure_pierce++ < structure_pierce_amount)
+				if(isobj(AM))
+					var/obj/O = AM
+					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff, BURN, "energy", FALSE)
+				loc = get_turf(AM)
+				return TRUE
+	return FALSE
 
-/obj/item/projectile/beam/beam_rifle/Range()
-	..()
-	last_turf = get_turf(src)
+/obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
+	if(isobj(target))
+		var/obj/O = target
+		O.take_damage(impact_structure_damage, BURN, "energy", FALSE)
 
-/obj/item/projectile/beam/beam_rifle/prehit(atom/target)
-	..()
-	last_turf = get_turf(target)
+/obj/item/projectile/beam/beam_rifle/proc/handle_hit(atom/target, turf/cached)
+	set waitfor = FALSE
+	if(nodamage)
+		return FALSE
+	playsound(cached, 'sound/effects/explosion3.ogg', 100, 1)
+	AOE(cached)
+	if(!QDELETED(target))
+		handle_impact(target)
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
-	halt = TRUE
-	var/turf/impact_turf
-	if(!QDELETED(target))
-		impact_turf = get_turf(target)
-	else
-		impact_turf = last_turf
-	if(!QDELETED(target) && isobj(target))
-		var/obj/objtarget = target
-		objtarget.take_damage(impact_structure_damage, BURN, "energy", FALSE)
-	if(aoe_mob_range || aoe_structure_range || aoe_fire_range)
-		new /obj/effect/temp_visual/explosion/fast(impact_turf)
-		for(var/mob/living/L in range(aoe_mob_range, impact_turf))
-			L.adjustFireLoss(aoe_mob_damage)
-			to_chat(L, "<span class='userdanger'>You are seared by the [src]!</span>")
-		for(var/turf/T in range(aoe_fire_range, impact_turf))
-			if(prob(aoe_fire_chance))
-				new /obj/effect/hotspot(impact_turf)
-		for(var/obj/O in range(aoe_structure_range, impact_turf))
-			if(istype(O, /obj/item))	//Only structures.
-				continue
-			if(isturf(O.loc))
-				O.take_damage(aoe_structure_damage, BURN, "energy", FALSE)
-	playsound(get_turf(target), 'sound/effects/explosion3.ogg', 100, 1)
+	handle_hit(target, get_turf(target))
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan
@@ -365,7 +363,7 @@
 	while(loc)
 		if(halt || (++safety > (range * 3)))	//If it's looping for way, way too long...
 			world << "Debug: Projectile killed with safety [safety] and halt [halt]"
-			break	//Kill!
+			return	//Kill!
 		if((!( current ) || loc == current))
 			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 		if(!Angle)
@@ -414,6 +412,7 @@
 				if(!(original in permutated))
 					Bump(original, 1)
 		Range()
+	world << "Projectile killed by deletion"
 
 /obj/item/projectile/beam/beam_rifle/hitscan/Range()
 	spawn_tracer_effect()
@@ -426,6 +425,7 @@
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
+	nodamage = TRUE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	if((isturf(target) && wall_pierce < wall_pierce_amount) || (isobj(target) && structure_pierce < structure_pierce_amount))
