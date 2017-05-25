@@ -296,12 +296,12 @@
 /obj/item/projectile/bullet/sniper/gang/sleeper/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
-		L.drowsyness += 6
-		if(L.health < 55)
-			L.Sleeping(25)
+		L.blur_eyes(8)
+		if(L.staminaloss >= 40)
+			L.Sleeping(20)
 		else
 			L.adjustStaminaLoss(55)
-	return ..()
+	return 1
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0
