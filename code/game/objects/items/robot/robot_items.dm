@@ -504,6 +504,8 @@
 		S.change_head_color(color2)
 		dropped = TRUE
 
+#define PKBORG_DAMPEN_CYCLE_DELAY 20
+
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
 	name = "Hyperkinetic Dampening projector"
@@ -549,18 +551,16 @@
 	if(cycle_delay < world.time)
 		to_chat(user, "<span class='boldwarning'>\the [src] is still recycling its projectors!</span>")
 		return
-	cycle_delay = world.time + 20
+	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY
 	active = !active
-	switch(active)
-		if(TRUE)
-			activate_field(user)
-		if(FALSE)
-			deactivate_field()
+	if(active)
+		activate_field(user)
+	else
+		deactivate_field()
 	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] the [src].</span>")
 
 /obj/item/borg/projectile_dampen/update_icon()
-	. = ..()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
@@ -570,8 +570,8 @@
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
-	visible_message("<span class='warning'>The [src] shuts off!</span>")
-	for(var/obj/item/projectile/P in tracked)
+	visible_message("<span class='warning'>\The [src] shuts off!</span>")
+	for(var/P in tracked)
 		restore_projectile(P)
 
 /obj/item/borg/projectile_dampen/dropped()
