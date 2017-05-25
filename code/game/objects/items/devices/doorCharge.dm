@@ -30,7 +30,7 @@
 	for(var/mob/living/carbon/human/H in orange(2, T))
 		H.Weaken(8)
 		H.apply_damage(40, BRUTE)
-		H.apply_damage(30, BURN)
+		H.apply_damage(20, BURN)
 	qdel(src)
 
 /obj/item/device/doorCharge/Destroy()
