@@ -11,9 +11,9 @@
 	clumsy_check = FALSE
 	randomspread = FALSE
 
-	var/obj/item/device/transfer_valve/bomb = null
-	var/datum/gas_mixture/air1 = null
-	var/datum/gas_mixture/air2 = null
+	var/obj/item/device/transfer_valve/bomb
+	var/datum/gas_mixture/air1
+	var/datum/gas_mixture/air2
 
 /obj/item/weapon/gun/blastcannon/New()
 	if(!pin)
@@ -73,7 +73,7 @@
 	temp.volume = air1.volume + air2.volume
 	temp.merge(air1)
 	temp.merge(air2)
-	for(var/i = 0, i < 6, i++)
+	for(var/i in 1 to 6)
 		temp.react()
 	var/pressure = temp.return_pressure()
 	qdel(temp)
@@ -87,16 +87,12 @@
 	var/power = calculate_bomb()
 	qdel(bomb)
 	update_icon()
-	var/heavy = power/5
-	var/medium = power/2
+	var/heavy = power * 0.2
+	var/medium = power * 0.5
 	var/light = power
 	user.visible_message("<span class='danger'>[user] opens \the [bomb] on \his [src.name] and fires a blast wave at \the [target]!</span>","<span class='danger'>You open \the [bomb] on your [src.name] and fire a blast wave at \the [target]!</span>")
 	var/sound = rand(1, 2)
-	switch(sound)
-		if(1)
-			playsound(user, 'sound/effects/Explosion1.ogg', 100, 1)
-		if(2)
-			playsound(user, 'sound/effects/Explosion2.ogg', 100, 1)
+	playsound(user, "explosion", 100, 1)
 	var/turf/starting = get_turf(user)
 	var/area/A = get_area(user)
 	var/log_str = "Blast wave fired at [ADMIN_COORDJMP(starting)] ([A.name]) by [user.name]([user.ckey]) with power [heavy]/[medium]/[light]."

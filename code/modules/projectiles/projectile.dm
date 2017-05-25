@@ -287,8 +287,8 @@
 			//Split Y+Pixel_Y up into list(Y, Pixel_Y)
 			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
 			// to_chat(world, "X: [screen_loc_X[1]] PixelX: [screen_loc_X[2]] / Y: [screen_loc_Y[1]] PixelY: [screen_loc_Y[2]]")
-			var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
-			var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
+			var/x = text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32
+			var/y = text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32
 
 			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths

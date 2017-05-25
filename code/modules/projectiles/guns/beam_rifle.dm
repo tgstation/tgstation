@@ -41,7 +41,9 @@
 	var/mob/current_user = null
 	var/list/obj/effect/temp_visual/current_tracers = list()
 
-	var/wall_pierce_amount = 2
+	var/structure_piercing = 2
+	var/structure_bleed_coeff = 0.7
+	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
 	var/aoe_structure_damage = 30
@@ -95,7 +97,6 @@
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
 	recharge_newshot()
-	return	//Energy drain handled by its cell.
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam()
 	var/atom/A = current_user.client.mouseObject
@@ -106,8 +107,10 @@
 		return
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
 	P.gun = src
+	P.wall_pierce_amount = wall_pierce_amount
+	P.structure_pierce_amount = structure_piercing
 	P.preparePixelProjectile(current_user.client.mouseObject, T, current_user, current_user.client.mouseParams, 0)
-	if(aiming_time >= 1)
+	if(aiming_time)
 		var/percent = ((100/aiming_time)*aiming_time_left)
 		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
@@ -119,7 +122,6 @@
 	for(var/I in current_tracers)
 		current_tracers -= I
 		var/obj/effect/temp_visual/projectile_beam/PB = I
-		PB.alpha = 0
 		qdel(PB)
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
@@ -232,6 +234,8 @@
 	HS_BB.aoe_structure_range = Clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
+	HS_BB.structure_pierce_amoutn = structure_piercing
+	HS_BB.structure_bleed_coeff = strcuture_bleed_coeff
 	. = ..(target, user, quiet, zone_override)
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
@@ -250,16 +254,19 @@
 	range = 150
 	jitter = 10
 	var/obj/item/weapon/gun/energy/beam_rifle/gun
+	var/structure_pierce_amount = 0				//All set to 0 so the gun can manually set them during firing.
+	var/structure_bleed_coeff = 0
+	var/structure_pierce = 0
 	var/wall_pierce_amount = 0
 	var/wall_pierce = 0
 	var/wall_devastate = 0
-	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 30
-	var/aoe_fire_range = 2
-	var/aoe_fire_chance = 66
-	var/aoe_mob_range = 1
-	var/aoe_mob_damage = 20
-	var/impact_structure_damage = 50
+	var/aoe_structure_range = 0
+	var/aoe_structure_damage = 0
+	var/aoe_fire_range = 0
+	var/aoe_fire_chance = 0
+	var/aoe_mob_range = 0
+	var/aoe_mob_damage = 0
+	var/impact_structure_damage = 0
 	var/turf/last_turf
 
 /obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
@@ -269,6 +276,17 @@
 			C.ex_act(2)
 		loc = target
 		return FALSE
+	if(ismovableatom(target) && !ismob(target))
+		var/atom/movable/AM = target
+		if(AM.density && ++structure_pierce < structure_pierce_amount)
+			if(isobj(AM))
+				var/obj/O = AM
+				var/d_o = aoe_structure_damage + impact_structure_damage
+				aoe_structure_damage *= structure_bleed_coeff
+				impact_structure_damage *= structure_bleed_coeff
+				var/d_m = aoe_structure_damage + impact_structure_damage
+				var/dealt = d_o - d_m
+				O.take_damage(dealt, BURN, "energy", false)
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/Range()
@@ -381,7 +399,9 @@
 	hitsound = null
 	hitsound_wall = null
 
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit()
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
+	if((isturf(target) && wall_pierce < wall_pierce_amount) || (isobj(target) && structure_pierce < structure_pierce_amount))
+		return ..()
 	qdel(src)
 	return FALSE
 
@@ -399,15 +419,17 @@
 
 /obj/effect/temp_visual/projectile_beam/New(time = 5, angle_override, p_x, p_y, color_override)
 	duration = time
-	if(isnull(angle_override)||isnull(p_x)|isnull(p_y))
+	if(!angle_override||!p_x||!p_y)
 		qdel(src)
-	pixel_x = p_x
-	pixel_y = p_y
+	var/mutable_appearance/look = new(src)
+	look.pixel_x = p_x
+	look.pixel_y = p_y
+	if(color_override)
+		look.color = color_override
 	var/matrix/M = new
 	M.Turn(angle_override)
-	transform = M
-	if(color_override)
-		color = color_override
+	look.transform = M
+	appearance = look
 	..()
 
 /obj/effect/temp_visual/projectile_beam/tracer
