@@ -23,6 +23,9 @@
 	var/combat = 0 //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 
+/obj/item/weapon/defibrillator/get_cell()
+	return cell
+
 /obj/item/weapon/defibrillator/New() //starts without a cell for rnd
 	..()
 	paddles = make_paddles()

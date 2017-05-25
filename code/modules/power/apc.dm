@@ -94,6 +94,8 @@
 	var/update_state = -1
 	var/update_overlay = -1
 
+/obj/machinery/power/apc/get_cell()
+	return cell
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.

@@ -24,6 +24,8 @@
 	recharge_newshot() //and try to charge a new shot
 	update_icon()
 
+/obj/item/weapon/gun/energy/get_cell()
+	return cell
 
 /obj/item/weapon/gun/energy/New()
 	..()

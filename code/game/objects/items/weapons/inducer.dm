@@ -14,7 +14,7 @@
 
 /obj/item/weapon/inducer/Initialize()
 	. = ..()
-	src.cell = new cell_type
+	cell = new cell_type
 
 /obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target)
 	var/totransfer = min(cell.charge,powertransfer)
@@ -23,36 +23,8 @@
 	cell.updateicon()
 	target.updateicon()
 
-/obj/item/weapon/inducer/proc/get_cell(atom/target)
-	if(istype(target, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/A = target
-		return A.cell
-	if(istype(target, /obj/item/weapon/gun/energy))
-		var/obj/item/weapon/gun/energy/A = target
-		return A.cell
-	if(istype(target, /obj/item/weapon/melee/baton))
-		var/obj/item/weapon/melee/baton/A = target
-		return A.cell
-	if(istype(target, /obj/item/clothing/suit/space/space_ninja))
-		var/obj/item/clothing/suit/space/space_ninja/A = target
-		return A.cell
-	if(istype(target, /obj/machinery/space_heater))
-		var/obj/machinery/space_heater/A = target
-		return A.cell
-	if(istype(target, /obj/mecha))
-		var/obj/mecha/A = target
-		return A.cell
-	if(istype(target, /obj/item/weapon/stock_parts/cell))
-		var/obj/item/weapon/stock_parts/cell/A = target
-		return A
-	if(istype(target, /obj/item/weapon/defibrillator))
-		var/obj/item/weapon/defibrillator/A = target
-		return A.cell
-	if(istype(target, /mob/living/silicon/robot))
-		var/mob/living/silicon/robot/A = target
-		return A.cell
-
-	return null
+/obj/item/weapon/inducer/get_cell()
+	return cell
 
 /obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
@@ -70,7 +42,7 @@
 		to_chat(user, "<span class='warning'>The [src]'s battery is dead!</span>")
 		return
 
-	var/obj/item/weapon/stock_parts/cell/C = get_cell(O)
+	var/obj/item/weapon/stock_parts/cell/C = O.get_cell()
 	if(C)
 		if(C.charge == C.maxcharge)
 			to_chat(user, "<span class='notice'>The [O] is fully charged!</span>")
@@ -121,7 +93,7 @@
 		to_chat(user, "<span class='warning'>The [src]'s battery is dead!</span>")
 		return
 
-	var/obj/item/weapon/stock_parts/cell/C = get_cell(W)
+	var/obj/item/weapon/stock_parts/cell/C = W.get_cell()
 	if(C)
 		if(C.charge == C.maxcharge)
 			to_chat(user, "<span class='notice'>The [W] is fully charged!</span>")
@@ -149,7 +121,7 @@
 		to_chat(user, "<span class='warning'>The [src]'s battery is dead!</span>")
 		return
 
-	var/obj/item/weapon/stock_parts/cell/C = get_cell(M)
+	var/obj/item/weapon/stock_parts/cell/C = M.get_cell()
 	if(C)
 		if(C.charge == C.maxcharge)
 			to_chat(user, "<span class='notice'>[M] is fully charged!</span>")

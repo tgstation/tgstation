@@ -19,6 +19,9 @@
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 
+/obj/item/weapon/stock_parts/cell/get_cell()
+	return src
+
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	START_PROCESSING(SSobj, src)
