@@ -372,6 +372,20 @@
 	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
 	id = /obj/item/weapon/card/id
 
+//UEG Marine
+/obj/effect/mob_spawn/human/marine/
+	name = "marine cryostasis sleeper"
+	desc = "A humming sleeper with a occupant inside. Desperatly attempting to revive the occupant despite its low power state."
+	mob_name = "a earth marine"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a United Earth Government marine. You were, until recently, stationed on board the UESS Inheritor, a Earth destroyer. As you struggle \
+	to exit your cyrostasis sleeper, you slowly start to recall exactly what cause of events has thrown you into your current predicament... "
+
 /obj/effect/mob_spawn/human/marine/New()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
