@@ -19,7 +19,7 @@
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/change_position_cooldown = 60
+	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
@@ -39,6 +39,9 @@
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
+/datum/computer_file/program/card_mod/New()
+	..()
+	change_position_cooldown = config.id_console_jobslot_delay
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed
