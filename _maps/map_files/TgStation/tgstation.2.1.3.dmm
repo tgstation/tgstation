@@ -32513,6 +32513,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Genetics Research Access";
+	req_access_txt = "9"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
