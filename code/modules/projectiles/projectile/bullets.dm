@@ -28,8 +28,8 @@
 	damage = 10
 
 /obj/item/projectile/bullet/armourpiercing
-	damage = 17
-	armour_penetration = 10
+	damage = 15
+	armour_penetration = 40
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"

@@ -90,6 +90,9 @@ LOG_LAW
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
 
+## Job slot open/close by identification consoles delay in seconds
+ID_CONSOLE_JOBSLOT_DELAY 30
+
 ## If metadata is supported
 ALLOW_METADATA
 
