@@ -386,14 +386,15 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a United Earth Government marine. You were, until recently, stationed on board the UESS Inheritor, a Earth destroyer. As you struggle \
 	to exit your cyrostasis sleeper, you slowly start to recall exactly what cause of events has thrown you into your current predicament... "
 
-/obj/effect/mob_spawn/human/marine/New()
+/obj/effect/mob_spawn/human/marine/Initialize(mapload)
+	. = ..()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(1)
 			flavour_text += "Your ship intercepted a distress call from a long range space station. As the Inheritor moved into investigate, suddenly and without warning the ship was being \
 			assaulted by a massive lovecraftian nightmare, you heard the name 'Nar-Sie' being uttered by the barely Human flesh monsters and constructs that poured out of every crack that was \
 			torn into the ship by the monster. With most of the crew dead, you and your squad retreat to the hanger bay, rescued a group of pilots and attempted to flee onboard the only functional \
-			troop transport. Your attempt to fly away is halted when Nar-Sie somehow was able to start attempting to drag the transport into her grasp. In one final desperate move, the pilots \
+			troop transport. Your attempt to fly away was halted when Nar-Sie somehow was able to start attempting to drag the transport into her grasp. In one final desperate move, the pilots \
 			turn the ship around and ram it directly into Nar-Sie's head, her screams somehow echo throughout the transport as she releases her grasp on the transport, unfortuantly taking half \
 			the engines with her. Your final thoughts are panic as you quickly dive into your cyrosleep pod, hoping you'll survive the crash landing.</b>"
 		if(2)
@@ -404,7 +405,7 @@
 			the transport. However as you take off, one of the surviving Changelings is able to plant a explosive charge on your engines. The explosion disables your ship, and you get caught in a \
 			nearby planets gravity well. The crew are forced into cyro sleep, as you're last thoughts are hoping to god none of your squadmates are secretly changelings.</b>"
 		if(3)
-			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Earth military ship. However, the Inheritor had run a large \
+			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Earth military ship. However, the Inheritor had conducted a large \
 			series of anti-piracy raids in your assigned sector, so crippling that every pirate in the local sector network formed a massive fleet in a attempt to destroy the Inheritor. The \
 			Inheritor won against all odds, but it was a pyrrhic victory as the Inheritor was byond repair. The acting Commander ordered all hands to abandon ship before it was scuttled. You and \
 			your remaining squad members were assigned to troop transport 5. Unbestknown to you or your pilots, your fuel tanks had suffered a massive leak during the fighting, leaving you with \
@@ -416,8 +417,7 @@
 			fly over the planet and locate any hidden Nanotrasen mining bases. About two hours into the recon mission, a giant, dragon like, creature swooped up and took a large part of your engine \
 			with it. With insufficent engines to leave the planet's atmosphere, the crew were ordered into cyrostasis as the pilots attempted a emergency landing.</b>"
 
-	..()
-
 /obj/effect/mob_spawn/human/marine/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
 	return ..()
+

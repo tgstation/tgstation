@@ -8,6 +8,7 @@
 #_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_biodome_clown_planet.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_cube.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_surface_ueg_crash1.dmm
 
 ##RESPAWN
 #_maps/RandomRuins/LavaRuins/lavaland_surface_seed_vault.dmm
