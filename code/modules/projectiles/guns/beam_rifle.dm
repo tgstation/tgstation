@@ -291,6 +291,8 @@
 				var/d_m = aoe_structure_damage + impact_structure_damage
 				var/dealt = d_o - d_m
 				O.take_damage(dealt, BURN, "energy", FALSE)
+		loc = get_turf(target)
+		return FALSE
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/Range()
