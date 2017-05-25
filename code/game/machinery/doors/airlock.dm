@@ -1171,8 +1171,7 @@
 		playsound(get_turf(src), I.usesound, 50, 1)
 		if(!do_after(user, 150*I.toolspeed, target = src))
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
-			charge.ex_act(1)
-			user.Weaken(3)
+			charge.Detonate()
 			return
 		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
@@ -1255,15 +1254,8 @@
 		panel_open = 1
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
-		charge.loc = get_turf(src)
-		charge.ex_act(1)
-		detonated = 1
-		charge = null
-		for(var/mob/living/carbon/human/H in orange(2,src))
-			H.Paralyse(8)
-			H.adjust_fire_stacks(20)
-			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
-			H.apply_damage(40, BRUTE, "chest")
+		charge.Detonate()
+		detonated = TRUE
 		return
 	if(forced < 2)
 		if(emagged)
