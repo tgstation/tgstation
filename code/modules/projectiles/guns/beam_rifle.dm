@@ -125,6 +125,7 @@
 	P.gun = src
 	P.wall_pierce_amount = wall_pierce_amount
 	P.structure_pierce_amount = structure_piercing
+	P.do_pierce = projectile_setting_pierce
 	P.preparePixelProjectile(current_user.client.mouseObject, T, current_user, current_user.client.mouseParams, 0)
 	if(aiming_time)
 		var/percent = ((100/aiming_time)*aiming_time_left)
@@ -245,9 +246,8 @@
 	. = ..(target, user, quiet, zone_override)
 	var/obj/item/projectile/beam/beam_rifle/hitscan/HS_BB = BB
 	if(!istype(HS_BB))
-		world << "Projectile sync failed"
 		return
-	HS_BB.damage = projectile_damage
+	HS_BB.impact_direct_damage = projectile_damage
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
@@ -261,7 +261,6 @@
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
-	world << "Successful projectile sync"
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
@@ -273,7 +272,7 @@
 	name = "particle beam"
 	icon = ""
 	hitsound = 'sound/effects/explosion3.ogg'
-	damage = 40
+	damage = 0				//Handled manually.
 	damage_type = BURN
 	flag = "energy"
 	range = 150
@@ -293,20 +292,20 @@
 	var/aoe_mob_range = 0
 	var/aoe_mob_damage = 0
 	var/impact_structure_damage = 0
-	var/halt = FALSE				//Used to kill projectile because projectile code is a shit.
+	var/impact_direct_damage = 0
 
 /obj/item/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
 	set waitfor = FALSE
 	new /obj/effect/temp_visual/explosion/fast(epicenter)
 	for(var/mob/living/L in range(aoe_mob_range, epicenter))		//handle aoe mob damage
 		L.adjustFireLoss(aoe_mob_damage)
-		to_chat(L, "<span class='userdanger'>\the [src] sears you!</span>")
+		to_chat(L, "<span class='userdanger'>\The [src] sears you!</span>")
 	for(var/turf/T in range(aoe_fire_range, epicenter))		//handle aoe fire
 		if(prob(aoe_fire_chance))
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
 		if(!istype(O, /obj/item))
-			O.take_damage(aoe_structure_damage, BURN, "energy", FALSE)
+			O.take_damage(aoe_structure_damage, BURN, "laser", FALSE)
 
 /obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
 	if(!do_pierce)
@@ -331,7 +330,11 @@
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
 	if(isobj(target))
 		var/obj/O = target
-		O.take_damage(impact_structure_damage, BURN, "energy", FALSE)
+		O.take_damage(impact_structure_damage, BURN, "laser", FALSE)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustFireLoss(impact_direct_damage)
+		L.emote("scream")
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_hit(atom/target, turf/cached)
 	set waitfor = FALSE
@@ -341,6 +344,12 @@
 	AOE(cached)
 	if(!QDELETED(target))
 		handle_impact(target)
+
+/obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
+	if(check_pierce(target))
+		permutated += target
+		return FALSE
+	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
 	handle_hit(target, get_turf(target))
@@ -361,8 +370,7 @@
 	var/old_pixel_y = pixel_y
 	var/safety = 0	//The code works fine, but... just in case...
 	while(loc)
-		if(halt || (++safety > (range * 3)))	//If it's looping for way, way too long...
-			world << "Debug: Projectile killed with safety [safety] and halt [halt]"
+		if(++safety > (range * 3))	//If it's looping for way, way too long...
 			return	//Kill!
 		if((!( current ) || loc == current))
 			current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
@@ -412,7 +420,6 @@
 				if(!(original in permutated))
 					Bump(original, 1)
 		Range()
-	world << "Projectile killed by deletion"
 
 /obj/item/projectile/beam/beam_rifle/hitscan/Range()
 	spawn_tracer_effect()
@@ -426,6 +433,7 @@
 	hitsound = null
 	hitsound_wall = null
 	nodamage = TRUE
+	damage = 0
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	if((isturf(target) && wall_pierce < wall_pierce_amount) || (isobj(target) && structure_pierce < structure_pierce_amount))
@@ -447,8 +455,6 @@
 
 /obj/effect/temp_visual/projectile_beam/New(time = 5, angle_override, p_x, p_y, color_override)
 	duration = time
-	if(isnull(angle_override)||isnull(p_x)||isnull(p_y))		//Remie, !thing returns yes on 0, and sometimes the angle will be 0 or the pixel x/y will be 0..
-		qdel(src)
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
