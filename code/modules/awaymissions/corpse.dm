@@ -372,7 +372,7 @@
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
-	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage, GLOB.access_security)
 	outfit = /datum/outfit/nanotrasensoldiercorpse
 
 /datum/outfit/nanotrasensoldiercorpse

@@ -14899,6 +14899,7 @@
 /area/shuttle/escape)
 "Mg" = (
 /obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
 	dir = 1;
 	icon_state = "cutout_ntsec";
 	name = "Private Security Officer"
@@ -14909,6 +14910,7 @@
 /area/centcom/evac)
 "Mh" = (
 /obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
 	icon_state = "cutout_ntsec";
 	name = "Private Security Officer"
 	},
