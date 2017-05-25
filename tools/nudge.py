@@ -12,7 +12,7 @@ def pack():
 
 def nudge(data):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    with open('config/nudge_port.txt', 'r') as myfile:
+    with open('config/server_to_tool_bridge_port.txt', 'r') as myfile:
         portstr=myfile.read().replace('\n', '').strip()
     s.connect(("localhost", int(portstr)))
     s.send(data)

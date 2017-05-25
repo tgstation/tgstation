@@ -17,7 +17,7 @@ namespace TGServerService
 		const string AdminRanksConfig = StaticConfigDir + "/admin_ranks.txt";
 		const string AdminRanksRepo = RepoConfig + "/admin_ranks.txt";
 		const string AdminConfig = StaticConfigDir + "/admins.txt";
-		const string NudgeConfig = StaticConfigDir + "/nudge_port.txt";
+		const string InteropConfig = StaticConfigDir + "/server_to_tool_bridge_port.txt";
 		const string MapConfig = StaticConfigDir + "/maps.txt";
 		const string JobsConfig = StaticConfigDir + "/jobs.txt";
 
@@ -400,12 +400,12 @@ namespace TGServerService
 			}
 		}
 		//public api
-		public ushort NudgePort(out string error)
+		public ushort InteropPort(out string error)
 		{
 			try
 			{
 				error = null;
-				return Convert.ToUInt16(File.ReadAllText(NudgeConfig));
+				return Convert.ToUInt16(File.ReadAllText(InteropConfig));
 			}
 			catch (Exception e)
 			{
@@ -429,6 +429,20 @@ namespace TGServerService
 				default:
 					throw new Exception("Bad TGConfigType: " + type);
 			}
+		}
+
+		string TranslateConfigComment(string input)
+		{
+			//https://github.com/tgstation/tgstation/pull/27632#discussion_r118389053
+			return input
+				.Replace("uncomment", "activate")
+				.Replace("Uncomment", "Activate")
+				.Replace("commented out", "deactivated")
+				.Replace("comment this out", "deactivate")
+				.Replace("Comment this out", "Deactivate")
+				.Replace("uncommenting", "activating")
+				.Replace("Uncommenting", "Activating")
+				.Replace("uncommented", "activated");
 		}
 
 		//public api
@@ -484,7 +498,7 @@ namespace TGServerService
 						{
 							//comment line
 							if (currentSetting.Comment == null)
-								currentSetting.Comment = trimmed.Substring(2).Trim();
+								currentSetting.Comment = TranslateConfigComment(trimmed.Substring(2).Trim());
 							else
 								currentSetting.Comment += "\r\n" + trimmed.Substring(2).Trim();
 							continue;
@@ -657,13 +671,13 @@ namespace TGServerService
 		}
 
         //public api
-        public string SetNudgePort(ushort port)
+        public string SetInteropPort(ushort port)
         {
             try
             {
                 lock (configLock)
                 {
-                    File.WriteAllText(NudgeConfig, port.ToString());
+                    File.WriteAllText(InteropConfig, port.ToString());
                 }
                 InitInterop();
                 return null;

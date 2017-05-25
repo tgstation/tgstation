@@ -145,7 +145,7 @@ namespace TGControlPanel
 			VisibilitySelector.SelectedIndex = (int)DD.VisibilityLevel();
 			SecuritySelector.SelectedIndex = (int)DD.SecurityLevel();
 
-			var val = Config.NudgePort(out string error);
+			var val = Config.InteropPort(out string error);
 			if (error != null)
 			{
 				updatingFields = false;
@@ -377,7 +377,7 @@ namespace TGControlPanel
 		private void NudgePortSelector_ValueChanged(object sender, EventArgs e)
 		{
 			if (!updatingFields)
-				Server.GetComponent<ITGConfig>().SetNudgePort((ushort)NudgePortSelector.Value);
+				Server.GetComponent<ITGConfig>().SetInteropPort((ushort)NudgePortSelector.Value);
 		}
 
 		private void SecuritySelector_SelectedIndexChanged(object sender, EventArgs e)
