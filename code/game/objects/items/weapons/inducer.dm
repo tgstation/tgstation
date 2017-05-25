@@ -26,6 +26,11 @@
 /obj/item/weapon/inducer/get_cell()
 	return cell
 
+/obj/item/weapon/inducer/emp_act(severity)
+	..(severity)
+	if(cell)
+		cell.emp_act(severity)
+
 /obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
