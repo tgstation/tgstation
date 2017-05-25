@@ -5,7 +5,7 @@ GLOBAL_PROTECT(reboot_mode)
 	return params[SERVER_SERVICE_PARAM]
 
 /world/proc/ExportService(command)
-	shell("python tools/nudge.py \"[command]\"")
+	shell("python code/modules/server_tools/nudge.py \"[command]\"")
 
 /world/proc/IRCBroadcast(msg)
 	ExportService("irc [msg]")
