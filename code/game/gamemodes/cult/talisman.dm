@@ -226,36 +226,41 @@
 	invocation = "Lo'Nab Na'Dm!"
 	creation_time = 60
 	var/duration = 1000
-	var/list/targets = list()
-	var/list/cultists = list()
-
+	
 /obj/item/weapon/paper/talisman/horror/invoke(mob/living/user, successfuluse = 1)
 	var/image/A
+	var/list/targets = list()
+	var/list/cultists = list()
 	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	for(var/datum/mind/B in SSticker.mode.cult)
-		world << "Targeting B for cult list"
 		cultists += B.current.client
 	for(var/mob/living/carbon/human/T in range(12, get_turf(src)))
 		if(!iscultist(T) && T.client)
-			world << "Targeting [T]"
 			targets += T.client
 			AH.remove_hud_from(T)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, T), duration)
-			A = image('icons/effects/effects.dmi',T,"bloodsparkles", ABOVE_MOB_LAYER)
-			A.override = 0
+			if(A == null)
+				A = image('icons/effects/effects.dmi',T,"bloodsparkles", ABOVE_MOB_LAYER)
+				A.override = FALSE
 			send_visions(A, cultists, duration)
+	var/UZ = user.z
+	A = null
 	for(var/mob/living/L in GLOB.living_mob_list)
-		if(L.z != user.z) // Does this actually helps performance?
+		if(L.z != UZ)
 			continue
 		if(ishuman(L))
-			A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
-			A.override = 1
+			if(A == null)
+				A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
+				A.override = TRUE
 			send_visions(A, targets, duration)
 		else
 			var/construct = pick("floating","artificer","behemoth")
-			A = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
-			A.override = 1
-			send_visions(A, targets, duration)
+			var/image/B = non_human_images[construct]
+			if(!B)
+    			B = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
+   				B.override = TRUE
+    			non_human_images[construct] = B
+			send_visions(B, targets, duration)
 	qdel(src)
 
 /proc/remove_visions(image/I, list/show_to)
