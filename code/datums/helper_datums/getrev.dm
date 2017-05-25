@@ -6,7 +6,6 @@
 	var/date
 
 /datum/getrev/New()
-	var/head_file = file2text(".git/logs/HEAD")
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
@@ -23,7 +22,7 @@
 		log_world("[date]")
 	logs = world.file2list(".git/logs/refs/remotes/origin/master")
 	if(logs)
-		originmaster = splittext(logs[logs.len - 1], " ")[2]
+		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
 
 	if(testmerge.len)
 		log_world(commit)
