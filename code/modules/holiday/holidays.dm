@@ -179,7 +179,20 @@
 /datum/holiday/firefighter/getStationPrefix()
 	return pick("Burning","Blazing","Plasma","Fire")
 
-/datum/holiday/summersolstice
+/datum/holiday/ramadanBegins
+	name = "Ramadan"
+	begin_day = 27
+	begin_month = MAY
+
+/datum/holiday/ramadanBegins/getStationPrefix()
+	return pick("Fasting", "Zakah", "Hajj", "Iftar", "Insha'Allah", "Kaffarah",
+				"Sawm", "Imsak", "Fidya")
+
+/datum/holiday/ramadanBegins/greet()
+	return "Assalamu alaikum wa rahmatullahi wa barakatuh, crew. Today marks the ninth month of the Islamic calendar, a time for fasting and growing closer to god."
+
+
+/datum/holiday/summerSolstice
 	name = "Summer Solstice"
 	begin_day = 21
 	begin_month = JUNE
