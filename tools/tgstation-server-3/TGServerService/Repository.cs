@@ -1,14 +1,11 @@
 ﻿using LibGit2Sharp;
-using LibGit2Sharp.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Security.Cryptography;
 using System.Web.Script.Serialization;
 using TGServiceInterface;
 
@@ -23,7 +20,7 @@ namespace TGServerService
 		const string SSHPushRemote = "ssh_push_target";
         const string PrivateKeyPath = "RepoKey/private_key.txt";
         const string PublicKeyPath = "RepoKey/public_key.txt";
-        const string PRJobFile = "prtestjob.json";
+		const string PRJobFile = "prtestjob.json";
 		const string CommitMessage = "Automatic changelog compile, [ci skip]";
 
 		object RepoLock = new object();
