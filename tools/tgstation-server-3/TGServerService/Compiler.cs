@@ -332,8 +332,8 @@ namespace TGServerService
 				{
 					Program.CopyDirectory(RepoPath, resurrectee, copyExcludeList);
 					//just the tip
-					const string HeadFile = "/.git/logs/HEAD";
-					File.Copy(RepoPath + HeadFile, resurrectee + HeadFile);
+					const string GitLogsDir = "/.git/logs";
+					Program.CopyDirectory(RepoPath + GitLogsDir, resurrectee + GitLogsDir);
 				}
 				finally
 				{
