@@ -441,6 +441,10 @@
 	qdel(src)
 	return FALSE
 
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+	qdel(src)
+	return FALSE
+
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/spawn_tracer_effect()
 	var/obj/effect/temp_visual/projectile_beam/T = new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
 	if(istype(gun) && istype(T))
