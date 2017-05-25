@@ -271,6 +271,8 @@ BLIND     // can't see anything
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "top_hat"
+	item_state = "that"
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
