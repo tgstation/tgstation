@@ -46,10 +46,13 @@
 				death(0)
 				return
 
-		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
-							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
+		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide!", \
+							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide!", \
+							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide!", \
+							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide!")
+							
+		if (restrained())
+			suicide_message = "[src] is strangling themselves with their own restraints! It looks like [p_theyre()] trying to commit suicide!"
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
@@ -167,9 +170,6 @@
 
 /mob/living/carbon/canSuicide()
 	if(!..())
-		return
-	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 	if(has_brain_worms())
 		to_chat(src, "You can't bring yourself to commit suicide!")
