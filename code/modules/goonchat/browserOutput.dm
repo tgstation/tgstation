@@ -11,6 +11,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/loaded       = FALSE // Has the client loaded the browser output area?
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
+	var/broken       = FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
 
 /datum/chatOutput/New(client/C)
@@ -25,6 +26,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	if(!winexists(owner, "browseroutput")) // Oh goddamnit.
 		set waitfor = FALSE
+		broken = TRUE
 		message_admins("Couldn't start chat for [key_name_admin(owner)]!")
 		. = FALSE
 		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
@@ -66,7 +68,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(usr.client != owner)
 		return TRUE
 
-	var/doLog = TRUE
 	// Build arguments.
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
@@ -87,13 +88,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		if("ping")
 			data = ping(arglist(params))
-			doLog = FALSE
 
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
-
-	if(doLog)
-		debug_log << "[owner.ckey] >> [href]"
 
 	if(data)
 		ehjax_send(data = data)
