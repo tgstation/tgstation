@@ -21,10 +21,9 @@
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
 
-/obj/item/weapon/melee/baton/New()
-	..()
+/obj/item/weapon/melee/baton/Initialize()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
@@ -32,10 +31,9 @@
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
 		baton_stun(hit_atom)
 
-/obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
-	..()
+/obj/item/weapon/melee/baton/loaded/Initialize() //this one starts with a cell pre-installed.
 	bcell = new(src)
-	update_icon()
+	. = ..()
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
@@ -188,8 +186,8 @@
 	slot_flags = SLOT_BACK
 	var/obj/item/device/assembly/igniter/sparkler = 0
 
-/obj/item/weapon/melee/baton/cattleprod/New()
-	..()
+/obj/item/weapon/melee/baton/cattleprod/Initialize()
+	. = ..()
 	sparkler = new (src)
 
 /obj/item/weapon/melee/baton/cattleprod/baton_stun()
