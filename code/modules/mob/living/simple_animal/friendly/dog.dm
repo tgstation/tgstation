@@ -276,11 +276,6 @@
 		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 		DF.apply(src)
 
-	//if(name != real_name)
-	//	var/dogarea = getarea(src)
-	//		for(obj/structure/dogbed/D in dogarea)
-	//			dogbed.name = "[src]'s bed"
-
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/Ian
 	name = "Ian"

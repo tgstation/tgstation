@@ -172,7 +172,6 @@
 	. = ..()
 	update_owner(M)
 
-
 /obj/structure/bed/alien
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
