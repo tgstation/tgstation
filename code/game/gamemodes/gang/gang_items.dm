@@ -141,7 +141,7 @@
 	var/rival = 0
 	var/cooldown = 0
 	for(var/datum/gang/baddies in SSticker.mode.gangs)
-		if(baddies = G)
+		if(baddies == G)
 			for(var/datum/mind/M in G.gangsters)
 				if(M.current.stat == DEAD)
 					var/mob/O = M.get_ghost(TRUE)
