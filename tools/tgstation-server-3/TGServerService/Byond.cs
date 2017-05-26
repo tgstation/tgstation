@@ -20,7 +20,7 @@ namespace TGServerService
 		const string ByondRevisionsURL = "https://secure.byond.com/download/build/{0}/{0}.{1}_byond.zip";
 		const string ByondLatestURL = "https://secure.byond.com/download/build/LATEST/";
 
-		const string ByondConfigDir = "/BYOND/cfg";
+		const string ByondConfigDir = "BYOND_staged/BYOND/cfg";
 		const string ByondDDConfig = "/daemon.txt";
 		const string ByondNoPromptTrustedMode = "trusted-check 0";
 
@@ -194,6 +194,9 @@ namespace TGServerService
 				lock (ByondLock)
 				{
 					File.WriteAllText(StagingDirectoryInner + VersionFile, String.Format("{0}.{1}", vi.major, vi.minor));
+					//IMPORTANT: SET THE BYOND CONFIG TO NOT PROMPT FOR TRUSTED MODE REEE
+					Directory.CreateDirectory(ByondConfigDir);
+					File.WriteAllText(ByondConfigDir + ByondDDConfig, ByondNoPromptTrustedMode);
 				}
 				File.Delete(RevisionDownloadPath);
 
@@ -266,11 +269,6 @@ namespace TGServerService
 				}
 				try
 				{
-					//IMPORTANT: SET THE BYOND CONFIG TO NOT PROMPT FOR TRUSTED MODE REEE
-					var dir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ByondConfigDir;
-					Directory.CreateDirectory(dir);
-					File.WriteAllText(dir + ByondDDConfig, ByondNoPromptTrustedMode);
-
 					Program.DeleteDirectory(ByondDirectory);
 					Directory.Move(StagingDirectoryInner, ByondDirectory);
 					Program.DeleteDirectory(StagingDirectory);
