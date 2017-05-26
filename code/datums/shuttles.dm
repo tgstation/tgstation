@@ -70,20 +70,12 @@
 	admin_notes = "Includes a small variety of weapons. And bears. Only captain-access can release the bears. Bears won't smash the windows themselves, but they can escape if someone lets them."
 	credit_cost = 5000 // While the shuttle is rusted and poorly maintained, trained bears are costly.
 
-/datum/map_template/shuttle/emergency/meteor
-	suffix = "meteor"
-	name = "Asteroid With Engines Strapped To It"
-	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
-	admin_notes = "This shuttle will likely crush escape, killing anyone there."
-	credit_cost = -5000
-
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
 	name = "Luxury Shuttle"
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
-
 
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
