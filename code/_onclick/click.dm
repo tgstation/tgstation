@@ -119,7 +119,7 @@
 	//User itself, current loc, and user inventory
 	if(DirectAccess(A))
 		if(W)
-			melee_item_attack_chain(src,W,A,params)
+			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -133,7 +133,7 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			melee_item_attack_chain(src,W,A,params)
+			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)

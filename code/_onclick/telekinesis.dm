@@ -124,7 +124,8 @@
 
 	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		apply_focus_overlay()
-		melee_item_attack_chain(tk_user, focus, target, params) //isn't copying the attack chain fun. we should do it more often.
+		var/obj/item/I = focus
+		I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
 		if(check_if_focusable(focus))
 			focus.do_attack_animation(target, null, focus)
 	else
