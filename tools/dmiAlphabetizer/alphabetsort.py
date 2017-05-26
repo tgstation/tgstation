@@ -1,5 +1,5 @@
 #NINX3's dank .dmi file sorter.
-import PIL #pep install pillow
+import PIL #pip install pillow
 from PIL import Image # YOU CANT HAVE PIL OR YOU DIE IN A FIRE
 def pngsave(im, file):
     #Credit for this function:
