@@ -840,6 +840,9 @@
 	health = 120
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
 	icon_state = "dwarf_legion"
+	icon_living = "dwarf_legion"
+	icon_aggro = "dwarf_legion"
+	icon_dead = "dwarf_legion"
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
 	stat_attack = 2
@@ -859,6 +862,7 @@
 	max_mobs = 3
 	spawn_time = 200
 	spawn_text = "peels itself off from"
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	anchored = FALSE
