@@ -153,6 +153,18 @@
 	new /obj/item/clothing/shoes/sneakers/black( src )
 	new /obj/item/clothing/head/bomb_hood( src )
 
+//It's bomb-resistant closet get it
+/obj/structure/closet/bombcloset/handle_explosion(atom/source, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
+	if(devastation_range > 0)
+		contents_explosion(1,null)
+	else if(heavy_impact_range > 0)
+		contents_explosion(2,null)
+	else
+		contents_explosion(3,null)
+	playsound(src,"explosion",50,1)
+	Shake(pixelshiftx = 5,pixelshifty = 5,duration=50)
+	return TRUE 
+
 
 /obj/structure/closet/bombclosetsecurity
 	name = "\improper EOD closet"

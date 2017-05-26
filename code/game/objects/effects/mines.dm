@@ -39,7 +39,7 @@
 	var/range_flash = 3
 
 /obj/effect/mine/explosive/mineEffect(mob/victim)
-	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
+	explosion(src, range_devastation, range_heavy, range_light, range_flash)
 
 
 /obj/effect/mine/stun

@@ -1,0 +1,15 @@
+{{#if data.emagged}}
+  <ui-notice>Maintenance Mode Engaged</ui-notice>
+{{/if}}
+<ui-display>
+    <ui-section label="Contents">
+    <ul>
+    {{#each data.items}}
+       <li>{{.}}</li>
+    {{else}}
+        <li>Empty</li>
+	{{/each}}
+    </ul>
+    </ui-section>
+<ui-button action='eject'>Eject</ui-button><br><br>
+</ui-display>

@@ -38,7 +38,7 @@
 		log_game("[key_name(user)] has detonated [src.name].")
 	for(var/atom/movable/AM in src)
 		qdel(AM)
-	explosion(get_turf(src), 0, 1, 5, 5)
+	explosion(src, 0, 1, 5, 5)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/weapon

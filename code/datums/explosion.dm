@@ -4,8 +4,15 @@ GLOBAL_LIST_EMPTY(explosions)
 //Against my better judgement, I will return the explosion datum
 //If I see any GC errors for it I will find you
 //and I will gib you
-/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
-	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
+/proc/explosion(atom/source, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE, target_turf = null)
+	//Check for direct explosion handling
+	var/atom/container = source
+	while(container && container.loc && !isarea(container.loc))
+		if(container.handle_explosion(source, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range , silent ,smoke, target_turf))
+			return null
+		else
+			container = container.loc
+	return new /datum/explosion(target_turf ? target_turf : source, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
 
 //This datum creates 3 async tasks
 //1 GatherSpiralTurfsProc runs spiral_range_turfs(tick_checked = TRUE) to populate the affected_turfs list
@@ -383,3 +390,8 @@ GLOBAL_LIST_EMPTY(explosions)
 // 10 explosion power is a (1, 3, 6) explosion.
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
+
+
+/atom/proc/handle_explosion(atom/source, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE,target_turf = null)
+	return FALSE //Just let it happen as usual by default
+

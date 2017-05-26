@@ -16,7 +16,7 @@
 	switch(severity)
 		if(1)
 			visible_message("<span class='warning'>[src] detonates!</span>")
-			explosion(src.loc,0,2,1,flame_range = 4)
+			explosion(src,0,2,1,flame_range = 4)
 			qdel(src)
 		if(2)
 			if(prob(50))

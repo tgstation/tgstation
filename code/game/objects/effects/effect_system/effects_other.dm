@@ -107,10 +107,12 @@
 	var/flashing = 0			// does explosion creates flash effect?
 	var/flashing_factor = 0		// factor of how powerful the flash effect relatively to the explosion
 	var/explosion_message = 1				//whether we show a message to mobs.
+	var/atom/source
 
-/datum/effect_system/reagents_explosion/set_up(amt, loca, flash = 0, flash_fact = 0, message = 1)
+/datum/effect_system/reagents_explosion/set_up(amt, loca, flash = 0, flash_fact = 0, message = 1 )
 	amount = amt
 	explosion_message = message
+	source = loca
 	if(isturf(loca))
 		location = loca
 	else
@@ -134,4 +136,4 @@
 				M.Weaken(rand(1,5))
 		return
 	else
-		dyn_explosion(location, amount, flashing_factor)
+		dyn_explosion(source, amount, flashing_factor)

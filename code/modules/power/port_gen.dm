@@ -167,7 +167,7 @@
 		src.updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
-	explosion(src.loc, 2, 5, 2, -1)
+	explosion(src, 2, 5, 2, -1)
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
@@ -294,7 +294,7 @@
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
-	explosion(src.loc, 3, 3, 3, -1)
+	explosion(src, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
@@ -305,4 +305,4 @@
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
-	explosion(src.loc, 4, 4, 4, -1)
+	explosion(src, 4, 4, 4, -1)

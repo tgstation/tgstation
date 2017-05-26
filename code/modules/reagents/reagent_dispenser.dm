@@ -66,7 +66,7 @@
 	reagent_id = "welding_fuel"
 
 /obj/structure/reagent_dispensers/fueltank/boom()
-	explosion(get_turf(src), 0, 1, 5, flame_range = 5)
+	explosion(src, 0, 1, 5, flame_range = 5)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)
@@ -165,7 +165,7 @@
 	reagent_id = "beer"
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
-	explosion(src.loc,0,3,5,7,10)
+	explosion(src,0,3,5,7,10)
 	if(!QDELETED(src))
 		qdel(src)
 
