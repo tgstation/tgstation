@@ -15,21 +15,28 @@
 /obj/item/device/doorCharge/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			visible_message("<span class='warning'>[src] detonates!</span>")
-			explosion(src.loc,0,2,1,flame_range = 4)
-			qdel(src)
+			Detonate()
 		if(2)
 			if(prob(50))
-				ex_act(1)
+				Detonate()
 		if(3)
 			if(prob(25))
-				ex_act(1)
+				Detonate()
+
+/obj/item/device/doorCharge/proc/Detonate()
+	var/turf/T = get_turf(src)
+	T.visible_message("<span class='warning'>[src] detonates!</span>")
+	explosion(T, 0, 1, 0)
+	for(var/mob/living/L in orange(2, T))
+		L.Weaken(8)
+		L.apply_damage(40, BRUTE)
+		L.apply_damage(20, BURN)
+	qdel(src)
 
 /obj/item/device/doorCharge/Destroy()
 	if(istype(loc, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = loc
-		if(A.charge == src)
-			A.charge = null
+		A.charge = null
 	return ..()
 
 /obj/item/device/doorCharge/examine(mob/user)
