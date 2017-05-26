@@ -1,3 +1,13 @@
+26 May 2017, by Jordie0608
+
+Modified table 'ban', adding the column 'round_id'.
+
+ALTER TABLE `feedback`.`ban` ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
 21 April 2017, by Jordie0608
 
 Modified table 'player', adding the column 'accountjoindate', removing the column 'id' and making the column 'ckey' the primary key.
