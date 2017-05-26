@@ -203,8 +203,6 @@ GLOBAL_LIST_EMPTY(broken_ckeys)
 
 //Global chat procs
 
-GLOBAL_LIST_EMPTY(bicon_cache)
-
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
@@ -230,15 +228,17 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = thing
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
-	if (!GLOB.bicon_cache[key]) // Doesn't exist, make it.
+
+	var/static/list/bicon_cache = list()
+	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
 		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
-		GLOB.bicon_cache[key] = icon2base64(I, key)
+		bicon_cache[key] = icon2base64(I, key)
 
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[GLOB.bicon_cache[key]]'>"
+	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_bicon(thing)
