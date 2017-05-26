@@ -14,6 +14,7 @@
 	languages_possible = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
+		/datum/language/cat
 		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
@@ -132,6 +133,7 @@
 		/datum/language/xenocommon,
 		/datum/language/common,
 		/datum/language/draconic,
+		/datum/language/cat
 		/datum/language/ratvar,
 		/datum/language/monkey))
 
