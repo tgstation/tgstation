@@ -78,7 +78,7 @@
 
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
 	popup.set_content(dat)
 	popup.open()
 
@@ -129,7 +129,7 @@
 				gang_rank = "3rd Lieutenant"
 			else
 				gang_rank = "[gang_rank - 1]th Lieutenant"
-		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank] - [user]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				to_chat(ganger.current, ping)
@@ -265,7 +265,7 @@
 	if(LAZYLEN(tags))
 		dat += "Your tags generate bonus influence for you.<br> You have tagged the following territories:"
 		for(var/obj/effect/decal/cleanable/crayon/gang/T in tags)
-			dat += " [T.territory] -"
+			dat += " [T] -"
 	else
 		dat += "You have not personally tagged any territory for your gang. Use a spray can to mark your territory and receive bonus influence."
 	dat += "<br>Time until Influence grows: <B>[time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss")]</B><br>"
@@ -293,7 +293,7 @@
 
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
 	popup.set_content(dat)
 	popup.open()
 
@@ -308,7 +308,6 @@
 	attack_self(usr)
 
 /datum/action/innate/gang
-	background_icon_state = "bg_spell"
 
 /datum/action/innate/gang/IsAvailable()
 	if(!owner.mind || !owner.mind in SSticker.mode.get_all_gangsters())
@@ -318,18 +317,13 @@
 /datum/action/innate/gang/tool
 	name = "Personal Gang Tool"
 	desc = "An implanted gang tool that lets you purchase gear"
-	background_icon_state = "bg_mime"
+	background_icon_state = "bg_demon"
 	button_icon_state = "bolt_action"
 	var/obj/item/device/gangtool/soldier/GT
 
 /datum/action/innate/gang/tool/Grant(mob/user, obj/reg)
 	. = ..()
 	GT = reg
-
-/datum/action/innate/gang/tool/New()
-	. = ..()
-	var/GC = owner.mind.gang_datum.color
-	src.button.color = GC
 
 /datum/action/innate/gang/tool/Activate()
 	GT.attack_self(owner)

@@ -43,7 +43,7 @@
 	G.territory_new |= list(territory.type = territory.name)
 	linked_tool = locate(/obj/item/device/gangtool) in user.contents
 	if(linked_tool)
-		linked_tool.tags += src
+		linked_tool.tags += territory
 	..(mapload, newcolor, icon_state, e_name, rotation)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()

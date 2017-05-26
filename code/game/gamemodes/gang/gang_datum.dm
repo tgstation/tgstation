@@ -13,6 +13,7 @@
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
 	var/recalls = 1
+	var/gateways = 0
 	var/dom_attempts = 2
 	var/inner_outfit
 	var/outer_outfit
@@ -26,6 +27,7 @@
 	var/boss_category_list
 	var/static/list/boss_items = list(
 		/datum/gang_item/function/gang_ping,
+		/datum/gang_item/function/backup,
 		/datum/gang_item/function/recall,
 
 		/datum/gang_item/clothing/under,
@@ -52,12 +54,12 @@
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
-		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/stimpack,
+		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/recruiter,
 		/datum/gang_item/equipment/wetwork_boots,
+		/datum/gang_item/equipment/reviver,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/dominator
 	)
@@ -82,6 +84,8 @@
 		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/pump,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
 		/datum/gang_item/weapon/machinegun,
@@ -90,12 +94,12 @@
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
 		/datum/gang_item/equipment/sharpener,
-		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
-		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/stimpack,
+		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/recruiter,
 		/datum/gang_item/equipment/wetwork_boots,
+		/datum/gang_item/equipment/reviver,
 	)
 
 /datum/gang/New(loc,gangname)
@@ -240,8 +244,10 @@
 		var/pmessage = message
 		var/points_new = 0
 		if(istype(G, /obj/item/device/gangtool/soldier))
-			points_new = max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(G.tags)/2) // Soldier points
-			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
+			var/stags = (LAZYLEN(G.tags)/2)
+			sbonus += max(0,round(3 - G.points/10))
+			points_new = sbonus + stags // Soldier points
+			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [(LAZYLEN(G.tags)/2)] for territories you have personally tagged.<BR>"
 		else
 			points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
 			pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"

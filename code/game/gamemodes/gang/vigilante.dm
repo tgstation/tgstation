@@ -3,13 +3,8 @@
 	desc = "A reverse-engineered gang tool designed by Nanotrasen to encourage crew to resist gang activity."
 	icon_state = "gangtool-white"
 	item_state = "walkietalkie"
-	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	throw_speed = 3
-	throw_range = 7
-	flags = CONDUCT
 	origin_tech = "programming=5;bluespace=2"
-//	var/datum/gang/gang
 	var/points = 0
 	var/list/tags = list()
 	var/vig_item_list
@@ -28,12 +23,15 @@
 		/datum/gang_item/weapon/ammo/auto_ammo_AP,
 		/datum/gang_item/weapon/riot,
 		/datum/gang_item/weapon/ammo/buckshot_ammo,
+		/datum/gang_item/weapon/launcher,
+		/datum/gang_item/equipment/soap,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/brutepatch,
 		/datum/gang_item/equipment/shield,
 		/datum/gang_item/equipment/bulletproof_armor,
 		/datum/gang_item/equipment/bulletproof_helmet,
-		/datum/gang_item/equipment/gangbreaker
+		/datum/gang_item/equipment/gangbreaker,
+		/datum/gang_item/equipment/seraph
 		)
 
 /obj/item/device/vigilante_tool/New(mob/user)
@@ -49,7 +47,27 @@
 			Cat += G
 		else
 			vig_category_list[G.category] = list(G)
+	addtimer(CALLBACK(src, .proc/income), 1800)
 
+/obj/item/device/vigilante_tool/proc/income()
+	if(!src)
+		return
+	var/list/all_territory
+	var/newpoints = 0
+	var/mob/living/carbon/human/H = src.loc
+	for(var/datum/gang/G in SSticker.mode.gangs)
+		all_territory += G.territory
+	for(var/area/A in tags)
+		if(A in all_territory)
+		else
+			newpoints += 0.5
+	to_chat(H, "<span class='notice'>You have received 2 points for your continued service, [newpoints] for keeping the station tag-free.")
+	points += newpoints + 2
+	for(var/obj/item/weapon/implant/I in H.implants)
+		if(istype(I,/obj/item/weapon/implant/mindshield))
+			points += 3
+			to_chat(H, "<span class='notice'>You have also received 3 influence for possessing a mindshield implant.</span>")
+	addtimer(CALLBACK(src, .proc/income), 1800)
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
 	if(user.mind in SSticker.mode.get_all_gangsters())
@@ -77,7 +95,7 @@
 
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to Vigilante's Companion v1.1", 340, 625)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to Vigilante's Companion v1.1", 400, 750)
 	popup.set_content(dat)
 	popup.open()
 
@@ -93,8 +111,7 @@
 	attack_self(usr)
 
 /obj/item/device/vigilante_tool/proc/Destroy_Contraband(mob/living/user)
-	playsound(get_turf(loc), 'sound/items/poster_being_created.ogg', 50, 1)
-	var/obj/I = user.get_active_held_item()
+	var/obj/item/I = user.get_active_held_item()
 	var/value
 	if(!I)
 		to_chat(user, "<span class='notice'> No item detected")
@@ -102,12 +119,69 @@
 	switch(I.type)
 		if(/obj/item/weapon/gun/ballistic/automatic/pistol)
 			value = 20
-		else
-			to_chat(user, "<span class='notice'> No contraband detected")
-			return
-	if(do_after(usr, 50, target = user))
+		if(/obj/item/weapon/implanter/gang)
+			value = 12
+		if(/obj/item/weapon/reagent_containers/syringe/stimulants)
+			var/obj/item/weapon/reagent_containers/syringe/stimulants/S
+			if(S.list_reagents.len)
+				value = 10
+			else
+				value = 2
+		if(/obj/item/weapon/grenade/plastic/c4)
+			value = 5
+		if(/obj/item/toy/crayon/spraycan/gang)
+			var/obj/item/toy/crayon/spraycan/gang/SC = I
+			value = 1 + round(SC.charges/5)
+		if(/obj/item/weapon/grenade/syndieminibomb/concussion/frag)
+			value = 15
+		if(/obj/item/clothing/shoes/combat/gang)
+			value = 10
+		if(/obj/item/weapon/pen/gang)
+			value = 20
+		if(/obj/item/weapon/reviver)
+			value = 25
+		if(/obj/item/device/gangtool)
+			value = 15
+		if(/obj/item/clothing/glasses/hud/security/chameleon)
+			value = 5
+		if(/obj/item/weapon/gun/ballistic/automatic/mini_uzi)
+			value = 40
+		if(/obj/item/weapon/gun/ballistic/automatic/sniper_rifle)
+			value = 30
+		if(/obj/item/ammo_box/magazine/sniper_rounds)
+			value = 5
+		if(/obj/item/weapon/gun/ballistic/shotgun/lethal)
+			value = 25
+		if(/obj/item/weapon/gun/ballistic/automatic/surplus/gang)
+			value = 8
+		if(/obj/item/weapon/throwing_star)
+			value = 2
+		if(/obj/item/weapon/switchblade)
+			value = 5
+		if(/obj/item/weapon/storage/belt/military/gang)
+			value = 10
+		if(/obj/item/clothing/gloves/gang)
+			value = 8
+		if(/obj/item/clothing/neck/necklace/dope)
+			value = 6
+		if(/obj/item/clothing/shoes/gang)
+			value = 17
+		if(/obj/item/clothing/mask/gskull)
+			value = 15
+		if(/obj/item/clothing/head/collectable/petehat/gang)
+			value = 12
+	if(istype(I, /obj/item/clothing))
+		for(var/datum/gang/G in SSticker.mode.gangs)
+			if(I.type == G.outer_outfit && I.armor["bullet"]>=35)
+				value = 5
+	if(!value)
+		to_chat(user, "<span class='notice'> No contraband detected")
+		return
+	playsound(get_turf(loc), 'sound/items/poster_being_created.ogg', 75, 1)
+	if(do_after(usr, 30, target = user))
 		if(I)
 			points += value
+			to_chat(user, "<span class='notice'>[I] has been processed for [value] influence.")
 			qdel(I)
 
 

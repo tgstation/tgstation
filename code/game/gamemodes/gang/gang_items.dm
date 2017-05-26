@@ -1,3 +1,5 @@
+#define HALFWAYCRIT 50
+
 /datum/gang_item
 	var/name
 	var/item_path
@@ -54,7 +56,6 @@
 /datum/gang_item/function/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return ""
 
-
 /datum/gang_item/function/gang_ping
 	name = "Send Message to Gang"
 	id = "gang_ping"
@@ -68,20 +69,135 @@
 	name = "Recall Emergency Shuttle"
 	id = "recall"
 
-/datum/gang_item/function/implant
-	name = "Influence-Enhancing Mindshield"
-	id = "mindshield"
-
-/datum/gang_item/function/implant/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	var/obj/item/weapon/implant/mindshield/MS = new()
-	MS.implant(user, user, 0)
-
 /datum/gang_item/function/recall/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return isboss(user, gang)
 
 /datum/gang_item/function/recall/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(gangtool)
 		gangtool.recall(user)
+
+/datum/gang_item/function/implant
+	name = "Influence-Enhancing Mindshield"
+	id = "mindshield"
+	cost = 10
+
+/datum/gang_item/function/implant/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	var/obj/item/weapon/implant/mindshield/MS = new()
+	MS.implant(user, user, 0)
+
+/datum/gang_item/function/implant/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	return "([get_cost(user, gang, gangtool)] Influence)"
+
+/datum/gang_item/function/backup
+	name = "Create Gateway for Reinforcements"
+	id = "backup"
+	cost = 100
+	item_path = /obj/machinery/gang/backup
+
+/datum/gang_item/function/backup/get_cost(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	cost = 50 + gang.gateways * 50
+	var/we = 0
+	var/rival = 0
+	for(var/datum/mind/M in SSticker.mode.get_all_gangsters())
+		if(M.current.stat == DEAD || !M.current.client || M.current.client.is_afk())
+			continue
+		if(is_in_gang(M.current, gang.name))
+			we++
+		else
+			rival++
+			world << "[M.current] is being added as rival"
+	cost += max(-50, round((we/(rival+we))*100 - 33) * 2)
+	return cost
+
+/datum/gang_item/function/backup/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	var/obj/machinery/gang/backup/bup = new(get_turf(user), gang)
+	bup.G = gang
+
+/datum/gang_item/function/backup/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	return "([get_cost(user, gang, gangtool)] Influence)"
+
+/obj/machinery/gang/backup
+	name = "gang reinforcements portal"
+	desc = "When a gang leader leverages their influence, they can pull in some muscle from other operations."
+	anchored = TRUE
+	density = TRUE
+	icon = 'icons/obj/machines/teleporter.dmi'
+	icon_state = "gang_teleporter_on"
+	var/datum/gang/G
+	var/list/queue = list()
+
+/obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
+	. = ..()
+	G = gang
+	reinforce()
+	gang.gateways++
+
+
+/obj/machinery/gang/backup/proc/reinforce()
+	if(!src)
+		return
+
+	var/we = 0
+	var/rival = 0
+	var/cooldown = 0
+	for(var/datum/gang/baddies in SSticker.mode.gangs)
+		if(baddies = G)
+			for(var/datum/mind/M in G.gangsters)
+				if(M.current.stat == DEAD)
+					var/mob/O = M.get_ghost(TRUE)
+					if(O)
+						queue += O
+					continue
+				we++
+		else
+			for(var/datum/mind/M in G.gangsters)
+				if(M.current.stat == DEAD)
+					continue
+				rival++
+	spawn_gangster()
+	if(we == 0)
+		we = 1
+	cooldown = 200+((we/(rival+we))*50)**2
+	world << "[cooldown] deciseconds"
+	addtimer(CALLBACK(src, .proc/reinforce), cooldown)
+
+
+/obj/machinery/gang/backup/proc/spawn_gangster()
+	var/mob/living/carbon/human/H = new(src)
+	var/mob/dead/observer/winner
+	var/obj/item/clothing/uniform = G.inner_outfit
+	var/obj/item/clothing/suit/outerwear = new G.outer_outfit(H)
+	outerwear.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
+	outerwear.body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	outerwear.desc += " Tailored for the [G.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
+	H.equip_to_slot_or_del(new uniform(H), slot_w_uniform)
+	H.equip_to_slot_or_del(outerwear, slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+	H.put_in_l_hand(new /obj/item/weapon/gun/ballistic/automatic/surplus/gang(H))
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm/rifle(H),slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/switchblade(H),slot_r_store)
+	var/equip = SSjob.EquipRank(H, "Assistant", 1)
+	H = equip
+	var/list/finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = queue)
+	if(finalists.len)
+		winner = pick(finalists)
+		queue -= winner
+	else
+		var/list/dead_vigils
+		for(var/mob/V in GLOB.joined_player_list.len)
+			if(V.mind && V.stat == DEAD && !is_gangster(V))
+				var/mob/dead/observer/O = V.get_ghost()
+				dead_vigils += O
+		finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = dead_vigils)
+		if(finalists.len)
+			winner = pick(finalists)
+	if(!src)
+		return
+	var/datum/mind/reinforcement = new /datum/mind(winner.key)
+	reinforcement.active = 1
+	reinforcement.transfer_to(H)
+	SSticker.mode.add_gangster(reinforcement, G, 0)
+	H.forceMove(get_turf(src))
 
 
 ///////////////////
@@ -111,6 +227,7 @@
 	if(gang.outer_outfit)
 		var/obj/item/O = new gang.outer_outfit(user.loc)
 		O.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
+		O.body_parts_covered = CHEST|GROIN|LEGS|ARMS
 		O.desc += " Tailored for the [gang.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 		user.put_in_hands(O)
 		to_chat(user, "<span class='notice'> This is your gang's official outerwear, wearing it will increase your influence")
@@ -124,7 +241,7 @@
 
 /obj/item/clothing/head/collectable/petehat/gang
 	name = "pimpin' hat"
-	desc = "The undisputed king of style."
+	desc = "Show the station the strength of your pimp hand."
 
 /datum/gang_item/clothing/mask
 	name = "Golden Death Mask"
@@ -221,8 +338,8 @@
 
 /datum/gang_item/weapon/pitchfork
 	name = "Premium Pitchfork"
-	id = "switchblade"
-	cost = 10
+	id = "pitchfork"
+	cost = 7
 	item_path = /obj/item/weapon/twohanded/pitchfork/gangfork
 
 /datum/gang_item/weapon/surgood
@@ -238,7 +355,7 @@
 	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus/gang
 
 /obj/item/weapon/gun/ballistic/automatic/surplus/gang
-	name = "Smuggled Surplus Rifle"
+	name = "smuggled surplus rifle"
 
 /datum/gang_item/weapon/ammo/surplus_ammo
 	name = "Surplus Rifle Ammo"
@@ -279,7 +396,7 @@
 /datum/gang_item/weapon/riot
 	name = "Riot Shotgun"
 	id = "riot"
-	cost = 30 // Vigilante only so cheaper than the gang's despite being better
+	cost = 30
 	item_path = /obj/item/weapon/gun/ballistic/shotgun/riot/lethal
 
 /obj/item/weapon/gun/ballistic/shotgun/riot/lethal
@@ -310,21 +427,18 @@
 	item_path = /obj/item/ammo_box/magazine/wt550m9
 
 /datum/gang_item/weapon/ammo/auto_ammo_AP
-	name = "Armor-Piercing Auto Rifle Ammo"
+	name = "Special Operations Auto Rifle Ammo"
 	id = "saber_ammo"
-	cost = 16
+	cost = 20
 	item_path = /obj/item/ammo_box/magazine/wt550m9/wtap/elite
 
 /obj/item/ammo_box/magazine/wt550m9/wtap/elite
-	desc = "An upgrade from previous armor-piercing ammunition; it provides additional piercing without sacrificing damage."
+	desc = "An upgrade from previous armor-piercing ammunition; it provides additional piercing and damage."
 	ammo_type = /obj/item/ammo_casing/c46x30mmap/elite
 
 /obj/item/ammo_casing/c46x30mmap/elite
-	projectile_type =/obj/item/projectile/bullet/armourpiercing/elite
+	projectile_type = /obj/item/projectile/bullet/midbullet3/ap
 
-/obj/item/projectile/bullet/armourpiercing/elite
-	damage = 20
-	armour_penetration = 50
 
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
@@ -337,7 +451,7 @@
 	name = "Uzi SMG"
 	id = "uzi"
 	cost = 60
-	item_path = /obj/item/ammo_box/magazine/smgm9mm
+	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
 
 
 /datum/gang_item/weapon/ammo/uzi_ammo
@@ -346,15 +460,16 @@
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
 
-/datum/gang_item/weapon/cluster
-	name = "High Explosive Rocket Launcher"
+/datum/gang_item/weapon/launcher
+	name = "88mm high explosive rocket launcher"
 	id = "launcher"
-	cost = 80
+	cost = 60
 	item_path = /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE
+	spawn_msg = "<span class='This weapon is single-use and takes 3 seconds to fire. Aim True!</span>"
 
 /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE
-		desc = "A single-use HE rocket launcher designed to neutralize enemies of the corporation without causing critical damage to the station."
-		name = "High Explosive Rocket Launcher"
+		desc = "A single-use HE rocket launcher designed to neutralize massed enemies without causing critical damage to the ship or station."
+		name = "88mm HE rocket launcher"
 		mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher/HE
 
 /obj/item/weapon/gun/ballistic/automatic/atlauncher/HE/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
@@ -370,30 +485,16 @@
 	projectile_type = /obj/item/projectile/bullet/HE_rocket
 
 /obj/item/projectile/bullet/HE_rocket
-	name = "84mm cluster rocket"
-	desc = "You're about to have much bigger problems"
+	name = "84mm HE rocket"
+	desc = "FWOOSH"
 	icon_state= "atrocket"
 	damage = 60
 	armour_penetration = 100
 	dismemberment = 100
-	var/cluster_explosions = 5
 
 /obj/item/projectile/bullet/HE_rocket/on_hit(atom/target, blocked=0)
-	explosion(target, 0, 0, 3, 4)
-	addtimer(CALLBACK(src, .proc/cluster, target), 15)
+	explosion(target, 0, 0, 5, 6)
 	return 1
-
-/obj/item/projectile/bullet/HE_rocket/proc/cluster(atom/target)
-	var/list/turfs = list()
-	for(var/turf/T in view(target, 6))
-		if(get_dist(target, T) >= 5)
-			turfs += T
-	for(var/i in 1 to cluster_explosions)
-		var/turf/boom = pick(turfs)
-		explosion(boom, 0, 0, 2, 2)
-		turfs -= boom
-		if(!turfs.len)
-			return
 
 ///////////////////
 //EQUIPMENT
@@ -494,6 +595,98 @@
 	cost = 20
 	item_path = /obj/item/clothing/shoes/combat/gang
 
+//////// REVIVIFICATION SERUM //////////
+
+/datum/gang_item/equipment/reviver
+	name = "Outlawed Reviver Serum"
+	id = "reviver"
+	cost = 50
+	item_path = /obj/item/weapon/reviver
+
+/datum/gang_item/equipment/reviver/get_cost(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	cost = 10 + gang.gangsters.len * 2
+	return cost
+
+/obj/item/weapon/reviver
+	name = "outlawed revivification serum"
+	desc = "Banned due to side effects of extreme rage, reduced intelligence, and violence. For gangs, that's just a fringe benefit."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implanter1"
+	item_state = "syringe_0"
+	throw_speed = 3
+	throw_range = 5
+	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "materials=2;biotech=5"
+	materials = list(MAT_METAL=600, MAT_GLASS=200)
+
+
+/obj/item/weapon/reviver/attack(mob/living/carbon/human/H, mob/user)
+	if(!ishuman(H))
+		return
+	user.visible_message("<span class='warning'>[user] begins inject [H] with [src].</span>", "<span class='warning'>You begin to inject [H] with [src]...</span>")
+	var/total_burn	= 0
+	var/total_brute	= 0
+	H.notify_ghost_cloning("You're being injected with a revivification serum!")
+	if(do_after(user, 30, target = H))
+		if(H.stat == DEAD)
+			H.visible_message("<span class='warning'>[H]'s body thrashes violently.")
+			playsound(get_turf(src), "bodyfall", 50, 1)
+			total_brute = H.getBruteLoss()
+			total_burn = H.getFireLoss()
+			if (H.suiciding || (H.disabilities & NOCLONE) || !H.getorgan(/obj/item/organ/heart) || !H.getorgan(/obj/item/organ/brain))
+				H.visible_message("<span class='warning'>[H]'s body falls still again, they're gone for good.")
+				return
+			var/overall_damage = total_brute + total_burn + H.getToxLoss() + H.getOxyLoss()
+			var/mobhealth = H.health
+			H.adjustOxyLoss((mobhealth - HALFWAYCRIT) * (H.getOxyLoss() / overall_damage), 0)
+			H.adjustToxLoss((mobhealth - HALFWAYCRIT) * (H.getToxLoss() / overall_damage), 0)
+			H.adjustFireLoss((mobhealth - HALFWAYCRIT) * (total_burn / overall_damage), 0)
+			H.adjustBruteLoss((mobhealth - HALFWAYCRIT) * (total_brute / overall_damage), 0)
+			H.updatehealth()
+			H.set_heartattack(FALSE)
+			H.grab_ghost()
+			H.revive()
+			H.emote("gasp")
+			H.setBrainLoss(70)
+			add_logs(user, H, "revived", src)
+			qdel(src)
+
+
+////// Gangbuster Seraph //////
+
+/datum/gang_item/equipment/seraph
+	name = "Seraph Advanced Combat Mech"
+	id = "seraph"
+	cost = 200
+	item_path = /obj/mecha/combat/marauder/gangbuster_seraph
+	spawn_msg = "<span class='notice'>For employees who go above and beyond... you know what to do with this. </span>"
+
+
+/obj/mecha/combat/marauder/gangbuster_seraph
+	desc = "Heavy-duty, combat-type exosuit. This is a custom gangbuster model, utilized only by employees who have proven themselves in the line of fire."
+	name = "\improper 'Gangbuster' Seraph"
+	icon_state = "seraph"
+	operation_req_access = list()
+	step_in = 2
+	obj_integrity = 400
+	wreckage = /obj/structure/mecha_wreckage/seraph
+	internal_damage_threshold = 20
+	max_equip = 4
+	bumpsmash = 0
+
+/obj/mecha/combat/marauder/gangbuster_seraph/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
+	ME.attach(src)
+
+
 /obj/item/clothing/shoes/combat/gang
 	name = "Wetwork boots"
 	desc = "A gang's best hitmen are prepared for anything."
@@ -503,20 +696,19 @@
 /datum/gang_item/equipment/bulletproof_armor
 	name = "Bulletproof Armor"
 	id = "BPA"
-	cost = 20
+	cost = 25
 	item_path = /obj/item/clothing/suit/armor/bulletproof
 
 /datum/gang_item/equipment/bulletproof_helmet
 	name = "Bulletproof Helmet"
 	id = "BPH"
-	cost = 12
+	cost = 15
 	item_path = /obj/item/clothing/head/helmet/alt
-
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
 	id = "pen"
-	cost = 50
+	cost = 35
 	item_path = /obj/item/weapon/pen/gang
 	spawn_msg = "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
 
@@ -535,6 +727,8 @@
 	if(gangtool && gangtool.free_pen)
 		return "(GET ONE FREE)"
 	return ..()
+
+
 
 
 /datum/gang_item/equipment/gangtool

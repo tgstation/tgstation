@@ -83,23 +83,6 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	. = ..()
-	if(. && !istype(src, /obj/item/weapon/twohanded/offhand))
-		block_animation(owner)
-
-
-/obj/item/weapon/twohanded/proc/block_animation(mob/living/carbon/human/owner)
-	var/atom/A = owner
-	var/image/I = image(src.icon, A, src.icon_state, A.layer + 0.1)
-	I.iSpinner()
-
-/image/proc/iSpinner()
-	transform *= 0.6
-	flick_overlay(src, GLOB.clients, 100)
-	for(var/n in 1 to 4)
-		animate(src, alpha = 120, transform = turn(transform, 90), time = 4)
-
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand

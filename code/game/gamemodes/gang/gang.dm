@@ -12,11 +12,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
 
-/proc/is_in_gang(var/mob/living/M, var/gang_type)
-	if(!is_gangster(M) || !gang_type)
+/proc/is_in_gang(var/mob/living/M, var/gang_name)
+	if(!is_gangster(M) || !gang_name)
 		return 0
 	var/datum/gang/G = M.mind.gang_datum
-	if(G.name == gang_type)
+	if(G.name == gang_name)
 		return 1
 	return 0
 
@@ -150,9 +150,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
 
 	for(var/mob/living/M in GLOB.player_list)
-		if(M in get_all_gangsters())
-			continue
-		vigilize(M)
+		if(!is_gangster(M))
+			vigilize(M)
 
 /proc/gangtest()
 	var/turf/target_armory
@@ -173,10 +172,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	if(!target_armory || !target_equipment)
 		message_admins("No armory/equipment room detected, unable to start gang!")
 		return FALSE
-	sleep(50)
+	sleep(20)
 	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
 	sleep(60)
-	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")
+	priority_announce("Unfortunately we have also received reports of several notorious gangs established in your sector. To assist in repelling this threat, we have taken the liberty of implanting you all with a device that will activate in the event of a gang incursion. Enjoy your shift.", "Nanotrasen Board of Directors")
+	sleep(40)
 	explosion(target_armory, 10, 16, 28, 30, TRUE, TRUE)
 	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
 	for(var/mob/living/M in GLOB.player_list)
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/datum/objective/escape/E = new
 	E.owner = M.mind
 	M.mind.objectives += E
-	to_chat(M, "<FONT size=3><u><b>You are a Vigilante!</b></u><br> Nanotrasen has given you, and all loyal crew, authority to eliminate gang activity aboard the station.<br> You possess a reverse-engineered gangtool that rewards influence for destroying gang equipment.<br> You will also receive influence for keeping the station free of gang tags.<br><b>Prevent gangs from taking over the station!<b></FONT>")
+	to_chat(M, "<FONT size=3><u><b>You are a Vigilante!</b></u><br> Nanotrasen has given all loyal crew the authority to eliminate gang activity aboard the station.<br> You possess a reverse-engineered gangtool that rewards influence for destroying gangster equipment.<br> You will also receive influence for keeping the station free of gang tags.<br><b>Prevent gangs from taking over the station!<b></FONT>")
 	M.mind.announce_objectives()
 	new /obj/item/device/vigilante_tool(M)
 
@@ -292,6 +292,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
+	new /obj/item/device/gangtool/soldier(gangster_mind.current)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//

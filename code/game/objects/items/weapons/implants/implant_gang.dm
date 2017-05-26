@@ -44,7 +44,6 @@
 			else
 				var/datum/gang/G = user.mind.gang_datum
 				SSticker.mode.add_gangster(target.mind,G)
-				new /obj/item/device/gangtool/soldier(target)
 				target.Paralyse(3)
 				return 1
 
