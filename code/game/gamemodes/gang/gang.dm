@@ -288,12 +288,12 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return
 	if(!winner)
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
-		SSblackbox.set_details("round_end_result","loss - gangs failed takeover")
+		SSticker.mode_result = "loss - gangs failed takeover"
 
 		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
-		SSblackbox.set_details("round_end_result","win - gang domination complete")
+		SSticker.mode_result = "win - gang domination complete"
 
 		SSticker.news_report = GANG_TAKEOVER
 
