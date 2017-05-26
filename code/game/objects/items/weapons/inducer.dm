@@ -14,7 +14,7 @@
 
 /obj/item/weapon/inducer/Initialize()
 	. = ..()
-	if(cell_type)
+	if(!cell && cell_type)
 		cell = new cell_type
 
 /obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target)
@@ -42,7 +42,7 @@
 	if(recharge(O, user))
 		return
 
-	..()
+	return ..()
 
 /obj/item/weapon/inducer/proc/cantbeused(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -56,7 +56,7 @@
 	if(!cell.charge)
 		to_chat(user, "<span class='warning'>\The [src]'s battery is dead!</span>")
 		return TRUE
-
+    return FALSE
 
 
 /obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
@@ -91,19 +91,19 @@
 	if(recharge(W, user, chargetime = 60))
 		return
 
-	..()
+	return ..()
 
 /obj/item/weapon/inducer/proc/recharge(atom/movable/A, mob/user, chargetime = 20)
 	var/obj/item/weapon/stock_parts/cell/C = A.get_cell()
 	if(C)
 		if(C.charge >= C.maxcharge)
-			to_chat(user, "<span class='notice'>[A] is fully charged!</span>")
+			to_chat(user, "<span class='notice'>\The [A] is fully charged!</span>")
 			return TRUE
 
-		user.visible_message("[user] starts recharging [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
+		user.visible_message("[user] starts recharging \the [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
 		if(do_after(user, chargetime, target = A))
 			induce(C)
-			user.visible_message("[user] recharged [A]!","<span class='notice'>You recharged [A]!</span>")
+			user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
 		return TRUE
 
 
@@ -116,22 +116,22 @@
 
 	if(recharge(M, user, chargetime = 10))
 		return
-	..()
+	return ..()
 
 
 /obj/item/weapon/inducer/attack_self(mob/user)
 	if(opened && cell)
-		user.put_in_hands(cell)
+		user.visible_message("[user] removes \the [cell] from \the [src]!","<span class='notice'>You remove \the [cell].</span>")
 		cell.updateicon()
+		user.put_in_hands(cell)
 		cell = null
 		update_icon()
-		user.visible_message("[user] removes the power cell from \the [src]!","<span class='notice'>You remove the power cell.</span>")
 
 
 /obj/item/weapon/inducer/examine(mob/living/M)
 	..()
 	if(cell)
-		to_chat(M, "<span class='notice'>It's display shows: [src.cell.charge]W</span>")
+		to_chat(M, "<span class='notice'>It's display shows: [cell.charge]W</span>")
 	else
 		to_chat(M,"<span class='notice'>It's display is dark.</span>")
 	if(opened)
