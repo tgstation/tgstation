@@ -419,6 +419,9 @@
 	message = null
 	emote_type = EMOTE_VISIBLE
 
+/datum/emote/living/custom/replace_pronoum(mob/user, message)
+	return
+
 /datum/emote/living/help
 	key = "help"
 
