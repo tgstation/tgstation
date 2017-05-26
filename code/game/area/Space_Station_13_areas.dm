@@ -203,19 +203,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Aft Maintenance"
 	icon_state = "amaint"
 	
-/area/maintenance/port
-//	/area/maintenance/fpmaint2/port_maintenance
-	name = "Port Maintenance"
-	icon_state = "pmaint"
+/area/maintenance/aft/secondary
+	name = "Aft Maintenance"
+	icon_state = "amaint_2"
 	
 /area/maintenance/central
 //	/area/maintenance/maintcentral
 	name = "Central Maintenance"
 	icon_state = "maintcentral"
 	
+/area/maintenance/central/secondary
+	name = "Central Maintenance"
+	icon_state = "maintcentral"
+	
 /area/maintenance/fore
 	name = "Fore Maintenance"
 	icon_state = "fmaint"
+	
+/area/maintenance/fore/secondary
+	name = "Fore Maintenance"
+	icon_state = "fmaint_2"
 	
 /area/maintenance/starboard
 	name = "Starboard Maintenance"
@@ -234,6 +241,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //	/area/maintenance/starboard/fore_starboard_maintenance
 	name = "Starboard Bow Maintenance"
 	icon_state = "fsmaint"
+	
+/area/maintenance/port
+//	/area/maintenance/fpmaint2/port_maintenance
+	name = "Port Maintenance"
+	icon_state = "pmaint"
 	
 /area/maintenance/port/central
 	name = "Central Port Maintenance"
