@@ -590,6 +590,6 @@
 	name = "Medical Synthesizer"
 
 /datum/robot_energy_storage/beacon
-	max_energy = 50
+	max_energy = 30
 	recharge_rate = 1
 	name = "Marker Beacon Storage"
