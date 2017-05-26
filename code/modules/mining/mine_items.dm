@@ -217,6 +217,7 @@
 /area/survivalpod
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
 
@@ -394,7 +395,9 @@
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
-	luminosity = 8
+	light_range = 5
+	light_power = 1.2
+	light_color = "#DDFFD3"
 	max_n_of_items = 10
 	pixel_y = -4
 	flags = NODECONSTRUCT
