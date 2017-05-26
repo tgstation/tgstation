@@ -192,11 +192,6 @@
 	icon_state = "map-overspace"
 	fixed_underlay = list("space"=1)
 
-/turf/closed/wall/mineral/titanium/ship
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall3"
-	smooth = SMOOTH_FALSE
-
 //sub-type to be used for interior shuttle walls
 //won't get an underlay of the destination turf on shuttle move
 /turf/closed/wall/mineral/titanium/interior/copyTurf(turf/T)
