@@ -106716,17 +106716,6 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
-"eiE" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
-/obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8;
-	heat_capacity = 1e+006
-	},
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -147795,7 +147784,7 @@ dMZ
 dOS
 ehs
 dOS
-eiE
+dMZ
 dNT
 dNT
 dNT
