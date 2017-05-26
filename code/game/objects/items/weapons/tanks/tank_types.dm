@@ -5,6 +5,7 @@
  *		Air
  *		Plasma
  *		Emergency Oxygen
+ *		Rebreather
  */
 
 /*
@@ -40,22 +41,45 @@
 //Rebreather
 /obj/item/weapon/tank/internals/rebreather
 	name = "rebreather tank"
-	desc = "A high-tech machine that uses electricity to recycle exhaled gases into breathable ones. The rebreather only kicks in when its pressure is 100kPa or less."
+	desc = "An advanced improvement on the internals tank that uses electricity to recycle ambient waste gases into breathable ones. AltClick it to turn it on or switch target species."
 	icon_state = "oxygen"
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
-	var/species = 1
+	var/species = "off"
+	var/obj/item/weapon/stock_parts/cell/high/tcell = new /obj/item/weapon/stock_parts/cell/high //maxcharge is 10000
 
 /obj/item/weapon/tank/internals/rebreather/process()
 	if(air_contents)
-		if(air_contents.return_pressure() <= 100)
-			if(species == 1)//Humans, Lizardmen, Flymen
-				air_contents.assert_gas("o2")
-				air_contents.gases["o2"][MOLES] = air_contents.gases["o2"][MOLES] + 1 //1 mole is about 32kPa in a tank this size.
-			if(species == 2)//Plasmamen
-				air_contents.assert_gas("plasma")
+		if(air_contents.return_pressure() <= 100 && tcell.charge >= 100)
+			if(species == "human")//Humans, Lizardmen, Flymen
+				air_contents.assert_gases("o2", "plasma")
+				air_contents.gases["o2"][MOLES] = air_contents.gases["o2"][MOLES] + 1 //1 mole is about 34kPa in a tank this size at room temp.
+				if(air_contents.gases["plasma"][MOLES] >= 1)
+					air_contents.gases["plasma"][MOLES] = air_contents.gases["plasma"][MOLES] -1 //if the species was accidentally set to plasmaman, this will filter the plasma
+				tcell.use(100)
+			if(species == "plasmaman")//Plasmamen
+				air_contents.assert_gases("plasma", "o2")
 				air_contents.gases["plasma"][MOLES] = air_contents.gases["plasma"][MOLES] + 1
+				if(air_contents.gases["o2"][MOLES] >= 1)
+					air_contents.gases["o2"][MOLES] = air_contents.gases["o2"][MOLES] -1
+				tcell.use(100)
+
+/obj/item/weapon/tank/internals/rebreather/AltClick(mob/user)
+	if(species == "human")
+		species = "plasmaman"
+	else
+		species = "human"
+	to_chat(user, "<span class='notice'>You turn the rebreather dial to [src.species].</span>")
+
+/obj/item/weapon/tank/internals/rebreather/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The rebreather dial is set to [src.species].</span>")
+	if(tcell.charge >= 100)
+		to_chat(user, "<span class='notice'>The charge meter reads [tcell.charge].</span>")
+	else
+		to_chat(user, "<span class='notice'>The charge meter is flashing a red light.</span>")
+
 
 
 /*

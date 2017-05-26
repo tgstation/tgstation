@@ -38,7 +38,7 @@
 	group = "Emergency"
 
 /datum/supply_pack/emergency/spacesuit
-	name = "Space Suit Crate"
+	name = "EVA Crate"
 	cost = 3000
 	access = GLOB.access_eva
 	contains = list(/obj/item/clothing/suit/space,
@@ -46,12 +46,14 @@
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
-					/obj/item/clothing/mask/breath)
+					/obj/item/clothing/mask/breath,
+					/obj/item/weapon/tank/internals/rebreather,
+					/obj/item/weapon/tank/internals/rebreather)
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/emergency/vehicle
-	name = "Biker Gang Kit" //TUNNEL SNAKES OWN THIS TOWN
+	name = "Biker Gang Kit" //TUNNEL SNAKES RULE
 	cost = 2000
 	contraband = TRUE
 	contains = list(/obj/vehicle/atv,
