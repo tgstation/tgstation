@@ -46,12 +46,12 @@
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
-	var/aoe_structure_damage = 30
+	var/aoe_structure_damage = 50
 	var/aoe_fire_range = 2
 	var/aoe_fire_chance = 50
 	var/aoe_mob_range = 1
-	var/aoe_mob_damage = 25
-	var/impact_structure_damage = 60
+	var/aoe_mob_damage = 30
+	var/impact_structure_damage = 80
 	var/projectile_damage = 35
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
