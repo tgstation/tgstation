@@ -8,11 +8,11 @@ And for small files the file is usually bigger (especially paletted pngs, since 
 in the Pillow library afaik, or I'm incapable of the mental gymnastics to fix it) before you resave.
 also paths like ..\..\icons should work fine when used with the recurser while on windows.
 Mileage on other operating systems may vary.
-##Requirements
+## Requirements
 So for this thing to work you need to install pillow for python 3. any flavor
 of python 3 should work. Ensure you don't have PIL installed (you should know already
 if you do).
-##Other Notes
+## Other Notes
 This program only runs on .dmi files so it should be safe to run it anywhere.
 If you feel like changing how the sort works, change the function atoz(key) knowing that
 key is a list in the form:
