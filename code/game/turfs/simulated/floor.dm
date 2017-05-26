@@ -42,8 +42,6 @@
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
-	if(mapload)
-		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
