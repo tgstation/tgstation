@@ -307,6 +307,7 @@
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
+	GenerateFlavorText()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
