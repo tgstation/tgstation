@@ -56,12 +56,12 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
-			query_feedback_create_round.Execute()
-			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
-			query_feedback_max_id.Execute()
-			if(query_feedback_max_id.NextRow())
-				GLOB.round_id = query_feedback_max_id.item[1]
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON('[world.internet_address]'), '[world.port]')")
+			query_round_start.Execute()
+			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
+			query_round_last_id.Execute()
+			if(query_round_last_id.NextRow())
+				GLOB.round_id = query_round_last_id.item[1]
 		else
 			log_world("Your server failed to establish a connection with the database.")
 
@@ -82,7 +82,7 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
-	
+
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
@@ -224,7 +224,7 @@
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
-	log_world("World rebooted at [time_stamp()]"); 
+	log_world("World rebooted at [time_stamp()]")
 	..()
 
 /world/proc/load_motd()
