@@ -47,7 +47,7 @@
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
 	var/species = "off"
-	var/obj/item/weapon/stock_parts/cell/high/tcell = new /obj/item/weapon/stock_parts/cell/high //maxcharge is 10000
+	var/obj/item/weapon/stock_parts/cell/high/tcell = new //maxcharge is 10000
 
 /obj/item/weapon/tank/internals/rebreather/process()
 	if(air_contents)
