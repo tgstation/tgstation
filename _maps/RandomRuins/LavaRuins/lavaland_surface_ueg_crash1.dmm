@@ -42,7 +42,7 @@
 "aP" = (/obj/effect/decal/cleanable/blood,/obj/structure/closet,/obj/item/weapon/storage/box/donkpockets,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
 "aQ" = (/turf/open/floor/plasteel/vault{dir = 5},/turf/open/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/ruin/powered)
 "aR" = (/obj/structure/closet,/obj/item/clothing/shoes/combat,/obj/item/clothing/under/syndicate/camo,/obj/item/weapon/storage/box/donkpockets,/obj/item/clothing/gloves/combat,/obj/item/weapon/storage/backpack/explorer{name = "marine bag"},/obj/item/weapon/card/id/ert{assignment = "Marine Standard"; desc = "A Marine ID card"; name = "\improper Marine ID"; registered_name = "Marine Standard"},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
-"aS" = (/obj/structure/mirror{pixel_y = 25; step_y = 0},/obj/structure/dresser,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aS" = (/obj/structure/dresser,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
 "aT" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
 "aU" = (/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
 "aV" = (/obj/structure/girder,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
