@@ -130,17 +130,12 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	var/t = round((val - min) / d)
 	return val - (t * d)
 
+#define NORM_ROT(rot) ((((rot % 360) + (rot - round(rot, 1))) > 0) ? ((rot % 360) + (rot - round(rot, 1))) : (((rot % 360) + (rot - round(rot, 1))) + 360))
+
 /proc/get_angle_of_incidence(face_angle, angle_in, auto_normalize = TRUE)
-	var/angle_in_s = angle_in
-	while(angle_in_s < 0)			//Don't round for optimal accuracy.
-		angle_in_s += 360
-	while(angle_in_s > 360)
-		angle_in_s -= 360
-	var/face_angle_s = face_angle
-	while(face_angle_s > 360)
-		face_angle_s -= 360
-	while(face_angle_s < 0)
-		face_angle_s += 360
+
+	var/angle_in_s = NORM_ROT(angle_in)
+	var/face_angle_s = NORM_ROT(face_angle)
 	var/incidence = face_angle_s - angle_in_s
 	var/incidence_s = incidence
 	while(incidence_s < -90)
