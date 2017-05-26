@@ -14,11 +14,6 @@
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
 
-/obj/item/projectile/beam/check_ricochet_flag(atom/A)
-	if(HAS_SECONDARY_FLAG(A, PROJECTILE_REFLECT) || HAS_SECONDARY_FLAG(A, PROJECTILE_RICOCHET))
-		return TRUE
-	return FALSE
-
 /obj/item/projectile/beam/laser
 
 /obj/item/projectile/beam/laser/heavylaser
