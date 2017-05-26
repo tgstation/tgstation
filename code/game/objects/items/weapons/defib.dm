@@ -19,7 +19,7 @@
 	var/safety = 1 //if you can zap people with the defibs on harm mode
 	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
-	var/obj/item/weapon/stock_parts/cell/high/cell = null
+	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/combat = 0 //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 
