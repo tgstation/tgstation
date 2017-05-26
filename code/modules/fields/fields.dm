@@ -176,6 +176,9 @@
 /datum/proximity_monitor/advanced/proc/field_turf_block_air(obj/effect/abstract/proximity_checker/advanced/field_turf/F)
 	return FALSE
 
+/datum/proximity_monitor/advanced/proc/field_turf_explosion_block(obj/effect/abstract/proximity_checker/advanced/field_turf/F)
+	return 0
+
 /datum/proximity_monitor/advanced/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
 	return TRUE
 
@@ -190,6 +193,9 @@
 
 /datum/proximity_monitor/advanced/proc/field_edge_block_air(obj/effect/abstract/proximity_checker/advanced/field_edge/F)
 	return FALSE
+
+/datum/proximity_monitor/advanced/proc/field_edge_explosion_block(obj/effect/abstract/proximity_checker/advanced/field_edge/F)
+	return 0
 
 /datum/proximity_monitor/advanced/HandleMove()
 	var/atom/_host = host

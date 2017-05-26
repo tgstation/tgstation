@@ -25,6 +25,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
 
+/obj/structure/window/get_explosion_block()
+	if(reinf && fulltile)
+		return explosion_block
+	return 0
+
 /obj/structure/window/examine(mob/user)
 	..()
 	if(reinf)

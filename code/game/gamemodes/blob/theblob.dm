@@ -20,6 +20,8 @@
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
 	var/mob/camera/blob/overmind
 
+/obj/structure/blob/get_explosion_block()
+	return explosion_block
 
 /obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)

@@ -277,20 +277,8 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/I 
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
-			var/current_exp_block = T.density ? T.explosion_block : 0
 
-			for(var/obj/machinery/door/D in T)
-				if(D.density)
-					current_exp_block += D.explosion_block
-
-			for(var/obj/structure/window/W in T)
-				if(W.reinf && W.fulltile)
-					current_exp_block += W.explosion_block
-
-			for(var/obj/structure/blob/B in T)
-				current_exp_block += B.explosion_block
-			
-			.[T] = current_exp_block
+			.[T] = T.get_explosion_block()
 
 			if(TICK_CHECK)
 				break

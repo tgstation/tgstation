@@ -33,6 +33,11 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
 
+/obj/machinery/door/get_explosion_block()
+	if(density)
+		return explosion_block
+	return 0
+
 /obj/machinery/door/New()
 	..()
 	if(density)

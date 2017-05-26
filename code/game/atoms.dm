@@ -104,6 +104,9 @@
 
 	return ..()
 
+/atom/proc/get_explosion_block()
+	return 0
+
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return (!density || !height)
 
