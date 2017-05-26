@@ -104,7 +104,7 @@
 
 /obj/machinery/suit_storage_unit/ueg
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ueg
-	mask_type = /obj/item/clothing/mask/gas/sechailer
+	mask_type = /obj/item/clothing/mask/gas/sechailer/swat
 	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
 /obj/machinery/suit_storage_unit/New()
