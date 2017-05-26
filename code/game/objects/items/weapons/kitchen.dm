@@ -99,6 +99,10 @@
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 
+/obj/item/weapon/kitchen/knife/butcher/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.zone_selected == "eyes")
+		return
+
 /obj/item/weapon/kitchen/knife/combat
 	name = "combat knife"
 	icon_state = "buckknife"
