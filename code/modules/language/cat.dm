@@ -1,4 +1,4 @@
-// 'catpeople' language; spoken by players with cat ears/tails and cats.
+// 'catpeople' language; spoken by players with cat ears/tails.
 /datum/language/cat
 	name = "Internyational Galactic"
 	desc = "Language used by catpeople"
