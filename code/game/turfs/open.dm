@@ -45,6 +45,9 @@
 
 /turf/open/indestructible/hierophant/two
 
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
+
 /turf/open/indestructible/paper
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."

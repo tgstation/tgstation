@@ -1,4 +1,0 @@
-author: "4dplanner, robustin"
-delete-after: True
-changes: 
-  - bugfix: "c4 has always taken 3 seconds to plant, and you are not allow to believe otherwise"
