@@ -432,7 +432,7 @@
 			if("Hard Restart (No Delay, No Feeback Reason)")
 				world.Reboot()
 			if("Hardest Restart (No actions, just reboot)")
-				world.Reboot(fast_track = TRUE)		
+				world.Reboot(fast_track = TRUE)
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -609,7 +609,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == 1)
+				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)

@@ -325,13 +325,13 @@
 		user.put_in_hands(O)
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
-		
+
 /datum/gang_item/equipment/wetwork_boots
 	name = "Wetwork boots"
 	id = "wetwork"
 	cost = 20
 	item_path = /obj/item/clothing/shoes/combat/gang
-	
+
 /obj/item/clothing/shoes/combat/gang
 	name = "Wetwork boots"
 	desc = "A gang's best hitmen are prepared for anything."
@@ -412,7 +412,7 @@
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
+	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != ZLEVEL_STATION)
 		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
 		return FALSE
 
