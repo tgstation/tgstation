@@ -212,6 +212,28 @@
 	build_path = /obj/item/organ/cyberimp/arm/toolset
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_toolset
+	name = "Surgical Toolarm implant"
+	desc = "A set of surgical tools designed to be built into a user's arm."
+	id = "ci-surgical"
+	req_tech = list("materials" = 4, "engineering" = 4, "biotech" = 4, "magnets" = 3, "programming" = 3)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 4000, MAT_GLASS = 1750, MAT_SILVER = 2250, MAT_GOLD = 1500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/surgery
+	category = list("Misc", "Medical Designs")
+
+/datum/design/cyberimp_flash
+	name = "Photon Projector Arm Implant"
+	desc = "A glorified flash that is able to be implanted into a user's arm for quick deployment."
+	id = "ci-flash"
+	req_tech = list("materials" = 5, "combat" = 4, "biotech" = 5, "magnets" = 5, "powerstorage" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 4000, MAT_GLASS = 7000, MAT_SILVER = 4500, MAT_GOLD = 4500, MAT_URANIUM = 2500, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/flash
+	category = list("Misc", "Weapons")
+
 /datum/design/cyberimp_medical_hud
 	name = "Medical HUD Implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
