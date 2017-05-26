@@ -87,7 +87,7 @@
 
 
 
-/obj/item/weapon/card/id/Initalize(mapload)
+/obj/item/weapon/card/id/Initialize(mapload)
 	. = ..()
 	if(mapload)
 		access = text2access(access_txt)
