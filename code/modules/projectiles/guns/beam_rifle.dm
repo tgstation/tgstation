@@ -57,6 +57,9 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 40
 
+	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
+	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
+
 /obj/item/weapon/gun/energy/beam_rifle/debug
 	delay = 0
 	cell_type = /obj/item/weapon/stock_parts/cell/infinite
@@ -67,6 +70,14 @@
 	hipfire_inaccuracy = 0
 	scoped_inaccuracy = 0
 	noscope = 1
+
+/obj/item/weapon/gun/energy/beam_rifle/update_icon()
+	cut_overlays()
+	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
+	if(power_supply.charge > primary_ammo.e_cost)
+		add_overlay(charged_overlay)
+	else
+		add_overlay(drained_overlay)
 
 /obj/item/weapon/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
