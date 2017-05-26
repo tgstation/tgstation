@@ -17,6 +17,7 @@
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
 	health = 30
 	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	initial_language_holder = /datum/language_holder/drone/syndicate
 	faction = list("syndicate")
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
@@ -108,10 +109,10 @@
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
+	verb_whisper = "imparts"
 	verb_yell = "harangues"
 	bubble_icon = "clock"
-	initial_languages = list(/datum/language/common, /datum/language/ratvar)
-	only_speaks_language = /datum/language/ratvar
+	initial_language_holder = /datum/language_holder/clockmob
 	light_color = "#E42742"
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
@@ -139,12 +140,10 @@
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
-	grant_language(/datum/language/ratvar)
-
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
+	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
@@ -169,12 +168,12 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!ratvar_awakens)
+	if(!GLOB.ratvar_awakens)
 		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
 	return TRUE
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		return 1
 	return ..()
 

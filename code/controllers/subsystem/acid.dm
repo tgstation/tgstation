@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(acid)
 	name = "Acid"
 	priority = 40
 	flags = SS_NO_INIT|SS_BACKGROUND
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
@@ -28,7 +29,7 @@ SUBSYSTEM_DEF(acid)
 
 		if(O.acid_level && O.acid_processing())
 		else
-			O.cut_overlay(acid_overlay, TRUE)
+			O.cut_overlay(GLOB.acid_overlay, TRUE)
 			processing -= O
 
 		if (MC_TICK_CHECK)

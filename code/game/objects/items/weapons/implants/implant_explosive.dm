@@ -10,6 +10,7 @@
 	var/heavy = 0.4
 	var/delay = 7
 	var/popup = FALSE // is the DOUWANNABLOWUP window open?
+	var/active = FALSE
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -28,9 +29,9 @@
 		activate("death")
 
 /obj/item/weapon/implant/explosive/activate(cause)
-	if(!cause || !imp_in)
+	if(!cause || !imp_in || active)
 		return 0
-	if(cause == "action_button" || !popup)
+	if(cause == "action_button" && !popup)
 		popup = TRUE
 		var/response = alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", "Yes", "No")
 		popup = FALSE
@@ -40,9 +41,10 @@
 	medium = round(medium)
 	weak = round(weak)
 	to_chat(imp_in, "<span class='notice'>You activate your [name].</span>")
+	active = TRUE
 	var/turf/boomturf = get_turf(imp_in)
 	var/area/A = get_area(boomturf)
-	message_admins("[key_name_admin(imp_in)]<A HREF='?_src_=holder;adminmoreinfo=\ref[imp_in]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[imp_in]'>FLW</A>) has activated their [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[imp_in.x];Y=[imp_in.y];Z=[imp_in.z]'>[A.name] (JMP)</a>.")
+	message_admins("[ADMIN_LOOKUPFLW(imp_in)] has activated their [name] at [A.name] [ADMIN_JMP(boomturf)].")
 //If the delay is short, just blow up already jeez
 	if(delay <= 7)
 		explosion(src,heavy,medium,weak,weak, flame_range = weak)

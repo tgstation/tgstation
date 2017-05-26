@@ -28,6 +28,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 		chamber_round(0)
@@ -45,6 +46,7 @@
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
+		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -343,6 +345,16 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
+
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
+	name = "sawn-off improvised shotgun"
+	desc = "A single-shot shotgun, better not miss"
+	icon_state = "ishotgun"
+	item_state = "gun"
+	w_class = WEIGHT_CLASS_NORMAL
+	sawn_state = SAWN_OFF
+	slot_flags = SLOT_BELT
+
 
 /obj/item/weapon/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = 0

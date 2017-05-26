@@ -71,3 +71,9 @@
 	icon_state = "refill_clothes"
 	charges = list(31, 4, 4)// of 101 standard, 12 contraband, 10 premium(?)
 	init_charges = list(31, 4, 4)
+
+/obj/item/weapon/vending_refill/medical
+	machine_name = "NanoMed"
+	icon_state = "refill_medical"
+	charges = list(26, 5, 3)// of 76 standard, 13 contraband, 8 premium
+	init_charges = list(26, 5, 3)

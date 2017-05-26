@@ -292,7 +292,7 @@
 	..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
-	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, protected_objects))
+	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
@@ -351,21 +351,9 @@
 
 /obj/item/projectile/magic/aoe/Range()
 	if(proxdet)
-		var/turf/T1 = get_step(src,turn(dir, -45))
-		var/turf/T2 = get_step(src,turn(dir, 45))
-		var/turf/T3 = get_step(src,dir)
-		var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-		if(L && L.stat != DEAD)
-			Bump(L,1) //Magic Bullet #teachthecontroversy
-			return
-		L = locate(/mob/living) in T2
-		if(L && L.stat != DEAD)
-			Bump(L,1)
-			return
-		L = locate(/mob/living) in T3
-		if(L && L.stat != DEAD)
-			Bump(L,1)
-			return
+		for(var/mob/living/L in range(1, get_turf(src)))
+			if(L.stat != DEAD && L != firer)
+				return Bump(L, TRUE)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning

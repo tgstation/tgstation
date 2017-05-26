@@ -4,9 +4,9 @@
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
-	init_order = 1
+	init_order = INIT_ORDER_TIMER
 
-	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER|SS_NO_INIT
 
 	var/list/datum/timedevent/processing = list()
 	var/list/hashes = list()

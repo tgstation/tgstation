@@ -98,8 +98,8 @@
 			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 
 	equip_antag(M)
-	var/wizard_name_first = pick(wizard_first)
-	var/wizard_name_second = pick(wizard_second)
+	var/wizard_name_first = pick(GLOB.wizard_first)
+	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	if(usr)
 		var/datum/objective/protect/new_objective = new /datum/objective/protect
@@ -117,6 +117,7 @@
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
+	M.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
 	M.dna.update_dna_identity()
 
 /obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
@@ -141,30 +142,29 @@
 /obj/item/weapon/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
-		return 0
+		return FALSE
 	if(!(user.mind in SSticker.mode.syndicates))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
-		return 0
+		return FALSE
 	if(user.z != ZLEVEL_CENTCOM)
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /obj/item/weapon/antag_spawner/nuke_ops/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
 
-	var/list/nuke_candidates = pollCandidatesForMob("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, src)
+	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
+	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
 	if(nuke_candidates.len)
 		if(!(check_usability(user)))
 			return
-		used = 1
+		used = TRUE
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
 		spawn_antag(theghost.client, get_turf(src), "syndieborg")
-		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
-		S.set_up(4, 1, src)
-		S.start()
+		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
@@ -174,7 +174,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/code = "BOMB-NOT-FOUND"
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 	if(nuke)
 		code = nuke.r_code
 	M.mind.make_Nuke(null, code, 0, FALSE)
@@ -206,10 +206,10 @@
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
 
-	var/brainfirstname = pick(first_names_male)
+	var/brainfirstname = pick(GLOB.first_names_male)
 	if(prob(50))
-		brainfirstname = pick(first_names_female)
-	var/brainopslastname = pick(last_names)
+		brainfirstname = pick(GLOB.first_names_female)
+	var/brainopslastname = pick(GLOB.last_names)
 	if(SSticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
 		brainopslastname = SSticker.mode.nukeops_lastname
 	var/brainopsname = "[brainfirstname] [brainopslastname]"

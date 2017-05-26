@@ -14,7 +14,7 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -68,7 +68,6 @@
 /obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	grant_language(/datum/language/common)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -148,11 +147,11 @@
 		3. Don't get messed up in their affairs."
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
+	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= access_cent_bar
-	grant_all_languages(omnitongue=TRUE)
+	access_card.access |= GLOB.access_cent_bar
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -163,16 +162,15 @@
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
+	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	access_card.flags |= NODROP
-
-	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -212,7 +210,7 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (access_cent_bar in ID.access))
+	if(ID && (GLOB.access_cent_bar in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers
@@ -256,7 +254,7 @@
 /mob/living/simple_animal/hostile/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /obj/effect/decal/hammerandsickle
 	name = "hammer and sickle"

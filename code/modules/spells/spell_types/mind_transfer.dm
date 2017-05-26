@@ -62,29 +62,14 @@ Also, you never added distance checking after target is selected. I've went ahea
 	var/mob/caster = user//The wizard/whomever doing the body transferring.
 
 	//MIND TRANSFER BEGIN
-	if(caster.mind.special_verbs.len)//If the caster had any special verbs, remove them from the mob verb list.
-		for(var/V in caster.mind.special_verbs)//Since the caster is using an object spell system, this is mostly moot.
-			caster.verbs -= V//But a safety nontheless.
-
-	if(victim.mind.special_verbs.len)//Now remove all of the victim's verbs.
-		for(var/V in victim.mind.special_verbs)
-			victim.verbs -= V
-
 	var/mob/dead/observer/ghost = victim.ghostize(0)
 	caster.mind.transfer_to(victim)
-
-	if(victim.mind.special_verbs.len)//To add all the special verbs for the original caster.
-		for(var/V in caster.mind.special_verbs)//Not too important but could come into play.
-			caster.verbs += V
 
 	ghost.mind.transfer_to(caster)
 	if(ghost.key)
 		caster.key = ghost.key	//have to transfer the key since the mind was not active
 	qdel(ghost)
 
-	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
-		for(var/V in caster.mind.special_verbs)
-			caster.verbs += V
 	//MIND TRANSFER END
 
 	//Here we paralyze both mobs and knock them out for a time.

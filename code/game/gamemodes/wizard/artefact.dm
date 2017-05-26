@@ -175,6 +175,7 @@
 			continue
 		var/mob/living/carbon/human/H = X
 		if(H.stat == DEAD)
+			H.dust(TRUE)
 			spooky_scaries.Remove(X)
 			continue
 	listclearnulls(spooky_scaries)
@@ -195,7 +196,6 @@
 
 
 /////////////////////Multiverse Blade////////////////////
-var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword
 	name = "multiverse sword"
@@ -214,10 +214,11 @@ var/global/list/multiverse = list()
 	var/faction = list("unassigned")
 	var/cooldown = 0
 	var/assigned = "unassigned"
+	var/static/list/multiverse = list()
 
 /obj/item/weapon/multisword/New()
 	..()
-	multiverse |= src
+	multiverse += src
 
 
 /obj/item/weapon/multisword/Destroy()
@@ -329,7 +330,7 @@ var/global/list/multiverse = list()
 		if("cyborg")
 			for(var/X in M.bodyparts)
 				var/obj/item/bodypart/affecting = X
-				affecting.change_bodypart_status(BODYPART_ROBOTIC)
+				affecting.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.put_in_hands_or_del(sword)
 
@@ -436,7 +437,7 @@ var/global/list/multiverse = list()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access += access_maint_tunnels
+	W.access += GLOB.access_maint_tunnels
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
@@ -517,7 +518,7 @@ var/global/list/multiverse = list()
 					user.unset_machine()
 			if("r_leg","l_leg")
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
-				var/turf/T = get_step(target,pick(cardinal))
+				var/turf/T = get_step(target,pick(GLOB.cardinal))
 				target.Move(T)
 			if("r_arm","l_arm")
 				target.click_random_mob()
@@ -533,7 +534,7 @@ var/global/list/multiverse = list()
 	possible = list()
 	if(!link)
 		return
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(md5(H.dna.uni_identity) in link.fingerprints)
 			possible |= H
 
@@ -584,7 +585,7 @@ var/global/list/multiverse = list()
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
 	user.canmove = 0
-	new /obj/effect/overlay/temp/tornado(T)
+	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return
@@ -602,7 +603,7 @@ var/global/list/multiverse = list()
 			T = potential_T
 			break
 		breakout += 1
-	new /obj/effect/overlay/temp/tornado(T)
+	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return
@@ -620,7 +621,7 @@ var/global/list/multiverse = list()
 		last_user.canmove = 1
 	return ..()
 
-/obj/effect/overlay/temp/tornado
+/obj/effect/temp_visual/tornado
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "tornado"
 	name = "tornado"
@@ -630,6 +631,6 @@ var/global/list/multiverse = list()
 	duration = 40
 	pixel_x = 500
 
-/obj/effect/overlay/temp/tornado/New(loc)
-	..()
+/obj/effect/temp_visual/tornado/Initialize()
+	. = ..()
 	animate(src, pixel_x = -500, time = 40)

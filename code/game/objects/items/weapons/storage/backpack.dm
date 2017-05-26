@@ -69,7 +69,7 @@
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
-		investigate_log("has become a singularity. Caused by [user.key]","singulo")
+		investigate_log("has become a singularity. Caused by [user.key]", INVESTIGATE_SINGULO)
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		var/obj/singularity/singulo = new /obj/singularity (get_turf(src))
@@ -198,9 +198,8 @@
 	icon_state = "satchel"
 	resistance_flags = 0
 
-/obj/item/weapon/storage/backpack/satchel/leather/withwallet/New()
-	..()
-	new /obj/item/weapon/storage/wallet/random( src )
+/obj/item/weapon/storage/backpack/satchel/leather/withwallet/PopulateContents()
+	new /obj/item/weapon/storage/wallet/random(src)
 
 /obj/item/weapon/storage/backpack/satchel/eng
 	name = "industrial satchel"
@@ -284,11 +283,13 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/storage/backpack/satchel/flat/New()
+/obj/item/weapon/storage/backpack/satchel/flat/Initialize(mapload)
 	..()
+	SSpersistence.new_secret_satchels += src
+
+/obj/item/weapon/storage/backpack/satchel/flat/PopulateContents()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
-	SSpersistence.new_secret_satchels += src
 
 /obj/item/weapon/storage/backpack/satchel/flat/Destroy()
 	SSpersistence.new_secret_satchels -= src
@@ -299,7 +300,7 @@
 	var/list/reward_all_of_these = list() //use paths!
 	var/revealed = 0
 
-/obj/item/weapon/storage/backpack/satchel/flat/secret/New()
+/obj/item/weapon/storage/backpack/satchel/flat/secret/Initialize()
 	..()
 
 	if(isfloorturf(loc) && !istype(loc,/turf/open/floor/plating/))
@@ -356,9 +357,7 @@
 	item_state = "duffle-drone"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/dufflebag/drone/New()
-	..()
-
+/obj/item/weapon/storage/backpack/dufflebag/drone/PopulateContents()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -373,8 +372,7 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
-/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/New()
-	. = ..()
+/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
@@ -399,9 +397,7 @@
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery/PopulateContents()
 	new /obj/item/weapon/scalpel(src)
 	new /obj/item/weapon/hemostat(src)
 	new /obj/item/weapon/retractor(src)
@@ -412,7 +408,6 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/device/mmi/syndie(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
 	name = "ammunition dufflebag"
@@ -423,80 +418,60 @@
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
 	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
 	desc = "A large dufflebag, packed to the brim with C20r magazines."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg/PopulateContents()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
 	desc = "A large dufflebag containing a C20r, some magazines, and a cheap looking suppressor."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/weapon/gun/ballistic/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
 	desc = "A large dufflebag containing a Bulldog, several drums, and a collapsed hardsuit."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
 	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
 	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
 	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
 	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
 	desc = "A large dufflebag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle/PopulateContents()
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
 	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
 	new /obj/item/weapon/gun/syringe/syndicate(src)
@@ -504,26 +479,19 @@
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
-	return
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c4/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/c4/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/grenade/plastic/c4(src)
-	return
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/x4/New()
-	..()
-	contents = list()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/x4/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/grenade/plastic/x4(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
 	desc = "A large dufflebag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter/New()
-	..()
+/obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)

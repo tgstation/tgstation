@@ -13,12 +13,6 @@
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
-	if (tr_flags & TR_KEEPORGANS)
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
-			int_organs += I
-			I.Remove(src, 1)
-
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
 	var/obj/item/cavity_object
@@ -42,7 +36,7 @@
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
-	new /obj/effect/overlay/temp/monkeyify(get_turf(src))
+	new /obj/effect/temp_visual/monkeyify(loc)
 	sleep(22)
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
@@ -57,7 +51,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
@@ -92,10 +86,21 @@
 			var/obj/item/weapon/implant/IMP = Y
 			IMP.implant(O, null, 1)
 
-	//re-add organs to new mob
+	//re-add organs to new mob. this order prevents moving the mind to a brain at any point
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
-			qdel(X)
+			var/obj/item/organ/I = X
+			I.Remove(O, 1)
+
+		if(mind)
+			mind.transfer_to(O)
+			if(O.mind.changeling)
+				O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
+			int_organs += I
+			I.Remove(src, 1)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -118,7 +123,7 @@
 					qdel(G) //we lose the organs in the missing limbs
 		qdel(BP)
 
-	//transfer mind and delete old mob
+	//transfer mind if we didn't yet
 	if(mind)
 		mind.transfer_to(O)
 		if(O.mind.changeling)
@@ -154,12 +159,6 @@
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
-	if (tr_flags & TR_KEEPORGANS)
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
-			int_organs += I
-			I.Remove(src, 1)
-
 	var/list/missing_bodyparts_zones = get_missing_limbs()
 
 	var/obj/item/cavity_object
@@ -187,7 +186,7 @@
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/overlay/temp/monkeyify/humanify(get_turf(src))
+	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 	sleep(22)
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
@@ -205,7 +204,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = mutations_list[RACEMUT]
+		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
 		O.domutcheck()
 
@@ -244,7 +243,19 @@
 
 	if(tr_flags & TR_KEEPORGANS)
 		for(var/X in O.internal_organs)
-			qdel(X)
+			var/obj/item/organ/I = X
+			I.Remove(O, 1)
+
+		if(mind)
+			mind.transfer_to(O)
+			if(O.mind.changeling)
+				for(var/obj/effect/proc_holder/changeling/humanform/HF in O.mind.changeling.purchasedpowers)
+					mind.changeling.purchasedpowers -= HF
+
+		for(var/X in internal_organs)
+			var/obj/item/organ/I = X
+			int_organs += I
+			I.Remove(src, 1)
 
 		for(var/X in int_organs)
 			var/obj/item/organ/I = X
@@ -311,21 +322,21 @@
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	var/turf/loc_landmark
-	for(var/obj/effect/landmark/start/sloc in landmarks_list)
+	for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
 		if(sloc.name != "AI")
 			continue
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
 			continue
 		loc_landmark = sloc.loc
 	if(!loc_landmark)
-		for(var/obj/effect/landmark/tripai in landmarks_list)
+		for(var/obj/effect/landmark/tripai in GLOB.landmarks_list)
 			if(tripai.name == "tripai")
 				if(locate(/mob/living/silicon/ai) in tripai.loc)
 					continue
 				loc_landmark = tripai.loc
 	if(!loc_landmark)
 		to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in GLOB.landmarks_list)
 			if (sloc.name == "AI")
 				loc_landmark = sloc.loc
 

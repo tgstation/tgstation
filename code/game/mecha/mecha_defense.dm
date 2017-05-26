@@ -72,7 +72,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].",1)
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src]")
+		user.emote("custom", message = "[user.friendly] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -213,7 +213,6 @@
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		else if(state==3 && cell)
-			cell_power_remaining = max(0.1, cell.charge/cell.maxcharge) //10% charge or whatever is remaining in the current cell
 			cell.forceMove(loc)
 			cell = null
 			state = 4
@@ -232,7 +231,6 @@
 				var/obj/item/weapon/stock_parts/cell/C = W
 				to_chat(user, "<span class='notice'>You install the powercell.</span>")
 				C.forceMove(src)
-				C.use(max(0, C.charge - C.maxcharge*cell_power_remaining)) //Set inserted cell's power to saved percentage if that's higher
 				cell = C
 				log_message("Powercell installed")
 			else
@@ -312,7 +310,7 @@
 			L.narsie_act()
 
 /obj/mecha/ratvar_act()
-	if((ratvar_awakens || clockwork_gateway_activated) && occupant)
+	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)
 		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
 			full_repair(TRUE)
 		else

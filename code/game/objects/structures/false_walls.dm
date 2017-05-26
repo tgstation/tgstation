@@ -234,8 +234,9 @@
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)
-		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma falsewall ignited by [key_name(user)] in [COORD(T)]")
 		burnbabyburn()
 	else
 		return ..()
@@ -330,8 +331,8 @@
 /obj/structure/falsewall/brass/New(loc)
 	..()
 	var/turf/T = get_turf(src)
-	new /obj/effect/overlay/temp/ratvar/wall/false(T)
-	new /obj/effect/overlay/temp/ratvar/beam/falsewall(T)
+	new /obj/effect/temp_visual/ratvar/wall/false(T)
+	new /obj/effect/temp_visual/ratvar/beam/falsewall(T)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()
@@ -339,5 +340,5 @@
 	return ..()
 
 /obj/structure/falsewall/brass/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity

@@ -65,7 +65,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/research/interior/engineering)
 "an" = (
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "ao" = (
 /obj/structure/window/reinforced,
@@ -82,20 +82,20 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aq" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "ar" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/research/interior/engineering)
 "as" = (
 /mob/living/simple_animal/hostile/syndicate/ranged,
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "at" = (
 /obj/machinery/suit_storage_unit/engine,
@@ -136,7 +136,7 @@
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/syndicate,
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "az" = (
 /obj/effect/gibspawner/human,
@@ -188,20 +188,20 @@
 	id = "spacebattlepod2";
 	name = "Hull Door Control"
 	},
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aK" = (
 /obj/effect/mob_spawn/human/syndicatesoldier{
 	brute_damage = 200
 	},
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aL" = (
 /obj/structure/table,
-/obj/item/weapon/c4,
-/obj/item/weapon/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
 /obj/item/weapon/storage/toolbox/syndicate,
-/turf/open/floor/plasteel/shuttle/red/syndicate,
+/turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aM" = (
 /obj/item/weapon/stock_parts/cell/high/empty,
@@ -4627,7 +4627,7 @@
 /obj/effect/mob_spawn/human/doctor{
 	brute_damage = 200
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)
 "ms" = (
 /obj/structure/chair{
@@ -4641,13 +4641,13 @@
 	uniform = /obj/item/clothing/under/rank/geneticist;
 	name = "Geneticist"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)
 "mt" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaymission/research/exterior)
 "mu" = (
 /obj/machinery/door/airlock/external{

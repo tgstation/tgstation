@@ -38,6 +38,11 @@
 /turf/open/floor/plating/lava/make_plating()
 	return
 
+/turf/open/floor/plating/lava/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
+
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
 
@@ -106,6 +111,12 @@
 	return
 
 /turf/open/floor/plating/lava/break_tile()
+	return
+
+/turf/open/floor/plating/lava/pry_tile()
+	return
+
+/turf/open/floor/plating/lava/try_replace_tile()
 	return
 
 /turf/open/floor/plating/lava/burn_tile()

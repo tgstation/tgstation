@@ -3,7 +3,7 @@
 
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
-	var/image/wet_overlay = null
+	var/mutable_appearance/wet_overlay
 
 /turf/open/indestructible
 	name = "floor"
@@ -30,7 +30,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
 /turf/open/indestructible/necropolis/Initialize()
-	..()
+	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
@@ -44,6 +44,9 @@
 	smooth = SMOOTH_TRUE
 
 /turf/open/indestructible/hierophant/two
+
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 /turf/open/indestructible/paper
 	name = "notebook floor"
@@ -59,7 +62,7 @@
 	//cache some vars
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
@@ -183,17 +186,22 @@
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			cut_overlay(wet_overlay)
-			wet_overlay = null
+		else
+			wet_overlay = mutable_appearance()
 		var/turf/open/floor/F = src
 		if(istype(F))
 			if(wet_setting == TURF_WET_PERMAFROST)
-				wet_overlay = image('icons/effects/water.dmi', src, "ice_floor")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "ice_floor"
 			else if(wet_setting == TURF_WET_ICE)
-				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
+				wet_overlay.icon = 'icons/turf/overlays.dmi'
+				wet_overlay.icon_state = "snowfloor"
 			else
-				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "wet_floor_static"
 		else
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
+			wet_overlay.icon = 'icons/effects/water.dmi'
+			wet_overlay.icon_state = "wet_static"
 		add_overlay(wet_overlay)
 	HandleWet()
 

@@ -23,6 +23,7 @@
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"
+#define STONER		"Stoner"
 #define UNINTELLIGABLE		"Unintelligable"
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
@@ -113,3 +114,4 @@
 #define EASYLIMBATTACHMENT 23
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define NO_UNDERWEAR		26

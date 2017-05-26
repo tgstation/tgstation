@@ -43,9 +43,13 @@
 		/obj/item/weapon/grenade/chem_grenade/glitter/pink		= 1,
 		/obj/item/weapon/grenade/chem_grenade/glitter/blue		= 1,
 		/obj/item/weapon/grenade/chem_grenade/glitter/white		= 1,
-		/obj/item/toy/eightball									= 2)
+		/obj/item/toy/eightball									= 2,
+		/obj/item/toy/windupToolbox								= 2)
 
 	light_color = LIGHT_COLOR_GREEN
+
+/obj/machinery/computer/arcade/proc/Reset()
+	return
 
 /obj/machinery/computer/arcade/New()
 	..()
@@ -56,6 +60,11 @@
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
+
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
+	Reset()
+
 
 #define PULSE_MEDAL "Jackpot"
 
@@ -73,8 +82,9 @@
 		"<span class='notice'>[src] dispenses a [prize]!</span>",
 		"<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.loc = src.loc
+	prize.loc = loc
 #undef PULSE_MEDAL
+
 /obj/machinery/computer/arcade/emp_act(severity)
 	..(severity)
 
@@ -90,8 +100,8 @@
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
 		empprize = pickweight(prizes)
-		new empprize(src.loc)
-	explosion(src.loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+		new empprize(loc)
+	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 
 // ** BATTLE ** //
@@ -108,12 +118,11 @@
 	var/player_mp = 10
 	var/enemy_hp = 45 //Enemy health/attack points
 	var/enemy_mp = 20
-	var/gameover = 0
-	var/blocked = 0 //Player cannot attack/heal while set
+	var/gameover = FALSE
+	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
 
-/obj/machinery/computer/arcade/battle/New()
-	..()
+/obj/machinery/computer/arcade/battle/Reset()
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -123,20 +132,20 @@
 	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
 	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn", "Bloopers")
 
-	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
-	src.name = (name_action + name_part1 + name_part2)
+	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
+	name = (name_action + name_part1 + name_part2)
 
 /obj/machinery/computer/arcade/battle/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
-	dat += "<center><h4>[src.enemy_name]</h4></center>"
+	dat += "<center><h4>[enemy_name]</h4></center>"
 
-	dat += "<br><center><h3>[src.temp]</h3></center>"
-	dat += "<br><center>Health: [src.player_hp] | Magic: [src.player_mp] | Enemy Health: [src.enemy_hp]</center>"
+	dat += "<br><center><h3>[temp]</h3></center>"
+	dat += "<br><center>Health: [player_hp] | Magic: [player_mp] | Enemy Health: [enemy_hp]</center>"
 
-	if (src.gameover)
+	if (gameover)
 		dat += "<center><b><a href='byond://?src=\ref[src];newgame=1'>New Game</a>"
 	else
 		dat += "<center><b><a href='byond://?src=\ref[src];attack=1'>Attack</a> | "
@@ -146,7 +155,7 @@
 	dat += "</b></center>"
 	var/datum/browser/popup = new(user, "arcade", "Space Villian 2000")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -154,48 +163,48 @@
 	if(..())
 		return
 
-	if (!src.blocked && !src.gameover)
+	if (!blocked && !gameover)
 		if (href_list["attack"])
-			src.blocked = 1
+			blocked = TRUE
 			var/attackamt = rand(2,6)
-			src.temp = "You attack for [attackamt] damage!"
-			playsound(src.loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
-			src.updateUsrDialog()
+			temp = "You attack for [attackamt] damage!"
+			playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+			updateUsrDialog()
 			if(turtle > 0)
 				turtle--
 
 			sleep(10)
-			src.enemy_hp -= attackamt
-			src.arcade_action()
+			enemy_hp -= attackamt
+			arcade_action()
 
 		else if (href_list["heal"])
-			src.blocked = 1
+			blocked = TRUE
 			var/pointamt = rand(1,3)
 			var/healamt = rand(6,8)
-			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			playsound(src.loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
-			src.updateUsrDialog()
+			temp = "You use [pointamt] magic to heal for [healamt] damage!"
+			playsound(loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+			updateUsrDialog()
 			turtle++
 
 			sleep(10)
-			src.player_mp -= pointamt
-			src.player_hp += healamt
-			src.blocked = 1
-			src.updateUsrDialog()
-			src.arcade_action()
+			player_mp -= pointamt
+			player_hp += healamt
+			blocked = TRUE
+			updateUsrDialog()
+			arcade_action()
 
 		else if (href_list["charge"])
-			src.blocked = 1
+			blocked = 1
 			var/chargeamt = rand(4,7)
-			src.temp = "You regain [chargeamt] points"
-			playsound(src.loc, 'sound/arcade/Mana.ogg', 50, 1, extrarange = -3, falloff = 10)
-			src.player_mp += chargeamt
+			temp = "You regain [chargeamt] points"
+			playsound(loc, 'sound/arcade/Mana.ogg', 50, 1, extrarange = -3, falloff = 10)
+			player_mp += chargeamt
 			if(turtle > 0)
 				turtle--
 
-			src.updateUsrDialog()
+			updateUsrDialog()
 			sleep(10)
-			src.arcade_action()
+			arcade_action()
 
 	if (href_list["close"])
 		usr.unset_machine()
@@ -207,83 +216,83 @@
 		player_mp = 10
 		enemy_hp = 45
 		enemy_mp = 20
-		gameover = 0
+		gameover = FALSE
 		turtle = 0
 
 		if(emagged)
-			src.New()
+			Reset()
 			emagged = 0
 
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 /obj/machinery/computer/arcade/battle/proc/arcade_action()
-	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
+	if ((enemy_mp <= 0) || (enemy_hp <= 0))
 		if(!gameover)
-			src.gameover = 1
-			src.temp = "[src.enemy_name] has fallen! Rejoice!"
-			playsound(src.loc, 'sound/arcade/Win.ogg', 50, 1, extrarange = -3, falloff = 10)
+			gameover = TRUE
+			temp = "[enemy_name] has fallen! Rejoice!"
+			playsound(loc, 'sound/arcade/Win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
 			if(emagged)
-				feedback_inc("arcade_win_emagged")
-				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
-				new /obj/item/clothing/head/collectable/petehat(src.loc)
+				SSblackbox.inc("arcade_win_emagged")
+				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
+				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				src.New()
+				Reset()
 				emagged = 0
 			else
-				feedback_inc("arcade_win_normal")
+				SSblackbox.inc("arcade_win_normal")
 				prizevend()
 
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
-		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(src.loc, 'sound/arcade/Boom.ogg', 50, 1, extrarange = -3, falloff = 10)
-		src.player_hp -= boomamt
+		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
+		playsound(loc, 'sound/arcade/Boom.ogg', 50, 1, extrarange = -3, falloff = 10)
+		player_hp -= boomamt
 
-	else if ((src.enemy_mp <= 5) && (prob(70)))
+	else if ((enemy_mp <= 5) && (prob(70)))
 		var/stealamt = rand(2,3)
-		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
-		playsound(src.loc, 'sound/arcade/Steal.ogg', 50, 1, extrarange = -3, falloff = 10)
-		src.player_mp -= stealamt
-		src.updateUsrDialog()
+		temp = "[enemy_name] steals [stealamt] of your power!"
+		playsound(loc, 'sound/arcade/Steal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		player_mp -= stealamt
+		updateUsrDialog()
 
-		if (src.player_mp <= 0)
-			src.gameover = 1
+		if (player_mp <= 0)
+			gameover = TRUE
 			sleep(10)
-			src.temp = "You have been drained! GAME OVER"
-			playsound(src.loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+			temp = "You have been drained! GAME OVER"
+			playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
-				feedback_inc("arcade_loss_mana_emagged")
+				SSblackbox.inc("arcade_loss_mana_emagged")
 				usr.gib()
 			else
-				feedback_inc("arcade_loss_mana_normal")
+				SSblackbox.inc("arcade_loss_mana_normal")
 
-	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
-		src.temp = "[src.enemy_name] heals for 4 health!"
-		playsound(src.loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
-		src.enemy_hp += 4
-		src.enemy_mp -= 4
+	else if ((enemy_hp <= 10) && (enemy_mp > 4))
+		temp = "[enemy_name] heals for 4 health!"
+		playsound(loc, 'sound/arcade/Heal.ogg', 50, 1, extrarange = -3, falloff = 10)
+		enemy_hp += 4
+		enemy_mp -= 4
 
 	else
 		var/attackamt = rand(3,6)
-		src.temp = "[src.enemy_name] attacks for [attackamt] damage!"
-		playsound(src.loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
-		src.player_hp -= attackamt
+		temp = "[enemy_name] attacks for [attackamt] damage!"
+		playsound(loc, 'sound/arcade/Hit.ogg', 50, 1, extrarange = -3, falloff = 10)
+		player_hp -= attackamt
 
-	if ((src.player_mp <= 0) || (src.player_hp <= 0))
-		src.gameover = 1
-		src.temp = "You have been crushed! GAME OVER"
-		playsound(src.loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
+	if ((player_mp <= 0) || (player_hp <= 0))
+		gameover = TRUE
+		temp = "You have been crushed! GAME OVER"
+		playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
-			feedback_inc("arcade_loss_hp_emagged")
+			SSblackbox.inc("arcade_loss_hp_emagged")
 			usr.gib()
 		else
-			feedback_inc("arcade_loss_hp_normal")
+			SSblackbox.inc("arcade_loss_hp_normal")
 
-	src.blocked = 0
+	blocked = FALSE
 	return
 
 
@@ -294,16 +303,16 @@
 		player_mp = 10
 		enemy_hp = 45
 		enemy_mp = 20
-		gameover = 0
-		blocked = 0
+		gameover = FALSE
+		blocked = FALSE
 
-		emagged = 1
+		emagged = TRUE
 
 		enemy_name = "Cuban Pete"
 		name = "Outbomb Cuban Pete"
 
 
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 
 
@@ -362,8 +371,7 @@
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
-/obj/machinery/computer/arcade/orion_trail/New()
-	..()
+/obj/machinery/computer/arcade/orion_trail/Reset()
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
 	stopblurbs = list(
@@ -461,7 +469,7 @@
 		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];close=1'>Close</a></P>"
 	var/datum/browser/popup = new(user, "arcade", "The Orion Trail",400,700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -521,12 +529,12 @@
 							M.Weaken(3)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
-							playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
+							playsound(loc, 'sound/weapons/Genhit.ogg', 100, 1)
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
 						if(prob(90))
-							playsound(src.loc, 'sound/effects/bang.ogg', 100, 1)
+							playsound(loc, 'sound/effects/bang.ogg', 100, 1)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
 								F.ChangeTurf(F.baseturf)
@@ -534,16 +542,16 @@
 							if(hull)
 								sleep(10)
 								say("A new floor suddenly appears around [src]. What the hell?")
-								playsound(src.loc, 'sound/weapons/Genhit.ogg', 100, 1)
+								playsound(loc, 'sound/weapons/Genhit.ogg', 100, 1)
 								var/turf/open/space/T
 								for(T in orange(1, src))
 									T.ChangeTurf(/turf/open/floor/plating/)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
-							playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
+							playsound(loc, 'sound/effects/bang.ogg', 50, 1)
 					if(ORION_TRAIL_MALFUNCTION)
-						playsound(src.loc, 'sound/effects/EMPulse.ogg', 50, 1)
-						src.visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
+						playsound(loc, 'sound/effects/EMPulse.ogg', 50, 1)
+						visible_message("<span class='danger'>[src] malfunctions, randomizing in-game stats!</span>")
 						var/oldfood = food
 						var/oldfuel = fuel
 						food = rand(10,80) / rand(1,2)
@@ -551,12 +559,12 @@
 						if(electronics)
 							sleep(10)
 							if(oldfuel > fuel && oldfood > food)
-								src.audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
+								audible_message("<span class='danger'>[src] lets out a somehow reassuring chime.</span>")
 							else if(oldfuel < fuel || oldfood < food)
-								src.audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
+								audible_message("<span class='danger'>[src] lets out a somehow ominous chime.</span>")
 							food = oldfood
 							fuel = oldfuel
-							playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
+							playsound(loc, 'sound/machines/chime.ogg', 50, 1)
 
 	else if(href_list["newgame"]) //Reset everything
 		if(gameStatus == ORION_STATUS_START)
@@ -608,7 +616,7 @@
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(emagged) //has to be here because otherwise it doesn't work
-					playsound(src.loc, 'sound/effects/supermatter.ogg', 100, 1)
+					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					usr.Stun(10) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
@@ -742,8 +750,8 @@
 							last_spaceport_action = "Traded Food for Fuel"
 							event()
 
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()
 	busy = 0
 	return
 
@@ -989,9 +997,9 @@
 		newcrew = specific
 	else
 		if(prob(50))
-			newcrew = pick(first_names_male)
+			newcrew = pick(GLOB.first_names_male)
 		else
-			newcrew = pick(first_names_female)
+			newcrew = pick(GLOB.first_names_female)
 	if(newcrew)
 		settlers += newcrew
 		alive++
@@ -1021,7 +1029,7 @@
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(emagged)
-		new /obj/item/weapon/orion_ship(src.loc)
+		new /obj/item/weapon/orion_ship(loc)
 		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
@@ -1048,17 +1056,21 @@
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"
+	id_job = "Officer"
+	id_access_list = list(GLOB.access_syndicate)
+	outfit = /datum/outfit/orionsecurity
+
+/datum/outfit/orionsecurity
+	name = "Orion Spaceport Security"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
+	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/swat
+	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/weapon/storage/backpack
-	has_id = 1
-	id_job = "Officer"
-	id_access_list = list(access_syndicate)
+	id = /obj/item/weapon/card/id
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
@@ -1086,18 +1098,18 @@
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1
-	src.visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
-	playsound(src.loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
+	visible_message("<span class='notice'>[src] softly beeps and whirs to life!</span>")
+	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, 1)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
 	sleep(20)
-	src.visible_message("<span class='warning'>[src] begins to vibrate...</span>")
+	visible_message("<span class='warning'>[src] begins to vibrate...</span>")
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
 	sleep(30)
 	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
-	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
+	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, 1)
 	sleep(3.6)
-	src.visible_message("<span class='userdanger'>[src] explodes!</span>")
-	explosion(src.loc, 2,4,8, flame_range = 16)
+	visible_message("<span class='userdanger'>[src] explodes!</span>")
+	explosion(loc, 2,4,8, flame_range = 16)
 	qdel(src)
 
 

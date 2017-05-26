@@ -146,7 +146,7 @@
 	return UI_CLOSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "thermomachine", name, 400, 240, master_ui, state)
@@ -173,7 +173,7 @@
 		if("power")
 			on = !on
 			use_power = 1 + on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("target")
 			var/target = params["target"]
@@ -190,7 +190,7 @@
 				. = TRUE
 			if(.)
 				target_temperature = Clamp(target, min_temperature, max_temperature)
-				investigate_log("was set to [target_temperature] K by [key_name(usr)]", "atmos")
+				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer

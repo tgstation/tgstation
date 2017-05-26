@@ -8,7 +8,7 @@
 	maxHealth = 1000
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = 3
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -53,7 +53,7 @@
 		return
 	else
 		if(!admin_spawned)
-			feedback_set_details("megafauna_kills","[initial(name)]")
+			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()

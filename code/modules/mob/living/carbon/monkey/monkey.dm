@@ -2,7 +2,7 @@
 	name = "monkey"
 	voice_name = "monkey"
 	verb_say = "chimpers"
-	initial_languages = list(/datum/language/monkey)
+	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = ""
 	gender = NEUTER
@@ -30,10 +30,8 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
-/mob/living/carbon/monkey/Initialize()
-	..()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
@@ -44,6 +42,7 @@
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/ears
 	..()
 
 /mob/living/carbon/monkey/movement_delay()
@@ -132,15 +131,6 @@
 		protection = max(1 - wear_mask.permeability_coefficient, protection)
 	protection = protection/7 //the rest of the body isn't covered.
 	return protection
-
-/mob/living/carbon/monkey/fully_heal(admin_revive = 0)
-	if(!getorganslot("lungs"))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
-	if(!getorganslot("tongue"))
-		var/obj/item/organ/tongue/T = new()
-		T.Insert(src)
-	..()
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot("lungs"))

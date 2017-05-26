@@ -29,14 +29,9 @@
 	if(I)
 		. |= I.get_held_item_speechspans(src)
 
-/mob/living/carbon/can_speak_in_language(datum/language/dt)
-	if(HAS_SECONDARY_FLAG(src, OMNITONGUE))
-		. = has_language(dt)
-	else if(has_language(dt))
-		var/obj/item/organ/tongue/T = getorganslot("tongue")
-		if(T)
-			. = T.can_speak_in_language(dt)
-		else
-			. = initial(dt.flags) & TONGUELESS_SPEECH
+/mob/living/carbon/could_speak_in_language(datum/language/dt)
+	var/obj/item/organ/tongue/T = getorganslot("tongue")
+	if(T)
+		. = T.could_speak_in_language(dt)
 	else
-		. = FALSE
+		. = initial(dt.flags) & TONGUELESS_SPEECH

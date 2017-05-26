@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = 9
+	init_order = INIT_ORDER_MACHINES
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(machines)
 		qdel(PN)
 	powernets.Cut()
 
-	for(var/obj/structure/cable/PC in cable_list)
+	for(var/obj/structure/cable/PC in GLOB.cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)

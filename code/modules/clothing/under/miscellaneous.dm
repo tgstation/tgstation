@@ -61,8 +61,8 @@
 	icon_state = "prisoner"
 	item_state = "o_suit"
 	item_color = "prisoner"
-	has_sensor = 2
-	sensor_mode = 3
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/mailman
@@ -210,6 +210,14 @@
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
+
+/obj/item/clothing/under/suit_jacket/green
+	name = "green suit"
+	desc = "A green suit and yellow necktie. Baller."
+	icon_state = "green_suit"
+	item_state = "dg_suit"
+	item_color = "green_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"
@@ -404,7 +412,7 @@
 
 /obj/item/clothing/under/gladiator/ash_walker
 	desc = "This gladiator uniform appears to be covered in ash and fairly dated."
-	has_sensor = 0
+	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/sundress
 	name = "sundress"

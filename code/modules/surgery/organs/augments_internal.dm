@@ -11,7 +11,7 @@
 	if(iscarbon(M))
 		src.Insert(M)
 	if(implant_overlay)
-		var/image/overlay = new /image(icon, implant_overlay)
+		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
 		add_overlay(overlay)
 	return ..()
@@ -117,6 +117,7 @@
 		return
 	crit_fail = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
+	..()
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
@@ -154,8 +155,7 @@
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/bundle/New()
-	..()
+/obj/item/weapon/storage/box/cyber_implants/PopulateContents()
 	var/implant
 	while(contents.len <= amount)
 		implant = pick(boxed)

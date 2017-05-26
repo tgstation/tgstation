@@ -9,7 +9,7 @@
 #define MIN_GALLOP 7
 
 	//This is a global instance to allow much of this code to be reused. The interfaces are kept seperately
-var/datum/sortInstance/sortInstance = new()
+GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 /datum/sortInstance
 	//The array being sorted.
 	var/list/L
@@ -626,14 +626,13 @@ var/datum/sortInstance/sortInstance = new()
 		var/val2 = fetchElement(L,cursor2)
 
 		while(1)
-			if(call(cmp)(val1,val2) < 0)
+			if(call(cmp)(val1,val2) <= 0)
 				if(++cursor1 >= end1)
 					break
 				val1 = fetchElement(L,cursor1)
 			else
 				moveElement(L,cursor2,cursor1)
 
-				++cursor2
 				if(++cursor2 >= end2)
 					break
 				++end1

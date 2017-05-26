@@ -13,7 +13,7 @@
 /*
  * Metal
  */
-var/global/list/datum/stack_recipe/metal_recipes = list ( \
+GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \
@@ -52,7 +52,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = 1, on_floor = 1), \
-)
+))
 
 /obj/item/stack/sheet/metal
 	name = "metal"
@@ -71,12 +71,14 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	qdel(src)
 
 /obj/item/stack/sheet/metal/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
+
+/obj/item/stack/sheet/metal/twenty
+	amount = 20
 
 /obj/item/stack/sheet/metal/five
 	amount = 5
@@ -87,16 +89,16 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	cost = 500
 
 /obj/item/stack/sheet/metal/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = metal_recipes
+	recipes = GLOB.metal_recipes
 	return ..()
 
 /*
  * Plasteel
  */
-var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
+GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
-)
+))
 
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
@@ -113,7 +115,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	merge_type = /obj/item/stack/sheet/plasteel
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = plasteel_recipes
+	recipes = GLOB.plasteel_recipes
 	return ..()
 
 /obj/item/stack/sheet/plasteel/twenty
@@ -125,7 +127,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /*
  * Wood
  */
-var/global/list/datum/stack_recipe/wood_recipes = list ( \
+GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
 	new/datum/stack_recipe("wood table frame", /obj/structure/table_frame/wood, 2, time = 10), \
@@ -139,7 +141,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("picture frame", /obj/item/weapon/picture_frame, 1, time = 10),\
+	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/weapon/shield/riot/buckler, 20, time = 40), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 50),\
@@ -147,7 +149,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = 1, on_floor = 1),\
 	new/datum/stack_recipe("baseball bat", /obj/item/weapon/melee/baseball_bat, 5, time = 15),\
-	)
+	))
 
 /obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
@@ -162,7 +164,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	merge_type = /obj/item/stack/sheet/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = wood_recipes
+	recipes = GLOB.wood_recipes
 	return ..()
 
 /obj/item/stack/sheet/mineral/wood/fifty
@@ -171,7 +173,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 /*
  * Cloth
  */
-var/global/list/datum/stack_recipe/cloth_recipes = list ( \
+GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("grey jumpsuit", /obj/item/clothing/under/color/grey, 3), \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	null, \
@@ -193,7 +195,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	new/datum/stack_recipe("black gloves", /obj/item/clothing/gloves/color/black, 3), \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
-	)
+	))
 
 /obj/item/stack/sheet/cloth
 	name = "cloth"
@@ -207,7 +209,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = cloth_recipes
+	recipes = GLOB.cloth_recipes
 	return ..()
 
 /obj/item/stack/sheet/cloth/ten
@@ -216,7 +218,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 /*
  * Cardboard
  */
-var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
+GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
 	new/datum/stack_recipe("light bulbs", /obj/item/weapon/storage/box/lights/bulbs), \
@@ -227,7 +229,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("folder", /obj/item/weapon/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
-)
+))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
@@ -239,8 +241,8 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	merge_type = /obj/item/stack/sheet/cardboard
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge = TRUE)
-		recipes = cardboard_recipes
-		return ..()
+	recipes = GLOB.cardboard_recipes
+	return ..()
 
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
@@ -249,14 +251,14 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
  * Runed Metal
  */
 
-var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
+GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	new/datum/stack_recipe("runed door", /obj/machinery/door/airlock/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("runed girder", /obj/structure/girder/cult, 1, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("pylon", /obj/structure/destructible/cult/pylon, 4, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("forge", /obj/structure/destructible/cult/forge, 3, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("archives", /obj/structure/destructible/cult/tome, 3, time = 40, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("altar", /obj/structure/destructible/cult/talisman, 3, time = 40, one_per_turf = 1, on_floor = 1), \
-	)
+	))
 
 /obj/item/stack/sheet/runed_metal
 	name = "runed metal"
@@ -283,17 +285,20 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 		return
 	..()
 
+/obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.runed_metal_recipes
+	return ..()
+
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
 
-/obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = runed_metal_recipes
-	return ..()
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
  */
-var/global/list/datum/stack_recipe/brass_recipes = list ( \
+GLOBAL_LIST_INIT(brass_recipes, list ( \
 	new/datum/stack_recipe("wall gear", /obj/structure/destructible/clockwork/wall_gear, 3, time = 30, one_per_turf = TRUE, on_floor = TRUE), \
 	null,
 	new/datum/stack_recipe("pinion airlock", /obj/machinery/door/airlock/clockwork, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
@@ -303,7 +308,7 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	new/datum/stack_recipe("directional brass window", /obj/structure/window/reinforced/clockwork/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("fulltile brass window", /obj/structure/window/reinforced/clockwork/fulltile/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE), \
 	new/datum/stack_recipe("brass table frame", /obj/structure/table_frame/brass, 1, time = 5, one_per_turf = TRUE, on_floor = TRUE) \
-)
+))
 
 /obj/item/stack/tile/brass
 	name = "brass"
@@ -319,13 +324,12 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	turf_type = /turf/open/floor/clockwork
 
 /obj/item/stack/tile/brass/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = brass_recipes
-	..()
+	recipes = GLOB.brass_recipes
+	. = ..()
 	pixel_x = 0
 	pixel_y = 0
 
@@ -360,8 +364,11 @@ var/global/list/datum/stack_recipe/brass_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
 
-var/global/list/datum/stack_recipe/plastic_recipes = list(
-	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40))
+GLOBAL_LIST_INIT(plastic_recipes, list(
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40), \
+	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"
@@ -380,5 +387,5 @@ var/global/list/datum/stack_recipe/plastic_recipes = list(
 	amount = 5
 
 /obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = plastic_recipes
+	recipes = GLOB.plastic_recipes
 	. = ..()

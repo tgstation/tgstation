@@ -45,13 +45,6 @@
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
-/obj/item/device/radio/New()
-	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
-	secure_radio_connections = new
-	..()
-
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
 	translate_binary = 0
@@ -75,7 +68,7 @@
 			independent = TRUE
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/device/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -92,12 +85,16 @@
 	return ..()
 
 /obj/item/device/radio/Initialize()
-	..()
+	wires = new /datum/wires/radio(src)
+	if(prison_radio)
+		wires.cut(WIRE_TX) // OH GOD WHY
+	secure_radio_connections = new
+	. = ..()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/device/radio/interact(mob/user)
 	if (..())
@@ -108,7 +105,7 @@
 		ui_interact(user)
 
 /obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
@@ -241,7 +238,7 @@
 	var/turf/position = get_turf(src)
 
 	var/jammed = FALSE
-	for(var/obj/item/device/jammer/jammer in active_jammers)
+	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
 		if(get_dist(position,get_turf(jammer)) < jammer.range)
 			jammed = TRUE
 			break
@@ -267,7 +264,7 @@
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
-		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
+		var/datum/data/record/findjob = find_record("name", voice, GLOB.data_core.general)
 
 		if(voice != real_name)
 			voicemask = 1
@@ -380,11 +377,11 @@
 
 		 //#### Sending the signal to all subspace receivers ####//
 
-		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+		for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 			R.receive_signal(signal)
 
 		// Allinone can act as receivers.
-		for(var/obj/machinery/telecomms/allinone/R in telecomms_list)
+		for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
@@ -427,7 +424,7 @@
 		"verb_yell" = M.verb_yell
 		)
 	signal.frequency = freqnum // Quick frequency set
-	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
 
 
@@ -444,7 +441,7 @@
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
 						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(radio_freq)
 		return
 	if(broadcasting)
@@ -476,10 +473,10 @@
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return -1
-	if(freq == SYND_FREQ)
+	if(freq == GLOB.SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if(freq == CENTCOM_FREQ)
+	if(freq == GLOB.CENTCOM_FREQ)
 		if(!independent)
 			return -1
 	if (!on)
@@ -492,7 +489,7 @@
 		if (!accept)
 			for(var/ch_name in channels)
 				if(channels[ch_name] & FREQ_LISTENING)
-					if(radiochannels[ch_name] == text2num(freq) || syndie) //the radiochannels list is located in communications.dm
+					if(GLOB.radiochannels[ch_name] == text2num(freq) || syndie) //the GLOB.radiochannels list is located in communications.dm
 						accept = 1
 						break
 		if (!accept)
@@ -559,16 +556,16 @@
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
-	set_frequency(SYND_FREQ)
+/obj/item/device/radio/borg/syndicate/Initialize()
+	. = ..()
+	set_frequency(GLOB.SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(keyslot)
 			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 

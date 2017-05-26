@@ -87,7 +87,7 @@
 		var/mob/living/silicon/robot/R = user
 
 		if(shock)
-			user <<"<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>"
+			to_chat(user, "<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
 			if(signs.len)
@@ -96,7 +96,7 @@
 			shock = 0
 			return
 		else if(R.emagged&&!shock)
-			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
+			to_chat(user, "<span class='warning'>You clear all active holograms, and overload your energy projector!</span>")
 			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
 			if(signs.len)

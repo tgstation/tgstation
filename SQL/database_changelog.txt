@@ -1,3 +1,13 @@
+21 April 2017, by Jordie0608
+
+Modified table 'player', adding the column 'accountjoindate', removing the column 'id' and making the column 'ckey' the primary key.
+
+ALTER TABLE `feedback`.`player` DROP COLUMN `id`, ADD COLUMN `accountjoindate` DATE NULL AFTER `lastadminrank`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`), DROP INDEX `ckey`;
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
 10 March 2017, by Jordie0608
 
 Modified table 'death', adding the columns 'toxloss', 'cloneloss', and 'staminaloss' and table 'legacy_population', adding the columns 'server_ip' and 'server_port'.

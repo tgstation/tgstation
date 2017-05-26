@@ -36,7 +36,7 @@ Bonus
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
 	var/heal_amt = 0.5
 	if(M.toxloss > 0 && prob(20))
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#66FF99")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#66FF99")
 	M.adjustToxLoss(-heal_amt)
 	return 1
 
@@ -67,7 +67,7 @@ Bonus
 /datum/symptom/heal/plus/Heal(mob/living/M, datum/disease/advance/A)
 	var/heal_amt = 1
 	if(M.toxloss > 0 && prob(20))
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#00FF00")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#00FF00")
 	M.adjustToxLoss(-heal_amt)
 	return 1
 
@@ -110,7 +110,7 @@ Bonus
 			M.update_damage_overlays()
 
 	if(prob(20))
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#FF3333")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#FF3333")
 
 	return 1
 
@@ -148,7 +148,7 @@ Bonus
 	if(M.getCloneLoss() > 0)
 		M.adjustCloneLoss(-1)
 		M.take_bodypart_damage(0, 1) //Deals BURN damage, which is not cured by this symptom
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#33FFCC")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#33FFCC")
 
 	if(!parts.len)
 		return
@@ -158,7 +158,7 @@ Bonus
 			M.update_damage_overlays()
 
 	if(prob(20))
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#CC1100")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#CC1100")
 
 	return 1
 
@@ -201,7 +201,7 @@ Bonus
 			M.update_damage_overlays()
 
 	if(prob(20))
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#FF9933")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#FF9933")
 	return 1
 
 
@@ -248,7 +248,7 @@ Bonus
 			M.update_damage_overlays()
 
 	if(prob(20))
-		new /obj/effect/overlay/temp/heal(get_turf(M), "#CC6600")
+		new /obj/effect/temp_visual/heal(get_turf(M), "#CC6600")
 	return 1
 
 
@@ -282,7 +282,7 @@ Bonus
 	var/amt_healed = 1
 	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
-	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
+	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)
 	M.radiation = max(M.radiation - (2 * amt_healed), 0)
 	return 1

@@ -21,14 +21,14 @@
 	var/mob/camera/blob/overmind
 
 
-/obj/structure/blob/New(loc)
+/obj/structure/blob/Initialize()
 	var/area/Ablob = get_area(loc)
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		blobs_legit += src
-	blobs += src //Keep track of the blob in the normal list either way
-	setDir(pick(cardinal))
+		GLOB.blobs_legit += src
+	GLOB.blobs += src //Keep track of the blob in the normal list either way
+	setDir(pick(GLOB.cardinal))
 	update_icon()
-	..()
+	.= ..()
 	ConsumeTile()
 	if(atmosblock)
 		CanAtmosPass = ATMOS_PASS_NO
@@ -41,8 +41,8 @@
 	if(atmosblock)
 		atmosblock = 0
 		air_update_turf(1)
-	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
-	blobs -= src //it's no longer in the all blobs list either
+	GLOB.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+	GLOB.blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
@@ -99,7 +99,7 @@
 	var/list/blobs_to_affect = list()
 	for(var/obj/structure/blob/B in urange(claim_range, src, 1))
 		blobs_to_affect += B
-	shuffle(blobs_to_affect)
+	shuffle_inplace(blobs_to_affect)
 	for(var/L in blobs_to_affect)
 		var/obj/structure/blob/B = L
 		if(!B.overmind && !istype(B, /obj/structure/blob/core) && prob(30))
@@ -140,7 +140,7 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
-	var/obj/effect/overlay/temp/blob/O = new /obj/effect/overlay/temp/blob(src.loc)
+	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
 	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
@@ -208,7 +208,7 @@
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
-			new /obj/effect/overlay/temp/emp(get_turf(src))
+			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/tesla_act(power)
 	..()
@@ -306,8 +306,8 @@
 
 /obj/structure/blob/examine(mob/user)
 	..()
-	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(user.research_scanner || (user in hud_to_check.hudusers))
+	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	if(user.research_scanner || hud_to_check.hudusers[user])
 		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
 		chemeffectreport(user)
 		typereport(user)

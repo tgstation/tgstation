@@ -18,9 +18,7 @@
 	name = "mining wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/miner/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/miner/PopulateContents()
 	new /obj/item/weapon/storage/backpack/dufflebag(src)
 	new /obj/item/weapon/storage/backpack/explorer(src)
 	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
@@ -37,9 +35,9 @@
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "mining"
-	req_access = list(access_mining)
+	req_access = list(GLOB.access_mining)
 
-/obj/structure/closet/secure_closet/miner/New()
+/obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
@@ -219,6 +217,7 @@
 /area/survivalpod
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
 
@@ -280,8 +279,8 @@
 
 		var/turf/T = deploy_location
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
-			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
@@ -297,36 +296,52 @@
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "smooth"
 	smooth = SMOOTH_MORE
-	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
 
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "airlock"
-	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = 0
 	glass = 1
+	var/expected_dir = SOUTH //we visually turn when shuttle rotated, but need to not turn for any other reason
+
+/obj/machinery/door/airlock/survival_pod/setDir(direction)
+	direction = expected_dir
+	..()
+
+/obj/machinery/door/airlock/survival_pod/shuttleRotate(rotation)
+	expected_dir = angle2dir(rotation+dir2angle(dir))
+	..()
 
 /obj/machinery/door/airlock/survival_pod/vertical
-	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
+	dir = EAST
+	expected_dir = EAST
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
-	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod
 	anchored = 1
 	state = 1
 	mineral = "glass"
 	material = "glass"
+	var/expected_dir = SOUTH
+
+/obj/structure/door_assembly/door_assembly_pod/setDir(direction)
+	direction = expected_dir
+	..()
+
+/obj/structure/door_assembly/door_assembly_pod/shuttleRotate(rotation)
+	expected_dir = angle2dir(rotation+dir2angle(dir))
+	..()
 
 /obj/structure/door_assembly/door_assembly_pod/vertical
-	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
+	dir = EAST
+	expected_dir = EAST
 
 //Table
 /obj/structure/table/survival_pod
@@ -380,7 +395,9 @@
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
-	luminosity = 8
+	light_range = 5
+	light_power = 1.2
+	light_color = "#DDFFD3"
 	max_n_of_items = 10
 	pixel_y = -4
 	flags = NODECONSTRUCT

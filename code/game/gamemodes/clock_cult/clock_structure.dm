@@ -18,18 +18,18 @@
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 	var/immune_to_servant_attacks = FALSE //if we ignore attacks from servants of ratvar instead of taking damage
 
-/obj/structure/destructible/clockwork/New()
-	..()
+/obj/structure/destructible/clockwork/Initialize()
+	. = ..()
 	change_construction_value(construction_value)
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/structure/destructible/clockwork/Destroy()
 	change_construction_value(-construction_value)
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/structure/destructible/clockwork/ratvar_act()
-	if(ratvar_awakens || clockwork_gateway_activated)
+	if(GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated)
 		obj_integrity = max_integrity
 
 /obj/structure/destructible/clockwork/narsie_act()
@@ -78,7 +78,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		if(increasing)
 			return 0.5
 		return 2
@@ -131,7 +131,7 @@
 	if(anchored && unanchored_icon)
 		anchored = FALSE
 		update_anchored(null, obj_integrity > max_integrity * 0.25)
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 
 
 //for the ark and Ratvar
@@ -142,12 +142,12 @@
 	density = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/destructible/clockwork/massive/New()
-	..()
-	poi_list += src
+/obj/structure/destructible/clockwork/massive/Initialize()
+	. = ..()
+	GLOB.poi_list += src
 
 /obj/structure/destructible/clockwork/massive/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	return ..()
 
 /obj/structure/destructible/clockwork/massive/singularity_pull(S, current_size)
@@ -177,7 +177,7 @@
 
 /obj/structure/destructible/clockwork/powered/ratvar_act()
 	..()
-	if(nezbere_invoked)
+	if(GLOB.nezbere_invoked)
 		needs_power = FALSE
 	else
 		needs_power = initial(needs_power)
@@ -222,10 +222,10 @@
 
 /obj/structure/destructible/clockwork/powered/emp_act(severity)
 	if(forced_disable(TRUE))
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 
 /obj/structure/destructible/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
-	if(!needs_power || ratvar_awakens)
+	if(!needs_power || GLOB.ratvar_awakens)
 		return INFINITY //oh yeah we've got power why'd you ask
 
 	var/power = 0
@@ -237,7 +237,7 @@
 	var/power = 0
 	var/area/A = get_area(src)
 	var/area/targetAPCA
-	for(var/obj/machinery/power/apc/APC in apcs_list)
+	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
 		var/area/APCA = get_area(APC)
 		if(APCA == A)
 			target_apc = APC
@@ -259,7 +259,7 @@
 
 
 /obj/structure/destructible/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
-	if(!needs_power || ratvar_awakens)
+	if(!needs_power || GLOB.ratvar_awakens)
 		return 1
 	if(amount <= 0)
 		return FALSE
