@@ -300,3 +300,87 @@
 			B.current.client.images -= GLOB.blood_target_image
 	QDEL_NULL(GLOB.blood_target_image)
 	GLOB.blood_target = null
+
+
+
+//////// ELDRITCH PULSE /////////
+
+
+
+/datum/action/innate/cult/master/pulse
+	name = "Eldritch Pulse"
+	desc = "Seize upon a fellow cultist and fling them through the veil."
+	button_icon_state = "arcane_barrage"
+	var/obj/effect/proc_holder/pulse/PM
+	var/cooldown = 0
+	var/base_cooldown = 200
+	var/throwing = FALSE
+	var/mob/living/throwee
+
+/datum/action/innate/cult/master/pulse/New()
+	PM = new()
+	PM.attached_action = src
+	..()
+
+/datum/action/innate/cult/master/pulse/IsAvailable()
+	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+		return FALSE
+	if(cooldown > world.time)
+		if(!PM.active)
+			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
+		return FALSE
+	return ..()
+
+/datum/action/innate/cult/master/pulse/Destroy()
+	QDEL_NULL(PM)
+	return ..()
+
+/datum/action/innate/cult/master/pulse/Activate()
+	PM.toggle(owner) //the important bit
+	return TRUE
+
+/obj/effect/proc_holder/pulse
+	active = FALSE
+	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	var/datum/action/innate/cult/master/pulse/attached_action
+
+/obj/effect/proc_holder/pulse/Destroy()
+	attached_action = null
+	return ..()
+
+/obj/effect/proc_holder/pulse/proc/toggle(mob/user)
+	if(active)
+		remove_ranged_ability("<span class='cult'>You cease your preparations...</span>")
+		attached_action.throwing = FALSE
+	else
+		add_ranged_ability(user, "<span class='cult'>You prepare to move a fellow cultist...</span>")
+
+/obj/effect/proc_holder/pulse/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return
+	if(ranged_ability_user.incapacitated())
+		remove_ranged_ability()
+		return
+	var/turf/T = get_turf(ranged_ability_user)
+	if(!isturf(T))
+		return FALSE
+	if(target in view(7, get_turf(ranged_ability_user)))
+		if(!iscultist(target) && !attached_action.throwing)
+			return
+		if(!attached_action.throwing)
+			attached_action.throwing = TRUE
+			attached_action.throwee = target
+			ranged_mousepointer = 'icons/effects/cult_target.dmi'
+			to_chat(ranged_ability_user,"<span class='cult'><b>You have seized [target] now choose where to fling them!</b></span>")
+			return
+		else
+			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
+			var/distance = get_dist(attached_action.throwee, target)
+			if(distance >= 12)
+				return
+			attached_action.throwee.incorporeal_move = 1
+			attached_action.throwee.throw_at(target, distance, 4)
+			attached_action.throwing = FALSE
+			attached_action.cooldown = world.time + attached_action.base_cooldown
+			sleep(10)
+			attached_action.throwee.incorporeal_move = 0

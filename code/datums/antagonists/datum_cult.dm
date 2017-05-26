@@ -112,10 +112,12 @@
 /datum/antagonist/cult/master
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
+	var/datum/action/innate/cult/master/pulse/throwing = new
 
 /datum/antagonist/cult/master/Destroy()
 	QDEL_NULL(reckoning)
 	QDEL_NULL(bloodmark)
+	QDEL_NULL(throwing)
 	return ..()
 
 /datum/antagonist/cult/master/on_gain()
@@ -136,6 +138,7 @@
 	if(!GLOB.reckoning_complete)
 		reckoning.Grant(current)
 	bloodmark.Grant(current)
+	throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 
@@ -146,5 +149,6 @@
 		current = mob_override
 	reckoning.Remove(current)
 	bloodmark.Remove(current)
+	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
