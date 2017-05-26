@@ -9,14 +9,16 @@ in the Pillow library afaik, or I'm incapable of the mental gymnastics to fix it
 also paths like ..\..\icons should work fine when used with the recurser while on windows.
 Mileage on other operating systems may vary.
 ## Requirements
-So for this thing to work you need to install pillow for python 3. any flavor
-of python 3 should work. Ensure you don't have PIL installed (you should know already
-if you do).
+* Python 3.X
+* **Do not have PIL installed** it messes with Pillow, you should know if you have it.
+* [Python Pillow](https://python-pillow.org/) (easy mode is "pip install Pillow" if you have pip)
 ## Other Notes
 This program only runs on .dmi files so it should be safe to run it anywhere.
 If you feel like changing how the sort works, change the function atoz(key) knowing that
 key is a list in the form:
+
 ["icon name", directions, frames, "extra data as a string",[list of icons]]
+
 directions*frames is the number of icons.
 I tried to make this modular, so feel free to rip it apart and use bits of it.
 Try to give me credit where credit is due though :P
