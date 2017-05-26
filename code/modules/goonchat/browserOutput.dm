@@ -252,14 +252,25 @@ GLOBAL_LIST_EMPTY(broken_ckeys)
 	return bicon(I)
 
 /proc/to_chat(target, message)
-	if(isnull(target))
+	if(!target)
 		return
+	
+	if(target == world)
+		to_chat(GLOB.clients, message)
+		return
+	
+	if(islist(target))
+		for(var/I in target)
+			to_chat(target, message)
+		return
+
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || istype(target, /client) || istype(target, /datum/log) || target == world))
+	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || istype(target, /datum/log)))
 		target << message
+		stack_trace("to_chat called with invalid target! [target]")
 		if (!istype(target, /atom)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
-			CRASH("DEBUG: Boutput called with invalid message")
+			CRASH("to_chat called with invalid message")
 		return
 
 	//Otherwise, we're good to throw it at the user
