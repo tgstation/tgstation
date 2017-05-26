@@ -12,17 +12,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
-	var/broken       = FALSE
-	var/static/debug_log
 
 /datum/chatOutput/New(client/C)
-	if(!debug_log)
-		debug_log = file("[GLOB.log_directory]/goonchat.log")
-
 	owner = C
 	messageQueue = list()
 	connectionHistory = list()
-	// log_world("chatOutput: New()")
 
 /datum/chatOutput/proc/start()
 	//Check for existing chat
@@ -30,9 +24,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		return FALSE
 
 	if(!winexists(owner, "browseroutput")) // Oh goddamnit.
+		set waitfor = FALSE
+		message_admins("Couldn't start chat for [key_name_admin(owner)]!")
+		. = FALSE
 		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
-		broken = TRUE
-		return FALSE
+		return
 
 	if(winget(owner, "browseroutput", "is-disabled") == "false") //Already setup
 		doneLoading()
@@ -61,16 +57,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		"browserOutput.html"	   = 'code/modules/goonchat/browserassets/html/browserOutput.html'
 	)
 
-	// to_chat(world.log, "chatOutput: load()")
-//	for(var/attempts in 1 to 5)
 	for(var/asset in chatResources)
 		owner << browse_rsc(file(chatResources[asset]), asset)
 
-		//log_world("Sending main chat window to client [owner.ckey]")
 	owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
-		//sleep(14 + (chatResources.len * 7))
-	if(loaded)
-		log_world("chatOutput: [owner.ckey] load() completed")
 
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
@@ -114,6 +104,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(loaded)
 		return
 
+	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
 	winset(owner, "browseroutput", "is-disabled=false")
 	for(var/message in messageQueue)
@@ -134,8 +125,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
-	if(data != "pong" && data != "pang" && data != "softPang")
-		debug_log << "[C.ckey] << [data]"
 	C << output("[data]", "[window]:ehjaxCallback")
 
 //Sends client connection details to the chat to handle and save
@@ -182,25 +171,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
-/datum/chatOutput/proc/Broke()
-	debug_log << "THE CHAT BROKE FOR [usr.client.ckey]"
-
-/client/verb/debug_chat()
-	set hidden = TRUE
-	chatOutput.ehjax_send(data = list("firebug" = TRUE))
-
-GLOBAL_LIST_EMPTY(broken_ckeys)
-/client/verb/chat_broke()
-	set category = "OOC"
-	set name = "MY CHAT BROKE!"
-	if(GLOB.broken_ckeys[ckey])
-		return
-	if(alert(usr, "HEY LISTEN! We are debugging the new chat system and you can only use this command once! HAS YOUR CHAT BOX ACTUALLY BROKEN?",, "Yes", "No") != "Yes")
-		return
-	GLOB.broken_ckeys[ckey] = TRUE
-	message_admins("The chat broke for [ckey]!")
-	chatOutput.Broke()
-
 //Global chat procs
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
@@ -215,7 +185,7 @@ GLOBAL_LIST_EMPTY(broken_ckeys)
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
 /proc/bicon(thing)
-	if (QDELETED(thing))
+	if (!thing)
 		return
 
 	if (isicon(thing))
@@ -289,7 +259,7 @@ GLOBAL_LIST_EMPTY(broken_ckeys)
 
 		if (C && C.chatOutput)
 			if(C.chatOutput.broken) // A player who hasn't updated his skin file.
-				to_chat(C, message)
+				C << message
 				return TRUE
 			if(!C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
 				//Client sucks at loading things, put their messages in a queue
