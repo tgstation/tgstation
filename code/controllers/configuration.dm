@@ -162,8 +162,8 @@
 	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/revival_pod_plants = 1
-	var/revival_cloning = 1
+	var/revival_pod_plants = FALSE
+	var/revival_cloning = FALSE
 	var/revival_brain_life = -1
 
 	var/rename_cyborg = 0
@@ -207,6 +207,8 @@
 	var/starlight = 0
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
+
+	var/id_console_jobslot_delay = 30
 
 	var/lavaland_budget = 60
 	var/space_budget = 16
@@ -409,6 +411,8 @@
 					usewhitelist = TRUE
 				if("allow_metadata")
 					allow_Metadata = 1
+				if("id_console_jobslot_delay")
+					id_console_jobslot_delay = text2num(value)
 				if("inactivity_period")
 					inactivity_period = text2num(value) * 10 //documented as seconds in config.txt
 				if("afk_period")
@@ -544,9 +548,9 @@
 				if("damage_multiplier")
 					damage_multiplier		= text2num(value)
 				if("revival_pod_plants")
-					revival_pod_plants		= text2num(value)
+					revival_pod_plants		= TRUE
 				if("revival_cloning")
-					revival_cloning			= text2num(value)
+					revival_cloning			= TRUE
 				if("revival_brain_life")
 					revival_brain_life		= text2num(value)
 				if("rename_cyborg")
@@ -766,7 +770,7 @@
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
-					arrivals_shuttle_require_safe_latejoin = text2num(value)
+					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
 					mice_roundstart = text2num(value)
 				else

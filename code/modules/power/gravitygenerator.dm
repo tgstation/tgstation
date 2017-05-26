@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator
 	name = "gravitational generator"
-	desc = "A device which produces a gravaton field when set up."
+	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	anchored = 1
 	density = 1
@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	var/broken_state = 0
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
-	investigate_log("was destroyed!", "gravity")
+	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
 	on = 0
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	breaker = 0
 	set_power()
 	set_state(0)
-	investigate_log("has broken down.", "gravity")
+	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
 	..()
@@ -263,7 +263,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 	if(href_list["gentoggle"])
 		breaker = !breaker
-		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
+		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", INVESTIGATE_GRAVITY)
 		set_power()
 		src.updateUsrDialog()
 
@@ -271,7 +271,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/power_change()
 	..()
-	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", "gravity")
+	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
 	set_power()
 
 /obj/machinery/gravity_generator/main/get_status()
@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		new_state = 1
 
 	charging_state = new_state ? POWER_UP : POWER_DOWN // Startup sequence animation.
-	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", "gravity")
+	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", INVESTIGATE_GRAVITY)
 	update_icon()
 
 // Set the state of the gravity.
@@ -304,16 +304,17 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = 0
 	var/area/A = get_area(src)
-	if(on && SSticker.IsRoundInProgress()) // If we turned on and the game is live.
-		if(gravity_in_level() == 0)
-			alert = 1
-			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
-	else
-		if(gravity_in_level() == 1)
-			alert = 1
-			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
+	if(SSticker.IsRoundInProgress())
+		if(on) // If we turned on and the game is live.
+			if(gravity_in_level() == 0)
+				alert = 1
+				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
+				message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
+		else
+			if(gravity_in_level() == 1)
+				alert = 1
+				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
+				message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
 
 	update_icon()
 	update_list()

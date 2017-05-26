@@ -328,7 +328,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()

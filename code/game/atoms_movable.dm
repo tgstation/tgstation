@@ -42,6 +42,30 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
+	switch(var_name)
+		if("x")
+			var/turf/T = locate(var_value, y, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("y")
+			var/turf/T = locate(x, var_value, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("z")
+			var/turf/T = locate(x, y, var_value)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("loc")
+			if(var_value == null || istype(var_value, /atom))
+				forceMove(var_value)
+				return TRUE
+			return FALSE
 	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -601,6 +625,10 @@
 /atom/movable/proc/has_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()
 	. = H.has_language(dt)
+
+/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.copy_known_languages_from(thing, replace)
 
 // Whether an AM can speak in a language or not, independent of whether
 // it KNOWS the language

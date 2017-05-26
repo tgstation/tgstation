@@ -1,10 +1,10 @@
 
-/proc/melee_item_attack_chain(mob/user, obj/item/I, atom/target, params)
-	if(I.pre_attackby(target, user, params))
+/obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
+	if(pre_attackby(target, user, params))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-		var/resolved = target.attackby(I,user,params)
-		if(!resolved && target && I)
-			I.afterattack(target, user, 1, params) // 1: clicking something Adjacent
+		var/resolved = target.attackby(src, user, params)
+		if(!resolved && target && !QDELETED(src))
+			afterattack(target, user, 1, params) // 1: clicking something Adjacent
 
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
@@ -28,7 +28,7 @@
 		if(sharpness)
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
+			if(do_mob(user, src, 80/sharpness) && Adjacent(I))
 				harvest(user)
 			return 1
 	return I.attack(src, user)

@@ -2,7 +2,8 @@ SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
 	wait = 5
-	flags = SS_FIRE_IN_LOBBY|SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
 	var/delslasttick = 0		// number of del()'s we've done this tick
@@ -60,7 +61,7 @@ SUBSYSTEM_DEF(garbage)
 		for(var/path in sleptDestroy)
 			dellog += "Path : [path] \n"
 			dellog += "Sleeps : [sleptDestroy[path]] \n"
-		log_world(dellog.Join())
+		text2file(dellog.Join(), "[GLOB.log_directory]/qdel.log")
 
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
@@ -181,14 +182,13 @@ SUBSYSTEM_DEF(garbage)
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D, force=FALSE)
-	if(!D)
+	if(!istype(D))
+		del(D)
 		return
 #ifdef TESTING
 	SSgarbage.qdel_list += "[D.type]"
 #endif
-	if(!istype(D))
-		del(D)
-	else if(isnull(D.gc_destroyed))
+	if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.

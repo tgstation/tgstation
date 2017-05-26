@@ -35,7 +35,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	..()
+	. = ..()
 
 /atom/proc/prepare_huds()
 	hud_list = list()
@@ -292,14 +292,14 @@
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/overlay/temp/point))
+	if(istype(A, /obj/effect/temp_visual/point))
 		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
 		return 0
 
-	new /obj/effect/overlay/temp/point(A,invisibility)
+	new /obj/effect/temp_visual/point(A,invisibility)
 
 	return 1
 
@@ -330,12 +330,14 @@
 	changeNext_move(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
-		visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		if(!supress_message)
+			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
 	AM.pulledby = src
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	if(!supress_message)
+		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))

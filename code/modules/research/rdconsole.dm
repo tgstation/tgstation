@@ -447,7 +447,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					for(var/i = 0, i<amount, i++)
 						var/obj/item/new_item = new P(src)
 						if( new_item.type == /obj/item/weapon/storage/backpack/holding )
-							new_item.investigate_log("built by [key]","singulo")
+							new_item.investigate_log("built by [key]", INVESTIGATE_SINGULO)
 						if(!istype(new_item, /obj/item/stack/sheet) && !istype(new_item, /obj/item/weapon/ore/bluespace_crystal)) // To avoid materials dupe glitches
 							new_item.materials = efficient_mats.Copy()
 						new_item.loc = linked_lathe.loc
@@ -728,6 +728,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & AUTOLATHE) dat += "Autolathe<BR>"
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
+						if(D.build_type & LIMBGROWER) dat += "Limbgrower<BR>"
+						if(D.build_type & SMELTER) dat += "Smelter<BR>"
 					dat += "Required Materials:<BR>"
 					var/all_mats = D.materials + D.reagents_list
 					for(var/M in all_mats)

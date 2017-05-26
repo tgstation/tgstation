@@ -75,7 +75,7 @@ Credit where due:
 /proc/remove_servant_of_ratvar(mob/living/L, silent = FALSE)
 	if(!L || !L.mind)
 		return
-	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(/datum/antagonist/clockcult)
+	var/datum/antagonist/clockcult/clock_datum = L.mind.has_antag_datum(ANTAG_DATUM_CLOCKCULT)
 	if(!clock_datum)
 		return FALSE
 	clock_datum.silent = silent
@@ -146,6 +146,7 @@ Credit where due:
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	to_chat(M, greeting_text)
+	M.playsound_local('sound/ambience/antag/ClockCultAlr.ogg',100,0)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
@@ -169,14 +170,6 @@ Credit where due:
 		to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
 		return TRUE
 	return FALSE
-
-/datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
-	if(!L || !istype(L) || !L.mind)
-		return 0
-	var/datum/mind/M = L.mind
-	to_chat(M.current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
-	M.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>"
-	return 1
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)

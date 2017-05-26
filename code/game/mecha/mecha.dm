@@ -37,7 +37,6 @@
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
-	var/cell_power_remaining = 1 // 0 - no power, 1 - 100% power in cell. Starts as 1 so putting any cell into empty mech doesn't deplete charge from it
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1

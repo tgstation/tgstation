@@ -30,22 +30,28 @@
 		var/obj/machinery/holopad/H = I
 		if(!QDELETED(H) && H.is_operational())
 			dialed_holopads += H
+			H.say("Incoming call.")
 			LAZYADD(H.holo_calls, src)
 
 	if(!dialed_holopads.len)
 		calling_pad.say("Connection failure.")
 		qdel(src)
+		return
 	
 	testing("Holocall started")
 
 //cleans up ALL references :)
 /datum/holocall/Destroy()
-	QDEL_NULL(eye)
-
 	user.reset_perspective()
+	if(user.client)
+		for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
+			chunk.remove(eye)
+	user.remote_control = null
+	QDEL_NULL(eye)
 	
 	user = null
-	hologram.HC = null
+	if(hologram)
+		hologram.HC = null
 	hologram = null
 	calling_holopad.outgoing_call = null
 
@@ -104,18 +110,17 @@
 	if(connected_holopad)
 		CRASH("Multi-connection holocall")
 
-	connected_holopad = H
 	for(var/I in dialed_holopads)
 		if(I == H)
 			continue
-		var/obj/machinery/holopad/Holo = I
-		LAZYREMOVE(Holo.holo_calls, src)
-		dialed_holopads -= Holo
+		Disconnect(I)
 	
 	for(var/I in H.holo_calls)
 		var/datum/holocall/HC = I
 		if(HC != src)
 			HC.Disconnect(H)
+
+	connected_holopad = H
 
 	if(!Check())
 		return

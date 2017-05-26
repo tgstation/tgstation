@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = INIT_ORDER_EVENTS
+	runlevels = RUNLEVEL_GAME
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -104,7 +105,7 @@ SUBSYSTEM_DEF(events)
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
 	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/crew_quarters/heads/chief)
 
 	//Need to locate() as it's just a list of paths.
 	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas))

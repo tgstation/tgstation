@@ -1,6 +1,8 @@
-## /tg/station server and codebase
+## /tg/station codebase
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
+[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)  
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/tgstation/tgstation.svg)](http://isitmaintained.com/project/tgstation/tgstation "Average time to resolve an issue")
+<BR>[![forthebadge](http://forthebadge.com/images/badges/built-with-resentment.svg)](http://forthebadge.com)
 
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
@@ -15,13 +17,7 @@ There are a number of ways to download the source code. Some are described here,
 Option 1:
 Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 
-Option 2:
-Install GitHub::windows from http://windows.github.com/
-It handles most of the setup and configuraton of Git for you.
-Then you simply search for the tgstation repository and click the big clone
-button.
-
-Option 3: Download the source code as a zip by clicking the ZIP button in the
+Option 2: Download the source code as a zip by clicking the ZIP button in the
 code tab of https://github.com/tgstation/tgstation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)

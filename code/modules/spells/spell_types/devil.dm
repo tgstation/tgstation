@@ -52,7 +52,7 @@
 					user.put_in_hands(contract)
 			else
 				var/obj/item/weapon/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
-				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge")
+				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship")
 				switch(contractTypeName)
 					if("Power")
 						contract = new /obj/item/weapon/paper/contract/infernal/power(C.loc, C.mind, user.mind)
@@ -64,6 +64,8 @@
 						contract = new /obj/item/weapon/paper/contract/infernal/magic(C.loc, C.mind, user.mind)
 					if("Knowledge")
 						contract = new /obj/item/weapon/paper/contract/infernal/knowledge(C.loc, C.mind, user.mind)
+					if("Friendship")
+						contract = new /obj/item/weapon/paper/contract/infernal/friend(C.loc, C.mind, user.mind)
 				C.put_in_hands(contract)
 		else
 			to_chat(user, "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for [C.p_them()].</span>")
@@ -106,7 +108,7 @@
 				continuing = 1
 			else
 				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
-					if (C.mind && C.mind.soulOwner == C.mind)
+					if (C.owns_soul())
 						continuing = 1
 						break
 			if(continuing)

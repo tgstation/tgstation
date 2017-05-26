@@ -152,7 +152,7 @@ Pipelines + Other Objects -> Pipe network
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)

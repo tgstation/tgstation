@@ -146,49 +146,49 @@
 
 /obj/structure/sign/biohazard
 	name = "\improper BIOHAZARD"
-	desc = "A warning sign which reads 'BIOHAZARD'"
+	desc = "A warning sign which reads 'BIOHAZARD'."
 	icon_state = "bio"
 
 /obj/structure/sign/electricshock
 	name = "\improper HIGH VOLTAGE"
-	desc = "A warning sign which reads 'HIGH VOLTAGE'"
+	desc = "A warning sign which reads 'HIGH VOLTAGE'."
 	icon_state = "shock"
 
 /obj/structure/sign/examroom
 	name = "\improper EXAM ROOM"
-	desc = "A guidance sign which reads 'EXAM ROOM'"
+	desc = "A guidance sign which reads 'EXAM ROOM'."
 	icon_state = "examroom"
 
 /obj/structure/sign/vacuum
 	name = "\improper HARD VACUUM AHEAD"
-	desc = "A warning sign which reads 'HARD VACUUM AHEAD'"
+	desc = "A warning sign which reads 'HARD VACUUM AHEAD'."
 	icon_state = "space"
 
 /obj/structure/sign/deathsposal
 	name = "\improper DISPOSAL: LEADS TO SPACE"
-	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'"
+	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'."
 	icon_state = "deathsposal"
 
 /obj/structure/sign/pods
 	name = "\improper ESCAPE PODS"
-	desc = "A warning sign which reads 'ESCAPE PODS'"
+	desc = "A warning sign which reads 'ESCAPE PODS'."
 	icon_state = "pods"
 
 /obj/structure/sign/fire
 	name = "\improper DANGER: FIRE"
-	desc = "A warning sign which reads 'DANGER: FIRE'"
+	desc = "A warning sign which reads 'DANGER: FIRE'."
 	icon_state = "fire"
 
 
 /obj/structure/sign/nosmoking_1
 	name = "\improper NO SMOKING"
-	desc = "A warning sign which reads 'NO SMOKING'"
+	desc = "A warning sign which reads 'NO SMOKING'."
 	icon_state = "nosmoking"
 
 
 /obj/structure/sign/nosmoking_2
 	name = "\improper NO SMOKING"
-	desc = "A warning sign which reads 'NO SMOKING'"
+	desc = "A warning sign which reads 'NO SMOKING'."
 	icon_state = "nosmoking2"
 
 /obj/structure/sign/radiation
@@ -223,7 +223,7 @@
 
 /obj/structure/sign/nanotrasen
 	name = "\improper NanoTrasen Logo "
-	desc = "A sign with the Nanotrasen Logo on it.  Glory to Nanotrasen!"
+	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 
 /obj/structure/sign/science			//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
@@ -245,6 +245,12 @@
 	name = "\improper XENOBIOLOGY"
 	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
+
+/obj/structure/sign/xeno_warning_mining
+	name = "DANGEROUS ALIEN LIFE"
+	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "xeno_warning"
 
 /obj/structure/sign/enginesafety
 	name = "\improper ENGINEERING SAFETY"

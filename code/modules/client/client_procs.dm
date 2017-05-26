@@ -645,3 +645,7 @@ GLOBAL_LIST(external_rsc_urls)
 		CRASH("change_view called without argument.")
 
 	view = new_size
+
+/client/proc/AnnouncePR(announcement)
+	if(prefs && prefs.chat_toggles & CHAT_PULLR)
+		to_chat(src, announcement)

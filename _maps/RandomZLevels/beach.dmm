@@ -163,7 +163,7 @@
 /area/awaymission/beach)
 "aC" = (
 /obj/effect/mob_spawn/human/cook{
-	helmet = null;
+	head = null;
 	id_access = "Bartender";
 	id_job = "Bartender";
 	suit = /obj/item/clothing/suit/armor/vest;
