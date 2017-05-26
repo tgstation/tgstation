@@ -78,7 +78,6 @@
 	build_path = /obj/item/weapon/inducer/sci
 	category = list("Power Designs")
 
-
 /datum/design/board/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
 	desc = "The circuit board that for a PACMAN-type portable generator."
