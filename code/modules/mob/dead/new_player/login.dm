@@ -32,7 +32,7 @@
 		var/tl = round(SSticker.GetTimeLeft(), 1)/10
 		var/postfix
 		if(tl >= 0)
-			postfix = "in about [t1] seconds"
+			postfix = "in about [tl] seconds"
 		else
 			postfix = "soon"
 		to_chat(src, "Please set up your character and select \"Ready\". The game will start [postfix].")
