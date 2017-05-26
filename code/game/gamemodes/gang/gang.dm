@@ -125,12 +125,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 
 	SSticker.OnRoundstart(CALLBACK(src, .proc/gangpocalypse))
-
 	return 1
 
 /datum/game_mode/gang/proc/gangpocalypse()
 	set waitfor = FALSE
-	..(FALSE, FALSE)
 	var/list/bosses = list()
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
@@ -141,7 +139,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			G.add_gang_hud(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
-	sleep(50)
+	sleep(30)
 	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
 	sleep(70)
 	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")

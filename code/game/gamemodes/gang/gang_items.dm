@@ -116,6 +116,18 @@
 /datum/gang_item/function/backup/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return "([get_cost(user, gang, gangtool)] Influence)"
 
+/datum/gang_item/function/backup/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	var/area/usrarea = get_area(user.loc)
+	var/usrturf = get_turf(user.loc)
+	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
+		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
+		return FALSE
+
+	if(!(usrarea.type in gang.territory|gang.territory_new))
+		to_chat(user, "<span class='warning'>This device can only be spawned in territory controlled by your gang!</span>")
+		return FALSE
+	return ..()
+
 /obj/machinery/gang/backup
 	name = "gang reinforcements portal"
 	desc = "When a gang leader leverages their influence, they can pull in some muscle from other operations."
@@ -185,13 +197,13 @@
 	else
 		var/list/dead_vigils
 		for(var/mob/V in GLOB.joined_player_list.len)
-			if(V.mind && V.stat == DEAD && !is_gangster(V))
-				var/mob/dead/observer/O = V.get_ghost()
+			if(!is_gangster(V) && V.stat == DEAD)
+				var/mob/dead/observer/O = V.get_ghost(TRUE)
 				dead_vigils += O
 		finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = dead_vigils)
 		if(finalists.len)
 			winner = pick(finalists)
-	if(!src)
+	if(!src || !winner)
 		return
 	var/datum/mind/reinforcement = new /datum/mind(winner.key)
 	reinforcement.active = 1
