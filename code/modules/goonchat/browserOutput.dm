@@ -216,23 +216,23 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bicon(obj)
-	if (!obj)
+/proc/bicon(thing)
+	if (QDELETED(thing))
 		return
 
-	if (isicon(obj))
+	if (isicon(thing))
 		//Icons get pooled constantly, references are no good here.
 		/*if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
 			bicon_cache["\ref[obj]"] = icon2base64(obj)
 		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"*/
-		return "<img class='icon misc' src='data:image/png;base64,[icon2base64(obj)]'>"
+		return "<img class='icon misc' src='data:image/png;base64,[icon2base64(thing)]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
-	var/atom/A = obj
+	var/atom/A = thing
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
 	if (!GLOB.bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
+		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
@@ -241,14 +241,14 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[GLOB.bicon_cache[key]]'>"
 
 //Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bicon(obj)
-	if (!obj)
+/proc/costly_bicon(thing)
+	if (!thing)
 		return
 
-	if (isicon(obj))
-		return bicon(obj)
+	if (isicon(thing))
+		return bicon(thing)
 
-	var/icon/I = getFlatIcon(obj)
+	var/icon/I = getFlatIcon(thing)
 	return bicon(I)
 
 /proc/to_chat(target, message)
