@@ -421,6 +421,8 @@
 	for(var/i in 1 to 5)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm/W = new(src)
 		load(W)
+	var/obj/item/weapon/pickaxe/mini/P = new(src)
+	var/obj/item/stack/sheet/cloth/ten/C = new(src)
 	if(prob(50))
 		var/obj/item/weapon/storage/pill_bottle/dice/D = new(src)
 		load(D)
