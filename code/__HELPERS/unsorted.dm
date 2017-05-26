@@ -1079,18 +1079,17 @@ B --><-- A
 	return L
 
 //similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
-/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0, list/outlist = list(), tick_checked)
+	outlist.Cut()
 	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
+		outlist += center
+		return outlist
 
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
-		return list()
+		return outlist
 
-	var/list/L = list()
+	var/list/L = outlist
 	var/turf/T
 	var/y
 	var/x
@@ -1128,6 +1127,8 @@ B --><-- A
 			if(T)
 				L += T
 		c_dist++
+		if(tick_checked)
+			CHECK_TICK
 
 	return L
 

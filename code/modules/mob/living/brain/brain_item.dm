@@ -72,6 +72,9 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
+		var/obj/item/organ/zombie_infection/ZI = L.getorganslot("zombie_infection")
+		if(ZI)
+			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
 	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")

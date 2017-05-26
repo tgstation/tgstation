@@ -22,6 +22,10 @@
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
 
+/turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
 
 /turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
@@ -170,6 +174,11 @@
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "dirt"
+	return TRUE
 
 /turf/open/chasm/straight_down/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'

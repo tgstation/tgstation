@@ -274,7 +274,6 @@
 	return
 
 /atom/proc/ex_act(severity, target)
-	set waitfor = FALSE
 	contents_explosion(severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)

@@ -16,6 +16,9 @@
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
+	can_bayonet = TRUE
+	knife_x_offset = 15
+	knife_y_offset = 13
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
@@ -129,18 +132,10 @@
 	overheat = FALSE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
-	cut_overlays()
+	..()
+
 	if(empty_state && !can_shoot())
 		add_overlay(empty_state)
-
-	if(gun_light && can_flashlight)
-		var/iconF = "flight"
-		if(gun_light.on)
-			iconF = "flight_on"
-		var/mutable_appearance/flashlight_overlay = mutable_appearance(icon, iconF)
-		flashlight_overlay.pixel_x = flight_x_offset
-		flashlight_overlay.pixel_y = flight_y_offset
-		add_overlay(flashlight_overlay)
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
