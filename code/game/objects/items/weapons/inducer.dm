@@ -1,4 +1,3 @@
-
 /obj/item/weapon/inducer
 	name = "inducer"
 	desc = "A tool for inductively charging internal power cells."
@@ -56,7 +55,7 @@
 	if(!cell.charge)
 		to_chat(user, "<span class='warning'>\The [src]'s battery is dead!</span>")
 		return TRUE
-    return FALSE
+	return FALSE
 
 
 /obj/item/weapon/inducer/attackby(obj/item/weapon/W, mob/user)
