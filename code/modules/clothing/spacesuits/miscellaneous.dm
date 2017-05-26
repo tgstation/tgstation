@@ -85,7 +85,7 @@ Contains:
 	desc = "An armoured, pressurised, military helmet used as standard issue among UEG Marines."
 	icon_state = "ueghelm"
 	item_state = "ueghelm"
-	armor = list(melee = 50, bullet = 50, laser = 30, energy = 30, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
+	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	actions_types = list()
@@ -95,11 +95,11 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/ueg
 	name = "UEG Marine Armour"
-	desc = "Modified MK.II SWAT Armour. Used by United Earth Government Marines in ship to ship action."
+	desc = "Modified MK.II SWAT Armour. Used by United Earth Government Marines in ship to ship action. This model appears to have lost some of its armour plating during the crash."
 	icon_state = "uegarmor"
 	item_state = "uegarmor"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 50, bullet = 50, laser = 30, energy = 30, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
+	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ueg
