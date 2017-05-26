@@ -199,8 +199,7 @@
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
-	qdel(wires)
-	wires = null
+	QDEL_NULL(wires)
 	if(charge)
 		qdel(charge)
 		charge = null
