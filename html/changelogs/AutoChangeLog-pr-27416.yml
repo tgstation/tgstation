@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "You can now add bayonets to kinetic accelerators. However, only combat knives and survival knives can be added. Harm intent attacking things will cause you to attack that thing with the bayonet instead!"
