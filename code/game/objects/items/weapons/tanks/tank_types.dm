@@ -51,7 +51,7 @@
 
 /obj/item/weapon/tank/internals/rebreather/process()
 	if(air_contents)
-		if(air_contents.return_pressure() <= 100 && tcell.charge >= 100)
+		if(air_contents.return_pressure() <= 39 && tcell.charge >= 100)
 			if(species == "human")//Humans, Lizardmen, Flymen
 				air_contents.assert_gases("o2", "plasma")
 				air_contents.gases["o2"][MOLES] = air_contents.gases["o2"][MOLES] + 1 //1 mole is about 34kPa in a tank this size at room temp.
