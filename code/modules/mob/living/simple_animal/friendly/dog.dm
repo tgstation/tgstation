@@ -43,6 +43,13 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = 2
 
+/mob/living/simple_animal/pet/dog/Initialize()
+	var/dog_area = get_area(src)
+	for(var/obj/structure/bed/dogbed/D in dog_area)
+		if(!D.owner)
+			D.update_owner(src)
+			break
+
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
 	..()
 	regenerate_icons()
@@ -268,6 +275,11 @@
 	if(inventory_back && inventory_back.dog_fashion)
 		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 		DF.apply(src)
+
+	//if(name != real_name)
+	//	var/dogarea = getarea(src)
+	//		for(obj/structure/dogbed/D in dogarea)
+	//			dogbed.name = "[src]'s bed"
 
 //IAN! SQUEEEEEEEEE~
 /mob/living/simple_animal/pet/dog/corgi/Ian

@@ -161,6 +161,16 @@
 	anchored = 0
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
+	var/owner = ""
+
+/obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
+	owner = M
+	name = "[M]'s bed"
+	desc = "[M]'s bed! Looks comfy."
+
+/obj/structure/bed/dogbed/buckle_mob(mob/living/M, force, check_loc)
+	. = ..()
+	update_owner(M)
 
 
 /obj/structure/bed/alien
