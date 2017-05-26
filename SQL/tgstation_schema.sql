@@ -375,6 +375,7 @@ CREATE TABLE `round` (
   `end_datetime` DATETIME NULL,
   `server_ip` INT(10) UNSIGNED NOT NULL,
   `server_port` SMALLINT(5) UNSIGNED NOT NULL,
+  `commit_hash` CHAR(40) NULL,
   `game_mode` VARCHAR(32) NULL,
   `game_mode_result` VARCHAR(64) NULL,
   `end_state` VARCHAR(64) NULL,
