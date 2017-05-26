@@ -179,7 +179,7 @@
 	return FALSE
 
 /obj/item/projectile/proc/check_ricochet_flag(atom/A)
-	if(A.flags & RICOCHET_CHECK)
+	if(A.flags & CHECK_RICOCHET)
 		return TRUE
 	return FALSE
 
