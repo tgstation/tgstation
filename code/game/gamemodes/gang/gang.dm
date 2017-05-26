@@ -262,11 +262,15 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	return gang_bosses
 
 /datum/game_mode/proc/shuttle_check()
+	if(SSshuttle.emergencyNoRecall)
+		return
 	var/alive = 0
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-	if((alive < (GLOB.joined_player_list.len * 0.4)) && (SSshuttle.emergency.timeLeft(1) < (SSshuttle.emergencyCallTime * 0.4)))
+
+	if((alive < (GLOB.joined_player_list.len * 0.4)) && ((SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
