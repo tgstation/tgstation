@@ -286,7 +286,7 @@
 				G.points += points_newer
 				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
 			pmessage += "You now have <b>[G.points] influence</b>.<BR>"
-			to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
+			to_chat(ganger, "<span class='notice'>[bicon(G)] [pmessage]</span>")
 
 
 //Multiverse
