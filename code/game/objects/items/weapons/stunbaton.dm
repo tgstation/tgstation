@@ -13,7 +13,7 @@
 
 	var/stunforce = 7
 	var/status = 0
-	var/obj/item/weapon/stock_parts/cell/high/cell = null
+	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
 
@@ -85,7 +85,7 @@
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(cell)
 			cell.updateicon()
-			cell.loc = get_turf(src.loc)
+			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			status = 0

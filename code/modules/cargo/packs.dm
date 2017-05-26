@@ -546,8 +546,7 @@
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	cost = 2000
-	contains = list(/obj/item/weapon/inducer,
-					/obj/item/weapon/inducer)
+	contains = list(/obj/item/weapon/inducer,/obj/item/weapon/inducer)
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 

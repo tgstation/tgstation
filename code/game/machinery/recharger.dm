@@ -108,16 +108,30 @@
 
 	var/using_power = 0
 	if(charging)
-		if(istype(charging, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/E = charging
-			if(E.cell.charge < E.cell.maxcharge)
-				E.cell.give(E.cell.chargerate * recharge_coeff)
-				E.recharge_newshot()
+		var/obj/item/weapon/stock_parts/cell/C = charging.get_cell()
+		if(C)
+			if(C.charge < C.maxcharge)
+				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
 				using_power = 1
+			update_icon(using_power)
+		if(istype(charging, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/gun/energy/E = charging
+			E.recharge_newshot()
+			return
+		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
+			var/obj/item/ammo_box/magazine/recharge/R = charging
+			if(R.stored_ammo.len < R.max_ammo)
+				R.stored_ammo += new R.ammo_type(R)
+				use_power(200 * recharge_coeff)
+				using_power = 1
+			update_icon(using_power)
+			return
 
 
-		if(istype(charging, /obj/item/weapon/melee/baton))
+
+
+/*		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.cell)
 				if(B.cell.give(B.cell.chargerate * recharge_coeff))
@@ -141,8 +155,7 @@
 						B.battery.give(B.battery.chargerate * recharge_coeff)
 						use_power(200 * recharge_coeff)
 						using_power = 1
-
-	update_icon(using_power)
+*/
 
 /obj/machinery/recharger/power_change()
 	..()

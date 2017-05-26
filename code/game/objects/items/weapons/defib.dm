@@ -123,7 +123,7 @@
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(cell)
 			cell.updateicon()
-			cell.loc = get_turf(src.loc)
+			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			update_icon()

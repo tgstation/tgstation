@@ -588,5 +588,5 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	.["Trigger explosion"] = "?_src_=vars;explode=\ref[src]"
 
 //Returns an atom's power cell, if it has one. Overload for individual items.
-/atom/proc/get_cell()
+/atom/movable/proc/get_cell()
 	return
