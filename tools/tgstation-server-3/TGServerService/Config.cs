@@ -442,7 +442,8 @@ namespace TGServerService
 				.Replace("Comment this out", "Deactivate")
 				.Replace("uncommenting", "activating")
 				.Replace("Uncommenting", "Activating")
-				.Replace("uncommented", "activated");
+				.Replace("uncommented", "activated")
+				.Replace("Uncomment", "Activate");
 		}
 
 		//public api
