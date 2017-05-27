@@ -63,10 +63,9 @@
 			newpoints += 0.5
 	to_chat(H, "<span class='notice'>You have received 2 points for your continued service, [newpoints] for keeping the station tag-free.")
 	points += newpoints + 2
-	for(var/obj/item/weapon/implant/I in H.implants)
-		if(istype(I,/obj/item/weapon/implant/mindshield))
-			points += 3
-			to_chat(H, "<span class='notice'>You have also received 3 influence for possessing a mindshield implant.</span>")
+	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
+		points += 4
+		to_chat(H, "<span class='notice'>You have also received 3 influence for possessing a mindshield implant.</span>")
 	addtimer(CALLBACK(src, .proc/income), 1800)
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
