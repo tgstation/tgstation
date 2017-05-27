@@ -120,11 +120,12 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	SSjob.DisableJob(/datum/job/warden)
 	SSjob.DisableJob(/datum/job/detective)
 	SSjob.DisableJob(/datum/job/officer)
+	SSjob.DisableJob(/datum/job/lawyer)
 	SSjob.DisableJob(/datum/job/ai)
 	SSjob.DisableJob(/datum/job/cyborg)
-	
+
 	gangpocalypse()
-	
+
 	return 1
 
 /datum/game_mode/gang/proc/gangpocalypse()
@@ -140,10 +141,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
 	sleep(30)
-	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
-	sleep(70)
+	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetics have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
+	sleep(80)
 	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")
-	sleep(30)
+	sleep(80)
 	explosion(target_armory, 10, 16, 28, 30, TRUE, TRUE)
 	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
 
@@ -282,11 +283,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	gangster_mind.current.log_message("<font color='red'>Has been converted to the [G.name] Gang!</font>", INDIVIDUAL_ATTACK_LOG)
 	gangster_mind.special_role = "[G.name] Gangster"
-	for(var/obj/O in gangster_mind.current.contents)
-		if(istype(O, /obj/item/device/vigilante_tool))
-			qdel(O)
-	for(var/datum/action/innate/vigilante_tool/VA in gangster_mind.current.actions)
-		VA.Remove(gangster_mind.current)
+	for(var/obj/item/device/vigilante_tool/O in gangster_mind.current.contents)
+		qdel(O)
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
@@ -298,12 +296,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
 	var/mob/living/gangster = gangster_mind.current
-	for(var/obj/O in gangster.contents)
-		if(istype(O, /obj/item/device/gangtool/soldier))
-			qdel(O)
-	for(var/datum/action/innate/gang/GA in gangster.actions)
-		GA.Remove(gangster)
-
+	for(var/obj/item/device/gangtool/soldier/O in gangster.contents)
+		qdel(O)
 	if(!gang)
 		return 0
 

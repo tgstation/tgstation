@@ -33,19 +33,19 @@
 		var/success
 		if(target.mind in SSticker.mode.get_gangsters())
 			if(SSticker.mode.remove_gangster(target.mind))
-				success = 1     //Was not a gang boss, convert as usual
+				success = TRUE     //Was not a gang boss, convert as usual
 		else
-			success = 1
+			success = TRUE
 
 		if(ishuman(target))
 			if(!success)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
-				return 1
+				return TRUE
 			else
 				var/datum/gang/G = user.mind.gang_datum
 				SSticker.mode.add_gangster(target.mind,G)
 				target.Paralyse(3)
-				return 1
+				return TRUE
 
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"

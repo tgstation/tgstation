@@ -247,14 +247,25 @@
 ///////////// Internal tool used by gang regulars ///////////
 
 /obj/item/device/gangtool/soldier
+	var/datum/action/innate/gang/tool/linked_action
 	points = 5
 
-/obj/item/device/gangtool/soldier/New(mob/user)
+/obj/item/device/gangtool/soldier/Initialize()
 	. = ..()
-	gang = user.mind.gang_datum
-	gang.gangtools += src
-	var/datum/action/innate/gang/tool/GT = new
-	GT.Grant(user, src)
+	if(ismob(loc))
+		var/mob/living/M = loc
+		gang = M.mind.gang_datum
+		gang.gangtools += src
+		linked_action = new(M)
+		linked_action.Grant(M, src)
+		M.update_icons()
+
+
+/obj/item/device/gangtool/soldier/Destroy()
+	var/mob/living/M = loc
+	linked_action.Remove(M)
+	M.update_icons()
+	return ..()
 
 /obj/item/device/gangtool/soldier/attack_self(mob/user)
 	if (!can_use(user))
@@ -313,7 +324,7 @@
 /datum/action/innate/gang
 
 /datum/action/innate/gang/IsAvailable()
-	if(!owner.mind || !owner.mind in SSticker.mode.get_all_gangsters())
+	if(!owner || !owner.mind || !owner.mind in SSticker.mode.get_all_gangsters())
 		return 0
 	return ..()
 

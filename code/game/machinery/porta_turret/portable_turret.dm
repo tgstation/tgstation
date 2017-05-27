@@ -1088,7 +1088,7 @@
 	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
-	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-9, 9))
+	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-7, 7))
 	P.fire()
 
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics

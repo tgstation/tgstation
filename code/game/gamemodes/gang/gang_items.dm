@@ -81,9 +81,10 @@
 	id = "mindshield"
 	cost = 10
 
-/datum/gang_item/function/implant/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+/datum/gang_item/function/implant/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/vigilante_tool/VT)
 	var/obj/item/weapon/implant/mindshield/MS = new()
 	MS.implant(user, user, 0)
+	VT.vigilante_items -= /datum/gang_item/function/implant
 
 /datum/gang_item/function/implant/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return "([get_cost(user, gang, gangtool)] Influence)"
@@ -110,8 +111,8 @@
 	return cost
 
 /datum/gang_item/function/backup/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	var/obj/machinery/gang/backup/bup = new(get_turf(user), gang)
-	bup.G = gang
+	var/obj/machinery/gang/backup/gate = new(get_turf(user), gang)
+	gate.G = gang
 
 /datum/gang_item/function/backup/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return "([get_cost(user, gang, gangtool)] Influence)"
@@ -144,11 +145,14 @@
 	reinforce()
 	gang.gateways++
 
+/obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
+	for(var/mob/M in contents)
+		qdel(M)
+	return ..()
 
 /obj/machinery/gang/backup/proc/reinforce()
 	if(!src)
 		return
-
 	var/we = 0
 	var/rival = 0
 	var/cooldown = 0
@@ -167,10 +171,9 @@
 					continue
 				rival++
 	spawn_gangster()
-	if(we == 0)
+	if(!we)
 		we = 1
 	cooldown = 200+((we/(rival+we))*50)**2
-	world << "[cooldown] deciseconds"
 	addtimer(CALLBACK(src, .proc/reinforce), cooldown)
 
 
@@ -242,7 +245,7 @@
 		O.body_parts_covered = CHEST|GROIN|LEGS|ARMS
 		O.desc += " Tailored for the [gang.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 		user.put_in_hands(O)
-		to_chat(user, "<span class='notice'> This is your gang's official outerwear, wearing it will increase your influence")
+		to_chat(user, "<span class='notice'> This is your gang's official armored outerwear, it provides significant bullet and melee armor and grants influence while you wear it.")
 
 
 /datum/gang_item/clothing/hat
@@ -491,7 +494,7 @@
 		name = "88mm HE rocket launcher"
 		mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher/HE
 
-/obj/item/weapon/gun/ballistic/automatic/atlauncher/HE/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override, bonus_spread = 0)
+/obj/item/weapon/gun/ballistic/automatic/atlauncher/HE/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = TRUE, params, zone_override, bonus_spread = 0)
 	if(!do_after(user, 30, target = user))
 		return
 	. = ..()
@@ -640,16 +643,16 @@
 
 
 /obj/item/weapon/reviver/attack(mob/living/carbon/human/H, mob/user)
-	if(!ishuman(H))
-		return
+	if(!ishuman(H) || icon_state == "implanter0")
+		return ..()
 	user.visible_message("<span class='warning'>[user] begins inject [H] with [src].</span>", "<span class='warning'>You begin to inject [H] with [src]...</span>")
 	var/total_burn	= 0
 	var/total_brute	= 0
 	H.notify_ghost_cloning("You're being injected with a revivification serum!")
 	if(do_after(user, 30, target = H))
-		if(H.stat == DEAD)
+		if(H.stat == DEAD && icon_state == "implanter1")
 			H.visible_message("<span class='warning'>[H]'s body thrashes violently.")
-			playsound(get_turf(src), "bodyfall", 50, 1)
+			playsound(src, "bodyfall", 50, 1)
 			total_brute = H.getBruteLoss()
 			total_burn = H.getFireLoss()
 			if (H.suiciding || (H.disabilities & NOCLONE) || !H.getorgan(/obj/item/organ/heart) || !H.getorgan(/obj/item/organ/brain))
@@ -668,13 +671,13 @@
 			H.emote("gasp")
 			H.setBrainLoss(70)
 			add_logs(user, H, "revived", src)
-			qdel(src)
+			icon_state = "implanter0"
 
 
 ////// Gangbuster Seraph //////
 
 /datum/gang_item/equipment/seraph
-	name = "Seraph Advanced Combat Mech"
+	name = "Seraph 'Gangbuster' Mech"
 	id = "seraph"
 	cost = 200
 	item_path = /obj/mecha/combat/marauder/gangbuster_seraph

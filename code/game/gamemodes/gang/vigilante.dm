@@ -5,12 +5,13 @@
 	item_state = "walkietalkie"
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "programming=5;bluespace=2"
+	var/datum/action/innate/vigilante_tool/linked_action
 	var/points = 0
 	var/list/tags = list()
 	var/vig_item_list
 	var/vig_category_list
 	var/static/gang = "Vigilante"
-	var/static/list/vigilante_items = list(
+	var/list/vigilante_items = list(
 		/datum/gang_item/function/implant,
 		/datum/gang_item/weapon/hatchet,
 		/datum/gang_item/weapon/pitchfork,
@@ -25,6 +26,7 @@
 		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/launcher,
 		/datum/gang_item/equipment/soap,
+		/datum/gang_item/equipment/sechuds,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/brutepatch,
 		/datum/gang_item/equipment/shield,
@@ -34,39 +36,46 @@
 		/datum/gang_item/equipment/seraph
 		)
 
-/obj/item/device/vigilante_tool/Initialize(mapload, mob/user)
-	var/datum/action/innate/vigilante_tool/VT = new
-	VT.Grant(user, src)
-	vig_item_list = list()
-	vig_category_list = list()
-	for(var/V in vigilante_items)
-		var/datum/gang_item/G = new V()
-		vig_item_list[G.id] = G
-		var/list/Cat = vig_category_list[G.category]
-		if(Cat)
-			Cat += G
-		else
-			vig_category_list[G.category] = list(G)
-	addtimer(CALLBACK(src, .proc/income), 1800)
+/obj/item/device/vigilante_tool/Initialize()
+	if(ismob(loc))
+		vig_item_list = list()
+		vig_category_list = list()
+		for(var/V in vigilante_items)
+			var/datum/gang_item/G = new V()
+			vig_item_list[G.id] = G
+			var/list/Cat = vig_category_list[G.category]
+			if(Cat)
+				Cat += G
+			else
+				vig_category_list[G.category] = list(G)
+		var/mob/living/M = loc
+		linked_action = new(src)
+		linked_action.Grant(M, src)
+		addtimer(CALLBACK(src, .proc/income), 1800)
+
+/obj/item/device/vigilante_tool/Destroy()
+	var/mob/living/M = loc
+	linked_action.Remove(M)
+	M.update_icons()
+	return ..()
 
 /obj/item/device/vigilante_tool/proc/income()
 	if(!src)
 		return
 	var/list/all_territory
 	var/newpoints = 0
-	var/mob/living/carbon/human/H = src.loc
+	var/mob/living/carbon/human/H = loc
 	for(var/datum/gang/G in SSticker.mode.gangs)
 		all_territory += G.territory
 	for(var/area/A in tags)
-		if(A in all_territory)
-		else
+		if(!(A in all_territory))
 			newpoints += 0.5
 	to_chat(H, "<span class='notice'>You have received 2 points for your continued service, [newpoints] for keeping the station tag-free.")
 	points += newpoints + 2
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
 		points += 4
-		to_chat(H, "<span class='notice'>You have also received 3 influence for possessing a mindshield implant.</span>")
-	addtimer(CALLBACK(src, .proc/income), 1800)
+		to_chat(H, "<span class='notice'>You have also received 4 influence for possessing a mindshield implant.</span>")
+	addtimer(CALLBACK(src, .proc/income), 1800, TIMER_UNIQUE)
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
 	if(user.mind in SSticker.mode.get_all_gangsters())
@@ -113,7 +122,7 @@
 	var/obj/item/I = user.get_active_held_item()
 	var/value
 	if(!I)
-		to_chat(user, "<span class='notice'> No item detected")
+		to_chat(user, "<span class='notice'>No item detected.</span>")
 		return
 	switch(I.type)
 		if(/obj/item/weapon/gun/ballistic/automatic/pistol)
@@ -174,9 +183,9 @@
 			if(I.type == G.outer_outfit && I.armor["bullet"]>=35)
 				value = 5
 	if(!value)
-		to_chat(user, "<span class='notice'> No contraband detected")
+		to_chat(user, "<span class='notice'> No contraband detected!</span>")
 		return
-	playsound(get_turf(loc), 'sound/items/poster_being_created.ogg', 75, 1)
+	playsound(src, 'sound/items/poster_being_created.ogg', 75, 1)
 	if(do_after(usr, 30, target = user))
 		if(I)
 			points += value
@@ -195,6 +204,7 @@
 /datum/action/innate/vigilante_tool/Grant(mob/user, obj/reg)
 	. = ..()
 	VT = reg
+	user.update_icons()
 
 
 /datum/action/innate/vigilante_tool/Activate()
