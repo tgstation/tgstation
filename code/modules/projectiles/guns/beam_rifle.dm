@@ -169,11 +169,7 @@
 			var/screenview = (current_user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 			var/ox = round(screenview/2) - current_user.client.pixel_x //"origin" x
 			var/oy = round(screenview/2) - current_user.client.pixel_y //"origin" y
-			var/angle = Atan2(y - oy, x - ox)
-			while(angle > 360)	//Don't round!
-				angle -= 360
-			while(angle < 0)
-				angle += 360
+			var/angle = NORM_ROT(Atan2(y - oy, x - ox))
 			var/difference = abs(lastangle - angle)
 			delay_penalty(difference * aiming_time_increase_angle_multiplier)
 			lastangle = angle
