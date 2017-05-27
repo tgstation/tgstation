@@ -633,8 +633,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
-	..()
+/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 50)
