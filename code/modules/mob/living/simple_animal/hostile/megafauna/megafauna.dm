@@ -59,7 +59,7 @@
 	else
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 		if(C && crusher_loot)
-			if(prob(150 * (C.total_damage/maxHealth))) //if you do at least 66% of its health with the crusher, you'll get the item always
+			if(C.total_damage >= maxHealth * 0.60) //if you do at least 60% of its health with the crusher, you'll get the item
 				spawn_crusher_loot()
 		if(!admin_spawned)
 			SSblackbox.set_details("megafauna_kills","[initial(name)]")
