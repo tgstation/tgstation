@@ -473,7 +473,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		ClickOn(T)
 
 /mob/proc/log_message(message, message_type)
-	if(!LAZYLEN(message) || !message_type)
+	if(!LAZYLEN(message) || !message_type || !client)
 		return
 
 	if(!islist(logging[message_type]))

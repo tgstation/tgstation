@@ -40,3 +40,7 @@
 		client.click_intercept = null
 
 		client.view = world.view // Resets the client.view in case it was changed.
+
+	if(!LAZYLEN(GLOB.individual_log_list[ckey]))
+		GLOB.individual_log_list[ckey] = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
+	logging = GLOB.individual_log_list[ckey]
