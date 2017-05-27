@@ -271,8 +271,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/bloodsense/Initialize()
 	. = ..()
-	if(!narnar)
-		narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
 
 /obj/screen/alert/bloodsense/Destroy()

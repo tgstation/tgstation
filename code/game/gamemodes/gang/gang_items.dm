@@ -199,10 +199,34 @@
 	cost = 5
 	item_path = /obj/item/weapon/switchblade
 
+/datum/gang_item/weapon/surplus
+	name = "Surplus Rifle"
+	id = "surplus"
+	cost = 8
+	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
+
+/datum/gang_item/weapon/ammo/surplus_ammo
+	name = "Surplus Rifle Ammo"
+	id = "surplus_ammo"
+	cost = 5
+	item_path = /obj/item/ammo_box/magazine/m10mm/rifle
+
+/datum/gang_item/weapon/improvised
+	name = "Sawn-Off Improvised Shotgun"
+	id = "sawn"
+	cost = 6
+	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
+
+/datum/gang_item/weapon/ammo/improvised_ammo
+	name = "Box of Buckshot"
+	id = "buckshot"
+	cost = 5
+	item_path = /obj/item/weapon/storage/box/lethalshot
+
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
-	cost = 25
+	cost = 30
 	item_path = /obj/item/weapon/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
@@ -223,19 +247,25 @@
 	cost = 15
 	item_path = /obj/item/ammo_box/magazine/sniper_rounds
 
+/datum/gang_item/weapon/machinegun
+	name = "Mounted Machine Gun"
+	id = "MG"
+	cost = 50
+	item_path = /obj/machinery/manned_turret
+	spawn_msg = "<span class='notice'>The mounted machine gun features enhanced responsiveness. Hold down on the trigger while firing to control where you're shooting.</span>"
+
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
 	id = "uzi"
 	cost = 60
 	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
-	id = "uzi"
+
 
 /datum/gang_item/weapon/ammo/uzi_ammo
 	name = "Uzi Ammo"
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-
 
 ///////////////////
 //EQUIPMENT
@@ -273,13 +303,13 @@
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
-	cost = 10
+	cost = 18
 	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
 
 /datum/gang_item/equipment/stimpack
 	name = "Black Market Stimulants"
 	id = "stimpack"
-	cost = 15
+	cost = 12
 	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
@@ -295,6 +325,18 @@
 		user.put_in_hands(O)
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
+		
+/datum/gang_item/equipment/wetwork_boots
+	name = "Wetwork boots"
+	id = "wetwork"
+	cost = 20
+	item_path = /obj/item/clothing/shoes/combat/gang
+	
+/obj/item/clothing/shoes/combat/gang
+	name = "Wetwork boots"
+	desc = "A gang's best hitmen are prepared for anything."
+	permeability_coefficient = 0.01
+	flags = NOSLIP
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"

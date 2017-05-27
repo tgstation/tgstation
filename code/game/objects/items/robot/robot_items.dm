@@ -504,6 +504,8 @@
 		S.change_head_color(color2)
 		dropped = TRUE
 
+#define PKBORG_DAMPEN_CYCLE_DELAY 20
+
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
 	name = "Hyperkinetic Dampening projector"
@@ -522,10 +524,11 @@
 	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
 	var/projectile_tick_speed_ecost = 15
-	var/current_damage_dampening = 0
 	var/list/obj/item/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
+	var/active = FALSE
+	var/cycle_delay = 0
 
 /obj/item/borg/projectile_dampen/debug
 	maxenergy = 50000
@@ -538,31 +541,46 @@
 	tracked = list()
 	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
+	host = loc
 
 /obj/item/borg/projectile_dampen/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
-	var/active = FALSE
-	if(!istype(dampening_field))
-		activate_field()
-		active = TRUE
+	if(cycle_delay < world.time)
+		to_chat(user, "<span class='boldwarning'>\the [src] is still recycling its projectors!</span>")
+		return
+	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY
+	active = !active
+	if(active)
+		activate_field(user)
 	else
 		deactivate_field()
-		active = FALSE
+	update_icon()
 	to_chat(user, "<span class='boldnotice'>You [active? "activate":"deactivate"] the [src].</span>")
+
+/obj/item/borg/projectile_dampen/update_icon()
 	icon_state = "[initial(icon_state)][active]"
 
 /obj/item/borg/projectile_dampen/proc/activate_field()
-	if(!istype(dampening_field))
-		dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
+	if(istype(dampening_field))
+		QDEL_NULL(dampening_field)
+	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
-	visible_message("<span class='warning'>The [src] shuts off!</span>")
-	for(var/obj/item/projectile/P in tracked)
+	visible_message("<span class='warning'>\The [src] shuts off!</span>")
+	for(var/P in tracked)
 		restore_projectile(P)
+
+/obj/item/borg/projectile_dampen/dropped()
+	. = ..()
+	host = loc
+
+/obj/item/borg/projectile_dampen/equipped()
+	. = ..()
+	host = loc
 
 /obj/item/borg/projectile_dampen/process()
 	process_recharge()
@@ -576,10 +594,11 @@
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0
 	for(var/I in tracked)
-		if(!tracked[I])	//No damage
+		var/obj/item/projectile/P = I
+		if(!P.stun && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
-	usage += (current_damage_dampening * projectile_damage_tick_ecost_coefficient)
+		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)
 	energy = Clamp(energy - usage, 0, maxenergy)
 	if(energy <= 0)
 		deactivate_field()
@@ -587,8 +606,11 @@
 
 /obj/item/borg/projectile_dampen/proc/process_recharge()
 	if(!istype(host))
-		energy = Clamp(energy + energy_recharge, 0, maxenergy)
-		return
+		if(iscyborg(host.loc))
+			host = host.loc
+		else
+			energy = Clamp(energy + energy_recharge, 0, maxenergy)
+			return
 	if((host.cell.charge >= (host.cell.maxcharge * cyborg_cell_critical_percentage)) && (energy < maxenergy))
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
@@ -598,7 +620,6 @@
 		return
 	if(track_projectile)
 		tracked[P] = P.damage
-		current_damage_dampening += P.damage
 	P.damage *= projectile_damage_coefficient
 	P.speed *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)
@@ -608,8 +629,6 @@
 	P.damage *= (1/projectile_damage_coefficient)
 	P.speed *= (1/projectile_speed_coefficient)
 	P.cut_overlay(projectile_effect)
-	current_damage_dampening -= P.damage
-
 
 /**********************************************************************
 						HUD/SIGHT things

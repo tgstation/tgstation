@@ -104,6 +104,10 @@
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
 
+		else if(istype(S, /obj/item/stack/marker_beacon))
+			S.cost = 1
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
+
 		if(S && S.source)
 			S.materials = list()
 			S.is_cyborg = 1
@@ -478,7 +482,6 @@
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
 		/obj/item/weapon/storage/bag/ore/cyborg,
 		/obj/item/weapon/pickaxe/drill/cyborg,
 		/obj/item/weapon/shovel,
@@ -488,7 +491,8 @@
 		/obj/item/weapon/storage/bag/sheetsnatcher/borg,
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg,
-		/obj/item/device/gps/cyborg)
+		/obj/item/device/gps/cyborg,
+		/obj/item/stack/marker_beacon)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,
@@ -584,3 +588,8 @@
 	max_energy = 2500
 	recharge_rate = 250
 	name = "Medical Synthesizer"
+
+/datum/robot_energy_storage/beacon
+	max_energy = 30
+	recharge_rate = 1
+	name = "Marker Beacon Storage"

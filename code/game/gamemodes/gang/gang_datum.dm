@@ -28,6 +28,7 @@
 	var/static/list/boss_items = list(
 		/datum/gang_item/function/gang_ping,
 		/datum/gang_item/function/recall,
+
 		/datum/gang_item/clothing/under,
 		/datum/gang_item/clothing/suit,
 		/datum/gang_item/clothing/hat,
@@ -36,21 +37,29 @@
 		/datum/gang_item/clothing/mask,
 		/datum/gang_item/clothing/hands,
 		/datum/gang_item/clothing/belt,
+
 		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
+		/datum/gang_item/weapon/improvised,
+		/datum/gang_item/weapon/ammo/improvised_ammo,
+		/datum/gang_item/weapon/surplus,
+		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/emp,
+		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/frag,
-		/datum/gang_item/equipment/implant_breaker,
 		/datum/gang_item/equipment/stimpack,
+		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/wetwork_boots,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/dominator
 	)
@@ -66,21 +75,29 @@
 		/datum/gang_item/clothing/mask,
 		/datum/gang_item/clothing/hands,
 		/datum/gang_item/clothing/belt,
-		/datum/gang_item/weapon/shuriken,
+
+  	/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
+		/datum/gang_item/weapon/improvised,
+		/datum/gang_item/weapon/ammo/improvised_ammo,
+		/datum/gang_item/weapon/surplus,
+		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/emp,
+		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/frag,
-		/datum/gang_item/equipment/implant_breaker,
 		/datum/gang_item/equipment/stimpack,
+		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/wetwork_boots,
 	)
 
 /datum/gang/New(loc,gangname)
@@ -165,7 +182,6 @@
 	var/diff = domination_timer - world.time
 	return diff / 10
 
-
 //////////////////////////////////////////// MESSAGING
 
 
@@ -188,7 +204,9 @@
 		return
 	var/added_names = ""
 	var/lost_names = ""
-
+	
+	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
+	
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
 	territory |= reclaimed_territories
