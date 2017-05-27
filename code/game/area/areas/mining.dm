@@ -57,13 +57,13 @@
 	name = "Mining Station Communications"
 
 /area/mine/cafeteria
-	name = "Mining station Cafeteria"
+	name = "Mining Station Cafeteria"
 
 /area/mine/hydroponics
-	name = "Mining station Hydroponics"
+	name = "Mining Station Hydroponics"
 
 /area/mine/sleeper
-	name = "Mining station Emergency Sleeper"
+	name = "Mining Station Emergency Sleeper"
 
 /area/mine/north_outpost
 	name = "North Mining Outpost"

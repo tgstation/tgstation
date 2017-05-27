@@ -12,7 +12,7 @@
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)
-	if(new_area && new_area.name == allowed_area || istype(new_area, /area/toxins/xenobiology ))
+	if(new_area && new_area.name == allowed_area || istype(new_area, /area/science/xenobiology ))
 		return ..()
 	else
 		return
@@ -96,12 +96,12 @@
 	origin.feed_slime_action.Remove(C)
 	origin.monkey_recycle_action.Remove(C)
 	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
-	remote_eye.eye_user = null
 	C.reset_perspective(null)
 	if(C.client)
 		C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			C.client.images -= chunk.obscured
+			chunk.remove(remote_eye)
+	remote_eye.eye_user = null
 	C.remote_control = null
 	C.unset_machine()
 	Remove(C)

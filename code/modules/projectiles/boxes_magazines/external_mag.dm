@@ -13,6 +13,22 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m10mm/rifle
+	name = "rifle magazine (10mm)"
+	desc = "A well-worn magazine fitted for the surplus rifle."
+	icon_state = "75-8"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = "10mm"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/m10mm/rifle/update_icon()
+	if(ammo_count())
+		icon_state = "75-8"
+	else
+		icon_state = "75-0"
+
+
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
 	icon_state = "9x19pI"
@@ -249,6 +265,17 @@
 	origin_tech = "combat=6;syndicate=3"
 	max_ammo = 5
 
+/obj/item/ammo_box/magazine/sniper_rounds/gang
+	name = "black market sniper rounds (.50)"
+	icon_state = ".50mag"
+	origin_tech = "combat=6"
+	ammo_type = /obj/item/ammo_casing/point50/gang
+
+/obj/item/ammo_box/magazine/sniper_rounds/gang/sleeper
+	name = "illegally modified tranquilizer round"
+	icon_state = "soporific"
+	origin_tech = "combat=6"
+	ammo_type = /obj/item/ammo_casing/point50/gang/sleeper
 
 //// SAW MAGAZINES
 

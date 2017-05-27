@@ -106,36 +106,19 @@
 	icon_state = "mecha_analyzer"
 	selectable = 0
 	equip_cooldown = 30
-	var/scanning = 0
+	var/scanning_time = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
 	..()
 	START_PROCESSING(SSobj, src)
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
-	..()
-	M.occupant_sight_flags |= SEE_TURFS
-	if(M.occupant)
-		M.occupant.update_sight()
-
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
-	chassis.occupant_sight_flags &= ~SEE_TURFS
-	if(chassis.occupant)
-		chassis.occupant.update_sight()
-	return ..()
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
-	if(scanning)
-		return
-	if(istype(loc,/obj/mecha/working))
+	if(istype(loc,/obj/mecha/working) && scanning_time <= world.time)
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/list/L = list(mecha.occupant)
-		scanning = 1
-		mineral_scan_pulse(L,get_turf(loc))
-		spawn(equip_cooldown)
-			scanning = 0
+		scanning_time = world.time + equip_cooldown
+		mineral_scan_pulse(get_turf(src))

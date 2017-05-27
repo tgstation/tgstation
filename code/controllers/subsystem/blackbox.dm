@@ -1,7 +1,8 @@
 SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
-	flags = SS_NO_TICK_CHECK
+	flags = SS_NO_TICK_CHECK | SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/msg_common = list()
 	var/list/msg_science = list()
@@ -54,6 +55,8 @@ SUBSYSTEM_DEF(blackbox)
 	return FALSE
 
 /datum/controller/subsystem/blackbox/Shutdown()
+	set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
+
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
@@ -78,8 +81,6 @@ SUBSYSTEM_DEF(blackbox)
 	add_details("radio_usage","OTH-[msg_other.len]")
 	add_details("radio_usage","PDA-[pda_msg_amt]")
 	add_details("radio_usage","RC-[rc_msg_amt]")
-
-	set_details("round_end","[time2text(world.realtime)]") //This one MUST be the last one that gets set.
 
 	if (!SSdbcore.Connect())
 		return

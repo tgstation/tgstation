@@ -56,13 +56,13 @@
 		qdel(active_dummy)
 		active_dummy = null
 		to_chat(usr, "<span class='notice'>You deactivate \the [src].</span>")
-		new /obj/effect/overlay/temp/emp/pulse(get_turf(src))
+		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
 		C.activate(usr, saved_appearance, src)
 		to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
-		new /obj/effect/overlay/temp/emp/pulse(get_turf(src))
+		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)

@@ -286,7 +286,7 @@
 	density = 0
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
 	update_icon()
-	investigate_log("was destroyed.", "atmos")
+	investigate_log("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
 		holding.forceMove(T)
@@ -388,7 +388,7 @@
 				. = TRUE
 			if(.)
 				release_pressure = Clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
-				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", "atmos")
+				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
 			valve_open = !valve_open
@@ -439,7 +439,7 @@
 		if("eject")
 			if(holding)
 				if(valve_open)
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", "atmos")
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transfering into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
 				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE
