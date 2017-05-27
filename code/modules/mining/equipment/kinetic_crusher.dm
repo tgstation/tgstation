@@ -186,16 +186,20 @@
 	bonus_value = 5
 
 /obj/item/crusher_trophy/tail_spike/effect_desc()
-	return "you to do <b>[bonus_value]</b> more damage and push back the target when detonating a mark"
+	return "mark detonation to do <b>[bonus_value]</b> damage to nearby enemies and push them back"
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/user)
-	playsound(target, 'sound/magic/Fireball.ogg', 25, 1)
-	new /obj/effect/temp_visual/fire(target.loc)
-	target.adjustBruteLoss(bonus_value)
-	addtimer(CALLBACK(src, .proc/pushback, target, user), 1) //no free backstabs, we push AFTER module stuff is done
+	for(var/mob/living/L in view(2, user))
+		if(user.faction_check_mob(L) || L.stat == DEAD)
+			continue
+		playsound(L, 'sound/magic/Fireball.ogg', 20, 1)
+		new /obj/effect/temp_visual/fire(L.loc)
+		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
+		L.adjustBruteLoss(bonus_value)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/user)
-	step(target, get_dir(user, target))
+	if(!anchored || ismegafauna(target)) //megafauna will always be pushed
+		step(target, get_dir(user, target))
 
 /obj/item/crusher_trophy/demon_claws
 	name = "demon claws"
@@ -206,7 +210,7 @@
 	bonus_value = 15
 
 /obj/item/crusher_trophy/demon_claws/effect_desc()
-	return "you to do <b>[bonus_value]</b> more damage when detonating a mark"
+	return "mark detonation to do <b>[bonus_value]</b> more damage"
 
 /obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/user)
 	target.adjustBruteLoss(bonus_value)
@@ -221,7 +225,7 @@
 	bonus_value = 20
 
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
-	return "your next destabilizer shot after detonating a mark to deal <b>[bonus_value]</b> damage but move slower"
+	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage but move slower"
 
 /obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/user)
 	if(deadly_shot)
@@ -246,7 +250,7 @@
 	denied_type = /obj/item/crusher_trophy/vortex_talisman
 
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
-	return "you to create a barrier you can pass when detonating a mark"
+	return "mark detonation to create a barrier you can pass"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/user)
 	var/turf/T = get_turf(user)
