@@ -46,10 +46,14 @@ Difficulty: Very Hard
 	del_on_death = 1
 	medal_type = MEDAL_PREFIX
 	score_type = COLOSSUS_SCORE
-	loot = list(/obj/effect/spawner/lootdrop/anomalous_crystal, /obj/item/organ/vocal_cords/colossus)
+	crusher_loot = /obj/structure/closet/crate/necropolis/colossus/crusher
+	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
+
+/mob/living/simple_animal/hostile/megafauna/colossus/spawn_crusher_loot()
+	loot = list(crusher_loot)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
@@ -443,13 +447,6 @@ Difficulty: Very Hard
 
 /obj/machinery/anomalous_crystal/ex_act()
 	ActivationReaction(null, ACTIVATE_BOMB)
-
-/obj/effect/spawner/lootdrop/anomalous_crystal
-	name = "anomalous crystal spawner"
-
-/obj/effect/spawner/lootdrop/anomalous_crystal/Initialize()
-	loot = subtypesof(/obj/machinery/anomalous_crystal)
-	. = ..()
 
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	observer_desc = "This crystal strips and equips its targets as clowns."
