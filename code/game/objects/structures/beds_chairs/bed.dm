@@ -161,7 +161,7 @@
 	anchored = 0
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
-	var/owner = ""
+	var/mob/living/owner = null
 
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
 	owner = M
