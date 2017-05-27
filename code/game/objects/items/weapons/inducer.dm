@@ -100,10 +100,13 @@
 		recharging = TRUE
 	var/obj/item/weapon/stock_parts/cell/C = A.get_cell()
 	var/obj/item/weapon/gun/energy/E
+	var/obj/O
 	var/coefficient = 1
 	if(istype(A, /obj/item/weapon/gun/energy))
 		coefficient = 0.075 // 14 loops to recharge an egun from 0-1000
 		E = A
+	else if(istype(A, /obj))
+		O = A
 	if(C)
 		if(C.charge >= C.maxcharge)
 			to_chat(user, "<span class='notice'>\The [A] is fully charged!</span>")
@@ -112,11 +115,12 @@
 		user.visible_message("[user] starts recharging \the [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
 		while(C.charge < C.maxcharge)
 			if(E)
-				E.update_icon()
 				E.chambered = null // Prevents someone from firing continuously while recharging the gun.
 			if(do_after(user, 10, target = user) && cell.charge)
 				induce(C, coefficient)
 				do_sparks(1, FALSE, A)
+				if(O)
+					O.update_icon()
 			else
 				break
 		if(E)
@@ -167,12 +171,13 @@
 /obj/item/weapon/inducer/sci
 	icon_state = "inducer-sci"
 	item_state = "inducer-sci"
-	desc = "A tool for inductively charging internal power cells. This one has a science color scheme."
+	desc = "A tool for inductively charging internal power cells. This one has a science color scheme, and is less potent than it's engineering counterpart."
 	cell_type = null
+	powertransfer = 500
+	opened = TRUE
 
 /obj/item/weapon/inducer/sci/Initialize()
 	. = ..()
-	opened = TRUE
 	update_icon()
 
 
