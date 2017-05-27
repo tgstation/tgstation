@@ -99,22 +99,28 @@
 	else
 		recharging = TRUE
 	var/obj/item/weapon/stock_parts/cell/C = A.get_cell()
+	var/obj/item/weapon/gun/energy/E
 	var/coefficient = 1
 	if(istype(A, /obj/item/weapon/gun/energy))
-		coefficient = 0.1
+		coefficient = 0.075 // 14 loops to recharge an egun from 0-1000
+		E = A
 	if(C)
 		if(C.charge >= C.maxcharge)
 			to_chat(user, "<span class='notice'>\The [A] is fully charged!</span>")
 			recharging = FALSE
 			return TRUE
-		var/iterations = Ceiling((C.maxcharge - C.charge) / (powertransfer * coefficient))
 		user.visible_message("[user] starts recharging \the [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
-		for (var/i in 1 to iterations)
+		while(C.charge < C.maxcharge)
+			if(E)
+				E.update_icon()
+				E.chambered = null // Prevents someone from firing continuously while recharging the gun.
 			if(do_after(user, 10, target = user) && cell.charge)
 				induce(C, coefficient)
 				do_sparks(1, FALSE, A)
 			else
 				break
+		if(E)
+			E.recharge_newshot() //We're done charging, so we'll let someone fire it now.
 		user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
 		recharging = FALSE
 		return TRUE
