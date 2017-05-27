@@ -419,7 +419,7 @@
 	message = null
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/custom/replace_pronoum(mob/user, message)
+/datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return
 
 /datum/emote/living/help
