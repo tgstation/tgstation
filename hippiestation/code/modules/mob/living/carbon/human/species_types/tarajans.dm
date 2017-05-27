@@ -11,9 +11,6 @@
 	mutant_bodyparts = list("tail_human")
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/cat
 	skinned_type = /obj/item/stack/sheet/animalhide/cat
-	exotic_bloodtype = "O-" //universal donor, more reason to drain their blood
-	burnmod = 1.25
-	brutemod = 1.25
 	teeth_type = /obj/item/stack/teeth/cat
 
 /datum/species/tarajan/qualifies_for_rank(rank, list/features)
@@ -41,14 +38,6 @@
 	C.dna.features["tail_human"] = null
 	. = ..()
 
-/obj/item/bodypart/var/should_draw_hippie = FALSE
-
-/mob/living/carbon/proc/draw_hippie_parts(undo = FALSE)
-	if(!undo)
-		for(var/O in bodyparts)
-			var/obj/item/bodypart/B = O
-			B.should_draw_hippie = TRUE
-	else
-		for(var/O in bodyparts)
-			var/obj/item/bodypart/B = O
-			B.should_draw_hippie = FALSE
+/datum/species/tarajan/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
