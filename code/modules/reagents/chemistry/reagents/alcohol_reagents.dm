@@ -74,7 +74,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/customizable
 	name = "Ale"
 	id = "customizable_ale"
-	description = "An alcoholic beverage brewed by hand.."
+	description = "An alcoholic beverage brewed by hand."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	boozepwr = 0 // filled out by brewing

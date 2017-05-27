@@ -9,6 +9,7 @@
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	strip_delay = 80
 	put_on_delay = 60
+	species_clothing_whitelist = list("dwarf")
 
 /obj/item/clothing/suit/armor/vest/dwarf/CheckParts(list/parts_list)
 	..()
@@ -30,6 +31,7 @@
 	icon_state = "dwarf"
 	item_state = "dwarf"
 	item_color = "dwarf"
+	species_clothing_whitelist = list("dwarf")
 
 /obj/item/clothing/shoes/dwarf
 	name = "dwarf shoes"
@@ -37,6 +39,7 @@
 	item_color = "dwarf"
 	item_state = "dwarf"
 	desc = "A pair of dwarven boots."
+	species_clothing_whitelist = list("dwarf")
 
 /obj/item/clothing/gloves/dwarf
 	desc = "Great for holding pickaxes."
@@ -44,12 +47,14 @@
 	icon_state = "dwarf"
 	item_color = "dwarf"
 	item_state = "dwarf"
+	species_clothing_whitelist = list("dwarf")
 
 /obj/item/clothing/head/helmet/dwarf
 	name = "dwarven helm"
 	desc = "Protects the head from tantrums."
 	icon_state = "dwarf"
 	item_state = "dwarf"
+	species_clothing_whitelist = list("dwarf")
 
 /obj/item/clothing/head/helmet/dwarf/CheckParts(list/parts_list)
 	..()

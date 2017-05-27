@@ -62,26 +62,6 @@
 /obj/screen/devil/soul_counter/proc/clear()
 	invisibility = INVISIBILITY_ABSTRACT
 
-obj/screen/dwarf
-	invisibility = INVISIBILITY_ABSTRACT
-
-/obj/screen/dwarf/alcohol_display
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "power_display2"
-	name = "alcohol stored"
-	screen_loc = ui_alcohol_amount
-
-/obj/screen/dwarf/alcohol_display/proc/update(mob/living/carbon/human/H)
-	var/obj/item/organ/alcoholvessel/dwarf
-	dwarf = H.getorganslot("dwarf_organ")
-	if(dwarf)
-		invisibility  = 0
-		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(dwarf.stored_alcohol)]</font></div>"
-
-/obj/screen/dwarf/alcohol_display/proc/remove()
-	invisibility  = INVISIBILITY_ABSTRACT
-	maptext = null
-
 /obj/screen/ling
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -316,9 +296,6 @@ obj/screen/dwarf
 
 	devilsouldisplay = new /obj/screen/devil/soul_counter
 	infodisplay += devilsouldisplay
-
-	alcohol_amount = new /obj/screen/dwarf/alcohol_display()
-	infodisplay += alcohol_amount
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

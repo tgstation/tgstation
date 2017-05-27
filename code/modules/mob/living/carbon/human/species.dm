@@ -50,8 +50,6 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
-	var/list/species_clothing_blacklist //If you're in this list, you can't wear it
-	var/list/species_clothing_whitelist //If you're not in this list, you can't wear it
 
 	// species flags. these can be found in flags.dm
 	var/list/species_traits = list()
@@ -609,7 +607,24 @@
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
+	if(istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if(C.species_clothing_blacklist)
+			for(var/the_id in C.species_clothing_blacklist)
+				if(the_id == id)
+					return 0
+				else
+					continue
 
+		else if(C.species_clothing_whitelist)
+			var/whitelisted = FALSE
+			for(var/the_id in C.species_clothing_whitelist)
+				if(the_id != id)
+					continue
+				else
+					whitelisted = TRUE
+			if(!whitelisted)
+				return 0
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
 	switch(slot)
