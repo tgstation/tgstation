@@ -1384,11 +1384,7 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in SSticker.mode.traitors))
-		SSticker.mode.traitors += src
-		special_role = "traitor"
-		SSticker.mode.forge_traitor_objectives(src)
-		SSticker.mode.finalize_traitor(src)
-		SSticker.mode.greet_traitor(src)
+		add_antag_datum(ANTAG_DATUM_TRAITOR)
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))
