@@ -623,14 +623,10 @@
 		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
 			user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
-
+			cell.update_icon()
 			src.cell = null
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
-								 "<span class='notice'>You remove the power cell.</span>")
-			//to_chat(user, "You remove the power cell.")
 			charging = 0
 			src.update_icon()
 		return

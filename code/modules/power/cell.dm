@@ -28,7 +28,7 @@
 	charge = maxcharge
 	if(ratingdesc)
 		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
-	updateicon()
+	update_icon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -49,7 +49,7 @@
 	else
 		return PROCESS_KILL
 
-/obj/item/weapon/stock_parts/cell/proc/updateicon()
+/obj/item/weapon/stock_parts/cell/update_icon()
 	cut_overlays()
 	if(grown_battery)
 		add_overlay("grown_wires")

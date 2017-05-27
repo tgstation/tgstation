@@ -21,8 +21,8 @@
 	var/totransfer = min(cell.charge,(powertransfer * coefficient))
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
-	cell.updateicon()
-	target.updateicon()
+	cell.update_icon()
+	target.update_icon()
 
 /obj/item/weapon/inducer/get_cell()
 	return cell
@@ -135,7 +135,7 @@
 /obj/item/weapon/inducer/attack_self(mob/user)
 	if(opened && cell)
 		user.visible_message("[user] removes \the [cell] from \the [src]!","<span class='notice'>You remove \the [cell].</span>")
-		cell.updateicon()
+		cell.update_icon()
 		user.put_in_hands(cell)
 		cell = null
 		update_icon()
