@@ -180,6 +180,7 @@
 /obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark) //the target, the mark applied, and if the target had a mark before
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/user) //the target and the user
 
+//ash drake
 /obj/item/crusher_trophy/tail_spike
 	desc = "A spike taken from a ash drake's tail."
 	denied_type = /obj/item/crusher_trophy/tail_spike
@@ -198,9 +199,10 @@
 		L.adjustBruteLoss(bonus_value)
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/user)
-	if(!anchored || ismegafauna(target)) //megafauna will always be pushed
+	if(!target.anchored || ismegafauna(target)) //megafauna will always be pushed
 		step(target, get_dir(user, target))
 
+//bubblegum
 /obj/item/crusher_trophy/demon_claws
 	name = "demon claws"
 	desc = "A set of blood-drenched claws from a massive demon's hand."
@@ -215,6 +217,7 @@
 /obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/user)
 	target.adjustBruteLoss(bonus_value)
 
+//colossus
 /obj/item/crusher_trophy/blaster_tubes
 	name = "blaster tubes"
 	desc = "The blaster tubes from a colossus's arm."
@@ -243,6 +246,7 @@
 /obj/item/crusher_trophy/blaster_tubes/proc/reset_deadly_shot()
 	deadly_shot = FALSE
 
+//hierophant
 /obj/item/crusher_trophy/vortex_talisman
 	name = "vortex talisman"
 	desc = "A glowing trinket that was originally the Hierophant's beacon."
