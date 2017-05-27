@@ -194,7 +194,7 @@
 		smelted_material = new M.smelted_material.type()
 		add_overlay(I)
 		name = "[M.material_type] warhammer"
-		if(M.blunt_bonus = TRUE)// club'em real good
+		if(M.blunt_bonus == TRUE)// club'em real good
 			force = M.attack_amt * 2
 			force_unwielded = M.attack_amt * 2
 			force_wielded = M.attack_amt * 4
@@ -245,7 +245,7 @@
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()
 		name = "[S.material_type] shovel"
-		if(S.blunt_bonus = TRUE)// a shovel is essentially a blunt object
+		if(S.blunt_bonus == TRUE)// a shovel is essentially a blunt object
 			force = S.attack_amt * 1.25
 		else
 			force = S.attack_amt * 0.75
