@@ -115,7 +115,8 @@
 		user.visible_message("[user] starts recharging \the [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
 		while(C.charge < C.maxcharge)
 			if(E)
-				E.chambered = null // Prevents someone from firing continuously while recharging the gun.
+				E.chambered = null
+				E.update_icon() // Prevents someone from firing continuously while recharging the gun.
 			if(do_after(user, 10, target = user) && cell.charge)
 				induce(C, coefficient)
 				do_sparks(1, FALSE, A)
