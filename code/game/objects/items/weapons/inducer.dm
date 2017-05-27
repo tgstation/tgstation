@@ -16,8 +16,8 @@
 	if(!cell && cell_type)
 		cell = new cell_type
 
-/obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target)
-	var/totransfer = min(cell.charge,powertransfer)
+/obj/item/weapon/inducer/proc/induce(obj/item/weapon/stock_parts/cell/target, coefficient)
+	var/totransfer = min(cell.charge,(powertransfer * coefficient))
 	var/transferred = target.give(totransfer)
 	cell.use(transferred)
 	cell.updateicon()
@@ -29,7 +29,7 @@
 /obj/item/weapon/inducer/emp_act(severity)
 	..()
 	if(cell)
-		cell.emp_act(severity)
+		cell.emp_act()
 
 /obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
@@ -87,22 +87,29 @@
 	if(cantbeused(user))
 		return
 
-	if(recharge(W, user, chargetime = 60))
+	if(recharge(W, user))
 		return
 
 	return ..()
 
-/obj/item/weapon/inducer/proc/recharge(atom/movable/A, mob/user, chargetime = 20)
+/obj/item/weapon/inducer/proc/recharge(atom/movable/A, mob/user)
 	var/obj/item/weapon/stock_parts/cell/C = A.get_cell()
+	var/coefficient = 1
+	if(istype(A, /obj/item/weapon/gun/energy))
+		coefficient = 0.1
 	if(C)
 		if(C.charge >= C.maxcharge)
 			to_chat(user, "<span class='notice'>\The [A] is fully charged!</span>")
 			return TRUE
-
+		var/iterations = Ceiling((C.maxcharge - C.charge) / (powertransfer * coefficient))
 		user.visible_message("[user] starts recharging \the [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
-		if(do_after(user, chargetime, target = A))
-			induce(C)
-			user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
+		for (var/i in 1 to iterations)
+			if(do_after(user, 10, target = user) && cell.charge)
+				induce(C, coefficient)
+				do_sparks(1, FALSE, A)
+			else
+				break
+		user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
 		return TRUE
 
 
@@ -113,7 +120,7 @@
 	if(cantbeused(user))
 		return
 
-	if(recharge(M, user, chargetime = 10))
+	if(recharge(M, user))
 		return
 	return ..()
 
@@ -143,10 +150,6 @@
 			add_overlay("inducer-nobat")
 		else
 			add_overlay("inducer-bat")
-
-	if(blood_DNA)
-		add_blood_overlay()
-
 
 /obj/item/weapon/inducer/sci
 	icon_state = "inducer-sci"
