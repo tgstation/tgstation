@@ -54,10 +54,10 @@
 	var/obj/effect/chrono_field/field = null
 	var/turf/startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/New(var/obj/item/weapon/chrono_eraser/T)
+/obj/item/weapon/gun/energy/chrono_gun/Initialize()
 	. = ..()
-	if(istype(T))
-		TED = T
+	if(istype(loc, /obj/item/weapon/chrono_eraser))
+		TED = loc
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)

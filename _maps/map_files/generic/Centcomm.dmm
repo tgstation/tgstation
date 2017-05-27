@@ -2648,7 +2648,7 @@
 /turf/open/floor/circuit,
 /area/ctf)
 "hq" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "hr" = (
 /obj/effect/turf_decal/stripes/line,
@@ -3700,7 +3700,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 50
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "jY" = (
 /turf/open/floor/plasteel/brown{
@@ -4260,7 +4260,7 @@
 /area/centcom/control)
 "ln" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lo" = (
 /obj/structure/table/reinforced,
@@ -4415,11 +4415,11 @@
 /area/centcom/control)
 "lF" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lG" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lH" = (
 /turf/closed/indestructible/fakeglass{
@@ -4433,7 +4433,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "lJ" = (
 /turf/closed/indestructible/riveted,
@@ -4636,7 +4636,7 @@
 /area/syndicate_mothership/control)
 "mh" = (
 /obj/item/toy/figure/syndie,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mi" = (
 /obj/machinery/newscaster/security_unit,
@@ -4769,7 +4769,7 @@
 /area/centcom/control)
 "mz" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "mA" = (
 /turf/closed/indestructible/fakeglass,
@@ -5976,7 +5976,7 @@
 	},
 /area/wizard_station)
 "pk" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/space)
 "pl" = (
 /obj/machinery/computer/shuttle/syndicate/recall,
@@ -6941,7 +6941,7 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "rl" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 8;
@@ -6960,7 +6960,7 @@
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
 "ro" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 1;
@@ -7776,7 +7776,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow;
 	width = 18
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/space)
 "th" = (
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -8097,7 +8097,7 @@
 	name = "\improper FOURTH WALL";
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "tS" = (
 /turf/open/floor/wood,
@@ -8332,14 +8332,14 @@
 	},
 /area/syndicate_mothership/control)
 "ux" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "uy" = (
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /obj/machinery/porta_turret/syndicate/pod,
 /turf/closed/wall/mineral/plastitanium{
 	dir = 4;
@@ -9745,7 +9745,7 @@
 /area/centcom/evac)
 "yc" = (
 /obj/structure/statue/uranium/nuke,
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "yd" = (
 /obj/structure/table/wood,
@@ -14078,7 +14078,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Kh" = (
 /obj/machinery/light{
@@ -14104,7 +14104,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Kk" = (
 /obj/structure/chair{
@@ -14123,7 +14123,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Km" = (
 /obj/effect/turf_decal/stripes/line,
@@ -14141,7 +14141,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Kp" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -14657,7 +14657,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Lx" = (
 /obj/structure/flora/grass/brown,
@@ -14665,7 +14665,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/asteroid/snow/atmosphere,
+/turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "Ly" = (
 /obj/structure/flora/grass/brown,

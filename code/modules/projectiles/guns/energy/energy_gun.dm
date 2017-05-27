@@ -22,9 +22,9 @@
 	charge_sections = 3
 	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
 
-/obj/item/weapon/gun/energy/e_gun/mini/New()
+/obj/item/weapon/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/device/flashlight/seclite(src)
-	..()
+	return ..()
 
 /obj/item/weapon/gun/energy/e_gun/mini/update_icon()
 	..()
@@ -34,6 +34,8 @@
 /obj/item/weapon/gun/energy/e_gun/stun
 	name = "tactical energy gun"
 	desc = "Military issue energy gun, is able to fire stun rounds."
+	icon_state = "energytac"
+	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/e_gun/mini/practice_phaser

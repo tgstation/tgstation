@@ -167,6 +167,9 @@
 	if(!can_use(user))
 		return 0
 
+	if(SSshuttle.emergencyNoRecall)
+		return 0
+
 	if(recalling)
 		to_chat(usr, "<span class='warning'>Error: Recall already in progress.</span>")
 		return 0

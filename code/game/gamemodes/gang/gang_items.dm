@@ -248,7 +248,7 @@
 /datum/gang_item/clothing/hat
 	name = "Pimp Hat"
 	id = "hat"
-	cost = 18
+	cost = 16
 	item_path = /obj/item/clothing/head/collectable/petehat/gang
 
 /obj/item/clothing/head/collectable/petehat/gang
@@ -258,7 +258,7 @@
 /datum/gang_item/clothing/mask
 	name = "Golden Death Mask"
 	id = "mask"
-	cost = 20
+	cost = 18
 	item_path = /obj/item/clothing/mask/gskull
 
 /obj/item/clothing/mask/gskull
@@ -270,7 +270,7 @@
 /datum/gang_item/clothing/shoes
 	name = "Bling Boots"
 	id = "boots"
-	cost = 25
+	cost = 22
 	item_path = /obj/item/clothing/shoes/gang
 
 /obj/item/clothing/shoes/gang
@@ -281,14 +281,14 @@
 /datum/gang_item/clothing/neck
 	name = "Gold Necklace"
 	id = "necklace"
-	cost = 10
+	cost = 9
 	item_path = /obj/item/clothing/neck/necklace/dope
 
 
 /datum/gang_item/clothing/hands
 	name = "Decorative Brass Knuckles"
 	id = "hand"
-	cost = 12
+	cost = 11
 	item_path = /obj/item/clothing/gloves/gang
 
 /obj/item/clothing/gloves/gang
@@ -300,7 +300,7 @@
 /datum/gang_item/clothing/belt
 	name = "Badass Belt"
 	id = "belt"
-	cost = 15
+	cost = 13
 	item_path = /obj/item/weapon/storage/belt/military/gang
 
 /obj/item/weapon/storage/belt/military/gang
@@ -379,7 +379,6 @@
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
 	cost = 6
-	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/buckshot_ammo
 	name = "Box of Buckshot"
@@ -415,16 +414,24 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
 
 /datum/gang_item/weapon/sniper
-	name = ".50cal Sniper Rifle"
+	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
 	cost = 40
 	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
 
 /datum/gang_item/weapon/ammo/sniper_ammo
-	name = "Standard .50cal Sniper Rounds"
+	name = "Smuggled .50cal Sniper Rounds"
 	id = "sniper_ammo"
 	cost = 15
-	item_path = /obj/item/ammo_box/magazine/sniper_rounds
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang
+
+
+/datum/gang_item/weapon/ammo/sleeper_ammo
+	name = "Illicit Tranquilizer Cartridges"
+	id = "sniper_ammo"
+	cost = 15
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang/sleeper
+
 
 /datum/gang_item/weapon/auto
 	name = "Auto Rifle"
@@ -697,7 +704,6 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter(src)
 	ME.attach(src)
-
 
 /obj/item/clothing/shoes/combat/gang
 	name = "Wetwork boots"
