@@ -110,6 +110,8 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+		if(wizard_mob.dna)
+			wizard_mob.dna.real_name = newname
 
 		/* Wizards by nature cannot be too young. */
 		if(wizard_mob.age < WIZARD_AGE_MIN)
