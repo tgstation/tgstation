@@ -824,7 +824,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!delay)
 		delay = config.round_end_countdown * 10
 
-	if(delay_end)
+	if(delay_end && !check_rights())
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
