@@ -34,7 +34,7 @@
 		/datum/gang_item/equipment/seraph
 		)
 
-/obj/item/device/vigilante_tool/New(mob/user)
+/obj/item/device/vigilante_tool/Initialize(mapload, mob/user)
 	var/datum/action/innate/vigilante_tool/VT = new
 	VT.Grant(user, src)
 	vig_item_list = list()
