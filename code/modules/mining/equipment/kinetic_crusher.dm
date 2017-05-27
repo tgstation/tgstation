@@ -215,10 +215,10 @@
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/blaster_tubes
 	var/deadly_shot = FALSE
-	var/bonus_damage = 5
+	var/bonus_damage = 15
 
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
-	return "your next destabilizer shot after detonating a mark to deal <b>[bonus_damage]</b> damage"
+	return "your next destabilizer shot after detonating a mark to deal <b>[bonus_damage]</b> damage but move slower"
 
 /obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/user)
 	if(deadly_shot)
@@ -226,6 +226,7 @@
 		marker.icon_state = "chronobolt"
 		marker.damage = bonus_damage
 		marker.nodamage = FALSE
+		marker.speed = 2
 		deadly_shot = FALSE
 
 /obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/user)
@@ -245,7 +246,14 @@
 	return "you to create a barrier you can pass when detonating a mark"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/user)
-	new /obj/effect/temp_visual/hierophant/wall/crusher(get_turf(user), user) //a wall only you can pass!
+	var/turf/T = get_turf(user)
+	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
+	var/turf/otherT = get_step(T, turn(user.dir, 90))
+	if(otherT)
+		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
+	otherT = get_step(T, turn(user.dir, -90))
+	if(otherT)
+		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
 
 /obj/effect/temp_visual/hierophant/wall/crusher
-	duration = 75
+	duration = 60
