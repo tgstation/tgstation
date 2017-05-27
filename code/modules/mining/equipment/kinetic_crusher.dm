@@ -144,6 +144,7 @@
 	desc = "A strange spike with no usage."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "tail_spike"
+	var/bonus_value = 10 //if it has a bonus effect, this is how much that effect is
 	var/denied_type = /obj/item/crusher_trophy
 
 /obj/item/crusher_trophy/examine(mob/user)
@@ -182,13 +183,15 @@
 /obj/item/crusher_trophy/tail_spike
 	desc = "A spike taken from a ash drake's tail."
 	denied_type = /obj/item/crusher_trophy/tail_spike
+	bonus_value = 5
 
 /obj/item/crusher_trophy/tail_spike/effect_desc()
-	return "you to push back the target when detonating a mark"
+	return "you to do <b>[bonus_value]</b> more damage and push back the target when detonating a mark"
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/user)
 	playsound(target, 'sound/magic/Fireball.ogg', 25, 1)
 	new /obj/effect/temp_visual/fire(target.loc)
+	target.adjustBruteLoss(bonus_value)
 	addtimer(CALLBACK(src, .proc/pushback, target, user), 1) //no free backstabs, we push AFTER module stuff is done
 
 /obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/user)
@@ -200,13 +203,13 @@
 	icon_state = "demon_claws"
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/demon_claws
-	var/bonus_damage = 5
+	bonus_value = 15
 
 /obj/item/crusher_trophy/demon_claws/effect_desc()
-	return "you to do <b>[bonus_damage]</b> more damage when detonating a mark"
+	return "you to do <b>[bonus_value]</b> more damage when detonating a mark"
 
 /obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/user)
-	target.adjustBruteLoss(bonus_damage)
+	target.adjustBruteLoss(bonus_value)
 
 /obj/item/crusher_trophy/blaster_tubes
 	name = "blaster tubes"
@@ -215,16 +218,16 @@
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/blaster_tubes
 	var/deadly_shot = FALSE
-	var/bonus_damage = 15
+	bonus_value = 20
 
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
-	return "your next destabilizer shot after detonating a mark to deal <b>[bonus_damage]</b> damage but move slower"
+	return "your next destabilizer shot after detonating a mark to deal <b>[bonus_value]</b> damage but move slower"
 
 /obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/user)
 	if(deadly_shot)
 		marker.name = "deadly [marker.name]"
 		marker.icon_state = "chronobolt"
-		marker.damage = bonus_damage
+		marker.damage = bonus_value
 		marker.nodamage = FALSE
 		marker.speed = 2
 		deadly_shot = FALSE
@@ -256,4 +259,4 @@
 		new /obj/effect/temp_visual/hierophant/wall/crusher(otherT, user)
 
 /obj/effect/temp_visual/hierophant/wall/crusher
-	duration = 60
+	duration = 75
