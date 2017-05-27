@@ -245,11 +245,7 @@
 	return "you to create a barrier you can pass when detonating a mark"
 
 /obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/user)
-	var/turf/T = get_turf(target)
-	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
-	T = get_step(T, pick(GLOB.cardinals))
-	if(T)
-		new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //plus one in a random direction
+	new /obj/effect/temp_visual/hierophant/wall/crusher(get_turf(user), user) //a wall only you can pass!
 
 /obj/effect/temp_visual/hierophant/wall/crusher
 	duration = 75
