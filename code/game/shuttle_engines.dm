@@ -40,46 +40,17 @@
 /obj/structure/shuttle/engine/large
 	name = "engine"
 	opacity = 1
-
-/obj/structure/shuttle/engine/large/topleft
-	icon_state = "large_topleft"
-
-/obj/structure/shuttle/engine/large/topright
-	icon_state = "large_topright"
-
-/obj/structure/shuttle/engine/large/bottomleft
-	icon_state = "large_bottomleft"
-
-/obj/structure/shuttle/engine/large/bottomright
-	icon_state = "large_bottomright"
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "large_engine"
+	bound_width = 64
+	bound_height = 64
+	appearance_flags = 0
 
 obj/structure/shuttle/engine/huge
 	name = "engine"
 	opacity = 1
-
-obj/structure/shuttle/engine/huge/topleft
-	icon_state = "huge_topleft"
-
-obj/structure/shuttle/engine/huge/topmid
-	icon_state = "huge_topmid"
-
-obj/structure/shuttle/engine/huge/topright
-	icon_state = "huge_topright"
-
-obj/structure/shuttle/engine/huge/midleft
-	icon_state = "huge_midleft"
-
-obj/structure/shuttle/engine/huge/mid
-	icon_state = "huge_mid"
-
-obj/structure/shuttle/engine/huge/midright
-	icon_state = "huge_midright"
-
-obj/structure/shuttle/engine/huge/bottomleft
-	icon_state = "huge_bottomleft"
-
-obj/structure/shuttle/engine/huge/bottommid
-	icon_state = "huge_bottommid"
-
-obj/structure/shuttle/engine/huge/bottomright
-	icon_state = "huge_bottomright"
+	icon = 'icons/obj/3x3.dmi'
+	icon_state = "huge_engine"
+	bound_width = 96
+	bound_height = 96
+	appearance_flags = 0
