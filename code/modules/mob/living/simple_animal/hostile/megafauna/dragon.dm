@@ -51,7 +51,7 @@ Difficulty: Medium
 	move_to_delay = 10
 	ranged = 1
 	pixel_x = -16
-	crusher_loot = /obj/structure/closet/crate/necropolis/dragon/crusher
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	var/swooping = NONE
@@ -64,9 +64,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	. = ..()
 	internal = new/obj/item/device/gps/internal/dragon(src)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/spawn_crusher_loot()
-	loot = list(crusher_loot)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)

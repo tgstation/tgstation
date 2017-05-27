@@ -44,7 +44,7 @@ Difficulty: Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
-	crusher_loot = /obj/structure/closet/crate/necropolis/bubblegum/crusher
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
@@ -58,9 +58,6 @@ Difficulty: Hard
 	gpstag = "Bloody Signal"
 	desc = "You're not quite sure how a signal can be bloody."
 	invisibility = 100
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/spawn_crusher_loot()
-	loot = list(crusher_loot)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

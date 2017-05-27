@@ -34,7 +34,7 @@
 	/obj/structure/barricade,
 	/obj/machinery/field,
 	/obj/machinery/power/emitter)
-	var/crusher_loot
+	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
@@ -68,7 +68,7 @@
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
-	loot += crusher_loot
+	loot = crusher_loot
 
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
