@@ -186,11 +186,11 @@
 	bonus_value = 5
 
 /obj/item/crusher_trophy/tail_spike/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> damage to nearby enemies and push them back"
+	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
 /obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/user)
-	for(var/mob/living/L in view(2, user))
-		if(user.faction_check_mob(L) || L.stat == DEAD)
+	for(var/mob/living/L in oview(2, user))
+		if(L.stat == DEAD)
 			continue
 		playsound(L, 'sound/magic/Fireball.ogg', 20, 1)
 		new /obj/effect/temp_visual/fire(L.loc)
