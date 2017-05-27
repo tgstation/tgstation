@@ -44,8 +44,8 @@
 		"corazone", // prevents cardiac arrest damage
 		"mimesbane") // stops them gasping from lack of air.
 
-/obj/machinery/clonepod/New()
-	..()
+/obj/machinery/clonepod/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
 	B.apply_default_parts(src)
 
