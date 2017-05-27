@@ -824,7 +824,8 @@ SUBSYSTEM_DEF(ticker)
 	if(!delay)
 		delay = config.round_end_countdown * 10
 
-	if(delay_end && !check_rights())
+	var/skip_delay = check_rights()
+	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
@@ -834,7 +835,7 @@ SUBSYSTEM_DEF(ticker)
 	UNTIL(round_end_sound_sent && (world.time - start_wait) > (delay * 2))	//don't wait forever
 	sleep(delay - (world.time - start_wait))
 
-	if(delay_end)
+	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
 	if(end_string)
