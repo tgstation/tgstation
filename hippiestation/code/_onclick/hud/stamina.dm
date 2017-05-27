@@ -1,15 +1,11 @@
-/datum/hud/var/obj/screen/staminas
+/datum/hud/var/obj/screen/staminas/staminas
 
 /obj/screen/staminas
 	icon = 'hippiestation/icons/mob/screen_gen.dmi'
 	name = "stamina"
 	icon_state = "stamina0"
 	screen_loc = ui_stamina
-
-/datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
-	..()
-	staminas = new /obj/screen/staminas()
-	infodisplay += staminas
+	mouse_opacity = 0
 
 /mob/living/carbon/human/proc/staminahudamount()
 	if(stat == DEAD || stunned || weakened)

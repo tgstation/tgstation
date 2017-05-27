@@ -8,3 +8,6 @@
 	if(client && hud_used) //Stamina HUD updates
 		if(hud_used.staminas)
 			hud_used.staminas.icon_state = staminahudamount()
+		if(hud_used.combo_object && hud_used.combo_object.cooldown < world.time)
+			hud_used.combo_object.update_icon()
+			mind.martial_art.streak = ""
