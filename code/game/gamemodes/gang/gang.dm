@@ -122,9 +122,9 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	SSjob.DisableJob(/datum/job/officer)
 	SSjob.DisableJob(/datum/job/ai)
 	SSjob.DisableJob(/datum/job/cyborg)
-
-
-	SSticker.OnRoundstart(CALLBACK(src, .proc/gangpocalypse))
+	
+	gangpocalypse()
+	
 	return 1
 
 /datum/game_mode/gang/proc/gangpocalypse()
