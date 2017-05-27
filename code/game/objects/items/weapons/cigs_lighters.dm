@@ -627,14 +627,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/screw = 0 // kinky
 	var/super = 0 //for the fattest vapes dude.
 	var/emagged = 0 //LET THE GRIEF BEGIN
+	var/param_color
 
 /obj/item/clothing/mask/vape/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!")//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
-	..()
+/obj/item/clothing/mask/vape/Initialize()
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 50)
@@ -645,11 +646,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
+	var/wasempty = FALSE
 	if(istype(O, /obj/item/weapon/reagent_containers) && (O.container_type & OPENCONTAINER))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
+				if(!reagents.total_volume)
+					wasempty = TRUE
 				O.reagents.trans_to(src,25)
 				to_chat(user, "<span class='notice'>You add the contents of [O] to the [src]</span>")
+				if(user.get_item_by_slot(slot_wear_mask) == src && wasempty)
+					itstimetovape(user)
 			else
 				to_chat(user, "<span class='warning'>The [O] is empty!</span>")
 		else
@@ -703,24 +709,32 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/attack_self(mob/user)
 	if(reagents.total_volume > 0)
-		to_chat(user, "<span class='notice'>you empty [src] of all reagents.</span>")
+		to_chat(user, "<span class='notice'>You empty \the [src] of all reagents.</span>")
 		reagents.clear_reagents()
 	return
+
+/obj/item/clothing/mask/vape/proc/itstimetovape(mob/user)
+	reagents.set_reacting(TRUE)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/mask/vape/proc/itstimetostop()
+	reagents.set_reacting(FALSE)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == slot_wear_mask)
 		if(!screw)
-			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
-			reagents.set_reacting(TRUE)
-			START_PROCESSING(SSobj, src)
+			to_chat(user, "<span class='notice'>You start inhaling from \the [src].</span>")
+			itstimetovape()
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
+		..()
 
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(slot_wear_mask) == src)
-		reagents.set_reacting(FALSE)
-		STOP_PROCESSING(SSobj, src)
+		itstimetostop()
+		..()
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
 	if(reagents.total_volume)
