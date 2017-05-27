@@ -76,7 +76,7 @@
 		/datum/gang_item/clothing/hands,
 		/datum/gang_item/clothing/belt,
 
-  	/datum/gang_item/weapon/shuriken,
+		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
 		/datum/gang_item/weapon/improvised,
 		/datum/gang_item/weapon/ammo/improvised_ammo,
