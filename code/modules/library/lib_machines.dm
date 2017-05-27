@@ -270,7 +270,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
-				findscanner(9)
+				scanner = findscanner(9)
 			if(!scanner)
 				dat += "<FONT color=red>No scanner found within wireless network range.</FONT><BR>"
 			else if(!scanner.cache)
@@ -314,7 +314,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/findscanner(viewrange)
-	for(var/obj/machinery/libraryscanner/S in range(viewrange))
+	for(var/obj/machinery/libraryscanner/S in range(viewrange, get_turf(src)))
 		return S
 	return null
 

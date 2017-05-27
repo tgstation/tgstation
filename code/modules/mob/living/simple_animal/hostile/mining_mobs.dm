@@ -255,10 +255,8 @@
 	addtimer(CALLBACK(src, .proc/inert_check), 2400)
 
 /obj/item/organ/hivelord_core/proc/inert_check()
-	if(!owner && !preserved)
+	if(!preserved)
 		go_inert()
-	else
-		preserved(implanted = 1)
 
 /obj/item/organ/hivelord_core/proc/preserved(implanted = 0)
 	inert = FALSE
@@ -278,7 +276,10 @@
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
-	owner.revive(full_heal = 1)
+	if(inert)
+		to_chat(owner, "<span class='notice'>[src] breaks down as it tries to activate.</span>")
+	else
+		owner.revive(full_heal = 1)
 	qdel(src)
 
 /obj/item/organ/hivelord_core/on_life()
@@ -305,6 +306,18 @@
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
+
+/obj/item/organ/hivelord_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(!preserved && !inert)
+		preserved(TRUE)
+		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
+
+/obj/item/organ/hivelord_core/Remove(mob/living/carbon/M, special = 0)
+	if(!inert && !special)
+		owner.visible_message("<span class='notice'>[src] goes inert as it's removed.</span>")
+		go_inert()
+	return ..()
 
 /obj/item/organ/hivelord_core/prepare_eat()
 	return null

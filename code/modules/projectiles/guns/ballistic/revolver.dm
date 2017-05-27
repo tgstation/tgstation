@@ -6,8 +6,8 @@
 	origin_tech = "combat=3;materials=2"
 	casing_ejector = 0
 
-/obj/item/weapon/gun/ballistic/revolver/New()
-	..()
+/obj/item/weapon/gun/ballistic/revolver/Initialize()
+	. = ..()
 	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
 		verbs -= /obj/item/weapon/gun/ballistic/revolver/verb/spin
 
@@ -28,6 +28,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
+		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
 		chamber_round(0)
@@ -45,6 +46,7 @@
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
+		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -93,8 +95,8 @@
 	unique_rename = 1
 	unique_reskin = 1
 
-/obj/item/weapon/gun/ballistic/revolver/detective/New()
-	..()
+/obj/item/weapon/gun/ballistic/revolver/detective/Initialize()
+	. = ..()
 	options["Default"] = "detective"
 	options["Leopard Spots"] = "detective_leopard"
 	options["Black Panther"] = "detective_panther"
@@ -175,8 +177,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
-/obj/item/weapon/gun/ballistic/revolver/russian/New()
-	..()
+/obj/item/weapon/gun/ballistic/revolver/russian/Initialize()
+	. = ..()
 	do_spin()
 	spun = TRUE
 	update_icon()
@@ -269,8 +271,8 @@
 	unique_rename = 1
 	unique_reskin = 1
 
-/obj/item/weapon/gun/ballistic/revolver/doublebarrel/New()
-	..()
+/obj/item/weapon/gun/ballistic/revolver/doublebarrel/Initialize()
+	. = ..()
 	options["Default"] = "dshotgun"
 	options["Dark Red Finish"] = "dshotgun-d"
 	options["Ash"] = "dshotgun-f"

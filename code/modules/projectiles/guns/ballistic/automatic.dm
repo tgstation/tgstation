@@ -44,6 +44,8 @@
 					oldmag.update_icon()
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
+
+				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
 				chamber_round()
 				A.update_icon()
 				update_icon()
@@ -97,10 +99,9 @@
 /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/c20r/Initialize()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/c20r/afterattack()
 	..()
@@ -148,20 +149,18 @@
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
-/obj/item/weapon/gun/ballistic/automatic/m90/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/m90/Initialize()
+	. = ..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher(src)
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/m90/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/Initialize()
+	. = ..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
@@ -257,8 +256,8 @@
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
@@ -300,6 +299,10 @@
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
+	if(cover_open)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
 	update_icon()
 
 
@@ -330,6 +333,7 @@
 		magazine = null
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
+		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
 
 
 /obj/item/weapon/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)

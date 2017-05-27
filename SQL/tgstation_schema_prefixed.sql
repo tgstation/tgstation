@@ -362,6 +362,29 @@ CREATE TABLE `SS13_poll_vote` (
   KEY `idx_pvote_optionid_ckey` (`optionid`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SS13_round`
+--
+DROP TABLE IF EXISTS `SS13_round`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_round` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `start_datetime` DATETIME NOT NULL,
+  `end_datetime` DATETIME NULL,
+  `server_ip` INT(10) UNSIGNED NOT NULL,
+  `server_port` SMALLINT(5) UNSIGNED NOT NULL,
+  `commit_hash` CHAR(40) NULL,
+  `game_mode` VARCHAR(32) NULL,
+  `game_mode_result` VARCHAR(64) NULL,
+  `end_state` VARCHAR(64) NULL,
+  `shuttle_name` VARCHAR(64) NULL,
+  `map_name` VARCHAR(32) NULL,
+  `station_name` VARCHAR(80) NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

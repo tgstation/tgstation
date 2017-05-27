@@ -337,9 +337,9 @@
 		/obj/item/weapon/restraints/handcuffs/cable = 1
 	)
 	category = CAT_MISC
-	
+
 /datum/crafting_recipe/toysword
-	name = "Toy Sword" 
+	name = "Toy Sword"
 	reqs = list(/obj/item/weapon/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword
 	category = CAT_MISC
@@ -396,6 +396,15 @@
 	result = /obj/item/clothing/head/helmet/skull
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4)
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/goliathcloak
+	name = "Goliath Cloak"
+	result = /obj/item/clothing/suit/hooded/cloak/goliath
+	time = 50
+	reqs = list(/obj/item/stack/sheet/leather = 2,
+				/obj/item/stack/sheet/sinew = 2,
+				/obj/item/stack/sheet/animalhide/goliath_hide = 2) //it takes 4 goliaths to make 1 cloak if the plates are skinned
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/drakecloak

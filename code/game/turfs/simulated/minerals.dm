@@ -26,7 +26,7 @@
 
 /turf/closed/mineral/Initialize()
 	if (!canSmoothWith)
-		canSmoothWith = list(/turf/closed)
+		canSmoothWith = list(/turf/closed/mineral, /turf/closed/indestructible)
 	pixel_y = -4
 	pixel_x = -4
 	icon = smooth_icon
@@ -41,6 +41,13 @@
 /turf/closed/mineral/shuttleRotate(rotation)
 	setDir(angle2dir(rotation+dir2angle(dir)))
 	queue_smooth(src)
+
+/turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	if(turf_type)
+		underlay_appearance.icon = initial(turf_type.icon)
+		underlay_appearance.icon_state = initial(turf_type.icon_state)
+		return TRUE
+	return ..()
 
 
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
