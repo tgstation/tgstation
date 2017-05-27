@@ -10,6 +10,7 @@
 	var/opened = FALSE
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell
+	var/recharging = FALSE
 
 /obj/item/weapon/inducer/Initialize()
 	. = ..()
@@ -93,6 +94,10 @@
 	return ..()
 
 /obj/item/weapon/inducer/proc/recharge(atom/movable/A, mob/user)
+	if(recharging)
+		return TRUE
+	else
+		recharging = TRUE
 	var/obj/item/weapon/stock_parts/cell/C = A.get_cell()
 	var/coefficient = 1
 	if(istype(A, /obj/item/weapon/gun/energy))
@@ -100,6 +105,7 @@
 	if(C)
 		if(C.charge >= C.maxcharge)
 			to_chat(user, "<span class='notice'>\The [A] is fully charged!</span>")
+			recharging = FALSE
 			return TRUE
 		var/iterations = Ceiling((C.maxcharge - C.charge) / (powertransfer * coefficient))
 		user.visible_message("[user] starts recharging \the [A] with \the [src]","<span class='notice'>You start recharging [A] with \the [src]</span>")
@@ -110,6 +116,7 @@
 			else
 				break
 		user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
+		recharging = FALSE
 		return TRUE
 
 
