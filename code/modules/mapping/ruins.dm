@@ -22,8 +22,8 @@
 		else
 			log_world("Ruin loader had no ruins to pick from with [budget] left to spend.")
 			break
-		// Can we afford it
-		if(ruin.cost > budget)
+		// Can we afford it and is it not free
+		if(ruin.cost > budget && ruin.cost != 0)
 			overall_sanity--
 			continue
 		// If so, try to place it
@@ -47,11 +47,11 @@
 			if(!valid)
 				continue
 
-			log_world("Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])")
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
 			budget -= ruin.cost
+			log_world("Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z]) using [ruin.cost] of the budget. [budget] left.")
 			if(!ruin.allow_duplicates)
 				ruins -= ruin.name
 			break
