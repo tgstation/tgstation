@@ -1746,7 +1746,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1756,7 +1756,7 @@
 "adJ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/entry)
@@ -1942,7 +1942,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/construction/mining/aux_base)
@@ -2839,7 +2839,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -2929,7 +2929,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 1
@@ -4057,7 +4057,7 @@
 "aje" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
@@ -4120,7 +4120,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
@@ -4265,7 +4265,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -4581,7 +4581,7 @@
 "aku" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
@@ -5183,7 +5183,7 @@
 "alR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -7700,7 +7700,7 @@
 "arc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8632,6 +8632,9 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/toilet/auxiliary)
 "asN" = (
@@ -8952,7 +8955,7 @@
 /obj/item/weapon/melee/skateboard,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/maintenance/port/fore)
@@ -9075,7 +9078,7 @@
 /obj/effect/landmark/start/janitor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	icon_state = "whitegreen";
@@ -9458,7 +9461,7 @@
 "auE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -10068,7 +10071,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -10732,7 +10735,7 @@
 "axt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/warehouse)
@@ -11956,7 +11959,7 @@
 "azT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
@@ -12759,7 +12762,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Bar Backroom";
@@ -13244,7 +13247,7 @@
 "aCC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/service)
@@ -13400,7 +13403,7 @@
 "aCQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -13960,7 +13963,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -14464,7 +14467,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/prison)
@@ -14930,7 +14933,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/loadingarea,
 /area/hallway/secondary/service)
@@ -15008,7 +15011,7 @@
 /obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -15124,7 +15127,7 @@
 "aFS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
@@ -15414,7 +15417,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -15675,7 +15678,7 @@
 "aHe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -15936,7 +15939,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/caution,
 /area/maintenance/disposal/incinerator)
@@ -16150,7 +16153,7 @@
 "aHZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
@@ -16296,7 +16299,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/supply)
@@ -17000,7 +17003,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17099,7 +17102,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	icon_state = "darkredcorners";
@@ -19060,7 +19063,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20526,7 +20529,7 @@
 "aQI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 4
@@ -20693,7 +20696,7 @@
 "aQU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plasteel/vault{
@@ -20998,7 +21001,7 @@
 "aRC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
@@ -21461,7 +21464,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -21490,7 +21493,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -21511,7 +21514,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -21935,7 +21938,7 @@
 "aTq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
@@ -22021,7 +22024,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22085,7 +22088,7 @@
 "aTH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
@@ -22171,6 +22174,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = 23
+	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
 	dir = 4
@@ -22202,7 +22208,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -22388,7 +22394,7 @@
 "aUp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -22946,7 +22952,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo - Quartermaster's Office";
@@ -23469,7 +23475,7 @@
 "aWm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/caution{
@@ -24001,7 +24007,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -24478,7 +24484,7 @@
 "aYq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
@@ -24662,6 +24668,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light_switch{
+	pixel_x = -38
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "aYK" = (
@@ -25758,7 +25767,7 @@
 "baZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/greenblue/side,
 /area/hydroponics)
@@ -26891,7 +26900,7 @@
 "bdA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -27333,7 +27342,7 @@
 "bew" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/miningoffice)
@@ -27414,7 +27423,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
@@ -28042,7 +28051,7 @@
 "bfO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28138,7 +28147,7 @@
 "bfZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/fore)
@@ -28177,7 +28186,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/miningoffice)
@@ -30273,7 +30282,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -31490,7 +31499,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -31607,7 +31616,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
@@ -31713,7 +31722,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall14";
@@ -31769,7 +31778,7 @@
 "bnk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -32437,7 +32446,7 @@
 "boA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
@@ -33052,7 +33061,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -33100,7 +33109,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -33219,7 +33228,7 @@
 "bpV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -33285,7 +33294,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -33694,7 +33703,7 @@
 "bqT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/main)
@@ -34198,7 +34207,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -34547,7 +34556,7 @@
 "bsD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35275,7 +35284,7 @@
 "btW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -36626,7 +36635,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -36778,7 +36787,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -37346,7 +37355,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -37503,7 +37512,7 @@
 "bxZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/transfer)
@@ -37634,7 +37643,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -39480,7 +39489,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39866,7 +39875,7 @@
 "bBR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -39882,7 +39891,7 @@
 "bBT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/gravity_generator)
@@ -39982,7 +39991,7 @@
 "bCd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/break_room)
@@ -41060,7 +41069,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -41166,7 +41175,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/storage/primary)
@@ -41296,7 +41305,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Bridge - Command Chair";
@@ -41692,7 +41701,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -42018,7 +42027,7 @@
 "bFZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -42497,7 +42506,7 @@
 "bHb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -42526,7 +42535,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -42895,7 +42904,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43123,7 +43132,7 @@
 "bIg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/bridge/meeting_room/council)
@@ -44279,7 +44288,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
@@ -44366,7 +44375,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
@@ -44427,7 +44436,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -44625,7 +44634,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/warden)
@@ -44652,7 +44661,7 @@
 "bLl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -45319,6 +45328,9 @@
 /obj/item/weapon/storage/toolbox/emergency,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -45393,7 +45405,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -45477,7 +45489,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -46865,7 +46877,7 @@
 "bPA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -46927,7 +46939,7 @@
 "bPF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -47885,7 +47897,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -47981,7 +47993,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -48024,7 +48036,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -48098,7 +48110,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -48333,7 +48345,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -48369,7 +48381,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -48460,7 +48472,7 @@
 "bSp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/port)
@@ -48843,7 +48855,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
@@ -51454,7 +51466,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -52048,7 +52060,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
@@ -52574,7 +52586,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53255,7 +53267,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -53313,7 +53325,7 @@
 "cby" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -53372,7 +53384,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hop)
@@ -53867,7 +53879,7 @@
 /obj/effect/landmark/start/security_officer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/brig)
@@ -54528,7 +54540,7 @@
 /obj/effect/landmark/start/lawyer,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -54585,7 +54597,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Brig Desk";
@@ -54814,7 +54826,7 @@
 "cew" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -55985,6 +55997,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/light_switch{
+	pixel_x = -36
+	},
 /turf/open/floor/plasteel,
 /area/security/range)
 "cgZ" = (
@@ -56579,7 +56594,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -56822,7 +56837,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57479,7 +57494,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/courtroom)
@@ -57685,7 +57700,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -58007,7 +58022,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -58114,7 +58129,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -58986,7 +59001,7 @@
 "cnr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -59034,7 +59049,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -59352,7 +59367,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -59666,7 +59681,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -60285,6 +60300,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -60729,7 +60747,7 @@
 "cqN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/command)
@@ -61520,7 +61538,7 @@
 "csv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -61957,7 +61975,7 @@
 "ctu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -61986,7 +62004,7 @@
 /obj/effect/landmark/revenantspawn,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -62690,7 +62708,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1;
@@ -63013,7 +63031,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/gateway)
@@ -63121,7 +63139,7 @@
 "cvI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/locker)
@@ -63789,6 +63807,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_x = -10;
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
 	dir = 1
@@ -64143,7 +64165,7 @@
 "cxG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -64452,7 +64474,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
@@ -64778,7 +64800,7 @@
 "cyO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/toilet/restrooms)
@@ -65276,7 +65298,7 @@
 "czS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -65512,7 +65534,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -65527,7 +65549,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
@@ -65886,7 +65908,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
@@ -66392,7 +66414,7 @@
 /obj/item/device/flashlight/lamp,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
@@ -66404,7 +66426,7 @@
 /obj/structure/dresser,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -66430,7 +66452,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -67423,6 +67445,10 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light_switch{
+	pixel_x = -26;
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -68195,7 +68221,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall6";
@@ -68245,7 +68271,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall7";
@@ -68304,7 +68330,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -69297,7 +69323,7 @@
 "cHD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -69876,7 +69902,7 @@
 "cJa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/fitness/recreation)
@@ -70471,7 +70497,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	icon_state = "whiteblue";
@@ -70645,7 +70671,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -70674,7 +70700,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -70707,7 +70733,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
@@ -71443,7 +71469,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/department/electrical)
@@ -71775,7 +71801,7 @@
 "cNi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -71903,7 +71929,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/cmo,
 /area/medical/medbay/central)
@@ -72361,7 +72387,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -72905,7 +72931,7 @@
 "cPz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/checkpoint/medical)
@@ -73865,7 +73891,7 @@
 "cRt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
@@ -74080,7 +74106,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -74211,7 +74237,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/button/door{
 	desc = "A remote control switch.";
@@ -75333,7 +75359,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -76702,7 +76728,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
@@ -76770,7 +76796,7 @@
 "cXm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -76977,7 +77003,7 @@
 "cXK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
@@ -77605,7 +77631,7 @@
 "cZd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
@@ -77653,7 +77679,7 @@
 "cZl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -79288,7 +79314,7 @@
 "dcQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -79344,7 +79370,7 @@
 /obj/effect/landmark/start/scientist,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/lab)
@@ -79521,7 +79547,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/medbay/central)
@@ -79563,7 +79589,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/blue,
 /area/medical/medbay/central)
@@ -81223,12 +81249,15 @@
 "dhh" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/bot,
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/science/explab)
 "dhi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
@@ -81274,7 +81303,7 @@
 "dhq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -81432,7 +81461,7 @@
 "dhB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -81784,7 +81813,7 @@
 "din" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -83189,7 +83218,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -83414,7 +83443,7 @@
 "dly" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
@@ -83470,7 +83499,7 @@
 "dlG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/genetics/cloning)
@@ -84598,7 +84627,7 @@
 "dop" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/surgery)
@@ -84643,7 +84672,7 @@
 "dou" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/blue,
 /area/medical/surgery)
@@ -84907,7 +84936,7 @@
 "doX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -85140,7 +85169,7 @@
 "dpw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -86087,6 +86116,9 @@
 	dir = 4;
 	name = "medbay camera"
 	},
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -86318,7 +86350,7 @@
 /obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/medbay/central)
@@ -86621,7 +86653,7 @@
 "dss" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
@@ -86901,7 +86933,7 @@
 "dsQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -86962,7 +86994,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/blue,
@@ -87564,7 +87596,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	icon_state = "whitepurplecorner";
@@ -87980,7 +88012,7 @@
 "dvb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/heads/hor)
@@ -88902,7 +88934,7 @@
 "dwS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/cmo,
 /area/crew_quarters/heads/cmo)
@@ -89401,7 +89433,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/robotics/lab)
@@ -89468,7 +89500,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -89623,7 +89655,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/cmo,
 /area/medical/medbay/central)
@@ -89764,7 +89796,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/mixing)
@@ -89848,7 +89880,7 @@
 "dyK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -90407,6 +90439,10 @@
 	name = "Research Division Server Room APC";
 	pixel_x = -26;
 	pixel_y = 0
+	},
+/obj/machinery/light_switch{
+	pixel_x = -28;
+	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -91098,7 +91134,7 @@
 "dBq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -91106,6 +91142,9 @@
 "dBr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/light_switch{
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel,
 /area/science/storage)
@@ -91152,7 +91191,7 @@
 "dBv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -91384,7 +91423,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -91991,7 +92030,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -92276,7 +92315,7 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -93809,7 +93848,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -94130,7 +94169,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -94774,7 +94813,7 @@
 "dIT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/white{
@@ -95604,7 +95643,7 @@
 "dKP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/bot,
@@ -95650,7 +95689,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -96147,7 +96186,7 @@
 "dLR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/blue/side,
 /area/security/checkpoint/customs)
@@ -96409,7 +96448,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/virology)
@@ -96454,7 +96493,7 @@
 /obj/effect/landmark/start/virologist,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/green,
 /area/medical/virology)
@@ -97383,7 +97422,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -97852,7 +97891,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -97932,7 +97971,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
+	on = 1
 	},
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/whitegreen/side{
@@ -98043,7 +98082,7 @@
 "dQf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
@@ -98777,7 +98816,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -98982,7 +99021,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -100496,7 +100535,7 @@
 /obj/machinery/iv_drip,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	icon_state = "whitegreen";
@@ -100532,7 +100571,7 @@
 /obj/machinery/iv_drip,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	icon_state = "whitegreen";
@@ -100731,7 +100770,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -100753,7 +100792,7 @@
 "dVO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
@@ -100847,7 +100886,7 @@
 "dVZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit/departure_lounge)
@@ -101704,7 +101743,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -102087,7 +102126,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/checkpoint/checkpoint2)
@@ -102152,7 +102191,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -103514,7 +103553,7 @@
 "ecb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -103638,7 +103677,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -103743,7 +103782,7 @@
 "ecS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
@@ -103803,7 +103842,7 @@
 "eda" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
@@ -103819,7 +103858,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics/garden/abandoned)
@@ -106092,7 +106131,7 @@
 "eje" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
@@ -106207,6 +106246,33 @@
 	dir = 8
 	},
 /area/science/research)
+"ejv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
+/turf/open/floor/plating,
+/area/quartermaster/warehouse)
+"ejw" = (
+/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light_switch{
+	pixel_x = 22;
+	pixel_y = -10
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/engine/transit_tube)
+"ejx" = (
+/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/machinery/light_switch{
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/ai_monitored/turret_protected/aisat_interior)
 
 (1,1,1) = {"
 aaa
@@ -115845,7 +115911,7 @@ bNw
 bPo
 ebZ
 bTM
-bNw
+ejx
 bLp
 bYV
 bYV
@@ -127919,7 +127985,7 @@ bDL
 bFF
 bHA
 bJC
-bLC
+ejw
 bNK
 bLC
 bRO
@@ -146380,7 +146446,7 @@ asW
 atZ
 aua
 awq
-aua
+ejv
 ayC
 azF
 aAB
@@ -156476,7 +156542,7 @@ eiT
 eiZ
 cGb
 cHs
-ejm
+eiT
 eci
 cCg
 cNS
@@ -156990,7 +157056,7 @@ eiU
 eja
 cGd
 cHu
-ejn
+eiU
 cKK
 cMj
 cyX
@@ -157500,11 +157566,11 @@ cxw
 cyV
 cCg
 ech
-eiV
-ejb
+eiT
+eiZ
 ejf
 ejj
-ejo
+eiT
 cKL
 cMk
 cyY
@@ -158014,11 +158080,11 @@ cxy
 cyX
 cAM
 cCh
-eiW
+eiU
 ejc
 ejg
 ejk
-ejp
+eiU
 cKM
 cyZ
 cyZ
@@ -158528,11 +158594,11 @@ cxz
 cyY
 cAN
 cCi
-eiX
+eiT
 cEv
 eji
 cHy
-ejq
+eiT
 cKN
 cMl
 cyT
@@ -159042,11 +159108,11 @@ cxB
 cyZ
 cyZ
 cCj
-eiY
-ejd
+eiU
+ejc
 cGg
 ejl
-ejr
+eiU
 cKO
 cMm
 cNU
