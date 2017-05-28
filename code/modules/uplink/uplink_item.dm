@@ -1181,7 +1181,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			This will permanently destroy your body, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/implants/macrobomb
 	name = "Macrobomb Implant"
