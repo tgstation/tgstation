@@ -27,7 +27,9 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_verbs(A)
 		qdel(A.malf_picker)
-	owner.objectives -= objectives_given
+	for(var/O in objectives_given)
+		owner.objectives -= O
+	objectives_given = list()
 	..()
 
 /datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)
