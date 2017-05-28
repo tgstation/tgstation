@@ -125,7 +125,7 @@ def merge_map(newfile, backupfile, tgm):
 #######################
 #write to file helpers#
 def write_dictionary_tgm(filename, dictionary, header = None): #write dictionary in tgm format
-    with open(filename, "w") as output:
+    with open(filename, "w", newline='\n') as output:
         output.write("{}\n".format(tgm_header))
         if header:
             output.write("{}\n".format(header))
@@ -172,7 +172,7 @@ def write_dictionary_tgm(filename, dictionary, header = None): #write dictionary
 
 
 def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for finding out about this one
-    with open(filename, "a") as output:
+    with open(filename, "a", newline='\n') as output:
         output.write("\n")
 
         for x in range(1, maxx+1):
@@ -183,7 +183,7 @@ def write_grid_coord_small(filename, grid, maxx, maxy): #thanks to YotaXP for fi
 
 
 def write_dictionary(filename, dictionary, header = None): #writes a tile dictionary the same way Dreammaker does
-    with open(filename, "w") as output:
+    with open(filename, "w", newline='\n') as output:
         for key, value in dictionary.items():
             if header:
                 output.write("{}\n".format(header))
@@ -191,7 +191,7 @@ def write_dictionary(filename, dictionary, header = None): #writes a tile dictio
 
 
 def write_grid(filename, grid, maxx, maxy): #writes a map grid the same way Dreammaker does
-    with open(filename, "a") as output:
+    with open(filename, "a", newline='\n') as output:
         output.write("\n")
         output.write("(1,1,1) = {\"\n")
 

@@ -86,6 +86,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = 1
+	flags = NONE
 
 /area/lavaland/surface
 	name = "Lavaland"
