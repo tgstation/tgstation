@@ -68,6 +68,10 @@
 				I.post_smithing()
 			else
 				I = new R.produce_type(get_turf(src))
+			qdel(current_mold)
+			cut_overlay(my_mold)
+			my_mold = null
+			current_mold = null
 			return
 		else
 			to_chat(user, "There's nothing in the mold!")
