@@ -43,22 +43,16 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/gang/pre_setup()
 		//for blowing up the armory
 	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
-		if(A.z == ZLEVEL_STATION)
-			target_armory = pick(get_area_turfs(A))
-			if(target_armory)
-				break
+		target_armory = pick(get_area_turfs(A))
+		if(target_armory)
+			break
 
 	//also need to find 1 sec closet to hit the equipment room
 	for(var/area/security/main/A in GLOB.sortedAreas)
-		if(A.z == ZLEVEL_STATION)
-			var/obj/structure/closet/secure_closet/security/C = locate() in A
-			if(C)
-				target_equipment = get_turf(C)
-				break
-
-	if(!target_armory || !target_equipment)
-		message_admins("No armory/equipment room detected, unable to start gang!")
-		return FALSE
+		var/obj/structure/closet/secure_closet/security/C = locate() in A
+		if(C)
+			target_equipment = get_turf(C)
+			break
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
