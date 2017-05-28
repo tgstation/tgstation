@@ -297,3 +297,38 @@
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	density = FALSE
+
+/obj/item/fakeartefact
+	name = "expensive forgery"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "x2"
+	var/possible = list(/obj/item/ship_in_a_bottle,
+						/obj/item/weapon/gun/energy/pulse,
+						/obj/item/weapon/sleeping_carp_scroll,
+						/obj/item/weapon/melee/supermatter_sword,
+						/obj/item/weapon/shield/changeling,
+						/obj/item/weapon/lava_staff,
+						/obj/item/weapon/katana/energy,
+						/obj/item/weapon/hierophant_club,
+						/obj/item/weapon/his_grace,
+						/obj/item/weapon/gun/ballistic/minigun,
+						/obj/item/weapon/gun/ballistic/automatic/l6_saw,
+						/obj/item/weapon/gun/magic/staff/chaos,
+						/obj/item/weapon/gun/magic/staff/spellblade,
+						/obj/item/weapon/gun/magic/wand/death,
+						/obj/item/weapon/gun/magic/wand/fireball,
+						/obj/item/weapon/disk/nuclear,
+						/obj/item/stack/telecrystal/twenty,
+						/obj/item/nuke_core,
+						/obj/item/phylactery,
+						/obj/item/riding_offhand,
+						/obj/item/weapon/banhammer)
+
+/obj/item/fakeartefact/Initialize()
+	. = ..()
+	var/obj/item/I = pick(possible)
+	name = initial(I.name)
+	icon = initial(I.icon)
+	desc = initial(I.desc)
+	icon_state = initial(I.icon_state)
+	item_state = initial(I.item_state)
