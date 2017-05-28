@@ -2893,11 +2893,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
-	name = "Arrivals APC";
+	name = "Arrivals Hallway APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -4681,11 +4680,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Starboard Bow Maintenance APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/bar,
@@ -8584,11 +8582,10 @@
 "asH" = (
 /obj/structure/closet/jcloset,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Custodial Closet APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -12753,11 +12750,10 @@
 "aBx" = (
 /obj/structure/closet/secure_closet/bar,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Bar APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -14732,11 +14728,10 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Turbine Generator APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -16798,11 +16793,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Abandoned Gambling Den APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood{
@@ -16860,11 +16854,10 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Atrium APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/camera{
 	c_tag = "Theatre Stage";
@@ -17512,11 +17505,10 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Theatre Backstage APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
@@ -19468,7 +19460,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
 	dir = 1;
 	name = "Quartermaster's Office APC";
 	pixel_x = 0;
@@ -20317,7 +20308,6 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/machinery/power/apc{
-	cell_type = 10000;
 	dir = 1;
 	name = "Cargo Office APC";
 	pixel_x = 0;
@@ -22360,7 +22350,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/prison/solitary)
+/area/prison/execution_room)
 "aUe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -24220,7 +24210,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/item/weapon/storage/pod{
 	pixel_x = 6;
@@ -26874,7 +26864,7 @@
 	dir = 1;
 	name = "Atmospherics APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -30732,6 +30722,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Central Primary Hallway APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/white{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -33481,6 +33479,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/port)
 "bqm" = (
@@ -36930,7 +36931,7 @@
 	dir = 1;
 	name = "Gravity Generator APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -38060,7 +38061,7 @@
 	dir = 1;
 	name = "Engineering Foyer APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -41576,11 +41577,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Detective's Office APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/item/device/taperecorder,
 /obj/item/weapon/restraints/handcuffs,
@@ -41834,7 +41834,6 @@
 	dir = 6
 	},
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 1;
 	name = "AI Chamber APC";
 	pixel_y = 24
@@ -42823,7 +42822,7 @@
 	dir = 1;
 	name = "Transit Tube Access APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -43490,7 +43489,7 @@
 	dir = 1;
 	name = "Auxiliary Tool Storage APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1
@@ -47201,11 +47200,10 @@
 /area/security/checkpoint/engineering)
 "bPS" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Security Post - Engineering APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -59397,7 +59395,6 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	aidisabled = 0;
 	dir = 1;
 	name = "Command Hall APC";
 	pixel_y = 24
@@ -63961,11 +63958,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Primary Restroom APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -73940,6 +73936,12 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Recreation Area APC";
+	pixel_x = -26;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -76147,11 +76149,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Chemistry Lab APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 4
@@ -76495,7 +76496,6 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	cell_type = 10000;
 	dir = 1;
 	name = "Port Maintenance APC";
 	pixel_x = 0;
@@ -78484,11 +78484,10 @@
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Abandoned Gambling Den APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
@@ -80014,11 +80013,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Experimentation Lab APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/machinery/camera{
 	c_tag = "Science - Experimentation Lab";
@@ -80534,7 +80532,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 2;
 	name = "Abandoned Medical Lab APC";
 	pixel_x = 1;
@@ -81768,7 +81765,7 @@
 	dir = 1;
 	name = "Cloning Lab APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/item/weapon/folder/white,
 /obj/item/weapon/book/manual/medical_cloning,
@@ -83756,7 +83753,6 @@
 "dmf" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 2;
 	name = "Abandoned Research Lab APC";
 	pixel_x = 1;
@@ -90049,6 +90045,9 @@
 	dir = 4;
 	on = 1
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "dyW" = (
@@ -90207,11 +90206,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Abandoned Theatre APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
@@ -92978,6 +92976,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
 "dET" = (
@@ -93773,7 +93774,6 @@
 	},
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 2;
 	name = "Aft Maintenance APC";
 	pixel_x = 1;
@@ -95210,11 +95210,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Port Quarter Maintenance APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -102488,11 +102487,10 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Chapel Quarters APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 24
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -105232,7 +105230,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "egC" = (
 /obj/machinery/power/apc{
-	cell_type = 10000;
+	cell_type = 5000;
 	dir = 1;
 	name = "Departure Lounge APC";
 	pixel_x = 0;
@@ -105990,6 +105988,109 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
+"eiE" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Port Primary Hallway APC";
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/yellow/corner{
+	dir = 4
+	},
+/area/hallway/primary/port)
+"eiF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Starboard Primary Hallway APC";
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/starboard)
+"eiG" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/maintenance/starboard/aft)
+"eiH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Starboard Quarter Maintenace APC";
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"eiI" = (
+/obj/structure/cable/white{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/aft)
+"eiJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Aft Primary Hallway APC";
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/primary/aft)
+"eiK" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/aft)
+"eiL" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/aft)
+"eiM" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/aft)
+"eiN" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/aft)
+"eiO" = (
+/obj/structure/cable/white{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral,
+/area/hallway/primary/aft)
 
 (1,1,1) = {"
 aaa
@@ -134628,7 +134729,7 @@ aJg
 aib
 bmu
 bot
-bot
+eiE
 brx
 brx
 btX
@@ -144977,13 +145078,13 @@ drc
 dgz
 cKe
 cKe
-cKe
-cKe
+eiI
+eiK
 dyV
-cKe
-cKe
-cKe
-cKe
+eiL
+eiM
+eiN
+eiO
 dES
 dGr
 dHN
@@ -145234,7 +145335,7 @@ drd
 dsF
 due
 dpB
-cSq
+eiJ
 dxQ
 dyW
 dAk
@@ -153149,7 +153250,7 @@ bMV
 bOK
 bQN
 bSZ
-bUW
+eiF
 bWM
 bYH
 cax
@@ -155511,7 +155612,7 @@ dnu
 dow
 dqk
 drO
-dkj
+eiG
 duz
 dvR
 dxd
@@ -155768,7 +155869,7 @@ daL
 dox
 dql
 daL
-cWq
+eiH
 cWq
 dvS
 dxe
