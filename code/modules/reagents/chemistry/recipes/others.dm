@@ -216,6 +216,17 @@
 	results = list("mulligan" = 1)
 	required_reagents = list("stablemutationtoxin" = 1, "mutagen" = 1)
 
+//not a mutation toxin but people will look here
+/datum/chemical_reaction/hormone
+	name = "Exotic Hormone"
+	id = "hormone"
+	required_reagents = list("sugar" = 10, "whiskey" = 10, "teslium" = 10, "mutagen" = 10, "welding_fuel" = 10)
+	mob_react = 1
+	
+/datum/chemical_reaction/hormone/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/weapon/genderpill(location)
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
