@@ -1,5 +1,6 @@
 /datum/antagonist/traitor
 	name = "Traitor"
+	var/special_role = "traitor"
 	var/employer = "The Syndicate" 
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
@@ -11,6 +12,7 @@
 
 /datum/antagonist/traitor/on_gain()
 	SSticker.mode.traitors+=owner
+	owner.special_role = special_role
 	if(give_objectives)
 		forge_traitor_objectives()
 	finalize_traitor()

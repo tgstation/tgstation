@@ -7,6 +7,7 @@
 /datum/antagonist/traitor/internal_affairs
 	name = "Internal Affairs Agent"
 	employer = "Nanotrasen"
+	special_role = "internal affairs agent"
 	var/last_man_standing = FALSE
 	var/list/datum/mind/targets_stolen
 
