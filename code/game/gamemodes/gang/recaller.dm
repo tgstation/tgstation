@@ -234,7 +234,7 @@
 		return 0
 	if(gang && (user.mind in gang.bosses))	//If it's already registered, only let the gang's bosses use this
 		return 1
-	else if(istype(src, /obj/item/device/gangtool/soldier) && user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
+	else if(istype(src, /obj/item/device/gangtool/soldier)) // For soldiers and potential LT's
 		return 1
 	return 0
 
