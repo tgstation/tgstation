@@ -376,14 +376,14 @@
 /obj/effect/mob_spawn/human/marine
 	name = "marine cryostasis sleeper"
 	desc = "A humming sleeper with a occupant inside. Desperatly attempting to revive the occupant despite its low power state."
-	mob_name = "a earth marine"
+	mob_name = "a terran marine"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
 	roundstart = FALSE
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a marine. You were, until recently, stationed on board the UESS Inheritor, a Earth capital ship. As you struggle \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a marine. You were, until recently, stationed on board the UESS Inheritor, a Terran capital ship. As you struggle \
 	to exit your cryostasis sleeper, you slowly start to recall exactly what cause of events has thrown you into your current predicament... "
 
 /obj/effect/mob_spawn/human/marine/Initialize(mapload)
@@ -405,14 +405,14 @@
 			the transport. However as you take off, one of the surviving Changelings was able to plant an explosive charge on your engines. The explosion disabled your ship, and you got caught in a \
 			nearby planets gravity well. The survivors were forced into cryo sleep, as you're last thoughts were hoping to god none of your squad mates were secretly changelings.</b>"
 		if(3)
-			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Earth capital ship. However, the Inheritor had conducted a \
+			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Terran capital ship. However, the Inheritor had conducted a \
 			large series of anti-piracy raids in your assigned sector, so crippling that every pirate in the local sector network formed a massive fleet in a attempt to destroy the Inheritor. The \
 			Inheritor won against all odds, but it was a pyrrhic victory as the Inheritor was byond repair. The acting Commander ordered all hands to abandon ship before it was scuttled. You and \
 			your remaining squad members were assigned to troop transport 5. Unbeknown to you or your pilots, your fuel tanks had suffered a massive leak during the fighting, leaving you with minimal \
 			fuel, thus your pilots had no choice but to land on a nearby planet. Strapping into your cryochamber, you can only hope that the pilots could land this thing safely.</b>"
 		if(4)
-			flavour_text += "The Inheritor was assigned to a high level covert recon mission of Space Station 13, a Nanotrasen research and development station. Stipulation of the Nanotrasen - United \
-			Earth Government plasma mining contract was that Nanotrasen were to be limited to mining only single gas giant and its orbiting moons. Military Intelligence received information that \
+			flavour_text += "The Inheritor was assigned to a high level covert recon mission of Space Station 13, a Nanotrasen research and development station. Stipulation of the Nanotrasen \
+			plasma mining contract was that Nanotrasen were to be limited to mining only single gas giant and its orbiting moons. Military Intelligence received information that \
 			Nanotrasen may have broken this condition by launching a illegal mining operation to an orbiting class-H planet in the same system. You and your squad were dispatched in a recon heavy transport \
 			to attempt to fly over the planet and locate any hidden Nanotrasen mining bases. About two hours into the recon mission, a giant, dragon like, creature swooped up and took a large part of your \
 			engines with it. With insufficient thrust power to leave the planet's atmosphere, the crew were ordered into cryostasis as the pilots attempted an emergency landing.</b>"
