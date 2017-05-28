@@ -14,6 +14,7 @@
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
+	PopulateContents()
 	..()
 
 
@@ -103,6 +104,16 @@
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
 		return ..()
+
+/obj/structure/toilet/secret
+	w_items = 2
+
+/obj/structure/toilet/proc/PopulateContents()
+	return
+
+/obj/structure/toilet/secret/PopulateContents()
+	new /obj/item/weapon/kitchen/knife/combat/survival{desc = "It's a secret!"}(src)
+
 
 /obj/structure/urinal
 	name = "urinal"
