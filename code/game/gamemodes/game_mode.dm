@@ -86,8 +86,8 @@
 			sql += "game_mode = '[SSticker.mode]'"
 		if(sql)
 			sql += ", "
-		if(GLOB.revdata.commit)
-			sql += "commit_hash = '[GLOB.revdata.commit]'"
+		if(GLOB.revdata.originmastercommit)
+			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
 		if(sql)
 			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
 			query_round_game_mode.Execute()
@@ -239,11 +239,11 @@
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.z == 2)
+					if(M.z == ZLEVEL_CENTCOM)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.z == 2)
+				if(M.z == ZLEVEL_CENTCOM)
 					escaped_total++
 
 
