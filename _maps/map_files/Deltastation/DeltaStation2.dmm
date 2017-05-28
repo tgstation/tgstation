@@ -60651,6 +60651,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -63560,6 +63563,10 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -67163,6 +67170,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -105780,6 +105790,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"ejB" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/arrival{
+	dir = 1
+	},
+/area/crew_quarters/locker)
 
 (1,1,1) = {"
 aaa
@@ -152955,10 +152975,10 @@ con
 bWM
 crg
 csA
-cuj
+cuh
 cvF
 cxj
-cyP
+cyH
 cAB
 cBV
 cDm
@@ -155006,7 +155026,7 @@ cgR
 ciC
 cke
 clx
-cmO
+ejB
 cos
 cpQ
 crr
@@ -157590,7 +157610,7 @@ cCh
 eiU
 ejc
 ejg
-ejk
+ejl
 eiU
 cKM
 cyZ
