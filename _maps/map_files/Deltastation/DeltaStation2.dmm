@@ -13471,7 +13471,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light_switch{
@@ -14642,7 +14641,6 @@
 "aFb" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light_switch{
@@ -19940,7 +19938,6 @@
 "aPO" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light_switch{
@@ -22595,7 +22592,6 @@
 "aUS" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -24292,7 +24288,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/chem_master/condimaster{
@@ -39806,7 +39801,6 @@
 "bCe" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/airalarm{
@@ -39902,7 +39896,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light_switch{
@@ -40630,7 +40623,6 @@
 "bDJ" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light_switch{
@@ -41021,7 +41013,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -42542,7 +42533,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/button/door{
@@ -46313,7 +46303,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light/small{
@@ -48961,7 +48950,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -50107,7 +50095,6 @@
 "bVM" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/porta_turret/ai,
@@ -51549,7 +51536,6 @@
 /obj/structure/closet/lawcloset,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/wood,
@@ -54167,7 +54153,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -56912,7 +56897,6 @@
 /obj/item/device/camera_film,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/grimy,
@@ -62569,7 +62553,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -71684,7 +71667,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light_switch{
@@ -77790,7 +77772,6 @@
 /obj/item/weapon/reagent_containers/dropper,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -80631,7 +80612,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/door/firedoor,
@@ -80918,7 +80898,6 @@
 "dhp" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -83497,7 +83476,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/camera{
@@ -83658,7 +83636,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 7;
 	pixel_y = -26
 	},
@@ -84796,7 +84773,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = -26
 	},
@@ -90273,7 +90249,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24;
 	pixel_y = -26
 	},
@@ -91924,7 +91899,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -92156,7 +92130,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -94201,7 +94174,6 @@
 /obj/structure/filingcabinet/medical,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/blue/side{
@@ -96832,7 +96804,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -98406,7 +98377,6 @@
 /obj/structure/chair/wood,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/camera{
@@ -98928,7 +98898,6 @@
 "dTb" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/structure/closet/secure_closet/medical1,
@@ -101934,7 +101903,6 @@
 /obj/item/device/camera_film,
 /obj/machinery/firealarm{
 	dir = 4;
-	icon_state = "fire0";
 	pixel_x = 24
 	},
 /obj/machinery/status_display{
