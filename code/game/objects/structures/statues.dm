@@ -309,12 +309,20 @@
 	icon_state = "assist"
 
 
-/obj/structure/statue/sandstone/venus //call me when we add marble i guess
+/obj/structure/statue/sandstone/venus //i'm your venus
 	name = "statue of a pure maiden"
 	desc = "An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a toolbox. By Jove, it's easily the most gorgeous depiction of a woman you've ever seen. The artist must truly be a master of his craft. Shame about the broken arm, though."
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "venus"
 
+/obj/structure/statue/sandstone/venus/examine(mob/user)
+	..()
+	if(prob(1))
+		user << "There's a message enscribed in an orange glowing powder at the base. It reads:"
+		if(prob(50))
+			user << "Great chest ahead."
+		else
+			user << "Need holding with both hands."
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
