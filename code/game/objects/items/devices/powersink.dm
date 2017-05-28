@@ -12,9 +12,9 @@
 	throw_range = 2
 	materials = list(MAT_METAL=750)
 	origin_tech = "powerstorage=5;syndicate=5"
-	var/drain_rate = 1600000	// amount of power to drain per tick
+	var/drain_rate = 4206969	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
-	var/max_power = 1e10		// maximum power that can be drained before exploding
+	var/max_power = 1e20		// maximum power that can be drained before exploding
 	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
 	var/admins_warned = 0 // stop spam, only warn the admins once that we are about to boom
 
@@ -141,5 +141,5 @@
 
 	if(power_drained >= max_power)
 		STOP_PROCESSING(SSobj, src)
-		explosion(src.loc, 4,8,16,32)
+		explosion(src.loc, 8,16,32,64)
 		qdel(src)
