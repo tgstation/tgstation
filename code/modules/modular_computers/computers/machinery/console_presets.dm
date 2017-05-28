@@ -5,7 +5,7 @@
 	var/_has_battery = 0
 	var/_has_ai = 0
 
-/obj/machinery/modular_computer/console/preset/New()
+/obj/machinery/modular_computer/console/preset/Initialize()
 	. = ..()
 	if(!cpu)
 		return

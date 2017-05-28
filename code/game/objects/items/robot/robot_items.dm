@@ -548,7 +548,7 @@
 	return ..()
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
-	if(cycle_delay < world.time)
+	if(cycle_delay > world.time)
 		to_chat(user, "<span class='boldwarning'>\the [src] is still recycling its projectors!</span>")
 		return
 	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY

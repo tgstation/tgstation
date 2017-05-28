@@ -70,7 +70,7 @@
 	for(var/area/A in tags)
 		if(!(A in all_territory))
 			newpoints += 0.5
-	to_chat(H, "<span class='notice'>You have received 2 points for your continued service, [newpoints] for keeping the station tag-free.")
+	to_chat(H, "<span class='notice'>You have received 2 influence for your continued service, [newpoints] for keeping the station tag-free.")
 	points += newpoints + 2
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
 		points += 4
