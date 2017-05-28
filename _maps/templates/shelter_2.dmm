@@ -14,27 +14,28 @@
 "n" = (/obj/structure/bed/pod,/obj/item/weapon/bedsheet/black,/turf/open/floor/pod,/area/survivalpod)
 "o" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (WEST)"; icon_state = "pwindow"; dir = 8},/turf/open/floor/carpet/black,/area/survivalpod)
 "p" = (/obj/structure/chair/comfy/black,/obj/item/cardboard_cutout{desc = "A cardboard cutout of a xenomorph maid."; icon_state = "cutout_lusty"; name = "lusty xenomorph maid"},/turf/open/floor/carpet/black,/area/survivalpod)
-"q" = (/obj/structure/table/survival_pod,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/brute{pixel_x = 5},/obj/structure/window/reinforced/survival_pod,/turf/open/floor/pod,/area/survivalpod)
-"r" = (/obj/machinery/door/window/survival_pod,/turf/open/floor/pod,/area/survivalpod)
-"s" = (/obj/structure/window/reinforced/survival_pod,/turf/open/floor/pod,/area/survivalpod)
-"t" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (WEST)"; icon_state = "pwindow"; dir = 8},/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{pixel_x = 28; pixel_y = 6},/turf/open/floor/carpet/black,/area/survivalpod)
-"u" = (/obj/machinery/light{dir = 4; light_color = "#DDFFD3"},/obj/structure/table/wood/fancy/black,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{icon_state = "wineglass"; pixel_x = -1; pixel_y = 20; pixel_x = 8; pixel_y = -2; reagents = list("wine" = 50)},/turf/open/floor/carpet/black,/area/survivalpod)
-"v" = (/obj/machinery/microwave{pixel_x = -1; pixel_y = 3},/obj/structure/table/wood/fancy/black,/turf/open/floor/carpet/black,/area/survivalpod)
-"w" = (/turf/open/floor/carpet/black,/area/survivalpod)
-"x" = (/obj/effect/spawner/lootdrop/three_course_meal{pixel_x = 1; pixel_y = 17},/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{icon_state = "wineglass"; pixel_y = 7; pixel_x = 8; pixel_y = -2; reagents = list("wine" = 50)},/obj/structure/table/wood/fancy/black,/turf/open/floor/carpet/black,/area/survivalpod)
+"q" = (/obj/structure/table/survival_pod,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/brute{pixel_x = 5},/turf/open/floor/pod,/area/survivalpod)
+"r" = (/obj/structure/tubes,/turf/open/floor/pod,/area/survivalpod)
+"s" = (/obj/machinery/light{dir = 4; light_color = "#DDFFD3"},/obj/structure/table/wood/fancy/black,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{icon_state = "wineglass"; pixel_x = 8; pixel_y = 4; reagents = list("wine" = 50)},/obj/item/weapon/reagent_containers/food/drinks/bottle/wine{step_x = -6; step_y = 10},/turf/open/floor/carpet/black,/area/survivalpod)
+"t" = (/obj/machinery/microwave,/obj/structure/table/wood/fancy/black,/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTH)"; icon_state = "pwindow"; dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
+"u" = (/obj/machinery/door/window/survival_pod{tag = "icon-windoor (NORTH)"; icon_state = "windoor"; dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
+"v" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTH)"; icon_state = "pwindow"; dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
+"w" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTHWEST)"; icon_state = "pwindow"; dir = 9},/turf/open/floor/carpet/black,/area/survivalpod)
+"x" = (/obj/structure/table/wood/fancy/black,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{icon_state = "wineglass"; pixel_x = 8; pixel_y = 4; reagents = list("wine" = 50)},/obj/effect/spawner/lootdrop/three_course_meal,/turf/open/floor/carpet/black,/area/survivalpod)
 "y" = (/obj/structure/reagent_dispensers/beerkeg{anchored = 1},/obj/machinery/light{icon_state = "tube1"; dir = 8; pixel_y = 16; light_color = "#DDFFD3"},/obj/structure/table/wood/fancy/black,/turf/open/floor/carpet/black,/area/survivalpod)
 "z" = (/obj/item/weapon/twohanded/required/kirbyplants/random,/turf/open/floor/carpet/black,/area/survivalpod)
-"A" = (/obj/structure/chair/comfy/black{dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
-"B" = (/obj/structure/sign/mining/survival,/turf/closed/wall/mineral/titanium/survival/pod,/area/survivalpod)
-"C" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/survival_pod,/turf/open/floor/pod,/area/survivalpod)
-"D" = (/obj/structure/sign/mining,/turf/closed/wall/mineral/titanium/survival/pod,/area/survivalpod)
+"A" = (/turf/open/floor/carpet/black,/area/survivalpod)
+"B" = (/obj/structure/chair/comfy/black{dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
+"C" = (/obj/structure/sign/mining/survival,/turf/closed/wall/mineral/titanium/survival/pod,/area/survivalpod)
+"D" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/survival_pod,/turf/open/floor/pod,/area/survivalpod)
+"E" = (/obj/structure/sign/mining,/turf/closed/wall/mineral/titanium/survival/pod,/area/survivalpod)
 
 (1,1,1) = {"
 abcbcda
 efghijk
 clmnopc
-eqrstuk
-cvwwwxc
-eyzwwAk
-aBcCcDa
+eqmrosk
+ctuvwxc
+eyzAABk
+aCcDcEa
 "}
