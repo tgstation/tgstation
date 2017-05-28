@@ -234,7 +234,16 @@
 	burst_size = 3
 	fire_delay = 1
 
-
+/obj/item/weapon/gun/ballistic/automatic/carbine
+	name = "\improper Marine Carbine"
+	desc = "Standard issue weapon used by Iron Hawk Marines in space to space combat. Due to modifications for space combat, the weapon has a very limited firing range."
+	icon_state = "oldrifle"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/carbine
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	can_suppress = 0
+	burst_size = 0
+	fire_delay = 2
 
 // Bulldog shotgun //
 
@@ -379,7 +388,10 @@
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
 
-
+/obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
+	name = "black market sniper rifle"
+	desc = "A long ranged weapon that does significant damage. It is well worn from years of service."
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/gang
 
 // Old Semi-Auto Rifle //
 
