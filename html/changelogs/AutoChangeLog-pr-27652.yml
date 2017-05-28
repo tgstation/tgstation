@@ -1,0 +1,5 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "Central Command has listened to complaints and, as such, has now stationed \"real\" Private Security Officers at centcom docks."
+  - rscadd: "A new Nanotrasen Security Officer NPC variant is available to admins, this 'peaceful' version will only attack people who attack it first. Great for keeping order."
