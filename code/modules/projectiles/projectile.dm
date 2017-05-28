@@ -54,6 +54,11 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
+var/global/globalprojspeed = 0.5
+
+/obj/item/projectile/proc/set_speed(newspeed)
+	globalprojspeed = newspeed
+
 /obj/item/projectile/New()
 	permutated = list()
 	return ..()
@@ -245,7 +250,7 @@
 			pixel_x = old_pixel_x
 			pixel_y = old_pixel_y
 			step_towards(src, locate(new_x, new_y, z))
-			next_run += max(world.tick_lag, speed)
+			next_run += max(world.tick_lag, globalprojspeed)
 			var/delay = next_run - world.time
 			if(delay <= world.tick_lag*2)
 				pixel_x = pixel_x_offset
