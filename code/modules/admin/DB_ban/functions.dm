@@ -134,7 +134,7 @@
 	if(announceinirc)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
 
-	banned_mob << 'sound/effects/dont_use_the_dye.ogg"
+	banned_mob << 'sound/effects/dont_use_the_dye.ogg'
 
 	if(kickbannedckey)
 		if(AH)
