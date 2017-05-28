@@ -383,7 +383,7 @@
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a United Earth Government marine. You were, until recently, stationed on board the UESS Inheritor, a Earth destroyer. As you struggle \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a marine. You were, until recently, stationed on board the UESS Inheritor, a Earth capital ship. As you struggle \
 	to exit your cryostasis sleeper, you slowly start to recall exactly what cause of events has thrown you into your current predicament... "
 
 /obj/effect/mob_spawn/human/marine/Initialize(mapload)
@@ -391,21 +391,21 @@
 	var/lorpee = rand(1,4)
 	switch(lorpee)
 		if(1)
-			flavour_text += "Your ship intercepted a distress call from a long range space station. As the Inheritor moved into investigate, suddenly and without warning the ship was being assaulted \
+			flavour_text += "Your ship intercepted a distress call from a distant space station. As the Inheritor moved into investigate, suddenly and without warning the ship was being assaulted \
 			by a massive lovecraftian nightmare, you heard the name 'Nar-Sie' being uttered by the barely Human flesh monsters and constructs that poured out of every crack that was torn into the \
-			ship by the monster. With most of the crew dead, you and your squad retreat to the hanger bay, rescued a group of pilots and attempted to flee aboard the only functional troop transport. \
-			 Your attempt to fly away was halted when Nar-Sie somehow was able to start attempting to drag the transport into her grasp. In one final desperate move, the pilots turn the ship around \
-			 and ram it directly into Nar-Sie's head, her screams somehow echo throughout the transport as she releases her grasp on the transport, unfortunately taking half the engines with her. \
-			 Your final thoughts are panic as you quickly dive into your cryosleep pod, hoping you'll survive the crash landing.</b>"
+			ship by the monster. With most of the crew dead, you and your squad retreated to the hanger bay, rescued a group of pilots and attempted to flee aboard the only functional heavy troop transport. \
+			 Your attempt to fly away was halted when Nar-Sie somehow was able to start attempting to drag the transport into her grasp. In one final desperate move, the pilots turnd the ship around \
+			 and ramed it directly into Nar-Sie's head, her screams somehow echoed throughout the transport as she released her grasp on the transport, unfortunately taking half the engines with her. \
+			 Your final thoughts were panic as you quickly dove into your cryosleep pod, hoping you'll survive the crash landing.</b>"
 		if(2)
 			flavour_text += "Panic and paranoia ran high as a group of changelings somehow infiltrated the Inheritor. Utterly unprepared to deal with this threat, the crew tore itself apart. \
 			In a final desperate move to end the changeling threat, the ship's Commander activated the Inheritor's self destruct sequence and remotely shut down all escape pods. You and your \
-			squad mates, who were already on the brink of a psychological breakdown, make a run for the last remaining troop transport. You arrive to discover the changelings had a similar plan \
-			, with minutes until the ship explodes, the changelings abandoned any pretense of subtly and revealed their true forms. After a intense gun fight you and your squad are able to board \
-			the transport. However as you take off, one of the surviving Changelings is able to plant a explosive charge on your engines. The explosion disables your ship, and you get caught in a \
-			nearby planets gravity well. The survivors are forced into cryo sleep, as you're last thoughts are hoping to god none of your squad mates are secretly changelings.</b>"
+			squadmates, who were already on the brink of a psychological breakdown, made a run for the last remaining heavy troop transport. You arrive to discover the changelings had a similar plan \
+			, with minutes until the ship exploded, the changelings abandoned any pretense of subtly and revealed their true forms. After a intense gun fight you and your squad were able to board \
+			the transport. However as you take off, one of the surviving Changelings was able to plant an explosive charge on your engines. The explosion disabled your ship, and you got caught in a \
+			nearby planets gravity well. The survivors were forced into cryo sleep, as you're last thoughts were hoping to god none of your squad mates were secretly changelings.</b>"
 		if(3)
-			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Earth military ship. However, the Inheritor had conducted a \
+			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Earth capital ship. However, the Inheritor had conducted a \
 			large series of anti-piracy raids in your assigned sector, so crippling that every pirate in the local sector network formed a massive fleet in a attempt to destroy the Inheritor. The \
 			Inheritor won against all odds, but it was a pyrrhic victory as the Inheritor was byond repair. The acting Commander ordered all hands to abandon ship before it was scuttled. You and \
 			your remaining squad members were assigned to troop transport 5. Unbeknown to you or your pilots, your fuel tanks had suffered a massive leak during the fighting, leaving you with minimal \
@@ -413,9 +413,9 @@
 		if(4)
 			flavour_text += "The Inheritor was assigned to a high level covert recon mission of Space Station 13, a Nanotrasen research and development station. Stipulation of the Nanotrasen - United \
 			Earth Government plasma mining contract was that Nanotrasen were to be limited to mining only single gas giant and its orbiting moons. Military Intelligence received information that \
-			Nanotrasen may have broken this condition by launching a illegal mining operation to an orbiting class-H planet in the same system. You and your squad were dispatched in a recon transport \
+			Nanotrasen may have broken this condition by launching a illegal mining operation to an orbiting class-H planet in the same system. You and your squad were dispatched in a recon heavy transport \
 			to attempt to fly over the planet and locate any hidden Nanotrasen mining bases. About two hours into the recon mission, a giant, dragon like, creature swooped up and took a large part of your \
-			engines with it. With insufficient engines to leave the planet's atmosphere, the crew were ordered into cryostasis as the pilots attempted an emergency landing.</b>"
+			engines with it. With insufficient thrust power to leave the planet's atmosphere, the crew were ordered into cryostasis as the pilots attempted an emergency landing.</b>"
 
 /obj/effect/mob_spawn/human/marine/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))

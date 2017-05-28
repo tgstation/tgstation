@@ -95,7 +95,7 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/ueg
 	name = "UEG Marine Armour"
-	desc = "Modified MK.II SWAT Armour. Used by United Earth Government Marines in ship to ship action. This model appears to have lost some of its armour plating during the crash."
+	desc = "Modified MK.II SWAT Armour. Used by UEG Marines in ship to ship action. This model appears to have lost some of its armour plating during the crash."
 	icon_state = "uegarmor"
 	item_state = "uegarmor"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
