@@ -544,3 +544,10 @@
 	icon_state = "bedsheet"
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+
+/obj/item/clothing/suit/jacket/bluespace
+	name = "bluespace coat"
+	desc = "A blue jacket outfitted with some specialized bluespace pockets.."
+	icon_state = "labcoat_cmo"
+	item_state = "labcoat_cmo"
+	pockets = /obj/item/weapon/storage/internal/pocket/bluespace
