@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - bugfix: "fixed not being able to attach heads without brainmobs in them"
