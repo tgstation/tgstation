@@ -104,6 +104,9 @@
 
 	return ..()
 
+/atom/proc/handle_ricochet(obj/item/projectile/P)
+	return
+
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return (!density || !height)
 

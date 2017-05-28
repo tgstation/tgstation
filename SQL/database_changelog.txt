@@ -1,3 +1,13 @@
+26 May 2017, by Jordie0608
+
+Modified table 'ban', adding the column 'round_id'.
+
+ALTER TABLE `feedback`.`ban` ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
 20 May 2017, by Jordie0608
 
 Created table `round` to replace tracking of the datapoints 'round_start', 'round_end', 'server_ip', 'game_mode', 'round_end_results', 'end_error', 'end_proper', 'emergency_shuttle', 'map_name' and 'station_renames' in the `feedback` table.
