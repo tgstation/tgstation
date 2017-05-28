@@ -419,7 +419,7 @@
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
+	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != ZLEVEL_STATION)
 		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
 		return FALSE
 

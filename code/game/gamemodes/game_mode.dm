@@ -239,11 +239,11 @@
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.z == 2)
+					if(M.z == ZLEVEL_CENTCOM)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.z == 2)
+				if(M.z == ZLEVEL_CENTCOM)
 					escaped_total++
 
 
