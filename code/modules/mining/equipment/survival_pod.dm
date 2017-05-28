@@ -67,6 +67,12 @@
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
+/obj/item/weapon/survivalcapsule/luxury
+	name = "luxury bluespace shelter capsule"
+	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
+	origin_tech = "engineering=3;bluespace=4"
+	template_id = "shelter_beta"
+
 //Pod objects
 
 //Window

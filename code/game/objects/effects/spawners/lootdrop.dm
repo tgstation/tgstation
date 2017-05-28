@@ -54,6 +54,34 @@
 			/obj/item/trash/sosjerky = 1,
 			/obj/item/trash/syndi_cakes = 1)
 
+/obj/effect/spawner/lootdrop/three_course_meal
+	name = "three course meal spawner"
+	lootcount = 3
+	lootdoubles = FALSE
+
+/obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
+	loot = list(pick(list(
+			/obj/item/weapon/reagent_containers/food/snacks/soup/beet,
+			/obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato,
+			/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
+			/obj/item/weapon/reagent_containers/food/snacks/soup/hotchili,
+			/obj/item/weapon/reagent_containers/food/snacks/soup/nettle,
+			/obj/item/weapon/reagent_containers/food/snacks/soup/meatball)) = 1,
+			pick(list(
+			/obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad,
+			/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
+			/obj/item/weapon/reagent_containers/food/snacks/salad/fruit,
+			/obj/item/weapon/reagent_containers/food/snacks/salad/jungle,
+			/obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad)) = 1,
+			pick(list(
+			/obj/item/weapon/reagent_containers/food/snacks/bearsteak,
+			/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
+			/obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat,
+			/obj/item/weapon/reagent_containers/food/snacks/burger/bigbite,
+			/obj/item/weapon/reagent_containers/food/snacks/burger/superbite,
+			/obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm)) = 1)
+	..()
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
