@@ -12,7 +12,7 @@
 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon")
+		"Laughter Demon", "Private Security Officer")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
@@ -168,6 +168,11 @@
 			desc = "A cardboard cutout of a laughter demon."
 			icon = 'icons/mob/mob.dmi'
 			icon_state = "bowmon"
+		if("Private Security Officer")
+			name = "Private Security Officer"
+			desc = "A cardboard cutout of a private security officer."
+			icon = 'icons/mob/mob.dmi'
+			icon_state = "cutout_ntsec"
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)
