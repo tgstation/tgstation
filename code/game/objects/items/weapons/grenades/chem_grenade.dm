@@ -9,6 +9,7 @@
 	item_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
+	unique_rename = 1
 	var/stage = EMPTY
 	var/list/beakers = list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
