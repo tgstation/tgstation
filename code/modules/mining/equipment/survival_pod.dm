@@ -317,7 +317,6 @@
 						/obj/item/weapon/gun/magic/staff/spellblade,
 						/obj/item/weapon/gun/magic/wand/death,
 						/obj/item/weapon/gun/magic/wand/fireball,
-						/obj/item/weapon/disk/nuclear,
 						/obj/item/stack/telecrystal/twenty,
 						/obj/item/nuke_core,
 						/obj/item/phylactery,
