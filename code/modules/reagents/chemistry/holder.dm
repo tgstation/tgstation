@@ -3,14 +3,14 @@
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
-	var/list/datum/reagent/reagent_list = new/list()
+	var/list/datum/reagent/reagent_list
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
 	var/chem_temp = 150
 	var/last_tick = 1
 	var/addiction_tick = 1
-	var/list/datum/reagent/addiction_list = new/list()
+	var/list/datum/reagent/addiction_list
 	var/flags
 
 /datum/reagents/New(maximum=100)
