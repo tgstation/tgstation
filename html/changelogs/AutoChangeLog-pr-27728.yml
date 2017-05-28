@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "The kinetic crusher can now gain bonus effects via trophy items gained by killing bosses with it."
+  - rscadd: "Yes, you do have to kill the boss primarily doing damage via the kinetic crusher, or you won't get the trophy item and the bonus effect it grants."
