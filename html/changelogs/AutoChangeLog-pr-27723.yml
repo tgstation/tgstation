@@ -1,5 +1,0 @@
-author: "QualityVan"
-delete-after: True
-changes: 
-  - tweak: "Cloning pods which are interrupted by a emagging will now produce a slightly lumpier smoothie"
-  - bugfix: "Cloning pods that have stopped cloning early can no longer be broken open to extract leftover parts"

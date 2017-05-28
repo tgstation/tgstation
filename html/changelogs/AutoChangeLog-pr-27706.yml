@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Adds AI follow links to holopad speech and PDA messages. Note that PDA messages point to the owner of the PDA and not the PDA's actual location."
-  - bugfix: "Fixes PDA icon not showing up beside received messages for AIs"
