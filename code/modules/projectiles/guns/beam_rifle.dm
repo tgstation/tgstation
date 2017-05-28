@@ -300,9 +300,12 @@
 	var/aoe_mob_damage = 0
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
+	var/turf/cached
 
 /obj/item/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
 	set waitfor = FALSE
+	if(!epicenter)
+		return
 	new /obj/effect/temp_visual/explosion/fast(epicenter)
 	for(var/mob/living/L in range(aoe_mob_range, epicenter))		//handle aoe mob damage
 		L.adjustFireLoss(aoe_mob_damage)
@@ -345,8 +348,10 @@
 		L.adjustFireLoss(impact_direct_damage)
 		L.emote("scream")
 
-/obj/item/projectile/beam/beam_rifle/proc/handle_hit(atom/target, turf/cached)
+/obj/item/projectile/beam/beam_rifle/proc/handle_hit(atom/target)
 	set waitfor = FALSE
+	if(!cached && !QDELETED(target))
+		cached = get_turf(target)
 	if(nodamage)
 		return FALSE
 	playsound(cached, 'sound/effects/explosion3.ogg', 100, 1)
@@ -358,10 +363,14 @@
 	if(check_pierce(target))
 		permutated += target
 		return FALSE
+	if(!QDELETED(target))
+		cached = get_turf(target)
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
-	handle_hit(target, get_turf(target))
+	if(!QDELETED(target))
+		cached = get_turf(target)
+	handle_hit(target)
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan
@@ -432,6 +441,8 @@
 
 /obj/item/projectile/beam/beam_rifle/hitscan/Range()
 	spawn_tracer_effect()
+	if(!QDELETED(src) && loc)
+		cached = get_turf(src)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
 	new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
@@ -445,8 +456,6 @@
 	damage = 0
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
-	if((isturf(target) && wall_pierce < wall_pierce_amount) || (isobj(target) && structure_pierce < structure_pierce_amount))
-		return ..()
 	qdel(src)
 	return FALSE
 
@@ -465,6 +474,9 @@
 	anchored = 1
 	duration = 5
 	randomdir = FALSE
+	light_power = 1
+	light_range = 2
+	light_color = "#00ffff"
 
 /obj/effect/temp_visual/projectile_beam/New(time = 5, angle_override, p_x, p_y, color_override)
 	duration = time
