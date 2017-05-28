@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "You can now rename dog beds by buckling a new owner to them"
+  - rscadd: "Dogs that spawn in an area with a vacant bed will take possession of and rename the bed"
