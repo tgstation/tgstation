@@ -15,6 +15,10 @@
 		if(L.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
 
+/mob/living/simple_animal/hostile/poison/New()
+	if(name == "giant spider")
+		name = ("giant spider ([rand(1, 1000)])")
+
 
 
 //basic spider mob, these generally guard nests
