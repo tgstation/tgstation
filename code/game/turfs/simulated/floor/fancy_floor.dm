@@ -140,7 +140,7 @@
 	floor_tile = /obj/item/stack/tile/carpet
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/turf/open/floor/carpet)
+	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/floor/carpet/black)
 	flags = NONE
 
 /turf/open/floor/carpet/Initialize()
@@ -157,6 +157,10 @@
 		make_plating()
 		if(smooth)
 			queue_smooth_neighbors(src)
+
+/turf/open/floor/carpet/black
+	icon = 'icons/turf/floors/carpet_black.dmi'
+
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)

@@ -83,6 +83,11 @@
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
 
+/obj/structure/window/reinforced/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "pwindow"
+
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "airlock"
@@ -127,6 +132,12 @@
 /obj/structure/door_assembly/door_assembly_pod/vertical
 	dir = EAST
 	expected_dir = EAST
+
+//Windoor
+/obj/machinery/door/window/survival_pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "windoor"
+	base_state = "windoor"
 
 //Table
 /obj/structure/table/survival_pod
