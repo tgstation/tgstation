@@ -397,6 +397,16 @@
 					/obj/item/weapon/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
 
+/datum/supply_pack/security/armory/snipins_a_good_job_mate
+	name = "Sniper Crate"
+	cost = 20000
+	contains = list(/obj/item/weapon/gun/projectile/automatic/sniper_rifle,
+					/obj/item/ammo_box/magazine/sniper_rounds,
+					/obj/item/ammo_box/magazine/sniper_rounds/soporific,
+					/obj/item/ammo_box/magazine/sniper_rounds/haemorrhage,
+					/obj/item/ammo_box/magazine/sniper_rounds/penetrator)
+	crate_name = "sniper crate"
+
 /datum/supply_pack/security/armory/wt550ammo
 	name = "WT-550 Auto Rifle Ammo Crate"
 	cost = 3000
