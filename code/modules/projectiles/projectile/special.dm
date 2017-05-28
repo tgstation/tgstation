@@ -5,7 +5,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -200,9 +200,10 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3.5 //works as 4, but doubles to 7
+	range = 4
 	dismemberment = 20
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	var/mine_range = 3 //mines this many additional tiles
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
@@ -215,29 +216,33 @@
 		if(pressure < 60)
 			name = "full strength [name]"
 			damage *= 4
-			range *= 2
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-		Range()
+		if(mine_range)
+			mine_range--
+			range++
 		if(range > 0)
 			return -1
 
 /obj/item/projectile/plasma/adv
 	damage = 7
 	range = 5
+	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 6
+	range = 9
+	mine_range = 3
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
 	damage = 6
+	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 
@@ -270,7 +275,7 @@
 		A.throw_at(throwtarget,power+1,1)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravityattract
 	name = "attraction bolt"
@@ -300,7 +305,7 @@
 		A.throw_at(T, power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravitychaos
 	name = "gravitational blast"
@@ -330,5 +335,5 @@
 		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(Z)
+		new /obj/effect/temp_visual/gravpush(Z)
 

@@ -13,7 +13,7 @@
 /atom/proc/attack_tk(mob/user)
 	if(user.stat)
 		return
-	new /obj/effect/overlay/temp/telekinesis(loc)
+	new /obj/effect/temp_visual/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	return
 
@@ -124,7 +124,8 @@
 
 	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		apply_focus_overlay()
-		melee_item_attack_chain(tk_user, focus, target, params) //isn't copying the attack chain fun. we should do it more often.
+		var/obj/item/I = focus
+		I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
 		if(check_if_focusable(focus))
 			focus.do_attack_animation(target, null, focus)
 	else
@@ -163,7 +164,7 @@
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
+	new /obj/effect/temp_visual/telekinesis(get_turf(focus))
 
 /obj/item/tk_grab/update_icon()
 	cut_overlays()

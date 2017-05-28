@@ -15,14 +15,15 @@ SUBSYSTEM_DEF(lighting)
 
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
-	if (config.starlight)
-		for(var/I in GLOB.sortedAreas)
-			var/area/A = I
-			if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-				A.luminosity = 0
+	if(!initialized)
+		if (config.starlight)
+			for(var/I in GLOB.sortedAreas)
+				var/area/A = I
+				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+					A.luminosity = 0
 
-	create_all_lighting_objects()
-	initialized = TRUE
+		create_all_lighting_objects()
+		initialized = TRUE
 	
 	fire(FALSE, TRUE)
 
@@ -36,18 +37,10 @@ SUBSYSTEM_DEF(lighting)
 	for (i in 1 to GLOB.lighting_update_lights.len)
 		var/datum/light_source/L = GLOB.lighting_update_lights[i]
 
-		if (L.check() || QDELETED(L) || L.force_update)
-			L.remove_lum()
-			if (!QDELETED(L))
-				L.apply_lum()
+		L.update_corners()
 
-		else if (L.vis_update) //We smartly update only tiles that became (in) visible to use.
-			L.smart_vis_update()
+		L.needs_update = LIGHTING_NO_UPDATE
 
-		L.vis_update   = FALSE
-		L.force_update = FALSE
-		L.needs_update = FALSE
-		
 		if(init_tick_checks)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)

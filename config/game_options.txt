@@ -1,33 +1,33 @@
-### HEALTH ###
+## HEALTH ###
 
-#Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
+##Damage multiplier, effects both weapons and healing on all mobs. For example, 1.25 would result in 25% higher damage.
 DAMAGE_MULTIPLIER 1
 
-### REVIVAL ###
+## REVIVAL ###
 
-# whether pod plants work or not
-REVIVAL_POD_PLANTS 1
+## whether pod plants work or not
+REVIVAL_POD_PLANTS
 
-# whether cloning tubes work or not
-REVIVAL_CLONING 1
+## whether cloning tubes work or not
+REVIVAL_CLONING
 
-# amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
+## amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
 
-### RENAMING ###
+## RENAMING ###
 
-#Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
+## Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
 #RENAME_CYBORG
 
-### OOC DURING ROUND ###
-#Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
+## OOC DURING ROUND ###
+## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
-### EMOJI ###
-#Comment this out if you want to disable emojis
+## EMOJI ###
+## Comment this out if you want to disable emojis
 EMOJIS
 
-### MOB MOVEMENT ###
+## MOB MOVEMENT ###
 
 ## We suggest editing these variables ingame to find a good speed for your server.
 ## To do this you must be a high level admin. Open the 'debug' tab ingame.
@@ -49,7 +49,7 @@ SLIME_DELAY 0
 ANIMAL_DELAY 0
 
 
-### NAMES ###
+## NAMES ###
 ## If uncommented this adds a random surname to a player's name if they only specify one name.
 #HUMANS_NEED_SURNAMES
 
@@ -57,7 +57,7 @@ ANIMAL_DELAY 0
 #FORCE_RANDOM_NAMES
 
 
-### ALERT LEVELS ###
+## ALERT LEVELS ###
 ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
 ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
 ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
@@ -67,7 +67,7 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 
 
-### GAME MODES ###
+## GAME MODES ###
 
 ## Uncomment to not send a roundstart intercept report. Gamemodes may override this.
 #NO_INTERCEPT_REPORT
@@ -142,7 +142,7 @@ MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
 
-## Uncomment for overrides of the minimum / maximum number of players in a round type. 
+## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
 ## If you set any of these occasionally check to see if you still need them as the modes
 ## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
 ## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
@@ -213,8 +213,8 @@ CHANGELING_SCALING_COEFF 6
 ## Set to 0 to disable scaling and use default numbers instead.
 SECURITY_SCALING_COEFF 8
 
-# The number of objectives traitors get.
-# Not including escaping/hijacking.
+## The number of objectives traitors get.
+## Not including escaping/hijacking.
 TRAITOR_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
@@ -233,8 +233,8 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
 #SHOW_GAME_TYPE_ODDS
 
-### RANDOM EVENTS ###
-## Comment this to disable random events during the round.
+## RANDOM EVENTS ###
+## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
 ## Multiplier for earliest start time of dangerous events.
@@ -246,34 +246,34 @@ EVENTS_MIN_TIME_MUL 1
 EVENTS_MIN_PLAYERS_MUL 1
 
 
-### AI ###
+## AI ###
 
 ## Allow the AI job to be picked.
 ALLOW_AI
 
-### Secborg ###
+## Secborg ###
 ## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
-### Peacekeeper Borg ###
+## Peacekeeper Borg ###
 ## Uncomment to prevent the peacekeeper cyborg module from being chosen
 #DISABLE_PEACEBORG
 
-### AWAY MISSIONS ###
+## AWAY MISSIONS ###
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
 GATEWAY_DELAY 18000
 
 
-### ACCESS ###
+## ACCESS ###
 
 ## If the number of players ready at round starts exceeds this threshold, JOBS_HAVE_MINIMAL_ACCESS will automatically be enabled. Otherwise, it will be disabled.
 ## This is useful for accomodating both low and high population rounds on the same server.
-## Comment out or set to 0 to disable this automatic toggle.
+## Comment this out or set to 0 to disable this automatic toggle.
 MINIMAL_ACCESS_THRESHOLD 20
 
-## Comment this out if you wish to use the setup where jobs have more access.
+## Comment this out this if you wish to use the setup where jobs have more access.
 ## This is intended for servers with low populations - where there are not enough
 ## players to fill all roles, so players need to do more than just one job.
 ## This option is ignored if MINIMAL_ACCESS_THRESHOLD is used.
@@ -282,35 +282,35 @@ MINIMAL_ACCESS_THRESHOLD 20
 ## Uncomment to give assistants maint access.
 #ASSISTANTS_HAVE_MAINT_ACCESS
 
-## Uncoment to give security maint access. Note that if you comment JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
+## Uncoment to give security maint access. Note that if you dectivate JOBS_HAVE_MINIMAL_ACCESS security already gets maint from that.
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
 #EVERYONE_HAS_MAINT_ACCESS
 
-## Comment this to make security officers spawn in departmental security posts
+## Comment this out this to make security officers spawn in departmental security posts
 SEC_START_BRIG
 
 
-### GHOST INTERACTION ###
+## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
 
-### NON-VOCAL SILICONS ###
-## Uncomment to stop the AI, or cyborgs, from having vocal communication.
+## NON-VOCAL SILICONS ###
+## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI
 #SILENT_BORG
 
-### SANDBOX PANEL AUTOCLOSE ###
+## SANDBOX PANEL AUTOCLOSE ###
 ## The sandbox panel's item spawning dialog now stays open even after you click an option.
 ## If you find that your players are abusing the sandbox panel, this option may slow them down
 ## without preventing people from using it properly.
 ## Only functions in sandbox game mode.
 #SANDBOX_AUTOCLOSE
 
-### ROUNDSTART SILICON LAWS ###
+## ROUNDSTART SILICON LAWS ###
 ## This controls what the AI's laws are at the start of the round.
-## Set to 0/commented for "off", silicons will just start with Asimov.
+## Set to 0/commented out for "off", silicons will just start with Asimov.
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
@@ -378,7 +378,7 @@ LAW_WEIGHT buildawall,0
 
 ##------------------------------------------------
 
-### SILICON LAW MAX AMOUNT ###
+## SILICON LAW MAX AMOUNT ###
 ## The maximum number of laws a silicon can have
 ## Attempting to upload laws past this point will fail unless the AI is reset
 SILICON_MAX_LAW_AMOUNT 12
@@ -435,7 +435,7 @@ ASSISTANT_CAP -1
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS
 
-### Midround Antag (aka Mulligan antag) config options ###
+## Midround Antag (aka Mulligan antag) config options ###
 
 ## A time, in minutes, after which the midround antag system stops attempting to run and continuous rounds end immediately upon completion.
 MIDROUND_ANTAG_TIME_CHECK 60
@@ -443,18 +443,18 @@ MIDROUND_ANTAG_TIME_CHECK 60
 ## A ratio of living to total crew members, the lower this is, the more people will have to die in order for midround antag to be skipped
 MIDROUND_ANTAG_LIFE_CHECK 0.7
 
-###Limit Spell Choices##
+##Limit Spell Choices##
 ## Uncomment to disallow wizards from using certain spells that may be too chaotic/fun for your playerbase
 
 #NO_SUMMON_GUNS
 #NO_SUMMON_MAGIC
 #NO_SUMMON_EVENTS
 
-##Comment for "normal" explosions, which ignore obstacles
-##Uncomment for explosions that react to doors and walls
+## Comment this out for "normal" explosions, which ignore obstacles
+## Uncomment for explosions that react to doors and walls
 REACTIONARY_EXPLOSIONS
 
-### Configure the bomb cap
+## Configure the bomb cap
 ## This caps all explosions to the specified range. Used for both balance reasons and to prevent overloading the server and lagging the game out.
 ## This is given as the 3rd number(light damage) in the standard (1,2,3) explosion notation. The other numbers are derived by dividing by 2 and 4.
 ## eg: If you give the number 20. The bomb cap will be 5,10,20.
@@ -469,23 +469,23 @@ BOMBCAP 20
 
 
 ## Lavaland "Budget"
-# Lavaland ruin spawning has an imaginary budget to spend on ruins, where
-# a less lootfilled or smaller or less round effecting ruin costs less to
-# spawn, while the converse is true. Alter this number to affect the amount
-# of ruins.
+## Lavaland ruin spawning has an imaginary budget to spend on ruins, where
+## a less lootfilled or smaller or less round effecting ruin costs less to
+## spawn, while the converse is true. Alter this number to affect the amount
+## of ruins.
 LAVALAND_BUDGET 60
 
 ## Space Ruin Budged
 Space_Budget 16
 
-#Time in ds from when a player latejoins till the arrival shuttle docks at the station
-#Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
+## Time in ds from when a player latejoins till the arrival shuttle docks at the station
+## Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
-#Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
-ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0
+## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
+#ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
-# How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
+## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
 MICE_ROUNDSTART 10
 

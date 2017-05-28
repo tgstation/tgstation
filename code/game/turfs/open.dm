@@ -30,7 +30,7 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
 /turf/open/indestructible/necropolis/Initialize()
-	..()
+	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
 
@@ -44,6 +44,9 @@
 	smooth = SMOOTH_TRUE
 
 /turf/open/indestructible/hierophant/two
+
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 /turf/open/indestructible/paper
 	name = "notebook floor"

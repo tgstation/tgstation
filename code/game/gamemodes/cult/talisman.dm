@@ -45,79 +45,11 @@
 		var/mob/living/carbon/C = user
 		C.apply_damage(10, BRUTE, "head")
 
-//Supply Talisman: Has a few unique effects. Granted only to starter cultists.
-/obj/item/weapon/paper/talisman/supply
-	cultist_name = "Supply Talisman"
-	cultist_desc = "A multi-use talisman that can create various objects. Intended to increase the cult's strength early on."
-	invocation = null
-	uses = 3
-
-/obj/item/weapon/paper/talisman/supply/invoke(mob/living/user, successfuluse = 1)
-	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
-	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
-	dat += "<HR>"
-	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Summons an arcane tome, used to scribe runes and communicate with other cultists.<BR>"
-	dat += "<A href='?src=\ref[src];rune=metal'>Bar'tea eas!</A> - Provides 5 runed metal.<BR>"
-	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
-	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
-	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
-	dat += "<A href='?src=\ref[src];rune=veiling'>Kla'atu barada nikt'o!</A> - Two use talisman, first use makes all nearby runes invisible, second use reveals nearby hidden runes.<BR>"
-	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
-	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with soulstone-captured souls. It is too large to carry on your person.<BR>"
-	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
-	popup.set_content(dat)
-	popup.open()
-	return 0
-
-/obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if(src)
-		if(usr.stat || usr.restrained() || !in_range(src, usr))
-			return
-		if(href_list["rune"])
-			switch(href_list["rune"])
-				if("newtome")
-					var/obj/item/weapon/tome/T = new(usr)
-					usr.put_in_hands(T)
-				if("metal")
-					if(istype(src, /obj/item/weapon/paper/talisman/supply/weak))
-						usr.visible_message("<span class='cultitalic'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
-						return
-					var/obj/item/stack/sheet/runed_metal/R = new(usr,5)
-					usr.put_in_hands(R)
-				if("teleport")
-					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
-					usr.put_in_hands(T)
-				if("emp")
-					var/obj/item/weapon/paper/talisman/emp/T = new(usr)
-					usr.put_in_hands(T)
-				if("runestun")
-					var/obj/item/weapon/paper/talisman/stun/T = new(usr)
-					usr.put_in_hands(T)
-				if("soulstone")
-					var/obj/item/device/soulstone/T = new(usr)
-					usr.put_in_hands(T)
-				if("construct")
-					new /obj/structure/constructshell(get_turf(usr))
-				if("veiling")
-					var/obj/item/weapon/paper/talisman/true_sight/T = new(usr)
-					usr.put_in_hands(T)
-			src.uses--
-			if(src.uses <= 0)
-				if(iscarbon(usr))
-					var/mob/living/carbon/C = usr
-					C.drop_item()
-					visible_message("<span class='warning'>[src] crumbles to dust.</span>")
-				qdel(src)
-
-/obj/item/weapon/paper/talisman/supply/weak
-	cultist_name = "Lesser Supply Talisman"
-	uses = 2
-
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport
 	cultist_name = "Talisman of Teleportation"
 	cultist_desc = "A single-use talisman that will teleport a user to a random rune of the same keyword."
-	color = "#551A8B" // purple
+	color = RUNE_COLOR_TELEPORT
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
 	creation_time = 80
@@ -147,9 +79,10 @@
 	if(is_blocked_turf(target, TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
+	"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
 	user.forceMove(target)
+	target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	return ..()
 
 

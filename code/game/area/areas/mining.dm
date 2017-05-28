@@ -57,13 +57,13 @@
 	name = "Mining Station Communications"
 
 /area/mine/cafeteria
-	name = "Mining station Cafeteria"
+	name = "Mining Station Cafeteria"
 
 /area/mine/hydroponics
-	name = "Mining station Hydroponics"
+	name = "Mining Station Hydroponics"
 
 /area/mine/sleeper
-	name = "Mining station Emergency Sleeper"
+	name = "Mining Station Emergency Sleeper"
 
 /area/mine/north_outpost
 	name = "North Mining Outpost"
@@ -86,6 +86,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = 1
+	flags = NONE
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -115,6 +116,12 @@
 /area/lavaland/surface/outdoors
 	name = "Lavaland Wastes"
 	outdoors = 1
+
+/area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
+	icon_state = "unexplored"
+
+/area/lavaland/surface/outdoors/unexplored/danger //megafauna will also spawn here
+	icon_state = "danger"
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"

@@ -20,7 +20,10 @@
 	var/r_hand = null
 	var/l_hand = null
 	var/internals_slot = null //ID of slot containing a gas tank
-	var/list/backpack_contents = list() // In the list(path=count,otherpath=count) format
+	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
+	var/list/implants = null
+
+	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overriden for customization depending on client prefs,species etc
@@ -71,11 +74,11 @@
 			H.equip_to_slot_or_del(new l_pocket(H),slot_l_store)
 		if(r_pocket)
 			H.equip_to_slot_or_del(new r_pocket(H),slot_r_store)
-
-		for(var/path in backpack_contents)
-			var/number = backpack_contents[path]
-			for(var/i=0,i<number,i++)
-				H.equip_to_slot_or_del(new path(H),slot_in_backpack)
+		if(backpack_contents)
+			for(var/path in backpack_contents)
+				var/number = backpack_contents[path]
+				for(var/i=0,i<number,i++)
+					H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
 	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
@@ -88,6 +91,10 @@
 		if(internals_slot)
 			H.internal = H.get_item_by_slot(internals_slot)
 			H.update_action_buttons_icon()
+		if(implants)
+			for(var/implant_type in implants)
+				var/obj/item/weapon/implant/I = new implant_type(H)
+				I.implant(H, null, silent=TRUE)
 
 	H.update_body()
 	return 1

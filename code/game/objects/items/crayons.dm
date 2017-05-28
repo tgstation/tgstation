@@ -68,6 +68,7 @@
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
 
+
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|OXYLOSS)
@@ -422,7 +423,7 @@
 	var/gangID = user.mind.gang_datum
 	var/area/territory = get_area(target)
 
-	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
+	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0,user)
 	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
 
 /obj/item/toy/crayon/red

@@ -31,14 +31,54 @@
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	var/static/list/meson_mining_failure_excuses = list("seismic activity", "excessive lava", "ambient radiation", "electromagnetic storms", "bluespace disruption", \
+	"gravity", "dust", "dense rock", "ash", "badly understood science", "radiant heat")
+	var/picked_excuse
+	var/mesons_on = TRUE
+
+/obj/item/clothing/glasses/meson/Initialize()
+	. = ..()
+	picked_excuse = pick(meson_mining_failure_excuses)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/meson/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/glasses/meson/examine(mob/user)
+	..()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING && !mesons_on && picked_excuse)
+		to_chat(user, "<span class='warning'>Due to [picked_excuse], these Meson Scanners will not be able to display terrain layouts in this area.</span>")
+
+/obj/item/clothing/glasses/meson/proc/toggle_mode(mob/user)
+	vision_flags ^= SEE_TURFS
+	mesons_on = (vision_flags & SEE_TURFS)? TRUE : FALSE
+
+	if(iscarbon(user)) //only carbons can wear glasses
+		var/mob/living/carbon/C = user
+		if(!mesons_on)
+			to_chat(C, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
+		else if(picked_excuse)
+			to_chat(C, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+		if(C.glasses == src)
+			C.update_sight()
+
+/obj/item/clothing/glasses/meson/process()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING)
+		if(mesons_on) //if we're on mining, turn mesons OFF
+			toggle_mode(loc)
+	else if(!mesons_on) //otherwise, if we're not on mining, turn mesons back ON
+		toggle_mode(loc)
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"

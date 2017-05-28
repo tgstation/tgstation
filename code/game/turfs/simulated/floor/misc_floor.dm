@@ -133,8 +133,8 @@
 
 /turf/open/floor/clockwork/Initialize()
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor(src)
-	new /obj/effect/overlay/temp/ratvar/beam(src)
+	new /obj/effect/temp_visual/ratvar/floor(src)
+	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor(src)
 	realappearence.linked = src
 	change_construction_value(1)
@@ -250,9 +250,10 @@
 	if(severity < 3 || target == src)
 		ChangeTurf(src.baseturf)
 
-/turf/open/floor/vines/narsie_act()
-	if(prob(20))
-		ChangeTurf(src.baseturf) //nar sie eats this shit
+/turf/open/floor/vines/narsie_act(force, ignore_mobs, probability = 20)
+	if(prob(probability) || force)
+		ChangeTurf(baseturf) //nar sie eats this shit
+		narsie_act(force, ignore_mobs, probability)
 
 /turf/open/floor/vines/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

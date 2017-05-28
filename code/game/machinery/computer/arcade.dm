@@ -43,7 +43,8 @@
 		/obj/item/weapon/grenade/chem_grenade/glitter/pink		= 1,
 		/obj/item/weapon/grenade/chem_grenade/glitter/blue		= 1,
 		/obj/item/weapon/grenade/chem_grenade/glitter/white		= 1,
-		/obj/item/toy/eightball									= 2)
+		/obj/item/toy/eightball									= 2,
+		/obj/item/toy/windupToolbox								= 2)
 
 	light_color = LIGHT_COLOR_GREEN
 
@@ -1055,17 +1056,21 @@
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"
+	id_job = "Officer"
+	id_access_list = list(GLOB.access_syndicate)
+	outfit = /datum/outfit/orionsecurity
+
+/datum/outfit/orionsecurity
+	name = "Orion Spaceport Security"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	radio = /obj/item/device/radio/headset
+	ears = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas
-	helmet = /obj/item/clothing/head/helmet/swat
+	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/weapon/storage/backpack
-	has_id = 1
-	id_job = "Officer"
-	id_access_list = list(GLOB.access_syndicate)
+	id = /obj/item/weapon/card/id
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"

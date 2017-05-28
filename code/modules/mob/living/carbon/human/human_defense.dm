@@ -31,25 +31,6 @@
 				protection += C.armor[d_type]
 	return protection
 
-///checkeyeprot()
-///Returns a number between -1 to 2
-/mob/living/carbon/human/get_eye_protection()
-	var/number = ..()
-	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
-		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
-		number += HFP.flash_protect
-	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
-		var/obj/item/clothing/glasses/GFP = src.glasses
-		number += GFP.flash_protect
-	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
-		var/obj/item/clothing/mask/MFP = src.wear_mask
-		number += MFP.flash_protect
-	return number
-
-/mob/living/carbon/human/get_ear_protection()
-	if((ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT)) || (head && HAS_SECONDARY_FLAG(head, BANG_PROTECT)))
-		return 1
-
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
 	dna.species.on_hit(P, src)
 
@@ -59,12 +40,13 @@
 	if(spec_return)
 		return spec_return
 
-	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-		if(prob(martial_art.deflection_chance))
-			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-				return 0
+	if(mind)
+		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
+			if(prob(mind.martial_art.deflection_chance))
+				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
+					visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -122,10 +104,11 @@
 	return 0
 
 /mob/living/carbon/human/proc/check_block()
-	if(martial_art && martial_art.block_chance \
-	&& prob(martial_art.block_chance) && in_throw_mode \
-	&& !stat && !weakened && !stunned)
-		return TRUE
+	if(mind)
+		if(mind.martial_art && mind.martial_art.block_chance \
+		&& prob(mind.martial_art.block_chance) && in_throw_mode \
+		&& !stat && !weakened && !stunned)
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
@@ -639,7 +622,7 @@
 			gain = 100
 		if(mind.assigned_role == "Clown")
 			gain = rand(-300, 300)
-	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
+	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 

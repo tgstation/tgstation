@@ -106,6 +106,7 @@
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
+		cult_mind.current.playsound_local('sound/ambience/antag/bloodcult.ogg',100,0)//subject to change
 		add_cultist(cult_mind, 0)
 	..()
 
@@ -207,12 +208,10 @@
 /datum/game_mode/cult/declare_completion()
 
 	if(!check_cult_victory())
-		SSblackbox.set_details("round_end_result","win - cult win")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "win - cult win"
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 
 	var/text = ""
@@ -256,22 +255,15 @@
 
 /datum/game_mode/proc/datum_cult_completion()
 	var/text = ""
-	var/acolytes_survived = 0
-	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
-				acolytes_survived++
 	var/cult_fail = 0
 	cult_fail += eldergod
 	if(!GLOB.sac_complete)
 		cult_fail++
 	if(!cult_fail)
-		SSblackbox.set_details("round_end_result","win - cult win")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "win - cult win"
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
@@ -279,12 +271,13 @@
 			var/explanation
 			switch(cult_objectives[obj_count])
 				if("sacrifice")
-					if(GLOB.sac_complete)
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
-					else
-						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
-						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
+					if(GLOB.sac_mind)
+						if(GLOB.sac_complete)
+							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
+							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
+						else
+							explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
+							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"

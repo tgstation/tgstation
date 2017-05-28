@@ -44,6 +44,7 @@ Difficulty: Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = FALSE
@@ -134,7 +135,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(charging)
-		new /obj/effect/overlay/temp/decoy/fading(loc,src)
+		new /obj/effect/temp_visual/decoy/fading(loc,src)
 		DestroySurroundings()
 	. = ..()
 	if(!stat && .)
@@ -150,12 +151,12 @@ Difficulty: Hard
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
-	new /obj/effect/overlay/temp/dragon_swoop/bubblegum(T)
+	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	charging = TRUE
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
-	var/obj/effect/overlay/temp/decoy/D = new /obj/effect/overlay/temp/decoy(loc,src)
+	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	sleep(3)
 	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
@@ -245,9 +246,9 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodsmack(turf/T, handedness)
 	if(handedness)
-		new /obj/effect/overlay/temp/bubblegum_hands/rightsmack(T)
+		new /obj/effect/temp_visual/bubblegum_hands/rightsmack(T)
 	else
-		new /obj/effect/overlay/temp/bubblegum_hands/leftsmack(T)
+		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
 	sleep(2.5)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
@@ -259,11 +260,11 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
 	if(handedness)
-		new /obj/effect/overlay/temp/bubblegum_hands/rightpaw(T)
-		new /obj/effect/overlay/temp/bubblegum_hands/rightthumb(T)
+		new /obj/effect/temp_visual/bubblegum_hands/rightpaw(T)
+		new /obj/effect/temp_visual/bubblegum_hands/rightthumb(T)
 	else
-		new /obj/effect/overlay/temp/bubblegum_hands/leftpaw(T)
-		new /obj/effect/overlay/temp/bubblegum_hands/leftthumb(T)
+		new /obj/effect/temp_visual/bubblegum_hands/leftpaw(T)
+		new /obj/effect/temp_visual/bubblegum_hands/leftthumb(T)
 	sleep(6)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
@@ -276,31 +277,31 @@ Difficulty: Hard
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
 
-/obj/effect/overlay/temp/dragon_swoop/bubblegum
+/obj/effect/temp_visual/dragon_swoop/bubblegum
 	duration = 10
 
-/obj/effect/overlay/temp/bubblegum_hands
+/obj/effect/temp_visual/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'
 	duration = 9
 
-/obj/effect/overlay/temp/bubblegum_hands/rightthumb
+/obj/effect/temp_visual/bubblegum_hands/rightthumb
 	icon_state = "rightthumbgrab"
 
-/obj/effect/overlay/temp/bubblegum_hands/leftthumb
+/obj/effect/temp_visual/bubblegum_hands/leftthumb
 	icon_state = "leftthumbgrab"
 
-/obj/effect/overlay/temp/bubblegum_hands/rightpaw
+/obj/effect/temp_visual/bubblegum_hands/rightpaw
 	icon_state = "rightpawgrab"
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/bubblegum_hands/leftpaw
+/obj/effect/temp_visual/bubblegum_hands/leftpaw
 	icon_state = "leftpawgrab"
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/bubblegum_hands/rightsmack
+/obj/effect/temp_visual/bubblegum_hands/rightsmack
 	icon_state = "rightsmack"
 
-/obj/effect/overlay/temp/bubblegum_hands/leftsmack
+/obj/effect/temp_visual/bubblegum_hands/leftsmack
 	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
@@ -316,7 +317,7 @@ Difficulty: Hard
 	if(!pools.len)
 		return FALSE
 
-	var/obj/effect/overlay/temp/decoy/DA = new /obj/effect/overlay/temp/decoy(loc,src)
+	var/obj/effect/temp_visual/decoy/DA = new /obj/effect/temp_visual/decoy(loc,src)
 	DA.color = "#FF0000"
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
@@ -358,7 +359,7 @@ Difficulty: Hard
 	new /obj/effect/decal/cleanable/blood/bubblegum(J)
 	for(var/i in 1 to range)
 		J = get_step(previousturf, targetdir)
-		new /obj/effect/overlay/temp/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
 		playsound(previousturf,'sound/effects/splat.ogg', 100, 1, -1)
 		if(!J || !previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])
 			break

@@ -109,7 +109,11 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		return call(target, procname)(arglist(arguments))
 
 /proc/IsAdminAdvancedProcCall()
+#ifdef TESTING
+	return FALSE
+#else
 	return usr && usr.client && GLOB.AdminProcCaller == usr.client.ckey
+#endif
 
 /client/proc/callproc_datum(datum/A as null|area|mob|obj|turf)
 	set category = "Debug"
@@ -578,7 +582,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
-		outfits[initial(O.name)] = path
+		if(initial(O.can_be_admin_equipped))
+			outfits[initial(O.name)] = path
 
 
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in outfits
@@ -593,7 +598,8 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		var/list/job_outfits = list()
 		for(var/path in job_paths)
 			var/datum/outfit/O = path
-			job_outfits[initial(O.name)] = path
+			if(initial(O.can_be_admin_equipped))
+				job_outfits[initial(O.name)] = path
 
 		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in job_outfits
 		dresscode = job_outfits[dresscode]

@@ -4,6 +4,11 @@
 	baseturf = /turf/open/space/transit
 	flags = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 
+/turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	. = ..()
+	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
+	underlay_appearance.transform = turn(matrix(), get_transit_angle(asking_turf))
+
 /turf/open/space/transit/south
 	dir = SOUTH
 
@@ -59,7 +64,8 @@
 	AM.newtonian_move(dir)
 
 /turf/open/space/transit/CanBuildHere()
-	return istype(get_area(src), /area/shuttle)
+	return SSshuttle.is_in_shuttle_bounds(src)
+
 
 /turf/open/space/transit/Initialize()
 	..()
@@ -68,25 +74,32 @@
 		throw_atom(AM)
 
 /turf/open/space/transit/proc/update_icon()
-	var/p = 9
-	var/angle = 0
-	var/state = 1
-	switch(dir)
-		if(NORTH)
-			angle = 180
-			state = ((-p*x+y) % 15) + 1
-			if(state < 1)
-				state += 15
-		if(EAST)
-			angle = 90
-			state = ((x+p*y) % 15) + 1
-		if(WEST)
-			angle = -90
-			state = ((x-p*y) % 15) + 1
-			if(state < 1)
-				state += 15
-		else
-			state =	((p*x+y) % 15) + 1
+	icon_state = "speedspace_ns_[get_transit_state(src)]"
+	transform = turn(matrix(), get_transit_angle(src))
 
-	icon_state = "speedspace_ns_[state]"
-	transform = turn(matrix(), angle)
+/proc/get_transit_state(turf/T)
+	var/p = 9
+	. = 1
+	switch(T.dir)
+		if(NORTH)
+			. = ((-p*T.x+T.y) % 15) + 1
+			if(. < 1)
+				. += 15
+		if(EAST)
+			. = ((T.x+p*T.y) % 15) + 1
+		if(WEST)
+			. = ((T.x-p*T.y) % 15) + 1
+			if(. < 1)
+				. += 15
+		else
+			. = ((p*T.x+T.y) % 15) + 1
+
+/proc/get_transit_angle(turf/T)
+	. = 0
+	switch(T.dir)
+		if(NORTH)
+			. = 180
+		if(EAST)
+			. = 90
+		if(WEST)
+			. = -90

@@ -4,7 +4,7 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	obj_damage = 30
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	response_help = "pokes"
@@ -215,7 +215,7 @@
 	ranged_cooldown = 0
 	ranged_cooldown_time = 20
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
@@ -255,10 +255,8 @@
 	addtimer(CALLBACK(src, .proc/inert_check), 2400)
 
 /obj/item/organ/hivelord_core/proc/inert_check()
-	if(!owner && !preserved)
+	if(!preserved)
 		go_inert()
-	else
-		preserved(implanted = 1)
 
 /obj/item/organ/hivelord_core/proc/preserved(implanted = 0)
 	inert = FALSE
@@ -278,7 +276,10 @@
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
-	owner.revive(full_heal = 1)
+	if(inert)
+		to_chat(owner, "<span class='notice'>[src] breaks down as it tries to activate.</span>")
+	else
+		owner.revive(full_heal = 1)
 	qdel(src)
 
 /obj/item/organ/hivelord_core/on_life()
@@ -305,6 +306,18 @@
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
+
+/obj/item/organ/hivelord_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(!preserved && !inert)
+		preserved(TRUE)
+		owner.visible_message("<span class='notice'>[src] stabilizes as it's inserted.</span>")
+
+/obj/item/organ/hivelord_core/Remove(mob/living/carbon/M, special = 0)
+	if(!inert && !special)
+		owner.visible_message("<span class='notice'>[src] goes inert as it's removed.</span>")
+		go_inert()
+	return ..()
 
 /obj/item/organ/hivelord_core/prepare_eat()
 	return null
@@ -334,7 +347,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE
 	del_on_death = 1
 
@@ -595,7 +608,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
@@ -640,7 +653,7 @@
 	minimum_distance = 1
 	move_to_delay = 6
 	transform *= 2
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
 	addtimer(CALLBACK(src, .proc/Deflate), 100)
@@ -660,7 +673,7 @@
 		move_to_delay = 2
 		transform /= 2
 		inflate_cooldown = 4
-		environment_smash = 0
+		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL
 		speed = 0
 
@@ -800,11 +813,12 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	var/can_infest_dead = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
 	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == UNCONSCIOUS)
+			if(H.stat == UNCONSCIOUS || (can_infest_dead && H.stat == DEAD))
 				infest(H)
 	..()
 
@@ -817,6 +831,62 @@
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)
+
+//Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
+	stat_attack = 2
+	maxHealth = 120
+	health = 120
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+	icon_state = "dwarf_legion"
+	icon_living = "dwarf_legion"
+	icon_aggro = "dwarf_legion"
+	icon_dead = "dwarf_legion"
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+	stat_attack = 2
+	can_infest_dead = TRUE
+
+//Legion that spawns Legions
+
+/mob/living/simple_animal/hostile/spawner/legion
+	name = "legion"
+	desc = "One of many."
+	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon_state = "legion"
+	icon_living = "legion"
+	icon_dead = "legion"
+	health = 450
+	maxHealth = 450
+	max_mobs = 3
+	spawn_time = 200
+	spawn_text = "peels itself off from"
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	anchored = FALSE
+	AIStatus = AI_ON
+	stop_automated_movement = FALSE
+	wander = TRUE
+	maxbodytemp = INFINITY
+	layer = MOB_LAYER
+	del_on_death = TRUE
+	sentience_type = SENTIENCE_BOSS
+	loot = list(/obj/item/organ/hivelord_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged = 5)
+	move_to_delay = 14
+	vision_range = 5
+	aggro_vision_range = 9
+	idle_vision_range = 5
+	speed = 3
+	faction = list("mining")
+	weather_immunities = list("lava","ash")
+	obj_damage = 30
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+//Organ
 
 /obj/item/organ/hivelord_core/legion
 	name = "legion's soul"
@@ -871,7 +941,7 @@
 	speak_chance = 1
 	turns_per_move = 8
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	move_to_delay = 15
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -971,6 +1041,11 @@
 		regenerate_icons()
 
 //Nests
+/obj/effect/light_emitter/tendril
+	set_luminosity = 4
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_LAVA
+
 /mob/living/simple_animal/hostile/spawner/lavaland
 	name = "necropolis tendril"
 	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
@@ -980,7 +1055,6 @@
 	icon_dead = "tendril"
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
-	luminosity = 1
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
@@ -993,9 +1067,17 @@
 	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
 	var/gps = null
+	var/obj/effect/light_emitter/tendril/emitted_light
+
+/mob/living/simple_animal/hostile/spawner/lavaland/goliath
+	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+
+/mob/living/simple_animal/hostile/spawner/lavaland/legion
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
-	..()
+	. = ..()
+	emitted_light = new(loc)
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
@@ -1003,7 +1085,8 @@
 	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
-	qdel(gps)
+	QDEL_NULL(emitted_light)
+	QDEL_NULL(gps)
 	. = ..()
 
 #define MEDAL_PREFIX "Tendril"
@@ -1030,29 +1113,31 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	luminosity = 1
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_OBJ_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
+	density = TRUE
+	var/obj/effect/light_emitter/tendril/emitted_light
 
-/obj/effect/collapse/New()
-	..()
+/obj/effect/collapse/Initialize()
+	. = ..()
+	emitted_light = new(loc)
 	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
 	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
-	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
-	spawn(50)
-		for(var/mob/M in range(7,src))
-			shake_camera(M, 15, 1)
-		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
-		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
-		for(var/turf/T in range(2,src))
-			if(!T.density)
-				T.TerraformTurf(/turf/open/chasm/straight_down/lava_land_surface)
-		qdel(src)
+	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
+	addtimer(CALLBACK(src, .proc/collapse), 50)
 
-/mob/living/simple_animal/hostile/spawner/lavaland/goliath
-	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+/obj/effect/collapse/Destroy()
+	QDEL_NULL(emitted_light)
+	return ..()
 
-/mob/living/simple_animal/hostile/spawner/lavaland/legion
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
+/obj/effect/collapse/proc/collapse()
+	for(var/mob/M in range(7,src))
+		shake_camera(M, 15, 1)
+	playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
+	visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
+	for(var/turf/T in range(2,src))
+		if(!T.density)
+			T.TerraformTurf(/turf/open/chasm/straight_down/lava_land_surface)
+	qdel(src)

@@ -459,8 +459,7 @@
 			var/datum/game_mode/nuclear/NM = SSticker.mode
 			NM.nukes_left --
 		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			spawn()
-				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
+			SSticker.Reboot("Station destroyed by Nuclear Device.", "nuke - unhandled ending")
 
 
 /*

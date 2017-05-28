@@ -20,7 +20,7 @@
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = 2
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/list/edibles = list(/mob/living/simple_animal/butterfly,/mob/living/simple_animal/cockroach) //list of atoms, however turfs won't affect AI, but will affect consumption.
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
