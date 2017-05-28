@@ -25,10 +25,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 0
-	required_enemies = 0
-	recommended_enemies = 0
-	enemy_minimum_age = 0
+	required_players = 20
+	required_enemies = 2
+	recommended_enemies = 2
+	enemy_minimum_age = 14
 	var/turf/target_armory
 	var/turf/target_equipment
 	var/turf/target_brig
