@@ -2,10 +2,12 @@
 	name = "Traitor"
 	var/employer = "The Syndicate" 
 	var/give_objectives = TRUE
+	var/should_give_codewords = TRUE
 
 /datum/antagonist/traitor/custom //used to give custom objectives
 	silent = TRUE
 	give_objectives = FALSE
+	should_give_codewords = FALSE
 
 /datum/antagonist/traitor/on_gain()
 	SSticker.mode.traitors+=owner
@@ -133,7 +135,8 @@
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
 	owner.announce_objectives()
-	give_codewords()
+	if(should_give_codewords)
+		give_codewords()
 
 /datum/antagonist/traitor/proc/finalize_traitor()
 	if(issilicon(owner.current))
@@ -167,7 +170,6 @@
 	var/law = "Accomplish your objectives at all costs."
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 	killer.set_zeroth_law(law, law_borg)
-	give_codewords(killer)
 	killer.set_syndie_radio()
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 	killer.add_malf_picker()

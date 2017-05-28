@@ -23,11 +23,11 @@
 
 /datum/game_mode/traitor/internal_affairs/post_setup()
 	var/i = 0
-	for(var/datum/mind/traitor in traitors)
+	for(var/datum/mind/traitor in pre_traitors)
 		i++
-		if(i + 1 > traitors.len)
+		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = traitors[i+1]	
+		target_list[traitor] = pre_traitors[i+1]	
 	..()
 
 

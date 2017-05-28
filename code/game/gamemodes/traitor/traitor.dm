@@ -22,6 +22,7 @@
 	<span class='danger'>Traitors</span>: Accomplish your objectives.\n\
 	<span class='notice'>Crew</span>: Do not let the traitors succeed!"
 
+	var/list/datum/mind/pre_traitors = list()
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
@@ -46,23 +47,22 @@
 		if (!antag_candidates.len)
 			break
 		var/datum/mind/traitor = pick(antag_candidates)
-		traitors += traitor
+		pre_traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
 
-	if(traitors.len < required_enemies)
+	if(pre_traitors.len < required_enemies)
 		return 0
 	return 1
 
 
 /datum/game_mode/traitor/post_setup()
-	for(var/datum/mind/traitor in traitors)
+	for(var/datum/mind/traitor in pre_traitors)
 		spawn(rand(10,100))
-			var/datum/antagonist/traitor/traitordatum = traitor.add_antag_datum(antag_datum)
-			traitordatum.finalize_traitor()
+			traitor.add_antag_datum(antag_datum)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
