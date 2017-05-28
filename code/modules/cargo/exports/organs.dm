@@ -67,7 +67,7 @@
 /datum/export/organ/hivelord
 	cost = 1500
 	unit_name = "active hivelord core"
-	export_types = list(/obj/item/organ/hivelord_core)
+	export_types = list(/obj/item/organ/regenerative_core)
 
 /datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/hivelord_core/C)
 	if(C.inert)
