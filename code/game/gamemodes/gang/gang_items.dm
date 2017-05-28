@@ -106,7 +106,6 @@
 			we++
 		else
 			rival++
-			world << "[M.current] is being added as rival"
 	cost += max(-50, round((we/(rival+we))*100 - 33) * 2)
 	return cost
 

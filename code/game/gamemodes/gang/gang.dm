@@ -25,10 +25,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
-	required_players = 20
-	required_enemies = 2
-	recommended_enemies = 2
-	enemy_minimum_age = 14
+	required_players = 0
+	required_enemies = 0
+	recommended_enemies = 0
+	enemy_minimum_age = 0
 	var/turf/target_armory
 	var/turf/target_equipment
 	var/turf/target_brig
@@ -42,18 +42,31 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
-		//for blowing up the armory
+
+
+	//turn off sec and captain
+	SSjob.DisableJob(/datum/job/captain)
+	SSjob.DisableJob(/datum/job/hop)
+	SSjob.DisableJob(/datum/job/hos)
+	SSjob.DisableJob(/datum/job/warden)
+	SSjob.DisableJob(/datum/job/detective)
+	SSjob.DisableJob(/datum/job/officer)
+	SSjob.DisableJob(/datum/job/lawyer)
+	SSjob.DisableJob(/datum/job/ai)
+	SSjob.DisableJob(/datum/job/cyborg)
+
+	//for blowing up the armory
 	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
 		target_armory = pick(get_area_turfs(A))
 		if(target_armory)
 			break
 
-	for(var/area/ai_monitored/security/brig in GLOB.sortedAreas)
+	for(var/area/security/brig in GLOB.sortedAreas)
 		target_equipment = pick(get_area_turfs(brig))
 		if(target_equipment)
 			break
 
-	for(var/area/security/main/C in GLOB.sortedAreas)
+	for(var/area/crew_quarters/heads/hos/C in GLOB.sortedAreas)
 		target_brig  = pick(get_area_turfs(C))
 		if(target_brig)
 			break
@@ -92,8 +105,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			boss.restricted_roles = restricted_jobs
 			log_game("[boss.key] has been selected as the [title] for the [G.name] Gang")
 
-	if(gangs.len < 2) //Need at least two gangs
-		return 0
+	//if(gangs.len < 2) //Need at least two gangs
+	//	return 0
 
 	return 1
 
@@ -101,29 +114,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/gang/post_setup()
 	set waitfor = FALSE
 	..()
-	sleep(rand(10,100))
-	for(var/datum/gang/G in gangs)
-		for(var/datum/mind/boss_mind in G.bosses)
-			G.add_gang_hud(boss_mind)
-			forge_gang_objectives(boss_mind)
-			greet_gang(boss_mind)
-			equip_gang(boss_mind.current,G)
-			modePlayer += boss_mind
-
-
-	//turn off sec and captain
-	SSjob.DisableJob(/datum/job/captain)
-	SSjob.DisableJob(/datum/job/hop)
-	SSjob.DisableJob(/datum/job/hos)
-	SSjob.DisableJob(/datum/job/warden)
-	SSjob.DisableJob(/datum/job/detective)
-	SSjob.DisableJob(/datum/job/officer)
-	SSjob.DisableJob(/datum/job/lawyer)
-	SSjob.DisableJob(/datum/job/ai)
-	SSjob.DisableJob(/datum/job/cyborg)
-
 	gangpocalypse()
-
 	return 1
 
 /datum/game_mode/gang/proc/gangpocalypse()
@@ -132,7 +123,6 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
 			bosses += boss_mind
-			//var/msg = "<span class='danger'>You are a local leader for the [G.name] gang, with security gone this station is ripe for the taking!"
 			forge_gang_objectives(boss_mind)
 			greet_gang(boss_mind)
 			G.add_gang_hud(boss_mind)
