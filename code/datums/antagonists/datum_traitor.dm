@@ -19,9 +19,9 @@
 	..()
 
 /datum/antagonist/traitor/on_removal()
-	SSticker.mode.traitors-=owner
+	SSticker.mode.traitors -= owner
 	if(owner.current && isAI(owner.current))
-		var/mob/living/silicon/ai/A = current
+		var/mob/living/silicon/ai/A = owner.current
 		A.set_zeroth_law("")
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_verbs(A)
