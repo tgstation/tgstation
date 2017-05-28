@@ -190,4 +190,4 @@
 	description = "A Marine	 Transport that has crashed, with one sole survivor"
 	suffix = "lavaland_surface_ueg_crash1.dmm"
 	allow_duplicates = FALSE
-	cost = 20
+	cost = 5
