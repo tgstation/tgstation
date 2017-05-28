@@ -253,7 +253,7 @@ update_label("John Doe", "Clowny")
 	name = "\improper Marine ID"
 	desc = "A Marine Rifleman ID card"
 	icon_state = "centcom"
-	registered_name = "Marine Rifleman"
+	registered_name = "Iron Hawk Marine"
 	assignment = "Marine Rifleman"
 
 /obj/item/weapon/card/id/marine/Initialize()
