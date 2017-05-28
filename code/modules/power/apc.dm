@@ -214,6 +214,7 @@
 						// 1 if we need to update the icon_state
 						// 2 if we need to update the overlays
 	if(!update)
+		icon_update_needed = FALSE
 		return
 
 	if(update & 1) // Updating the icon state
@@ -268,6 +269,8 @@
 		set_light(lon_range)
 	else
 		set_light(0)
+
+	icon_update_needed = FALSE
 
 /obj/machinery/power/apc/proc/check_updates()
 	var/last_update_state = update_state
