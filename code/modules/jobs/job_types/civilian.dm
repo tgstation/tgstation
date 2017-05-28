@@ -99,6 +99,7 @@ Mime
 
 	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
+	ears = null // i'm a FUCKING MIME
 
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
