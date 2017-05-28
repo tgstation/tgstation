@@ -29,7 +29,7 @@
 	trophies = null
 	return ..()
 
-/obj/item/weapon/twohanded/required/mining_hammer/examine(mob/user)
+/obj/item/weapon/twohanded/required/mining_hammer/examine(mob/living/user)
 	..()
 	to_chat(user, "<span class='notice'>Mark a large creature with the destabilizing force, then hit them in melee to do <b>50</b> damage.</span>")
 	to_chat(user, "<span class='notice'>Does <b>80</b> damage if the target is backstabbed, instead of <b>50</b>.</span>")
@@ -37,7 +37,7 @@
 		var/obj/item/crusher_trophy/T = t
 		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
 
-/obj/item/weapon/twohanded/required/mining_hammer/attackby(obj/item/A, mob/user)
+/obj/item/weapon/twohanded/required/mining_hammer/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/weapon/crowbar))
 		if(LAZYLEN(trophies))
 			to_chat(user, "<span class='notice'>You remove [src]'s trophies.</span>")
@@ -57,10 +57,14 @@
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	var/target_health = target.health
 	..()
+	for(var/t in trophies)
+		if(!QDELETED(target))
+			var/obj/item/crusher_trophy/T = t
+			T.on_melee_hit(target, user)
 	if(!QDELETED(C) && !QDELETED(target))
 		C.total_damage += target_health - target.health //we did some damage, but let's not assume how much we did
 
-/obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/living/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
 		var/turf/proj_turf = user.loc
 		if(!isturf(proj_turf))
@@ -147,20 +151,20 @@
 	var/bonus_value = 10 //if it has a bonus effect, this is how much that effect is
 	var/denied_type = /obj/item/crusher_trophy
 
-/obj/item/crusher_trophy/examine(mob/user)
+/obj/item/crusher_trophy/examine(mob/living/user)
 	..()
 	to_chat(user, "<span class='notice'>Causes [effect_desc()] when attached to a kinetic crusher.</span>")
 
 /obj/item/crusher_trophy/proc/effect_desc()
 	return "errors"
 
-/obj/item/crusher_trophy/attackby(obj/item/A, mob/user)
+/obj/item/crusher_trophy/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/weapon/twohanded/required/mining_hammer))
 		add_to(A, user)
 	else
 		..()
 
-/obj/item/crusher_trophy/proc/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/user)
+/obj/item/crusher_trophy/proc/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
 	for(var/t in H.trophies)
 		var/obj/item/crusher_trophy/T = t
 		if(istype(T, denied_type) || istype(src, T.denied_type))
@@ -171,14 +175,15 @@
 	to_chat(user, "<span class='notice'>You attach [src] to [H].</span>")
 	return TRUE
 
-/obj/item/crusher_trophy/proc/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/user)
+/obj/item/crusher_trophy/proc/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
 	forceMove(get_turf(H))
 	H.trophies -= src
 	return TRUE
 
-/obj/item/crusher_trophy/proc/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/user) //the projectile fired and the user
+/obj/item/crusher_trophy/proc/on_melee_hit(mob/living/target, mob/living/user) //the target and the user
+/obj/item/crusher_trophy/proc/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/living/user) //the projectile fired and the user
 /obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark) //the target, the mark applied, and if the target had a mark before
-/obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/user) //the target and the user
+/obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike
@@ -189,7 +194,7 @@
 /obj/item/crusher_trophy/tail_spike/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> damage to nearby creatures and push them back"
 
-/obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/user)
+/obj/item/crusher_trophy/tail_spike/on_mark_detonation(mob/living/target, mob/living/user)
 	for(var/mob/living/L in oview(2, user))
 		if(L.stat == DEAD)
 			continue
@@ -198,7 +203,7 @@
 		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustBruteLoss(bonus_value)
 
-/obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/user)
+/obj/item/crusher_trophy/tail_spike/proc/pushback(mob/living/target, mob/living/user)
 	if(!target.anchored || ismegafauna(target)) //megafauna will always be pushed
 		step(target, get_dir(user, target))
 
@@ -209,13 +214,32 @@
 	icon_state = "demon_claws"
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/demon_claws
-	bonus_value = 15
+	bonus_value = 10
+	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
 /obj/item/crusher_trophy/demon_claws/effect_desc()
-	return "mark detonation to do <b>[bonus_value]</b> more damage"
+	return "melee hits to do <b>[bonus_value * 0.2]</b> more damage and heal you for <b>[bonus_value * 0.1]</b>; this effect is increased by <b>500%</b> during mark detonation"
 
-/obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/user)
-	target.adjustBruteLoss(bonus_value)
+/obj/item/crusher_trophy/demon_claws/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.force += bonus_value * 0.2
+		H.force_unwielded += bonus_value * 0.2
+		H.force_wielded += bonus_value * 0.2
+
+/obj/item/crusher_trophy/demon_claws/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.force -= bonus_value * 0.2
+		H.force_unwielded -= bonus_value * 0.2
+		H.force_wielded -= bonus_value * 0.2
+
+/obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
+	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)
+
+/obj/item/crusher_trophy/demon_claws/on_mark_detonation(mob/living/target, mob/living/user)
+	target.adjustBruteLoss(bonus_value * 0.8)
+	user.heal_ordered_damage(bonus_value * 0.4, damage_heal_order)
 
 //colossus
 /obj/item/crusher_trophy/blaster_tubes
@@ -224,13 +248,13 @@
 	icon_state = "blaster_tubes"
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/blaster_tubes
+	bonus_value = 15
 	var/deadly_shot = FALSE
-	bonus_value = 20
 
 /obj/item/crusher_trophy/blaster_tubes/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage but move slower"
 
-/obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/user)
+/obj/item/crusher_trophy/blaster_tubes/on_projectile_fire(obj/item/projectile/destabilizer/marker, mob/living/user)
 	if(deadly_shot)
 		marker.name = "deadly [marker.name]"
 		marker.icon_state = "chronobolt"
@@ -239,7 +263,7 @@
 		marker.speed = 2
 		deadly_shot = FALSE
 
-/obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/user)
+/obj/item/crusher_trophy/blaster_tubes/on_mark_detonation(mob/living/target, mob/living/user)
 	deadly_shot = TRUE
 	addtimer(CALLBACK(src, .proc/reset_deadly_shot), 300, TIMER_OVERRIDE)
 
@@ -256,7 +280,7 @@
 /obj/item/crusher_trophy/vortex_talisman/effect_desc()
 	return "mark detonation to create a barrier you can pass"
 
-/obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/user)
+/obj/item/crusher_trophy/vortex_talisman/on_mark_detonation(mob/living/target, mob/living/user)
 	var/turf/T = get_turf(user)
 	new /obj/effect/temp_visual/hierophant/wall/crusher(T, user) //a wall only you can pass!
 	var/turf/otherT = get_step(T, turn(user.dir, 90))
