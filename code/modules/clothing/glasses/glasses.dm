@@ -39,8 +39,8 @@
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
-	var/static/list/meson_mining_failure_excuses = list("seismic activity", "excessive lava", "ambient radiation", "electromagnetic storms", "bluespace disruption", \
-	"gravity", "dust", "dense rock", "ash", "badly understood science", "radiant heat")
+	var/static/list/meson_mining_failure_excuses = list("ambient radiation", "seismic activity", "extreme weather", "excessive lava", "volcanic ash", "radiant heat", "dense rock", "gravity", "dust", \
+	"damaged meson generators", "badly understood science", "electromagnetic storms", "bluespace disruption", "ancient structures", "a loose wire", "strange signals", "giant monsters", "alien life")
 	var/picked_excuse
 	var/mesons_on = TRUE
 
