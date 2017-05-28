@@ -1,6 +1,5 @@
 /datum/game_mode
 	var/traitor_name = "traitor"
-	var/employer = "The Syndicate"
 	var/list/datum/mind/traitors = list()
 
 	var/datum/mind/exchange_red
@@ -25,6 +24,7 @@
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
+	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -60,7 +60,9 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		traitor.add_antag_datum(ANTAG_DATUM_TRAITOR)
+		spawn(rand(10,100))
+			var/datum/antagonist/traitor/traitordatum = traitor.add_antag_datum(antag_datum)
+			traitordatum.finalize_traitor()
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
@@ -146,6 +148,69 @@
 		to_chat(world, text)
 
 	return 1
+
+/datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob,var/employer = "The Syndicate")
+	if (!istype(traitor_mob))
+		return
+	. = 1
+	if (traitor_mob.mind)
+		if (traitor_mob.mind.assigned_role == "Clown")
+			to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+			traitor_mob.dna.remove_mutation(CLOWNMUT)
+
+	var/list/all_contents = traitor_mob.GetAllContents()
+	var/obj/item/device/pda/PDA = locate() in all_contents
+	var/obj/item/device/radio/R = locate() in all_contents
+	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
+
+	var/obj/item/uplink_loc
+
+	if(traitor_mob.client && traitor_mob.client.prefs)
+		switch(traitor_mob.client.prefs.uplink_spawn_loc)
+			if(UPLINK_PDA)
+				uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = R
+				if(!uplink_loc)
+					uplink_loc = P
+			if(UPLINK_RADIO)
+				uplink_loc = R
+				if(!uplink_loc)
+					uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = P
+			if(UPLINK_PEN)
+				uplink_loc = P
+				if(!uplink_loc)
+					uplink_loc = PDA
+				if(!uplink_loc)
+					uplink_loc = R
+
+	if (!uplink_loc)
+		to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
+		. = 0
+	else
+		var/obj/item/device/uplink/U = new(uplink_loc)
+		U.owner = "[traitor_mob.key]"
+		uplink_loc.hidden_uplink = U
+
+		if(uplink_loc == R)
+			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
+
+			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
+
+		else if(uplink_loc == PDA)
+			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+
+			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
+
+		else if(uplink_loc == P)
+			P.traitor_unlock_degrees = rand(1, 360)
+
+			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
 
 
 

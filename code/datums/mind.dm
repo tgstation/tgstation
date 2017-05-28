@@ -186,13 +186,7 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		SSticker.mode.traitors -= src
-		if(isAI(current))
-			var/mob/living/silicon/ai/A = current
-			A.set_zeroth_law("")
-			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-			A.malf_picker.remove_verbs(A)
-			qdel(A.malf_picker)
+		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	special_role = null
 	remove_antag_equip()
 	SSticker.mode.update_traitor_icons_removed(src)
@@ -1164,19 +1158,22 @@
 
 			if("traitor")
 				if(!(src in SSticker.mode.traitors))
-					SSticker.mode.traitors += src
-					special_role = "traitor"
-					to_chat(current, "<span class='boldannounce'>You are a traitor!</span>")
 					message_admins("[key_name_admin(usr)] has traitor'ed [current].")
 					log_admin("[key_name(usr)] has traitor'ed [current].")
-					if(isAI(current))
-						var/mob/living/silicon/ai/A = current
-						SSticker.mode.add_law_zero(A)
-					SSticker.mode.update_traitor_icons_added(src)
+					make_Traitor()
 
 			if("autoobjectives")
-				SSticker.mode.forge_traitor_objectives(src)
-				to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+				if(!(src in SSticker.mode.traitors))
+					message_admins("[key_name_admin(usr)] has traitor'ed [current] as part of autoobjectives.")
+					log_admin("[key_name(usr)] has traitor'ed [current] as part of autoobjectives.")
+					make_Traitor()
+				else
+					var/datum/antagonist/traitor/traitordatum = has_antag_datum(ANTAG_DATUM_TRAITOR)
+					if(!traitordatum)
+						message_admins("Could not generate objectives for [current] with mind [src] - they have no traitor datum despite being in SSticker.mode.traitors! This is a bug.")
+					else
+						traitordatum.forge_traitor_objectives()
+						to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
@@ -1353,7 +1350,7 @@
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("uplink")
-				if(!SSticker.mode.equip_traitor(current, !(src in SSticker.mode.traitors)))
+				if(!SSticker.mode.equip_traitor(current))
 					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
@@ -1384,7 +1381,9 @@
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in SSticker.mode.traitors))
-		add_antag_datum(ANTAG_DATUM_TRAITOR)
+		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
+		return traitordatum
+		
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))

@@ -6,3 +6,6 @@
 #define ANTAG_DATUM_NINJA				/datum/antagonist/ninja
 #define ANTAG_DATUM_NINJA_FRIENDLY		/datum/antagonist/ninja/friendly
 #define ANTAG_DATUM_NINJA_RANDOM		/datum/antagonist/ninja/randomAllegiance/
+#define ANTAG_DATUM_TRAITOR 			/datum/antagonist/traitor
+#define ANTAG_DATUM_TRAITOR_CUSTOM 		/datum/antagonist/traitor/custom
+#define ANTAG_DATUM_IAA				/datum/antagonist/traitor/internal_affairs

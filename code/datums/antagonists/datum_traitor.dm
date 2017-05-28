@@ -1,17 +1,30 @@
 /datum/antagonist/traitor
 	name = "Traitor"
+	var/employer = "The Syndicate" 
+	var/give_objectives = TRUE
+
+/datum/antagonist/traitor/custom //used to give custom objectives
+	silent = TRUE
+	give_objectives = FALSE
 
 /datum/antagonist/traitor/on_gain()
-	forge_traitor_objectives()
-	addMemories()
-	.=..()
+	SSticker.mode.traitors+=owner
+	if(give_objectives)
+		forge_traitor_objectives()
+	finalize_traitor()
+	..()
+
+/datum/antagonist/traitor/on_removal()
+	SSticker.mode.traitors-=owner
+	..()
+
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	if(issilicon(owner.current))
 		var/objective_count = 0
 
 		if(prob(30))
-			objective_count+=forge_single_objective(owner)
+			objective_count+=forge_single_objective()
 
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			var/datum/objective/assassinate/kill_objective = new
@@ -27,16 +40,16 @@
 		var/is_hijacker = prob(10)
 		var/martyr_chance = prob(20)
 		var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-		if(!exchange_blue && traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-			if(!exchange_red)
-				exchange_red = owner
+		if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
+			if(!SSticker.mode.exchange_red)
+				SSticker.mode.exchange_red = owner
 			else
-				exchange_blue = owner
-				assign_exchange_role(exchange_red)
-				assign_exchange_role(exchange_blue)
+				SSticker.mode.exchange_blue = owner
+				assign_exchange_role(SSticker.mode.exchange_red)
+				assign_exchange_role(SSticker.mode.exchange_blue)
 			objective_count += 1					//Exchange counts towards number of objectives
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-			forge_single_objective(owner)
+			forge_single_objective()
 
 		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 			if (!(locate(/datum/objective/hijack) in owner.objectives))
@@ -117,10 +130,10 @@
 			steal_objective.find_target()
 			owner.objectives += steal_objective
 
-/datum/antagonist/traitor/proc/greet()
-	to_chat(traitor.current, "<B><font size=3 color=red>You are the [traitor_name].</font></B>")
-	traitor.announce_objectives()
-	return
+/datum/antagonist/traitor/greet()
+	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
+	owner.announce_objectives()
+	give_codewords()
 
 /datum/antagonist/traitor/proc/finalize_traitor()
 	if(issilicon(owner.current))
@@ -128,7 +141,7 @@
 		owner.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
 		owner.current.grant_language(/datum/language/codespeak)
 	else
-		equip_traitor()
+		equip()
 		owner.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
 	SSticker.mode.update_traitor_icons_added(owner)
 	return
@@ -159,82 +172,18 @@
 	to_chat(killer, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")
 	killer.add_malf_picker()
 
-/datum/antagonist/traitor/proc/equip(safety = 0)
-	var/mob/living/human/traitor_mob = owner.current
-	if (!traitor_mob||!istype(traitor_mob))
-		return
-	. = 1
-	if (traitor_mob.mind)
-		if (traitor_mob.mind.assigned_role == "Clown")
-			to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			traitor_mob.dna.remove_mutation(CLOWNMUT)
-
-	var/list/all_contents = traitor_mob.GetAllContents()
-	var/obj/item/device/pda/PDA = locate() in all_contents
-	var/obj/item/device/radio/R = locate() in all_contents
-	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
-
-	var/obj/item/uplink_loc
-
-	if(traitor_mob.client && traitor_mob.client.prefs)
-		switch(traitor_mob.client.prefs.uplink_spawn_loc)
-			if(UPLINK_PDA)
-				uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
-				if(!uplink_loc)
-					uplink_loc = P
-			if(UPLINK_RADIO)
-				uplink_loc = R
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = P
-			if(UPLINK_PEN)
-				uplink_loc = P
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
-
-	if (!uplink_loc)
-		to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
-		. = 0
-	else
-		var/obj/item/device/uplink/U = new(uplink_loc)
-		U.owner = "[traitor_mob.key]"
-		uplink_loc.hidden_uplink = U
-
-		if(uplink_loc == R)
-			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
-
-			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
-
-		else if(uplink_loc == PDA)
-			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
-
-			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
-
-		else if(uplink_loc == P)
-			P.traitor_unlock_degrees = rand(1, 360)
-
-			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
-
-	if(!safety) // If they are not a rev. Can be added on to.
-		give_codewords(traitor_mob)
+/datum/antagonist/traitor/proc/equip(safety = 0, employer)
+	SSticker.mode.equip_traitor(owner.current)
 
 /datum/antagonist/traitor/proc/assign_exchange_role()
 	//set faction
 	var/faction = "red"
-	if(owner == exchange_blue)
+	if(owner == SSticker.mode.exchange_blue)
 		faction = "blue"
 
 	//Assign objectives
 	var/datum/objective/steal/exchange/exchange_objective = new
-	exchange_objective.set_faction(faction,((faction == "red") ? exchange_blue : exchange_red))
+	exchange_objective.set_faction(faction,((faction == "red") ? SSticker.mode.exchange_blue : SSticker.mode.exchange_red))
 	exchange_objective.owner = owner
 	owner.objectives += exchange_objective
 
@@ -248,7 +197,7 @@
 	var/mob/living/carbon/human/mob = owner.current
 
 	var/obj/item/weapon/folder/syndicate/folder
-	if(owner == exchange_red)
+	if(owner == SSticker.mode.exchange_red)
 		folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
 	else
 		folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
