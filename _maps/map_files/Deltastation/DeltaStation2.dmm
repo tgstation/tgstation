@@ -300,9 +300,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -2119,7 +2117,6 @@
 "aeC" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/structure/rack,
@@ -3094,7 +3091,6 @@
 "agO" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -3212,7 +3208,6 @@
 "ahc" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3858,7 +3853,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -3868,7 +3862,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/bot,
@@ -4834,9 +4827,7 @@
 "ale" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
@@ -5907,7 +5898,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/item/weapon/storage/secure/briefcase,
@@ -5945,7 +5935,6 @@
 /obj/effect/landmark/start/assistant,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/grimy,
@@ -5993,7 +5982,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/red/side{
@@ -6219,9 +6207,7 @@
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/light_switch{
 	pixel_y = -26
@@ -6796,7 +6782,6 @@
 "aps" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/structure/table/wood,
@@ -7839,7 +7824,6 @@
 /obj/item/device/geiger_counter,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/cable{
@@ -8490,6 +8474,9 @@
 "asz" = (
 /obj/structure/table_frame/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asA" = (
@@ -8517,6 +8504,9 @@
 /obj/structure/table/wood,
 /obj/item/device/camera_film,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/wood,
 /area/maintenance/port/fore)
 "asE" = (
@@ -9622,9 +9612,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/item/weapon/storage/box/lights/mixed{
 	pixel_x = 3;
@@ -9711,7 +9699,6 @@
 "avm" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/cable/white{
@@ -10248,9 +10235,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -11058,10 +11043,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics/garden/abandoned)
@@ -12149,6 +12131,9 @@
 /area/hallway/secondary/service)
 "aAq" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/service)
 "aAr" = (
@@ -12528,6 +12513,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	locked = 0;
+	name = "Engine Air Alarm";
 	pixel_y = 23;
 	req_access = null;
 	req_one_access_txt = "24;10"
@@ -12899,7 +12885,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -14889,6 +14874,9 @@
 /obj/structure/table/wood,
 /obj/item/weapon/folder,
 /obj/item/weapon/pen,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
 "aFq" = (
@@ -15225,7 +15213,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -15569,7 +15556,6 @@
 "aGR" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/newscaster{
@@ -16074,7 +16060,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -16198,7 +16183,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -16218,7 +16202,6 @@
 "aIg" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -16307,7 +16290,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -17088,7 +17070,6 @@
 "aKb" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -18468,7 +18449,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -19583,9 +19563,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -20819,7 +20797,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/camera{
@@ -20964,7 +20941,6 @@
 /obj/machinery/vending/autodrobe,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -21907,7 +21883,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -22853,7 +22828,6 @@
 /obj/structure/closet/wardrobe/cargotech,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -22947,7 +22921,6 @@
 "aVq" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -23745,7 +23718,6 @@
 /obj/machinery/autolathe,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/firealarm{
@@ -23985,7 +23957,6 @@
 "aXr" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -25255,7 +25226,6 @@
 /obj/item/weapon/hand_labeler,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/bot,
@@ -25865,7 +25835,6 @@
 "bbl" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/item/device/radio/intercom{
@@ -27896,7 +27865,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/bot,
@@ -29137,9 +29105,7 @@
 /obj/machinery/computer/stockexchange,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -29254,7 +29220,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/delivery,
@@ -30039,9 +30004,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -32523,7 +32486,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -32670,7 +32632,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -33253,7 +33214,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -33767,7 +33727,6 @@
 /obj/machinery/disposal/bin,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -34458,7 +34417,6 @@
 "bsv" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/visible,
@@ -35299,7 +35257,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/item/weapon/wrench,
@@ -37438,7 +37395,6 @@
 /obj/item/weapon/storage/belt/champion,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light/small,
@@ -38024,7 +37980,6 @@
 "byV" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -38048,7 +38003,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/caution,
@@ -38760,7 +38714,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/red/side,
@@ -40004,7 +39957,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
@@ -40480,7 +40432,6 @@
 "bDc" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -40802,7 +40753,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -41133,7 +41083,6 @@
 /obj/item/weapon/stock_parts/manipulator,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -43366,7 +43315,6 @@
 "bIF" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/wood,
@@ -43411,10 +43359,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 4
@@ -43541,7 +43486,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -44127,9 +44071,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -44805,9 +44747,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/flasher{
 	id = "AI";
@@ -45400,7 +45340,6 @@
 "bMT" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -46114,7 +46053,6 @@
 "bOn" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/camera{
@@ -46408,9 +46346,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/item/weapon/clipboard,
 /obj/item/toy/figure/warden,
@@ -46768,7 +46704,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -48230,7 +48165,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -48321,7 +48255,6 @@
 /obj/machinery/suit_storage_unit/ce,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -48417,7 +48350,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,
@@ -49428,7 +49360,6 @@
 /obj/item/weapon/cartridge/atmos,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -49505,9 +49436,7 @@
 /obj/machinery/light/small,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
@@ -49675,7 +49604,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/door/firedoor,
@@ -49953,7 +49881,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -50362,7 +50289,6 @@
 /obj/machinery/light,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault,
@@ -52793,7 +52719,6 @@
 /obj/structure/filingcabinet/employment,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/wood,
@@ -53503,7 +53428,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -54258,7 +54182,6 @@
 /obj/item/weapon/pen,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/wood,
@@ -54693,9 +54616,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/item/device/radio{
 	pixel_x = 5;
@@ -55634,6 +55555,9 @@
 /obj/item/weapon/tank/internals/emergency_oxygen/engi,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cgk" = (
@@ -55722,7 +55646,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -57002,7 +56925,6 @@
 /obj/machinery/light,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -57646,7 +57568,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/item/weapon/gun/energy/laser/practice{
@@ -58015,9 +57936,7 @@
 "clc" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -58124,7 +58043,6 @@
 /obj/machinery/light,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -58679,9 +58597,7 @@
 /obj/structure/table,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel/vault{
@@ -59832,6 +59748,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
 "cpc" = (
@@ -59901,7 +59821,6 @@
 /obj/item/toy/figure/curator,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/item/device/radio/intercom{
@@ -60249,7 +60168,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -61269,7 +61187,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -61510,7 +61427,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -61812,7 +61728,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -62382,7 +62297,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -62835,7 +62749,6 @@
 /obj/structure/filingcabinet,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/black,
@@ -63386,7 +63299,6 @@
 /obj/item/clothing/shoes/magboots,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/delivery,
@@ -64035,10 +63947,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
@@ -64074,10 +63983,7 @@
 /obj/item/clothing/under/kilt,
 /obj/item/clothing/head/beret,
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -64122,10 +64028,7 @@
 	},
 /obj/item/clothing/under/rank/curator/treasure_hunter,
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -64581,7 +64484,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/wood,
@@ -64807,7 +64709,6 @@
 "cyP" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -65152,7 +65053,6 @@
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -65355,7 +65255,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/table/reinforced,
@@ -65557,6 +65456,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/toilet/restrooms)
@@ -65797,9 +65700,7 @@
 /obj/item/weapon/folder,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -66240,7 +66141,6 @@
 "cBL" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
@@ -66342,7 +66242,6 @@
 "cBY" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -69144,7 +69043,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -70790,9 +70688,7 @@
 /obj/machinery/atmospherics/components/binary/valve,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -72082,6 +71978,9 @@
 	pixel_x = 32;
 	pixel_y = 32
 	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -72135,7 +72034,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -73097,7 +72995,6 @@
 /obj/item/clothing/head/kitty,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/wood,
@@ -73125,7 +73022,6 @@
 /obj/item/clothing/under/lawyer/female,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/carpet,
@@ -73154,7 +73050,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/grimy,
@@ -74264,7 +74159,6 @@
 "cSd" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -74290,7 +74184,6 @@
 /obj/item/device/assembly/signaler,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -74430,7 +74323,6 @@
 /obj/structure/bed/roller,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -74570,6 +74462,9 @@
 	c_tag = "Medbay - Break Room";
 	dir = 2;
 	name = "medbay camera"
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -75219,9 +75114,7 @@
 "cUl" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light{
@@ -75290,7 +75183,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -76535,7 +76427,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/delivery,
@@ -76851,9 +76742,7 @@
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -77140,8 +77029,7 @@
 "cXZ" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
@@ -77482,9 +77370,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
@@ -79935,10 +79821,7 @@
 	dir = 6
 	},
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -80242,7 +80125,6 @@
 /obj/item/weapon/hand_labeler,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -80678,7 +80560,6 @@
 "dfM" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black,
@@ -81177,9 +81058,7 @@
 /obj/item/weapon/stock_parts/matter_bin,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -81431,9 +81310,7 @@
 /obj/item/device/paicard,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -81504,9 +81381,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -82805,7 +82680,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/yellow/corner{
@@ -83195,7 +83069,6 @@
 /obj/machinery/recharger,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/light_switch{
@@ -83978,7 +83851,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -84679,7 +84551,6 @@
 "dov" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/mirror{
@@ -84996,7 +84867,6 @@
 "dpf" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/delivery,
@@ -86727,7 +86597,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
@@ -86778,9 +86647,7 @@
 /obj/structure/table/glass,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -87227,7 +87094,6 @@
 "dtw" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plating,
@@ -87701,9 +87567,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -88220,7 +88084,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -89127,7 +88990,6 @@
 /obj/structure/cable,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -89187,7 +89049,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plating,
@@ -89863,9 +89724,7 @@
 "dyJ" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/structure/table,
 /obj/structure/extinguisher_cabinet{
@@ -90084,9 +89943,7 @@
 "dzn" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
@@ -90288,7 +90145,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -90579,7 +90435,6 @@
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -92025,7 +91880,6 @@
 "dCZ" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -92673,6 +92527,10 @@
 "dEs" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office/private_investigators_office)
 "dEt" = (
@@ -92700,7 +92558,6 @@
 /obj/item/device/taperecorder,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -93974,7 +93831,6 @@
 "dHb" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
@@ -94237,6 +94093,10 @@
 "dHH" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -94602,9 +94462,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -95961,7 +95819,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plating,
@@ -97190,7 +97047,6 @@
 /obj/structure/table,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/microwave{
@@ -98305,9 +98161,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/wood,
 /area/library/abandoned)
@@ -98825,7 +98679,6 @@
 "dRO" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -98950,9 +98803,7 @@
 /obj/structure/table/glass,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -99899,7 +99750,6 @@
 "dTX" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel{
@@ -100426,7 +100276,6 @@
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -100964,7 +100813,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -100991,9 +100839,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
@@ -101170,7 +101016,6 @@
 "dWE" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -102535,7 +102380,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -103012,7 +102856,6 @@
 /obj/structure/closet/wardrobe/chaplain_black,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -103349,7 +103192,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -106003,10 +105845,7 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -106030,7 +105869,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -106177,7 +106015,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -106216,10 +106053,7 @@
 "ejs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/airalarm{
-	locked = 0;
-	pixel_y = 23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
@@ -106238,9 +106072,7 @@
 "eju" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
@@ -106273,6 +106105,40 @@
 	dir = 8
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
+"ejy" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel/brown,
+/area/maintenance/disposal)
+"ejz" = (
+/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
+"ejA" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 
 (1,1,1) = {"
 aaa
@@ -134692,7 +134558,7 @@ bWg
 cwo
 cxU
 czx
-cBl
+ejA
 cCF
 bWg
 cFi
@@ -137461,7 +137327,7 @@ awX
 aqg
 aoT
 aHW
-aJm
+ejz
 ecs
 aMr
 aOa
@@ -152352,7 +152218,7 @@ alJ
 alJ
 apw
 aqS
-arW
+ejy
 alJ
 aaf
 aaf
