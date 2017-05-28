@@ -419,7 +419,7 @@
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
+	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != ZLEVEL_STATION)
 		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
 		return FALSE
 
@@ -429,7 +429,7 @@
 			return FALSE
 
 	if(dominator_excessive_walls(user))
-		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
+		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
 		return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))
