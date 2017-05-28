@@ -61,14 +61,6 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_PLASMA_VISIBLE
 
-/datum/gas/freon
-	id = "freon"
-	specific_heat = 2000
-	name = "Freon"
-	gas_overlay = "freon"
-	moles_visible = MOLES_PLASMA_VISIBLE
-	dangerous = TRUE
-
 /datum/gas/nitrous_oxide
 	id = "n2o"
 	specific_heat = 40

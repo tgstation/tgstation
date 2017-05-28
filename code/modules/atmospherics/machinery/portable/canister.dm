@@ -44,7 +44,6 @@
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
 		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
@@ -74,6 +73,13 @@
 	icon_state = "black"
 	gas_type = "co2"
 
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/chilled
+	name = "co2 canister"
+	desc = "Carbon dioxide. What the fuck is carbon dioxide?"
+	icon_state = "black"
+	gas_type = "co2"
+	starter_temp = T0C
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
@@ -101,13 +107,6 @@
 	name = "air canister"
 	desc = "Pre-mixed air."
 	icon_state = "grey"
-
-/obj/machinery/portable_atmospherics/canister/freon
-	name = "freon canister"
-	desc = "Freon. Great for the atmosphere!"
-	icon_state = "freon"
-	gas_type = "freon"
-	starter_temp = 120
 
 /obj/machinery/portable_atmospherics/canister/water_vapor
 	name = "water vapor canister"

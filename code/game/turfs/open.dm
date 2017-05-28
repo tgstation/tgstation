@@ -110,7 +110,7 @@
 	air.temperature += temp
 	air_update_turf()
 
-/turf/open/proc/freon_gas_act()
+/turf/open/proc/freeze()
 	for(var/obj/I in contents)
 		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
 			I.make_frozen_visual()

@@ -926,15 +926,6 @@
 	crate_type = /obj/structure/closet/crate/secure/science
 	dangerous = TRUE
 
-/datum/supply_pack/science/freon_canister
-	name = "Freon Canister"
-	cost = 6000
-	access_any = list(GLOB.access_rd, GLOB.access_atmospherics)
-	contains = list(/obj/machinery/portable_atmospherics/canister/freon)
-	crate_name = "freon canister crate"
-	crate_type = /obj/structure/closet/crate/secure/science
-	dangerous = TRUE
-
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
 	cost = 8000

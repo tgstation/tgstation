@@ -88342,7 +88342,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "deZ" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/chilled,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dfa" = (

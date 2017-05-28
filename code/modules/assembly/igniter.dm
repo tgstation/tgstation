@@ -35,3 +35,23 @@
 		light [A].</span>"
 	activate()
 	add_fingerprint(user)
+
+
+/obj/item/device/assembly/igniter/cold
+	name = "plasmic thermoconverter"
+	desc = "A small electronic device able to tranform ambient plasma "
+	icon_state = "igniter"
+	materials = list(MAT_METAL=500, MAT_GLASS=50)
+	origin_tech = "magnets=1"
+	heat = 100
+
+/obj/item/device/assembly/igniter/activate()
+	if(!..())
+		return 0//Cooldown check
+	var/turf/open/location = get_turf(loc)
+	if(istype(location))
+		location.air.assert_gas("plasma")
+		if(location.air.gases["plasma"]) // only works in presence of plasma because uh space magic
+			location.TakeTemperature(heat)
+	sparks.start()
+	return 1

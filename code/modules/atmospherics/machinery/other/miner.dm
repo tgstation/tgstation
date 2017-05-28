@@ -160,11 +160,6 @@
 	overlay_color = "#FAFF00"
 	spawn_id = "bz"
 
-/obj/machinery/atmospherics/miner/freon
-	name = "\improper Freon Gas Miner"
-	overlay_color = "#00FFE5"
-	spawn_id = "freon"
-
 /obj/machinery/atmospherics/miner/volatile_fuel
 	name = "\improper Volatile Fuel Gas Miner"
 	overlay_color = "#564040"

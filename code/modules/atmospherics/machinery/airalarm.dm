@@ -82,7 +82,6 @@
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5),
-		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5),
 		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
@@ -96,7 +95,6 @@
 		"plasma"		= new/datum/tlv(-1, -1, -1, -1),
 		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
 		"bz"			= new/datum/tlv(-1, -1, -1, -1),
-		"freon"			= new/datum/tlv(-1, -1, -1, -1),
 		"water_vapor"	= new/datum/tlv(-1, -1, -1, -1)
 	)
 
@@ -110,7 +108,6 @@
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
-		"freon"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
@@ -244,7 +241,6 @@
 					"filter_toxins"			= info["filter_toxins"],
 					"filter_n2o"			= info["filter_n2o"],
 					"filter_bz"				= info["filter_bz"],
-					"filter_freon"			= info["filter_freon"],
 					"filter_water_vapor"	= info["filter_water_vapor"]
 				))
 		data["mode"] = mode
@@ -301,7 +297,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "freon_scrub","water_vapor_scrub", "widenet", "scrubbing")
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "water_vapor_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
 			. = TRUE
 		if("excheck")
@@ -419,7 +415,6 @@
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
 					"bz_scrub"	= 0,
-					"freon_scrub"= 0,
 					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
@@ -438,7 +433,6 @@
 					"tox_scrub" = 1,
 					"n2o_scrub" = 1,
 					"bz_scrub"	= 1,
-					"freon_scrub"= 1,
 					"water_vapor_scrub"= 1,
 					"scrubbing" = 1,
 					"widenet" = 1,
@@ -470,7 +464,6 @@
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
 					"bz_scrub"	= 0,
-					"freon_scrub"= 0,
 					"water_vapor_scrub"= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
