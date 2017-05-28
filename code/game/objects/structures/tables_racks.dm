@@ -281,6 +281,7 @@
 	icon_state = "fancy_table_black"
 
 /obj/structure/table/wood/fancy/black/New()
+	..()
 	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
