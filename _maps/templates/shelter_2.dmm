@@ -20,7 +20,7 @@
 "t" = (/obj/machinery/microwave,/obj/structure/table/wood/fancy/black,/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTH)"; icon_state = "pwindow"; dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
 "u" = (/obj/machinery/door/window/survival_pod{tag = "icon-windoor (NORTH)"; icon_state = "windoor"; dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
 "v" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTH)"; icon_state = "pwindow"; dir = 1},/turf/open/floor/carpet/black,/area/survivalpod)
-"w" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTHWEST)"; icon_state = "pwindow"; dir = 9},/turf/open/floor/carpet/black,/area/survivalpod)
+"w" = (/obj/structure/window/reinforced/survival_pod{tag = "icon-pwindow (NORTHWEST)"; icon_state = "pwindow"; dir = 9; density = 0;},/turf/open/floor/carpet/black,/area/survivalpod)
 "x" = (/obj/structure/table/wood/fancy/black,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{icon_state = "wineglass"; pixel_x = 8; pixel_y = 4; reagents = list("wine" = 50)},/obj/effect/spawner/lootdrop/three_course_meal,/turf/open/floor/carpet/black,/area/survivalpod)
 "y" = (/obj/structure/reagent_dispensers/beerkeg{anchored = 1},/obj/machinery/light{icon_state = "tube1"; dir = 8; pixel_y = 16; light_color = "#DDFFD3"},/obj/structure/table/wood/fancy/black,/turf/open/floor/carpet/black,/area/survivalpod)
 "z" = (/obj/item/weapon/twohanded/required/kirbyplants/random,/turf/open/floor/carpet/black,/area/survivalpod)
