@@ -55,6 +55,12 @@
 			to_chat(user, "You break the result out of the mold.")
 			new current_mold.type(get_turf(src))
 			var/datum/reagent/R = current_mold.reagents.get_master_reagent()
+			if(!R)
+				qdel(current_mold)
+				cut_overlay(my_mold)
+				my_mold = null
+				current_mold = null
+				return
 			var/obj/item/I
 			if(!istype(current_mold, /obj/item/weapon/reagent_containers/glass/mold/bar))
 				I = new current_mold.produce_type(get_turf(src))
@@ -62,10 +68,7 @@
 				I.post_smithing()
 			else
 				I = new R.produce_type(get_turf(src))
-			qdel(current_mold)
-			cut_overlay(my_mold)
-			my_mold = null
-			current_mold = null
+			return
 		else
 			to_chat(user, "There's nothing in the mold!")
 
