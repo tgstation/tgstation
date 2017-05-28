@@ -372,6 +372,55 @@
 	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
 	id = /obj/item/weapon/card/id
 
+/obj/effect/mob_spawn/human/syndicate
+	name = "Syndicate Operative"
+	roundstart = FALSE
+	death = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	id_access_list = list(GLOB.access_syndicate)
+	outfit = /datum/outfit/syndicate_empty
+
+/datum/outfit/syndicate_empty
+	name = "Syndicate Operative Empty"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset/syndicate/alt
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/weapons_auth)
+	id = /obj/item/weapon/card/id
+
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+	H.faction |= "syndicate"
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser
+	name = "Syndicate Battlecruiser Ensign"
+	flavour_text = "<font size=3>You are a syndicate ensign aboard a state of the art weapons platform -- the SBC Starfury. <b>Follow your captain's orders, maintain the ship, and protect both with your life.</b>"
+	outfit = /datum/outfit/syndicate_empty/SBC
+
+/datum/outfit/syndicate_empty/SBC
+	name = "Syndicate Battlecruiser Ensign"
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
+	suit = /obj/item/clothing/suit/armor/vest
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
+	name = "Syndicate Battlecruiser Captain"
+	flavour_text = "<font size=3>You are a syndicate admiral in command of a state of the art weapons platform -- the SBC Starfury. <b>You are to destroy Nanotrasens' Space Station 13.</b> Do not let the enemy take control of your ship under any circumstances."
+	outfit = /datum/outfit/syndicate_empty/SBC/captain
+	id_access_list = list(150,151)
+
+/datum/outfit/syndicate_empty/SBC/captain
+	name = "Syndicate Battlecruiser Captain"
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	back = /obj/item/weapon/storage/backpack/satchel/leather
+	head = /obj/item/clothing/head/HoS/beret/syndicate
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+
 //UEG Marine
 /obj/effect/mob_spawn/human/marine
 	name = "marine cryostasis sleeper"
