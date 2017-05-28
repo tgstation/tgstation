@@ -4,6 +4,7 @@
 	var/employer = "The Syndicate" 
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
+	var/list/objectives_given = list()
 
 /datum/antagonist/traitor/custom //used to give custom objectives
 	silent = TRUE
@@ -26,8 +27,16 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_verbs(A)
 		qdel(A.malf_picker)
+	owner.objectives -= objectives_given
 	..()
 
+/datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)
+	owner.objectives += O
+	objectives_given += O
+
+/datum/antagonist/traitor/proc/remove_objective(var/datum/objective/O)
+	owner.objectives -= O
+	objectives_given -= O
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	if(issilicon(owner.current))
@@ -40,11 +49,11 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			kill_objective.find_target()
-			owner.objectives += kill_objective
+			add_objective(kill_objective)
 
 		var/datum/objective/survive/survive_objective = new
 		survive_objective.owner = owner
-		owner.objectives += survive_objective
+		add_objective(survive_objective)
 
 	else
 		var/is_hijacker = prob(10)
@@ -65,7 +74,7 @@
 			if (!(locate(/datum/objective/hijack) in owner.objectives))
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = owner
-				owner.objectives += hijack_objective
+				add_objective(hijack_objective)
 				return
 
 
@@ -78,14 +87,14 @@
 		if(martyr_compatibility && martyr_chance)
 			var/datum/objective/martyr/martyr_objective = new
 			martyr_objective.owner = owner
-			owner.objectives += martyr_objective
+			add_objective(martyr_objective)
 			return
 
 		else
 			if(!(locate(/datum/objective/escape) in owner.objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = owner
-				owner.objectives += escape_objective
+				add_objective(escape_objective)
 				return
 
 /datum/antagonist/traitor/proc/forge_single_objective() //Returns how many objectives are added
@@ -96,25 +105,25 @@
 			if(1)
 				var/datum/objective/block/block_objective = new
 				block_objective.owner = owner
-				owner.objectives += block_objective
+				add_objective(block_objective)
 			if(2)
 				var/datum/objective/purge/purge_objective = new
 				purge_objective.owner = owner
-				owner.objectives += purge_objective
+				add_objective(purge_objective)
 			if(3)
 				var/datum/objective/robot_army/robot_objective = new
 				robot_objective.owner = owner
-				owner.objectives += robot_objective
+				add_objective(robot_objective)
 			if(4) //Protect and strand a target
 				var/datum/objective/protect/yandere_one = new
 				yandere_one.owner = owner
-				owner.objectives += yandere_one
+				add_objective(yandere_one)
 				yandere_one.find_target()
 				var/datum/objective/maroon/yandere_two = new
 				yandere_two.owner = owner
 				yandere_two.target = yandere_one.target
 				yandere_two.update_explanation_text() // normally called in find_target()
-				owner.objectives += yandere_two
+				add_objective(yandere_two)
 				.=2
 	else
 		if(prob(50))
@@ -123,22 +132,22 @@
 				var/datum/objective/destroy/destroy_objective = new
 				destroy_objective.owner = owner
 				destroy_objective.find_target()
-				owner.objectives += destroy_objective
+				add_objective(destroy_objective)
 			else if(prob(30))
 				var/datum/objective/maroon/maroon_objective = new
 				maroon_objective.owner = owner
 				maroon_objective.find_target()
-				owner.objectives += maroon_objective
+				add_objective(maroon_objective)
 			else
 				var/datum/objective/assassinate/kill_objective = new
 				kill_objective.owner = owner
 				kill_objective.find_target()
-				owner.objectives += kill_objective
+				add_objective(kill_objective)
 		else
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = owner
 			steal_objective.find_target()
-			owner.objectives += steal_objective
+			add_objective(steal_objective)
 
 /datum/antagonist/traitor/greet()
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role].</font></B>")
@@ -195,13 +204,13 @@
 	var/datum/objective/steal/exchange/exchange_objective = new
 	exchange_objective.set_faction(faction,((faction == "red") ? SSticker.mode.exchange_blue : SSticker.mode.exchange_red))
 	exchange_objective.owner = owner
-	owner.objectives += exchange_objective
+	add_objective(exchange_objective)
 
 	if(prob(20))
 		var/datum/objective/steal/exchange/backstab/backstab_objective = new
 		backstab_objective.set_faction(faction)
 		backstab_objective.owner = owner
-		owner.objectives += backstab_objective
+		add_objective(backstab_objective)
 
 	//Spawn and equip documents
 	var/mob/living/carbon/human/mob = owner.current

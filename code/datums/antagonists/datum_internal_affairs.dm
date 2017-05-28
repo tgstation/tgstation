@@ -95,9 +95,10 @@
 		if(!(istype(objective_, /datum/objective/escape)||istype(objective_,/datum/objective/survive)))
 			continue
 		owner.objectives -= objective_
+		
 	var/datum/objective/martyr/martyr_objective = new
 	martyr_objective.owner = owner
-	owner.objectives += martyr_objective
+	add_objective(martyr_objective)
 
 /datum/antagonist/traitor/internal_affairs/proc/reinstate_escape_objective()
 	if(!owner||!owner.objectives)
@@ -109,11 +110,11 @@
 	if(issilicon(owner))	
 		var/datum/objective/survive/survive_objective = new
 		survive_objective.owner = owner
-		owner.objectives += survive_objective
+		add_objective(survive_objective)
 	else
 		var/datum/objective/escape/escape_objective = new
 		escape_objective.owner = owner
-		owner.objectives += escape_objective
+		add_objective(escape_objective)
 
 /datum/antagonist/traitor/internal_affairs/proc/steal_targets(datum/mind/victim)
 	if(!owner.current||owner.current.stat==DEAD) 
@@ -130,7 +131,7 @@
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()
-				owner.objectives += new_objective
+				add_objective(new_objective)
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<span class='userdanger'> New target added to database: [objective.target.name] ([status_text]) </span>")
@@ -143,7 +144,7 @@
 				new_objective.owner = owner
 				new_objective.target = objective.target
 				new_objective.update_explanation_text()
-				owner.objectives += new_objective
+				add_objective(new_objective)
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<span class='userdanger'> New target added to database: [objective.target.name] ([status_text]) </span>")
@@ -198,23 +199,23 @@
 			destroy_objective.owner = owner
 			destroy_objective.target = target_mind
 			destroy_objective.update_explanation_text()
-			owner.objectives += destroy_objective
+			add_objective(destroy_objective)
 		else
 			var/datum/objective/assassinate/internal/kill_objective = new
 			kill_objective.owner = owner
 			kill_objective.target = target_mind
 			kill_objective.update_explanation_text()
-			owner.objectives += kill_objective
+			add_objective(kill_objective)
 
 		// Escape
 		if(issilicon(owner.current))
 			var/datum/objective/survive/survive_objective = new
 			survive_objective.owner = owner
-			owner.objectives += survive_objective
+			add_objective(survive_objective)
 		else
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = owner
-			owner.objectives += escape_objective
+			add_objective(escape_objective)
 		START_PROCESSING(SSprocessing, src)
 		if(!issilicon(owner.current))
 			give_pinpointer()
