@@ -31,6 +31,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	enemy_minimum_age = 14
 	var/turf/target_armory
 	var/turf/target_equipment
+	var/turf/target_brig
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -47,11 +48,14 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		if(target_armory)
 			break
 
-	//also need to find 1 sec closet to hit the equipment room
-	for(var/area/security/main/A in GLOB.sortedAreas)
-		var/obj/structure/closet/secure_closet/security/C = locate() in A
-		if(C)
-			target_equipment = get_turf(C)
+	for(var/area/ai_monitored/security/brig in GLOB.sortedAreas)
+		target_equipment = pick(get_area_turfs(brig))
+		if(target_equipment)
+			break
+
+	for(var/area/security/main/C in GLOB.sortedAreas)
+		target_brig  = pick(get_area_turfs(C))
+		if(target_brig)
 			break
 
 	if(config.protect_roles_from_antagonist)
