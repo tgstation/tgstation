@@ -56,7 +56,7 @@
 
 /obj/item/seeds/cannabis/ultimate
 	name = "pack of omega weed seeds"
-	desc = "These seeds grow into omega weed."
+	desc = "These seeds grow into Omega Weed. The packet emits a weird green glow."
 	icon_state = "seed-ocannabis"
 	species = "ocannabis"
 	plantname = "Omega Weed"
