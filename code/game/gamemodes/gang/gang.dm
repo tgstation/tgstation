@@ -143,9 +143,9 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	sleep(80)
 	priority_announce("Unfortunately we have also received reports of multiple criminal enterprises established in your sector. To assist in repelling this threat, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals. Enjoy your shift ", "Nanotrasen Board of Directors")
 	sleep(80)
-	explosion(target_armory, 10, 16, 28, 30, TRUE, TRUE)
-	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
-
+	explosion(target_armory, 10, 16, 20, 20, TRUE, TRUE)
+	explosion(target_equipment, 10, 16, 20, 20, TRUE, TRUE)
+	explosion(target_brig, 7, 0, 0, 0, TRUE, TRUE)
 	for(var/mob/living/M in GLOB.player_list)
 		if(!is_gangster(M))
 			vigilize(M)
@@ -153,29 +153,29 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /proc/gangtest()
 	var/turf/target_armory
 	var/turf/target_equipment
+	var/turf/target_brig
 	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
-		if(A.z == ZLEVEL_STATION)
-			target_armory = pick(get_area_turfs(A))
-			if(target_armory)
-				break
-	//also need to find 1 sec closet to hit the equipment room
-	for(var/area/security/main/A in GLOB.sortedAreas)
-		if(A.z == ZLEVEL_STATION)
-			var/obj/structure/closet/secure_closet/security/C = locate() in A
-			if(C)
-				target_equipment = get_turf(C)
-				break
+		target_armory = pick(get_area_turfs(A))
+		if(target_armory)
+			break
 
-	if(!target_armory || !target_equipment)
-		message_admins("No armory/equipment room detected, unable to start gang!")
-		return FALSE
+	for(var/area/ai_monitored/security/brig in GLOB.sortedAreas)
+		target_equipment = pick(get_area_turfs(brig))
+		if(target_equipment)
+			break
+
+	for(var/area/security/main/C in GLOB.sortedAreas)
+		target_brig  = pick(get_area_turfs(C))
+		if(target_brig)
+			break
 	sleep(20)
 	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
 	sleep(60)
 	priority_announce("Unfortunately we have also received reports of several notorious gangs established in your sector. To assist in repelling this threat, we have taken the liberty of implanting you all with a device that will activate in the event of a gang incursion. Enjoy your shift.", "Nanotrasen Board of Directors")
 	sleep(40)
-	explosion(target_armory, 10, 16, 28, 30, TRUE, TRUE)
-	explosion(target_equipment, 10, 16, 28, 30, TRUE, TRUE)
+	explosion(target_armory, 10, 16, 20, 20, TRUE, TRUE)
+	explosion(target_equipment, 10, 16, 20, 20, TRUE, TRUE)
+	explosion(target_brig, 7, 0, 0, 0, TRUE, TRUE)
 	for(var/mob/living/M in GLOB.player_list)
 		vigilize(M)
 
