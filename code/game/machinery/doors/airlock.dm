@@ -202,9 +202,7 @@
 	if(charge)
 		qdel(charge)
 		charge = null
-	if(electronics)
-		qdel(electronics)
-		electronics = null
+	QDEL_NULL(electronics)
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null

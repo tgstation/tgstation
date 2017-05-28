@@ -133,7 +133,7 @@
 
 /datum/game_mode/wizard/raginmages/declare_completion()
 	if(finished)
-		SSblackbox.set_details("round_end_result","loss - wizard killed")
+		SSticker.mode_result = "loss - wizard killed"
 		to_chat(world, "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>")
 	..(1)
 

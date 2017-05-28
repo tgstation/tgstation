@@ -1,6 +1,0 @@
-author: "Moonlighting Mac says"
-delete-after: True
-changes: 
-  - rscadd: "You can now craft a strong cloak with a hood made out of goliath and monster materials from within the primitive crafting screen."
-  - rscadd: "The cloak has a suit slot for all kind of primitive supplies, however it cannot carry most electronic miner equipment."
-  - balance: "Due to the recipe requiring leather, it is not normally accessible to all ghost roles without a source of water & electricity."

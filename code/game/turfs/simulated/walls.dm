@@ -28,6 +28,20 @@
 /turf/closed/wall/attack_tk()
 	return
 
+/turf/closed/wall/handle_ricochet(obj/item/projectile/P)			//A huge pile of shitcode!
+	var/turf/p_turf = get_turf(P)
+	var/face_direction = get_dir(src, p_turf)
+	var/face_angle = dir2angle(face_direction)
+	var/incidence_s = get_angle_of_incidence(face_angle, P.Angle)
+	var/new_angle = face_angle + incidence_s
+	var/new_angle_s = new_angle
+	while(new_angle_s > 180)	// Translate to regular projectile degrees
+		new_angle_s -= 360
+	while(new_angle_s < -180)
+		new_angle_s += 360
+	P.Angle = new_angle_s
+	return TRUE
+
 /turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
