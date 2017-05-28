@@ -54,8 +54,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -85,8 +84,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -121,8 +119,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -194,8 +191,7 @@
 /obj/machinery/status_display{
 	density = 0;
 	layer = 3;
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
@@ -217,8 +213,7 @@
 /obj/machinery/status_display{
 	density = 0;
 	layer = 3;
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
@@ -655,8 +650,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -672,8 +666,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
@@ -689,8 +682,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
@@ -701,8 +693,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/space,
 /area/solar/starboard/fore)
@@ -847,8 +838,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/fore)
@@ -890,8 +880,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -1661,9 +1650,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/docking_port/mobile/auxillary_base{
-	pixel_y = 0
-	},
+/obj/docking_port/mobile/auxillary_base,
 /obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
@@ -2663,8 +2650,7 @@
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -3894,8 +3880,7 @@
 /area/shuttle/syndicate)
 "aiO" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -4108,8 +4093,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Customs Desk APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -4253,8 +4237,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Security Checkpoint APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -4319,8 +4302,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -4911,8 +4893,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/camera{
 	c_tag = "Arrivals Customs";
@@ -5031,8 +5012,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/red,
 /area/security/checkpoint/checkpoint2)
@@ -5674,8 +5654,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -5710,8 +5689,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -6166,8 +6144,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 30
@@ -6419,8 +6396,7 @@
 /obj/machinery/mineral/stacking_unit_console{
 	dir = 2;
 	machinedir = 8;
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -6936,8 +6912,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -7690,8 +7665,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -7702,8 +7676,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/atmospherics_engine)
@@ -7715,8 +7688,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -7730,8 +7702,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
@@ -7744,8 +7715,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/circuit/green,
 /area/engine/atmospherics_engine)
@@ -7756,8 +7726,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/caution{
 	icon_state = "caution";
@@ -7770,8 +7739,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7800,8 +7768,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/atmospherics_engine)
@@ -7817,8 +7784,7 @@
 	pixel_x = -5
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen/engi{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /obj/item/device/geiger_counter,
 /obj/item/device/geiger_counter,
@@ -8833,8 +8799,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -9404,8 +9369,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -9416,8 +9380,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -9489,8 +9452,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -9985,8 +9947,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -10019,8 +9980,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -10041,8 +10001,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	icon_state = "manifold";
@@ -10473,8 +10432,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -10494,14 +10452,12 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -10512,8 +10468,7 @@
 "awW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/securearea{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/camera{
 	c_tag = "Supermatter Engine - Starboard";
@@ -10887,8 +10842,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -10940,8 +10894,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -11493,8 +11446,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
@@ -11546,8 +11498,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11882,8 +11833,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Cargo Warehouse APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -12417,8 +12367,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -12429,8 +12378,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/sign/fire{
 	pixel_x = 32;
@@ -12451,8 +12399,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/button/door{
 	id = "engsm";
@@ -12474,8 +12421,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -12487,8 +12433,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/camera{
 	c_tag = "Supermatter Engine - Aft";
@@ -12507,8 +12452,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
@@ -12529,8 +12473,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -12542,8 +12485,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -12563,8 +12505,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -12599,8 +12540,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Atmospherics Engine APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -13081,8 +13021,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -13533,8 +13472,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light_switch{
 	pixel_x = 38
@@ -14046,8 +13984,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -14498,8 +14435,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
@@ -14517,8 +14453,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
@@ -14534,8 +14469,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -14621,8 +14555,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -14637,8 +14570,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -14650,8 +14582,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -14663,8 +14594,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -14713,8 +14643,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light_switch{
 	pixel_x = 24;
@@ -14795,8 +14724,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/glass_atmos{
 	name = "Power Monitoring";
@@ -14900,8 +14828,7 @@
 "aFt" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	icon_state = "manifold";
@@ -15250,8 +15177,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
@@ -15434,8 +15360,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -15630,8 +15555,7 @@
 /obj/structure/chair/stool/bar,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
@@ -15704,8 +15628,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargodisposals";
 	name = "Trash Filter Switch";
-	pixel_x = -1;
-	pixel_y = 0
+	pixel_x = -1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -15897,8 +15820,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/oil,
@@ -16265,8 +16187,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Security Post - Cargo APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -16599,8 +16520,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line{
@@ -16823,8 +16743,7 @@
 /area/crew_quarters/bar/atrium)
 "aJx" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -16858,8 +16777,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -17162,8 +17080,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
@@ -17181,8 +17098,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -17195,8 +17111,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -17215,8 +17130,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/engine,
@@ -17225,8 +17139,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17510,8 +17423,7 @@
 /area/crew_quarters/bar/atrium)
 "aKW" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/grimy,
@@ -18282,8 +18194,7 @@
 /obj/structure/table/wood,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/item/device/camera,
 /turf/open/floor/plasteel/vault{
@@ -18303,8 +18214,7 @@
 /area/crew_quarters/bar/atrium)
 "aMF" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/bar/atrium)
@@ -19847,8 +19757,7 @@
 /area/engine/atmos)
 "aPu" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -20032,8 +19941,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light_switch{
 	pixel_x = 26;
@@ -20861,8 +20769,7 @@
 	sensors = list("air_sensor" = "Tank")
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -20920,8 +20827,7 @@
 	department = "Theatre Backstage";
 	departmentType = 0;
 	name = "Theatre RC";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/item/weapon/lipstick/random{
 	pixel_x = 3;
@@ -21408,8 +21314,7 @@
 	icon_state = "tube1"
 	},
 /obj/machinery/ai_status_display{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -21790,8 +21695,7 @@
 /area/engine/atmos)
 "aTd" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -22692,8 +22596,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -23506,8 +23409,7 @@
 /area/engine/atmos)
 "aWt" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -23611,8 +23513,7 @@
 "aWG" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	icon_state = "manifold";
@@ -24292,8 +24193,7 @@
 	sensors = list("o2_sensor" = "Tank")
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plasteel/blue/side{
@@ -24393,8 +24293,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/chem_master/condimaster{
 	name = "BrewMaster 3000"
@@ -24632,8 +24531,7 @@
 /obj/item/toy/figure/miner,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/light{
 	dir = 1
@@ -24969,8 +24867,7 @@
 /area/engine/atmos)
 "aZw" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
@@ -25624,8 +25521,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/caution{
@@ -25825,8 +25721,7 @@
 /obj/structure/kitchenspike,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
@@ -26049,8 +25944,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/pods{
-	name = "MINING POD";
-	pixel_x = 0
+	name = "MINING POD"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
@@ -26283,8 +26177,7 @@
 /area/engine/atmos)
 "bcm" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -26724,9 +26617,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "WARNING: BLAST DOORS"
 	},
 /turf/open/floor/plating,
 /area/security/brig)
@@ -26885,8 +26776,7 @@
 	sensors = list("n2_sensor" = "Tank")
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/plasteel/red/side{
@@ -26933,8 +26823,7 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -27797,8 +27686,7 @@
 /area/engine/atmos)
 "bft" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
@@ -29149,8 +29037,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Mining Dock APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo - Mining Office";
@@ -29483,8 +29370,7 @@
 /area/crew_quarters/heads/hos)
 "biN" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -29516,8 +29402,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/vault{
@@ -30042,8 +29927,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Security Office APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -30234,8 +30118,7 @@
 "bko" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -30267,8 +30150,7 @@
 /area/aisat)
 "bks" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -30399,8 +30281,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -31001,8 +30882,7 @@
 /area/crew_quarters/heads/hos)
 "blN" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/lattice,
 /turf/open/space,
@@ -31071,8 +30951,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/door/window/southright,
 /turf/open/floor/plasteel/vault{
@@ -32043,8 +31922,7 @@
 /area/crew_quarters/heads/hos)
 "bnM" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -32120,8 +31998,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -32690,8 +32567,7 @@
 "bpa" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -31;
-	pixel_y = 0
+	pixel_x = -31
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/labor)
@@ -33105,8 +32981,7 @@
 "bpM" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -34055,8 +33930,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/machinery/requests_console{
 	department = "Hydroponics";
@@ -34449,8 +34323,7 @@
 "bsy" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	name = "scrubbers pipe";
@@ -34497,8 +34370,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/light_switch{
 	pixel_x = -38;
@@ -34907,8 +34779,7 @@
 "btm" = (
 /obj/machinery/mineral/labor_claim_console{
 	machinedir = 1;
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -35007,8 +34878,7 @@
 /area/security/main)
 "btv" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -35071,8 +34941,7 @@
 /area/ai_monitored/turret_protected/ai)
 "btC" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -35524,8 +35393,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Vault APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -35625,8 +35493,7 @@
 "buI" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side{
@@ -35696,8 +35563,7 @@
 /area/security/main)
 "buR" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -36210,8 +36076,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/camera{
 	c_tag = "Central Hallway - Bridge Port";
@@ -36657,8 +36522,7 @@
 /area/security/main)
 "bww" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -36980,8 +36844,7 @@
 	layer = 4;
 	name = "Engine Monitor";
 	network = list("Engine");
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -37475,8 +37338,7 @@
 "bya" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -37708,8 +37570,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -38038,8 +37899,7 @@
 	department = "Atmospherics Office";
 	departmentType = 0;
 	name = "Atmospherics RC";
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26;
@@ -38752,8 +38612,7 @@
 	freerange = 1;
 	listening = 1;
 	name = "Common Channel";
-	pixel_x = -27;
-	pixel_y = 0
+	pixel_x = -27
 	},
 /obj/item/device/radio/intercom{
 	anyai = 1;
@@ -38867,8 +38726,7 @@
 	freerange = 1;
 	listening = 1;
 	name = "Common Channel";
-	pixel_x = 27;
-	pixel_y = 0
+	pixel_x = 27
 	},
 /obj/item/device/radio/intercom{
 	anyai = 1;
@@ -39804,12 +39662,10 @@
 /area/ai_monitored/turret_protected/ai)
 "bBP" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -39918,8 +39774,7 @@
 "bCa" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/delivery,
@@ -39952,8 +39807,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/airalarm{
 	dir = 1;
@@ -40049,8 +39903,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light_switch{
 	pixel_y = 26
@@ -40197,8 +40050,7 @@
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -40779,8 +40631,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light_switch{
 	pixel_y = -26
@@ -41171,8 +41022,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -42066,8 +41916,7 @@
 /obj/machinery/vending/tool,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -42266,8 +42115,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -42278,8 +42126,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -42556,8 +42403,7 @@
 "bHl" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -42646,8 +42492,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -42698,8 +42543,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/button/door{
 	id = "transitlock";
@@ -43446,8 +43290,7 @@
 	department = "Detective's Office";
 	departmentType = 0;
 	name = "Detective RC";
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -43497,8 +43340,7 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/light{
 	dir = 4
@@ -43571,8 +43413,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/clothing/mask/gas/sechailer,
@@ -43718,8 +43559,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -43850,9 +43690,7 @@
 	},
 /area/engine/transit_tube)
 "bJD" = (
-/obj/machinery/computer/card/minor/ce{
-	pixel_x = 0
-	},
+/obj/machinery/computer/card/minor/ce,
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
@@ -44399,8 +44237,7 @@
 "bKP" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -44631,8 +44468,7 @@
 /area/ai_monitored/security/armory)
 "bLo" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -44682,8 +44518,7 @@
 	frequency = 1447;
 	listening = 0;
 	name = "AI Intercom";
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -44703,8 +44538,7 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bLw" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -44776,8 +44610,7 @@
 	department = "Chief Engineer's Desk";
 	departmentType = 5;
 	name = "Chief Engineer's RC";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/machinery/camera{
 	c_tag = "Engineering - Chief Engineer's Office";
@@ -45321,8 +45154,7 @@
 /area/security/detectives_office)
 "bMR" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/security/detectives_office)
@@ -45507,9 +45339,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/vest{
-	pixel_y = 0
-	},
+/obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/suit/armor/vest{
 	pixel_x = 3;
 	pixel_y = -3
@@ -45682,8 +45512,7 @@
 /obj/structure/lattice,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -46215,8 +46044,7 @@
 	desc = "A direction sign, pointing out which way the Command department is.";
 	dir = 1;
 	icon_state = "direction_bridge";
-	name = "command department";
-	pixel_y = 0
+	name = "command department"
 	},
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Supply department is.";
@@ -46375,8 +46203,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Warden's Office APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Warden's Office";
@@ -46436,9 +46263,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_y = 0
-	},
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
@@ -46489,8 +46314,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -46744,8 +46568,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	icon_state = "intact";
@@ -46767,8 +46590,7 @@
 "bPx" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -47090,8 +46912,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/camera{
 	c_tag = "Security Post - Engineering";
@@ -47377,8 +47198,7 @@
 	department = "Captain's Desk";
 	departmentType = 5;
 	name = "Captain RC";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -47640,8 +47460,7 @@
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	icon_state = "intact";
@@ -48053,8 +47872,7 @@
 /area/aisat)
 "bRE" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/transit_tube/station{
@@ -48112,8 +47930,7 @@
 "bRK" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -48187,8 +48004,7 @@
 	layer = 4;
 	name = "Engine Monitor";
 	network = list("Engine");
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /mob/living/simple_animal/parrot/Poly,
 /turf/open/floor/plasteel/vault{
@@ -49146,8 +48962,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -49235,8 +49050,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -49249,8 +49063,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -49287,8 +49100,7 @@
 "bTQ" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/transit_tube/curved/flipped{
 	icon_state = "curved1";
@@ -49814,8 +49626,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -50297,8 +50108,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/porta_turret/ai,
 /turf/open/floor/plasteel/vault{
@@ -51296,8 +51106,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Port Maintenance APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-2"
@@ -51379,8 +51188,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -51742,8 +51550,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -52301,8 +52108,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "HoP Office APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -52322,8 +52128,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Telecoms Server Room APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/structure/cable/white,
 /turf/open/floor/plasteel/vault{
@@ -53242,8 +53047,7 @@
 /obj/structure/sign/kiddieplaque{
 	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
 	name = "Library Rules Sign";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -53285,8 +53089,7 @@
 /obj/structure/sign/kiddieplaque{
 	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
 	name = "Library Rules Sign";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -53539,9 +53342,7 @@
 "ccd" = (
 /obj/structure/table/wood,
 /obj/item/device/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "Station Intercom"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -53865,8 +53666,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/space,
 /area/space)
@@ -54368,8 +54168,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -55239,8 +55038,7 @@
 /obj/item/device/flashlight/lamp,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -55314,8 +55112,7 @@
 /area/security/brig)
 "cfL" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -55333,8 +55130,7 @@
 /obj/item/weapon/aiModule/reset,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -55386,8 +55182,7 @@
 	frequency = 1447;
 	listening = 0;
 	name = "AI Intercom";
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -55451,8 +55246,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -55464,8 +55258,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -55526,8 +55319,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engine Room APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -56548,9 +56340,7 @@
 "cir" = (
 /obj/structure/table/wood,
 /obj/item/device/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "Station Intercom"
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/security/courtroom)
@@ -56854,8 +56644,7 @@
 /area/security/range)
 "ciQ" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -56934,8 +56723,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "ciW" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -57022,8 +56810,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -57126,8 +56913,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
@@ -57375,8 +57161,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -57539,8 +57324,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Shooting Range APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -58112,8 +57896,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Courtroom APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -58217,8 +58000,7 @@
 "clH" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/lattice,
 /obj/structure/lattice,
@@ -58642,9 +58424,7 @@
 "cmH" = (
 /obj/structure/table/wood,
 /obj/item/device/radio/intercom{
-	name = "Station Intercom";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "Station Intercom"
 	},
 /turf/open/floor/plasteel/vault,
 /area/security/courtroom)
@@ -58794,8 +58574,7 @@
 "cnc" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/door/window/northright,
 /turf/open/floor/plasteel/vault{
@@ -58878,8 +58657,7 @@
 	layer = 4;
 	name = "Engine Containment Telescreen";
 	network = list("Singularity");
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -59088,8 +58866,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
@@ -59592,8 +59369,7 @@
 /area/aisat)
 "coH" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -60201,9 +59977,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "WARNING: PRESSURIZED DOORS"
 	},
 /turf/closed/wall,
 /area/security/courtroom)
@@ -60362,8 +60136,7 @@
 "cqh" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/vault{
@@ -60594,8 +60367,7 @@
 	desc = "A direction sign, pointing out which way the Command department is.";
 	dir = 1;
 	icon_state = "direction_bridge";
-	name = "command department";
-	pixel_y = 0
+	name = "command department"
 	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
@@ -60747,8 +60519,7 @@
 	desc = "A direction sign, pointing out which way the Command department is.";
 	dir = 1;
 	icon_state = "direction_bridge";
-	name = "command department";
-	pixel_y = 0
+	name = "command department"
 	},
 /turf/closed/wall/r_wall,
 /area/gateway)
@@ -62572,8 +62343,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62669,8 +62439,7 @@
 /obj/structure/sign/kiddieplaque{
 	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside.";
 	name = "Library Rules Sign";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -62798,8 +62567,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -62825,10 +62593,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/clothing/shoes/magboots{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots{
 	pixel_x = 4;
 	pixel_y = -3
@@ -63455,8 +63220,7 @@
 	department = "E.V.A. Storage";
 	departmentType = 0;
 	name = "E.V.A. RC";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -63660,8 +63424,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -63903,8 +63666,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Lockerroom APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -64330,10 +64092,7 @@
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/jetpack/carbondioxide{
 	pixel_x = -4;
 	pixel_y = 1
@@ -64363,8 +64122,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Corporate Lounge APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -64977,8 +64735,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engineering Storage APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -66667,9 +66424,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "WARNING: PRESSURIZED DOORS"
 	},
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
@@ -66792,9 +66547,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "WARNING: BLAST DOORS"
 	},
 /turf/closed/wall/r_wall,
 /area/gateway)
@@ -66927,8 +66680,7 @@
 "cDs" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -70374,8 +70126,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Medbay Storage APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Storage";
@@ -70811,8 +70562,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Auxiliary Power APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
@@ -70922,8 +70672,7 @@
 /obj/structure/closet/secure_closet/security/science,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -71466,8 +71215,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
@@ -71927,8 +71675,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light_switch{
 	pixel_x = 38
@@ -72384,8 +72131,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: BIOHAZARD CELL";
-	pixel_x = 0
+	name = "WARNING: BIOHAZARD CELL"
 	},
 /turf/closed/wall,
 /area/science/xenobiology)
@@ -72907,8 +72653,7 @@
 	department = "Medbay Storage";
 	departmentType = 0;
 	name = "Medbay Storage RC";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -73765,8 +73510,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Recreation Area APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -75041,8 +74785,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/aft)
@@ -75149,8 +74892,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Security Post - Medical APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -76646,8 +76388,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Xenobiology Lab APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -76870,8 +76611,7 @@
 /obj/machinery/computer/crew,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
@@ -77306,8 +77046,7 @@
 /obj/item/weapon/pen,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/item/weapon/storage/bag/bio,
 /obj/item/weapon/storage/bag/bio,
@@ -77431,8 +77170,7 @@
 /obj/item/weapon/stock_parts/manipulator,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -78043,8 +77781,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -80885,8 +80622,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -81173,8 +80909,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -81186,8 +80921,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -81503,8 +81237,7 @@
 "dhR" = (
 /obj/machinery/clonepod,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/status_display{
 	pixel_x = -32
@@ -81874,8 +81607,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -83713,8 +83445,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Research Director's Office APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/structure/cable/white,
 /obj/structure/disposalpipe/segment,
@@ -83757,8 +83488,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/camera{
 	c_tag = "Science - Research Director's Office";
@@ -83878,13 +83608,11 @@
 /area/hallway/primary/aft)
 "dmV" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -84208,8 +83936,7 @@
 /obj/structure/closet/bombcloset,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -84370,8 +84097,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/aft)
@@ -84438,8 +84164,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Medbay APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -84523,8 +84248,7 @@
 "dor" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
@@ -85090,8 +84814,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -85206,8 +84929,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end{
@@ -85957,8 +85679,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Genetics Lab APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -86043,8 +85764,7 @@
 /area/medical/genetics)
 "drr" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/door/window/westright{
 	name = "'Monkey Pen";
@@ -86285,8 +86005,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/surgery)
@@ -86812,8 +86531,7 @@
 /area/medical/genetics)
 "dsR" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/door/window/westleft{
 	name = "'Monkey Pen";
@@ -86914,8 +86632,7 @@
 /obj/structure/table,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/ai_status_display{
 	pixel_y = -32
@@ -87543,8 +87260,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/end,
@@ -87610,8 +87326,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Chief Medical Officer's Office APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay - Chief Medical Officer's Office";
@@ -87626,8 +87341,7 @@
 "duy" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/corner,
@@ -87907,8 +87621,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -88642,8 +88355,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/crew_quarters/heads/hor)
@@ -89121,10 +88833,7 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/timer{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/device/assembly/timer,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -89204,8 +88913,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
@@ -89302,8 +89010,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/camera{
@@ -89487,8 +89194,7 @@
 	department = "Chief Medical Officer's Desk";
 	departmentType = 5;
 	name = "Chief Medical Officer's RC";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -89580,8 +89286,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -89612,12 +89317,8 @@
 /obj/item/device/transfer_valve{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
-	pixel_x = 0
-	},
-/obj/item/device/transfer_valve{
-	pixel_x = 0
-	},
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve{
 	pixel_x = 5
 	},
@@ -90293,8 +89994,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Research Division Server Room APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/machinery/light_switch{
 	pixel_x = -28;
@@ -90387,8 +90087,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Robotics Lab APC";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -90812,8 +90511,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -90840,8 +90538,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -90861,9 +90558,7 @@
 	dir = 4;
 	layer = 4;
 	name = "Testing Site Telescreen";
-	network = list("Toxins");
-	pixel_x = 0;
-	pixel_y = 0
+	network = list("Toxins")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -91087,8 +90782,7 @@
 "dBy" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/weapon/storage/box/gloves{
 	pixel_x = 3;
@@ -91144,8 +90838,7 @@
 "dBE" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/vault{
@@ -91423,8 +91116,7 @@
 /obj/machinery/button/massdriver{
 	dir = 2;
 	id = "toxinsdriver";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -91764,8 +91456,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Research Division APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	icon_state = "manifold";
@@ -91798,8 +91489,7 @@
 "dCP" = (
 /obj/structure/closet/wardrobe/robotics_black,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -92225,8 +91915,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -92372,8 +92061,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Toxins Storage APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white,
 /obj/effect/turf_decal/bot,
@@ -92459,8 +92147,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/aft)
@@ -94505,8 +94192,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 5
@@ -95194,8 +94880,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -95384,9 +95069,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dKD" = (
@@ -95396,9 +95078,6 @@
 	req_access = "0"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/port/aft)
 "dKE" = (
@@ -95406,9 +95085,6 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/port/aft)
 "dKF" = (
@@ -96232,8 +95908,7 @@
 "dMi" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -96650,8 +96325,7 @@
 /area/shuttle/escape)
 "dNd" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -97149,8 +96823,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
@@ -97451,8 +97124,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Virology Satellite APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -97661,8 +97333,7 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -97781,8 +97452,7 @@
 "dPN" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
@@ -98727,8 +98397,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/camera{
 	c_tag = "Chapel - Starboard";
@@ -98926,8 +98595,7 @@
 /obj/item/weapon/hand_labeler,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	icon_state = "intact";
@@ -99251,8 +98919,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/closet/secure_closet/medical1,
 /obj/machinery/light_switch{
@@ -99463,8 +99130,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -26;
-	pixel_y = 0
+	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -100183,8 +99849,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/port/aft)
@@ -100444,8 +100109,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/space,
 /area/solar/port/aft)
@@ -100453,8 +100117,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
@@ -100470,8 +100133,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
@@ -100486,8 +100148,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -101632,8 +101293,7 @@
 /obj/structure/filingcabinet/security,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/light_switch{
 	pixel_x = -26;
@@ -102265,8 +101925,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/status_display{
 	pixel_x = 0;
@@ -102760,8 +102419,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -102796,8 +102454,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -103124,8 +102781,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
@@ -103289,8 +102945,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/atmospherics_engine)
@@ -103301,8 +102956,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -103314,8 +102968,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -103323,8 +102976,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -103831,8 +103483,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
@@ -105028,8 +104679,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_y = -32
@@ -105296,8 +104946,7 @@
 "ehj" = (
 /obj/machinery/requests_console{
 	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 0
+	name = "Arrivals Shuttle console"
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
@@ -105590,8 +105239,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
@@ -105642,8 +105290,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -105659,8 +105306,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
@@ -105676,8 +105322,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
@@ -105687,8 +105332,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/external{
 	name = "External Solar Access";
@@ -105741,8 +105385,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Port Primary Hallway APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -105785,8 +105428,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Starboard Quarter Maintenace APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -105802,8 +105444,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Aft Primary Hallway APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -138311,7 +137952,7 @@ aaD
 aax
 aax
 aaD
-abP
+abT
 aax
 acj
 aax
