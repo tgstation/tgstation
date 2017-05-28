@@ -475,8 +475,7 @@
 	dir = 5
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -1175,8 +1174,7 @@
 	pixel_x = -32
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -1194,8 +1192,7 @@
 	pixel_x = 32
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -1299,8 +1296,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -1591,8 +1587,7 @@
 "adr" = (
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -1783,8 +1778,7 @@
 /area/shuttle/arrival)
 "adM" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -1807,8 +1801,7 @@
 /area/shuttle/arrival)
 "adP" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -3001,8 +2994,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -3077,8 +3069,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -3440,8 +3431,7 @@
 /area/hallway/secondary/entry)
 "ahF" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/entry)
@@ -3464,8 +3454,7 @@
 /area/hallway/secondary/entry)
 "ahJ" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -4454,10 +4443,7 @@
 /area/crew_quarters/electronic_marketing_den)
 "ajY" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/electronic_marketing_den)
@@ -5907,8 +5893,7 @@
 /area/security/vacantoffice)
 "anu" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -5986,8 +5971,7 @@
 	pixel_y = -32
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/entry)
@@ -6717,8 +6701,7 @@
 /area/hallway/secondary/entry)
 "ape" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -6753,8 +6736,7 @@
 /area/hallway/secondary/entry)
 "api" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -10010,10 +9992,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
@@ -20988,10 +20967,7 @@
 /area/engine/atmos)
 "aRq" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -25417,8 +25393,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -28255,8 +28230,7 @@
 "bgb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -29197,8 +29171,7 @@
 "bhT" = (
 /obj/machinery/light,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/brown,
 /area/hallway/primary/fore)
@@ -30592,8 +30565,7 @@
 	dir = 6
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -31407,8 +31379,7 @@
 /area/engine/atmos)
 "bms" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 1
@@ -40679,8 +40650,7 @@
 "bDm" = (
 /obj/structure/disposalpipe/segment,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
@@ -47023,10 +46993,7 @@
 /area/engine/transit_tube)
 "bPB" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/vault{
@@ -50665,8 +50632,7 @@
 /area/security/checkpoint/engineering)
 "bWd" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
@@ -51019,8 +50985,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
@@ -56551,10 +56516,7 @@
 /area/library)
 "chT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -60272,8 +60234,7 @@
 	dir = 4
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/blue/corner{
 	icon_state = "bluecorner";
@@ -61597,8 +61558,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/blue/corner,
 /area/hallway/secondary/command)
@@ -61742,8 +61702,7 @@
 /area/hallway/primary/central)
 "csA" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -65327,10 +65286,7 @@
 /area/library)
 "czF" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -71298,8 +71254,7 @@
 /area/science/research)
 "cLJ" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4
@@ -71307,8 +71262,7 @@
 /area/science/research)
 "cLK" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 1
@@ -73894,8 +73848,7 @@
 /area/security/checkpoint/science/research)
 "cQR" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
@@ -73970,8 +73923,7 @@
 	})
 "cRa" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay{
@@ -74615,8 +74567,7 @@
 /area/science/research)
 "cSl" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
@@ -74692,8 +74643,7 @@
 "cSv" = (
 /obj/structure/disposalpipe/segment,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
@@ -80712,15 +80662,13 @@
 /area/science/lab)
 "deN" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/purple,
 /area/hallway/primary/aft)
 "deO" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/orange,
 /area/hallway/primary/aft)
@@ -81079,8 +81027,7 @@
 /area/medical/abandoned)
 "dfx" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -89844,10 +89791,7 @@
 /area/science/research/abandoned)
 "dxo" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -89893,10 +89837,7 @@
 /area/science/research/abandoned)
 "dxu" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -93612,8 +93553,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -95408,8 +95348,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -97529,8 +97468,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dMZ" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -97545,8 +97483,7 @@
 	dir = 4
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -99205,8 +99142,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -101257,8 +101193,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -102701,8 +102636,7 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -102710,8 +102644,7 @@
 /area/shuttle/escape)
 "dXY" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -103868,8 +103801,7 @@
 	dir = 1
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/vault{
 	icon_state = "vault";
@@ -105920,8 +105852,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -105975,8 +105906,7 @@
 "egF" = (
 /obj/effect/turf_decal/delivery,
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -106336,8 +106266,7 @@
 	dir = 8
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1
+	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -106364,10 +106293,7 @@
 /area/shuttle/escape)
 "ehu" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+	icon_state = "plant-21"
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
