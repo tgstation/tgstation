@@ -1102,4 +1102,4 @@
 	if(target == user || target == get_turf(src))
 		return
 	target_turf = get_turf(target)
-	fire_helper(target_turf)
+	fire_helper(user)
