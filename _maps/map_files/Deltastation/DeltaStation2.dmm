@@ -1747,7 +1747,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1758,7 +1757,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/entry)
@@ -1945,7 +1943,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/construction/mining/aux_base)
@@ -2843,8 +2840,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -2935,8 +2930,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 1
@@ -4065,7 +4058,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/vacantoffice)
@@ -4129,7 +4121,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 8
@@ -4275,7 +4266,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -4592,7 +4582,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
@@ -5195,8 +5184,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -7714,7 +7701,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8967,7 +8953,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/maintenance/port/fore)
@@ -9091,7 +9076,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	icon_state = "whitegreen";
@@ -9475,7 +9459,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -10086,7 +10069,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -10751,7 +10733,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/warehouse)
@@ -11073,6 +11054,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn,
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple,
 /obj/effect/turf_decal/bot,
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics/garden/abandoned)
 "ayf" = (
@@ -11970,7 +11957,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
@@ -12774,8 +12760,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Bar Backroom";
@@ -13261,7 +13245,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/secondary/service)
@@ -13418,7 +13401,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -13979,7 +13961,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -14484,8 +14465,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/prison)
@@ -14952,7 +14931,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/loadingarea,
 /area/hallway/secondary/service)
@@ -15031,7 +15009,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -15148,7 +15125,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
@@ -15439,7 +15415,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -15701,7 +15676,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -15963,8 +15937,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/caution,
 /area/maintenance/disposal/incinerator)
@@ -16179,7 +16151,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
@@ -16326,7 +16297,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/supply)
@@ -17031,8 +17001,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17132,8 +17100,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/darkred/corner{
 	icon_state = "darkredcorners";
@@ -19095,8 +19061,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -20563,8 +20527,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 4
@@ -20732,7 +20694,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plasteel/vault{
@@ -21038,7 +20999,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
@@ -21502,8 +21462,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -21533,8 +21491,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -21556,8 +21512,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -21982,7 +21936,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
@@ -22069,8 +22022,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22135,8 +22086,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
@@ -22254,7 +22203,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -22441,7 +22389,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -23000,7 +22947,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo - Quartermaster's Office";
@@ -23524,7 +23470,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/caution{
@@ -24057,7 +24002,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -24535,7 +24479,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/kitchen)
@@ -25816,7 +25759,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/greenblue/side,
 /area/hydroponics)
@@ -26950,7 +26892,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -27393,7 +27334,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/miningoffice)
@@ -27475,7 +27415,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
@@ -28104,7 +28043,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28201,7 +28139,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/fore)
@@ -28241,7 +28178,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/miningoffice)
@@ -30338,8 +30274,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -31557,7 +31491,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -31675,8 +31608,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/cable/white{
 	icon_state = "1-4"
@@ -31783,7 +31714,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall14";
@@ -31840,7 +31770,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -32509,7 +32438,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hydroponics)
@@ -33125,7 +33053,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
@@ -33174,7 +33101,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -33294,8 +33220,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -33362,8 +33286,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -33773,7 +33695,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/main)
@@ -34278,8 +34199,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -34629,7 +34548,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35358,7 +35276,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -36710,8 +36627,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -36864,7 +36779,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -37433,8 +37347,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -37592,7 +37504,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/transfer)
@@ -37724,7 +37635,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -39571,7 +39481,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39958,8 +39867,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -39976,7 +39883,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/gravity_generator)
@@ -40077,7 +39983,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/break_room)
@@ -41156,7 +41061,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -41263,7 +41167,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/storage/primary)
@@ -41394,7 +41297,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Bridge - Command Chair";
@@ -41791,7 +41693,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -42118,7 +42019,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -42598,7 +42498,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -42628,7 +42527,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -42998,7 +42896,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43227,7 +43124,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/carpet,
 /area/bridge/meeting_room/council)
@@ -43505,6 +43401,12 @@
 /obj/structure/closet/toolcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 4
 	},
@@ -44378,7 +44280,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
@@ -44466,8 +44367,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
@@ -44529,8 +44428,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -44729,8 +44626,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/warden)
@@ -44758,8 +44653,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -45501,7 +45394,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -45586,7 +45478,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -46975,8 +46866,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -47039,7 +46928,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
@@ -47998,7 +47886,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -48095,7 +47982,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -48139,7 +48025,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -48214,7 +48099,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -48450,7 +48334,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -48487,8 +48370,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -48580,8 +48461,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/port)
@@ -48965,7 +48844,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
@@ -51577,7 +51455,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -52172,7 +52049,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
@@ -52699,8 +52575,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -53382,7 +53256,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -53441,7 +53314,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -53501,7 +53373,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hop)
@@ -53997,7 +53868,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/brig)
@@ -54659,7 +54529,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -54717,7 +54586,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Brig Desk";
@@ -54947,7 +54815,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -56713,7 +56580,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -56957,8 +56823,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -57616,7 +57480,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/courtroom)
@@ -57823,7 +57686,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
@@ -58146,7 +58008,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -58254,7 +58115,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -59127,7 +58987,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -59176,7 +59035,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -59495,8 +59353,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -59811,7 +59667,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -60377,6 +60232,11 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/command)
 "cpL" = (
@@ -60870,7 +60730,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/command)
@@ -61662,8 +61521,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -62101,7 +61958,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -62131,7 +61987,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -62836,8 +62691,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1;
@@ -63161,7 +63014,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/gateway)
@@ -63270,7 +63122,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/locker)
@@ -64161,6 +64012,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/geranium,
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cxw" = (
@@ -64194,6 +64051,12 @@
 	},
 /obj/item/clothing/under/kilt,
 /obj/item/clothing/head/beret,
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "cxz" = (
@@ -64236,6 +64099,12 @@
 	icon_state = "curator"
 	},
 /obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "cxC" = (
@@ -64275,7 +64144,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -64585,7 +64453,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
@@ -64912,8 +64779,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/toilet/restrooms)
@@ -65412,7 +65277,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -65649,7 +65513,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -65665,7 +65528,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
@@ -66025,8 +65887,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
@@ -66521,11 +66381,19 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cCf" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 2;
+	on = 1;
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cCg" = (
@@ -66534,6 +66402,10 @@
 /area/crew_quarters/dorms)
 "cCh" = (
 /obj/structure/dresser,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 2;
+	on = 1;
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "cCi" = (
@@ -66548,10 +66420,18 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "cCj" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 2;
+	on = 1;
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "cCk" = (
@@ -67654,10 +67534,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	icon_state = "manifold";
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -68319,7 +68196,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall6";
@@ -68370,8 +68246,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall7";
@@ -68431,7 +68305,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -68672,6 +68545,7 @@
 /area/crew_quarters/dorms)
 "cGb" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
@@ -68680,11 +68554,9 @@
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
 "cGd" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	icon_state = "manifold";
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
@@ -68700,6 +68572,7 @@
 /area/crew_quarters/dorms)
 "cGg" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/dorms)
 "cGh" = (
@@ -69243,6 +69116,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/dorms)
 "cHq" = (
@@ -69283,6 +69161,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -69302,10 +69181,10 @@
 /area/crew_quarters/dorms)
 "cHu" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -69359,6 +69238,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/dorms)
 "cHz" = (
@@ -69418,7 +69298,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -69998,7 +69877,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/fitness/recreation)
@@ -70594,7 +70472,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	icon_state = "whiteblue";
@@ -70766,6 +70643,10 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "cKL" = (
@@ -70778,6 +70659,10 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "cKM" = (
@@ -70786,6 +70671,10 @@
 	name = "Station Intercom";
 	pixel_x = 26;
 	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -70802,6 +70691,10 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cKO" = (
@@ -70811,6 +70704,10 @@
 	name = "Station Intercom";
 	pixel_x = 26;
 	pixel_y = 26
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
@@ -71547,7 +71444,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/department/electrical)
@@ -71880,8 +71776,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -72010,8 +71904,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/cmo,
 /area/medical/medbay/central)
@@ -72470,7 +72362,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -73015,7 +72906,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/checkpoint/medical)
@@ -73179,6 +73069,11 @@
 /obj/item/clothing/suit/toggle/lawyer,
 /obj/item/clothing/under/maid,
 /obj/item/clothing/head/kitty,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "cPO" = (
@@ -73202,6 +73097,11 @@
 	icon_state = "detective"
 	},
 /obj/item/clothing/under/lawyer/female,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "cPQ" = (
@@ -73226,6 +73126,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy/lily,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "cPS" = (
@@ -73961,8 +73866,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
@@ -74178,8 +74081,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -74311,7 +74212,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/button/door{
 	desc = "A remote control switch.";
@@ -74362,6 +74262,11 @@
 /obj/item/weapon/electronics/airlock,
 /obj/item/weapon/stock_parts/console_screen,
 /obj/item/device/assembly/signaler,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 8
 	},
@@ -74497,6 +74402,11 @@
 /area/medical/medbay/central)
 "cSw" = (
 /obj/structure/bed/roller,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -75424,7 +75334,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -76794,7 +76703,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
@@ -76863,7 +76771,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -77071,7 +76978,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
@@ -77548,6 +77454,12 @@
 	},
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/bot,
+/obj/machinery/airalarm{
+	dir = 4;
+	locked = 0;
+	pixel_x = -23;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel,
 /area/science/research)
 "cYN" = (
@@ -77694,8 +77606,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 5
@@ -77744,7 +77654,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -79380,8 +79289,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -79438,8 +79345,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/lab)
@@ -79617,7 +79522,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/medbay/central)
@@ -79660,7 +79564,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/blue,
 /area/medical/medbay/central)
@@ -80004,6 +79907,12 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
 	},
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -81320,8 +81229,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
@@ -81368,7 +81275,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -81527,8 +81433,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -81881,7 +81785,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -83287,7 +83190,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -83513,7 +83415,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
@@ -83570,7 +83471,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/genetics/cloning)
@@ -84699,7 +84599,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/surgery)
@@ -84745,7 +84644,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/blue,
 /area/medical/surgery)
@@ -85010,7 +84908,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -85244,7 +85141,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -86423,7 +86319,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/medbay/central)
@@ -86727,7 +86622,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
@@ -86798,6 +86692,11 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
@@ -87003,7 +86902,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -87065,7 +86963,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/blue,
@@ -87668,7 +87565,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	icon_state = "whitepurplecorner";
@@ -88085,7 +87981,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/heads/hor)
@@ -89008,7 +88903,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/cmo,
 /area/crew_quarters/heads/cmo)
@@ -89508,7 +89402,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/robotics/lab)
@@ -89576,8 +89469,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -89733,7 +89624,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/cmo,
 /area/medical/medbay/central)
@@ -89875,7 +89765,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/mixing)
@@ -89960,7 +89849,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -91211,7 +91099,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -91266,7 +91153,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -91499,7 +91385,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -91972,18 +91857,25 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
 /turf/open/floor/plasteel/neutral,
 /area/science/research)
 "dCM" = (
 /obj/structure/cable/white{
 	icon_state = "0-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Research Division APC";
 	pixel_x = 26;
 	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	icon_state = "manifold";
+	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
@@ -92100,7 +91992,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -92386,7 +92277,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -93920,7 +93810,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -94242,7 +94131,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -94887,7 +94775,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/white{
@@ -95718,7 +95605,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/bot,
@@ -95765,7 +95651,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -96263,7 +96148,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/blue/side,
 /area/security/checkpoint/customs)
@@ -96526,7 +96410,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/virology)
@@ -96572,7 +96455,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/green,
 /area/medical/virology)
@@ -97502,8 +97384,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -97973,8 +97853,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -98055,8 +97933,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
 	},
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/whitegreen/side{
@@ -98168,7 +98044,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
@@ -98903,7 +98778,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -99109,7 +98983,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -100624,7 +100497,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	icon_state = "whitegreen";
@@ -100661,7 +100533,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	icon_state = "whitegreen";
@@ -100861,7 +100732,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -100884,7 +100754,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
@@ -100979,7 +100848,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit/departure_lounge)
@@ -101837,7 +101705,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -102221,7 +102088,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/neutral,
 /area/security/checkpoint/checkpoint2)
@@ -102287,7 +102153,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -103650,7 +103515,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -103695,6 +103559,10 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "eci" = (
@@ -103706,6 +103574,10 @@
 	pixel_y = 7;
 	req_access_txt = "0";
 	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -103767,7 +103639,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
@@ -103873,7 +103744,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
@@ -103934,7 +103804,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
@@ -103951,7 +103820,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
-	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics/garden/abandoned)
@@ -106091,6 +105959,254 @@
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/aft)
+"eiP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/hallway/secondary/command)
+"eiQ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	icon_state = "manifold";
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/hallway/secondary/command)
+"eiR" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/hallway/secondary/command)
+"eiS" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/hallway/secondary/command)
+"eiT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"eiU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"eiV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"eiW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"eiX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"eiY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"eiZ" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/crew_quarters/dorms)
+"eja" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/crew_quarters/dorms)
+"ejb" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/crew_quarters/dorms)
+"ejc" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/crew_quarters/dorms)
+"ejd" = (
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/crew_quarters/dorms)
+"eje" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/dorms)
+"ejf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/dorms)
+"ejg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/dorms)
+"ejh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/dorms)
+"eji" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	icon_state = "manifold";
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/crew_quarters/dorms)
+"ejj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8;
+	heat_capacity = 1e+006
+	},
+/area/crew_quarters/dorms)
+"ejk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/crew_quarters/dorms)
+"ejl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/corner,
+/area/crew_quarters/dorms)
+"ejm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"ejn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"ejo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"ejp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"ejq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"ejr" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/dorms)
+"ejs" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	locked = 0;
+	pixel_y = 23;
+	req_access = null;
+	req_one_access_txt = "24;10"
+	},
+/turf/open/floor/plasteel/whitepurple/corner{
+	dir = 1
+	},
+/area/science/research)
+"ejt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/science/research)
+"eju" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	locked = 0;
+	pixel_x = -23;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/whitepurple/corner{
+	dir = 8
+	},
+/area/science/research)
 
 (1,1,1) = {"
 aaa
@@ -137356,7 +137472,7 @@ cYF
 cZR
 dbj
 dcJ
-cOW
+eju
 dad
 dhq
 djj
@@ -139143,7 +139259,7 @@ cFs
 cGK
 cId
 cJM
-cLs
+ejs
 cLs
 cOO
 cOO
@@ -141209,8 +141325,8 @@ cVv
 cXm
 cYM
 dac
-dbo
-cLE
+dbm
+ejt
 dez
 dgr
 dhD
@@ -141955,7 +142071,7 @@ cjw
 ckX
 bQn
 cnM
-cpp
+eiR
 cqH
 crY
 ctF
@@ -144524,7 +144640,7 @@ ecG
 cjC
 clc
 cmt
-cnM
+eiP
 cpy
 cqM
 csf
@@ -145081,10 +145197,10 @@ cKe
 eiI
 eiK
 dyV
-eiL
-eiM
-eiN
-eiO
+eiK
+eiK
+eiK
+eiK
 dES
 dGr
 dHN
@@ -146837,8 +146953,8 @@ cfi
 cfi
 cfi
 cfi
-cnV
-cpG
+eiQ
+eiS
 cqS
 csm
 ctS
@@ -156356,11 +156472,11 @@ cxt
 cyT
 cAK
 cCe
-cvP
-cEq
+eiT
+eiZ
 cGb
 cHs
-cvP
+ejm
 eci
 cCg
 cNS
@@ -156615,7 +156731,7 @@ cyT
 cyT
 cDp
 cEq
-cGc
+eje
 cHt
 cIM
 cyX
@@ -156870,11 +156986,11 @@ cxv
 cyU
 cAL
 cCf
-cvP
-cEq
+eiU
+eja
 cGd
 cHu
-cvP
+ejn
 cKK
 cMj
 cyX
@@ -157384,11 +157500,11 @@ cxw
 cyV
 cCg
 ech
-cvP
-cEq
-cGc
-cHt
-cvP
+eiV
+ejb
+ejf
+ejj
+ejo
 cKL
 cMk
 cyY
@@ -157898,11 +158014,11 @@ cxy
 cyX
 cAM
 cCh
-cvP
-cEt
-cGc
-cHx
-cvP
+eiW
+ejc
+ejg
+ejk
+ejp
 cKM
 cyZ
 cyZ
@@ -158157,7 +158273,7 @@ cvP
 cvP
 cvP
 cEu
-cGc
+ejh
 cHx
 cvP
 cvP
@@ -158412,11 +158528,11 @@ cxz
 cyY
 cAN
 cCi
-cvP
+eiX
 cEv
-cFY
+eji
 cHy
-cvP
+ejq
 cKN
 cMl
 cyT
@@ -158926,11 +159042,11 @@ cxB
 cyZ
 cyZ
 cCj
-cvP
-cEt
+eiY
+ejd
 cGg
-cHx
-cvP
+ejl
+ejr
 cKO
 cMm
 cNU
