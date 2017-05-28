@@ -169,6 +169,7 @@
 					if(!is_type_in_list(REA, ale.contained_reagents.reagent_list))
 						ale.contained_reagents.add_reagent(REA.id, 1)
 						TA.contained_reagents.del_reagent(REA.id)
+				ale.boozepwr = TA.boozepwr
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()

@@ -43,13 +43,13 @@
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
-				return
+				return 0
 		if(R && R.volume)
 			to_chat(user, "There's not enough in the mold to make a full cast!")
-			return
+			return 0
 		else
 			to_chat(user, "There's nothing in the mold!")
-			return
+			return 0
 	if(istype(W, /obj/item/weapon/smith_hammer))
 		if(current_mold)
 			to_chat(user, "You break the result out of the mold.")

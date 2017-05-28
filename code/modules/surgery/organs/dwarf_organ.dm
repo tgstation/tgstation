@@ -20,7 +20,7 @@
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
-			stored_alcohol += (E.boozepwr / 100)
+			stored_alcohol += (E.boozepwr / 50)
 			if(stored_alcohol > max_alcohol)
 				stored_alcohol = max_alcohol
 	var/heal_amt = heal_rate

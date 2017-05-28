@@ -18,7 +18,7 @@
 	if(!brewing_result)
 		return ..()
 	if(user.temporarilyRemoveItemFromInventory(W))
-		seedify(W)
+		seedify(W, rand(1,4))
 		brewables += list(brewing_result)
 		already_brewing += W.type
 		to_chat(user, "You insert [W] into [src].")
