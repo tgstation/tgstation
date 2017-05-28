@@ -94,7 +94,7 @@
 	for (var/objective_ in owner.objectives)
 		if(!(istype(objective_, /datum/objective/escape)||istype(objective_,/datum/objective/survive)))
 			continue
-		owner.objectives -= objective_
+		remove_objective(objective_)
 		
 	var/datum/objective/martyr/martyr_objective = new
 	martyr_objective.owner = owner
@@ -106,7 +106,7 @@
 	for (var/objective_ in owner.objectives)
 		if(!istype(objective_, /datum/objective/martyr))
 			continue
-		owner.objectives -= objective_
+		remove_objective(objective_)
 	if(issilicon(owner))	
 		var/datum/objective/survive/survive_objective = new
 		survive_objective.owner = owner
