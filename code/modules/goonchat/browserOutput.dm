@@ -233,7 +233,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || !istype(target, /client) || istype(target, /datum/log)))
+	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || istype(target, /client) || istype(target, /datum/log)))
 		target << message
 		stack_trace("to_chat called with invalid target! [target]")
 		if (!istype(target, /atom)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
