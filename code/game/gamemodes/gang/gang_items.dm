@@ -162,7 +162,7 @@
 	reinforce()
 	gang.gateways++
 
-/obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
+/obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
 	for(var/mob/M in contents)
 		qdel(M)
 	return ..()
@@ -175,7 +175,7 @@
 	var/cooldown = 0
 	for(var/datum/gang/baddies in SSticker.mode.gangs)
 		if(baddies == G)
-			for(var/datum/mind/M in G.gangsters)
+			for(var/datum/mind/M in G.gangsters|G.bosses)
 				if(M.current.stat == DEAD)
 					var/mob/O = M.get_ghost(TRUE)
 					if(O)
@@ -611,14 +611,14 @@
 /datum/gang_item/equipment/gangbreaker
 	name = "Gangbreaker Implant"
 	id = "gangbreaker"
-	cost = 20
+	cost = 15
 	item_path = /obj/item/weapon/implanter/mindshield
 	spawn_msg = "<span class='notice'>Nanotrasen has provided you with a prototype mindshield implant that will both break a gang's control over a person and shield them from further conversion attempts.Gang bosses are immune.</b></u></span>"
 
 /datum/gang_item/equipment/recruiter
 	name = "Advanced Recruitment Implant"
 	id = "recruitment"
-	cost = 20
+	cost = 15
 	item_path = /obj/item/weapon/implanter/gang
 	spawn_msg = "<span class='notice'>The <b>Advanced Recruitment Implant</b> is a single-use device that is guaranteed to convert anyone into your gang, only rival gang bosses are immune.</b></u></span>"
 
@@ -687,7 +687,7 @@
 			H.grab_ghost()
 			H.revive()
 			H.emote("gasp")
-			H.setBrainLoss(70)
+			H.setBrainLoss(40)
 			add_logs(user, H, "revived", src)
 			icon_state = "implanter0"
 
