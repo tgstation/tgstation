@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - spellcheck: "Renames hivelord and legion cores to 'regenerative core'. Their descs have also been updated to be more clear."

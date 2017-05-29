@@ -1,5 +1,5 @@
 /datum/getrev
-	var/parentcommit
+	var/originmastercommit
 	var/commit
 	var/list/testmerge = list()
 	var/date
@@ -7,13 +7,17 @@
 /datum/getrev/New()
 	if(fexists(PR_TEST_JSON))
 		testmerge = json_decode(file2text(PR_TEST_JSON))
-	var/list/logs = world.file2list(".git/logs/HEAD")
-	logs = splittext(logs[logs.len - 1], " ")
-	date = unix2date(text2num(logs[5]))
-	parentcommit = logs[1]
-	commit = logs[2]
 	log_world("Running /tg/ revision:")
-	log_world("[date]")
+	var/list/logs = world.file2list(".git/logs/HEAD")
+	if(logs)
+		logs = splittext(logs[logs.len - 1], " ")
+		date = unix2date(text2num(logs[5]))
+		commit = logs[2]
+		log_world("[date]")
+	logs = world.file2list(".git/logs/refs/remotes/origin/master")
+	if(logs)
+		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+
 	if(testmerge.len)
 		log_world(commit)
 		for(var/line in testmerge)
@@ -21,9 +25,9 @@
 				var/tmcommit = testmerge[line]["commit"]
 				log_world("Test merge active of PR #[line] commit [tmcommit]")
 				SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
-		log_world("Based off master commit [parentcommit]")
+		log_world("Based off origin/master commit [originmastercommit]")
 	else
-		log_world(parentcommit)
+		log_world(originmastercommit)
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
@@ -39,13 +43,13 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	if(GLOB.revdata.parentcommit)
+	if(GLOB.revdata.originmastercommit)
 		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
 		var/prefix = ""
 		if(GLOB.revdata.testmerge.len)
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
-			prefix = "Based off master commit: "
-		var/pc = GLOB.revdata.parentcommit
+			prefix = "Based off origin/master commit: "
+		var/pc = GLOB.revdata.originmastercommit
 		to_chat(src, "[prefix]<a href='[config.githuburl]/commit/[pc]'>[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")

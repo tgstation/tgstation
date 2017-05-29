@@ -42,7 +42,7 @@
 	var/static/list/meson_mining_failure_excuses = list("seismic activity", "excessive lava", "ambient radiation", "electromagnetic storms", "bluespace disruption", \
 	"gravity", "dust", "dense rock", "ash", "badly understood science", "radiant heat")
 	var/picked_excuse
-	var/mode = FALSE //if FALSE, is in normal meson mode.
+	var/mesons_on = TRUE
 
 /obj/item/clothing/glasses/meson/Initialize()
 	. = ..()
@@ -56,34 +56,28 @@
 /obj/item/clothing/glasses/meson/examine(mob/user)
 	..()
 	var/turf/T = get_turf(src)
-	if(T && T.z == ZLEVEL_MINING && mode && picked_excuse)
+	if(T && T.z == ZLEVEL_MINING && !mesons_on && picked_excuse)
 		to_chat(user, "<span class='warning'>Due to [picked_excuse], these Meson Scanners will not be able to display terrain layouts in this area.</span>")
 
 /obj/item/clothing/glasses/meson/proc/toggle_mode(mob/user)
-	if(vision_flags & SEE_TURFS)
-		mode = TRUE
-		vision_flags &= ~SEE_TURFS
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(picked_excuse)
-				to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
-			if(H.glasses == src)
-				H.update_sight()
-	else if(!(vision_flags & SEE_TURFS))
-		mode = FALSE
-		vision_flags |= SEE_TURFS
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			to_chat(H, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
-			if(H.glasses == src)
-				H.update_sight()
+	vision_flags ^= SEE_TURFS
+	mesons_on = (vision_flags & SEE_TURFS)? TRUE : FALSE
+
+	if(iscarbon(user)) //only carbons can wear glasses
+		var/mob/living/carbon/C = user
+		if(mesons_on)
+			to_chat(C, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
+		else if(picked_excuse)
+			to_chat(C, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+		if(C.glasses == src)
+			C.update_sight()
 
 /obj/item/clothing/glasses/meson/process()
 	var/turf/T = get_turf(src)
 	if(T && T.z == ZLEVEL_MINING)
-		if(!mode)
+		if(mesons_on) //if we're on mining, turn mesons OFF
 			toggle_mode(loc)
-	else if(mode)
+	else if(!mesons_on) //otherwise, if we're not on mining, turn mesons back ON
 		toggle_mode(loc)
 
 /obj/item/clothing/glasses/meson/night
