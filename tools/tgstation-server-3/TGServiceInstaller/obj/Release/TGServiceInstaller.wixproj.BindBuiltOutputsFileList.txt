@@ -1,0 +1,2 @@
+D:\tgstation\tools\tgstation-server-3\TGServiceInstaller\bin\Release\cab1.cab
+D:\tgstation\tools\tgstation-server-3\TGServiceInstaller\bin\Release\TGServiceInstaller.exe

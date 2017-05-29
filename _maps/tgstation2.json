@@ -1,7 +1,0 @@
-{
-    "map_name": "Box Station",
-    "map_path": "map_files/TgStation",
-    "map_file": "tgstation.2.1.3.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default"
-}

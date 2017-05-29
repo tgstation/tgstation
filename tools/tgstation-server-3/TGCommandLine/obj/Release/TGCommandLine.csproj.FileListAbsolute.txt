@@ -1,0 +1,8 @@
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\bin\Release\TGCommandLine.exe.config
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\bin\Release\TGCommandLine.exe
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\bin\Release\TGCommandLine.pdb
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\bin\Release\TGServiceInterface.dll
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\bin\Release\TGServiceInterface.pdb
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\obj\Release\TGCommandLine.exe
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\obj\Release\TGCommandLine.pdb
+D:\tgstation\tools\tgstation-server-3\TGCommandLine\obj\Release\TGCommandLine.csprojResolveAssemblyReference.cache
