@@ -231,7 +231,7 @@
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
 		SSshuttle.registerHostileEnvironment(src)
-		src.name = "[gang.name] Gang [name]"
+		name = "[gang.name] Gang [name]"
 		operating = 1
 		icon_state = "dominator-[gang.color]"
 
