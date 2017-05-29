@@ -67,7 +67,7 @@
 				I.smelted_material = new R.type()
 				I.post_smithing()
 			else
-				I = new R.produce_type(get_turf(src))
+				I = new R.produce_type(get_turf(src), new_amount=5)
 			qdel(current_mold)
 			cut_overlay(my_mold)
 			my_mold = null

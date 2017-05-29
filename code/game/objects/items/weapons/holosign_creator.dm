@@ -27,6 +27,12 @@
 			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
 			qdel(H)
 		else
+			var/mandate
+			if(istype(src, /obj/item/weapon/holosign_creator/mandate))
+				mandate = stripped_input(user, "What Mandate do you wish to declare?", "Mandate")
+				if(!mandate)
+					to_chat(user,"You decide against a mandate.")
+					return
 			if(!is_blocked_turf(T, TRUE)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
 					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
@@ -44,9 +50,21 @@
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 							return
 					H = new holosign_type(get_turf(target), src)
+					if(istype(H, /obj/structure/holosign/mandate))
+						var/obj/structure/holosign/mandate/M = H
+						M.mandate = mandate
+						for(var/D in GLOB.dwarves_list)
+							var/mob/living/carbon/human/HM = D
+							if(HM != user)
+								to_chat(HM, "<span class = 'userdanger'>A new mandate has been issued! You take the time to read it and contemplate it:</span>")
+								to_chat(HM, "<span class = 'danger'>[mandate]</span>")
+								HM.Stun(2)
 					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 				else
 					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+			else
+				to_chat(user, "<span class='notice'>[src] can't place a hologram there.</span>")
+				return
 
 /obj/item/weapon/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -114,3 +132,12 @@
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
+
+
+/obj/item/weapon/holosign_creator/mandate
+	name = "royal scepter"
+	desc = "Allows you to mandate orders to your dwarves."
+	icon_state = "mandate"
+	holosign_type = /obj/structure/holosign/mandate
+	creation_time = 30
+	max_signs = 1

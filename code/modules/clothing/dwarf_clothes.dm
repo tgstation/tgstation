@@ -22,7 +22,7 @@
 		name = "[S.material_type] armor"
 		desc = "Armor forged from [S.material_type]."
 		for(var/A in armor)
-			A = S.attack_amt/100
+			A = S.attack_amt*2
 
 
 
@@ -67,4 +67,4 @@
 		name = "[S.material_type] helmet"
 		desc = "Helmet forged from [S.material_type]."
 		for(var/A in armor)
-			A = S.attack_amt/100
+			A = S.attack_amt*2

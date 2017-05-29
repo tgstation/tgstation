@@ -1,5 +1,5 @@
 /obj/item/organ/alcoholvessel //essentially the opposite of the xeno's plasmavessel, but with alcohol
-	name = "alcohol vessel"
+	name = "adamantine infused lungs"
 	icon_state = "plasma"
 	origin_tech = "biotech=5"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -16,7 +16,41 @@
 	return S
 
 
-/obj/item/organ/alcoholvessel/on_life()//alcohol usage
+/obj/item/organ/alcoholvessel/on_life()
+	// MIASMA HANDLING
+	var/miasma_counter = 0
+	for(var/fuck in view(owner,7))
+		if(istype(fuck, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = fuck
+			if(H.stat == DEAD)
+				miasma_counter += 10
+		if(istype(fuck, /obj/effect/decal/cleanable/blood))
+			if(istype(fuck, /obj/effect/decal/cleanable/blood/gibs))
+				miasma_counter += 1
+			else
+				miasma_counter += 0.1
+	switch(miasma_counter)
+		if(11 to 25)
+			if(prob(5))
+				to_chat(owner, "<span class = 'danger'>Someone should really clean up in here!</span>")
+		if(26 to 50)
+			if(prob(5))
+				to_chat(owner, "<span class = 'danger'>The stench makes you queasy.</span>")
+				if(prob(5))
+					owner.vomit(20)
+		if(51 to 75)
+			if(prob(10))
+				to_chat(owner, "<span class = 'danger'>By Armok! You won't be able to keep ale down at all!</span>")
+				if(prob(10))
+					owner.vomit(20)
+		if(76 to 100)
+			if(prob(15))
+				to_chat(owner, "<span class = 'userdanger'>You can't live in such filth!</span>")
+				if(prob(15))
+					owner.adjustToxLoss(6)
+					owner.vomit(20)
+
+	// BOOZE HANDLING
 	for(var/datum/reagent/R in owner.reagents.reagent_list)
 		if(istype(R, /datum/reagent/consumable/ethanol))
 			var/datum/reagent/consumable/ethanol/E = R
