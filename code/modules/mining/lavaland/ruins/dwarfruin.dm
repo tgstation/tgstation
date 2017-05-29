@@ -65,7 +65,7 @@
 	M.equipOutfit(dorf_gear)
 	M.real_name = M.dna.species.random_name()
 	to_chat(M, "<span class='notice'>You have arrived. After a journey from The Mountainhomes into the forbidding beyond.\
-	 Your harsh trek has finally ended. A new chapter of Dorven history begins at this place 'Koganusan' -Boatmurdered- Strike the Earth.</span>")
+	 Your harsh trek has finally ended. A new chapter of Dorven history begins at this place 'Koganusan' -Boatmurdered- Strike the Earth.<br><br>There's been rumors of a station occupied by Humans nearby. It's dangerous to fight them, so you probably shouldn't invade unless they really provoke you.<br>The rest of lavaland is rightfully the Dwarven peoples', and you should forge your own path for the empire, be it friendly or hostile.</span>")
 	M.mind.special_role = "Dwarf"
 	var/datum/objective/O = new("Make claim to these hellish lands, constructing a great fortress and mining the rock for its precious metals, in the name of the Dwarven people!")
 	M.mind.objectives += O
