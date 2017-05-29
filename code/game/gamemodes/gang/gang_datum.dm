@@ -206,22 +206,19 @@
 
 
 /datum/gang/proc/income()
-	world << "[name] is starting with [territory.len]"
 	var/added_names = ""
 	var/lost_names = ""
 	bosses_working = FALSE
 	for(var/datum/mind/B in bosses)
 		var/mob/living/bossman = B.current
-		for(var/obj/item/T in bossman.contents)
-			if(istype(T, /obj/item/device/gangtool) && bossman.stat != DEAD && !bossman.client.is_afk())
+		for(var/obj/item/T in bossman.GetAllContents())
+			if(istype(T, /obj/item/device/gangtool) && (bossman.stat != DEAD))
 				bosses_working = TRUE
 				break
 	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
 
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
-	for(var/place in reclaimed_territories)
-		world << "[place] was reclaimed by [name]"
 	territory |= reclaimed_territories
 	territory_new -= reclaimed_territories
 	territory_lost -= reclaimed_territories
@@ -240,7 +237,6 @@
 		if(added_names != "")
 			added_names += ", "
 		added_names += "[territory_new[area]]"
-		world << "[area] was claimed by [name]"
 		territory += area
 
 	//Report territory changes

@@ -87,7 +87,7 @@
 /datum/gang_item/function/leadership/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(!gang || (src in gang.bosses))
 		return
-	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool(user.loc)
+	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool/spare/lt(user.loc)
 	O.points = gangtool.points
 	qdel(gangtool)
 	O.register_device(user)
