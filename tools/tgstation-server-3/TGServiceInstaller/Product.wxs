@@ -8,11 +8,14 @@
 
     <Feature Id="ProductFeature" Title="TGServiceInstaller" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="StartMenuShortcuts" />
+      <ComponentGroupRef Id="DesktopShortcuts" />
       <ComponentGroupRef Id="Gitx86Components" />
       <ComponentGroupRef Id="Gitx64Components" />
     </Feature>
 		<Icon Id="tgs.ico" SourceFile="..\tgs.ico"/>
 		<Property Id="ARPPRODUCTICON" Value="tgs.ico" />
+    <Property Id="INSTALLSHORTCUTDESK" />
   </Product>
 
   <Fragment>
@@ -27,24 +30,53 @@
           </Directory>
         </Directory>
       </Directory>
-
       <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="ProgramMenuFolder" Name="StartMenuDir">
+        <Directory Id="ApplicationProgramsFolder" Name="TG Station Server"/>
+      </Directory>
     </Directory>
-    
   </Fragment>
 
   <Fragment>
+    <ComponentGroup Id="StartMenuShortcuts" Directory="ApplicationProgramsFolder">
+      <Component Id="StartMenuShortcut" Guid="685790d5-24ae-431b-8c5a-c71125e389d5">
+        <Shortcut Id="StartMenuShortcutCL"
+                  Name="TG Command Line"
+                  Target="[#TGCommandLine.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <Shortcut Id="StartMenuShortcutCP"
+                  Name="TG Control Panel"
+                  Target="[#TGControlPanel.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <Shortcut Id="UninstallProduct"
+									Name="Uninstall TG Station Server"
+									Target="[SystemFolder]msiexec.exe"
+									Arguments="/x [ProductCode]"
+									Description="Uninstalls TG Station Server" />
+        <RemoveFolder Id="CleanUpSMShortCuts" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\TGStation\Server" Name="StartMenuShortcuts" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="DesktopShortcuts" Directory="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="08950533-8264-4824-b7a5-8424c48375df">
+        <Shortcut Id="DesktopShortcutCL"
+                  Name="TG Command Line"
+                  Target="[#TGCommandLine.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <Shortcut Id="DesktopShortcutCP"
+                  Name="TG Control Panel"
+                  Target="[#TGControlPanel.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpDKShortCuts" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\TGStation\Server" Name="DesktopShortcuts" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+
     <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <Component Id="TGCommandLine">
         <File Source="$(var.TGCommandLine.TargetPath)" />
         <Environment Id="PATH" Name="PATH" Value="[INSTALLFOLDER]" Permanent="no" Part="last" Action="set" System="yes" />
-          <Shortcut
-            Id="CLDesktopShortcut"
-            Directory="DesktopFolder"
-            Name="TG Command Line"
-            WorkingDirectory="INSTALLFOLDER" 
-            Advertise="yes"
-						Icon="tgs.ico"/>
       </Component>
       <Component Id="TGServerService">
         <File Source="$(var.TGServerService.TargetPath)" />
@@ -86,15 +118,7 @@
         <File Source="$(var.TGServerService.TargetDir)/WebSocket4Net.dll" />
       </Component>
       <Component Id="TGControlPanel">
-        <File Source="$(var.TGControlPanel.TargetPath)" KeyPath="yes">
-          <Shortcut
-            Id="CPDesktopShortcut"
-            Directory="DesktopFolder"
-            Name="TG Control Panel"
-            WorkingDirectory="INSTALLFOLDER" 
-            Advertise="yes"
-						Icon="tgs.ico"/>
-        </File>
+        <File Source="$(var.TGControlPanel.TargetPath)" KeyPath="yes" />
       </Component>
       <Component Id="TGServiceInterface">
         <File Source="$(var.TGServiceInterface.TargetPath)" />
