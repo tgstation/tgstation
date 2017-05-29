@@ -110,6 +110,8 @@
 
 
 /obj/item/device/vigilante_tool/Topic(href, href_list)
+	if(usr.restrained() || usr.lying || usr.stat || usr.stunned || usr.weakened)
+		return 0
 	if(href_list["purchase"])
 		var/datum/gang_item/G = vig_item_list[href_list["purchase"]]
 		if(G && G.can_buy(usr, gang, src))

@@ -203,15 +203,18 @@
 
 
 /datum/gang/proc/income()
+	world << "[name] is starting with [territory.len]"
 	if(!bosses.len)
 		return
 	var/added_names = ""
 	var/lost_names = ""
-	
+
 	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
-	
+
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
+	for(var/place in reclaimed_territories)
+		world << "[place] was reclaimed by [name]"
 	territory |= reclaimed_territories
 	territory_new -= reclaimed_territories
 	territory_lost -= reclaimed_territories
@@ -230,6 +233,7 @@
 		if(added_names != "")
 			added_names += ", "
 		added_names += "[territory_new[area]]"
+		world << "[area] was claimed by [name]"
 		territory += area
 
 	//Report territory changes

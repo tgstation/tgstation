@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	sleep(40)
 	explosion(target_armory, 10, 16, 20, 20, TRUE, TRUE)
 	explosion(target_equipment, 10, 16, 20, 20, TRUE, TRUE)
-	explosion(target_brig, 7, 0, 0, 0, TRUE, TRUE)
+	explosion(target_brig, 7, 8, 9, 0, TRUE, TRUE)
 	for(var/mob/living/M in GLOB.player_list)
 		vigilize(M)
 
@@ -409,16 +409,13 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any
 
-	for(var/datum/gang/G in SSticker.mode.gangs)
-		if(world.time > next_point_time)
-			G.income()
-
-		if(G.is_dominating)
-			if(G.domination_time_remaining() < 0)
-				winners += G
-
 	if(world.time > next_point_time)
 		next_point_time = world.time + next_point_interval
+		for(var/datum/gang/G in SSticker.mode.gangs)
+			G.income()
+			if(G.is_dominating)
+				if(G.domination_time_remaining() < 0)
+					winners += G
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time
