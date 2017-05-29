@@ -105,6 +105,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+	var/canMouseDown = FALSE
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
