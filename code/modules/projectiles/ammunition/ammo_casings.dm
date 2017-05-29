@@ -76,6 +76,11 @@
 	caliber = "4.6x30mm"
 	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
+/obj/item/ammo_casing/c46carbine
+	desc = "A 4.6x30mm bullet casing."
+	caliber = "4.6x30mm"
+	projectile_type = /obj/item/projectile/bullet/carbinebullet
+
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
@@ -117,7 +122,7 @@
 	desc = "A .50 bullet casing, specialised in sending the target to sleep, instead of hell."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/sniper/soporific
-	icon_state = ".50"
+	icon_state = "sleeper"
 
 /obj/item/ammo_casing/haemorrhage
 	desc = "A .50 bullet casing, specialised in causing massive bloodloss"
@@ -131,7 +136,14 @@
 	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
 	icon_state = ".50"
 
+/obj/item/ammo_casing/point50/gang
+	desc = "A black market .50 bullet casing."
+	projectile_type = /obj/item/projectile/bullet/sniper/gang
 
+/obj/item/ammo_casing/point50/gang/sleeper
+	desc = "Am illegally modified tranquilizer round."
+	projectile_type = /obj/item/projectile/bullet/sniper/gang/sleeper
+	icon_state = "sleeper"
 
 /// SAW ROUNDS
 

@@ -269,4 +269,4 @@
 
 /obj/item/weapon/pneumatic_cannon/pie/selfcharge/process()
 	if(++charge_tick >= charge_ticks)
-		fill_with_type(/obj/item/weapon/reagent_containers/food/snacks/pie, charge_amount)
+		fill_with_type(/obj/item/weapon/reagent_containers/food/snacks/pie/cream, charge_amount)

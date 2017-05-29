@@ -28,6 +28,9 @@
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+	var/ricochets = 0
+	var/ricochets_max = 2
+	var/ricochet_chance = 30
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
@@ -132,7 +135,11 @@
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
 		return
-	if(firer)
+	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
+		ricochets++
+		if(A.handle_ricochet(src))
+			return FALSE
+	if(firer && !ricochets)
 		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
 			loc = A.loc
 			return 0
@@ -165,6 +172,16 @@
 				prehit(picked_mob)
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
+
+/obj/item/projectile/proc/check_ricochet()
+	if(prob(ricochet_chance))
+		return TRUE
+	return FALSE
+
+/obj/item/projectile/proc/check_ricochet_flag(atom/A)
+	if(A.flags & CHECK_RICOCHET)
+		return TRUE
+	return FALSE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
