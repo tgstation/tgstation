@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TGControlPanel.Properties {
+namespace TGServerService.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,18 +20,6 @@ namespace TGControlPanel.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/tgstation/tgstation.git")]
-        public string RepoURL {
-            get {
-                return ((string)(this["RepoURL"]));
-            }
-            set {
-                this["RepoURL"] = value;
             }
         }
         
@@ -49,25 +37,13 @@ namespace TGControlPanel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2337")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1337")]
         public ushort ServerPort {
             get {
                 return ((ushort)(this["ServerPort"]));
             }
             set {
                 this["ServerPort"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("master")]
-        public string RepoBranch {
-            get {
-                return ((string)(this["RepoBranch"]));
-            }
-            set {
-                this["RepoBranch"] = value;
             }
         }
         
@@ -85,18 +61,6 @@ namespace TGControlPanel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\BYOND\\bin")]
-        public string ByondPath {
-            get {
-                return ((string)(this["ByondPath"]));
-            }
-            set {
-                this["ByondPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("tgstation-server")]
         public string CommitterName {
             get {
@@ -109,13 +73,161 @@ namespace TGControlPanel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tgstation-server@users.noreply.github.com")]
+        [global::System.Configuration.DefaultSettingValueAttribute("tgstation-server@tgstation13.org")]
         public string CommitterEmail {
             get {
                 return ((string)(this["CommitterEmail"]));
             }
             set {
                 this["CommitterEmail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:/tgstation-server-3")]
+        public string ServerDirectory {
+            get {
+                return ((string)(this["ServerDirectory"]));
+            }
+            set {
+                this["ServerDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ServerSecurity {
+            get {
+                return ((int)(this["ServerSecurity"]));
+            }
+            set {
+                this["ServerSecurity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int ServerVisiblity {
+            get {
+                return ((int)(this["ServerVisiblity"]));
+            }
+            set {
+                this["ServerVisiblity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ChatEnabled {
+            get {
+                return ((bool)(this["ChatEnabled"]));
+            }
+            set {
+                this["ChatEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DDAutoStart {
+            get {
+                return ((bool)(this["DDAutoStart"]));
+            }
+            set {
+                this["DDAutoStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Python27")]
+        public string PythonPath {
+            get {
+                return ((string)(this["PythonPath"]));
+            }
+            set {
+                this["PythonPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ChatProvider {
+            get {
+                return ((int)(this["ChatProvider"]));
+            }
+            set {
+                this["ChatProvider"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NEEDS INITIALIZING")]
+        public string ChatProviderData {
+            get {
+                return ((string)(this["ChatProviderData"]));
+            }
+            set {
+                this["ChatProviderData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>theghostofwhibyl1</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ChatAdmins {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["ChatAdmins"]));
+            }
+            set {
+                this["ChatAdmins"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>#botbus</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ChatChannels {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["ChatChannels"]));
+            }
+            set {
+                this["ChatChannels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#botbus")]
+        public string ChatAdminChannel {
+            get {
+                return ((string)(this["ChatAdminChannel"]));
+            }
+            set {
+                this["ChatAdminChannel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("John Madden")]
+        public string ChatProviderEntropy {
+            get {
+                return ((string)(this["ChatProviderEntropy"]));
+            }
+            set {
+                this["ChatProviderEntropy"] = value;
             }
         }
     }
