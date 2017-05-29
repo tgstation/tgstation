@@ -39,12 +39,12 @@
 		thing.forceMove(pick(edge_turfs))
 	return TRUE
 
-/datum/proximity_monitor/advanced/dominator_forcefield/field_edge_canpass(atom/movable/thing)
+/datum/proximity_monitor/advanced/dominator_forcefield/field_edge_canpass(atom/movable/thing, obj/effect/abstract/proximity_checker/advanced/ADV)
 	if(isliving(thing))
 		return teamcheck(thing)
 	else if(istype(thing, /obj/item/projectile))
 		var/obj/item/projectile/P = thing
-		P.Bump(src, TRUE)
+		P.Bump(ADV, TRUE)
 		return FALSE
 	else if(thing.throwing)
 		var/datum/thrownthing/TT = thing.throwing
