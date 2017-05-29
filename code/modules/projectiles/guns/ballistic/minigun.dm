@@ -135,7 +135,7 @@
 
 /obj/item/weapon/gun/ballistic/minigun/m134
 	name = "M134 Minigun"
-	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at ten rounds per second."
+	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at five rounds per second."
 	burst_size = 6
 	spread = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun/m134
