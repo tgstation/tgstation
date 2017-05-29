@@ -11,13 +11,15 @@
 	maxHealth = 200
 	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
 	del_on_death = 1
-	var/meat_counter
+	var/meat_counter = ASH_WALKER_SPAWN_THRESHOLD * 3 //supplies the roundstart eggs
+	var/list/eggs	= list()
+	var/list/children = list()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/Life()
 	..()
 	if(!stat)
-		consume()
-		spawn_mob()
+		if(consume())
+			spawn_mob()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/proc/consume()
 	for(var/mob/living/H in view(src,1)) //Only for corpse right next to/on same tile
@@ -34,7 +36,33 @@
 			adjustHealth(-maxHealth * 0.05)//restores 5% hp of tendril
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()
-	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)
-		new /obj/effect/mob_spawn/human/ash_walker(get_step(src.loc, SOUTH))
+	var/ashwalker_force = 0
+	var/opposing_force = 1
+	var/threat_ratio = ashwalker_force / opposing_force
+	var/cost_to_spawn = max(round(threat_ratio*10),ASH_WALKER_SPAWN_THRESHOLD)
+
+	for(var/mob/M in children)
+		if(M.stat == DEAD || isbrain(M) || qdeleted(M))
+			children -= M
+
+	for(var/E in eggs)
+		if(qdeleted(E))
+			eggs -= E
+
+	ashwalker_force = children.len + eggs.len
+
+	for(var/mob/M in mob_list)
+		if(M.mind && M.stat != DEAD && !isnewplayer(M) &&!isbrain(M))
+			opposing_force++
+
+	opposing_force = max((opposing_force - children.len),1) //DIV0 protection
+
+	if(ashwalker_force <= 3)
+		cost_to_spawn = ASH_WALKER_SPAWN_THRESHOLD
+
+	if(meat_counter >= cost_to_spawn)
+		var/obj/effect/mob_spawn/human/ash_walker/A = new(get_step(src.loc, SOUTH))
+		eggs += A
+		A.home_nest = src
 		visible_message("<span class='danger'>One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!</span>")
-		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD
+		meat_counter -= cost_to_spawn

@@ -19,7 +19,6 @@
 /area/ruin/unpowered)
 "e" = (
 /obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/human/ash_walker,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -30,7 +29,6 @@
 	},
 /area/ruin/unpowered)
 "g" = (
-/obj/effect/mob_spawn/human/ash_walker,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

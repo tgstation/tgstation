@@ -22,6 +22,10 @@
 	anchored = 1
 	var/banType = "lavaland"
 
+/obj/effect/mob_spawn/New()
+	if(!mob_gender)
+		mob_gender = pick(MALE, FEMALE)
+
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc)
 		return

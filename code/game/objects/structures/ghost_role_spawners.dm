@@ -44,6 +44,7 @@
 	density = 0
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	var/mob/living/simple_animal/hostile/spawner/ash_walker/home_nest = null
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
@@ -57,6 +58,9 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+	if(home_nest && !qdeleted(home_nest))
+		home_nest.eggs -= src
+		home_nest.children += new_spawn
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
 	. = ..()
