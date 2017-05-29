@@ -25,13 +25,17 @@ namespace TGControlPanel
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show("An unhandled exception occurred. This usually means we lost connection to the service. Error" + e.ToString());
-				return;
+				ServiceDisconnectException(e);
 			}
 			finally
 			{
 				Properties.Settings.Default.Save();
 			}
+		}
+
+		public static void ServiceDisconnectException(Exception e)
+		{
+			MessageBox.Show("An unhandled exception occurred. This usually means we lost connection to the service. Error" + e.ToString());
 		}
 
 		public static string TextPrompt(string caption, string text)

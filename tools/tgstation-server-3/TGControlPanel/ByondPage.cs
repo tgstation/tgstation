@@ -103,13 +103,20 @@ namespace TGControlPanel
 
 		private void BYONDTimer_Tick(object sender, EventArgs e)
 		{
-			UpdateBYONDButtons();
-			var error = Server.GetComponent<ITGByond>().GetError();
-			if(error != lastReadError)
+			try
 			{
-				lastReadError = error;
-				if(error != null)
-					MessageBox.Show("An error occurred: " + lastReadError);
+				UpdateBYONDButtons();
+				var error = Server.GetComponent<ITGByond>().GetError();
+				if (error != lastReadError)
+				{
+					lastReadError = error;
+					if (error != null)
+						MessageBox.Show("An error occurred: " + lastReadError);
+				}
+			}
+			catch (Exception ex)
+			{
+				Program.ServiceDisconnectException(ex);
 			}
 		}
 	}

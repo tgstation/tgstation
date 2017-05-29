@@ -203,7 +203,14 @@ namespace TGControlPanel
 
 		private void ServerTimer_Tick(object sender, System.EventArgs e)
 		{
-			LoadServerPage();
+			try
+			{
+				LoadServerPage();
+			}
+			catch (Exception ex)
+			{
+				Program.ServiceDisconnectException(ex);
+			}
 		}
 		private void ProjectNameText_LostFocus(object sender, EventArgs e)
 		{
@@ -269,10 +276,17 @@ namespace TGControlPanel
 		//because of lol byond this can take some time...
 		private void WorldStatusChecker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
 		{
-			if (!Server.GetComponent<ITGRepository>().Exists())
-				DDStatusString = "NOT INSTALLED";
-			else
-				DDStatusString = Server.GetComponent<ITGDreamDaemon>().StatusString(true);
+			try
+			{
+				if (!Server.GetComponent<ITGRepository>().Exists())
+					DDStatusString = "NOT INSTALLED";
+				else
+					DDStatusString = Server.GetComponent<ITGDreamDaemon>().StatusString(true);
+			}
+			catch
+			{
+				DDStatusString = "ERROR";
+			}
 		}
 
 		private void WorldStatusTimer_Tick(object sender, System.EventArgs e)
