@@ -224,7 +224,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/minigun
 	name = "M134 Minigun"
-	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at five rounds per second."
+	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at ten rounds per second."
 	item = /obj/item/weapon/minigunpack/ballistic
 	surplus = 0
 	cant_discount = TRUE	//No.
