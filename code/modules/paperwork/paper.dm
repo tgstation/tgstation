@@ -129,49 +129,8 @@
 		usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 		onclose(usr, "[name]")
 
-
-/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
-	var/locid = 0
-	var/laststart = 1
-	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
-		var/istart = 0
-		if(links)
-			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
-		else
-			istart = findtext(info, "<span class=\"paper_field\">", laststart)
-
-		if(istart == 0)
-			return	//No field found with matching id
-
-		laststart = istart+1
-		locid++
-		if(locid == id)
-			var/iend = 1
-			if(links)
-				iend = findtext(info_links, "</span>", istart)
-			else
-				iend = findtext(info, "</span>", istart)
-
-			//textindex = istart+26
-			textindex = iend
-			break
-
-	if(links)
-		var/before = copytext(info_links, 1, textindex)
-		var/after = copytext(info_links, textindex)
-		info_links = before + text + after
-	else
-		var/before = copytext(info, 1, textindex)
-		var/after = copytext(info, textindex)
-		info = before + text + after
-		updateinfolinks()
-
-
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
-	for(var/i in 1 to min(fields, 15))
-		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
 
@@ -203,7 +162,6 @@
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[tab\]", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
 	if(!iscrayon)
@@ -228,28 +186,6 @@
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
-//Count the fields
-	var/laststart = 1
-	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
-		if(i == 0)
-			break
-		laststart = i+1
-		fields++
-
-	return t
-
-/obj/item/weapon/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
-	fields = 0
-	var/laststart = 1
-	while(1)
-		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
-		if(i == 0)
-			break
-		laststart = i+1
-		fields++
-	updateinfolinks()
-
 
 /obj/item/weapon/paper/proc/openhelp(mob/user)
 	user << browse({"<HTML><HEAD><TITLE>Paper Help</TITLE></HEAD>
@@ -263,7 +199,6 @@
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
 		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
-		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
 		\[small\] - \[/small\] : Decreases the <font size = \"1\">size</font> of the text.<br>
@@ -299,11 +234,8 @@
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(t != null)	//No input from the user means nothing needs to be added
-			if(id!="end")
-				addtofield(text2num(id), t) // He wants to edit a field, let him.
-			else
-				info += t // Oh, he wants to edit to the end of the file, let him.
-				updateinfolinks()
+			info += t // Oh, he wants to edit to the end of the file, let him.
+			updateinfolinks()
 			i.on_write(src,usr)
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
 			update_icon()
