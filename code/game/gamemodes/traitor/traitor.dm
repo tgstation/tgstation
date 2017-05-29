@@ -81,7 +81,7 @@
 						add_latejoin_traitor(character.mind)
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
-	character.make_Traitor()
+	character.add_antag_datum(antag_datum)
 
 
 
