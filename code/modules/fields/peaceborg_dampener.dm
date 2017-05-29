@@ -15,6 +15,13 @@
 	START_PROCESSING(SSfields, src)
 	tracked = list()
 	staging = list()
+	..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
+	STOP_PROCESSING(SSfields, src)
+	return ..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/initialize_effects()
 	edgeturf_south = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
 	edgeturf_north = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
 	edgeturf_west = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
@@ -24,11 +31,6 @@
 	northeast_corner = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
 	southeast_corner = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
 	generic_edge = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
-	..()
-
-/datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
-	STOP_PROCESSING(SSfields, src)
-	return ..()
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
 	if(!istype(projector))

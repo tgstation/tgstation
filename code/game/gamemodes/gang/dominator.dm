@@ -1,5 +1,9 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 #define DOM_REQUIRED_TURFS 30
+#define DOM_REQUIRED_SEPARATION 10
+#define DOMINATOR_FORCEFIELD_RADIUS 6
+#define DOMINATOR_TELEGRAPH_DELAY 100		//No visual effects yet but prevents instant combat dominator dropping.
+#define DOMINATOR_FORCEFIELD FALSE			//Dominators have forcefields.
 
 /obj/machinery/dominator
 	name = "dominator"
@@ -19,6 +23,7 @@
 	var/spam_prevention = DOM_BLOCKED_SPAM_CAP //first message is immediate
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
+	var/datum/proximity_monitor/advanced/dominator_forcefield/forcefield
 
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
@@ -30,16 +35,24 @@
 	else
 		return FALSE
 
+/proc/dominator_interference_check(atom/A)
+	for(obj/machinery/dominator/DM in world)
+		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION)
+			return TRUE
+	return FALSE
+
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/New()
-	..()
+/obj/machinery/dominator/Initialize()
+	. = ..()
 	set_light(2)
 	GLOB.poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
+	if(DOMINATOR_FORCEFIELD)
+		addtimer(CALLBACK(src, ./proc/activate_forcefield), DOMINATOR_TELEGRAPH_DELAY)
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -56,6 +69,25 @@
 	else
 		to_chat(user, "<span class='notice'>System on standby.</span>")
 	to_chat(user, "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>")
+
+/obj/machinery/dominator/proc/activate_forcefield(force = FALSE)
+	if(istype(forcefield))
+		QDEL_NULL(forcefield)
+	if(!istype(gang))
+		return FALSE
+	if(stat & BROKEN)
+		return FALSE
+	if(!force && gang.is_dominating)
+		return FALSE
+	var/list/fparams = list()
+	fparams[current_range] = DOMINATOR_FORCEFIELD_RADIUS
+	fparams[host] = src
+	fparams[controller] = src
+	fparams[team] = gang
+	forcefield = make_field(/datum/proximity_monitor/advanced/dominator_forcefield, fparams)
+
+/obj/machinery/dominator/proc/deactivate_forcefield()
+	QDEL_NULL(forcefield)
 
 /obj/machinery/dominator/process()
 	..()
@@ -109,6 +141,7 @@
 /obj/machinery/dominator/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		set_broken()
+		deactivate_forcefield()
 
 /obj/machinery/dominator/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -196,7 +229,7 @@
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
 		SSshuttle.registerHostileEnvironment(src)
-		src.name = "[gang.name] Gang [src.name]"
+		src.name = "[gang.name] Gang [name]"
 		operating = 1
 		icon_state = "dominator-[gang.color]"
 
@@ -205,6 +238,8 @@
 
 		set_light(3)
 		START_PROCESSING(SSmachines, src)
+
+		deactivate_forcefield()
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in SSticker.mode.gangs)

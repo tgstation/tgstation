@@ -428,8 +428,16 @@
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
 
+	if(istype(gang.dom) && !(gang.dom.stat & BROKEN) && DOMINATOR_FORCEFIELD)
+		to_chat(user, "<span class='warning'>Your gang already has an active dominator at [get_area(dom)]!</span>")
+		return FALSE
+
 	if(dominator_excessive_walls(user))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
+		return FALSE
+
+	if(dominator_interference_check(user))
+		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! There is an opposing dominator in close proximity, which would be able to override this dominator before it even starts!</span>")
 		return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))

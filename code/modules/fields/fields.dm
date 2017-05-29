@@ -49,6 +49,10 @@
 	var/mutable_appearance/southeast_corner
 	var/mutable_appearance/generic_edge
 
+/datum/proximity_monitor/advanced/New()
+	initialize_effects()
+	..()
+
 /datum/proximity_monitor/advanced/Destroy()
 	full_cleanup()
 	return ..()
@@ -61,6 +65,8 @@
 		else
 			pass_check = FALSE
 	return pass_check
+
+/datum/proximity_monitor/advanced/proc/initialize_effects()
 
 /datum/proximity_monitor/advanced/proc/check_variables()
 	var/pass = TRUE
@@ -75,7 +81,9 @@
 /datum/proximity_monitor/advanced/proc/auto_set_edgeturf_appearance(turf/T)
 	var/mutable_appearance/I = get_edgeturf_appearance(get_edgeturf_direction(T))
 	if(!I)
-		return
+		I = get_edgeturf_appearance(0)		//Get generic if snowflake is unavailable
+		if(!I)
+			return
 	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
 	I.invisibility = 0
 	I.layer = 5

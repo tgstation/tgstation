@@ -22,6 +22,7 @@
 
 	var/domination_timer
 	var/is_dominating
+	var/obj/machinery/dominator/dom
 
 	var/boss_item_list
 	var/boss_category_list
@@ -202,9 +203,9 @@
 		return
 	var/added_names = ""
 	var/lost_names = ""
-	
+
 	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
-	
+
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
 	territory |= reclaimed_territories
