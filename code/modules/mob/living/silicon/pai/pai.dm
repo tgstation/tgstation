@@ -79,7 +79,7 @@
 
 /mob/living/silicon/pai/Destroy()
 	GLOB.pai_list -= src
-	..()
+	return ..()
 
 /mob/living/silicon/pai/Initialize()
 	var/obj/item/device/paicard/P = loc
