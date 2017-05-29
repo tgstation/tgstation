@@ -189,6 +189,9 @@
 	caliber = "gatling"
 	max_ammo = 5000
 
+/obj/item/ammo_box/magazine/internal/minigun/m134
+	name = "M134 ammo pack"
+	ammo_type = /obj/item/ammo_casing/c46x30mm
 
 /obj/item/ammo_box/magazine/internal/bow
 	name = "bow internal magazine"
