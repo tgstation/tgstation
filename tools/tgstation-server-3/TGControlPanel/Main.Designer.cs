@@ -1472,11 +1472,11 @@
             // ConfigPanel
             // 
             this.ConfigPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(40)))), ((int)(((byte)(34)))));
+            this.ConfigPanel.Controls.Add(this.ConfigApply);
             this.ConfigPanel.Controls.Add(this.ConfigDownloadRepo);
             this.ConfigPanel.Controls.Add(this.ConfigUpload);
             this.ConfigPanel.Controls.Add(this.ConfigDownload);
             this.ConfigPanel.Controls.Add(this.ConfigRefresh);
-            this.ConfigPanel.Controls.Add(this.ConfigApply);
             this.ConfigPanel.Controls.Add(this.ConfigPanels);
             this.ConfigPanel.Controls.Add(this.ConfigDisabledLabel);
             this.ConfigPanel.Location = new System.Drawing.Point(4, 22);

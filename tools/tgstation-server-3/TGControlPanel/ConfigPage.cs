@@ -272,7 +272,10 @@ namespace TGControlPanel
 		public void RefreshCurrentPage()
 		{
 			if (!ConfigPanels.Visible)
+			{
 				LoadConfig();
+				return;
+			}
 
 			switch ((ConfigIndex)ConfigPanels.SelectedIndex)
 			{
