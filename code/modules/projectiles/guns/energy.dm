@@ -28,8 +28,8 @@
 /obj/item/weapon/gun/energy/get_cell()
 	return cell
 
-/obj/item/weapon/gun/energy/New()
-	..()
+/obj/item/weapon/gun/energy/Initialize()
+	. = ..()
 	if(cell_type)
 		cell = new cell_type(src)
 	else

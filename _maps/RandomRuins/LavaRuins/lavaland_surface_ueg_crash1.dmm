@@ -1,0 +1,93 @@
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"ac" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"ad" = (/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/lavaland/surface/outdoors)
+"ae" = (/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"af" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"ag" = (/obj/machinery/door/airlock/hatch{name = "Assault Pods"; req_access_txt = "101"},/obj/machinery/door/poddoor/preopen{desc = "A anti-breach blast door that has been forced open."; name = "anti-breach blast door"},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"ah" = (/obj/machinery/door/poddoor{name = "anti-breach blast door"},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"ai" = (/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/ruin/powered)
+"aj" = (/obj/structure/sign/poster/official/safety_internals,/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/ruin/powered)
+"ak" = (/obj/effect/decal/cleanable/blood/gibs/body,/obj/item/weapon/pickaxe/drill,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"al" = (/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/black,/area/ruin/powered)
+"am" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"an" = (/obj/item/weapon/rack_parts,/obj/item/weapon/survivalcapsule,/turf/open/floor/plating{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/ruin/powered)
+"ao" = (/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plating,/area/ruin/powered)
+"ap" = (/turf/open/floor/plasteel/black,/area/ruin/powered)
+"aq" = (/obj/effect/decal/cleanable/vomit,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"ar" = (/obj/machinery/portable_atmospherics/canister/oxygen{maximum_pressure = 1019.25},/turf/open/floor/plasteel/black,/area/ruin/powered)
+"as" = (/turf/open/floor/plating,/area/ruin/powered)
+"at" = (/obj/item/ammo_box/magazine/carbine,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
+"au" = (/obj/item/clothing/mask/breath,/turf/open/floor/plasteel/black,/area/ruin/powered)
+"av" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aw" = (/obj/machinery/door/airlock/hatch{name = "Delta Squad Armoury"; req_access_txt = "101"},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered)
+"ax" = (/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"ay" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/ruin/powered)
+"az" = (/obj/item/clothing/glasses/meson,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aA" = (/obj/structure/rack,/obj/item/weapon/storage/firstaid/tactical,/obj/item/device/flashlight/seclite{desc = "A robust flashlight used by the military."; name = "combat flashlight"},/obj/item/weapon/kitchen/knife/combat/survival{name = "military knife"},/obj/item/weapon/survivalcapsule,/obj/item/ammo_box/magazine/carbine,/obj/item/ammo_box/magazine/carbine,/obj/item/weapon/gun/ballistic/automatic/carbine,/turf/open/floor/plating,/area/ruin/powered)
+"aB" = (/obj/machinery/suit_storage_unit/ueg{name = "Marine Armour Storage Unit"},/turf/open/floor/plating,/area/ruin/powered)
+"aC" = (/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/lavaland/surface/outdoors)
+"aD" = (/obj/machinery/door/airlock/hatch{name = "Armoury"; req_access_txt = "101"},/turf/open/floor/plasteel/black,/area/ruin/powered)
+"aE" = (/turf/open/floor/plating{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/ruin/powered)
+"aF" = (/turf/open/floor/plasteel/vault{dir = 5},/area/lavaland/surface/outdoors)
+"aG" = (/turf/open/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/lavaland/surface/outdoors)
+"aH" = (/obj/structure/sign/poster/official/help_others,/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/ruin/powered)
+"aI" = (/obj/effect/decal/cleanable/vomit,/turf/open/floor/plating,/area/ruin/powered)
+"aJ" = (/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
+"aK" = (/turf/open/floor/plating{tag = "icon-platingdmg1"; icon_state = "platingdmg1"},/area/lavaland/surface/outdoors)
+"aL" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aM" = (/obj/structure/closet,/obj/item/toy/prize/honk,/turf/open/floor/plasteel/vault{dir = 5},/area/lavaland/surface/outdoors)
+"aN" = (/obj/structure/sign/poster/contraband/clown,/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/lavaland/surface/outdoors)
+"aO" = (/turf/open/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/ruin/powered)
+"aP" = (/obj/structure/sign/poster/official/walk,/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/ruin/powered)
+"aQ" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aR" = (/obj/machinery/door/airlock/hatch{name = "Personal Quarters D"; req_access_txt = "101"},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aS" = (/obj/structure/sign/poster/official/enlist{desc = "Enlist in the marine corps today!"},/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/ruin/powered)
+"aT" = (/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plasteel/black,/area/ruin/powered)
+"aU" = (/obj/effect/decal/cleanable/blood,/obj/structure/closet,/obj/item/weapon/storage/box/donkpockets,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aV" = (/turf/open/floor/plasteel/vault{dir = 5},/turf/open/floor/plating{tag = "icon-platingdmg2"; icon_state = "platingdmg2"},/area/ruin/powered)
+"aW" = (/obj/structure/closet,/obj/item/clothing/shoes/combat,/obj/item/clothing/under/syndicate/camo,/obj/item/weapon/storage/box/donkpockets,/obj/item/clothing/gloves/combat,/obj/item/weapon/storage/backpack/explorer{name = "marine bag"},/obj/item/weapon/card/id/marine,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aX" = (/obj/structure/dresser,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"aY" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
+"aZ" = (/obj/effect/decal/cleanable/blood/gibs,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"ba" = (/obj/structure/girder,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/ruin/powered)
+"bb" = (/obj/structure/sign/poster/contraband/space_cola,/turf/closed/wall/mineral/plastitanium{desc = "An wall of plasma and titanium."},/area/ruin/powered)
+"bc" = (/obj/structure/table_frame,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"bd" = (/obj/effect/mob_spawn/human/marine,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+"be" = (/obj/structure/table,/obj/effect/holodeck_effect/cards,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered)
+
+(1,1,1) = {"
+aaaaaaaaabaaaaaaaaaaaaaaabaaaaaaaaaaababacacaaaaaaaaaaaa
+aaaaaaabababaaaaababababababaaaaaaabababacacacaaabababaa
+aaaaabababababababababababababababababababacacacabababaa
+aaaaababababadaeabababababababacacababababababababababaa
+acacabababababaeababababababababacababababababababacaaaa
+acababacababababadadabadababababacababababababababacaaaa
+abababacababababadaeabaeabaeababababababababababababaaaa
+acababacabababababababaeabadababababababababababababaaaa
+aaababababadaeabacacacababaeababaeadafabababababacababaa
+aaaaabababadaeacacagahahaiaiaiaiadadafababababababababaa
+aaaaabababababacajakalamaianaoaiaeafafafabababacabababaa
+aaaaabababababaeaiapaqaraiasataiahahaiafabababababababaa
+aaaaabababafafaeahamauavawaxaxaxaxamayafafababababababaa
+acacabafafafafafaiapaxapaiaxaxaiahahaiafafabafafafababaa
+acacafafafafafaeaiazapaxaiaAaBaiaCaeafafafafafafafafaaaa
+acacafafafafadadaiaDayaDaiaiaiaiaiadadafafafafafafafafaa
+abacafafafafaeaeaiaxapaxaiaEavaoaiaFaGafafafafafafafafaa
+ababafafafafafaeaiapaxapaHasaIaJaiaeaCaKafafafafafafafaa
+ababafafafafafaeaiaxapaLaiamaEaJaiaMaeaeaNabafafafafaaaa
+acabafafafafaCadaiapaxapaiaiaiaOaPaiaiahaiabafafafafafaa
+acabafafafaeaeaGahaxapaxapasaEaJapaxapaxayababafafafaaaa
+acabafafafaCaKaCahapaQapaxapaxasaxapaxapayababafafafafaa
+acabafafafafaeaeaiaxapaxaiaiaiahaiaiaiaRaiababafafafafaa
+acabafafafafafafaSaTaxapaiaUaVaxaiaWaXaxaiabafafafafafaa
+acabafafafafafafaiahahahaiaEaYaZbaaxaxaxbbabafafafafafaa
+acacafafafafafafafaeaKaeaiaoambcaibdaxbeaiabafafafafafaa
+aaafafafafafafafafaeaeafaiaiaiaiaiaiaiaiaiabafafafafafaa
+aaafafafafafafafafafafafafafafafafaeaeadababafafafafafaa
+aaafafafafafabababafafafafafafafafafafadafafafafafafafaa
+aaafafafafafababababababafafafafafafafafafafafafafafafaa
+aaafafabababaeabadabababababababafafafafafafafafafafafaa
+aaafafafababaKabaGadabababaaaaaaaaaaaaaaaaafafafafafafaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

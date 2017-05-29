@@ -11,6 +11,8 @@
 	eyeblur = 2
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 	light_color = LIGHT_COLOR_RED
+	ricochets_max = 50	//Honk!
+	ricochet_chance = 80
 
 /obj/item/projectile/beam/laser
 

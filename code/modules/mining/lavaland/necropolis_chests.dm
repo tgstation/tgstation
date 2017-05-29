@@ -488,6 +488,13 @@
 		if(4)
 			new /obj/item/weapon/dragons_blood(src)
 
+/obj/structure/closet/crate/necropolis/dragon/crusher
+	name = "firey dragon chest"
+
+/obj/structure/closet/crate/necropolis/dragon/crusher/PopulateContents()
+	..()
+	new /obj/item/crusher_trophy/tail_spike(src)
+
 /obj/item/weapon/melee/ghost_sword
 	name = "\improper spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
@@ -700,7 +707,26 @@
 	icon_state = "lavastaff_warn"
 	duration = 50
 
-///Bubblegum
+//Bubblegum
+/obj/structure/closet/crate/necropolis/bubblegum
+	name = "bubblegum chest"
+
+/obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)
+			new /obj/item/mayhem(src)
+		if(2)
+			new /obj/item/blood_contract(src)
+		if(3)
+			new /obj/item/weapon/gun/magic/staff/spellblade(src)
+
+/obj/structure/closet/crate/necropolis/bubblegum/crusher
+	name = "bloody bubblegum chest"
+
+/obj/structure/closet/crate/necropolis/bubblegum/crusher/PopulateContents()
+	..()
+	new /obj/item/crusher_trophy/demon_claws(src)
 
 /obj/item/mayhem
 	name = "mayhem in a bottle"
@@ -715,19 +741,6 @@
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 	qdel(src)
-
-/obj/structure/closet/crate/necropolis/bubblegum
-	name = "bubblegum chest"
-
-/obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
-	var/loot = rand(1,3)
-	switch(loot)
-		if(1)
-			new /obj/item/mayhem(src)
-		if(2)
-			new /obj/item/blood_contract(src)
-		if(3)
-			new /obj/item/weapon/gun/magic/staff/spellblade(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -772,6 +785,23 @@
 			H.put_in_hands_or_del(new /obj/item/weapon/kitchen/knife/butcher(H))
 
 	qdel(src)
+
+//Colossus
+/obj/structure/closet/crate/necropolis/colossus
+	name = "colossus chest"
+
+/obj/structure/closet/crate/necropolis/colossus/PopulateContents()
+	var/list/choices = subtypesof(/obj/machinery/anomalous_crystal)
+	var/random_crystal = pick(choices)
+	new random_crystal(src)
+	new /obj/item/organ/vocal_cords/colossus(src)
+
+/obj/structure/closet/crate/necropolis/colossus/crusher
+	name = "angelic colossus chest"
+
+/obj/structure/closet/crate/necropolis/colossus/crusher/PopulateContents()
+	..()
+	new /obj/item/crusher_trophy/blaster_tubes(src)
 
 //Hierophant
 /obj/item/weapon/hierophant_club

@@ -632,7 +632,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+
+		var/hrefstart
+		var/hrefend
+		if (isAI(L))
+			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
+			hrefend = "</a>"
+
+		to_chat(L, "\icon[src.icon] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(icon_alert)

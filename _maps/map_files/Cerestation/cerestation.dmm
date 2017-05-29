@@ -2353,7 +2353,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "aeX" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -2590,17 +2590,17 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "afu" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "afv" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_r"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "afw" = (
 /obj/structure/closet,
@@ -101529,7 +101529,7 @@ cpo
 cqk
 cri
 cqk
-dky
+dkx
 ctm
 cua
 cKv
@@ -101786,7 +101786,7 @@ cpo
 cql
 crj
 csf
-dkz
+dkx
 ctn
 cub
 cuu
