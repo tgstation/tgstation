@@ -85,12 +85,15 @@
 	return !gang.bosses_working
 
 /datum/gang_item/function/leadership/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool/spare/lt(user.loc)
-	gangtool.register_device(user)
-	gang.bosses_working = TRUE
-	user.put_in_hands(O)
+	if(!gang || (src in gang.bosses))
+		return
+	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool(user.loc)
 	O.points = gangtool.points
 	qdel(gangtool)
+	O.register_device(user)
+	gang.bosses_working = TRUE
+	user.put_in_hands(O)
+
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
 
