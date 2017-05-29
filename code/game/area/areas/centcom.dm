@@ -37,6 +37,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
+	flags = NONE
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
@@ -75,6 +76,7 @@
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	flags = NONE
 
 //Abductors
 /area/abductor_ship
@@ -83,6 +85,7 @@
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	flags = NONE
 
 //Syndicates
 /area/syndicate_mothership
@@ -92,6 +95,7 @@
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	flags = NONE
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
