@@ -93,9 +93,6 @@
 	ambientsounds = list('sound/ambience/ambivapor1.ogg')
 
 
-
-
-
 //Ruin of Hotel
 
 /area/ruin/hotel
