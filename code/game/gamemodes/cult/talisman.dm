@@ -245,12 +245,10 @@
 			send_visions(A, cultists, duration)
 	var/UZ = user.z
 	A = null
-	var/list/non_human_images = list()
 	for(var/mob/living/L in GLOB.living_mob_list)
 		if(L.z != UZ)
 			continue
 		if(ishuman(L))
-			if(ishuman(L))
 			A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			send_visions(A, targets, duration)
