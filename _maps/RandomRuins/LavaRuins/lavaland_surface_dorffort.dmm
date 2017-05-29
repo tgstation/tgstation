@@ -1,70 +1,76 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/mineral/ash_rock,/area/awaymission)
-"c" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"d" = (/obj/machinery/smelter{layer = 4.4},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"e" = (/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"f" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"g" = (/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"h" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"i" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"j" = (/obj/machinery/hydroponics/soil,/obj/effect/decal/cleanable/egg_smudge,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"k" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/chicken,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"l" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/cow,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"m" = (/obj/item/clothing/head/crown,/turf/closed/mineral/ash_rock,/area/awaymission)
-"n" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"o" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"p" = (/obj/structure/table/wood,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/storage/backpack/quiver,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"q" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"r" = (/obj/structure/sink/puddle{name = "magic puddle"},/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"s" = (/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"t" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"u" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"v" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/weapon/grown/log,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"w" = (/turf/closed/wall/mineral/iron,/area/awaymission)
-"x" = (/obj/item/seeds/tower,/turf/closed/mineral/ash_rock,/area/awaymission)
-"y" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"z" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"A" = (/obj/structure/chair/wood,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"B" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"C" = (/obj/effect/decal/cleanable/cobweb,/turf/open/floor/wood/airless,/area/awaymission)
-"D" = (/turf/open/floor/carpet,/area/awaymission)
-"E" = (/turf/open/floor/wood/airless,/area/awaymission)
-"F" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"G" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/drinks/wooden_mug,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"H" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"I" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"J" = (/turf/closed/wall/mineral/wood,/area/awaymission)
-"K" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"L" = (/obj/machinery/migrant_spawner,/turf/open/floor/carpet,/area/awaymission)
-"M" = (/obj/structure/closet/cabinet,/turf/closed/mineral/ash_rock,/area/awaymission)
-"N" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"O" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"P" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"Q" = (/obj/effect/decal/cleanable/generic,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"R" = (/obj/effect/decal/cleanable/flour,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"S" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet,/area/awaymission)
-"T" = (/obj/structure/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/turf/open/floor/carpet,/area/awaymission)
-"U" = (/obj/item/clothing/head/crown,/turf/open/floor/carpet,/area/awaymission)
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/closed/mineral/ash_rock,/area/awaymission)
+"ac" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"ad" = (/obj/machinery/smelter{layer = 4.4},/obj/item/weapon/shovel,/obj/item/weapon/shovel,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"ae" = (/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"af" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"ag" = (/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"ah" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/weapon/cultivator,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"ai" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aj" = (/obj/machinery/hydroponics/soil,/obj/effect/decal/cleanable/egg_smudge,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"ak" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/chicken,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"al" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/cow,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"am" = (/obj/item/clothing/head/crown,/turf/closed/mineral/ash_rock,/area/awaymission)
+"an" = (/obj/item/device/flashlight/lantern,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"ao" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"ap" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aq" = (/obj/structure/table/wood,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/storage/backpack/quiver,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/weapon/shovel/spade,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"ar" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"as" = (/obj/structure/sink/puddle{name = "magic puddle"},/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"at" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"au" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"av" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/storage/bag/ore,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aw" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"ax" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/weapon/grown/log,/obj/item/weapon/hatchet,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"ay" = (/obj/item/device/flashlight/lantern,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"az" = (/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aA" = (/turf/closed/wall/mineral/iron,/area/awaymission)
+"aB" = (/obj/item/seeds/tower,/turf/closed/mineral/ash_rock,/area/awaymission)
+"aC" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aD" = (/obj/item/device/flashlight/lantern,/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aE" = (/obj/structure/chair/wood,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aF" = (/obj/item/device/flashlight/lantern,/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aG" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/bonfire,/turf/open/floor/wood/airless,/area/awaymission)
+"aH" = (/turf/open/floor/carpet,/area/awaymission)
+"aI" = (/obj/structure/bonfire,/turf/open/floor/wood/airless,/area/awaymission)
+"aJ" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aK" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/drinks/wooden_mug,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aL" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aM" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aN" = (/turf/closed/wall/mineral/wood,/area/awaymission)
+"aO" = (/obj/item/device/flashlight/flare/torch,/turf/open/floor/carpet,/area/awaymission)
+"aP" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"aQ" = (/obj/machinery/migrant_spawner,/turf/open/floor/carpet,/area/awaymission)
+"aR" = (/obj/structure/closet/cabinet,/turf/closed/mineral/ash_rock,/area/awaymission)
+"aS" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aT" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aU" = (/obj/effect/decal/cleanable/shreds,/obj/item/weapon/storage/bag/ore,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aV" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aW" = (/obj/effect/decal/cleanable/generic,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aX" = (/obj/effect/decal/cleanable/flour,/obj/item/weapon/storage/bag/ore,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"aY" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet,/area/awaymission)
+"aZ" = (/obj/structure/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/turf/open/floor/carpet,/area/awaymission)
+"ba" = (/obj/item/clothing/head/crown,/turf/open/floor/carpet,/area/awaymission)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aabbbbbbbbbbbbbbbbaa
-abbcdebfdgbhiijklmaa
-abbggnbggobpggqkrbaa
-abbsgtbggubvgsqqlbaa
-bbbbgbbbsbbbsbbbbbaa
-bbbggssggssggggggbaa
-bbbwggwggwgggggggbaa
-bxbggggggggggggggbaa
-ygyggwggwgswggggsbaa
-bbbbbbbgbbbbbgggbbaa
-bbbzAAAAAABbCggDEbaa
-bbbFGHGHGHIbJgDDJbaa
-bbbFGHGHGHIbEDDDEbaa
-abbzKKKKKKzbJDLDJbaa
-abbbsbbbbbbbEDDDEbaa
-abMNsssOiiibJDDDJbaa
-abbPssQRiiibESTUEbaa
-aabbbbbbbbbbbbbbbbaa
-aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaababababababababababababababababaaaa
+aaababacadaeabafadagabahaiaiajakalamaaaa
+aaababanagaoabanagapabaqagagarakasabaaaa
+aaababatagauabavagawabaxagayararalabaaaa
+ababababagabababazabababazabababababaaaa
+abababagagazazagagazazagagagagagagabaaaa
+abababaAagagaAagagaAagagagagagagagabaaaa
+abaBabagagagagagagagagagagagagagagabaaaa
+aCagaCagagaAagagaAagazaAagagagagazabaaaa
+abababababababagabababababagagagababaaaa
+abababaDaEaEaEaEaEaEaFabaGagagaHaIabaaaa
+abababaJaKaLaKaLaKaLaMabaNagaHaHaNabaaaa
+abababaJaKaLaKaLaKaLaMabaIaOaHaOaIabaaaa
+aaababaDaPaPaPaPaPaPaDabaNaHaQaHaNabaaaa
+aaabababazabababababababaIaOaHaOaIabaaaa
+aaabaRaSazazaTaUaiaiaiabaNaHaHaHaNabaaaa
+aaababaVazazaWaXaiaiaiabaIaYaZbaaIabaaaa
+aaaaababababababababababababababababaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
