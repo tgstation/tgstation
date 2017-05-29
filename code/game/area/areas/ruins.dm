@@ -104,9 +104,6 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 
-
-
-
 //Ruin of Hotel
 
 /area/ruin/hotel
