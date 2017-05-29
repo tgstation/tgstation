@@ -120,13 +120,12 @@
 /datum/antagonist/traitor/internal_affairs/proc/steal_targets(datum/mind/victim)
 	if(!owner.current||owner.current.stat==DEAD) 
 		return
-	var/already_traitored = last_man_standing
 	to_chat(owner.current, "<span class='userdanger'> Target eliminated: [victim.name]</span>")
 	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
-				last_man_standing = TRUE
+				continue
 			else if(targets_stolen.Find(objective.target) == 0)
 				var/datum/objective/assassinate/internal/new_objective = new
 				new_objective.owner = owner
@@ -140,7 +139,7 @@
 			var/datum/objective/destroy/internal/objective = objective_
 			var/datum/objective/destroy/internal/new_objective = new
 			if(objective.target==owner)
-				last_man_standing = TRUE
+				continue
 			else if(targets_stolen.Find(objective.target) == 0)
 				new_objective.owner = owner
 				new_objective.target = objective.target
@@ -149,14 +148,15 @@
 				targets_stolen += objective.target
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<span class='userdanger'> New target added to database: [objective.target.name] ([status_text]) </span>")
-	if(last_man_standing&&!already_traitored)
-		for(var/objective_ in owner.objectives)
-			if(!is_internal_objective(objective_))
-				continue
-			var/datum/objective/assassinate/internal/objective = objective_
-			if(!objective.check_completion())
-				last_man_standing = FALSE
-				return
+	last_man_standing = TRUE
+	for(var/objective_ in owner.objectives)
+		if(!is_internal_objective(objective_))
+			continue
+		var/datum/objective/assassinate/internal/objective = objective_
+		if(!objective.check_completion())
+			last_man_standing = FALSE
+			return
+	if(last_man_standing)
 		if(syndicate)
 			to_chat(owner.current,"<span class='userdanger'> All the loyalist agents are dead, and no more is required of you. Die a glorious death, agent. </span>")
 		else
