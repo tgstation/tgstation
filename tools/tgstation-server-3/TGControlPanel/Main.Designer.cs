@@ -131,11 +131,11 @@
             this.ChatAdminsTitle = new System.Windows.Forms.Label();
             this.ChatChannelsTextBox = new System.Windows.Forms.TextBox();
             this.ConfigPanel = new System.Windows.Forms.TabPage();
+            this.ConfigApply = new System.Windows.Forms.Button();
             this.ConfigDownloadRepo = new System.Windows.Forms.Button();
             this.ConfigUpload = new System.Windows.Forms.Button();
             this.ConfigDownload = new System.Windows.Forms.Button();
             this.ConfigRefresh = new System.Windows.Forms.Button();
-            this.ConfigApply = new System.Windows.Forms.Button();
             this.ConfigPanels = new System.Windows.Forms.TabControl();
             this.ConfigConfigPanel = new System.Windows.Forms.TabPage();
             this.DatabaseConfigPanel = new System.Windows.Forms.TabPage();
@@ -405,7 +405,7 @@
             // 
             // IdentityLabel
             // 
-            this.IdentityLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.IdentityLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.IdentityLabel.AutoSize = true;
             this.IdentityLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IdentityLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(242)))));
@@ -1486,6 +1486,17 @@
             this.ConfigPanel.TabIndex = 5;
             this.ConfigPanel.Text = "Config";
             // 
+            // ConfigApply
+            // 
+            this.ConfigApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ConfigApply.Location = new System.Drawing.Point(782, 26);
+            this.ConfigApply.Name = "ConfigApply";
+            this.ConfigApply.Size = new System.Drawing.Size(63, 22);
+            this.ConfigApply.TabIndex = 4;
+            this.ConfigApply.Text = "Apply";
+            this.ConfigApply.UseVisualStyleBackColor = true;
+            this.ConfigApply.Click += new System.EventHandler(this.ConfigApply_Click);
+            // 
             // ConfigDownloadRepo
             // 
             this.ConfigDownloadRepo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1529,17 +1540,6 @@
             this.ConfigRefresh.Text = "Refresh";
             this.ConfigRefresh.UseVisualStyleBackColor = true;
             this.ConfigRefresh.Click += new System.EventHandler(this.ConfigRefresh_Click);
-            // 
-            // ConfigApply
-            // 
-            this.ConfigApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ConfigApply.Location = new System.Drawing.Point(782, 26);
-            this.ConfigApply.Name = "ConfigApply";
-            this.ConfigApply.Size = new System.Drawing.Size(63, 22);
-            this.ConfigApply.TabIndex = 4;
-            this.ConfigApply.Text = "Apply";
-            this.ConfigApply.UseVisualStyleBackColor = true;
-            this.ConfigApply.Click += new System.EventHandler(this.ConfigApply_Click);
             // 
             // ConfigPanels
             // 
