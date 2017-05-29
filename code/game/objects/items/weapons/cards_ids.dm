@@ -37,7 +37,7 @@
 		return
 
 	if (t)
-		src.name = sanitize("data disk- '[t]'")
+		src.name = "data disk- '[t]'"
 	else
 		src.name = "data disk"
 	src.add_fingerprint(usr)
@@ -89,7 +89,7 @@
 
 /obj/item/weapon/card/id/Initialize(mapload)
 	. = ..()
-	if(mapload)
+	if(mapload && access_txt)
 		access = text2access(access_txt)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
@@ -247,6 +247,17 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/ert/Medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-GLOB.access_change_ids
+	..()
+
+/obj/item/weapon/card/id/marine
+	name = "\improper Marine ID"
+	desc = "A Marine Rifleman ID card"
+	icon_state = "centcom"
+	registered_name = "Iron Hawk Marine"
+	assignment = "Marine Rifleman"
+
+/obj/item/weapon/card/id/marine/Initialize()
+	access = get_all_centcom_access()
 	..()
 
 /obj/item/weapon/card/id/prisoner

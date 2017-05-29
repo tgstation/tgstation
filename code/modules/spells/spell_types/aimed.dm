@@ -24,6 +24,7 @@
 		if(charge_type == "recharge")
 			var/refund_percent = current_amount/projectile_amount
 			charge_counter = charge_max * refund_percent
+			start_recharge()
 		remove_ranged_ability(msg)
 	else
 		msg = "<span class='notice'>[active_msg]<B>Left-click to shoot it at a target!</B></span>"

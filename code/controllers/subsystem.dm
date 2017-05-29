@@ -29,6 +29,8 @@
 	var/datum/controller/subsystem/queue_next
 	var/datum/controller/subsystem/queue_prev
 
+	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
+
 	var/static/failure_strikes = 0 //How many times we suspect this subsystem has crashed the MC, 3 strikes and you're out!
 
 //Do not override

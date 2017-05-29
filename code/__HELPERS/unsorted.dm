@@ -723,7 +723,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
 	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/icon/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
@@ -1079,18 +1079,17 @@ B --><-- A
 	return L
 
 //similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
-/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0, list/outlist = list(), tick_checked)
+	outlist.Cut()
 	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
+		outlist += center
+		return outlist
 
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
-		return list()
+		return outlist
 
-	var/list/L = list()
+	var/list/L = outlist
 	var/turf/T
 	var/y
 	var/x
@@ -1128,6 +1127,8 @@ B --><-- A
 			if(T)
 				L += T
 		c_dist++
+		if(tick_checked)
+			CHECK_TICK
 
 	return L
 
@@ -1215,7 +1216,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, GLOB.CURRENT_TICKLIMIT))
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
@@ -1416,24 +1417,3 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
-
-/proc/msglog_admins(text)
-	message_admins(text)
-	log_admin(text)
-
-/proc/trigger_centcom_recall()
-	if(SSshuttle.emergency.mode != SHUTTLE_CALL)
-		return
-
-	var/time = rand(600, 1200)
-	var/message = pick(GLOB.annoyed_admiral_messages)
-
-	message = input("Enter message from the on-call admiral to be put in the recall report.", "Annoyed Admiral Message", message) as text|null
-
-	if(!message)
-		return
-
-	message_admins("[key_name_admin(usr)] triggered a Centcom recall in [time/10] seconds, with the annoyed admiral message of: [message]")
-	log_game("[key_name(usr)] triggered a Centcom recall in [time/10] seconds, with the annoyed admiral message of: [message]")
-
-	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle/.proc/centcom_recall, SSshuttle.emergency.timer, message), time)

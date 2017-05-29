@@ -433,7 +433,7 @@
 
 /obj/item/projectile/beam/ctf/red
 	icon_state = "laser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/red_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
 // BLUE TEAM GUNS
 
@@ -448,7 +448,7 @@
 
 /obj/item/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
 /datum/outfit/ctf
 	name = "CTF"
