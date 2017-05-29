@@ -235,7 +235,7 @@
 /datum/antagonist/traitor/internal_affairs/greet()
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 
-	to_chat(owner.current, "<span class='userdanger'>You are the [owner.special_role].</span>")
+	to_chat(owner.current, "<span class='userdanger'>You are the [special_role].</span>")
 	if(syndicate)
 		to_chat(owner.current, "<span class='userdanger'>Your target has been framed for [crime], and you have been tasked with eliminating them to prevent them defending themselves in court.</span>")
 		to_chat(owner.current, "<B><font size=5 color=red>Any damage you cause will be a further embarrassment to Nanotrasen, so you have no limits on collateral damage.</font></B>")

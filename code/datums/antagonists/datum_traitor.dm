@@ -19,7 +19,7 @@
 	finalize_traitor()
 	..()
 
-/datum/antagonist/traitor/on_removal()
+/datum/antagonist/traitor/on_removal() //does not disable uplink, call remove_antag_equip() to remove uplink
 	SSticker.mode.traitors -= owner
 	if(owner.current && isAI(owner.current))
 		var/mob/living/silicon/ai/A = owner.current
@@ -32,6 +32,7 @@
 	objectives_given = list()
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
+	owner.special_role = null
 	..()
 
 /datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)

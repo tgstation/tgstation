@@ -187,7 +187,6 @@
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
 		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
-	special_role = null
 	remove_antag_equip()
 	SSticker.mode.update_traitor_icons_removed(src)
 
