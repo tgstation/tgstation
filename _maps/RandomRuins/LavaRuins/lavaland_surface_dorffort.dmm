@@ -23,26 +23,28 @@
 "w" = (/turf/closed/wall/mineral/iron,/area/awaymission)
 "x" = (/obj/item/seeds/tower,/turf/closed/mineral/ash_rock,/area/awaymission)
 "y" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"z" = (/obj/structure/chair/wood,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"A" = (/obj/effect/decal/cleanable/cobweb,/turf/open/floor/wood/airless,/area/awaymission)
-"B" = (/turf/open/floor/carpet,/area/awaymission)
-"C" = (/turf/open/floor/wood/airless,/area/awaymission)
-"D" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"E" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/drinks/wooden_mug,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"F" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"G" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"H" = (/turf/closed/wall/mineral/wood,/area/awaymission)
-"I" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
-"J" = (/obj/machinery/migrant_spawner,/turf/open/floor/carpet,/area/awaymission)
-"K" = (/obj/structure/closet/cabinet,/turf/closed/mineral/ash_rock,/area/awaymission)
-"L" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"M" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"N" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"O" = (/obj/effect/decal/cleanable/generic,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"P" = (/obj/effect/decal/cleanable/flour,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
-"Q" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet,/area/awaymission)
-"R" = (/obj/structure/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/turf/open/floor/carpet,/area/awaymission)
-"S" = (/obj/item/clothing/head/crown,/turf/open/floor/carpet,/area/awaymission)
+"z" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"A" = (/obj/structure/chair/wood,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"B" = (/mob/living/simple_animal/pet/cat,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"C" = (/obj/effect/decal/cleanable/cobweb,/turf/open/floor/wood/airless,/area/awaymission)
+"D" = (/turf/open/floor/carpet,/area/awaymission)
+"E" = (/turf/open/floor/wood/airless,/area/awaymission)
+"F" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"G" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/drinks/wooden_mug,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"H" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"I" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"J" = (/turf/closed/wall/mineral/wood,/area/awaymission)
+"K" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"L" = (/obj/machinery/migrant_spawner,/turf/open/floor/carpet,/area/awaymission)
+"M" = (/obj/structure/closet/cabinet,/turf/closed/mineral/ash_rock,/area/awaymission)
+"N" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"O" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"P" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"Q" = (/obj/effect/decal/cleanable/generic,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"R" = (/obj/effect/decal/cleanable/flour,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"S" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet,/area/awaymission)
+"T" = (/obj/structure/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/turf/open/floor/carpet,/area/awaymission)
+"U" = (/obj/item/clothing/head/crown,/turf/open/floor/carpet,/area/awaymission)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaa
@@ -56,13 +58,13 @@ bbbwggwggwgggggggbaa
 bxbggggggggggggggbaa
 ygyggwggwgswggggsbaa
 bbbbbbbgbbbbbgggbbaa
-bbbszzzzzzgbAggBCbaa
-bbbDEFEFEFGbHgBBHbaa
-bbbDEFEFEFGbCBBBCbaa
-abbsIIIIIIsbHBJBHbaa
-abbbsbbbbbbbCBBBCbaa
-abKLsssMiiibHBBBHbaa
-abbNssOPiiibCQRSCbaa
+bbbzAAAAAABbCggDEbaa
+bbbFGHGHGHIbJgDDJbaa
+bbbFGHGHGHIbEDDDEbaa
+abbzKKKKKKzbJDLDJbaa
+abbbsbbbbbbbEDDDEbaa
+abMNsssOiiibJDDDJbaa
+abbPssQRiiibESTUEbaa
 aabbbbbbbbbbbbbbbbaa
 aaaaaaaaaaaaaaaaaaaa
 "}
