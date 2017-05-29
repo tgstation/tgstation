@@ -36,7 +36,9 @@
 		return FALSE
 
 /proc/dominator_interference_check(atom/A)
-	for(obj/machinery/dominator/DM in world)
+	if(!DOMINATOR_FORCEFIELD)
+		return TRUE
+	for(var/obj/machinery/dominator/DM in world)
 		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION)
 			return TRUE
 	return FALSE
@@ -52,7 +54,7 @@
 	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
 	if(DOMINATOR_FORCEFIELD)
-		addtimer(CALLBACK(src, ./proc/activate_forcefield), DOMINATOR_TELEGRAPH_DELAY)
+		addtimer(CALLBACK(src, .proc/activate_forcefield), DOMINATOR_TELEGRAPH_DELAY)
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -80,10 +82,10 @@
 	if(!force && gang.is_dominating)
 		return FALSE
 	var/list/fparams = list()
-	fparams[current_range] = DOMINATOR_FORCEFIELD_RADIUS
-	fparams[host] = src
-	fparams[controller] = src
-	fparams[team] = gang
+	fparams["current_range"] = DOMINATOR_FORCEFIELD_RADIUS
+	fparams["host"] = src
+	fparams["controller"] = src
+	fparams["team"] = gang
 	forcefield = make_field(/datum/proximity_monitor/advanced/dominator_forcefield, fparams)
 
 /obj/machinery/dominator/proc/deactivate_forcefield()

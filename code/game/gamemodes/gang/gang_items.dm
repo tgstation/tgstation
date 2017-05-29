@@ -412,11 +412,11 @@
 		return "(Out of stock)"
 	return ..()
 
-/datum/gang_item/equipment/dominator/get_extra_info(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	if(gang)
-		return "(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)"
+/datum/gang_item/equipment/dominator/get_extra_info(mob/living/carbon/user, datum/gang/G, obj/item/device/gangtool/gangtool)
+	if(G)
+		return "(Estimated Takeover Time: [round(determine_domination_time(G)/60,0.1)] minutes)"
 
-/datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+/datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/G, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
 	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != ZLEVEL_STATION)
@@ -428,8 +428,8 @@
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
 
-	if(istype(gang.dom) && !(gang.dom.stat & BROKEN) && DOMINATOR_FORCEFIELD)
-		to_chat(user, "<span class='warning'>Your gang already has an active dominator at [get_area(dom)]!</span>")
+	if(istype(G.current_dominator) && !(G.current_dominator.stat & BROKEN) && DOMINATOR_FORCEFIELD)
+		to_chat(user, "<span class='warning'>Your gang already has an active dominator at [get_area(G.current_dominator)]!</span>")
 		return FALSE
 
 	if(dominator_excessive_walls(user))
@@ -440,10 +440,12 @@
 		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! There is an opposing dominator in close proximity, which would be able to override this dominator before it even starts!</span>")
 		return FALSE
 
-	if(!(usrarea.type in gang.territory|gang.territory_new))
+	if(!(usrarea.type in G.territory|G.territory_new))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
 		return FALSE
 	return ..()
 
 /datum/gang_item/equipment/dominator/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	new item_path(user.loc)
+	var/obj/machinery/dominator/D = new item_path(user.loc)
+	gang.current_dominator = D
+	D.gang = gang

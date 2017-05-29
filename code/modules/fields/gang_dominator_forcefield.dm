@@ -2,6 +2,7 @@
 /datum/proximity_monitor/advanced/dominator_forcefield
 	name = "\improper Dominator Protection Field"
 	setup_field_turfs = TRUE
+	setup_edge_turfs = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
 	var/obj/machinery/dominator/controller
 	var/datum/gang/team
@@ -28,7 +29,7 @@
 	generic_edge = mutable_appearance('icons/effects/fields.dmi', icon_state = "dominator_field_generic")
 
 /datum/proximity_monitor/advanced/dominator_forcefield/field_turf_explosion_block()
-	return INFINITE
+	return 100
 
 /datum/proximity_monitor/advanced/dominator_forcefield/field_edge_block_air()
 	return TRUE

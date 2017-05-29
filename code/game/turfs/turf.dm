@@ -63,7 +63,7 @@
 
 /turf/get_explosion_block()
 	var/ret = 0
-	if(denstiy)
+	if(density)
 		ret = explosion_block
 	for(var/atom/A in src)
 		ret += A.get_explosion_block()

@@ -22,7 +22,7 @@
 
 	var/domination_timer
 	var/is_dominating
-	var/obj/machinery/dominator/dom
+	var/obj/machinery/dominator/current_dominator
 
 	var/boss_item_list
 	var/boss_category_list
