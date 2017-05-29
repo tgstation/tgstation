@@ -91,7 +91,7 @@
 	var/force_update = 0
 	var/update_state = -1
 	var/update_overlay = -1
-  var/icon_update_needed = FALSE
+	var/icon_update_needed = FALSE
 
 /obj/machinery/power/apc/get_cell()
 	return cell
