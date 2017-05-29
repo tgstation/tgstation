@@ -20,7 +20,7 @@
 /turf/open/floor/mineral/silver{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/pride)
 "f" = (
 /obj/structure/mirror{
 	pixel_x = 32
@@ -28,12 +28,12 @@
 /turf/open/floor/mineral/silver{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/pride)
 "g" = (
 /turf/open/floor/mineral/silver{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/pride)
 "h" = (
 /obj/structure/mirror/magic/pride,
 /turf/closed/wall/mineral/diamond{

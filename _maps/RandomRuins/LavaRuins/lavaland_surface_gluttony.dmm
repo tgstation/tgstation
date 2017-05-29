@@ -15,36 +15,36 @@
 /area/ruin/powered)
 "e" = (
 /turf/open/floor/plating/lava/smooth,
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "f" = (
 /obj/item/weapon/reagent_containers/syringe/gluttony,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "g" = (
 /obj/effect/gluttony,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "h" = (
 /obj/item/weapon/veilrender/vealrender,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "i" = (
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "j" = (
 /obj/item/trash/plate,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "k" = (
 /obj/machinery/door/airlock/uranium,
 /obj/structure/fans/tiny/invisible,
@@ -57,37 +57,37 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "m" = (
 /obj/item/trash/raisins,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "n" = (
 /obj/item/trash/pistachios,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "o" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "p" = (
 /obj/item/trash/semki,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 "q" = (
 /obj/item/trash/syndi_cakes,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/gluttony)
 
 (1,1,1) = {"
 a
