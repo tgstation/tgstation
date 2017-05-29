@@ -5,6 +5,7 @@
 	icon_state = "away"
 	has_gravity = 1
 	hidden = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 
 /area/ruin/unpowered
@@ -199,3 +200,15 @@
 /area/ruin/abandonedzoo
 	name = "Abandoned Zoo"
 	icon_state = "green"
+	
+	
+//Xeno Nest
+	
+/area/ruin/xenonest
+	name = "The Hive"
+	always_unpowered = 1
+	power_environ = 0
+	power_equip = 0
+	power_light = 0
+	poweralm = 0
+	

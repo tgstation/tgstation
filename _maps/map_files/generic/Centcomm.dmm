@@ -14897,6 +14897,27 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Mg" = (
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	dir = 1;
+	icon_state = "cutout_ntsec";
+	name = "Private Security Officer"
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/centcom/evac)
+"Mh" = (
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	icon_state = "cutout_ntsec";
+	name = "Private Security Officer"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -65195,7 +65216,7 @@ sv
 wW
 xt
 xQ
-xZ
+Mg
 yC
 yC
 yU
@@ -65454,7 +65475,7 @@ xp
 xR
 xZ
 yC
-yC
+Mh
 yV
 qk
 aa
