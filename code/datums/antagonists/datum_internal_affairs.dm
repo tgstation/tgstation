@@ -231,7 +231,7 @@
 		..() // Give them standard objectives.
 	return
 
-/datum/antagonist/traitor/iaa/greet()
+/datum/antagonist/traitor/internal_affairs/greet()
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
 
 	to_chat(owner.current, "<span class='userdanger'>You are the [owner.special_role].</span>")
