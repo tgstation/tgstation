@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup>
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_hash.txt" />
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libgit2_filename.txt" />
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libssh2_hash.txt" />
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\libssh2_filename.txt" />
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\zlib_hash.txt" />
+        <EmbeddedResource Include="$(MSBuildThisFileDirectory)\..\libgit2\zlib_filename.txt" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-baa87df.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-baa87df.dll">
+            <Link>lib\win32\x64\git2-ssh-baa87df.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-baa87df.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\git2-ssh-baa87df.pdb">
+            <Link>lib\win32\x64\git2-ssh-baa87df.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-baa87df.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-baa87df.dll">
+            <Link>lib\win32\x86\git2-ssh-baa87df.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-baa87df.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\git2-ssh-baa87df.pdb">
+            <Link>lib\win32\x86\git2-ssh-baa87df.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\libssh2.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\libssh2.dll">
+            <Link>lib\win32\x64\libssh2.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\libssh2.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\libssh2.pdb">
+            <Link>lib\win32\x64\libssh2.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\libssh2.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\libssh2.dll">
+            <Link>lib\win32\x86\libssh2.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\libssh2.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\libssh2.pdb">
+            <Link>lib\win32\x86\libssh2.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\zlib.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\zlib.dll">
+            <Link>lib\win32\x64\zlib.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\zlib.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x64\native\zlib.pdb">
+            <Link>lib\win32\x64\zlib.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\zlib.dll')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\zlib.dll">
+            <Link>lib\win32\x86\zlib.dll</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\zlib.pdb')" Include="$(MSBuildThisFileDirectory)\..\runtimes\win7-x86\native\zlib.pdb">
+            <Link>lib\win32\x86\zlib.pdb</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>		
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-ssh-baa87df.dylib')" Include="$(MSBuildThisFileDirectory)\..\runtimes\osx\native\libgit2-ssh-baa87df.dylib">
+            <Link>lib\osx\libgit2-ssh-baa87df.dylib</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Condition="Exists('$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-ssh-baa87df.so')" Include="$(MSBuildThisFileDirectory)\..\runtimes\linux-x64\native\libgit2-ssh-baa87df.so">
+            <Link>lib\linux\x86_64\libgit2-ssh-baa87df.so</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Include="$(MSBuildThisFileDirectory)\..\libgit2\LibGit2Sharp.dll.config">
+            <Link>LibGit2Sharp.dll.config</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+</Project>

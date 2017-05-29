@@ -1,0 +1,4 @@
+D:\tgstation\tools\tgstation-server-3\TGServiceInterface\bin\Release\TGServiceInterface.dll
+D:\tgstation\tools\tgstation-server-3\TGServiceInterface\bin\Release\TGServiceInterface.pdb
+D:\tgstation\tools\tgstation-server-3\TGServiceInterface\obj\Release\TGServiceInterface.dll
+D:\tgstation\tools\tgstation-server-3\TGServiceInterface\obj\Release\TGServiceInterface.pdb

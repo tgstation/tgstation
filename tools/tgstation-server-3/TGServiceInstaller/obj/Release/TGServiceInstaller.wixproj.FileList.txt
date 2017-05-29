@@ -1,0 +1,6 @@
+obj\Release\Product.wixobj
+D:\tgstation\tools\tgstation-server-3\TGServiceInstaller\bin\Release\cab1.cab
+D:\tgstation\tools\tgstation-server-3\TGServiceInstaller\bin\Release\TGServiceInstaller.exe
+obj\Release\TGServiceInstaller.wixproj.BindContentsFileList.txt
+obj\Release\TGServiceInstaller.wixproj.BindOutputsFileList.txt
+obj\Release\TGServiceInstaller.wixproj.BindBuiltOutputsFileList.txt
