@@ -54,6 +54,9 @@
 				M.reagents.add_reagent(id, amount)
 	return 1
 
+/datum/reagent/proc/on_transfer(datum/reagent/OR)
+	return
+
 /datum/reagent/proc/reaction_obj(obj/O, volume)
 	return
 

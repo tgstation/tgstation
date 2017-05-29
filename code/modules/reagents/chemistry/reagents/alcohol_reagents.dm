@@ -94,6 +94,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		RA.volume = volume
 		RA.on_mob_life(M)
 
+/datum/reagent/consumable/ethanol/customizable/on_transfer(datum/reagent/OR)
+	if(istype(OR, /datum/reagent/consumable/ethanol/customizable))
+		var/datum/reagent/consumable/ethanol/customizable/TA = OR
+		for(var/datum/reagent/REA in TA.contained_reagents.reagent_list)
+			if(!is_type_in_list(REA, contained_reagents.reagent_list))
+				contained_reagents.add_reagent(REA.id, 1)
+				TA.contained_reagents.del_reagent(REA.id)
+		boozepwr = TA.boozepwr
+	..()
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"

@@ -160,16 +160,8 @@
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
-		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
-		if(istype(T, /datum/reagent/consumable/ethanol/customizable))
-			var/datum/reagent/consumable/ethanol/customizable/ale = R.has_reagent("customizable_ale")
-			var/datum/reagent/consumable/ethanol/customizable/TA = T
-			if(ale)
-				for(var/datum/reagent/REA in TA.contained_reagents.reagent_list)
-					if(!is_type_in_list(REA, ale.contained_reagents.reagent_list))
-						ale.contained_reagents.add_reagent(REA.id, 1)
-						TA.contained_reagents.del_reagent(REA.id)
-				ale.boozepwr = TA.boozepwr
+		var/datum/reagent/fuck_this_shit = R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+		fuck_this_shit.on_transfer(T)
 		remove_reagent(T.id, transfer_amount)
 
 	update_total()
