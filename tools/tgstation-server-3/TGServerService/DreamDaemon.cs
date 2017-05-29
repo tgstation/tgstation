@@ -156,6 +156,7 @@ namespace TGServerService
 						currentStatus = TGDreamDaemonStatus.HardRebooting;
 						currentPort = 0;
 						Proc.Close();
+						ShutdownInterop();
 
 						if (AwaitingShutdown)
 							return;
@@ -186,6 +187,7 @@ namespace TGServerService
 				{
 					Proc.Kill();
 					Proc.Close();
+					ShutdownInterop();
 				}
 				catch
 				{ }
@@ -301,12 +303,14 @@ namespace TGServerService
 					StartingVisiblity = (TGDreamDaemonVisibility)Config.ServerVisiblity;
 					StartingSecurity = (TGDreamDaemonSecurity)Config.ServerSecurity;
 					Proc.StartInfo.Arguments = String.Format("{0} -port {1} -close -verbose -params server_service={4} -{2} -{3}", DMB, Config.ServerPort, SecurityWord(), VisibilityWord(), serviceCommsKey);
+					InitInterop();
 					Proc.Start();
 
 					if (!Proc.WaitForInputIdle(DDHangStartTime * 1000))
 					{
 						Proc.Kill();
 						Proc.Close();
+						ShutdownInterop();
 						currentStatus = TGDreamDaemonStatus.Offline;
 						currentPort = 0;
 						return String.Format("Server start is taking more than {0}s! Aborting!", DDHangStartTime);

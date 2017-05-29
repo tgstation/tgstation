@@ -42,7 +42,8 @@ namespace TGServerService
 					SendMessage("GAME: " + String.Join(" ", splits));
 					break;
 				case "killme":
-					Restart();
+					//Do this is a seperate thread or we'll kill this thread in the middle of rebooting
+					ThreadPool.QueueUserWorkItem(_ => { Restart(); });
 					break;
 				case "send2irc":
 					splits.RemoveAt(0);
@@ -155,16 +156,29 @@ namespace TGServerService
 		{
 			lock (NudgeLock)
 			{
-				if(NudgeThread != null)
-				{
-					NudgeThread.Abort();
-					NudgeThread.Join();
-				}
+				ShutdownInteropNoLock();
 				NudgeThread = new Thread(new ThreadStart(NudgeHandler)) { IsBackground = true };
 				NudgeThread.Start();
 			}
 		}
 
+		void ShutdownInterop()
+		{
+			lock (NudgeLock)
+			{
+				ShutdownInteropNoLock();
+			}
+		}
+
+		void ShutdownInteropNoLock()
+		{
+			if (NudgeThread != null)
+			{
+				NudgeThread.Abort();
+				NudgeThread.Join();
+			}
+		}
+		
 		void NudgeHandler()
 		{
 			try
