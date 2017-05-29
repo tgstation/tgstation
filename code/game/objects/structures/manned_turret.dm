@@ -168,10 +168,9 @@
 	view_range = 12
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
 
-
 /obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
 	if(target == user || target == get_turf(src))
 		return
 	target_turf = get_turf(target)
-	fire_helper(target_turf)
+	fire_helper(user)

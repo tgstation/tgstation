@@ -230,7 +230,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cant_discount = TRUE	//No.
 	player_minimum = 40		//No lowpop minigunning.
 	include_modes = list(/datum/game_mode/nuclear)
-	cost = 35
+	cost = 55
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
