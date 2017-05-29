@@ -250,18 +250,15 @@
 		if(L.z != UZ)
 			continue
 		if(ishuman(L))
-			if(!A)
-				A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
-				A.override = TRUE
+			if(ishuman(L))
+			A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
+			A.override = 1
 			send_visions(A, targets, duration)
 		else
 			var/construct = pick("floating","artificer","behemoth")
-			var/image/B = non_human_images[construct]
-			if(!B)
-				B = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
-				B.override = TRUE
-				non_human_images[construct] = B
-			send_visions(B, targets, duration)
+			A = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
+			A.override = 1
+			send_visions(A, targets, duration)
 	qdel(src)
 
 /proc/send_visions(image/I, list/show_to, duration)
