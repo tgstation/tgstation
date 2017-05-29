@@ -14,6 +14,7 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_golem_ship.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_surface_ueg_crash1.dmm
 
 ##SIN
 #_maps/RandomRuins/LavaRuins/lavaland_surface_envy.dmm

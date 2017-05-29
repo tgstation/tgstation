@@ -65,7 +65,7 @@
 
 	if(iscarbon(user)) //only carbons can wear glasses
 		var/mob/living/carbon/C = user
-		if(!mesons_on)
+		if(mesons_on)
 			to_chat(C, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
 		else if(picked_excuse)
 			to_chat(C, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")

@@ -295,14 +295,16 @@
 /obj/item/weapon/gun/attack(mob/M as mob, mob/user)
 	if(user.a_intent == INTENT_HARM) //Flogging
 		if(bayonet)
-			bayonet.attack(M, user)
+			M.attackby(bayonet, user)
 			return
-	return ..()
+		else
+			return ..()
+	return
 
 /obj/item/weapon/gun/attack_obj(obj/O, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		if(bayonet)
-			bayonet.attack_obj(O, user)
+			O.attackby(bayonet, user)
 			return
 	return ..()
 
@@ -332,7 +334,7 @@
 		if(!bayonet)
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, "<span class='notice'>You attach \the [K] to the front of ]the [src].</span>")
+			to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
 			bayonet = K
 			update_icon()
 	else if(istype(I, /obj/item/weapon/screwdriver))

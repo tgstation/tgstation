@@ -87,7 +87,6 @@
 		log_game("Round ID: [GLOB.round_id]")
 
 	hippie_initialize()
-
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
