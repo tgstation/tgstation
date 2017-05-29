@@ -30,6 +30,8 @@
 	for(var/O in objectives_given)
 		owner.objectives -= O
 	objectives_given = list()
+	if(owner.current)
+		to_chat(owner.current,"<span class='userdanger'> You are no longer the [special_role]! </span>")
 	..()
 
 /datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)

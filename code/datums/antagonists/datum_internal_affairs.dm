@@ -224,6 +224,7 @@
 		if(prob(PROB_ACTUAL_TRAITOR))
 			employer = "The Syndicate"
 			owner.special_role = TRAITOR_AGENT_ROLE
+			special_role = TRAITOR_AGENT_ROLE
 			syndicate = TRUE
 			forge_single_objective()	
 
