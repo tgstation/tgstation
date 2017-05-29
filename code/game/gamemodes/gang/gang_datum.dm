@@ -15,6 +15,7 @@
 	var/recalls = 1
 	var/gateways = 0
 	var/dom_attempts = 2
+	var/bosses_working = TRUE
 	var/inner_outfit
 	var/outer_outfit
 	var/datum/atom_hud/antag/gang/ganghud
@@ -25,7 +26,7 @@
 
 	var/boss_item_list
 	var/boss_category_list
-	var/static/list/boss_items = list(
+	var/list/boss_items = list(
 		/datum/gang_item/function/gang_ping,
 		/datum/gang_item/function/backup,
 		/datum/gang_item/function/recall,
@@ -66,7 +67,9 @@
 
 	var/reg_item_list
 	var/reg_category_list
-	var/static/list/soldier_items = list(
+	var/list/soldier_items = list(
+		/datum/gang_item/function/leadership,
+
 		/datum/gang_item/clothing/under,
 		/datum/gang_item/clothing/suit,
 		/datum/gang_item/clothing/hat,
@@ -204,11 +207,15 @@
 
 /datum/gang/proc/income()
 	world << "[name] is starting with [territory.len]"
-	if(!bosses.len)
-		return
 	var/added_names = ""
 	var/lost_names = ""
-
+	bosses_working = FALSE
+	for(var/datum/mind/B in bosses)
+		var/mob/living/bossman = B.current
+		for(var/obj/item/T in bossman.contents)
+			if(istype(T, /obj/item/device/gangtool) && bossman.stat != DEAD && !bossman.client.is_afk())
+				bosses_working = TRUE
+				break
 	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
 
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
@@ -288,7 +295,8 @@
 			pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
 		pmessage += "You now have <b>[G.points] influence</b>.<BR>"
 		to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
-
+		if(bosses_working == FALSE)
+			to_chat(ganger, "<span class='danger'><b>Your gang no longer has a functioning leader. Your gangtool has been updated with the option to claim leadership for yourself.</b></span>")
 
 //Multiverse
 

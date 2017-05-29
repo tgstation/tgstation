@@ -51,7 +51,7 @@
 		var/mob/living/M = loc
 		linked_action = new(src)
 		linked_action.Grant(M, src)
-		addtimer(CALLBACK(src, .proc/income), 1800)
+		addtimer(CALLBACK(src, .proc/earnings), 1800)
 
 /obj/item/device/vigilante_tool/Destroy()
 	var/mob/living/M = loc
@@ -59,10 +59,10 @@
 	M.update_icons()
 	return ..()
 
-/obj/item/device/vigilante_tool/proc/income()
+/obj/item/device/vigilante_tool/proc/earnings()
 	if(!src)
 		return
-	var/list/all_territory
+	var/all_territory = list()
 	var/newpoints = 0
 	var/mob/living/carbon/human/H = loc
 	for(var/datum/gang/G in SSticker.mode.gangs)
@@ -75,7 +75,7 @@
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
 		points += 4
 		to_chat(H, "<span class='notice'>You have also received 4 influence for possessing a mindshield implant.</span>")
-	addtimer(CALLBACK(src, .proc/income), 1800, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/earnings), 1800, TIMER_UNIQUE)
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
 	if(user.mind in SSticker.mode.get_all_gangsters())

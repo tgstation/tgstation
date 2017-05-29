@@ -76,6 +76,26 @@
 	if(gangtool)
 		gangtool.recall(user)
 
+/datum/gang_item/function/leadership
+	name = "Claim Gang Leadership"
+	id = "leader"
+	spawn_msg = "<span class='notice'>Use your new gangtool to accept your promotion; your influence has been transferred to the new tool.</span>"
+
+/datum/gang_item/function/leadership/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	return !gang.bosses_working
+
+/datum/gang_item/function/leadership/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool/spare/lt(user.loc)
+	gangtool.register_device(user)
+	gang.bosses_working = TRUE
+	user.put_in_hands(O)
+	O.points = gangtool.points
+	qdel(gangtool)
+	if(spawn_msg)
+		to_chat(user, spawn_msg)
+
+
+
 /datum/gang_item/function/implant
 	name = "Influence-Enhancing Mindshield"
 	id = "mindshield"
@@ -336,7 +356,7 @@
 /datum/gang_item/weapon/shuriken
 	name = "Shuriken"
 	id = "shuriken"
-	cost = 3
+	cost = 4
 	item_path = /obj/item/weapon/throwing_star
 
 /datum/gang_item/weapon/switchblade
@@ -724,7 +744,7 @@
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
 	id = "pen"
-	cost = 35
+	cost = 30
 	item_path = /obj/item/weapon/pen/gang
 	spawn_msg = "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
 

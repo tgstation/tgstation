@@ -397,7 +397,7 @@
 	var/occupying_gang = territory_claimed(A, user)
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
 		if(user.mind.gang_datum == occupying_gang)
-			to_chat(user, "<span class='danger'>[A] has already been tagged by your gang!</span>")
+			to_chat(user, "<span class='danger'>This is your gang's tag!</span>")
 			return FALSE
 		else
 			spraying_over = TRUE

@@ -36,11 +36,8 @@
 				dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device as Spare</a><br>"
 		else if (promotable)
-			if(user.mind.gang_datum.bosses.len < 3)
-				dat += "You have been selected for a promotion!<br>"
-				dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
-			else
-				dat += "No promotions available: All positions filled.<br>"
+			dat += "You have been selected for a promotion!<br>"
+			dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
