@@ -297,7 +297,9 @@
 		if(bayonet)
 			M.attackby(bayonet, user)
 			return
-	return ..()
+		else
+			return ..()
+	return
 
 /obj/item/weapon/gun/attack_obj(obj/O, mob/user)
 	if(user.a_intent == INTENT_HARM)
