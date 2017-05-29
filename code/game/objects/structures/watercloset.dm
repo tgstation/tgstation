@@ -11,11 +11,10 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 
-/obj/structure/toilet/New()
+/obj/structure/toilet/Initialize()
+	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
-	PopulateContents()
-	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -106,13 +105,18 @@
 		return ..()
 
 /obj/structure/toilet/secret
-	w_items = 2
+	var/obj/item/secret
+	var/secret_type = null
 
-/obj/structure/toilet/proc/PopulateContents()
-	return
+/obj/structure/toilet/secret/Initialize(mapload)
+	. = ..()
+	if (secret_type)
+		secret = new secret_type(src)
+		secret.desc += " It's a secret!"
+		w_items += secret.w_class
+		contents += secret
 
-/obj/structure/toilet/secret/PopulateContents()
-	new /obj/item/weapon/kitchen/knife/combat/survival{desc = "It's a secret!"}(src)
+
 
 
 /obj/structure/urinal
