@@ -149,28 +149,3 @@
 		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
-
-
-/mob/living/simple_animal/hostile/alien/maid
-	name = "lusty xenomorph maid"
-	melee_damage_lower = 0
-	melee_damage_upper = 0
-	a_intent = INTENT_HELP
-	friendly = "caresses"
-	obj_damage = 0
-	environment_smash = ENVIRONMENT_SMASH_NONE
-	gold_core_spawnable = 1
-	icon_state = "maid"
-	icon_living = "maid"
-	icon_dead = "maid_dead"
-
-/mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
-	if(istype(target, /atom/movable))
-		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("[src] cleans up \the [target].")
-			qdel(target)
-			return TRUE
-		var/atom/movable/M = target
-		M.clean_blood()
-		visible_message("[src] polishes \the [target].")
-		return TRUE

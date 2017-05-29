@@ -153,29 +153,6 @@
 	. = ..()
 	access_card.access |= GLOB.access_cent_bar
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid
-	gold_core_spawnable = 0
-	name = "Barmaid"
-	desc = "A barmaid, a maiden found in a bar."
-	pass_flags = PASSTABLE
-	status_flags = GODMODE
-	unique_name = FALSE
-	AIStatus = AI_OFF
-	stop_automated_movement = TRUE
-	initial_language_holder = /datum/language_holder/universal
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
-	. = ..()
-	access_card = new /obj/item/weapon/card/id(src)
-	var/datum/job/captain/C = new /datum/job/captain
-	access_card.access = C.get_access()
-	access_card.access |= GLOB.access_cent_bar
-	access_card.flags |= NODROP
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
-	qdel(access_card)
-	. = ..()
-
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
 // with CENTCOM_BARSTAFF)
