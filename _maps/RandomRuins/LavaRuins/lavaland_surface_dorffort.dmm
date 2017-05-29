@@ -1,0 +1,72 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/ash_rock,/area/template_noop)
+"c" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"d" = (/obj/machinery/smelter{layer = 4.4},/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"e" = (/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"f" = (/obj/machinery/anvil,/obj/item/weapon/smith_hammer,/obj/effect/decal/cleanable/molten_object/large,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"g" = (/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"h" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"i" = (/obj/machinery/brewing_barrel,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"j" = (/obj/machinery/hydroponics/soil,/obj/effect/decal/cleanable/egg_smudge,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"k" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/chicken,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"l" = (/obj/machinery/hydroponics/soil,/mob/living/simple_animal/cow,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"m" = (/obj/item/clothing/head/crown,/turf/closed/mineral/ash_rock,/area/template_noop)
+"n" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"o" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/mold/bar,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"p" = (/obj/structure/table/wood,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/gun/ballistic/bow,/obj/item/weapon/storage/backpack/quiver,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/obj/item/ammo_casing/caseless/arrow,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"q" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"r" = (/obj/structure/sink/puddle{name = "magic puddle"},/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"s" = (/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"t" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"u" = (/obj/structure/table/wood,/obj/item/weapon/smith_hammer,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"v" = (/obj/structure/table/wood,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/seeds/tower,/obj/item/weapon/grown/log,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"w" = (/turf/closed/wall/mineral/iron,/area/template_noop)
+"x" = (/obj/item/seeds/tower,/turf/closed/mineral/ash_rock,/area/template_noop)
+"y" = (/obj/structure/mineral_door/iron,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"z" = (/obj/structure/chair/wood,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"A" = (/obj/effect/decal/cleanable/cobweb,/turf/open/floor/wood/airless,/area/template_noop)
+"B" = (/turf/open/floor/carpet,/area/template_noop)
+"C" = (/turf/open/floor/wood/airless,/area/template_noop)
+"D" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (EAST)"; icon_state = "wooden_chair"; dir = 4},/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"E" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/drinks/wooden_mug,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"F" = (/obj/structure/table/wood/fancy,/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice,/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"G" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (WEST)"; icon_state = "wooden_chair"; dir = 8},/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"H" = (/turf/closed/wall/mineral/wood,/area/template_noop)
+"I" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plating/ashplanet/ash,/area/template_noop)
+"J" = (/obj/machinery/migrant_spawner,/turf/open/floor/carpet,/area/template_noop)
+"K" = (/turf/closed/mineral/ash_rock,/area/mine/explored)
+"L" = (/obj/structure/closet/cabinet,/turf/closed/mineral/ash_rock,/area/mine/explored)
+"M" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"N" = (/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"O" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"P" = (/turf/closed/mineral/ash_rock,/area/awaymission)
+"Q" = (/obj/structure/closet/cabinet,/obj/item/seeds/plump,/obj/item/seeds/plump,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"R" = (/obj/effect/decal/cleanable/generic,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"S" = (/obj/effect/decal/cleanable/flour,/turf/open/floor/plating/ashplanet/rocky,/area/template_noop)
+"T" = (/obj/item/weapon/bedsheet/rd/royal_cape{name = "Dwarven Leader's Cloak"},/turf/open/floor/carpet,/area/template_noop)
+"U" = (/obj/structure/chair/wood/wings{tag = "icon-wooden_chair_wings (NORTH)"; icon_state = "wooden_chair_wings"; dir = 1},/turf/open/floor/carpet,/area/template_noop)
+"V" = (/obj/item/clothing/head/crown,/turf/open/floor/carpet,/area/template_noop)
+"W" = (/turf/template_noop,/area/mine/explored)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aabbbbbbbbbbbbbbbbaa
+abbcdebfdgbhiijklmaa
+abbggnbggobpggqkrbaa
+abbsgtbggubvgsqqlbaa
+bbbbgbbbsbbbsbbbbbaa
+bbbggssggssggggggbaa
+bbbwggwggwgggggggbaa
+bxbggggggggggggggbaa
+ygyggwggwgswggggsbaa
+bbbbbbbgbbbbbgggbbaa
+bbbszzzzzzgbAggBCbaa
+bbbDEFEFEFGbHgBBHbaa
+bbbDEFEFEFGbCBBBCbaa
+abbsIIIIIIsbHBJBHbaa
+abbbsbbbbbbbCBBBCbaa
+aKLMNNsOiiibHBBBHbaa
+aKPQNNRSiiibCTUVCbaa
+aWKPPPbbbbbbbbbbbbaa
+aaaaaaaaaaaaaaaaaaaa
+"}
