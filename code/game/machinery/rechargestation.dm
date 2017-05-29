@@ -11,12 +11,18 @@
 	var/recharge_speed
 	var/repairs
 	state_open = 1
+	var/datum/action/reset_module/reset_module_action
 
 /obj/machinery/recharge_station/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
+	reset_module_action = new
 	B.apply_default_parts(src)
 	update_icon()
+
+/obj/machinery/recharge_station/Destroy()
+	qdel(reset_module_action)
+	. = ..()
 
 /obj/item/weapon/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
@@ -96,6 +102,7 @@
 /obj/machinery/recharge_station/open_machine()
 	..()
 	use_power = 1
+	reset_module_action.Grant() // empty Grant() removes action from owner
 
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
@@ -104,10 +111,35 @@
 			occupant = R
 			use_power = 2
 			add_fingerprint(R)
+			reset_module_action.Grant(occupant)
 			break
 		state_open = 0
 		density = 1
 		update_icon()
+
+/datum/action/reset_module
+	name = "Reset Module"
+	desc = "Reset your active module."
+	icon_icon = 'icons/mob/robots.dmi'
+	button_icon_state = "robot"
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_CONSCIOUS | AB_CHECK_STUNNED
+
+/datum/action/reset_module/IsAvailable()
+	if(!owner || !iscyborg(owner))
+		return FALSE
+
+	var/mob/living/silicon/robot/R = owner
+	if(R.module == null || R.module.type == /obj/item/weapon/robot_module)
+		return FALSE
+
+	. = ..()
+
+/datum/action/reset_module/Trigger()
+	if(!..())
+		return FALSE
+	var/mob/living/silicon/robot/R = owner
+
+	R.ResetModule()
 
 /obj/machinery/recharge_station/update_icon()
 	if(is_operational())
