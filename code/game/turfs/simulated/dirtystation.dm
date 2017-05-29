@@ -79,7 +79,7 @@
 				new /obj/effect/decal/cleanable/flour(src)
 		return
 
-	if(istype(A, /area/medical))	//Kept clean, but chance of blood
+	if(istype(A, /area/medical) || istype(A, /area/crew_quarters/heads/cmo))	//Kept clean, but chance of blood
 		if(prob(66))
 			if(prob(5))
 				new /obj/effect/decal/cleanable/blood/gibs/old(src)
