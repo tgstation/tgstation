@@ -34,13 +34,13 @@
 /*
  Lizard subspecies: ASHWALKERS
 */
+
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 
-/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/human/C)
-	. = ..()
-	C.grant_language(/datum/language/draconic)
-
+/datum/outfit/ashwalker/post_equip(mob/living/carbon/human/H)
+	H.remove_all_languages() //Ashwalkers can only speak Draconic
+	H.grant_language(/datum/language/draconic)
