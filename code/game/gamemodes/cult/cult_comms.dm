@@ -99,9 +99,9 @@
 	pollCultists(owner)
 
 /proc/pollCultists(var/mob/living/Nominee) //Cult Master Poll
-	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
-		return
+//	if(world.time < CULT_POLL_WAIT)
+//		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
+//		return
 	GLOB.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(B.current)
@@ -327,7 +327,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!PM.active)
-			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
+			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can pulse again!</b></span>"
 		return FALSE
 	return ..()
 
@@ -370,17 +370,22 @@
 		if(!attached_action.throwing)
 			attached_action.throwing = TRUE
 			attached_action.throwee = target
-			ranged_mousepointer = 'icons/effects/cult_target.dmi'
+			ranged_ability_user << 'sound/weapons/thudswoosh.ogg'
 			to_chat(ranged_ability_user,"<span class='cult'><b>You have seized [target] now choose where to fling them!</b></span>")
 			return
 		else
-			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
+			new /obj/effect/temp_visual/cult/sparks(get_turf(attached_action.throwee), ranged_ability_user.dir)
 			var/distance = get_dist(attached_action.throwee, target)
-			if(distance >= 12)
+			if(distance >= 16)
 				return
-			attached_action.throwee.incorporeal_move = 1
-			attached_action.throwee.throw_at(target, distance, 4)
+			playsound(target,'sound/magic/exit_blood.ogg')
+			attached_action.throwee.Beam(target,icon_state="sendbeam",time=4)
+			attached_action.throwee.forceMove(target)
+			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
 			attached_action.throwing = FALSE
 			attached_action.cooldown = world.time + attached_action.base_cooldown
-			sleep(10)
-			attached_action.throwee.incorporeal_move = 0
+			remove_mousepointer(ranged_ability_user.client)
+			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [target] through time and space.</span>")
+			ranged_ability_user.update_icons()
+			sleep(200)
+			ranged_ability_user.update_icons()
