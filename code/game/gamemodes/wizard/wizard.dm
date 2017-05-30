@@ -43,6 +43,7 @@
 			update_wiz_icons_added(wizard)
 		greet_wizard(wizard)
 		name_wizard(wizard.current)
+		wizard.current.reset_perspective(null)
 	..()
 	return
 
