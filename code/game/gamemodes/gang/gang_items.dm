@@ -10,7 +10,10 @@
 	if(check_canbuy && !can_buy(user, gang, dominator))
 		return FALSE
 	var/real_cost = get_cost(user, gang, dominator)
-	dominator.points -= real_cost
+	if(gang.bosses[user])
+		gang.bosses[user] -= real_cost
+	if(gang.gangsters[user])
+		gang.gangsters[user] -= real_cost
 	spawn_item(user, gang, dominator)
 	return TRUE
 
@@ -61,7 +64,6 @@
 /datum/gang_item/function/gang_ping/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
 	if(dominator)
 		dominator.ping_gang(user)
-
 
 /datum/gang_item/function/recall
 	name = "Recall Emergency Shuttle"
@@ -353,37 +355,37 @@
 
 /datum/gang_item/equipment/pen/purchase(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
 	if(..())
-		dominator.free_pen = FALSE
+		dominator.free_pens--
 		return TRUE
 	return FALSE
 
 /datum/gang_item/equipment/pen/get_cost(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	if(dominator && dominator.free_pen)
+	if(dominator && dominator.free_pens)
 		return 0
 	return ..()
 
 /datum/gang_item/equipment/pen/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	if(dominator && dominator.free_pen)
+	if(dominator && dominator.free_pens)
 		return "(GET ONE FREE)"
 	return ..()
 
 
-/datum/gang_item/equipment/dominator
-	id = "dominator"
+/datum/gang_item/equipment/gangtool
+	id = "gangtool"
 	cost = 10
 
-/datum/gang_item/equipment/dominator/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
+/datum/gang_item/equipment/gangtool/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
 	var/item_type
 	if(gang && isboss(user, gang))
-		item_type = /obj/item/device/dominator/spare/lt
+		item_type = /obj/item/device/gangtool/spare/lt
 		if(gang.bosses.len < 3)
 			to_chat(user, "<span class='notice'><b>dominators</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the dominator. You may promote up to [3-gang.bosses.len] more Lieutenants</span>")
 	else
-		item_type = /obj/item/device/dominator/spare
+		item_type = /obj/item/device/gangtool/spare
 	var/obj/item/device/dominator/spare/tool = new item_type(user.loc)
 	user.put_in_hands(tool)
 
-/datum/gang_item/equipment/dominator/get_name_display(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
+/datum/gang_item/equipment/gangtool/get_name_display(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
 	if(gang && isboss(user, gang) && (gang.bosses.len < 3))
 		return "Promote a Gangster"
 	return "Spare dominator"

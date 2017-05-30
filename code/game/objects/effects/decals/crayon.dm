@@ -32,18 +32,17 @@
 	var/datum/gang/gang
 	var/obj/item/device/gangtool/linked_tool
 	var/area/territory
+	var/datum/mind/tagger_mind
 
 /obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0,  var/mob/user)
 	if(!type || !G)
 		qdel(src)
 	territory = get_area(src)
+	tagger_mind = user.mind
 	gang = G
 	var/newcolor = G.color_hex
 	icon_state = G.name
-	G.territory_new |= list(territory.type = territory.name)
-	linked_tool = locate(/obj/item/device/gangtool) in user.contents
-	if(linked_tool)
-		linked_tool.tags += src
+	G.territory_new[territory] = tagger_mind
 	..(mapload, newcolor, icon_state, e_name, rotation)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
@@ -52,5 +51,5 @@
 	if(gang)
 		gang.territory -= territory.type
 		gang.territory_new -= territory.type
-		gang.territory_lost |= list(territory.type = territory.name)
+		gang.territory_lost[src] = tagger_mind
 	return ..()

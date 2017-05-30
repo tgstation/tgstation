@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	gang_broadcast(message, src, user)
 
 //PING
-/proc/gang_broadcast(message, datum/gang, mob/user, ignore_checks = FALSE)
+/proc/gang_broadcast(message, datum/gang/gang, mob/user, ignore_checks = FALSE)
 	if(!user && !ignore_checks)
 		return
 	if(!ignore_checks)
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	else
 		if(!message)
 			return
-	if(user.z != Z_LEVEL_STATION && user.z != Z_LEVEL_CENTCOM && !ignore_checks)
+	if(user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM && !ignore_checks)
 		to_chat(user, "<span class='info'>\icon[src]Error: Station out of range.</span>")
 		return
 	var/list/members = list()

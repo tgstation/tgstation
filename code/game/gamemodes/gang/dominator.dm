@@ -25,6 +25,7 @@
 	var/obj/effect/countdown/dominator/countdown
 	var/datum/proximity_monitor/advanced/dominator_forcefield/forcefield
 	var/recalling = FALSE
+	var/free_pens = 3
 
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
@@ -75,7 +76,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/device/gangtool/proc/recall(mob/user, phase = 1)
+/obj/machinery/dominator/proc/recall(mob/user, phase = 1)
 	switch(phase)
 		if(1)
 			if(!can_use(user))
@@ -126,7 +127,7 @@
 			recalling = FALSE
 			log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 			message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
-			userturf = get_turf(user)
+			var/userturf = get_turf(user)
 			if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
 				if(SSshuttle.cancelEvac(user))
 					gang.recalls -= 1
@@ -281,7 +282,7 @@
 		examine(user)
 		return
 
-/obj/machinery/dominator/proc/get_gang_item_interface(boss = FALSE, soldier = FALSE)
+/obj/machinery/dominator/proc/get_gang_item_interface(mob/user, boss = FALSE, soldier = FALSE)
 	. = list()
 	if(boss)
 		for(var/cat in gang.boss_category_list)
@@ -355,7 +356,7 @@
 	dat += "<hr>"
 	dat += get_gang_status(user)
 	dat += "<hr>"
-	dat += get_gang_item_interface(TRUE, FALSE)
+	dat += get_gang_item_interface(user, TRUE, FALSE)
 	dat += "<hr>"
 	show_popup(user, dat)
 
@@ -365,7 +366,7 @@
 	dat += "<hr>"
 	dat += get_gang_status(user)
 	dat += "<hr>"
-	dat += get_gang_item_interface(FALSE, TRUE)
+	dat += get_gang_item_interface(user, FALSE, TRUE)
 	dat += "<hr>"
 	show_popup(user, dat)
 
