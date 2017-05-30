@@ -46136,7 +46136,7 @@
 	},
 /area/engine/atmos)
 "bEU" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/chilled,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;

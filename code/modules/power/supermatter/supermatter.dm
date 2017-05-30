@@ -9,7 +9,7 @@
 
 #define OXYGEN_TRANSMIT_MODIFIER 1.5   //Higher == Bigger bonus to power generation.
 #define PLASMA_TRANSMIT_MODIFIER 4
-#define FREON_TRANSMIT_PENALTY 0.75    // Scales how much freon reduces total power transmission. 1 equals 1% per 1% of freon in the mix.
+#define FROZEN_TRANSMIT_PENALTY 0.75
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 
@@ -29,7 +29,6 @@
 #define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
 #define PLASMA_RELEASE_MODIFIER 750        //Higher == less plasma released by reaction
 #define OXYGEN_RELEASE_MODIFIER 325        //Higher == less oxygen released at high temperature/power
-#define FREON_BREEDING_MODIFIER 100        //Higher == less freon created
 #define REACTION_POWER_MODIFIER 0.55       //Higher == more overall power
 
 #define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
@@ -83,7 +82,7 @@
 	var/power = 0
 
 	var/n2comp = 0					// raw composition of each gas in the chamber, ranges from 0 to 1
-	var/freoncomp = 0
+	var/frozen = 0
 
 	var/plasmacomp = 0
 	var/o2comp = 0
@@ -98,7 +97,7 @@
 	var/powerloss_dynamic_scaling= 0
 	var/power_transmission_bonus = 0
 	var/mole_heat_penalty = 0
-	var/freon_transmit_modifier = 1
+	var/frozen_transmit_modifier = 1
 
 	var/matter_power = 0
 
@@ -125,7 +124,7 @@
 	var/obj/effect/countdown/supermatter/countdown
 
 /obj/machinery/power/supermatter_shard/make_frozen_visual()
-	return
+	frozen = min(frozen + 0.2,1)
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
@@ -227,7 +226,7 @@
 		if(damage > damage_archived && prob(10))
 			playsound(get_turf(src), 'sound/effects/EMPulse.ogg', 50, 1)
 
-	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
+	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2")
 	//calculating gas related values
 	combined_gas = max(removed.total_moles(), 0)
 
@@ -237,16 +236,15 @@
 
 	n2ocomp = max(removed.gases["n2o"][MOLES]/combined_gas, 0)
 	n2comp = max(removed.gases["n2"][MOLES]/combined_gas, 0)
-	freoncomp = max(removed.gases["freon"][MOLES]/combined_gas, 0)
 
-	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp - freoncomp, 0), 1)
+	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp - frozen, 0), 1)
 
 	dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
 	dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
 
 	power_transmission_bonus = max((plasmacomp * PLASMA_TRANSMIT_MODIFIER) + (o2comp * OXYGEN_TRANSMIT_MODIFIER), 0)
 
-	freon_transmit_modifier = max(1-(freoncomp * FREON_TRANSMIT_PENALTY), 0)
+	frozen_transmit_modifier = max(1-(frozen * FROZEN_TRANSMIT_PENALTY), 0)
 
 	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -294,9 +292,6 @@
 	removed.gases["plasma"][MOLES] += max((device_energy * dynamic_heat_modifier) / PLASMA_RELEASE_MODIFIER, 0)
 
 	removed.gases["o2"][MOLES] += max(((device_energy + removed.temperature * dynamic_heat_modifier) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
-
-	if(combined_gas < 50)
-		removed.gases["freon"][MOLES] = max((removed.gases["freon"][MOLES] + device_energy) * freoncomp / FREON_BREEDING_MODIFIER, 0)
 
 	if(produces_gas)
 		env.merge(removed)
@@ -379,6 +374,8 @@
 
 
 	power -= ((power/500)**3) * powerloss_inhibitor
+	if(frozen)
+		frozen = max(0,frozen - 0.05)
 
 	return 1
 
@@ -458,7 +455,7 @@
 /obj/machinery/power/supermatter_shard/proc/transfer_energy()
 	for(var/obj/machinery/power/rad_collector/R in GLOB.rad_collectors)
 		if(R.z == z && get_dist(R, src) <= 15) //Better than using orange() every process
-			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
+			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * frozen_transmit_modifier)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
