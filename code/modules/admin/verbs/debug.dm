@@ -52,7 +52,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 
-	//hascall() doesn't support proc paths (eg: /proc/gib(), it only supports "gib"
+	//hascall() doesn't support proc paths (eg: /proc/gib(), it only supports "gib")
 	var/testname = procname
 	if(targetselected)
 		//Find one of the 3 possible ways they could have written /proc/PROCNAME
