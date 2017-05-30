@@ -72,9 +72,9 @@
 		var/turf/T = get_turf(A)
 		if(istype(T))	//They're hovering over something in the map.
 			direction_track(controller, T)
-			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, C.mouseParams)
+			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
-/obj/machinery/manned_turret/proc/direction_track(user, atom/targeted)
+/obj/machinery/manned_turret/proc/direction_track(mob/user, atom/targeted)
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
 	switch(dir)
@@ -143,7 +143,7 @@
 	..()
 	var/obj/machinery/manned_turret/E = user.buckled
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
-	E.track_direction(user, targeted_atom)
+	E.direction_track(user, targeted_atom)
 	E.checkfire(targeted_atom, user)
 
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)

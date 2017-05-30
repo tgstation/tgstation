@@ -300,6 +300,7 @@
 	var/list/mouse_control = params2list(params)
 	var/p_x = 0
 	var/p_y = 0
+	var/angle = 0
 	if(mouse_control["icon-x"])
 		p_x = text2num(mouse_control["icon-x"])
 	if(mouse_control["icon-y"])
@@ -323,7 +324,7 @@
 		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
 		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
 		// to_chat(world, "Pixel position: [x] [y]")
-		var/angle = Atan2(y - oy, x - ox)
+		angle = Atan2(y - oy, x - ox)
 		// to_chat(world, "Angle: [angle]")
 	return list(angle, p_x, p_y)
 
