@@ -99,9 +99,9 @@
 	pollCultists(owner)
 
 /proc/pollCultists(var/mob/living/Nominee) //Cult Master Poll
-//	if(world.time < CULT_POLL_WAIT)
-//		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
-//		return
+	if(world.time < CULT_POLL_WAIT)
+		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [round((CULT_POLL_WAIT-world.time)/10)] seconds.")
+		return
 	GLOB.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(B.current)
