@@ -1199,7 +1199,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 	var/message = pick(GLOB.admiral_messages)
-	var/time = rand(600, 1200)
 	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
 
 	if(!message)
@@ -1207,4 +1206,4 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	message_admins("[key_name_admin(usr)] triggered a Centcom recall, with the admiral message of: [message]")
 	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")
-	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle/.proc/centcom_recall, SSshuttle.emergency.timer, message), time)
+	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
