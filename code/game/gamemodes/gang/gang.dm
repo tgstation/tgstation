@@ -139,6 +139,9 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			G.add_gang_hud(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
+	for(var/mob/living/M in GLOB.player_list)
+		if(!is_gangster(M))
+			vigilize(M)
 	sleep(30)
 	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetics have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
 	sleep(80)
@@ -147,9 +150,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	explosion(target_armory, 13, 15, 16, 20, TRUE, TRUE)
 	explosion(target_equipment, 8, 9, 10, 0, TRUE, TRUE)
 	explosion(target_brig, 8, 9, 10, 0, TRUE, TRUE)
-	for(var/mob/living/M in GLOB.player_list)
-		if(!is_gangster(M))
-			vigilize(M)
+
 
 /proc/vigilize(mob/living/M)
 	var/datum/objective/escape/E = new
