@@ -320,7 +320,6 @@
 				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = 0
 			ui_interact(usr)
-	//I got rid of the text messages, because you don't need reminding of a thing you just did when the UI updates immediately.
 		if("forwardCat") //Meow
 			viewing_category = next_cat(FALSE)
 			. = TRUE
