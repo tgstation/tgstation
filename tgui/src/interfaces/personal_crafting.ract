@@ -45,7 +45,7 @@
 
 
 
-<ui-display title='{{data.category}}'>
+<ui-display title='{{data.category}} : {{data.subcategory}}'>
 	{{#if data.busy}}
 		<ui-section>
 			Crafting... <i class='fa-spin fa fa-spinner'></i>
@@ -54,6 +54,12 @@
 		<ui-section>
 			<ui-button icon='arrow-left' action='backwardCat'>
 				{{data.prev_cat}}
+			</ui-button>
+			<ui-button icon='arrow-left' action='backwardSubCat'>
+				{{data.prev_subcat}}
+			</ui-button>
+			<ui-button icon='arrow-right' action='forwardSubCat'>
+				{{data.next_subcat}}
 			</ui-button>
 			<ui-button icon='arrow-right' action='forwardCat'>
 				{{data.next_cat}}
