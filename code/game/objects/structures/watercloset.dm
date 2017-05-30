@@ -114,6 +114,10 @@
 		secret = new secret_type(src)
 		secret.desc += " It's a secret!"
 		w_items += secret.w_class
+		contents += secret
+
+
+
 
 /obj/structure/urinal
 	name = "urinal"
@@ -250,7 +254,7 @@
 		qdel(mymist)
 
 	if(on)
-		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", MOB_LAYER + 1))
+		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
@@ -576,7 +580,7 @@
 /obj/structure/curtain/update_icon()
 	if(!open)
 		icon_state = "closed"
-		layer = FLY_LAYER //Changed from WALL_OBJ_LAYER so that when a shower is being used, the curtain is in front of the water droplets but behind the steam.
+		layer = WALL_OBJ_LAYER
 		density = 1
 		open = FALSE
 
