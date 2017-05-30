@@ -45,7 +45,7 @@
 	var/user_good = !QDELETED(user)
 	if(user_good)
 		user.reset_perspective()
-    	user.remote_control = null
+		user.remote_control = null
 	
 	if(!QDELETED(eye))
 		if(user_good && user.client)
