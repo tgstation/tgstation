@@ -50,9 +50,6 @@
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
-		if(WIRE_RESET_MODULE)
-			if(R.has_module())
-				R.ResetModule()
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder
@@ -74,3 +71,6 @@
 				R.visible_message("[R]'s camera lense focuses loudly.", "Your camera lense focuses loudly.")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
+		if(WIRE_RESET_MODULE)
+			if(R.has_module() && !mend)
+				R.ResetModule()
