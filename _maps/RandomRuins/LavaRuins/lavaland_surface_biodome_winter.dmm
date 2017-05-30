@@ -6,7 +6,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "ac" = (
 /obj/item/stack/medical/ointment,
 /obj/structure/table,
@@ -290,89 +290,89 @@
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aT" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aU" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aV" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aW" = (
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aX" = (
 /turf/open/floor/pod/light,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aY" = (
 /obj/structure/chair/stool,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "aZ" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "ba" = (
 /obj/machinery/door/airlock/silver,
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bb" = (
 /obj/machinery/door/airlock/silver,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bc" = (
 /obj/structure/table,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bd" = (
 /obj/structure/table,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "be" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bf" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bg" = (
 /obj/item/weapon/twohanded/required/chainsaw,
 /obj/structure/closet,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bh" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bi" = (
 /obj/machinery/computer/monitor,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bj" = (
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bk" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bl" = (
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/lava/smooth;
@@ -382,22 +382,22 @@
 /area/ruin/powered/snow_biodome)
 "bm" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bn" = (
 /obj/item/clothing/mask/balaclava,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bo" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bp" = (
 /obj/structure/table,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "bq" = (
 /obj/machinery/light/built{
 	dir = 1
@@ -406,12 +406,25 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
 "br" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/glass_large,
 /turf/open/floor/pod/dark,
-/area/ruin/powered/snow_biodome)
+/area/ruin/powered)
+"bs" = (
+/obj/machinery/door/airlock/glass_large,
+/obj/structure/fans/tiny,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"bt" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"bu" = (
+/obj/structure/fans/tiny,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -887,7 +900,7 @@ ao
 ak
 ak
 ak
-aO
+bs
 aX
 aX
 br
@@ -919,10 +932,10 @@ ao
 ao
 ak
 ak
-aP
+bt
 aX
 aX
-aP
+bu
 bm
 "}
 (17,1,1) = {"
