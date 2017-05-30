@@ -98,7 +98,6 @@
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/frag,

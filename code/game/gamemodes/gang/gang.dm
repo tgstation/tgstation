@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/proc/vigilante_vengeance()
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Would you like be a part of a Vigilante posse?", "pAI", null, FALSE, 100)
 	var/list/mob/dead/observer/finalists = list()
-	var/posse_size = round(GLOB.joined_player_list.len * 0.08)
+	var/posse_size = 1+round(GLOB.joined_player_list.len * 0.07)
 	if(candidates.len)
 		for(var/n in 1 to posse_size)
 			finalists += pick_n_take(candidates)
@@ -394,8 +394,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		var/mob/dead/observer/spoo = pick_n_take(finalists)
 		character.key = spoo.key
 		vigilize(character)
-		character.equip_to_slot_or_del(new /obj/item/weapon/twohanded/pitchfork/gangfork(character),slot_l_store)
-		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(character),slot_wear_suit)
+		character.put_in_r_hand(new /obj/item/weapon/twohanded/pitchfork/gangfork(character))
+		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(character),slot_wear_suit)
 
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
@@ -451,9 +451,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		SSticker.mode.shuttle_check() // See if its time to start wrapping things up
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			G.income()
-			if(G.is_dominating)
-				if(G.domination_time_remaining() < 0)
-					winners += G
+
+	for(var/datum/gang/G in SSticker.mode.gangs)
+		if(G.is_dominating)
+			if(G.domination_time_remaining() < 0)
+				winners += G
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time

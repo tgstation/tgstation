@@ -244,12 +244,13 @@
 		if(LAZYLEN(finalists))
 			winner = pick(finalists)
 	if(!src || !winner)
+		qdel(H)
 		return
 	var/datum/mind/reinforcement = new /datum/mind(winner.key)
 	reinforcement.active = 1
 	reinforcement.transfer_to(H)
 	SSticker.mode.add_gangster(reinforcement, G, 0)
-	sparks.start()
+	do_sparks(4, TRUE, src)
 	H.forceMove(get_turf(src))
 
 
