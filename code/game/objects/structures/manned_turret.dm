@@ -62,7 +62,7 @@
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
-	if(!buckled_mobs.len)
+	if(!LAZYLEN(buckled_mobs))
 		STOP_PROCESSING(SSfastprocess, src)
 		return
 	var/mob/living/controller = buckled_mobs[1]
@@ -181,7 +181,7 @@
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
-	P.Angle = calculated_projectile_vars[1]
+	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)
 	P.p_x = calculated_projectile_vars[2]
 	P.p_y = calculated_projectile_vars[3]
 	P.fire()
