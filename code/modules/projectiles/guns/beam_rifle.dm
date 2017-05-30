@@ -35,7 +35,7 @@
 	var/aiming_time_fire_threshold = 2
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
-	var/aiming_time_increase_angle_multiplier = 0.7
+	var/aiming_time_increase_angle_multiplier = 0.5
 
 	var/lastangle = 0
 	var/mob/current_user = null
@@ -56,6 +56,7 @@
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
+	var/lastfire = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
@@ -202,6 +203,9 @@
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
 		return
+	if(lastfire > world.time + delay)
+		return
+	lastfire = world.time
 	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
