@@ -19,7 +19,7 @@
 	finalize_traitor()
 	..()
 
-/datum/antagonist/traitor/on_removal() //does not disable uplink, call remove_antag_equip() to remove uplink
+/datum/antagonist/traitor/on_removal() 
 	SSticker.mode.traitors -= owner
 	if(owner.current && isAI(owner.current))
 		var/mob/living/silicon/ai/A = owner.current
@@ -27,6 +27,7 @@
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
 		A.malf_picker.remove_verbs(A)
 		qdel(A.malf_picker)
+	owner.remove_antag_equip()
 	for(var/O in objectives_given)
 		owner.objectives -= O
 	objectives_given = list()
@@ -197,7 +198,7 @@
 	killer.add_malf_picker()
 
 /datum/antagonist/traitor/proc/equip(safety = 0, employer)
-	SSticker.mode.equip_traitor(owner.current)
+	owner.equip_traitor(employer)
 
 /datum/antagonist/traitor/proc/assign_exchange_role()
 	//set faction
