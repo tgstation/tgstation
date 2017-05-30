@@ -51,20 +51,18 @@ Possible to do for anyone motivated enough:
 	var/static/list/holopads = list()
 
 /obj/machinery/holopad/Initialize()
-	..()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
 	B.apply_default_parts(src)
 	holopads += src
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
-		LAZYADD(holo_calls, outgoing_call)
-		outgoing_call = null
+		outgoing_call.ConnectionFailure(src)
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		HC.ConnectionFailure(src)
-	LAZYCLEARLIST(holo_calls)
 
 	for (var/I in masters)
 		clear_holo(I)
@@ -75,7 +73,14 @@ Possible to do for anyone motivated enough:
 	if (powered())
 		stat &= ~NOPOWER
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
+		if(outgoing_call)
+			outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/obj_break()
+	. = ..()
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4

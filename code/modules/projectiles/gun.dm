@@ -62,8 +62,8 @@
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
 	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
+	var/zoom_out_amt = 0
 	var/datum/action/toggle_scope_zoom/azoom
-
 
 /obj/item/weapon/gun/Initialize()
 	. = ..()
@@ -503,12 +503,14 @@
 			if(WEST)
 				_x = -zoom_amt
 
+		user.client.view = zoom_out_amt
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
+		user.client.view = world.view
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
-
+	return zoomed
 
 //Proc, so that gun accessories/scopes/etc. can easily add zooming.
 /obj/item/weapon/gun/proc/build_zooming()
