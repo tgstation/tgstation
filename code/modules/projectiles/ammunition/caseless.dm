@@ -55,7 +55,7 @@
 
 /obj/item/ammo_casing/caseless/foam_dart
 	name = "foam dart"
-	desc = "Its nerf or nothing! Ages 8 and up."
+	desc = "Its nerf or nothing! Ages 8 and up. The cap seems glued on rather cheaply."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
@@ -66,12 +66,12 @@
 	..()
 	if (modified)
 		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
+		desc = "Its nerf or nothing! ... Upon closer inspection, you notice a pen sticking out the end."
 		if(BB)
 			BB.icon_state = "foamdart_empty"
 	else
 		icon_state = initial(icon_state)
-		desc = "Its nerf or nothing! Ages 8 and up."
+		desc = "Its nerf or nothing! Ages 8 and up. The cap seems glued on rather cheaply."
 		if(BB)
 			BB.icon_state = initial(BB.icon_state)
 
@@ -102,6 +102,12 @@
 
 /obj/item/ammo_casing/caseless/foam_dart/attack_self(mob/living/user)
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
+	if (!modified)
+		modified = 1
+		FD.modified = 1
+		FD.damage_type = BRUTE
+		to_chat(user, "<span class='notice'>You pop the safety cap off of [src].</span>")
+		update_icon()
 	if(FD.pen)
 		FD.damage = initial(FD.damage)
 		FD.nodamage = initial(FD.nodamage)
