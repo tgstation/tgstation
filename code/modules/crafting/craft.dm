@@ -3,26 +3,33 @@
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/viewing_subcategory = 1
 	var/list/categories = list(
-				CAT_WEAPON = list(
-					CAT_WEAPON,
-					CAT_AMMO),
+				CAT_WEAPON,
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
-				CAT_FOOD = list(
-					CAT_BREAD,
-					CAT_BURGER,
-					CAT_CAKE,
-					CAT_EGG,
-					CAT_MEAT,
-					CAT_MISCFOOD,
-					CAT_PASTRY,
-					CAT_PIE,
-					CAT_PIZZA,
-					CAT_SALAD,
-					CAT_SANDWICH,
-					CAT_SOUP,
-					CAT_SPAGHETTI))
+				CAT_FOOD)
+	var/list/subcategories = list(
+						list(	//Weapon subcategories
+							CAT_WEAPON,
+							CAT_AMMO),
+						CAT_NONE, //Robot subcategories
+						CAT_NONE, //Misc subcategories
+						CAT_NONE, //Tribal subcategories
+						list(	//Food subcategories
+							CAT_BREAD,
+							CAT_BURGER,
+							CAT_CAKE,
+							CAT_EGG,
+							CAT_MEAT,
+							CAT_MISCFOOD,
+							CAT_PASTRY,
+							CAT_PIE,
+							CAT_PIZZA,
+							CAT_SALAD,
+							CAT_SANDWICH,
+							CAT_SOUP,
+							CAT_SPAGHETTI))
+
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
@@ -266,15 +273,19 @@
 
 /datum/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
+	var/list/subs = list()
+	var/cur_subcategory = CAT_NONE
 	var/cur_category = categories[viewing_category]
-	var/cur_subcategory = cur_category[viewing_subcategory]
+	if (islist(subcategories[viewing_category]))
+		subs = subcategories[viewing_category]
+		cur_subcategory = subs[viewing_subcategory]
 	data["busy"] = busy
 	data["prev_cat"] = categories[prev_cat()]
-	data["prev_subcat"] = cur_category[prev_subcat()]
+	data["prev_subcat"] = subs[prev_subcat()]
 	data["category"] = cur_category
 	data["subcategory"] = cur_subcategory
 	data["next_cat"] = categories[next_cat()]
-	data["next_subcat"] = cur_category[next_subcat()]
+	data["next_subcat"] = subs[next_subcat()]
 	data["display_craftable_only"] = display_craftable_only
 	data["display_compact"] = display_compact
 
@@ -283,7 +294,7 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		if((R.category != cur_category) && (R.subcategory != cur_subcategory))
+		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
 			can_craft += list(build_recipe_data(R))
@@ -310,20 +321,20 @@
 			busy = 0
 			ui_interact(usr)
 		if("forwardCat") //Meow
-			viewing_category = next_cat()
+			viewing_category = next_cat(FALSE)
 			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("backwardCat")
-			viewing_category = prev_cat()
+			viewing_category = prev_cat(FALSE)
 			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("forwardSubCat")
 			viewing_subcategory = next_subcat()
-			to_chat(usr, "<span class='notice'>Subcategory is now [categories[viewing_category]].</span>")
+			to_chat(usr, "<span class='notice'>Subcategory is now [subcategories[viewing_subcategory]].</span>")
 			. = TRUE
 		if("backwardSubCat")
 			viewing_subcategory = prev_subcat()
-			to_chat(usr, "<span class='notice'>Subcategory is now [categories[viewing_category]].</span>")
+			to_chat(usr, "<span class='notice'>Subcategory is now [subcategories[viewing_subcategory]].</span>")
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
@@ -336,20 +347,21 @@
 
 
 //Next works nicely with modular arithmetic
-/datum/personal_crafting/proc/next_cat()
-	viewing_subcategory = 1
+/datum/personal_crafting/proc/next_cat(readonly = TRUE)
+	if (!readonly)
+		viewing_subcategory = 1
 	. = viewing_category % categories.len + 1
 
 /datum/personal_crafting/proc/next_subcat()
-	if(islist(categories[viewing_category]))
-		. = viewing_subcategory % categories[viewing_category].len + 1
-	else
-		. = null
+	if(islist(subcategories[viewing_category]))
+		var/list/subs = subcategories[viewing_category]
+		. = viewing_subcategory % subs.len + 1
 
 
 //Previous can go fuck itself
-/datum/personal_crafting/proc/prev_cat()
-	viewing_subcategory = 1
+/datum/personal_crafting/proc/prev_cat(readonly = TRUE)
+	if (!readonly)
+		viewing_subcategory = 1
 	if(viewing_category == categories.len)
 		. = viewing_category-1
 	else
@@ -358,13 +370,14 @@
 		. = categories.len
 
 /datum/personal_crafting/proc/prev_subcat()
-	if(islist(categories[viewing_category]))
-		if(viewing_subcategory == categories[viewing_category].len)
+	if(islist(subcategories[viewing_category]))
+		var/list/subs = subcategories[viewing_category]
+		if(viewing_subcategory == subs.len)
 			. = viewing_subcategory-1
 		else
-			. = viewing_subcategory % categories[viewing_category].len - 1
+			. = viewing_subcategory % subs.len - 1
 		if(. <= 0)
-			. = categories[viewing_category].len
+			. = subs.len
 	else
 		. = null
 

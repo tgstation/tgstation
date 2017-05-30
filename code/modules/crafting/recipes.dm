@@ -170,6 +170,17 @@
 	time = 40
 	category = CAT_ROBOT
 
+/datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
+	name = "Pneumatic Cannon"
+	result = /obj/item/weapon/pneumatic_cannon/ghetto
+	tools = list(/obj/item/weapon/weldingtool,
+				 /obj/item/weapon/wrench)
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/stack/packageWrap = 8,
+				/obj/item/pipe = 2)
+	time = 300
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/flamethrower
 	name = "Flamethrower"
 	result = /obj/item/weapon/flamethrower
@@ -181,6 +192,7 @@
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 10
 	category = CAT_WEAPON
+	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/meteorshot
 	name = "Meteorshot Shell"
