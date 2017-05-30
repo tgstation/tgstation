@@ -92,17 +92,20 @@
 		for(var/t in trophies)
 			var/obj/item/crusher_trophy/T = t
 			T.on_mark_detonation(target, user)
-		if(!QDELETED(L)) //if L still exists, we can assume the crusher damage tracker also does
-			C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
+		if(!QDELETED(L))
+			if(!QDELETED(C))
+				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
 			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 			var/backstab_dir = get_dir(user, L)
 			var/def_check = L.getarmor(type = "bomb")
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-				C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
+				if(!QDELETED(C))
+					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
 				L.apply_damage(80, BRUTE, blocked = def_check)
 				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
-				C.total_damage += 50
+				if(!QDELETED(C))
+					C.total_damage += 50
 				L.apply_damage(50, BRUTE, blocked = def_check)
 
 /obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
