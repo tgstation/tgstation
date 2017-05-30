@@ -26,6 +26,6 @@
 		if(reversed)
 			reversed = reverseRange(reversed.Copy())
 			for(var/entry in reversed)
-				dat += "<font size=2px>[entry]: [reversed[entry]]</font><br>"
+				dat += "<font size=2px>[entry]: [reversed[entry]]</font><hr>"
 
 	usr << browse(dat, "window=invidual_logging;size=600x480")
