@@ -6,6 +6,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
+	origin_tech = "combat=10;magnets=7"
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_DIAMOND = 5000, MAT_URANIUM = 5000, MAT_SILVER = 800, MAT_GOLD = 5000)
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
@@ -13,6 +15,9 @@
 
 /obj/item/weapon/gun/energy/pulse/emp_act(severity)
 	return
+
+/obj/item/weapon/gun/energy/pulse/rnd
+	pin = null
 
 /obj/item/weapon/gun/energy/pulse/prize
 	pin = /obj/item/device/firing_pin
