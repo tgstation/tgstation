@@ -18,7 +18,7 @@
 	parts = list(/obj/item/weapon/gun = 1)
 	tools = list(/obj/item/weapon/weldingtool, /obj/item/weapon/screwdriver, /obj/item/weapon/wirecutters)
 	time = 50
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/IED
@@ -30,7 +30,7 @@
 				/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans = 1)
 	time = 15
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/lance
@@ -41,7 +41,7 @@
 	parts = list(/obj/item/weapon/twohanded/spear = 1,
 				/obj/item/weapon/grenade = 1)
 	time = 15
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/strobeshield
@@ -51,7 +51,7 @@
 				/obj/item/device/assembly/flash/handheld = 1,
 				/obj/item/weapon/shield/riot = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/molotov
@@ -61,7 +61,7 @@
 				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/stunprod
@@ -71,7 +71,7 @@
 				/obj/item/stack/rods = 1,
 				/obj/item/device/assembly/igniter = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/teleprod
@@ -82,7 +82,7 @@
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/ore/bluespace_crystal = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/bola
@@ -100,7 +100,7 @@
 	reqs = list(/obj/item/severedtail = 1,
 	            /obj/item/stack/sheet/metal = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/tailwhip
@@ -109,7 +109,7 @@
 	reqs = list(/obj/item/severedtail = 1,
 	            /obj/item/stack/cable_coil = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/ed209
@@ -179,7 +179,7 @@
 				/obj/item/stack/packageWrap = 8,
 				/obj/item/pipe = 2)
 	time = 300
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/flamethrower
@@ -192,7 +192,7 @@
 				/obj/item/weapon/weldingtool = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 10
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/meteorshot
@@ -203,7 +203,7 @@
 				/obj/item/weapon/stock_parts/manipulator = 2)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/pulseslug
@@ -214,7 +214,7 @@
 				/obj/item/weapon/stock_parts/micro_laser/ultra = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/dragonsbreath
@@ -223,7 +223,7 @@
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,/datum/reagent/phosphorus = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/frag12
@@ -235,7 +235,7 @@
 				/datum/reagent/toxin/acid/fluacid = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ionslug
@@ -246,7 +246,7 @@
 				/obj/item/weapon/stock_parts/subspace/crystal = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/improvisedslug
@@ -258,7 +258,7 @@
 				/datum/reagent/fuel = 10)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/improvisedslugoverload
@@ -269,7 +269,7 @@
 				/datum/reagent/toxin/plasma = 20)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/laserslug
@@ -280,7 +280,7 @@
 				/obj/item/weapon/stock_parts/micro_laser/high = 1)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 5
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/ishotgun
@@ -292,7 +292,7 @@
 				/obj/item/stack/packageWrap = 5)
 	tools = list(/obj/item/weapon/screwdriver)
 	time = 100
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/chainsaw
@@ -303,7 +303,7 @@
 				/obj/item/stack/sheet/plasteel = 1)
 	tools = list(/obj/item/weapon/weldingtool)
 	time = 50
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/spear
@@ -313,7 +313,7 @@
 				/obj/item/weapon/shard = 1,
 				/obj/item/stack/rods = 1)
 	time = 40
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/spooky_camera
@@ -389,7 +389,7 @@
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
 	time = 30
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/chemical_payload2
@@ -402,7 +402,7 @@
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
 	time = 50
-	category = CAT_WEAPON
+	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/bonearmor

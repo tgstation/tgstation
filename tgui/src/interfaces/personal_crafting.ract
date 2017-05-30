@@ -45,7 +45,7 @@
 
 
 
-<ui-display title='{{data.category}} : {{data.subcategory}}'>
+<ui-display title='{{data.category}}{{#if data.subcategory}} : {{data.subcategory}} {{/if}}'>
 	{{#if data.busy}}
 		<ui-section>
 			Crafting... <i class='fa-spin fa fa-spinner'></i>
@@ -55,16 +55,6 @@
 			<ui-button icon='arrow-left' action='backwardCat'>
 				{{data.prev_cat}}
 			</ui-button>
-			{{#if data.prev_subcat}}
-			<ui-button icon='arrow-left' action='backwardSubCat'>
-				{{data.prev_subcat}}
-			</ui-button>
-			{{/if}}
-			{{#if data.next_subcat}}
-			<ui-button icon='arrow-right' action='forwardSubCat'>
-				{{data.next_subcat}}
-			</ui-button>
-			{{/if}}
 			<ui-button icon='arrow-right' action='forwardCat'>
 				{{data.next_cat}}
 			</ui-button>
@@ -86,6 +76,16 @@
 				{{/data.display_compact}}
 			{{/if}}
 		</ui-section>
+		{{#if data.subcategory}}
+			<ui-section>
+				<ui-button icon='arrow-left' action='backwardSubCat'>
+					{{data.prev_subcat}}
+				</ui-button>
+				<ui-button icon='arrow-right' action='forwardSubCat'>
+					{{data.next_subcat}}
+				</ui-button>
+			</ui-section>
+		{{/if}}
 			{{#if data.display_compact}}
 				<ui-display>
 				{{#each data.can_craft}}

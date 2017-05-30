@@ -3,7 +3,7 @@
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/viewing_subcategory = 1
 	var/list/categories = list(
-				CAT_WEAPON,
+				CAT_WEAPONRY,
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
