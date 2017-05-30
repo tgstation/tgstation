@@ -52,7 +52,7 @@
 		</ui-section>
 	{{else}}
 		<ui-section>
-			<table>
+			<table style='width:100%'>
 				<tr>
 					<td style='width:150px!important'>
 						<ui-button icon='arrow-left' action='backwardCat'>
@@ -64,18 +64,18 @@
 						{{data.next_cat}}
 						</ui-button>
 					</td>
-					<td>
+					<td style='float:right!important'>
 					{{#if data.display_craftable_only}}
-						<ui-button icon='lock' action='toggle_recipes' style='float:right!important'>
+						<ui-button icon='lock' action='toggle_recipes'>
 							Showing Craftable Recipes
 						</ui-button>
 					{{else}}
-						<ui-button icon='unlock' action='toggle_recipes' style='float:right!important'>
+						<ui-button icon='unlock' action='toggle_recipes'>
 							Showing All Recipes
 						</ui-button>
 					{{/if}}
 					</td>
-					<td>
+					<td style='float:right!important'>
 						<ui-button icon='{{data.display_compact ? "check-square-o" : "square-o"}}' action='toggle_compact'>
 							Compact
 						</ui-button>
