@@ -832,7 +832,7 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 
 	var/start_wait = world.time
-	UNTIL(round_end_sound_sent && (world.time - start_wait) > (delay * 2))	//don't wait forever
+	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
 	sleep(delay - (world.time - start_wait))
 
 	if(delay_end && !skip_delay)

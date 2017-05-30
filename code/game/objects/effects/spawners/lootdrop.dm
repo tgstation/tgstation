@@ -85,7 +85,7 @@
 		/obj/item/organ/heart/gland/spiderman = 5,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
 		/obj/item/organ/body_egg/alien_embryo = 1,
-		/obj/item/organ/hivelord_core = 2)
+		/obj/item/organ/regenerative_core = 2)
 	lootcount = 3
 
 /obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner
