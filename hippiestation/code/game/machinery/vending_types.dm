@@ -554,6 +554,7 @@ BOOZE O MAT
 */
 /obj/machinery/vending/boozeomat
 	name = "\improper Booze-O-Mat"
+	icon = 'icons/obj/vending.dmi'
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	icon_deny = "boozeomat-deny"
@@ -951,7 +952,6 @@ PDA TECH
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
-	icon = 'icons/obj/vending.dmi'
 	desc = "Cartridges for PDAs"
 	product_slogans = "Carts to go!"
 	icon_state = "cart"
