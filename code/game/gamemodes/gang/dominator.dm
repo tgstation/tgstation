@@ -24,6 +24,7 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
 	var/datum/proximity_monitor/advanced/dominator_forcefield/forcefield
+	var/recalling = FALSE
 
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
@@ -73,6 +74,66 @@
 	else if(user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
 		return TRUE
 	return FALSE
+
+/obj/item/device/gangtool/proc/recall(mob/user, phase = 1)
+	switch(phase)
+		if(1)
+			if(!can_use(user))
+				return FALSE
+
+			if(SSshuttle.emergencyNoRecall)
+				return FALSE
+
+			if(recalling)
+				to_chat(usr, "<span class='warning'>Error: Recall already in progress.</span>")
+				return FALSE
+
+			if(!gang.recalls)
+				to_chat(usr, "<span class='warning'>Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
+
+			gang.message_gangtools("[usr] is attempting to recall the emergency shuttle.")
+			recalling = TRUE
+			to_chat(loc, "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>")
+			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
+		if(1)
+			if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
+				to_chat(user, "<span class='warning'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>")
+				recalling = FALSE
+				return FALSE
+			to_chat(loc, "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
+			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
+		if(2)
+			if(!gang.dom_attempts)
+				to_chat(user, "<span class='warning'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
+				recalling = FALSE
+				return FALSE
+
+			var/turf/userturf = get_turf(user)
+			if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
+				to_chat(user, "<span class='warning'>\icon[src]Error: Device out of range of station communication arrays.</span>")
+				recalling = FALSE
+				return FALSE
+			var/datum/station_state/end_state = new /datum/station_state()
+			end_state.count()
+			if((100 * GLOB.start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
+				to_chat(user, "<span class='warning'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>")
+				recalling = FALSE
+				return FALSE
+			to_chat(loc, "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>")
+
+			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
+		if(3)
+			recalling = FALSE
+			log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
+			message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
+			userturf = get_turf(user)
+			if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
+				if(SSshuttle.cancelEvac(user))
+					gang.recalls -= 1
+					return TRUE
+
+			to_chat(loc, "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>")
+			return FALSE
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -240,7 +301,7 @@
 				. += toAdd
 				var/extra = G.get_extra_info(user, gang, src)
 				if(extra)
-					dat . "<br><i>[extra]</i>"
+					. += "<br><i>[extra]</i>"
 				. += "<br>"
 			. += "<br>"
 	if(soldier)
@@ -253,17 +314,17 @@
 
 				var/cost = G.get_cost_display(user, gang, src)
 				if(cost)
-					dat . cost + " "
+					. += cost + " "
 
 				var/toAdd = G.get_name_display(user, gang, src)
 				if(G.can_buy(user, gang, src))
 					toAdd = "<a href='?src=\ref[src];purchase=[G.id]'>[toAdd]</a>"
-				dat . toAdd
+				. += toAdd
 				var/extra = G.get_extra_info(user, gang, src)
 				if(extra)
-					dat += "<br><i>[extra]</i>"
-				dat . "<br>"
-			dat . "<br>"
+					. += "<br><i>[extra]</i>"
+				. += "<br>"
+			. += "<br>"
 
 /obj/machinery/dominator/proc/get_gang_dominator_interface(takeover = TRUE, start = FALSE)
 	. = list()

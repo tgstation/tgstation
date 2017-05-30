@@ -6,7 +6,6 @@
 	var/category
 	var/id
 
-
 /datum/gang_item/proc/purchase(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator, check_canbuy = TRUE)
 	if(check_canbuy && !can_buy(user, gang, dominator))
 		return FALSE

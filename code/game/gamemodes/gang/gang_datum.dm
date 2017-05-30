@@ -252,7 +252,8 @@
 	else
 		for(var/I in bosses)	//Give bosses their dosh
 			bosses[I] += max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
-			var/mob/living/L = bosses[I].current
+			var/datum/mind/M = bosses[I]
+			var/mob/living/L = M.current
 			if(istype(L) && L.stat != DEAD)
 				to_chat(L, "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>")
 				var/extra = return_clothing_bonus(L)	//Dead people aren't influential.
@@ -262,7 +263,8 @@
 				to_chat(L, "You now have <b>[bosses[I]] influence</b>.<BR>")
 		for(var/I in gangsters)
 			gangsters[I] += max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(cached_territory_by_mind[I])/2) // Soldier points
-			var/mob/living/L = gangsters[I].current
+			var/mind/M = gangsters[I]
+			var/mob/living/L = M.current
 			if(istype(L) && L.stat != DEAD)
 				to_chat(L, "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>")
 				var/extra = return_clothing_bonus(L)	//Dead people aren't influential.
