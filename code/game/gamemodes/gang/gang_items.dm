@@ -135,9 +135,6 @@
 	var/obj/machinery/gang/backup/gate = new(get_turf(user), gang)
 	gate.G = gang
 
-/datum/gang_item/function/backup/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return "([get_cost(user, gang, gangtool)] Influence)"
-
 /datum/gang_item/function/backup/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	if(!(usrarea.type in gang.territory|gang.territory_new))
@@ -165,11 +162,9 @@
 	. = ..()
 	G = gang
 	desc += " Etchings on this gateway indicate it belongs to [G] gang."
-	addtimer(CALLBACK(src, .proc/reinforce), max(0, (4500 - world.time)))
+	addtimer(CALLBACK(src, .proc/reinforce), max(0, (5400 - world.time)))
 
 /obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
-	qdel(sparks)
-	sparks = null
 	for(var/mob/M in contents)
 		qdel(M)
 	return ..()
@@ -671,9 +666,10 @@
 	item_path = /obj/item/weapon/reviver
 
 /datum/gang_item/equipment/reviver/get_cost(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	for(va
-	cost = 5 + gang.gangsters.len * 2
-	return cost
+	cost = 5
+	for(var/datum/mind/M in gang.gangsters)
+		if(M.current.stat != DEAD)
+			cost += 2
 
 /obj/item/weapon/reviver
 	name = "outlawed revivification serum"

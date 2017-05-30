@@ -50,9 +50,11 @@
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/ammo/sleeper_ammo,
 		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/equipment/reviver,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
@@ -61,7 +63,6 @@
 		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/recruiter,
 		/datum/gang_item/equipment/wetwork_boots,
-		/datum/gang_item/equipment/reviver,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/dominator
 	)
@@ -92,9 +93,11 @@
 		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/ammo/sleeper_ammo,
 		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/equipment/reviver,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
@@ -102,8 +105,7 @@
 		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/recruiter,
-		/datum/gang_item/equipment/wetwork_boots,
-		/datum/gang_item/equipment/reviver,
+		/datum/gang_item/equipment/wetwork_boots
 	)
 
 /datum/gang/New(loc,gangname)
