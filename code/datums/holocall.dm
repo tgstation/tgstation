@@ -42,14 +42,19 @@
 
 //cleans up ALL references :)
 /datum/holocall/Destroy()
-	if(!QDELETED(user))
+	var/user_good = !QDELETED(user)
+	if(user_good)
 		user.reset_perspective()
-		if(!QDELETED(eye) && user.client)
-		  for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-			chunk.remove(eye)
-		  qdel(eye)
-		eye = null
     	user.remote_control = null
+	
+	if(!QDELETED(eye))
+		if(user_good && user.client)
+			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
+				chunk.remove(eye)
+		qdel(eye)
+	eye = null
+	
+	user = null
 	
 	if(hologram)
 		hologram.HC = null
