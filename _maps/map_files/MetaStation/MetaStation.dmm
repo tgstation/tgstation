@@ -37906,6 +37906,11 @@
 "brf" = (
 /obj/structure/table,
 /obj/item/weapon/airlock_painter,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel,
 /area/storage/art)
 "brg" = (
@@ -44239,6 +44244,11 @@
 /area/security/vacantoffice)
 "bCP" = (
 /obj/machinery/light/small,
+/obj/machinery/camera{
+	c_tag = "Auxilary Restrooms";
+	dir = 4;
+	network = list("SS13")
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "bCQ" = (
@@ -67481,6 +67491,11 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
 	},
@@ -69533,6 +69548,11 @@
 /obj/item/weapon/bedsheet/medical,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
