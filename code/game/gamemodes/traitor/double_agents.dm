@@ -1,6 +1,8 @@
 #define PINPOINTER_MINIMUM_RANGE 15 
 #define PINPOINTER_EXTRA_RANDOM_RANGE 10
 #define PINPOINTER_PING_TIME 40
+#define PROB_ACTUAL_TRAITOR 20
+#define TRAITOR_AGENT_ROLE "Syndicate External Affairs Agent"
 
 /datum/game_mode/traitor/internal_affairs
 	name = "Internal Affairs"
@@ -171,7 +173,10 @@
 			if(!objective.check_completion())
 				traitored = FALSE
 				return
-		to_chat(owner.current,"<span class='userdanger'> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</span>")
+		if(owner.special_role == TRAITOR_AGENT_ROLE)
+			to_chat(owner.current,"<span class='userdanger'> All the loyalist agents are dead, and no more is required of you. Die a glorious death, agent. </span>")
+		else
+			to_chat(owner.current,"<span class='userdanger'> All the other agents are dead, and you're the last loose end. Stage a Syndicate terrorist attack to cover up for today's events. You no longer have any limits on collateral damage.</span>")
 		replace_escape_objective(owner)
 		
 			
@@ -194,7 +199,10 @@
 				if(objective.stolen)
 					var/fail_msg = "<span class='userdanger'>Your sensors tell you that [objective.target.current.real_name], one of the targets you were meant to have killed, pulled one over on you, and is still alive - do the job properly this time! </span>"
 					if(traitored)
-						fail_msg += "<span class='userdanger'> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</span>"
+						if(owner.special_role == TRAITOR_AGENT_ROLE)
+							fail_msg += "<span class='userdanger'> You no longer have permission to die. </span>"
+						else
+							fail_msg += "<span class='userdanger'> The truth could still slip out!</font><B><font size=5 color=red> Cease any terrorist actions as soon as possible, unneeded property damage or loss of employee life will lead to your contract being terminated.</span>"
 						reinstate_escape_objective(owner)
 						traitored = FALSE
 					to_chat(owner.current, fail_msg)
@@ -238,6 +246,10 @@
 		state.add_steal_targets_timer()
 		if(!issilicon(traitor.current))
 			give_pinpointer(traitor)
+		//Optional traitor objective
+		if(prob(PROB_ACTUAL_TRAITOR))
+			traitor.special_role = TRAITOR_AGENT_ROLE
+			forge_single_objective(traitor)	
 
 	else
 		..() // Give them standard objectives.
@@ -289,11 +301,18 @@
 
 /datum/game_mode/traitor/internal_affairs/greet_traitor(datum/mind/traitor)
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	to_chat(traitor.current, "<span class='userdanger'>You are the [traitor_name].</span>")
-	to_chat(traitor.current, "<span class='userdanger'>Your target is suspected of [crime], and you have been tasked with eliminating them by any means necessary to avoid a costly and embarrassing public trial.</span>")
-	to_chat(traitor.current, "<B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>")
-	to_chat(traitor.current, "<span class='userdanger'>For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.</span>")
-	to_chat(traitor.current, "<span class='userdanger'>Finally, watch your back. Your target has friends in high places, and intel suggests someone may have taken out a contract of their own to protect them.</span>")
+	if(traitor.special_role == TRAITOR_AGENT_ROLE)
+		to_chat(traitor.current, "<span class='userdanger'>You are the [TRAITOR_AGENT_ROLE].</span>")
+		to_chat(traitor.current, "<span class='userdanger'>Your target has been framed for [crime], and you have been tasked with eliminating them to prevent them defending themselves in court.</span>")
+		to_chat(traitor.current, "<B><font size=5 color=red>Any damage you cause will be a further embarrassment to Nanotrasen, so you have no limits on collateral damage.</font></B>")
+		to_chat(traitor.current, "<span class='userdanger'> You have been provided with a standard uplink to accomplish your task. </span>")
+		to_chat(traitor.current, "<span class='userdanger'>Finally, watch your back. Your target has friends in high places, and intel suggests someone may have taken out a contract of their own to protect them.</span>")
+	else
+		to_chat(traitor.current, "<span class='userdanger'>You are the [traitor_name].</span>")
+		to_chat(traitor.current, "<span class='userdanger'>Your target is suspected of [crime], and you have been tasked with eliminating them by any means necessary to avoid a costly and embarrassing public trial.</span>")
+		to_chat(traitor.current, "<B><font size=5 color=red>While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.</font></B>")
+		to_chat(traitor.current, "<span class='userdanger'>For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.</span>")
+		to_chat(traitor.current, "<span class='userdanger'>Finally, watch your back. Your target has friends in high places, and intel suggests someone may have taken out a contract of their own to protect them.</span>")
 	traitor.announce_objectives()
 
 
@@ -301,6 +320,8 @@
 /datum/game_mode/traitor/internal_affairs/give_codewords(mob/living/traitor_mob)
 	return
 
+#undef PROB_ACTUAL_TRAITOR
 #undef PINPOINTER_EXTRA_RANDOM_RANGE
 #undef PINPOINTER_MINIMUM_RANGE
 #undef PINPOINTER_PING_TIME
+

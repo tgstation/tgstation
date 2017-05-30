@@ -1,15 +1,5 @@
 //Largely negative status effects go here, even if they have small benificial effects
 
-/datum/status_effect/sigil_mark //allows the affected target to always trigger sigils while mindless
-	id = "sigil_mark"
-	duration = -1
-	alert_type = null
-	var/stat_allowed = DEAD //if owner's stat is below this, will remove itself
-
-/datum/status_effect/sigil_mark/tick()
-	if(owner.stat < stat_allowed)
-		qdel(src)
-
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1
@@ -182,6 +172,7 @@
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
 		owner.underlays += marked_underlay
+		return TRUE
 	return FALSE
 
 /datum/status_effect/crusher_mark/Destroy()

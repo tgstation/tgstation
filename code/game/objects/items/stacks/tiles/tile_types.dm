@@ -106,6 +106,11 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/carpet/black
+	name = "black carpet"
+	icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/black
+
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"

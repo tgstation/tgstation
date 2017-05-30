@@ -429,11 +429,11 @@
 		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		switch(result)
 			if("Regular Restart")
-				SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+				SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
 			if("Hard Restart (No Delay, No Feeback Reason)")
 				world.Reboot()
 			if("Hardest Restart (No actions, just reboot)")
-				world.Reboot(fast_track = TRUE)		
+				world.Reboot(fast_track = TRUE)
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -610,7 +610,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == 1)
+				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)

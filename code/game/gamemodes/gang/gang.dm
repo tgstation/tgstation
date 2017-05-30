@@ -261,6 +261,20 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		gang_bosses += G.bosses
 	return gang_bosses
 
+/datum/game_mode/proc/shuttle_check()
+	if(SSshuttle.emergencyNoRecall)
+		return
+	var/alive = 0
+	for(var/mob/living/L in GLOB.player_list)
+		if(L.stat != DEAD)
+			alive++
+
+	if((alive < (GLOB.joined_player_list.len * 0.4)) && ((SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+
+		SSshuttle.emergencyNoRecall = TRUE
+		SSshuttle.emergency.request(null, set_coefficient = 0.4)
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
 
@@ -274,12 +288,12 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return
 	if(!winner)
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
-		SSblackbox.set_details("round_end_result","loss - gangs failed takeover")
+		SSticker.mode_result = "loss - gangs failed takeover"
 
 		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
-		SSblackbox.set_details("round_end_result","win - gang domination complete")
+		SSticker.mode_result = "win - gang domination complete"
 
 		SSticker.news_report = GANG_TAKEOVER
 

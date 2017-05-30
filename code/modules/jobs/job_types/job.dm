@@ -161,7 +161,9 @@
 		else
 			back = backpack //Department backpack
 
-	if(backpack_contents && box)
+	if(box)
+		if(!backpack_contents)
+			backpack_contents = list()
 		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
 		backpack_contents[box] = 1
 
