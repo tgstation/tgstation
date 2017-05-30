@@ -320,29 +320,24 @@
 				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = 0
 			ui_interact(usr)
+	//I got rid of the text messages, because you don't need reminding of a thing you just did when the UI updates immediately.
 		if("forwardCat") //Meow
 			viewing_category = next_cat(FALSE)
-			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("backwardCat")
 			viewing_category = prev_cat(FALSE)
-			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
 			. = TRUE
 		if("forwardSubCat")
 			viewing_subcategory = next_subcat()
-			to_chat(usr, "<span class='notice'>Subcategory is now [subcategories[viewing_subcategory]].</span>")
 			. = TRUE
 		if("backwardSubCat")
 			viewing_subcategory = prev_subcat()
-			to_chat(usr, "<span class='notice'>Subcategory is now [subcategories[viewing_subcategory]].</span>")
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
-			to_chat(usr, "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>")
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
-			to_chat(usr, "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>")
 			. = TRUE
 
 
