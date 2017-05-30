@@ -2,7 +2,7 @@
 	spawnableTurfs = list(/turf/open/floor/plasteel = 100)
 	var/ignore_wall = FALSE
 
-/datum/mapGeneratorModule/proc/place(turf/T)
+/datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel/place(turf/T)
 	if(isclosedturf(T))
 		return FALSE
 	return TRUE
