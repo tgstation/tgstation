@@ -179,7 +179,7 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob)
+	for(var/obj/O in mob.contents|mob.held_items)
 		O.on_mob_move(direct, src)
 
 	return .
