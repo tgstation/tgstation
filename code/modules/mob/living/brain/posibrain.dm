@@ -65,12 +65,22 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/device/mmi/posibrain/attack_ghost(mob/user)
 	activate(user)
 
+/obj/item/device/mmi/posibrain/proc/is_occupied()
+	if(brainmob.key)
+		return TRUE
+	if(iscyborg(loc))
+		var/mob/living/silicon/robot/R = loc
+		if(R.mmi == src)
+			return TRUE
+	return FALSE
+
 //Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
 /obj/item/device/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
-	if(brainmob.key || jobban_isbanned(user,"posibrain"))
+	if(is_occupied() || jobban_isbanned(user,"posibrain"))
 		return
+	
 	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
 	if(posi_ask == "No" || QDELETED(src))
 		return
@@ -98,7 +108,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(QDELETED(brainmob))
 		return
-	if(brainmob.key) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
+	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
 		to_chat(candidate, "This brain has already been taken! Please try your possession again later!")
 		return FALSE
 	if(candidate.mind && !isobserver(candidate))
