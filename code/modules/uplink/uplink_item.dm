@@ -1359,7 +1359,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
-	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortation of items, \
+	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
 			but you never know. Contents are sorted to always be worth 50 TC."
 	item = /obj/structure/closet/crate
 	cost = 20
