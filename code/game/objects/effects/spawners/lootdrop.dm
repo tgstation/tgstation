@@ -81,7 +81,7 @@
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)
-	..()
+	. = ..()
 
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
