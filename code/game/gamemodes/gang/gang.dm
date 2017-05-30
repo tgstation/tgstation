@@ -395,6 +395,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		character.key = spoo.key
 		vigilize(character)
 		character.put_in_r_hand(new /obj/item/weapon/twohanded/pitchfork/gangfork(character))
+		character.put_in_l_hand(new /obj/item/device/flashlight/flare/torch(character))
 		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(character),slot_wear_suit)
 
 /proc/determine_domination_time(var/datum/gang/G)

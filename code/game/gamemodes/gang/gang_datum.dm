@@ -267,10 +267,10 @@
 		if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
 			for(var/obj/C in ganger.contents)
 				if(C.type == inner_outfit)
-					points_newer += 2
+					points_newer += 1
 					continue
 				if(C.type == outer_outfit)
-					points_newer += 2
+					points_newer += 1
 					continue
 				switch(C.type)
 					if(/obj/item/clothing/neck/necklace/dope)

@@ -157,17 +157,14 @@
 	icon_state = "gang_teleporter_on"
 	var/datum/gang/G
 	var/list/mob/dead/observer/queue = list()
-	var/datum/effect_system/spark_spread/sparks
 	max_integrity = 500
 	obj_integrity = 500
+	var/final_guard = TRUE
 
 /obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
 	. = ..()
 	G = gang
 	desc += " Etchings on this gateway indicate it belongs to [G] gang."
-	sparks = new(src)
-	sparks.set_up(3, 0, src)
-	sparks.attach(src)
 	addtimer(CALLBACK(src, .proc/reinforce), max(0, (4500 - world.time)))
 
 /obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
@@ -177,7 +174,14 @@
 		qdel(M)
 	return ..()
 
-/obj/machinery/gang/backup/proc/reinforce()
+/obj/machinery/gang/backup/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	. = ..()
+	if(.)
+		if((obj_integrity/max_integrity > 0.8) && final_guard == TRUE)
+			final_guard = FALSE
+			reinforce(FALSE)
+
+/obj/machinery/gang/backup/proc/reinforce(var/repeat = TRUE)
 	if(!src)
 		return
 	var/we = 0
@@ -212,7 +216,8 @@
 	if(!we)
 		we = 1
 	cooldown = 200+((we/(rival+we))*60)**2
-	addtimer(CALLBACK(src, .proc/reinforce), cooldown)
+	if(repeat)
+		addtimer(CALLBACK(src, .proc/reinforce), cooldown)
 
 
 /obj/machinery/gang/backup/proc/spawn_gangster()
@@ -290,7 +295,7 @@
 /datum/gang_item/clothing/hat
 	name = "Pimp Hat"
 	id = "hat"
-	cost = 16
+	cost = 14
 	item_path = /obj/item/clothing/head/collectable/petehat/gang
 
 /obj/item/clothing/head/collectable/petehat/gang
@@ -300,7 +305,7 @@
 /datum/gang_item/clothing/mask
 	name = "Golden Death Mask"
 	id = "mask"
-	cost = 18
+	cost = 15
 	item_path = /obj/item/clothing/mask/gskull
 
 /obj/item/clothing/mask/gskull
@@ -312,7 +317,7 @@
 /datum/gang_item/clothing/shoes
 	name = "Bling Boots"
 	id = "boots"
-	cost = 22
+	cost = 18
 	item_path = /obj/item/clothing/shoes/gang
 
 /obj/item/clothing/shoes/gang
@@ -323,14 +328,14 @@
 /datum/gang_item/clothing/neck
 	name = "Gold Necklace"
 	id = "necklace"
-	cost = 9
+	cost = 6
 	item_path = /obj/item/clothing/neck/necklace/dope
 
 
 /datum/gang_item/clothing/hands
 	name = "Decorative Brass Knuckles"
 	id = "hand"
-	cost = 11
+	cost = 9
 	item_path = /obj/item/clothing/gloves/gang
 
 /obj/item/clothing/gloves/gang
@@ -666,7 +671,8 @@
 	item_path = /obj/item/weapon/reviver
 
 /datum/gang_item/equipment/reviver/get_cost(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	cost = 10 + gang.gangsters.len * 2
+	for(va
+	cost = 5 + gang.gangsters.len * 2
 	return cost
 
 /obj/item/weapon/reviver
