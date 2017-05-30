@@ -30,6 +30,7 @@
 	var/noscope = FALSE	//Can you fire this without a scope?
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	pin = null
 	var/aiming = FALSE
 	var/aiming_time = 7
 	var/aiming_time_fire_threshold = 2
