@@ -56,7 +56,7 @@
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
 	SSblackbox.add_details("mobs_killed_mining","[src.type]")
 	var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-	if(C && crusher_loot && prob((C.total_damage/maxHealth)) * 4) //on average, you'll need to kill 25 creatures before getting the item
+	if(C && crusher_loot && prob((C.total_damage/maxHealth)) * 5) //on average, you'll need to kill 20 creatures before getting the item
 		spawn_crusher_loot()
 	..(gibbed)
 
