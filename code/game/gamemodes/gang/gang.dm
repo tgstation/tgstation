@@ -347,3 +347,44 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = TRUE
 
+/datum/gang/proc/ping(message, mob/user)
+	gang_broadcast(message, src, user)
+
+//PING
+/proc/gang_broadcast(message, datum/gang, mob/user, ignore_checks = FALSE)
+	if(!user && !ignore_checks)
+		return
+	if(!ignore_checks)
+		message = stripped_input(message)
+	else
+		if(!message)
+			return
+	if(user.z != Z_LEVEL_STATION && user.z != Z_LEVEL_CENTCOM && !ignore_checks)
+		to_chat(user, "<span class='info'>\icon[src]Error: Station out of range.</span>")
+		return
+	var/list/members = list()
+	members += gang.gangsters
+	members += gang.bosses
+	if(members.len)
+		var/gang_rank = "Gang Broadcaster"
+		if(user)
+		var/gang_rank = gang.bosses.Find(user.mind)
+			switch(gang_rank)
+				if(1)
+					gang_rank = "Gang Boss"
+				if(2)
+					gang_rank = "1st Lieutenant"
+				if(3)
+					gang_rank = "2nd Lieutenant"
+				if(4)
+					gang_rank = "3rd Lieutenant"
+				else
+					gang_rank = "[gang_rank - 1]th Lieutenant"
+		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
+		for(var/datum/mind/ganger in members)
+			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
+				to_chat(ganger.current, ping)
+		for(var/mob/M in GLOB.dead_mob_list)
+			var/link = FOLLOW_LINK(M, user)
+			to_chat(M, "[link] [ping]")
+		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")

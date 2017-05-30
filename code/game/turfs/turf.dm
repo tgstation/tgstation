@@ -62,12 +62,11 @@
 	CalculateAdjacentTurfs()
 
 /turf/get_explosion_block()
-	var/ret = 0
+	. = 0
 	if(density)
-		ret = explosion_block
+		. = explosion_block
 	for(var/atom/A in src)
-		ret += A.get_explosion_block()
-	return ret
+		. += A.get_explosion_block()
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC

@@ -56,6 +56,23 @@
 	if(DOMINATOR_FORCEFIELD)
 		//Someone can add a visual telegraph later I guess!
 		addtimer(CALLBACK(src, .proc/activate_forcefield), DOMINATOR_TELEGRAPH_DELAY)
+	if(!SSticker.mode.gang_points)
+		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
+
+/obj/machinery/dominator/can_use(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+	if(!user.mind)
+		return FALSE
+	if(gang && (user.mind in gang.bosses))	//If it's already registered, only let the gang's bosses use this
+		return TRUE
+	else if(user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
+		return TRUE
+	return FALSE
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -271,16 +288,24 @@
 			. += "<B>Remember! Territories you tag will generate bonus influence to you!</B>"
 	. += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
 
-
 /obj/machinery/dominator/proc/interface_boss(mob/user)
 	var/dat = list()
-
+	dat += get_gang_dominator_interface(TRUE, TRUE)
+	dat += "<hr>"
+	dat += get_gang_status(user)
+	dat += "<hr>"
+	dat += get_gang_item_interface(TRUE, FALSE)
+	dat += "<hr>"
 	show_popup(user, dat)
-
 
 /obj/machinery/dominator/proc/interface_soldier(mob/user)
 	var/dat = list()
-
+	dat += get_gang_dominator_interface(TRUE, FALSE)
+	dat += "<hr>"
+	dat += get_gang_status(user)
+	dat += "<hr>"
+	dat += get_gang_item_interface(FALSE, TRUE)
+	dat += "<hr>"
 	show_popup(user, dat)
 
 /obj/machinery/dominator/proc/show_popup(mob/user, data)
