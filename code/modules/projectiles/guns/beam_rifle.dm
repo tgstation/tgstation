@@ -17,8 +17,8 @@
 	ammo_y_offset = 3
 	modifystate = FALSE
 	zoomable = TRUE
-	zoom_amt = 20
-	zoom_out_amt = 23
+	zoom_amt = 17
+	zoom_out_amt = 20
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
