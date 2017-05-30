@@ -49582,6 +49582,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/starboard)
 "bVd" = (
@@ -105111,6 +105114,9 @@
 	dir = 2;
 	name = "Starboard Primary Hallway APC";
 	pixel_y = -26
+	},
+/obj/structure/cable/white{
+	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/starboard)
