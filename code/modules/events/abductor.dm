@@ -4,7 +4,7 @@
 	weight = 10
 	max_occurrences = 1
 
-	min_players = 5
+	min_players = 15
 
 	gamemode_blacklist = list("nuclear","wizard","revolution","abduction")
 
