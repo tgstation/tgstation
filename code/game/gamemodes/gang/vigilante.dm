@@ -27,7 +27,7 @@
 		/datum/gang_item/weapon/launcher,
 		/datum/gang_item/equipment/sechuds,
 		/datum/gang_item/equipment/sharpener,
-		/datum/gang_item/equipment/brutepatch,
+		/datum/gang_item/equipment/brutepack,
 		/datum/gang_item/equipment/shield,
 		/datum/gang_item/equipment/bulletproof_armor,
 		/datum/gang_item/equipment/bulletproof_helmet,
@@ -69,8 +69,8 @@
 	for(var/area/A in tags)
 		if(!(A in all_territory))
 			newpoints += 0.5
-	to_chat(H, "<span class='notice'>You have received 4 influence for your continued service, [newpoints] for keeping the station tag-free.")
-	points += newpoints + 2
+	to_chat(H, "<span class='notice'>You have received 4 influence for your continued loyalty, [newpoints] for keeping the station tag-free.")
+	points += newpoints + 4
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
 		points += 4
 		to_chat(H, "<span class='notice'>You have also received 4 influence for possessing a mindshield implant.</span>")
@@ -149,14 +149,16 @@
 			value = 20
 		if(/obj/item/weapon/reviver)
 			value = 25
+		if(/obj/item/weapon/reagent_containers/pill/patch/gang)
+			value = 4
 		if(/obj/item/device/gangtool)
-			value = 15
+			value = 20
 		if(/obj/item/clothing/glasses/hud/security/chameleon)
 			value = 5
 		if(/obj/item/weapon/gun/ballistic/automatic/mini_uzi)
-			value = 40
+			value = 50
 		if(/obj/item/weapon/gun/ballistic/automatic/sniper_rifle)
-			value = 30
+			value = 35
 		if(/obj/item/ammo_box/magazine/sniper_rounds)
 			value = 5
 		if(/obj/item/weapon/gun/ballistic/shotgun/lethal)
@@ -164,7 +166,7 @@
 		if(/obj/item/weapon/gun/ballistic/automatic/surplus/gang)
 			value = 8
 		if(/obj/item/weapon/throwing_star)
-			value = 2
+			value = 3
 		if(/obj/item/weapon/switchblade)
 			value = 5
 		if(/obj/item/weapon/storage/belt/military/gang)

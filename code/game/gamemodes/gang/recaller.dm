@@ -47,7 +47,7 @@
 		var/isboss = (user.mind == gang.bosses[1])
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Your Influence: <B>[points]</B><br>"
+		dat += "Your Influence: <B>[round(points)]</B><br>"
 		dat += "Time until Influence grows: <B>[time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss")]</B><br>"
 		dat += "<hr>"
 

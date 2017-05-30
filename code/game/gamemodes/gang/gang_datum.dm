@@ -54,6 +54,7 @@
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
+		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
 		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/stimpack,
@@ -95,6 +96,7 @@
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
+		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/c4,
@@ -252,11 +254,11 @@
 		var/points_new = 0
 		if(istype(G, /obj/item/device/gangtool/soldier))
 			var/stags = (LAZYLEN(G.tags)/2)
-			sbonus += max(0,round(3 - G.points/10))
+			sbonus += max(0,(3 - G.points/10)) + (0.3 * LAZYLEN(territory))
 			points_new = sbonus + stags // Soldier points
-			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [(LAZYLEN(G.tags)/2)] for territories you have personally tagged.<BR>"
+			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [stags] for territories you have personally tagged.<BR>"
 		else
-			points_new = max(0,round(4 - G.points/10)) + round(0.8 * LAZYLEN(territory)) // Boss points, more focused on big picture
+			points_new = max(0,(4 - G.points/10)) + (0.6 * LAZYLEN(territory)) // Boss points, more focused on big picture
 			pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
 		G.points += points_new
 		var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)

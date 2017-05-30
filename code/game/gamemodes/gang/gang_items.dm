@@ -143,29 +143,32 @@
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>This device can only be spawned in territory controlled by your gang!</span>")
 		return FALSE
-	var/confirm_final = alert(user, "Your gang can only place ONE gateway, make sure it is in a well-secured location.", "Are you ready to place the gateway?", "This location is Secure", "I should wait...")
+	var/confirm_final = alert(user, "Your gang can only place ONE gateway, make sure it is in a well-secured location.", "Are you ready to place the gateway?", "This location is secure", "I should wait...")
 	if(confirm_final == "No")
 		return FALSE
 	return ..()
 
 /obj/machinery/gang/backup
-	name = "gang reinforcements portal"
-	desc = "When a gang leader leverages their influence, they can pull in some muscle from other operations."
+	name = "gang reinforcements gateway"
+	desc = "A gateway used by gangs to bring in muscle from other operations."
 	anchored = TRUE
 	density = TRUE
 	icon = 'icons/obj/machines/teleporter.dmi'
 	icon_state = "gang_teleporter_on"
 	var/datum/gang/G
-	var/list/queue = list()
+	var/list/mob/dead/observer/queue = list()
 	var/datum/effect_system/spark_spread/sparks
+	max_integrity = 500
+	obj_integrity = 500
 
 /obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
 	. = ..()
 	G = gang
-	var/datum/effect_system/spark_spread/sparks = new()
+	desc += " Etchings on this gateway indicate it belongs to [G] gang."
+	sparks = new(src)
 	sparks.set_up(3, 0, src)
 	sparks.attach(src)
-	addtimer(CALLBACK(src, .proc/reinforce), 3000)
+	addtimer(CALLBACK(src, .proc/reinforce), max(0, (4500 - world.time)))
 
 /obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
 	qdel(sparks)
@@ -208,7 +211,7 @@
 	spawn_gangster()
 	if(!we)
 		we = 1
-	cooldown = 200+((we/(rival+we))*80)**2
+	cooldown = 200+((we/(rival+we))*60)**2
 	addtimer(CALLBACK(src, .proc/reinforce), cooldown)
 
 
@@ -228,17 +231,17 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/switchblade(H),slot_r_store)
 	var/equip = SSjob.EquipRank(H, "Assistant", 1)
 	H = equip
-	var/list/mob/dead/observer/finalists = pollGhostCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang", group = queue)
-	if(finalists.len)
+	var/list/mob/dead/observer/finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = queue)
+	if(LAZYLEN(finalists))
 		winner = pick(finalists)
 		queue -= winner
 	else
-		var/list/dead_vigils
+		var/list/mob/dead/observer/dead_vigils
 		for(var/mob/dead/observer/O in GLOB.player_list)
-			if(M.mind.gang_datum != G)
+			if(O.mind.gang_datum != G)
 				dead_vigils += O
 		finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = dead_vigils)
-		if(finalists.len)
+		if(LAZYLEN(finalists))
 			winner = pick(finalists)
 	if(!src || !winner)
 		return
@@ -389,7 +392,7 @@
 /datum/gang_item/weapon/pitchfork
 	name = "Premium Pitchfork"
 	id = "pitchfork"
-	cost = 7
+	cost = 6
 	item_path = /obj/item/weapon/twohanded/pitchfork/gangfork
 
 /datum/gang_item/weapon/surgood
@@ -561,11 +564,23 @@
 /datum/gang_item/equipment
 	category = "Purchase Equipment:"
 
-/datum/gang_item/equipment/brutepatch
-	name = "Styptic Patch"
+/datum/gang_item/equipment/brutepack
+	name = "Brute Pack"
 	id = "brute"
 	cost = 4
-	item_path = /obj/item/weapon/reagent_containers/pill/patch/styptic
+	item_path = /obj/item/stack/medical/bruise_pack
+
+/datum/gang_item/equipment/medpatch
+	name = "Healing Patch"
+	id = "heal"
+	cost = 4
+	item_path = /obj/item/weapon/reagent_containers/pill/patch/gang
+
+/obj/item/weapon/reagent_containers/pill/patch/gang
+	name = "unlabeled medical patch"
+	desc = "Very popular among the type of people who can't go to a real hospital."
+	list_reagents = list("styptic_powder" = 20, "silver_sulfadiazine" = 10, "crank" = 5)
+	icon_state = "bandaid_brute"
 
 /datum/gang_item/equipment/spraycan
 	name = "Territory Spraycan"
@@ -587,16 +602,10 @@
 	item_path = /obj/item/weapon/sharpener
 
 
-/datum/gang_item/equipment/emp
-	name = "EMP Grenade"
-	id = "EMP"
-	cost = 5
-	item_path = /obj/item/weapon/grenade/empgrenade
-
 /datum/gang_item/equipment/c4
 	name = "C4 Explosive"
 	id = "c4"
-	cost = 7
+	cost = 5
 	item_path = /obj/item/weapon/grenade/plastic/c4
 
 
@@ -747,13 +756,13 @@
 /datum/gang_item/equipment/bulletproof_armor
 	name = "Bulletproof Armor"
 	id = "BPA"
-	cost = 25
+	cost = 20
 	item_path = /obj/item/clothing/suit/armor/bulletproof
 
 /datum/gang_item/equipment/bulletproof_helmet
 	name = "Bulletproof Helmet"
 	id = "BPH"
-	cost = 15
+	cost = 10
 	item_path = /obj/item/clothing/head/helmet/alt
 
 /datum/gang_item/equipment/pen

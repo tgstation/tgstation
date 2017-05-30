@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
 	var/datum/gang_points/gang_points
+	var/posse_timer = 0
 
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
@@ -32,6 +33,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/turf/target_armory
 	var/turf/target_equipment
 	var/turf/target_brig
+	var/turf/target_captain
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -66,9 +68,14 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		if(target_equipment)
 			break
 
-	for(var/area/crew_quarters/heads/hos/C in GLOB.sortedAreas)
-		target_brig  = pick(get_area_turfs(C))
+	for(var/area/crew_quarters/heads/hos/S in GLOB.sortedAreas)
+		target_brig  = pick(get_area_turfs(S))
 		if(target_brig)
+			break
+
+	for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
+		target_captain  = pick(get_area_turfs(C))
+		if(target_captain)
 			break
 
 	if(config.protect_roles_from_antagonist)
@@ -119,6 +126,13 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 /datum/game_mode/gang/proc/gangpocalypse()
 	set waitfor = FALSE
+	if(target_captain)
+		for(var/turf/T in area_contents(target_captain))
+			for(var/obj/I in T.contents)
+				if(istype(I, /obj/item/weapon/card/id/captains_spare))
+					qdel(I)
+				if(istype(I, /obj/structure/displaycase/captain))
+					qdel(I)
 	var/list/bosses = list()
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
@@ -140,35 +154,6 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		if(!is_gangster(M))
 			vigilize(M)
 
-/proc/gangtest()
-	var/turf/target_armory
-	var/turf/target_equipment
-	var/turf/target_brig
-	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
-		target_armory = pick(get_area_turfs(A))
-		if(target_armory)
-			break
-
-	for(var/area/ai_monitored/security/brig in GLOB.sortedAreas)
-		target_equipment = pick(get_area_turfs(brig))
-		if(target_equipment)
-			break
-
-	for(var/area/security/main/C in GLOB.sortedAreas)
-		target_brig  = pick(get_area_turfs(C))
-		if(target_brig)
-			break
-	sleep(20)
-	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetic crew have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance.", "Nanotrasen Board of Directors")
-	sleep(60)
-	priority_announce("Unfortunately we have also received reports of several notorious gangs established in your sector. To assist in repelling this threat, we have taken the liberty of implanting you all with a device that will activate in the event of a gang incursion.", "Nanotrasen Board of Directors")
-	sleep(40)
-	explosion(target_armory, 10, 16, 20, 20, TRUE, TRUE)
-	explosion(target_equipment, 10, 16, 20, 20, TRUE, TRUE)
-	explosion(target_brig, 7, 8, 9, 0, TRUE, TRUE)
-	for(var/mob/living/M in GLOB.player_list)
-		vigilize(M)
-
 /proc/vigilize(mob/living/M)
 	var/datum/objective/escape/E = new
 	E.owner = M.mind
@@ -177,6 +162,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	M.mind.announce_objectives()
 	new /obj/item/device/vigilante_tool(M)
 	M.equip_to_slot_or_del(new /obj/item/weapon/soap/vigilante(M), slot_in_backpack)
+
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
@@ -349,23 +335,35 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	return gang_bosses
 
 /datum/game_mode/proc/shuttle_check()
+	posse_timer++
 	if(SSshuttle.emergencyNoRecall)
 		return
 	var/alive = 0
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-
-	if((alive < (GLOB.joined_player_list.len * 0.4)) && ((SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
-		SSshuttle.emergencyNoRecall = TRUE
-		SSshuttle.emergency.request(null, set_coefficient = 0.4)
-		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
-	else if(alive < (GLOB.joined_player_list.len *  0.7))
+	if(alive < (GLOB.joined_player_list.len * 0.4))
+		if((SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4)))
+			SSshuttle.emergencyNoRecall = TRUE
+			SSshuttle.emergency.request(null, set_coefficient = 0.4)
+			priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+	else if((alive < (GLOB.joined_player_list.len *  0.7)) && posse_timer >= 4)
+		posse_timer = 0
 		vigilante_vengeance()
 
 
 /datum/game_mode/proc/vigilante_vengeance()
-	for(var/i in 1 to 6)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Would you like be a part of a Vigilante posse?", "pAI", null, FALSE, 100)
+	var/list/mob/dead/observer/finalists = list()
+	var/posse_size = round(GLOB.joined_player_list.len * 0.08)
+	if(candidates.len)
+		for(var/n in 1 to posse_size)
+			finalists += pick_n_take(candidates)
+	else
+		message_admins("No ghosts were willing to join the posse")
+		posse_timer = 2
+		return
+	for(var/i in 1 to finalists.len)
 		var/mob/living/carbon/human/character = new(src)
 		var/equip = SSjob.EquipRank(character, "Assistant", 1)
 		character = equip
@@ -393,15 +391,14 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		else
 			AnnounceArrival(character, "Vigilante")
 		GLOB.joined_player_list += character.ckey
-		if(!offer_control(character))
-			qdel(character)
-		else
-			vigilize(character)
+		var/mob/dead/observer/spoo = pick_n_take(finalists)
+		character.key = spoo.key
+		vigilize(character)
+		character.equip_to_slot_or_del(new /obj/item/weapon/twohanded/pitchfork/gangfork(character),slot_l_store)
+		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor(character),slot_wear_suit)
 
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
-
-
 
 
 

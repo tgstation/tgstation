@@ -43,7 +43,7 @@
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/weapon/soap/vigilante
-	name = "Loyalist's Rag"
+	name = "cleaning rag"
 	desc = "All great things start with a little elbow grease."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
@@ -57,6 +57,8 @@
 	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
+	if(!slippyness)
+		return
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		M.slip(slippyness, slippyness, src)
