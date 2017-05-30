@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/turf/target_armory
 	var/turf/target_equipment
 	var/turf/target_brig
-	var/turf/target_captain
+	var/area/target_captain
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -74,9 +74,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			break
 
 	for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
-		target_captain  = pick(get_area_turfs(C))
-		if(target_captain)
-			break
+		target_captain = C
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -127,12 +125,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/gang/proc/gangpocalypse()
 	set waitfor = FALSE
 	if(target_captain)
-		for(var/turf/T in area_contents(target_captain))
-			for(var/obj/I in T.contents)
-				if(istype(I, /obj/item/weapon/card/id/captains_spare))
-					qdel(I)
-				if(istype(I, /obj/structure/displaycase/captain))
-					qdel(I)
+		for(var/obj/I in area_contents(target_captain))
+			if(istype(I, /obj/item/weapon/card/id/captains_spare))
+				qdel(I)
+			if(istype(I, /obj/structure/displaycase/captain))
+				qdel(I)
 	var/list/bosses = list()
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)

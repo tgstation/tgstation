@@ -172,7 +172,7 @@
 /obj/machinery/gang/backup/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(.)
-		if((obj_integrity/max_integrity > 0.8) && final_guard == TRUE)
+		if((obj_integrity < 400) && final_guard == TRUE)
 			final_guard = FALSE
 			reinforce(FALSE)
 
