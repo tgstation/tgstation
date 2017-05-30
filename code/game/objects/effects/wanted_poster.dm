@@ -11,6 +11,7 @@
 	var/wanted_name
 
 /obj/structure/sign/poster/wanted/New(var/icon/person_icon, var/person_name, var/description)
+	..()
 	if(!person_icon)
 		qdel(src)
 		return
