@@ -17,9 +17,9 @@
 /obj/item/weapon/gun/energy/pulse/prize
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/energy/pulse/prize/New()
+/obj/item/weapon/gun/energy/pulse/prize/Initialize()
 	. = ..()
-	GLOB.poi_list |= src
+	GLOB.poi_list += src
 	var/msg = "A pulse rifle prize has been created at [ADMIN_COORDJMP(src)]"
 
 	message_admins(msg)

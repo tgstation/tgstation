@@ -48,6 +48,8 @@
 	take_damage(tforce, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	..() //contents explosion
 	if(target == src)
 		qdel(src)

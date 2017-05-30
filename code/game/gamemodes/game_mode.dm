@@ -80,11 +80,17 @@
 		report = config.intercept
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	SSblackbox.set_details("round_start","[time2text(world.realtime)]")
-	if(SSticker && SSticker.mode)
-		SSblackbox.set_details("game_mode","[SSticker.mode]")
-	if(GLOB.revdata.commit)
-		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
+	if(SSdbcore.Connect())
+		var/sql
+		if(SSticker && SSticker.mode)
+			sql += "game_mode = '[SSticker.mode]'"
+		if(sql)
+			sql += ", "
+		if(GLOB.revdata.originmastercommit)
+			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
+		if(sql)
+			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
+			query_round_game_mode.Execute()
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
@@ -233,11 +239,11 @@
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.z == 2)
+					if(M.z == ZLEVEL_CENTCOM)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.z == 2)
+				if(M.z == ZLEVEL_CENTCOM)
 					escaped_total++
 
 

@@ -178,7 +178,7 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob)
+	for(var/obj/O in mob.contents|mob.held_items)
 		O.on_mob_move(direct, src)
 
 	return .
@@ -209,10 +209,10 @@
 		return
 	var/mob/living/L = mob
 	switch(L.incorporeal_move)
-		if(1)
+		if(INCORPOREAL_MOVE_BASIC)
 			L.loc = get_step(L, direct)
 			L.setDir(direct)
-		if(2)
+		if(INCORPOREAL_MOVE_SHADOW)
 			if(prob(50))
 				var/locx
 				var/locy
@@ -250,7 +250,7 @@
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
-		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
+		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 				to_chat(L, "<span class='warning'>[S] bars your passage!</span>")

@@ -208,6 +208,8 @@
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
+	var/id_console_jobslot_delay = 30
+
 	var/lavaland_budget = 60
 	var/space_budget = 16
 
@@ -409,6 +411,8 @@
 					usewhitelist = TRUE
 				if("allow_metadata")
 					allow_Metadata = 1
+				if("id_console_jobslot_delay")
+					id_console_jobslot_delay = text2num(value)
 				if("inactivity_period")
 					inactivity_period = text2num(value) * 10 //documented as seconds in config.txt
 				if("afk_period")
@@ -822,6 +826,8 @@
 				defaultmap = currentmap
 			if ("endmap")
 				maplist[currentmap.map_name] = currentmap
+				currentmap = null
+			if ("disabled")
 				currentmap = null
 			else
 				GLOB.config_error_log << "Unknown command in map vote config: '[command]'"

@@ -154,7 +154,7 @@
 
 /obj/item/weapon/pen/sleepy/New()
 	create_reagents(45)
-	reagents.add_reagent("morphine", 20)
+	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()
@@ -197,12 +197,3 @@
 	else
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
-
-//Crayons path disambiguity sigh.
-/obj/item/proc/on_write(obj/item/weapon/paper/P, mob/user)
-	return
-
-/obj/item/weapon/pen/poison/on_write(obj/item/weapon/paper/P, mob/user)
-	P.contact_poison = "delayed_toxin"
-	P.contact_poison_volume = 10
-	add_logs(user,P,"used poison pen on")
