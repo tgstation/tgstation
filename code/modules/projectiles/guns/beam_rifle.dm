@@ -31,7 +31,7 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
 	var/aiming = FALSE
-	var/aiming_time = 10
+	var/aiming_time = 7
 	var/aiming_time_fire_threshold = 2
 	var/aiming_time_left = 10
 	var/aiming_time_increase_user_movement = 3
@@ -47,13 +47,13 @@
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
 	var/aoe_structure_damage = 50
-	var/aoe_fire_range = 2
-	var/aoe_fire_chance = 50
-	var/aoe_mob_range = 1
-	var/aoe_mob_damage = 30
+	var/aoe_fire_range = 0
+	var/aoe_fire_chance = 0
+	var/aoe_mob_range = 0
+	var/aoe_mob_damage = 0
 	var/impact_structure_damage = 80
-	var/projectile_damage = 35
-	var/projectile_stun = 0
+	var/projectile_damage = 0
+	var/projectile_stun = 7
 	var/projectile_setting_pierce = TRUE
 	var/delay = 40
 
