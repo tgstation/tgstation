@@ -160,6 +160,7 @@
 
 /turf/open/floor/carpet/black
 	icon = 'icons/turf/floors/carpet_black.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/black
 	canSmoothWith = list(/turf/open/floor/carpet/black)
 
 

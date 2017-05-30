@@ -279,6 +279,7 @@
 
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
+	buildstack = /obj/item/stack/tile/carpet/black
 
 /obj/structure/table/wood/fancy/black/New()
 	..()
