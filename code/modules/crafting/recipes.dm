@@ -180,6 +180,7 @@
 				/obj/item/pipe = 2)
 	time = 300
 	category = CAT_WEAPON
+	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/flamethrower
 	name = "Flamethrower"
