@@ -138,6 +138,7 @@
 			var/mutable_appearance/charge_overlay = mutable_appearance(icon, iconState)
 			for(var/i = ratio, i >= 1, i--)
 				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
+				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
 				add_overlay(charge_overlay)
 		else
 			add_overlay("[icon_state]_charge[ratio]")
