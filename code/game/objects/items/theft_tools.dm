@@ -15,8 +15,8 @@
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
 
-/obj/item/nuke_core/New()
-	..()
+/obj/item/nuke_core/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
@@ -38,23 +38,26 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "core_container_empty"
 	item_state = "tile"
-	var/obj/item/nuke_core/core = null
+	var/obj/item/nuke_core/core
+
+/obj/item/nuke_core_container/Destroy()
+	QDEL_NULL(core)
 
 /obj/item/nuke_core_container/proc/load(obj/item/nuke_core/ncore, mob/user)
 	if(core || !istype(ncore))
-		return 0
+		return FALSE
 	ncore.forceMove(src)
 	core = ncore
 	icon_state = "core_container_loaded"
 	to_chat(user, "<span class='warning'>Container is sealing...</span>")
 	addtimer(CALLBACK(src, .proc/seal), 50)
-	return 1
+	return TRUE
 
 /obj/item/nuke_core_container/proc/seal()
 	if(istype(core))
 		STOP_PROCESSING(SSobj, core)
 		icon_state = "core_container_sealed"
-		playsound(loc, 'sound/items/Deconstruct.ogg', 60, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 60, 1)
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [core]'s radiation is contained.</span>")
 
@@ -112,7 +115,7 @@
 		if (tongs.sliver)
 			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return
-		src.forceMove(tongs)
+		forceMove(tongs)
 		tongs.sliver = src
 		tongs.icon_state = "supermatter_tongs_loaded"
 		to_chat(user, "<span class='notice'>You carefully pick up [src] with [tongs].</span>")
@@ -128,25 +131,29 @@
 	if(!iscarbon(user))
 		return FALSE
 	var/mob/ded = user
-	to_chat(user, "<span class='warning'>You reach for the supermatter sliver. That was dumb.</span>")
+	to_chat(user, "<span class='warning'>You reach for the supermatter sliver with your hands. That was dumb.</span>")
 	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
 	ded.dust()
 
 /obj/item/nuke_core_container/supermatter
 	name = "supermatter receptacle"
 	desc = "A tiny receptacle that releases an inert freon mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
-	var/obj/item/nuke_core/supermatter_sliver/sliver = null
+	var/obj/item/nuke_core/supermatter_sliver/sliver
+
+/obj/item/nuke_core_container/supermatter/Destroy()
+	QDEL_NULL(sliver)
 
 /obj/item/nuke_core_container/supermatter/load(obj/item/weapon/hemostat/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
-		return 0
+		return FALSE
 	T.sliver.forceMove(src)
 	sliver = T.sliver
 	T.sliver = null
 	icon_state = "core_container_loaded"
 	to_chat(user, "<span class='warning'>Container is sealing...</span>")
 	addtimer(CALLBACK(src, .proc/seal), 50)
-	return 1
+	return TRUE
 
 /obj/item/nuke_core_container/supermatter/seal()
 	if(istype(sliver))
@@ -159,8 +166,7 @@
 /obj/item/nuke_core_container/supermatter/attackby(obj/item/weapon/hemostat/supermatter/tongs, mob/user)
 	if(istype(tongs))
 		if(!user.temporarilyRemoveItemFromInventory(tongs))
-			to_chat(user, "<span class='warning'>The [tongs] is stuck to your hand!</span>")
-			return
+			to_chat(user, "<span class='warning'>\The [tongs] is stuck to your hand!</span>")
 		else
 			load(sliver, user)
 	else
@@ -183,6 +189,9 @@
 	toolspeed = 0.75
 	damtype = "fire"
 	var/obj/item/nuke_core/supermatter_sliver/sliver
+
+/obj/item/weapon/hemostat/supermatter/Destroy()
+	QDEL_NULL(sliver)
 
 /obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
