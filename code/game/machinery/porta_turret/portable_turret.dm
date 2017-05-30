@@ -975,24 +975,25 @@
 /obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
 	if(user.incapacitated() || !istype(user))
 		return
-	M.forceMove(get_turf(src))
-	..()
-	for(var/V in M.held_items)
-		var/obj/item/I = V
-		if(istype(I))
-			if(M.dropItemToGround(I))
+	if(do_after(user, 35, target = M))
+		M.forceMove(get_turf(src))
+		..()
+		for(var/V in M.held_items)
+			var/obj/item/I = V
+			if(istype(I))
+				if(M.dropItemToGround(I))
+					var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
+					M.put_in_hands(TC)
+			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
 				M.put_in_hands(TC)
-		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
-			M.put_in_hands(TC)
-	M.pixel_y = 14
-	layer = ABOVE_MOB_LAYER
-	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
-	anchored = TRUE
-	if(user.client)
-		user.client.change_view(view_range)
+		M.pixel_y = 14
+		layer = ABOVE_MOB_LAYER
+		setDir(SOUTH)
+		playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+		anchored = TRUE
+		if(user.client)
+			user.client.change_view(view_range)
 
 /obj/item/gun_control
 	name = "turret controls"

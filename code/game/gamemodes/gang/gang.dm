@@ -176,6 +176,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	to_chat(M, "<FONT size=3><u><b>You are a Vigilante!</b></u><br> Nanotrasen has given all loyal crew the authority to eliminate gang activity aboard the station.<br> You possess a reverse-engineered gangtool that rewards influence for destroying gangster equipment.<br> You will also receive influence for keeping the station free of gang tags.<br><b>Prevent gangs from taking over the station!<b></FONT>")
 	M.mind.announce_objectives()
 	new /obj/item/device/vigilante_tool(M)
+	M.equip_to_slot_or_del(new /obj/item/weapon/soap/vigilante(M), slot_in_backpack)
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
@@ -356,13 +357,52 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			alive++
 
 	if((alive < (GLOB.joined_player_list.len * 0.4)) && ((SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
-
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+	else if(alive < (GLOB.joined_player_list.len *  0.7))
+		vigilante_vengeance()
+
+
+/datum/game_mode/proc/vigilante_vengeance()
+	for(var/i in 1 to 6)
+		var/mob/living/carbon/human/character = new(src)
+		var/equip = SSjob.EquipRank(character, "Assistant", 1)
+		character = equip
+		var/D
+		if(GLOB.latejoin.len)
+			D = get_turf(pick(GLOB.latejoin))
+		if(!D)
+			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						D = T
+						continue
+		character.loc = D
+		var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
+		if(chair)
+			chair.buckle_mob(character)
+		GLOB.data_core.manifest_inject(character)
+		if(SSshuttle.arrivals)
+			SSshuttle.arrivals.QueueAnnounce(character, "Vigilante")
+		else
+			AnnounceArrival(character, "Vigilante")
+		GLOB.joined_player_list += character.ckey
+		if(!offer_control(character))
+			qdel(character)
+		else
+			vigilize(character)
 
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
+
+
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -411,6 +451,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	if(world.time > next_point_time)
 		next_point_time = world.time + next_point_interval
+		SSticker.mode.shuttle_check() // See if its time to start wrapping things up
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			G.income()
 			if(G.is_dominating)
@@ -430,3 +471,6 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = TRUE
 			SSticker.mode.auto_declare_completion_gang(G)
+
+
+

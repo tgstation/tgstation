@@ -25,7 +25,6 @@
 		/datum/gang_item/weapon/riot,
 		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/launcher,
-		/datum/gang_item/equipment/soap,
 		/datum/gang_item/equipment/sechuds,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/brutepatch,
@@ -51,7 +50,7 @@
 		var/mob/living/M = loc
 		linked_action = new(src)
 		linked_action.Grant(M, src)
-		addtimer(CALLBACK(src, .proc/earnings), 1800)
+		addtimer(CALLBACK(src, .proc/earnings), 1500)
 
 /obj/item/device/vigilante_tool/Destroy()
 	var/mob/living/M = loc
@@ -70,12 +69,12 @@
 	for(var/area/A in tags)
 		if(!(A in all_territory))
 			newpoints += 0.5
-	to_chat(H, "<span class='notice'>You have received 2 influence for your continued service, [newpoints] for keeping the station tag-free.")
+	to_chat(H, "<span class='notice'>You have received 4 influence for your continued service, [newpoints] for keeping the station tag-free.")
 	points += newpoints + 2
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
 		points += 4
 		to_chat(H, "<span class='notice'>You have also received 4 influence for possessing a mindshield implant.</span>")
-	addtimer(CALLBACK(src, .proc/earnings), 1800, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, .proc/earnings), 1500, TIMER_UNIQUE)
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
 	if(user.mind in SSticker.mode.get_all_gangsters())

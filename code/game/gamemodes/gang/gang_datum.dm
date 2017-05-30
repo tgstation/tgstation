@@ -215,8 +215,6 @@
 			if(istype(T, /obj/item/device/gangtool) && (bossman.stat != DEAD))
 				bosses_working = TRUE
 				break
-	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
-
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
 	territory |= reclaimed_territories
@@ -258,7 +256,7 @@
 			points_new = sbonus + stags // Soldier points
 			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [(LAZYLEN(G.tags)/2)] for territories you have personally tagged.<BR>"
 		else
-			points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
+			points_new = max(0,round(4 - G.points/10)) + round(0.8 * LAZYLEN(territory)) // Boss points, more focused on big picture
 			pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
 		G.points += points_new
 		var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)

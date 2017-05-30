@@ -1,4 +1,5 @@
 #define HALFWAYCRIT 50
+#define GATEWAYMAX 1
 
 /datum/gang_item
 	var/name
@@ -112,27 +113,25 @@
 /datum/gang_item/function/implant/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return "([get_cost(user, gang, gangtool)] Influence)"
 
+
+
 /datum/gang_item/function/backup
 	name = "Create Gateway for Reinforcements"
 	id = "backup"
-	cost = 100
 	item_path = /obj/machinery/gang/backup
 
-/datum/gang_item/function/backup/get_cost(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	cost = 50 + gang.gateways * 50
-	var/we = 0
-	var/rival = 0
-	for(var/datum/mind/M in SSticker.mode.get_all_gangsters())
-		if(M.current.stat == DEAD || !M.current.client || M.current.client.is_afk())
-			continue
-		if(is_in_gang(M.current, gang.name))
-			we++
-		else
-			rival++
-	cost += max(-50, round((we/(rival+we))*100 - 33) * 2)
-	return cost
+/datum/gang_item/function/backup/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(gang.gateways >= GATEWAYMAX)
+		return FALSE
+	return TRUE
+
+/datum/gang_item/function/backup/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(gang.gateways >= GATEWAYMAX)
+		return FALSE
+	return TRUE
 
 /datum/gang_item/function/backup/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	gang.gateways++
 	var/obj/machinery/gang/backup/gate = new(get_turf(user), gang)
 	gate.G = gang
 
@@ -143,6 +142,9 @@
 	var/area/usrarea = get_area(user.loc)
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>This device can only be spawned in territory controlled by your gang!</span>")
+		return FALSE
+	var/confirm_final = alert(user, "Your gang can only place ONE gateway, make sure it is in a well-secured location.", "Are you ready to place the gateway?", "This location is Secure", "I should wait...")
+	if(confirm_final == "No")
 		return FALSE
 	return ..()
 
@@ -155,14 +157,19 @@
 	icon_state = "gang_teleporter_on"
 	var/datum/gang/G
 	var/list/queue = list()
+	var/datum/effect_system/spark_spread/sparks
 
 /obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
 	. = ..()
 	G = gang
-	reinforce()
-	gang.gateways++
+	var/datum/effect_system/spark_spread/sparks = new()
+	sparks.set_up(3, 0, src)
+	sparks.attach(src)
+	addtimer(CALLBACK(src, .proc/reinforce), 3000)
 
 /obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
+	qdel(sparks)
+	sparks = null
 	for(var/mob/M in contents)
 		qdel(M)
 	return ..()
@@ -175,22 +182,33 @@
 	var/cooldown = 0
 	for(var/datum/gang/baddies in SSticker.mode.gangs)
 		if(baddies == G)
-			for(var/datum/mind/M in G.gangsters|G.bosses)
+			for(var/datum/mind/M in G.gangsters)
 				if(M.current.stat == DEAD)
 					var/mob/O = M.get_ghost(TRUE)
 					if(O)
 						queue += O
 					continue
 				we++
+			for(var/datum/mind/B in G.bosses)
+				if(B.current.stat == DEAD)
+					var/mob/O = B.get_ghost(TRUE)
+					if(O)
+						queue += O
+					continue
+				we++
 		else
-			for(var/datum/mind/M in G.gangsters)
-				if(M.current.stat == DEAD)
+			for(var/datum/mind/E in G.gangsters)
+				if(E.current.stat == DEAD)
+					continue
+				rival++
+			for(var/datum/mind/R in G.gangsters)
+				if(R.current.stat == DEAD)
 					continue
 				rival++
 	spawn_gangster()
 	if(!we)
 		we = 1
-	cooldown = 200+((we/(rival+we))*50)**2
+	cooldown = 200+((we/(rival+we))*80)**2
 	addtimer(CALLBACK(src, .proc/reinforce), cooldown)
 
 
@@ -210,15 +228,14 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/switchblade(H),slot_r_store)
 	var/equip = SSjob.EquipRank(H, "Assistant", 1)
 	H = equip
-	var/list/finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = queue)
+	var/list/mob/dead/observer/finalists = pollGhostCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang", group = queue)
 	if(finalists.len)
 		winner = pick(finalists)
 		queue -= winner
 	else
 		var/list/dead_vigils
-		for(var/mob/V in GLOB.joined_player_list.len)
-			if(!is_gangster(V) && V.stat == DEAD)
-				var/mob/dead/observer/O = V.get_ghost(TRUE)
+		for(var/mob/dead/observer/O in GLOB.player_list)
+			if(M.mind.gang_datum != G)
 				dead_vigils += O
 		finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 150, ignore_category = "gang war", group = dead_vigils)
 		if(finalists.len)
@@ -229,6 +246,7 @@
 	reinforcement.active = 1
 	reinforcement.transfer_to(H)
 	SSticker.mode.add_gangster(reinforcement, G, 0)
+	sparks.start()
 	H.forceMove(get_turf(src))
 
 
@@ -555,12 +573,6 @@
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
 
-
-/datum/gang_item/equipment/soap
-	name = "Influential Soap"
-	id = "soap"
-	cost = 4
-	item_path = /obj/item/weapon/soap/vigilante
 
 /datum/gang_item/equipment/sechuds
 	name = "SecHud Sunglasses"

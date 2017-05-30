@@ -45,7 +45,7 @@
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
 	set waitfor = FALSE
-	var/cooldown_time = 800+(200*(gang.gangsters.len))
+	var/cooldown_time = 800+(250*(gang.gangsters.len))
 
 	cooldown = 1
 	icon_state = "pen_blink"

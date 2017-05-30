@@ -43,11 +43,12 @@
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/weapon/soap/vigilante
-	name = "Bulky Soap"
-	desc = "Is that an antenna sticking out of a soap bar? This soap appears to sacrifice some of its slipperyness for cleaning grit."
-	icon_state = "soapnt"
+	name = "Loyalist's Rag"
+	desc = "All great things start with a little elbow grease."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "rag"
 	cleanspeed = 35
-	slippyness = 2
+	slippyness = 0
 
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
