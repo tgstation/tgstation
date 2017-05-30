@@ -114,10 +114,6 @@
 		secret = new secret_type(src)
 		secret.desc += " It's a secret!"
 		w_items += secret.w_class
-		contents += secret
-
-
-
 
 /obj/structure/urinal
 	name = "urinal"
