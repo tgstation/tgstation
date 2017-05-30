@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		for(var/n in 1 to 3)
 			var/datum/mind/boss = pick(antag_candidates)
 			antag_candidates -= boss
-			G.bosses += boss
+			G.bosses[boss] = 0
 			boss.gang_datum = G
 			var/title
 			if(n == 1)
@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
-	G.gangsters += gangster_mind
+	G.gangsters[gangster_mind] = 0
 	gangster_mind.gang_datum = G
 	if(check)
 		if(iscarbon(gangster_mind.current))

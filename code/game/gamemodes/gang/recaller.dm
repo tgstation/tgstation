@@ -82,28 +82,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-
-
-/obj/item/device/gangtool/Topic(href, href_list)
-	if(!can_use(usr))
-		return
-
-	add_fingerprint(usr)
-
-	if(href_list["register"])
-		register_device(usr)
-
-	else if(!gang) //Gangtool must be registered before you can use the functions below
-		return
-
-	if(href_list["purchase"])
-		var/datum/gang_item/G = gang.boss_item_list[href_list["purchase"]]
-		if(G && G.can_buy(usr, gang, src))
-			G.purchase(usr, gang, src, FALSE)
-
-	attack_self(usr)
-
-
 /obj/item/device/gangtool/proc/ping_gang(mob/user)
 	if(!user)
 		return
@@ -299,16 +277,6 @@
 	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
 	popup.set_content(dat)
 	popup.open()
-
-/obj/item/device/gangtool/soldier/Topic(href, href_list)
-	if(!can_use(usr))
-		return
-	if(href_list["purchase"])
-		var/datum/gang_item/G = gang.reg_item_list[href_list["purchase"]]
-		if(G && G.can_buy(usr, gang, src))
-			G.purchase(usr, gang, src, FALSE)
-
-	attack_self(usr)
 
 /datum/action/innate/gang
 	background_icon_state = "bg_spell"

@@ -54,6 +54,7 @@
 	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
 	if(DOMINATOR_FORCEFIELD)
+		//Someone can add a visual telegraph later I guess!
 		addtimer(CALLBACK(src, .proc/activate_forcefield), DOMINATOR_TELEGRAPH_DELAY)
 
 /obj/machinery/dominator/examine(mob/user)
@@ -202,6 +203,114 @@
 		examine(user)
 		return
 
+/obj/machinery/dominator/proc/get_gang_item_interface(boss = FALSE, soldier = FALSE)
+	. = list()
+	if(boss)
+		for(var/cat in gang.boss_category_list)
+			. += "<b>[cat]</b><br>"
+			for(var/V in gang.boss_category_list[cat])
+				var/datum/gang_item/G = V
+				if(!G.can_see(user, gang, src))
+					continue
+
+				var/cost = G.get_cost_display(user, gang, src)
+				if(cost)
+					. += cost + " "
+
+				var/toAdd = G.get_name_display(user, gang, src)
+				if(G.can_buy(user, gang, src))
+					toAdd = "<a href='?src=\ref[src];purchase=[G.id]'>[toAdd]</a>"
+				. += toAdd
+				var/extra = G.get_extra_info(user, gang, src)
+				if(extra)
+					dat . "<br><i>[extra]</i>"
+				. += "<br>"
+			. += "<br>"
+	if(soldier)
+		for(var/cat in gang.reg_category_list)
+			. += "<b>[cat]</b><br>"
+			for(var/V in gang.reg_category_list[cat])
+				var/datum/gang_item/G = V
+				if(!G.can_see(user, gang, src))
+					continue
+
+				var/cost = G.get_cost_display(user, gang, src)
+				if(cost)
+					dat . cost + " "
+
+				var/toAdd = G.get_name_display(user, gang, src)
+				if(G.can_buy(user, gang, src))
+					toAdd = "<a href='?src=\ref[src];purchase=[G.id]'>[toAdd]</a>"
+				dat . toAdd
+				var/extra = G.get_extra_info(user, gang, src)
+				if(extra)
+					dat += "<br><i>[extra]</i>"
+				dat . "<br>"
+			dat . "<br>"
+
+/obj/machinery/dominator/proc/get_gang_dominator_interface(takeover = TRUE, start = FALSE)
+	. = list()
+	if(takeover && gang.is_dominating)
+		. += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
+	if(start && !gang.is_dominating)
+		. += "<center><font color='red' size='4'><br><B><a href='?src=\ref[src];dominate=1'>START TAKEOVER</a></B></font></center>"
+
+/obj/machinery/dominator/proc/get_gang_status(mob/user)
+	if(!gang)
+		return
+	. = list()
+	if(user)
+		var/isboss = (user.mind == gang.bosses[1])
+		var/issoldier = !(user in gang.bosses)
+		if(isboss)
+			. += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
+			. += "Influence available to you: <B>[gang.bosses[user]]</B><br>"
+		else
+			. += "Registration: <B>[gang.name] Gang Soldier</B><br>"
+			. += "Influence available to you: <B>[gang.gangsters[user]]</B><br>"
+			. += "<B>Remember! Territories you tag will generate bonus influence to you!</B>"
+	. += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
+
+
+/obj/machinery/dominator/proc/interface_boss(mob/user)
+	var/dat = list()
+
+	show_popup(user, dat)
+
+
+/obj/machinery/dominator/proc/interface_soldier(mob/user)
+	var/dat = list()
+
+	show_popup(user, dat)
+
+/obj/machinery/dominator/proc/show_popup(mob/user, data)
+	var/dat = list()
+	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
+	dat += data
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/dominator/Topic(href, href_list)
+	if(!can_use(usr))
+		return
+	add_fingerprint(usr)
+	if(!gang)			//Shouldn't happen.
+		return
+	if(href_list["purchase_soldier"])
+		var/datum/gang_item/G = gang.reg_item_list[href_list["purchase"]]
+		if(G && G.can_buy(usr, gang, src))
+			G.purchase(usr, gang, src, FALSE)
+		interface_soldier(usr)
+	if(href_list["purchase_boss"])
+		var/datum/gang_item/G = gang.boss_item_list[href_list["purchase"]]
+		if(G && G.can_buy(usr, gang, src))
+			G.purchase(usr, gang, src, FALSE)
+		interface_boss(usr)
+	if(href_list["dominate"])
+		interface_domination(usr)
+
+/obj/machinery/dominator/proc/interface_domination(mob/user)
 	var/datum/gang/tempgang
 
 	if(user.mind in SSticker.mode.get_all_gangsters())
