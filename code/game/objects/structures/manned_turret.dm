@@ -20,7 +20,7 @@
 	var/atom/target
 	var/turf/target_turf
 	var/warned = FALSE
-	var/mouseparams
+	var/list/calculated_projectile_vars
 
 //BUCKLE HOOKS
 
@@ -36,6 +36,7 @@
 			buckled_mob.client.change_view(world.view)
 	anchored = FALSE
 	. = ..()
+	STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
 	if(user.incapacitated() || !istype(user))
@@ -58,6 +59,57 @@
 	anchored = TRUE
 	if(user.client)
 		user.client.change_view(view_range)
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/machinery/manned_turret/process()
+	if(!buckled_mobs.len)
+		STOP_PROCESSING(SSfastprocess, src)
+		return
+	var/mob/living/controller = buckled_mobs[1]
+	if(controller.client)
+		var/client/C = controller.client
+		var/atom/A = C.mouseObject
+		var/turf/T = get_turf(A)
+		if(istype(T))	//They're hovering over something in the map.
+			direction_track(controller, T)
+			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, C.mouseParams)
+
+/obj/machinery/manned_turret/proc/direction_track(user, atom/targeted)
+	setDir(get_dir(src,targeted))
+	user.setDir(dir)
+	switch(dir)
+		if(NORTH)
+			layer = BELOW_MOB_LAYER
+			user.pixel_x = 0
+			user.pixel_y = -14
+		if(NORTHEAST)
+			layer = BELOW_MOB_LAYER
+			user.pixel_x = -8
+			user.pixel_y = -4
+		if(EAST)
+			layer = ABOVE_MOB_LAYER
+			user.pixel_x = -14
+			user.pixel_y = 0
+		if(SOUTHEAST)
+			layer = BELOW_MOB_LAYER
+			user.pixel_x = -8
+			user.pixel_y = 4
+		if(SOUTH)
+			layer = ABOVE_MOB_LAYER
+			user.pixel_x = 0
+			user.pixel_y = 14
+		if(SOUTHWEST)
+			layer = BELOW_MOB_LAYER
+			user.pixel_x = 8
+			user.pixel_y = 4
+		if(WEST)
+			layer = ABOVE_MOB_LAYER
+			user.pixel_x = 14
+			user.pixel_y = 0
+		if(NORTHWEST)
+			layer = BELOW_MOB_LAYER
+			user.pixel_x = 8
+			user.pixel_y = -4
 
 /obj/item/gun_control
 	name = "turret controls"
@@ -75,7 +127,7 @@
 		qdel(src)
 
 /obj/item/gun_control/CanItemAutoclick()
-	return 1
+	return TRUE
 
 /obj/item/gun_control/attack_obj(obj/O, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -90,42 +142,8 @@
 /obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
 	..()
 	var/obj/machinery/manned_turret/E = user.buckled
-	E.setDir(get_dir(E,targeted_atom))
-	user.setDir(E.dir)
-	E.mouseparams = params
-	switch(E.dir)
-		if(NORTH)
-			E.layer = BELOW_MOB_LAYER
-			user.pixel_x = 0
-			user.pixel_y = -14
-		if(NORTHEAST)
-			E.layer = BELOW_MOB_LAYER
-			user.pixel_x = -8
-			user.pixel_y = -4
-		if(EAST)
-			E.layer = ABOVE_MOB_LAYER
-			user.pixel_x = -14
-			user.pixel_y = 0
-		if(SOUTHEAST)
-			E.layer = BELOW_MOB_LAYER
-			user.pixel_x = -8
-			user.pixel_y = 4
-		if(SOUTH)
-			E.layer = ABOVE_MOB_LAYER
-			user.pixel_x = 0
-			user.pixel_y = 14
-		if(SOUTHWEST)
-			E.layer = BELOW_MOB_LAYER
-			user.pixel_x = 8
-			user.pixel_y = 4
-		if(WEST)
-			E.layer = ABOVE_MOB_LAYER
-			user.pixel_x = 14
-			user.pixel_y = 0
-		if(NORTHWEST)
-			E.layer = BELOW_MOB_LAYER
-			user.pixel_x = 8
-			user.pixel_y = -4
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
+	E.track_direction(user, targeted_atom)
 	E.checkfire(targeted_atom, user)
 
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)
@@ -147,27 +165,31 @@
 	for(var/i in 1 to number_of_shots)
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
-
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
 	if(!src)
 		return
+	process()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	P.current = targets_from
 	P.starting = targets_from
+	loc = targets_from
 	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
-	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-9, 9))
+	P.xo = target.x - targets_from.x
+	P.yo = target.y - targets_from.y
+	P.Angle = calculated_projectile_vars[1]
+	P.p_x = calculated_projectile_vars[2]
+	P.p_y = calculated_projectile_vars[3]
 	P.fire()
 
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
 	name = "Infinity Gun"
 	view_range = 12
 	projectile_type = /obj/item/projectile/bullet/weakbullet3
-
 
 /obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
