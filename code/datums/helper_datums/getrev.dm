@@ -2,11 +2,17 @@
 	var/originmastercommit
 	var/commit
 	var/list/testmerge = list()
+	var/has_pr_details = FALSE	//tgs2 support
 	var/date
 
 /datum/getrev/New()
 	if(fexists(PR_TEST_JSON))
 		testmerge = json_decode(file2text(PR_TEST_JSON))
+	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
+		var/list/tmp = world.file2list("..\\prtestjob.lk")
+		for(var/I in tmp)
+			if(I)
+				testmerge |= I
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
@@ -22,12 +28,44 @@
 		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-				var/tmcommit = testmerge[line]["commit"]
-				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
+				if(world.RunningService())
+					var/tmcommit = testmerge[line]["commit"]
+					log_world("Test merge active of PR #[line] commit [tmcommit]")
+					SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
+				else //tgs2 support
+					log_world("Test merge active of PR #[line]")
+					var/tmcommit = testmerge[line]["commit"]
+					SSblackbox.add_details("testmerged_prs","[line]")
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
+/datum/getrev/proc/DownloadPRDetails()
+	if(!config.githubrepoid)
+		if(testmerge.len)
+			log_world("PR details download failed: No github repo config set")
+		return
+	if(!isnum(text2num(config.githubrepoid)))
+		log_world("PR details download failed: Invalid github repo id: [config.githubrepoid]")
+		return
+	for(var/line in testmerge)
+		if(!isnum(text2num(line)))
+			log_world("PR details download failed: Invalid PR number: [line]")
+			return
+
+		var/url = "https://api.github.com/repositories/[config.githubrepoid]/pulls/[line].json"
+		GLOB.valid_HTTPSGet = TRUE
+		var/json = HTTPSGet(url)
+		if(!json)
+			return
+
+		testmerge[line] = json_decode(json)
+
+		if(!testmerge[line])
+			log_world("PR details download failed: null details returned")
+			return
+		CHECK_TICK
+	log_world("PR details successfully downloaded")
+	has_pr_details = TRUE
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
@@ -35,7 +73,11 @@
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
 		var/cm = testmerge[line]["commit"]
-		var/details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+		var/details 
+		if(world.RunningService())
+			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+		else if(has_pr_details)	//tgs2 support
+			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
 		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
 
 /client/verb/showrevinfo()
