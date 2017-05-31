@@ -60,7 +60,7 @@
 
 	for (var/client/C in GLOB.clients)
 		t1 =""
-		query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid IN (SELECT DISTINCT computerid FROM [format_table_name("player")] WHERE ckey LIKE '[C.ckey]'))")
+		query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid IN (SELECT DISTINCT computerid FROM [format_table_name("player")] WHERE ckey LIKE '[C.ckey]')")
 		query.Execute()
 		var/c = 0
 		while(query.NextRow())
