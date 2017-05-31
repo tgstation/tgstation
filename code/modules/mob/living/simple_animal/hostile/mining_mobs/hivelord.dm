@@ -116,7 +116,7 @@
 			stored_mob.forceMove(get_turf(src))
 			stored_mob = null
 		else
-			new /obj/effect/mob_spawn/human/corpse/damaged(T)
+			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
 
 //Legion skull
@@ -202,7 +202,7 @@
 	layer = MOB_LAYER
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
-	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged = 5)
+	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged/legioninfested = 5)
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
@@ -214,3 +214,78 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+
+	//Legion infested mobs
+
+/obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
+	var/type = pickweight(list("Miner" = 70, "Ashwalker" = 10, "Golem" = 10, "Shadow" = 5, "YeOlde" = 3, "Operative" = 2))
+	switch(type)
+		if("Miner")
+			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
+			if(!istype(mob_species, /datum/species/plasmaman))
+				uniform = /obj/item/clothing/under/plasmaman
+				head = /obj/item/clothing/head/helmet/space/plasmaman
+				belt = /obj/item/weapon/tank/internals/plasmaman/belt
+			else
+				uniform = /obj/item/clothing/under/rank/miner/lavaland
+			if(!istype(mob_species, /datum/species/lizard))
+				shoes = /obj/item/clothing/shoes/workboots/mining
+			gloves = /obj/item/clothing/gloves/color/black
+			mask = /obj/item/clothing/mask/gas/explorer
+			suit = pickweight(list(null =  80, /obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
+			if (belt == -1)
+				belt = pickweight(list(null = 96, /obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining = 2))
+			if(prob(10))
+				r_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
+			else if(prob(10))
+				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
+		if("Ashwalker")
+			mob_species = /datum/species/lizard/ashwalker
+			uniform = /obj/item/clothing/under/gladiator/ash_walker
+			if(prob(95))
+				head = /obj/item/clothing/head/helmet/gladiator
+			else
+				head = /obj/item/clothing/head/helmet/skull
+				suit = /obj/item/clothing/suit/armor/bone
+				gloves = /obj/item/clothing/gloves/bracer
+			if(prob(5))
+				back = pickweight(list(/datum/crafting_recipe/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
+			if(prob(14))
+				belt = /obj/item/weapon/storage/belt/mining/primitive
+			if(prob(30))
+				r_pocket = /obj/item/weapon/kitchen/knife/combat/bone
+			if(prob(30))
+				l_pocket = /obj/item/weapon/kitchen/knife/combat/bone
+		if("Golem")
+			mob_species = /datum/species/golem/random
+			glasses = pickweight(list(/obj/item/clothing/glasses/meson = 5, /obj/item/clothing/glasses/night = 4, /obj/item/clothing/glasses/hud/health/night = 1))
+			belt = pickweight(list(null = 8, /obj/item/weapon/storage/belt/mining/vendor = 1,/obj/item/weapon/storage/belt/utility/full = 1))
+		if("YeOlde")
+			mob_gender = FEMALE
+			uniform = /obj/item/clothing/under/maid
+			head = /obj/item/clothing/head/helmet/knight
+			suit = /obj/item/clothing/suit/armor/riot/knight
+			gloves = /obj/item/clothing/gloves/plate
+			shoes = /obj/item/clothing/shoes/plate
+			back = /obj/item/weapon/shield/riot/buckler
+			belt = /obj/item/weapon/nullrod/claymore
+		if("Operative")
+			id_job = "Operative"
+			id_access_list = list(GLOB.access_syndicate)
+			outfit = /datum/outfit/syndicatecommandocorpse
+		if("Shadow")
+			mob_species = /datum/species/shadow
+			r_pocket = /obj/item/weapon/reagent_containers/pill/shadowtoxin
+			l_pocket = /obj/item/clothing/tie/medal/nobel_science
+			uniform = /obj/item/clothing/under/color/black
+			shoes = /obj/item/clothing/shoes/sneakers/black
+			suit = /obj/item/clothing/suit/toggle/labcoat
+			glasses = /obj/item/clothing/glasses/sunglasses/blindfold
+			back = /obj/item/weapon/tank/internals/oxygen
+			mask = /obj/item/clothing/mask/breath
+	. = ..()
+
+
+
+

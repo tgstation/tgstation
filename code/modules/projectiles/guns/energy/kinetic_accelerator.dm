@@ -208,6 +208,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
 	origin_tech = "programming=2;materials=2;magnets=4"
+	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	var/denied_type = null
