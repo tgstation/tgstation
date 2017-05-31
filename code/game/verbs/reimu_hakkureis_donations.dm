@@ -120,7 +120,7 @@ var/list/datum/donator/donators = list()
 	var/ownerkey
 	var/money = 0
 	var/maxmoney = 0
-	var/allowed_num_items = 1000 //rel lox //sam lox
+	var/allowed_num_items = 10 //rel lox //sam lox
 
 /datum/donator/New(ckey, money)
 	..()
