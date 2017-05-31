@@ -16,6 +16,10 @@
 	var/list/mutations = list()
 	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02)
 
+/obj/item/seeds/kudzu/New()
+	..()
+	qdel(src)
+
 /obj/item/seeds/kudzu/Copy()
 	var/obj/item/seeds/kudzu/S = ..()
 	S.mutations = mutations.Copy()
