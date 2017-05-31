@@ -2,7 +2,7 @@ GLOBAL_VAR_INIT(reboot_mode, REBOOT_MODE_NORMAL)	//if the world should request t
 GLOBAL_PROTECT(reboot_mode)
 
 /world/proc/RunningService()
-	return params[SERVER_SERVICE_PARAM]
+	return params[SERVICE_WORLD_PARAM]
 
 /world/proc/ExportService(command)
 	return shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0

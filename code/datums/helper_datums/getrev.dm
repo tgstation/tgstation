@@ -6,8 +6,8 @@
 	var/date
 
 /datum/getrev/New()
-	if(fexists(PR_TEST_JSON))
-		testmerge = json_decode(file2text(PR_TEST_JSON))
+	if(fexists(SERVICE_PR_TEST_JSON))
+		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)

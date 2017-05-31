@@ -5,8 +5,8 @@
 #define IRC_STATUS_THROTTLE 50
 
 //keep these in sync with TGS3
-#define SERVER_SERVICE_PARAM "server_service"
-#define PR_TEST_JSON "..\\..\\prtestjob.json"
+#define SERVICE_WORLD_PARAM "server_service"
+#define SERVICE_PR_TEST_JSON "..\\..\\prtestjob.json"
 
 #define SERVICE_CMD_HARD_REBOOT "hard_reboot"
 #define SERVICE_CMD_GRACEFUL_SHUTDOWN "graceful_shutdown"
