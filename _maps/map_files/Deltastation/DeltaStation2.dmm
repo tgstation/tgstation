@@ -5466,12 +5466,11 @@
 	id = "garbage";
 	verted = -1
 	},
-/obj/effect/turf_decal/stripes/end{
-	dir = 8
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_end"
-	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "amJ" = (
 /obj/machinery/conveyor{
@@ -5488,9 +5487,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "amK" = (
 /obj/machinery/conveyor{
@@ -5504,9 +5504,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "amL" = (
 /obj/machinery/mass_driver{
@@ -5519,9 +5520,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "amM" = (
 /obj/machinery/door/poddoor{
@@ -6057,6 +6059,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -6781,6 +6786,9 @@
 	verted = -1
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -20586,9 +20594,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aQZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
@@ -22147,9 +22153,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "aUg" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -55323,9 +55327,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/teleporter)
 "cgB" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -55475,9 +55477,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/lawoffice)
 "cgR" = (
 /obj/effect/decal/cleanable/cobweb,
