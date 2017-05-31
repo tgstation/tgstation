@@ -378,7 +378,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(cultslurring)
 		message = cultslur(message)
 
-	message = capitalize(message)
+	message = ruscapitalize(message)
 
 	return message
 
