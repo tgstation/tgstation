@@ -219,26 +219,27 @@
 	//Legion infested mobs
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 70, "Ashwalker" = 10, "Golem" = 10, "Shadow" = 5, "YeOlde" = 3, "Operative" = 2))
+	var/type = pickweight(list("Miner" = 70, "Ashwalker" = 12, "Golem" = 12, "Shadow" = 2, "YeOlde" = 2, "Operative" = 2))
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
-			if(!istype(mob_species, /datum/species/plasmaman))
+			if(mob_species == /datum/species/plasmaman)
 				uniform = /obj/item/clothing/under/plasmaman
 				head = /obj/item/clothing/head/helmet/space/plasmaman
 				belt = /obj/item/weapon/tank/internals/plasmaman/belt
 			else
 				uniform = /obj/item/clothing/under/rank/miner/lavaland
-			if(!istype(mob_species, /datum/species/lizard))
+			if(mob_species != /datum/species/lizard)
 				shoes = /obj/item/clothing/shoes/workboots/mining
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
-			suit = pickweight(list(null =  80, /obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
-			if (belt == -1)
-				belt = pickweight(list(null = 96, /obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining = 2))
+			if(prob(20))
+				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
+			if (belt == -1 && prob(4))
+				belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining = 2))
 			if(prob(10))
 				r_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
-			else if(prob(10))
+			if(prob(10))
 				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
 			mob_species = /datum/species/lizard/ashwalker
@@ -251,7 +252,7 @@
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
 				back = pickweight(list(/datum/crafting_recipe/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
-			if(prob(14))
+			if(prob(10))
 				belt = /obj/item/weapon/storage/belt/mining/primitive
 			if(prob(30))
 				r_pocket = /obj/item/weapon/kitchen/knife/combat/bone
@@ -259,8 +260,10 @@
 				l_pocket = /obj/item/weapon/kitchen/knife/combat/bone
 		if("Golem")
 			mob_species = /datum/species/golem/random
-			glasses = pickweight(list(/obj/item/clothing/glasses/meson = 5, /obj/item/clothing/glasses/night = 4, /obj/item/clothing/glasses/hud/health/night = 1))
-			belt = pickweight(list(null = 8, /obj/item/weapon/storage/belt/mining/vendor = 1,/obj/item/weapon/storage/belt/utility/full = 1))
+			if(prob(20))
+				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 5, /obj/item/clothing/glasses/night = 4, /obj/item/clothing/glasses/hud/health/night = 1))
+			if(prob(20))
+				belt = pickweight(/obj/item/weapon/storage/belt/mining/vendor = 1,/obj/item/weapon/storage/belt/utility/full = 1))
 		if("YeOlde")
 			mob_gender = FEMALE
 			uniform = /obj/item/clothing/under/maid
