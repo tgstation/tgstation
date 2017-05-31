@@ -34,7 +34,6 @@
 					SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
 				else //tgs2 support
 					log_world("Test merge active of PR #[line]")
-					var/tmcommit = testmerge[line]["commit"]
 					SSblackbox.add_details("testmerged_prs","[line]")
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
