@@ -769,11 +769,13 @@
 //Kicks all the clients currently in the lobby. The second parameter (kick_only_afk) determins if an is_afk() check is ran, or if all clients are kicked
 //defaults to kicking everyone (afk + non afk clients in the lobby)
 //returns a list of ckeys of the kicked clients
-/proc/kick_clients_in_lobby(message, kick_only_afk = 0)
+/proc/kick_clients_in_lobby(message, kick_only_afk = 0, kick_admins = FALSE)
 	var/list/kicked_client_names = list()
 	for(var/client/C in GLOB.clients)
 		if(isnewplayer(C.mob))
 			if(kick_only_afk && !C.is_afk()) //Ignore clients who are not afk
+				continue
+			if(C.holder && !kick_admins)
 				continue
 			if(message)
 				to_chat(C, message)
