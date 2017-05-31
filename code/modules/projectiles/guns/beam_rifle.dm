@@ -17,8 +17,8 @@
 	ammo_y_offset = 3
 	modifystate = FALSE
 	zoomable = TRUE
-	zoom_amt = 20
-	zoom_out_amt = 23
+	zoom_amt = 17
+	zoom_out_amt = 20
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
@@ -30,32 +30,34 @@
 	var/noscope = FALSE	//Can you fire this without a scope?
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
+	pin = null
 	var/aiming = FALSE
 	var/aiming_time = 10
 	var/aiming_time_fire_threshold = 2
-	var/aiming_time_left = 10
+	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
-	var/aiming_time_increase_angle_multiplier = 1
+	var/aiming_time_increase_angle_multiplier = 0.6
 
 	var/lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/temp_visual/current_tracers = list()
 
-	var/structure_piercing = 2
+	var/structure_piercing = 2				//This doesn't always work!
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
 	var/aoe_structure_range = 1
 	var/aoe_structure_damage = 50
 	var/aoe_fire_range = 2
-	var/aoe_fire_chance = 50
+	var/aoe_fire_chance = 40
 	var/aoe_mob_range = 1
 	var/aoe_mob_damage = 30
-	var/impact_structure_damage = 80
-	var/projectile_damage = 35
+	var/impact_structure_damage = 60
+	var/projectile_damage = 30
 	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
-	var/delay = 40
+	var/delay = 65
+	var/lastfire = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
@@ -202,6 +204,9 @@
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
 		return
+	if(lastfire > world.time + delay)
+		return
+	lastfire = world.time
 	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
@@ -317,7 +322,7 @@
 		if(!istype(O, /obj/item))
 			if(O.level == 1)	//Please don't break underfloor items!
 				continue
-			O.take_damage(aoe_structure_damage, BURN, "laser", FALSE)
+			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)
 
 /obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
 	if(!do_pierce)
@@ -334,15 +339,22 @@
 			if(structure_pierce++ < structure_pierce_amount)
 				if(isobj(AM))
 					var/obj/O = AM
-					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff, BURN, "energy", FALSE)
+					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				loc = get_turf(AM)
 				return TRUE
 	return FALSE
 
+/obj/item/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
+	if(istype(target, /obj/machinery/door))
+		return 0.4
+	if(istype(target, /obj/structure/window))
+		return 0.5
+	return 1
+
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
 	if(isobj(target))
 		var/obj/O = target
-		O.take_damage(impact_structure_damage, BURN, "laser", FALSE)
+		O.take_damage(impact_structure_damage * get_damage_coeff(target), BURN, "laser", FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		L.adjustFireLoss(impact_direct_damage)
