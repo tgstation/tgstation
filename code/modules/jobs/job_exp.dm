@@ -178,6 +178,7 @@ GLOBAL_PROTECT(exp_to_update)
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
 //Manual incrementing/updating
+/*
 /client/proc/update_exp_client(minutes, announce_changes = FALSE)
 	if(!src ||!ckey || !config.use_exp_tracking)
 		return
@@ -200,7 +201,7 @@ GLOBAL_PROTECT(exp_to_update)
 		if(!play_records[rtype])
 			play_records[rtype] = 0
 	var/list/old_records = play_records.Copy()
-	if(mob.stat == CONSCIOUS && mob.mind.assigned_role)
+	if(mob.stat != DEAD && mob.mind.assigned_role)
 		play_records[EXP_TYPE_LIVING] += minutes
 		if(announce_changes)
 			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
@@ -209,10 +210,10 @@ GLOBAL_PROTECT(exp_to_update)
 				play_records[job] += minutes
 				if(announce_changes)
 					to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
-		if(mob.mind.special_role)
+		if(mob.mind.special_role && !mob.mind.var_edited)
 			play_records[EXP_TYPE_SPECIAL] += minutes
 			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] Special EXP!")
+				to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!")
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
@@ -231,7 +232,7 @@ GLOBAL_PROTECT(exp_to_update)
 				log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
 				message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
 				return
-
+*/
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
 	if(!src ||!ckey || !config.use_exp_tracking)
@@ -294,19 +295,25 @@ GLOBAL_PROTECT(exp_to_update)
 		if(!play_records[rtype])
 			play_records[rtype] = 0
 	var/list/old_records = play_records.Copy()
-	if(mob.stat == CONSCIOUS && mob.mind.assigned_role)
-		play_records[EXP_TYPE_LIVING] += minutes
-		if(announce_changes)
-			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
-		for(var/job in SSjob.name_occupations)
-			if(mob.mind.assigned_role == job)
-				play_records[job] += minutes
-				if(announce_changes)
-					to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
-		if(mob.mind.special_role)
-			play_records[EXP_TYPE_SPECIAL] += minutes
+	if(isliving(mob))
+		if(mob.stat != DEAD)
+			play_records[EXP_TYPE_LIVING] += minutes
 			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] Special EXP!")
+				to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
+			if(mob.mind.assigned_role)
+				for(var/job in SSjob.name_occupations)
+					if(mob.mind.assigned_role == job)
+						play_records[job] += minutes
+						if(announce_changes)
+							to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
+				if(mob.mind.special_role && !mob.mind.var_edited)
+					play_records[mob.mind.special_role] += minutes
+					if(announce_changes)
+						to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!")
+		else
+			play_records[EXP_TYPE_GHOST] += minutes
+			if(announce_changes)
+				to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
@@ -319,7 +326,7 @@ GLOBAL_PROTECT(exp_to_update)
 		if(play_records[jtype] != old_records[jtype])
 			LAZYINITLIST(GLOB.exp_to_update)
 			GLOB.exp_to_update.Add(list(list(
-				"job" = "'[jtype]'",
+				"job" = "'[sanitizeSQL(jtype)]'",
 				"ckey" = "'[sanitizeSQL(ckey)]'",
 				"minutes" = play_records[jtype])))
 	addtimer(CALLBACK(GLOBAL_PROC,.proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)

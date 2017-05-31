@@ -1,6 +1,7 @@
 23rd April 2017, by Shadowlight213
 
-Added role_time table to track time spent playing departments. see the schema.
+Added role_time table to track time spent playing departments.
+CREATE TABLE `SS13_role_time` ( `ckey` VARCHAR(32) NOT NULL , `job` VARCHAR(128) NOT NULL , `minutes` INT UNSIGNED NOT NULL, PRIMARY KEY (`ckey`, `job`) ) ENGINE = InnoDB;
 
 ----------------------------------------------------
 

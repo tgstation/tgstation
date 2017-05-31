@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 
 GLOBAL_LIST_INIT(exp_specialmap, list(
 	EXP_TYPE_LIVING = list(), // all living mobs
-	EXP_TYPE_SPECIAL = list(), // antags, ERT, etc
+	EXP_TYPE_SPECIAL = list(), // antags, ERT, etc Todo: find a way to calculate the totals of special roles
 	EXP_TYPE_GHOST = list(), // dead people, observers
 	EXP_TYPE_EXEMPT = list() // special grandfather setting
 ))
