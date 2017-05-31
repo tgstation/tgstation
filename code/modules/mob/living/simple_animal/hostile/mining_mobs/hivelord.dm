@@ -107,6 +107,7 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	var/mob/living/carbon/human/stored_mob
+	var/fromtendril = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -115,6 +116,8 @@
 		if(stored_mob)
 			stored_mob.forceMove(get_turf(src))
 			stored_mob = null
+		else if(fromtendril)
+			new /obj/effect/mob_spawn/human/corpse/damaged(T)
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
@@ -219,7 +222,7 @@
 	//Legion infested mobs
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 70, "Ashwalker" = 12, "Golem" = 12, "Shadow" = 2, "YeOlde" = 2, "Operative" = 2))
+	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 11, "Golem" = 11,"Clown" = 11, pick(list("Shadow", "YeOlde","Operative")) = 1)
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
@@ -235,10 +238,12 @@
 			mask = /obj/item/clothing/mask/gas/explorer
 			if(prob(20))
 				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
-			if (belt == -1 && prob(4))
-				belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining = 2))
-			if(prob(10))
-				r_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
+			if (mob_species != /datum/species/plasmaman && prob(4))
+				belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining/alt = 2))
+			else if (mob_species != /datum/species/plasmaman)
+				belt = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+			if(prob(30))
+				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))
 				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
 		if("Ashwalker")
@@ -251,26 +256,46 @@
 				suit = /obj/item/clothing/suit/armor/bone
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
-				back = pickweight(list(/datum/crafting_recipe/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
+				back = pickweight(list(/obj/item/weapon/twohanded/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
 			if(prob(10))
 				belt = /obj/item/weapon/storage/belt/mining/primitive
 			if(prob(30))
 				r_pocket = /obj/item/weapon/kitchen/knife/combat/bone
 			if(prob(30))
 				l_pocket = /obj/item/weapon/kitchen/knife/combat/bone
+		if("Clown")
+			name = pick(GLOB.clown_names)
+			outfit = /datum/outfit/job/clown
+			outfit.backpack_contents = list()
+			if(prob(40))
+				outfit.backpack_contents += pick(list(/obj/item/weapon/stamp/clown = 1, /obj/item/weapon/reagent_containers/spray/waterflower = 1,/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,/obj/item/weapon/pneumatic_cannon/pie = 1))
+			if(prob(30))
+				outfit.backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
+			if(prob(10))
+				l_pocket = /obj/item/weapon/bikehorn/golden
+			if(prob(10))
+				r_pocket = /obj/item/weapon/implanter/sad_trombone
 		if("Golem")
 			mob_species = /datum/species/golem/random
-			if(prob(20))
-				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 5, /obj/item/clothing/glasses/night = 4, /obj/item/clothing/glasses/hud/health/night = 1))
-			if(prob(20))
-				belt = pickweight(list(/obj/item/weapon/storage/belt/mining/vendor = 1,/obj/item/weapon/storage/belt/utility/full = 1))
+			if(prob(10))
+				glasses = pick(list(/obj/item/clothing/glasses/meson, /obj/item/clothing/glasses/hud/health,/obj/item/clothing/glasses/hud/diagnostic, /obj/item/clothing/glasses/science, /obj/item/clothing/glasses/welding))
+			if(prob(10))
+				belt = pick(list(/obj/item/weapon/storage/belt/mining/vendor,/obj/item/weapon/storage/belt/utility/full))
+			if(prob(50))
+				r_pocket = /obj/item/weapon/bedsheet/rd/royal_cape
+			if(prob(10))
+				l_pocket = pick(list(/obj/item/weapon/crowbar/power, /obj/item/weapon/wrench/power, /obj/item/weapon/weldingtool/experimental))
 		if("YeOlde")
 			mob_gender = FEMALE
 			uniform = /obj/item/clothing/under/maid
+			gloves = /obj/item/clothing/gloves/color/white
+			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
 			suit = /obj/item/clothing/suit/armor/riot/knight
 			back = /obj/item/weapon/shield/riot/buckler
 			belt = /obj/item/weapon/nullrod/claymore
+			r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+			mask = /obj/item/clothing/mask/breath
 		if("Operative")
 			id_job = "Operative"
 			id_access_list = list(GLOB.access_syndicate)
