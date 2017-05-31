@@ -13,7 +13,7 @@
 		to_chat(src, "Guests may not use OOC.")
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = sanitize(strip_html_properly(copytext(msg, 1, MAX_MESSAGE_LEN)))
 	var/raw_msg = msg
 
 	if(!msg)
