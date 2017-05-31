@@ -69,6 +69,5 @@
 #error You need version 511 or higher
 #endif
 
-//keep these in sync with TGS3
-#define SERVER_SERVICE_PARAM "server_service"
-#define PR_TEST_JSON "..\\..\\prtestjob.json"
+ #define SERVICE_CMD_PARAM_KEY "serviceCommsKey"
+ 

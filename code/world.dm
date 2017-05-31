@@ -95,7 +95,7 @@
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
-	if(input["serviceCommsKey"])
+	if(input[SERVICE_CMD_PARAM_KEY])
 		return ServiceCommand(input)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 
