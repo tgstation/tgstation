@@ -276,6 +276,8 @@
 
 	C.ircreplyamount = IRCREPLYCOUNT
 
+	return "Message Successful"
+
 /proc/GenIrcStealthKey()
 	var/num = (rand(0,1000))
 	var/i = 0
