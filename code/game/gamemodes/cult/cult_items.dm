@@ -381,7 +381,7 @@
 	on_damage = 15
 	slot_flags = null
 	on = 1
-	var/charges = 3
+	var/charges = 5
 
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
@@ -407,6 +407,9 @@
 		if(!iscultist(cultist_to_receive))
 			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
 			log_game("Void torch failed - target was deconverted")
+			return
+		if(A in user.GetAllContents())
+			to_chat(user, "<span class='cultitalic'>[A] must be on a surface in order to teleport it!</span>")
 			return
 		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
 		cultist_to_receive.put_in_hands(A)

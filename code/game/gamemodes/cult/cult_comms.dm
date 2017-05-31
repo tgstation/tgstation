@@ -309,11 +309,11 @@
 
 /datum/action/innate/cult/master/pulse
 	name = "Eldritch Pulse"
-	desc = "Seize upon a fellow cultist and fling them through the veil."
+	desc = "Seize upon a fellow cultist or cult structure and teleport it to a nearby location."
 	button_icon_state = "arcane_barrage"
 	var/obj/effect/proc_holder/pulse/PM
 	var/cooldown = 0
-	var/base_cooldown = 200
+	var/base_cooldown = 150
 	var/throwing = FALSE
 	var/mob/living/throwee
 
@@ -353,7 +353,7 @@
 		remove_ranged_ability("<span class='cult'>You cease your preparations...</span>")
 		attached_action.throwing = FALSE
 	else
-		add_ranged_ability(user, "<span class='cult'>You prepare to move a fellow cultist...</span>")
+		add_ranged_ability(user, "<span class='cult'>You prepare to tear at the fabric of reality...</span>")
 
 /obj/effect/proc_holder/pulse/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
@@ -365,13 +365,13 @@
 	if(!isturf(T))
 		return FALSE
 	if(target in view(7, get_turf(ranged_ability_user)))
-		if(!iscultist(target) && !attached_action.throwing)
+		if((!(iscultist(target) || istype(target, /obj/structure/destructible/cult)) || target == caller)) && !(attached_action.throwing))
 			return
 		if(!attached_action.throwing)
 			attached_action.throwing = TRUE
 			attached_action.throwee = target
 			ranged_ability_user << 'sound/weapons/thudswoosh.ogg'
-			to_chat(ranged_ability_user,"<span class='cult'><b>You have seized [target] now choose where to fling them!</b></span>")
+			to_chat(ranged_ability_user,"<span class='cult'><b>You have seized [target]!</b></span>")
 			return
 		else
 			new /obj/effect/temp_visual/cult/sparks(get_turf(attached_action.throwee), ranged_ability_user.dir)
@@ -380,12 +380,12 @@
 				return
 			playsound(target,'sound/magic/exit_blood.ogg')
 			attached_action.throwee.Beam(target,icon_state="sendbeam",time=4)
-			attached_action.throwee.forceMove(target)
+			attached_action.throwee.forceMove(get_turf(target))
 			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
 			attached_action.throwing = FALSE
 			attached_action.cooldown = world.time + attached_action.base_cooldown
 			remove_mousepointer(ranged_ability_user.client)
 			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [target] through time and space.</span>")
-			ranged_ability_user.update_icons()
-			sleep(200)
-			ranged_ability_user.update_icons()
+			caller.update_action_buttons_icon()
+			sleep(attached_action.base_cooldown)
+			caller.update_action_buttons_icon()
