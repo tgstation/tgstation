@@ -76,7 +76,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(power_supply.charge > primary_ammo.e_cost)
+	if(cell.charge > primary_ammo.e_cost)
 		add_overlay(charged_overlay)
 	else
 		add_overlay(drained_overlay)
