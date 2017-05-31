@@ -83,7 +83,7 @@
 	var/githubrepoid
 
 	var/forbid_singulo_possession = 0
-	var/use_irc_bot = 0
+	var/useircbot = 0
 
 	var/check_randomizer = 0
 
@@ -429,7 +429,7 @@
 					popup_admin_pm = 1
 				if("allow_holidays")
 					allow_holidays = 1
-				if("useircbot")
+				if("useircbot")	//tgs2 support
 					useircbot = 1
 				if("ticklag")
 					var/ticklag = text2num(value)
