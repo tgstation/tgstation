@@ -942,7 +942,7 @@
 	icon_state = "machinegun"
 	can_buckle = TRUE
 	density = TRUE
-	anchored = TRUE
+	anchored = 1
 	max_integrity = 100
 	obj_integrity = 100
 	buckle_lying = 0
