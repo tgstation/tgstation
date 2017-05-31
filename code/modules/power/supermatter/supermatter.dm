@@ -23,7 +23,7 @@
 #define SEVERE_POWER_PENALTY_THRESHOLD 7000   //Same as above, but causes more dangerous effects
 #define CRITICAL_POWER_PENALTY_THRESHOLD 9000 //Even more dangerous effects, threshold for tesla delamination
 #define HEAT_PENALTY_THRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
-#define DAMAGE_HARDCAP 0.01
+#define DAMAGE_HARDCAP 0.0025
 
 
 #define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
