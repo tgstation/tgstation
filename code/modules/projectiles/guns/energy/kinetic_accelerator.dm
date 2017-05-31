@@ -394,12 +394,16 @@
 	cost = 50
 
 /obj/item/borg/upgrade/modkit/cooldown/repeater/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	var/valid_repeat = FALSE
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat == DEAD)
-			return
+		if(L.stat != DEAD)
+			valid_repeat = TRUE
+	if(ismineralturf(target_turf))
+		valid_repeat = TRUE
+	if(valid_repeat)
 		KA.overheat = FALSE
-		KA.attempt_reload(KA.overheat_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
+	KA.attempt_reload(KA.overheat_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"
