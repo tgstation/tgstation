@@ -263,14 +263,12 @@
 			if(prob(20))
 				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 5, /obj/item/clothing/glasses/night = 4, /obj/item/clothing/glasses/hud/health/night = 1))
 			if(prob(20))
-				belt = pickweight(/obj/item/weapon/storage/belt/mining/vendor = 1,/obj/item/weapon/storage/belt/utility/full = 1))
+				belt = pickweight(list(/obj/item/weapon/storage/belt/mining/vendor = 1,/obj/item/weapon/storage/belt/utility/full = 1))
 		if("YeOlde")
 			mob_gender = FEMALE
 			uniform = /obj/item/clothing/under/maid
 			head = /obj/item/clothing/head/helmet/knight
 			suit = /obj/item/clothing/suit/armor/riot/knight
-			gloves = /obj/item/clothing/gloves/plate
-			shoes = /obj/item/clothing/shoes/plate
 			back = /obj/item/weapon/shield/riot/buckler
 			belt = /obj/item/weapon/nullrod/claymore
 		if("Operative")
