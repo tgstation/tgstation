@@ -467,7 +467,7 @@
 					dat += "<tr><td>[M.mind.changeling.changelingID] as <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td><td><A href='?_src_=holder;announcechange=[M.real_name]'>ANN</a></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[changeling]'>[changeling.name]([changeling.key])</a><i>Changeling body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[changeling.key]'>PM</A></td></tr>"
@@ -529,7 +529,7 @@
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td>"
-					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td><td><A href='?_src_=holder;announcetritor=[M.real_name]'>ANN</a></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[traitor]'>[traitor.name]([traitor.key])</a><i>Traitor body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[traitor.key]'>PM</A></td></tr>"

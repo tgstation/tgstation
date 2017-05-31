@@ -2339,3 +2339,12 @@
 
 		usr << browse(dat, "size=420x300")
 
+	else if(href_list["announcetritor"])
+		var/zhirobas = href_list["announcetritor"]
+		priority_announce("Нам стало известно что следующий член экипажа является предателем, работающим на Синдикат: [zhirobas]. Необходимо уничтожить его при обнаружении.", null, 'sound/AI/commandreport.ogg')
+		print_command_report("We have made certain that the following crewmember is a syndicate agent: [zhirobas]. Exterminate on sight.", null, FALSE)
+
+	else if(href_list["announcechange"])
+		var/zhirobas = href_list["announcechange"]
+		priority_announce("Нам стало известно что следующий член экипажа является опасным инопланетным существом, способным принимать чужие обличия: [zhirobas]. Необходимо уничтожить его при обнаружении.", null, 'sound/AI/commandreport.ogg')
+		print_command_report("We have made certain that the following crewmember is a dangerous creature able to change its appearance: [zhirobas]. Exterminate on sight.", null, FALSE)
