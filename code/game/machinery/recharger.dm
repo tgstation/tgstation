@@ -8,7 +8,7 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
-	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer)
+	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer, /obj/item/weapon/tank/internals/rebreather)
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/New()
@@ -121,6 +121,13 @@
 			var/obj/item/weapon/melee/baton/B = charging
 			if(B.bcell)
 				if(B.bcell.give(B.bcell.chargerate * recharge_coeff))
+					use_power(200 * recharge_coeff)
+					using_power = 1
+
+		if(istype(charging, /obj/item/weapon/tank/internals/rebreather))
+			var/obj/item/weapon/tank/internals/rebreather/B = charging
+			if(B.tcell)
+				if(B.tcell.give(B.tcell.chargerate * recharge_coeff))
 					use_power(200 * recharge_coeff)
 					using_power = 1
 
