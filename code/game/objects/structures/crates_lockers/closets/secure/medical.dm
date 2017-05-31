@@ -71,6 +71,7 @@
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
 	new /obj/item/device/autosurgeon/cmo(src)
 	new /obj/item/weapon/door_remote/chief_medical_officer(src)
+	new /obj/item/weapon/gun/energy/disabler(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
