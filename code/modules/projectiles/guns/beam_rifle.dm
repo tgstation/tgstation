@@ -36,6 +36,7 @@
 	var/aiming_time_left = 10
 	var/aiming_time_increase_user_movement = 3
 	var/aiming_time_increase_angle_multiplier = 1
+	var/scoped_slow = 1
 
 	var/lastangle = 0
 	var/mob/current_user = null
@@ -83,8 +84,14 @@
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 
-/obj/item/weapon/gun/energy/beam_rifle/New()
-	..()
+/obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
+	if(scoped)
+		slowdown = scoped_slow
+	else
+		slowdown = initial(slowdonw)
+
+/obj/item/weapon/gun/energy/beam_rifle/Initialize()
+	, = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
@@ -114,6 +121,7 @@
 		recoil = hipfire_recoil
 		scoped = FALSE
 		user << "<span class='boldnotice'>You lower your [src].</span>"
+	update_slowdown()
 
 /obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
 	if(!scoped && !noscope)
