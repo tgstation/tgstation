@@ -632,6 +632,8 @@
 			charging = 0
 			src.update_icon()
 		return
+	if(stat & MAINT && opened == 0) //no board; no interface
+		return
 	..()
 
 /obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
