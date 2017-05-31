@@ -88,7 +88,7 @@
 	if(scoped)
 		slowdown = scoped_slow
 	else
-		slowdown = initial(slowdonw)
+		slowdown = initial(slowdown)
 
 /obj/item/weapon/gun/energy/beam_rifle/Initialize()
 	. = ..()
