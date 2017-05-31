@@ -84,8 +84,6 @@
 		var/sql
 		if(SSticker && SSticker.mode)
 			sql += "game_mode = '[SSticker.mode]'"
-		if(sql)
-			sql += ", "
 		if(GLOB.revdata.originmastercommit)
 			if(sql)
 				sql += ", "
