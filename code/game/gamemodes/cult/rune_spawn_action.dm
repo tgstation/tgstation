@@ -46,6 +46,8 @@
 	if(damage_interrupt && isliving(owner))
 		var/mob/living/L = owner
 		health = list("health" = L.health)
+	if(istype(get_turf(owner), /turf/open/floor/engine/cult)
+		scribe_time = scribe_time * 0.5
 	if(do_after(owner, scribe_time, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
 		var/obj/effect/rune/new_rune = new rune_type(owner.loc)
 		new_rune.keyword = chosen_keyword
