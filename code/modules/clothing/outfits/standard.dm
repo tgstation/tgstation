@@ -169,7 +169,8 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/ballistic/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
-
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/syndieminibomb,1) //You can replace this with a HE grenade, and the kit already comes with a syndicate ID
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/implanter/adrenalin,1)
 	var/obj/item/device/pda/heads/pda = H.belt
 	pda.owner = H.real_name
 	pda.ownjob = "Reaper"
@@ -181,6 +182,29 @@
 	W.registered_name = H.real_name
 	W.update_label(H.real_name)
 
+/datum/outfit/AI_Assassin //For when you need a preset outfit to deal with AI or mechs
+	name = "AI Assassin"
+
+	uniform = /obj/item/clothing/under/suit_jacket
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	gloves = /obj/item/clothing/gloves/color/black
+	ears = /obj/item/device/radio/headset
+	glasses = /obj/item/clothing/glasses/sunglasses
+	l_pocket = /obj/item/device/multitool/ai_detect
+	l_hand = /obj/item/weapon/storage/secure/briefcase
+	id = /obj/item/weapon/card/id/syndicate
+	belt = /obj/item/device/pda/heads
+	back = /obj/item/weapon/storage/backpack/black
+
+	backpack_contents = list(/obj/item/weapon/storage/toolbox/syndicate,1\
+	/obj/item/weapon/aiModule/syndicate,1\
+	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1\
+	/obj/item/weapon/grenade/clusterbuster/emp,2\
+	/obj/item/weapon/gun/energy/ionrifle,1\
+	/obj/item/weapon/grenade/plastic/x4,1\
+	/obj/item/weapon/implanter/emp,1\
+	/obj/item/weapon/aiModule/reset,1)
+	
 /datum/outfit/centcom_commander
 	name = "Centcom Commander"
 
@@ -369,6 +393,46 @@
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
 	L.implant(H, null, 1)
+
+
+	var/obj/item/weapon/card/id/W = H.wear_id
+	W.icon_state = "centcom"
+	W.access = get_all_accesses()//They get full station access.
+	W.access += get_centcom_access("Death Commando")//Let's add their alloted Centcom access.
+	W.assignment = "Death Commando"
+	W.registered_name = H.real_name
+	W.update_label(W.registered_name, W.assignment)
+
+/datum/outfit/gatling_commando //For when you need a mech killer or suppression fire support. The backpack will have infinite energy until overheated
+	name = "Laser Gatling Death Commando"
+
+	uniform = /obj/item/clothing/under/color/green
+	suit = /obj/item/clothing/suit/space/hardsuit/deathsquad
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/combat
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
+	back = /obj/item/weapon/minigunpack
+	l_pocket = /obj/item/weapon/melee/energy/sword/saber
+	r_pocket = /obj/item/weapon/shield/energy
+	suit_store = /obj/item/weapon/tank/internals/emergency_oxygen
+	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	r_hand = /obj/item/weapon/gun/projectile/minigun
+	id = /obj/item/weapon/card/id
+	ears = /obj/item/device/radio/headset/headset_cent/alt
+
+/datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/device/radio/R = H.ears
+	R.set_frequency(CENTCOM_FREQ)
+	R.freqlock = 1
+
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
+	L.imp_in = H
+	L.implanted = 1
+	H.sec_hud_set_implants()
 
 
 	var/obj/item/weapon/card/id/W = H.wear_id
