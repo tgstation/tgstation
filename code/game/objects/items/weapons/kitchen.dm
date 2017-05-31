@@ -28,27 +28,64 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/datum/reagent/forkload //used to eat omelette
 
-/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))
+/obj/item/weapon/kitchen/fork/New()
+	..()
+	reagents = new(10)
+	reagents.my_atom = src
+
+/obj/item/weapon/kitchen/fork/attack_self(var/mob/living/carbon/user)
+	if(forkload)
+		attack(user,user)
+
+/obj/item/weapon/kitchen/fork/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M) || !istype(user))
 		return ..()
+
+	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != LIMB_HEAD && M != user && !forkload)
+		return ..()
+
+	if (src.forkload)
+		reagents.update_total()
+		if(M == user)
+			user.visible_message("<span class='notice'>[user] eats a delicious forkful of [forkload_name]!</span>")
+			feed_to(user, user)
+			return
+		else
+			user.visible_message("<span class='notice'>[user] attempts to feed [M] a delicious forkful of [forkload_name].</span>")
+			if(do_mob(user, M))
+				if(!forkload)
+					return
+
+				user.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of [forkload_name]!</span>")
+				feed_to(user, M)
+				return
+	else
+		if((M_CLUMSY in user.mutations) && prob(50))
+			return eyestab(user,user)
+		else
+			return eyestab(M, user)
+
+/obj/item/weapon/kitchen/fork/examine(mob/user)
+	..()
+	if(forkload)
+		user.show_message("It has a forkful of [forkload_name] on it.")
+
+/obj/item/weapon/kitchen/fork/proc/load_food(obj/item/weapon/reagent_containers/food/snacks/snack, mob/user)
+	if(!snack || !user || !istype(snack) || !istype(user))
+		return
 
 	if(forkload)
-		if(M == user)
-			M.visible_message("<span class='notice'>[user] eats a delicious forkful of omelette!</span>")
-			M.reagents.add_reagent(forkload.id, 1)
-		else
-			M.visible_message("<span class='notice'>[user] feeds [M] a delicious forkful of omelette!</span>")
-			M.reagents.add_reagent(forkload.id, 1)
-		icon_state = "fork"
-		forkload = null
+		to_chat(user, "<span class='notice'>You already have food on \the [src].</span>")
+		return
+	return 1
 
-	else if(user.zone_selected == "eyes")
-		if(user.disabilities & CLUMSY && prob(50))
-			M = user
-		return eyestab(M,user)
-	else
-		return ..()
-
+/obj/item/weapon/kitchen/fork/proc/feed_to(mob/living/carbon/user, mob/living/carbon/target)
+	reagents.reaction(target, INGEST)
+	reagents.trans_to(target.reagents, reagents.total_volume, log_transfer = TRUE, whodunnit = user)
+	overlays -= forkload
+	qdel(forkload)
+	forkload = null
+	forkload_name = null
 
 /obj/item/weapon/kitchen/knife
 	name = "kitchen knife"
