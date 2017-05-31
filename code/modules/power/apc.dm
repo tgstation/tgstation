@@ -448,6 +448,8 @@
 				update_icon()
 		else if(emagged)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
+		else if(stat & MAINT && opened == 0)
+			..() //its an empty closed frame... theres no wires to expose!
 		else
 			panel_open = !panel_open
 			to_chat(user, "The wires have been [panel_open ? "exposed" : "unexposed"]")
