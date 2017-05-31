@@ -109,12 +109,15 @@
 	item_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 
+/obj/item/nuke_core/supermatter_sliver/attack_tk() // no TK dusting
+	return FALSE
+
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/hemostat/supermatter))
 		var/obj/item/weapon/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
 			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
-			return
+			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
 		tongs.icon_state = "supermatter_tongs_loaded"
@@ -122,9 +125,11 @@
 	else if(istype(W, /obj/item/weapon/scalpel/supermatter) || istype(W, /obj/item/nuke_core_container/supermatter/)) // we don't want it to dust
 		return
 	else
-		to_chat(user, "<span class='notice'>As it touches \the [src], [W] bursts into dust!</span>")
+		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
 		radiation_pulse(get_turf(user), 1, 2, 10, 1)
+		playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
 		qdel(W)
+		qdel(src)
 
 /obj/item/nuke_core/supermatter_sliver/pickup(mob/living/user)
 	..()
