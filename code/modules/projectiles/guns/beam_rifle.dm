@@ -91,7 +91,7 @@
 		slowdown = initial(slowdonw)
 
 /obj/item/weapon/gun/energy/beam_rifle/Initialize()
-	, = ..()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
