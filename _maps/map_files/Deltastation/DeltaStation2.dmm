@@ -8353,6 +8353,7 @@
 /area/engine/atmospherics_engine)
 "asq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 4;
 	filter_type = "o2";
 	on = 1
@@ -11417,6 +11418,7 @@
 /area/shuttle/supply)
 "aza" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
+	critical_machine = 1;
 	filter_type = "n2";
 	name = "nitrogen filter"
 	},
@@ -12364,6 +12366,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	density = 0;
 	dir = 8;
 	req_access = "0"

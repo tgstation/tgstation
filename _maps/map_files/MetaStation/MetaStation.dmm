@@ -22376,6 +22376,7 @@
 /area/engine/engineering)
 "aQd" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
+	critical_machine = 1;
 	dir = 1;
 	on = 1
 	},
@@ -56463,6 +56464,7 @@
 "cbh" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 4;
 	filter_type = "o2";
 	on = 1
@@ -85835,6 +85837,7 @@
 /area/engine/supermatter)
 "deI" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 1;
 	on = 1
 	},
@@ -85899,6 +85902,7 @@
 /area/engine/supermatter)
 "deT" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 1;
 	filter_type = "plasma";
 	on = 1
@@ -85975,6 +85979,7 @@
 /area/engine/supermatter)
 "dfd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 1;
 	filter_type = "o2";
 	on = 1
@@ -86074,6 +86079,7 @@
 /area/engine/supermatter)
 "dft" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 1;
 	filter_type = "co2";
 	on = 1

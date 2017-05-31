@@ -37627,6 +37627,7 @@
 "bqt" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
+	critical_machine = 1;
 	dir = 8;
 	filter_type = "co2";
 	icon_state = "filter_off_f";
@@ -37653,6 +37654,7 @@
 "bqv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
+	critical_machine = 1;
 	dir = 8;
 	filter_type = "o2";
 	icon_state = "filter_off_f";
@@ -37700,6 +37702,7 @@
 "bqy" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
+	critical_machine = 1;
 	dir = 8;
 	filter_type = "plasma";
 	icon_state = "filter_off_f";
@@ -37715,6 +37718,7 @@
 "bqz" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
+	critical_machine = 1;
 	dir = 8;
 	filter_type = "";
 	icon_state = "filter_off_f";
@@ -43767,6 +43771,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 8;
 	icon_state = "filter_off";
 	on = 1;
