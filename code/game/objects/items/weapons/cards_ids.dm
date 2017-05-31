@@ -259,7 +259,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/marine
 	name = "\improper Marine ID"
 	desc = "A Marine Rifleman ID card"
-	access = list(GLOB.access_away_generic1)
+	access = list(GLOB.access_away_generic1, GLOB.access_mining_station)
 	icon_state = "centcom"
 	registered_name = "Iron Hawk Marine"
 	assignment = "Marine Rifleman"
