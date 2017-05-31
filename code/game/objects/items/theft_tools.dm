@@ -109,7 +109,10 @@
 	item_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 
-/obj/item/nuke_core/supermatter_sliver/attack_tk() // no TK dusting
+/obj/item/nuke_core/supermatter_sliver/attack_tk() // no TK dusting memes
+	return FALSE
+
+/obj/item/nuke_core/supermatter_sliver/can_be_pulled(user) // no drag memes
 	return FALSE
 
 /obj/item/nuke_core/supermatter_sliver/attackby(obj/item/W, mob/living/user, params)

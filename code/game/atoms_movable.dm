@@ -681,12 +681,14 @@
 	if(!anchored && has_gravity())
 		step(src, movedir)
 
+//Returns an atom's power cell, if it has one. Overload for individual items.
+/atom/movable/proc/get_cell()
+	return
+
 /atom/movable/proc/can_be_pulled(user)
 	if(src == user || !isturf(loc))
 		return FALSE
 	if(anchored || throwing)
-		return FALSE
-	if(istype(src, /obj/item/nuke_core/supermatter_sliver)) // I was told to do this instead of making a var
 		return FALSE
 	if(isliving(src))
 		var/mob/living/L = src
