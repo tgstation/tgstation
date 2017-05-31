@@ -61029,8 +61029,9 @@
 "cDv" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
-	dir = 4
+	critical_machine = 1;
+	dir = 4;
+	icon_state = "filter_off_f"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62040,6 +62041,7 @@
 /area/engine/engineering)
 "cFL" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 4;
 	filter_type = "co2";
 	on = 1
@@ -62063,6 +62065,7 @@
 /area/engine/engineering)
 "cFN" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 4;
 	filter_type = "o2";
 	on = 1
@@ -62090,6 +62093,7 @@
 /area/engine/engineering)
 "cFP" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 4;
 	filter_type = "plasma";
 	on = 1
@@ -62113,6 +62117,7 @@
 /area/engine/engineering)
 "cFR" = (
 /obj/machinery/atmospherics/components/trinary/filter{
+	critical_machine = 1;
 	dir = 4;
 	filter_type = "";
 	on = 1
