@@ -13,7 +13,7 @@
 #define SERVICE_CMD_WORLD_ANNOUNCE "world_announce"
 #define SERVICE_CMD_IRC_STATUS "irc_status"
 #define SERVICE_CMD_ADMIN_MSG "adminmsg"
-#define SERVICE_CMD_NAMECHECK "namecheck"
+#define SERVICE_CMD_NAME_CHECK "namecheck"
 #define SERVICE_CMD_ADMIN_WHO "adminwho"
 
 //#define SERVICE_CMD_PARAM_KEY //defined in __compile_options.dm

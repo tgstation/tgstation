@@ -69,7 +69,6 @@ GLOBAL_PROTECT(reboot_mode)
 			return IrcPm(params[SERVICE_CMD_PARAM_TARGET], params[SERVICE_CMD_PARAM_MESSAGE], params[SERVICE_CMD_PARAM_SENDER])
 
 		if(SERVICE_CMD_NAME_CHECK)
-			//TODO
 			log_admin("IRC Name Check: [params[SERVICE_CMD_PARAM_SENDER]] on [params[SERVICE_CMD_PARAM_TARGET]]")
 			message_admins("IRC name checking on [params[SERVICE_CMD_PARAM_TARGET]] from [params[SERVICE_CMD_PARAM_SENDER]]")
 			return keywords_lookup(params[SERVICE_CMD_PARAM_TARGET], 1)
