@@ -9,7 +9,7 @@
 	density = TRUE
 	max_integrity = 100
 	obj_integrity = 100
-	buckle_lying = 0
+	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
@@ -22,9 +22,14 @@
 	var/warned = FALSE
 	var/list/calculated_projectile_vars
 
+/obj/machinery/manned_turret/Destroy()
+	target = null
+	target_turf = null
+	..()
+
 //BUCKLE HOOKS
 
-/obj/machinery/manned_turret/unbuckle_mob(mob/living/buckled_mob,force = 0)
+/obj/machinery/manned_turret/unbuckle_mob(mob/living/buckled_mob,force = FALSE)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
@@ -33,7 +38,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.client.change_view(world.view)
+			buckled_mob.reset_perspective()
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -47,10 +52,10 @@
 		var/obj/item/I = V
 		if(istype(I))
 			if(M.dropItemToGround(I))
-				var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
+				var/obj/item/gun_control/TC = new(src)
 				M.put_in_hands(TC)
 		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/gun_control/TC = new /obj/item/gun_control(src)
+			var/obj/item/gun_control/TC = new(src)
 			M.put_in_hands(TC)
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
@@ -63,11 +68,15 @@
 
 /obj/machinery/manned_turret/process()
 	if(!LAZYLEN(buckled_mobs))
-		STOP_PROCESSING(SSfastprocess, src)
-		return
+		return PROCESS_KILL
+	update_positioning()
+
+/obj/machinery/manned_turret/proc/update_positioning()
 	var/mob/living/controller = buckled_mobs[1]
-	if(controller.client)
-		var/client/C = controller.client
+	if(!istype(controller))
+		return
+	var/client/C = controller.client
+	if(C)
 		var/atom/A = C.mouseObject
 		var/turf/T = get_turf(A)
 		if(istype(T))	//They're hovering over something in the map.
@@ -111,41 +120,6 @@
 			user.pixel_x = 8
 			user.pixel_y = -4
 
-/obj/item/gun_control
-	name = "turret controls"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "offhand"
-	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/obj/machinery/manned_turret/turret
-
-/obj/item/gun_control/New(obj/machinery/manned_turret/MT)
-	if(MT)
-		turret = MT
-	else
-		qdel(src)
-
-/obj/item/gun_control/CanItemAutoclick()
-	return TRUE
-
-/obj/item/gun_control/attack_obj(obj/O, mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	O.attacked_by(src, user)
-
-/obj/item/gun_control/attack(mob/living/M, mob/living/user)
-	user.lastattacked = M
-	M.lastattacker = user
-	M.attacked_by(src, user)
-	add_fingerprint(user)
-
-/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
-	..()
-	var/obj/machinery/manned_turret/E = user.buckled
-	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
-	E.direction_track(user, targeted_atom)
-	E.checkfire(targeted_atom, user)
-
 /obj/machinery/manned_turret/proc/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
 	if(target == user || target == get_turf(src))
@@ -166,16 +140,13 @@
 		addtimer(CALLBACK(src, /obj/machinery/manned_turret/.proc/fire_helper, user), i*rate_of_fire)
 
 /obj/machinery/manned_turret/proc/fire_helper(mob/user)
-	if(!src)
-		return
-	process()						//REFRESH MOUSE TRACKING!!
+	update_positioning()						//REFRESH MOUSE TRACKING!!
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
 	var/obj/item/projectile/P = new projectile_type(targets_from)
 	P.current = targets_from
 	P.starting = targets_from
-	loc = targets_from
 	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
@@ -197,3 +168,42 @@
 		return
 	target_turf = get_turf(target)
 	fire_helper(user)
+
+/obj/item/gun_control
+	name = "turret controls"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	w_class = WEIGHT_CLASS_HUGE
+	flags = ABSTRACT | NODROP | NOBLUDGEON
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/obj/machinery/manned_turret/turret
+
+/obj/item/gun_control/Initialize()
+    . = ..()
+    turret = loc
+    if(!istype(turret))
+        return INITIALIZE_HINT_QDEL
+
+/obj/item/gun_control/Destroy()
+	turret = null
+	..()
+
+/obj/item/gun_control/CanItemAutoclick()
+	return TRUE
+
+/obj/item/gun_control/attack_obj(obj/O, mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	O.attacked_by(src, user)
+
+/obj/item/gun_control/attack(mob/living/M, mob/living/user)
+	user.lastattacked = M
+	M.lastattacker = user
+	M.attacked_by(src, user)
+	add_fingerprint(user)
+
+/obj/item/gun_control/afterattack(atom/targeted_atom, mob/user, flag, params)
+	..()
+	var/obj/machinery/manned_turret/E = user.buckled
+	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
+	E.direction_track(user, targeted_atom)
+	E.checkfire(targeted_atom, user)

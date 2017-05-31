@@ -282,7 +282,7 @@
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
-	loc = get_turf(user)
+	forceMove(get_turf(user))
 	starting = get_turf(user)
 	current = curloc
 	yo = targloc.y - curloc.y
