@@ -221,7 +221,7 @@
 		return
 
 	if(update & 1) // Updating the icon state
-		if(update_state & UPSTATE_ALLGOOD)
+		if(update_state & UPSTATE_ALLGOOD || update_state & UPSTATE_MAINT)
 			icon_state = "apc0"
 		else if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
 			var/basestate = "apc[ cell ? "2" : "1" ]"
