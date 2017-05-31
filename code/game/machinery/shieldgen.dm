@@ -87,12 +87,13 @@
 	max_integrity = 100
 	obj_integrity = 100
 	var/active = FALSE
-	var/list/deployed_shields = list()
+	var/list/deployed_shields
 	var/locked = 0
 	var/shield_range = 4
 
 /obj/machinery/shieldgen/Initialize(mapload)
 	. = ..()
+	deployed_shields = list()
 	if(mapload && active && anchored)
 		shields_up()
 
