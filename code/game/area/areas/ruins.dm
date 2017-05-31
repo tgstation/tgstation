@@ -21,20 +21,48 @@
 
 
 //Areas
+
+/area/ruin/powered/beach
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/clownplanet
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/animal_hospital
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/snow_biodome
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/gluttony
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/golem_ship
+	name = "Free Golem Ship"
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/greed
+	icon_state = "dk_yellow"
+	
 /area/ruin/unpowered/hierophant
 	name = "Hierophant's Arena"
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/pride
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/seedvault
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/syndicate_lava_base
+	name = "Secret Base"
+	icon_state = "dk_yellow"
+
 
 /area/ruin/unpowered/no_grav/way_home
 	name = "\improper Salvation"
 	icon_state = "away"
 
-/area/ruin/powered/snow_biodome
-
-/area/ruin/powered/golem_ship
-	name = "Free Golem Ship"
-
-/area/ruin/powered/syndicate_lava_base
-	name = "Secret Base"
 
 // Ruins of "onehalf" ship
 
