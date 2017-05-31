@@ -87,6 +87,8 @@
 		if(sql)
 			sql += ", "
 		if(GLOB.revdata.originmastercommit)
+			if(sql)
+				sql += ", "
 			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
 		if(sql)
 			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
