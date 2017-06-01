@@ -198,12 +198,8 @@
 
 /obj/machinery/chem_dispenser/emp_act(severity)
 	var/list/datum/reagents/R = list()
-	var/total = min(rand(3,15), Floor(cell.charge*powerefficiency))
+	var/total = min(rand(7,15), Floor(cell.charge*powerefficiency))
 	var/datum/reagents/Q = new(total*10)
-	var/datum/reagents/medium
-	if(prob(66))
-		medium.add_reagent_list(pick(list(list("potassium" = 15, "sugar" = 15, "phosphorus" = 15),list("fluorosurfactant" = 25, "water" = 25))))
-		R += medium
 	if(beaker && beaker.reagents)
 		R += beaker.reagents
 	for(var/i in 1 to total)
@@ -213,6 +209,7 @@
 	if(beaker && beaker.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
+	cell.emp_act()
 	visible_message("<span class='danger'> The [src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
 
