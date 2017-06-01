@@ -146,7 +146,6 @@
 	name = "High Luminosity Eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
 	origin_tech = "material=3;biotech=3;engineering=3;magnets=4"
-	flash_protect = 1
 	var/current_color_string = "#000000"
 	eye_color = "000"
 	var/active = FALSE
