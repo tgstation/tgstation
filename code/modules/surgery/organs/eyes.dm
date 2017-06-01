@@ -130,7 +130,6 @@
 	eye.forceMove(src)
 	..()
 
-
 // Welding shield implant
 /obj/item/organ/eyes/robotic/shield
 	name = "shielded robotic eyes"
@@ -140,3 +139,180 @@
 
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
+
+#define RGB2EYECOLORSTRING(definitionvar) ("[copytext(definitionvar,2,3)][copytext(definitionvar,4,5)][copytext(definitionvar,6,7)]")
+
+/obj/item/organ/eyes/robotic/glow
+	name = "High Luminosity Eyes"
+	desc = "Special glowing eyes, used by snowflakes who want to be special."
+	origin_tech = "material=3;biotech=3;engineering=3;magnets=4"
+	flash_protect = 1
+	var/current_color_string = "#000000"
+	eye_color = "000"
+	var/active = FALSE
+	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
+	var/olddir = 0
+	var/max_light_beam_distance = 5
+	var/light_beam_distance = 5
+	var/light_object_range = 1
+	var/light_object_power = 1
+	var/list/obj/effect/abstract/eye_lighting/eye_lighting
+	var/image/mob_overlay
+
+/obj/item/organ/eyes/robotic/glow/Initialize()
+	. = ..()
+	START_PROCESSING(SSfastprocess, src)
+	eye_lighting = list()
+	mob_overlay = icon('icons/mob/human_face.dmi', "eyes_glow_gs")
+
+/obj/item/organ/eyes/robotic/glow/Destroy()
+	terminate_effects()
+	..()
+
+/obj/item/organ/eyes/robotic/glow/Remove()
+	terminate_effects()
+	..()
+
+/obj/item/organ/eyes/robotic/glow/proc/terminate_effects()
+	if(owner && active)
+		deactivate()
+	clear_visuals(TRUE)
+	STOP_PROCESSING(SSfastprocess, src)
+
+/obj/item/organ/eyes/robotic/glow/process()
+	if(owner && (olddir != owner.dir) && active)
+		update_visuals()
+		olddir = owner.dir
+		world << "Direction change detected."
+
+/obj/item/organ/eyes/robotic/glow/ui_action_click(owner, action)
+	if(istype(action, /datum/action/item_action/organ_action/toggle))
+		toggle_active()
+	else if(istype(action, /datum/action/item_action/organ_action/use))
+		prompt_for_controls(owner)
+
+/obj/item/organ/eyes/robotic/glow/proc/toggle_active()
+	active ? deactivate() : activate()
+
+/obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(owner)
+	var/r = input(owner, "Enter red value (0 - 255)", "Color Select", 0) as null|num
+	if(!r)
+		return
+	var/g = input(owner, "Enter green value (0 - 255)", "Color Select", 0) as null|num
+	if(!g)
+		return
+	var/b = input(owner, "Enter blue value (0 - 255)", "Color Select", 0) as null|num
+	if(!b)
+		return
+	var/range = input(owner, "Enter range (0 - [max_light_beam_distance]", "Range Select", 0) as null|num
+	if(!range)
+		return
+
+	set_distance(Clamp(range, 0, max_light_beam_distance))
+	assume_rgb(Clamp(r, 0, 255),Clamp(g, 0, 255),Clamp(b, 0, 255))
+
+/obj/item/organ/eyes/robotic/glow/proc/assume_rgb(red,green,blue)
+	current_color_string = rgb(red,green,blue)
+	eye_color = RGB2EYECOLORSTRING(current_color_string)
+	sync_light_effects()
+	sync_mob_overlay()
+	if(owner)
+		owner.regenerate_icons()
+
+/obj/item/organ/eyes/robotic/glow/proc/sync_mob_overlay()
+	remove_mob_overlay()
+	mob_overlay.color = current_color_string
+	add_mob_overlay()
+
+/obj/item/organ/eyes/robotic/glow/proc/add_mob_overlay()
+	if(owner)
+		owner.add_overlay(mob_overlay)
+
+/obj/item/organ/eyes/robotic/glow/proc/remove_mob_overlay()
+	if(owner)
+		owner.cut_overlay(mob_overlay)
+
+/obj/item/organ/eyes/robotic/glow/emp_act()
+	if(active)
+		deactivate(silent = TRUE)
+
+/obj/item/organ/eyes/robotic/glow/on_mob_move()
+	if(active)
+		update_visuals()
+	world << "OnMobMove detection chain"
+
+/obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
+	start_visuals()
+	if(!silent)
+		to_chat(owner, "<span class='warning'>Your [src] clicks and makes a whining noise, before shooting out a beam of light!</span>")
+	active = TRUE
+	sync_mob_overlay()
+
+/obj/item/organ/eyes/robotic/glow/proc/deactivate(silent = FALSE)
+	clear_visuals()
+	if(!silent)
+		to_chat(owner, "<span class='warning'>Your [src] shuts off!</span>")
+	active = FALSE
+	remove_mob_overlay()
+
+/obj/item/organ/eyes/robotic/glow/proc/update_visuals()
+	var/turf/scanfrom = get_turf(owner)
+	var/scandir = owner.dir
+	if(!istype(scanfrom))
+		clear_visuals()
+	var/turf/scanning = scanfrom
+	var/stop = FALSE
+	for(var/i in 1 to light_beam_distance)
+		scanning = get_step(scanning, scandir)
+		if(scanning.opacity)
+			stop = TRUE
+		else
+			for(var/v in scanning)
+				var/atom/A = v
+				if(A.opacity)
+					stop = TRUE
+		var/obj/effect/abstract/eye_lighting/L = eye_lighting[i]
+		L.forceMove(stop ? src : scanning)
+
+/obj/item/organ/eyes/robotic/glow/proc/clear_visuals(delete_everything = FALSE)
+	if(delete_everything)
+		QDEL_LIST(eye_lighting)
+	else
+		for(var/i in eye_lighting)
+			var/obj/effect/abstract/eye_lighting/L = i
+			L.forceMove(src)
+
+/obj/item/organ/eyes/robotic/glow/proc/start_visuals()
+	if(!initialized)
+		return
+	if(eye_lighting.len < light_beam_distance)
+		regenerate_light_effects()
+	sync_light_effects()
+	update_visuals()
+
+/obj/item/organ/eyes/robotic/glow/proc/set_distance(dist)
+	light_beam_distance = dist
+	regenerate_light_effects()
+
+/obj/item/organ/eyes/robotic/glow/proc/regenerate_light_effects()
+	QDEL_LIST(eye_lighting)
+	eye_lighting = list()
+	for(var/i in 1 to light_beam_distance)
+		eye_lighting[i] = new /obj/effect/abstract/eye_lighting(src)
+	sync_light_effects()
+
+/obj/item/organ/eyes/robotic/glow/proc/sync_light_effects()
+	for(var/I in eye_lighting)
+		var/obj/effect/abstract/eye_lighting/L = I
+		L.light_color = current_color_string
+		L.set_light(light_object_range)
+		L.light_power = light_object_power
+
+/obj/effect/abstract/eye_lighting
+	var/obj/item/organ/eyes/robotic/glow/parent
+
+/obj/effect/abstract/eye_lighting/Initialize()
+	. = ..()
+	parent = loc
+	if(!istype(parent))
+		return INITIALIZE_HINT_QDEL
