@@ -345,7 +345,7 @@
 	var/datum/action/innate/cult/master/pulse/attached_action
 
 /obj/effect/proc_holder/pulse/Destroy()
-	attached_action = null
+	QDEL_NULL(attached_action)
 	return ..()
 
 /obj/effect/proc_holder/pulse/proc/toggle(mob/user)
@@ -371,7 +371,7 @@
 			attached_action.throwing = TRUE
 			attached_action.throwee = target
 			ranged_ability_user << 'sound/weapons/thudswoosh.ogg'
-			to_chat(ranged_ability_user,"<span class='cult'><b>You have seized [target]!</b></span>")
+			to_chat(ranged_ability_user,"<span class='cult'><b>You reach through the veil with your mind's eye and seize [target]!</b></span>")
 			return
 		else
 			new /obj/effect/temp_visual/cult/sparks(get_turf(attached_action.throwee), ranged_ability_user.dir)
@@ -385,7 +385,7 @@
 			attached_action.throwing = FALSE
 			attached_action.cooldown = world.time + attached_action.base_cooldown
 			remove_mousepointer(ranged_ability_user.client)
-			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [target] through time and space.</span>")
+			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [attached_action.throwee] through time and space.</span>")
 			caller.update_action_buttons_icon()
 			sleep(attached_action.base_cooldown)
 			caller.update_action_buttons_icon()
