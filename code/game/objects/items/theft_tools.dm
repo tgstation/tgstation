@@ -205,7 +205,6 @@
 	if(!sliver)
 		return
 	if(ismovableatom(O))
-		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
 		Consume(O)
 
 /obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
@@ -228,6 +227,7 @@
 			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
 	user.dust()
 	icon_state = "supermatter_tongs"
 	QDEL_NULL(sliver)
