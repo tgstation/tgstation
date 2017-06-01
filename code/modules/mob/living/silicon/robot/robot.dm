@@ -195,6 +195,10 @@
 	if(module.type != /obj/item/weapon/robot_module)
 		return
 
+	if(wires.is_cut(WIRE_RESET_MODULE))
+		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
+		return
+
 	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
 	"Engineering" = /obj/item/weapon/robot_module/engineering, \
 	"Medical" = /obj/item/weapon/robot_module/medical, \
