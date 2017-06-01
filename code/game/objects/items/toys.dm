@@ -275,30 +275,33 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
 	item_state = "flashbang"
-	var/isactive = FALSE
-	var/det_time = 50  //Definately not copypasta
+	var/active = FALSE
 	var/pranksound = 'sound/items/bikehorn.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minibomb/attack_self(mob/user)
-	if(active)
-		return
-	else
+	if(!active)
 		playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1) //Commence the panic
-		prime()
-		
-/obj/item/toy/minibomb/prime(src) //No copypasta here at all
-	active = TRUE
-	user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
-	icon_state = initial(icon_state) + "_active"
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.throw_mode_on()
-	spawn(det_time)
-		playsound(src.loc, pranksound, 50, 1) //what a prank so funny hahaha
-		active = FALSE
-		icon_state = inital(icon_state)
-	
+		active = TRUE
+		user << "<span class='warning'>You prime the [name]! 5 seconds!</span>"
+		icon_state = initial(icon_state) + "_active"
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.throw_mode_on()
+		spawn(50)
+			if(prob(25)) //Cool 25% chance for a neat effect
+				var/obj/item/weapon/grenade/chem_grenade/glitter/O = new /obj/item/weapon/grenade/chem_grenade/glitter/blue(get_turf(src))
+				var/explosionsound = pick('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg','sound/effects/Explosion3.ogg')
+				playsound(src.loc, explosionsound, 50, 1) //EVERYONE PANIC AS THERE'S SUDDENLY SMOKE AND NOISES
+				O.det_time = 0 //Instant detonation
+				O.prime()
+				active = FALSE
+				icon_state = initial(icon_state)
+			else
+				playsound(src.loc, pranksound, 50, 1) //what a prank so funny hahaha
+				active = FALSE
+				icon_state = initial(icon_state)
+
 
 /*
  * Foam armblade
