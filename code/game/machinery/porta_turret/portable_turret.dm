@@ -946,12 +946,12 @@
 	obj_integrity = 100
 	buckle_lying = 0
 	layer = ABOVE_MOB_LAYER
-	var/view_range = 10
+	var/view_range = 9
 	var/cooldown = 0
 	var/projectile_type = /obj/item/projectile/bullet/weakbullet3
-	var/rate_of_fire = 1
+	var/rate_of_fire = 1.2
 	var/number_of_shots = 40
-	var/cooldown_duration = 90
+	var/cooldown_duration = 10
 	var/atom/target
 	var/turf/target_turf
 	var/warned = FALSE
@@ -1096,7 +1096,7 @@
 	P.firer = user
 	P.original = target
 	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
-	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-7, 7))
+	P.preparePixelProjectile(target, target_turf, user, mouseparams, rand(-9, 9))
 	P.fire()
 
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics

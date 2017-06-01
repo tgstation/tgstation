@@ -210,7 +210,7 @@
 	spawn_gangster()
 	if(!we)
 		we = 1
-	cooldown = 200+((we/(rival+we))*60)**2
+	cooldown = 200+((we/(rival+we))*40)**2
 	if(repeat)
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown)
 

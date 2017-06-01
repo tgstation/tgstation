@@ -34,6 +34,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/turf/target_equipment
 	var/turf/target_brig
 	var/area/target_captain
+	var/area/target_science
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -75,6 +76,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
 		target_captain = C
+		break
+
+	for(var/area/science/mixing/T in GLOB.sortedAreas)
+		target_science = T
+		break
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -125,10 +131,18 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/gang/proc/gangpocalypse()
 	set waitfor = FALSE
 	if(target_captain)
+		world << "SUCCESS!"
 		for(var/obj/I in area_contents(target_captain))
+			world << "checking the [I]..."
 			if(istype(I, /obj/item/weapon/card/id/captains_spare))
+				world << "DELETING [I]!"
 				qdel(I)
 			if(istype(I, /obj/structure/displaycase/captain))
+				world << "DELETING [I]!"
+				qdel(I)
+	if(target_science)
+		for(var/obj/I in area_contents(target_science))
+			if(istype(I, /obj/item/device/transfer_valve))
 				qdel(I)
 	var/list/bosses = list()
 	for(var/datum/gang/G in gangs)
@@ -340,12 +354,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-	if(alive < (GLOB.joined_player_list.len * 0.4))
-		if((SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4)))
-			SSshuttle.emergencyNoRecall = TRUE
-			SSshuttle.emergency.request(null, set_coefficient = 0.4)
-			priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
-	else if((alive < (GLOB.joined_player_list.len *  0.7)) && posse_timer >= 4)
+	if(alive < (GLOB.joined_player_list.len * 0.4 && (SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+		SSshuttle.emergencyNoRecall = TRUE
+		SSshuttle.emergency.request(null, set_coefficient = 0.4)
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+	else if((alive < (GLOB.joined_player_list.len *  0.6)) && posse_timer >= 4)
 		posse_timer = 0
 		vigilante_vengeance()
 
