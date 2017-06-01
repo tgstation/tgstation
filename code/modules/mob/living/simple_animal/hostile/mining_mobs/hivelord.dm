@@ -221,6 +221,7 @@
 //Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
 /obj/effect/mob_spawn/human/corpse/charredskeleton
 	name = "charred skeletal remains"
+	burn_damage = 1000
 	mob_name = "ashen skeleton"
 	mob_gender = NEUTER
 	husk = FALSE
