@@ -82,6 +82,11 @@
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD && is_operational())
 			to_chat(occupant, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+
+/obj/machinery/sleeper/process()
+	if(is_operational())
+		var/mob/living/mob_occupant = occupant
+		if(istype(mob_occupant))
 			mob_occupant.ExtinguishMob()
 
 /obj/machinery/sleeper/emp_act(severity)
