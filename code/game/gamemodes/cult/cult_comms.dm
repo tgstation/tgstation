@@ -365,7 +365,7 @@
 	if(!isturf(T))
 		return FALSE
 	if(target in view(7, get_turf(ranged_ability_user)))
-		if((!(iscultist(target) || istype(target, /obj/structure/destructible/cult)) || target == caller)) && !(attached_action.throwing))
+		if((!(iscultist(target) || istype(target, /obj/structure/destructible/cult)) || target == caller) && !(attached_action.throwing))
 			return
 		if(!attached_action.throwing)
 			attached_action.throwing = TRUE
