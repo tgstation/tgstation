@@ -12,6 +12,7 @@
 		/obj/item/clothing/under/syndicate/tacticool			= 2,
 		/obj/item/toy/sword										= 2,
 		/obj/item/toy/gun										= 2,
+		/obj/item/toy/minibomb									= 2,
 		/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow	= 2,
 		/obj/item/weapon/storage/box/fakesyndiesuit				= 2,
 		/obj/item/weapon/storage/crayons						= 2,
