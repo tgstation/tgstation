@@ -271,7 +271,10 @@
 				if(A.opacity)
 					stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = eye_lighting[i]
-		L.forceMove(stop ? src : scanning)
+		if(stop)
+			L.forceMove(src)
+		else
+			L.forceMove(scanning)
 
 /obj/item/organ/eyes/robotic/glow/proc/clear_visuals(delete_everything = FALSE)
 	if(delete_everything)

@@ -48,6 +48,9 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
+	if(.)
+		for(var/obj/O in internal_organs)
+			O.on_mob_move(direct, src)
 	if(. && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous

@@ -198,7 +198,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
 	materials = list(MAT_METAL = 600, MAT_GLASS = 1000)
-	build_pathe = /obj/item/organ/eyes/robotic/glow
+	build_path = /obj/item/organ/eyes/robotic/glow
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_breather
