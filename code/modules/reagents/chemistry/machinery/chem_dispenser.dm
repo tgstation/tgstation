@@ -184,7 +184,7 @@
 		beaker.loc = src
 		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
 
-		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker") 
+		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
 		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
 		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
@@ -370,6 +370,19 @@
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
-	name = "mutagen and saltpeter dispenser"
-	desc = "Creates and dispenses mutagen and even saltpeter."
-	dispensable_reagents = list("mutagen", "saltpetre")
+	name = "botanical chemical dispenser"
+	desc = "Creates and dispenses chemicals useful for botany."
+	dispensable_reagents = list(
+		"mutagen",
+		"saltpetre",
+		"eznutriment",
+		"left4zednutriment",
+		"robustharvestnutriment",
+		"water",
+		"plantbgone",
+		"weedkiller",
+		"pestkiller",
+		"cryoxadone",
+		"ammonia",
+		"ash",
+		"diethylamine")
