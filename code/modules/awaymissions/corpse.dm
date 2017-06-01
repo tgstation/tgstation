@@ -115,6 +115,9 @@
 	var/l_pocket = -1
 	var/back = -1
 	var/id = -1
+	var/neck = -1
+	var/backpack_contents = -1
+	var/suit_store
 
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
@@ -130,7 +133,7 @@
 		H.Drain()
 
 	if(outfit)
-		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id")
+		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)
 			var/T = vars[slot]
 			if(!isnum(T))

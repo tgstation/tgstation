@@ -222,7 +222,7 @@
 	//Legion infested mobs
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
-	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 11, "Golem" = 11,"Clown" = 11, pick(list("Shadow", "YeOlde","Operative")) = 1))
+	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))
 	switch(type)
 		if("Miner")
 			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
@@ -240,6 +240,8 @@
 				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
 			if (mob_species != /datum/species/plasmaman && prob(4))
 				belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining/alt = 2))
+			else if(prob(10))
+				belt = pickweight(list(/obj/item/weapon/pickaxe = 8, /obj/item/weapon/pickaxe/mini = 4, /obj/item/weapon/pickaxe/silver = 2, /obj/item/weapon/pickaxe/diamond = 1))
 			else if (mob_species != /datum/species/plasmaman)
 				belt = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 			if(prob(30))
@@ -266,23 +268,24 @@
 		if("Clown")
 			name = pick(GLOB.clown_names)
 			outfit = /datum/outfit/job/clown
-			outfit.backpack_contents = list()
+			belt = null
+			backpack_contents = list()
 			if(prob(70))
-				outfit.backpack_contents += pick(list(/obj/item/weapon/stamp/clown = 1, /obj/item/weapon/reagent_containers/spray/waterflower = 1,/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,/obj/item/weapon/pneumatic_cannon/pie = 1))
+				backpack_contents += pick(list(/obj/item/weapon/stamp/clown = 1, /obj/item/weapon/reagent_containers/spray/waterflower = 1,/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,/obj/item/weapon/pneumatic_cannon/pie = 1))
 			if(prob(30))
-				outfit.backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
+				backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
 			if(prob(10))
-				l_pocket = /obj/item/weapon/bikehorn/golden
+				l_pocket = pickweight(list(/obj/item/weapon/bikehorn/golden = 3, /obj/item/weapon/bikehorn/airhorn= 1 ))
 			if(prob(10))
 				r_pocket = /obj/item/weapon/implanter/sad_trombone
 		if("Golem")
-			mob_species = /datum/species/golem/random
-			if(prob(10))
-				glasses = pick(list(/obj/item/clothing/glasses/meson, /obj/item/clothing/glasses/hud/health,/obj/item/clothing/glasses/hud/diagnostic, /obj/item/clothing/glasses/science, /obj/item/clothing/glasses/welding))
+			mob_species = pick(list(/datum/species/golem/adamantine, /datum/species/golem/plasma, /datum/species/golem/diamond, /datum/species/golem/gold, /datum/species/golem/silver, /datum/species/golem/plasteel, /datum/species/golem/titanium, /datum/species/golem/plastitanium))
+			if(prob(30))
+				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 2, /obj/item/clothing/glasses/hud/health = 2,/obj/item/clothing/glasses/hud/diagnostic =2, /obj/item/clothing/glasses/science = 2, /obj/item/clothing/glasses/welding = 2, /obj/item/clothing/glasses/night = 1))
 			if(prob(10))
 				belt = pick(list(/obj/item/weapon/storage/belt/mining/vendor,/obj/item/weapon/storage/belt/utility/full))
 			if(prob(50))
-				outfit.neck = /obj/item/weapon/bedsheet/rd/royal_cape
+				neck = /obj/item/weapon/bedsheet/rd/royal_cape
 			if(prob(10))
 				l_pocket = pick(list(/obj/item/weapon/crowbar/power, /obj/item/weapon/wrench/power, /obj/item/weapon/weldingtool/experimental))
 		if("YeOlde")
@@ -303,13 +306,22 @@
 		if("Shadow")
 			mob_species = /datum/species/shadow
 			r_pocket = /obj/item/weapon/reagent_containers/pill/shadowtoxin
-			outfit.neck = /obj/item/clothing/tie/medal/nobel_science
+			neck = /obj/item/clothing/tie/medal/nobel_science
 			uniform = /obj/item/clothing/under/color/black
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			suit = /obj/item/clothing/suit/toggle/labcoat
 			glasses = /obj/item/clothing/glasses/sunglasses/blindfold
 			back = /obj/item/weapon/tank/internals/oxygen
 			mask = /obj/item/clothing/mask/breath
+		if("Cultist")
+			uniform = /obj/item/clothing/under/roman
+			suit = /obj/item/clothing/suit/cultrobes
+			head = /obj/item/clothing/head/culthood
+			suit_store = /obj/item/weapon/tome
+			r_pocket = /obj/item/weapon/restraints/legcuffs/bola/cult
+			l_pocket = /obj/item/weapon/melee/cultblade/dagger
+			glasses =  /obj/item/clothing/glasses/night/cultblind
+			backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater = 1, /obj/item/device/cult_shift = 1, /obj/item/device/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
 	. = ..()
 
 
