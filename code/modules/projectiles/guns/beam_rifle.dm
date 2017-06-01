@@ -157,17 +157,13 @@
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
-	if(loc != current_user)
-		stop_aiming()
-		clear_tracers()
-		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
 	if(current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
 		if(isturf(current_user.client.mouseLocation))
-			current_user.faceAtom(current_user.client.mouseLocation)
+			current_user.face_atom(current_user.client.mouseLocation)
 		if(mouse_control["screen-loc"])
 			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
