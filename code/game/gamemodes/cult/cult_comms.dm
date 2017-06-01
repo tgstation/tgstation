@@ -353,7 +353,7 @@
 		remove_ranged_ability("<span class='cult'>You cease your preparations...</span>")
 		attached_action.throwing = FALSE
 	else
-		add_ranged_ability(user, "<span class='cult'>You prepare to tear at the fabric of reality...</span>")
+		add_ranged_ability(user, "<span class='cult'>You prepare to tear through the fabric of reality...</span>")
 
 /obj/effect/proc_holder/pulse/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
