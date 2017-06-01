@@ -1344,7 +1344,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //kevinz000 if you touch this I will hunt you down
 GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 GLOBAL_PROTECT(valid_HTTPSGet)
-/proc/HTTPSGet(url)
+/proc/HTTPSGet(url)	//tgs2 support
 	if(findtext(url, "\""))
 		GLOB.valid_HTTPSGet = FALSE
 
