@@ -297,7 +297,7 @@
 	spawn(det_time)
 		playsound(src.loc, pranksound, 50, 1) //what a prank so funny hahaha
 		active = FALSE
-		icon_state = inial(icon_state)
+		icon_state = inital(icon_state)
 	
 
 /*
