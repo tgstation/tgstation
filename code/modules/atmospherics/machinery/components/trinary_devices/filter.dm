@@ -12,7 +12,17 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = 1
+	
+// These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
+	
+/obj/machinery/atmospherics/components/trinary/filter/critical
+	critical_machine = 1
+	
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical
+	critical_machine = 1
 
+
+	
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency

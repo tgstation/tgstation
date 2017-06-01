@@ -21142,8 +21142,7 @@
 	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 4;
 	icon_state = "filter_off_f";
 	tag = "icon-filter_off_f (EAST)"
@@ -26391,8 +26390,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/trinary/filter{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4
 	},
 /turf/open/floor/plasteel,

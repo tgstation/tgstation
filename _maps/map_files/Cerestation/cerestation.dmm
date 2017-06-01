@@ -37958,8 +37958,7 @@
 /area/engine/engineering)
 "bqt" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
 	filter_type = "co2";
 	icon_state = "filter_off_f";
@@ -37985,8 +37984,7 @@
 /area/engine/engineering)
 "bqv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
 	filter_type = "o2";
 	icon_state = "filter_off_f";
@@ -38033,8 +38031,7 @@
 /area/engine/engineering)
 "bqy" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
 	filter_type = "plasma";
 	icon_state = "filter_off_f";
@@ -38049,8 +38046,7 @@
 /area/engine/engineering)
 "bqz" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
 	filter_type = "";
 	icon_state = "filter_off_f";
@@ -44101,8 +44097,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/trinary/filter{
-	critical_machine = 1;
+/obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 8;
 	icon_state = "filter_off";
 	on = 1;
