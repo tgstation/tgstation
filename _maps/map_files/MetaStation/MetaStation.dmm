@@ -22375,12 +22375,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQd" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 1;
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85834,12 +85833,11 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "deI" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85898,13 +85896,12 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "deT" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "plasma";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1;
+	filter_type = "plasma"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85974,13 +85971,12 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dfd" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "o2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1;
+	filter_type = "o2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -86073,13 +86069,12 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dft" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "co2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1;
+	filter_type = "co2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
