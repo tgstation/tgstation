@@ -77,7 +77,6 @@
 		message_admins("[key_name_admin(user)] detonated a bag of holding")
 		log_game("[key_name(user)] detonated a bag of holding")
 		qdel(src)
-		singulo.process()
 		return
 	. = ..()
 
