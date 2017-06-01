@@ -146,6 +146,7 @@
 		A.on_removal()
 		return TRUE
 
+
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
 		var/datum/antagonist/A = a
@@ -254,17 +255,13 @@
 	if(gang_datum)
 		gang_datum.remove_gang_hud(src)
 
-/datum/mind/proc/equip_traitor(var/employer = "The Syndicate")
+/datum/mind/proc/equip_traitor(var/employer = "The Syndicate", var/silent = FALSE)
 	if(!current)
 		return
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
 	. = 1
-	if (traitor_mob.mind)
-		if (traitor_mob.mind.assigned_role == "Clown")
-			to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			traitor_mob.dna.remove_mutation(CLOWNMUT)
 
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
@@ -295,7 +292,7 @@
 					uplink_loc = R
 
 	if (!uplink_loc)
-		to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
+		if(!silent) to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
 		var/obj/item/device/uplink/U = new(uplink_loc)
@@ -305,19 +302,19 @@
 		if(uplink_loc == R)
 			R.traitor_frequency = sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
 
-			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
+			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [R.name]. Simply dial the frequency [format_frequency(R.traitor_frequency)] to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Radio Frequency:</B> [format_frequency(R.traitor_frequency)] ([R.name]).")
 
 		else if(uplink_loc == PDA)
 			PDA.lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
 
-			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
+			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [PDA.name]. Simply enter the code \"[PDA.lock_code]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [PDA.lock_code] ([PDA.name]).")
 
 		else if(uplink_loc == P)
 			P.traitor_unlock_degrees = rand(1, 360)
 
-			to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
+			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -1552,7 +1549,6 @@
 	qdel(flash)
 	take_uplink()
 	var/fail = 0
-//	fail |= !SSticker.mode.equip_traitor(current, 1)
 	fail |= !SSticker.mode.equip_revolutionary(current)
 
 

@@ -338,11 +338,13 @@
 				if(!(istype(H, /mob/living/carbon/human)||istype(H, /mob/living/silicon/))) continue
 				if(H.stat == 2 || !H.client || !H.mind || ispAI(H)) continue
 				if(is_special_character(H)) continue
-				var/datum/antagonist/traitor/traitordatum = H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
+				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
+				var/datum/antagonist/traitor/traitordatum = H.mind.has_antag_datum(ANTAG_DATUM_TRAITOR) //original datum self deletes
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
 				traitordatum.add_objective(new_objective)
+				traitordatum.equip(FALSE)
 				traitordatum.greet()
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")

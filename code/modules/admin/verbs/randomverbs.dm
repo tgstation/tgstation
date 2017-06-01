@@ -399,12 +399,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
-					if(traitordatum)
-						traitordatum.add_law_zero(new_character)
 				if("AI")
 					new_character = new_character.AIize()
-					if(traitordatum)
-						traitordatum.add_law_zero(new_character)
 				else
 					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
 
