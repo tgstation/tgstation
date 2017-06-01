@@ -17,8 +17,10 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0	//for preventing explosion dodging
-	var/explosion_id = 0
+	var/turf/previous_exploded_turf
+	var/turf/next_exploded_turf
+	var/explosion_level = 0
+	var/explosion_id
 
 	var/list/decals
 	var/requires_activation	//add to air processing after initialize?
