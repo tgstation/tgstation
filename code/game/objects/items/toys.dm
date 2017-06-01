@@ -5,6 +5,7 @@
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
+ *      Toy minibomb
  *		Crayons
  *		Snap pops
  *		Mech prizes
@@ -264,6 +265,40 @@
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
 	else
 		return ..()
+
+/*
+ * Toy Syndie Minibomb
+ */
+/obj/item/toy/minibomb
+	name = "syndicate minibomb"
+	desc = "A syndicate minibomb made out of some foam, don't question on why it looks exactly like it's counterpart."
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "syndicate"
+	item_state = "flashbang"
+	var/isactive = FALSE
+	var/det_time = 50  //Definately not copypasta
+	var/pranksound = 'sound/items/bikehorn.ogg'
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/toy/minibomb/attack_self(mob/user)
+	if(active)
+		return
+	else
+		playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1) //Commence the panic
+		prime()
+		
+/obj/item/toy/minibomb/prime(src) //No copypasta here at all
+	active = TRUE
+	user << "<span class='warning'>You prime the [name]! [det_time/10] seconds!</span>"
+	icon_state = initial(icon_state) + "_active"
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+	spawn(det_time)
+		playsound(src.loc, pranksound, 50, 1) //what a prank so funny hahaha
+		active = FALSE
+		icon_state = inial(icon_state)
+	
 
 /*
  * Foam armblade
