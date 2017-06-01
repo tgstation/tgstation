@@ -346,7 +346,7 @@
 
 /datum/crafting_recipe/blackcarpet
 	name = "Black Carpet"
-	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
+	reqs = list(/obj/item/stack/tile/carpet = 10, /obj/item/toy/crayon/black = 1)
 	result = /obj/item/stack/tile/carpet/black
 	category = CAT_MISC
 
