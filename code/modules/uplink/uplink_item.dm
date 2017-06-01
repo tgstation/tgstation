@@ -899,7 +899,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
 	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tatical equipment."
-	item = /obj/item/weapon/storage/belt/military
+	item = /obj/item/weapon/storage/belt/military/rig
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
