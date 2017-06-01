@@ -56462,7 +56462,6 @@
 "cbh" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
-	critical_machine = 1;
 	dir = 4;
 	filter_type = "o2";
 	on = 1

@@ -21,8 +21,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical
 	critical_machine = 1
 
-
-	
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
