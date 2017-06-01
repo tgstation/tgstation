@@ -18,6 +18,8 @@
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
+	var/burn_damage = 0
+	var/mob_color //Change the mob's color
 	density = 1
 	anchored = 1
 	var/banType = "lavaland"
@@ -68,6 +70,8 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
+	M.adjustFireLoss(burn_damage)
+	M.color = mob_color
 	equip(M)
 
 	if(ckey)
@@ -131,7 +135,9 @@
 		H.set_species(mob_species)
 	if(husk)
 		H.Drain()
-
+	H.underwear = "Nude"
+	H.undershirt = "Nude"
+	H.socks = "Nude"
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)

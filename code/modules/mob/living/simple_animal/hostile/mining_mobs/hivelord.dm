@@ -117,7 +117,7 @@
 			stored_mob.forceMove(get_turf(src))
 			stored_mob = null
 		else if(fromtendril)
-			new /obj/effect/mob_spawn/human/corpse/damaged(T)
+			new /obj/effect/mob_spawn/human/corpse/charredskeleton(T)
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
@@ -218,8 +218,16 @@
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
+//Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
+/obj/effect/mob_spawn/human/corpse/charredskeleton
+	name = "charred skeletal remains"
+	mob_name = "ashen skeleton"
+	mob_gender = NEUTER
+	husk = FALSE
+	mob_species = /datum/species/skeleton
+	mob_color = "#454545"
 
-	//Legion infested mobs
+//Legion infested mobs
 
 /obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
 	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))
