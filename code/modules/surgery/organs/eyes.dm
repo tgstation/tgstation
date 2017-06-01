@@ -202,10 +202,10 @@
 		return
 
 	set_distance(Clamp(range, 0, max_light_beam_distance))
-	assume_rgb(Clamp(r, 0, 255),Clamp(g, 0, 255),Clamp(b, 0, 255))
+	assume_rgb(C)
 
-/obj/item/organ/eyes/robotic/glow/proc/assume_rgb(red,green,blue)
-	current_color_string = rgb(red,green,blue)
+/obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)
+	current_color_string = newcolor
 	eye_color = RGB2EYECOLORSTRING(current_color_string)
 	sync_light_effects()
 	cycle_mob_overlay()
@@ -289,7 +289,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
 	if(!initialized)
 		return
-	if((eye_lighting.len < light_beam_distance) || !onmob)
+	if((eye_lighting.len < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	sync_light_effects()
 	update_visuals()
@@ -312,6 +312,10 @@
 		L.light_color = current_color_string
 		L.set_light(light_object_range)
 		L.light_power = light_object_power
+	if(on_mob)
+		on_mob.light_color = current_color_string
+		on_mob.set_light(1)
+		on_mob.light_power = 1
 
 /obj/effect/abstract/eye_lighting
 	var/obj/item/organ/eyes/robotic/glow/parent
