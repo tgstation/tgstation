@@ -259,13 +259,10 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/marine
 	name = "\improper Marine ID"
 	desc = "A Marine Rifleman ID card"
+	access = list(GLOB.access_away_generic1)
 	icon_state = "centcom"
 	registered_name = "Iron Hawk Marine"
 	assignment = "Marine Rifleman"
-
-/obj/item/weapon/card/id/marine/Initialize()
-	access = get_all_centcom_access()
-	..()
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
