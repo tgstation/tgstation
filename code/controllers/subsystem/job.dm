@@ -523,9 +523,9 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/SendToAtom(mob/M, atom/A, buckle)
 	if(buckle && isliving(M) && istype(A, /obj/structure/chair))
 		var/obj/structure/chair/C = A
-		C.buckle_mob(M)
-	else
-		M.forceMove(get_turf(A))
+		if(C.buckle_mob(M, FALSE, FALSE))
+			return
+	M.forceMove(get_turf(A))
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	if(latejoin_trackers.len)
