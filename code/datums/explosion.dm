@@ -198,8 +198,9 @@ GLOBAL_LIST_EMPTY(explosions)
 							break
 				
 				//add it to the linked list
-				T.previous_exploded_turf = last_exploded
-				last_exploded.next_exploded_turf = T
+				if(last_exploded)
+					T.previous_exploded_turf = last_exploded
+					last_exploded.next_exploded_turf = T
 				last_exploded = T
 				#ifdef TESTING
 				T.add_atom_colour("#FF0000", TEMPORARY_COLOUR_PRIORITY)
