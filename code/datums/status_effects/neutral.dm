@@ -39,6 +39,6 @@
 		get_kill()
 		qdel(src)
 
-/datum/status_effect/cult_master/on_remove()
+/datum/status_effect/syphon_mark/on_remove()
 	get_kill()
 	. = ..()

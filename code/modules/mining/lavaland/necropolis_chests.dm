@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,27)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
