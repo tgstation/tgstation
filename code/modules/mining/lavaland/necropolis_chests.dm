@@ -69,6 +69,8 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/weapon/bedsheet/cult(src)
+		if(28)
+			new /obj/item/borg/upgrade/modkit/bounty(src)
 
 
 
