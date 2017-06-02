@@ -1269,7 +1269,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	To activate His Grace, simply unlatch Him."
 	item = /obj/item/weapon/his_grace
 	cost = 20
-	restricted_roles = list("Chaplain")
+	restricted_roles = list("Chaplain", "Assistant")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 /datum/uplink_item/role_restricted/pie_cannon
