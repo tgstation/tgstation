@@ -146,10 +146,10 @@
 	name = "High Luminosity Eyes"
 	desc = "Special glowing eyes, used by snowflakes who want to be special."
 	origin_tech = "material=3;biotech=3;engineering=3;magnets=4"
-	var/current_color_string = "#ffffff"
 	eye_color = "000"
-	var/active = FALSE
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
+	var/current_color_string = "#ffffff"
+	var/active = FALSE
 	var/max_light_beam_distance = 5
 	var/light_beam_distance = 5
 	var/light_object_range = 1
@@ -160,7 +160,6 @@
 
 /obj/item/organ/eyes/robotic/glow/Initialize()
 	. = ..()
-	eye_lighting = list()
 	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
@@ -169,7 +168,7 @@
 
 /obj/item/organ/eyes/robotic/glow/Remove()
 	terminate_effects()
-	, = ..()
+	. = ..()
 
 /obj/item/organ/eyes/robotic/glow/proc/terminate_effects()
 	if(owner && active)
@@ -184,13 +183,16 @@
 		prompt_for_controls(owner)
 
 /obj/item/organ/eyes/robotic/glow/proc/toggle_active()
-	active ? deactivate() : activate()
+	if(active)
+		deactivate()
+	else
+		activate()
 
-/obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(owner)
+/obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(user)
 	var/C = input(owner, "Select Color", "Select color", "#ffffff") as null|color
-	if(!C)
+	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
-	var/range = input(owner, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
+	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
 	if(!range)
 		return
 
@@ -202,7 +204,7 @@
 	eye_color = RGB2EYECOLORSTRING(current_color_string)
 	sync_light_effects()
 	cycle_mob_overlay()
-	if(owner)
+	if(!QDELETED(owner))
 		owner.regenerate_icons()
 
 /obj/item/organ/eyes/robotic/glow/proc/cycle_mob_overlay()
@@ -211,11 +213,11 @@
 	add_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/add_mob_overlay()
-	if(owner)
+	if(!QDELETED(owner))
 		owner.add_overlay(mob_overlay)
 
 /obj/item/organ/eyes/robotic/glow/proc/remove_mob_overlay()
-	if(owner)
+	if(!QDELETED(owner))
 		owner.cut_overlay(mob_overlay)
 
 /obj/item/organ/eyes/robotic/glow/emp_act()
@@ -244,20 +246,20 @@
 	remove_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/update_visuals()
-	if((eye_lighting.len < light_beam_distance) || !on_mob)
+	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	var/turf/scanfrom = get_turf(owner)
 	var/scandir = owner.dir
 	if(!istype(scanfrom))
 		clear_visuals()
-	var/turf/scanning = scanfrom
+	var/turf/scanning
 	var/stop = FALSE
 	on_mob.forceMove(scanfrom)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
 		if(scanning.opacity || scanning.has_opaque_atom)
 			stop = TRUE
-		var/obj/effect/abstract/eye_lighting/L = eye_lighting[i]
+		var/obj/effect/abstract/eye_lighting/L = LAZYACCESS(eye_lighting, i)
 		if(stop)
 			L.forceMove(src)
 		else
@@ -266,7 +268,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/clear_visuals(delete_everything = FALSE)
 	if(delete_everything)
 		QDEL_LIST(eye_lighting)
-		qdel(on_mob)
+		QDEL_NULL(on_mob)
 	else
 		for(var/i in eye_lighting)
 			var/obj/effect/abstract/eye_lighting/L = i
@@ -275,8 +277,6 @@
 			on_mob.forceMove(src)
 
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
-	if(!initialized)
-		return
 	if((eye_lighting.len < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	sync_light_effects()
@@ -287,23 +287,18 @@
 	regenerate_light_effects()
 
 /obj/item/organ/eyes/robotic/glow/proc/regenerate_light_effects()
-	QDEL_LIST(eye_lighting)
-	eye_lighting = list()
+	clear_visuals(TRUE)
 	on_mob = new(src)
 	for(var/i in 1 to light_beam_distance)
-		eye_lighting += new /obj/effect/abstract/eye_lighting(src)
+		LAZYADD(eye_lighting,new /obj/effect/abstract/eye_lighting(src))
 	sync_light_effects()
 
 /obj/item/organ/eyes/robotic/glow/proc/sync_light_effects()
 	for(var/I in eye_lighting)
 		var/obj/effect/abstract/eye_lighting/L = I
-		L.light_color = current_color_string
-		L.set_light(light_object_range)
-		L.light_power = light_object_power
+		L.set_light(light_object_range, light_object_power, current_color_string)
 	if(on_mob)
-		on_mob.light_color = current_color_string
-		on_mob.set_light(1)
-		on_mob.light_power = 1
+		on_mob.set_light(1, 1, current_color_string)
 
 /obj/effect/abstract/eye_lighting
 	var/obj/item/organ/eyes/robotic/glow/parent
