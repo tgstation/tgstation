@@ -277,6 +277,7 @@ Janitor
 	jobtype = /datum/job/janitor
 
 	belt = /obj/item/device/pda/janitor
+	l_pocket = /obj/item/weapon/melee/flyswatter
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
