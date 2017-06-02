@@ -150,7 +150,6 @@
 	eye_color = "000"
 	var/active = FALSE
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
-	var/olddir = 0
 	var/max_light_beam_distance = 5
 	var/light_beam_distance = 5
 	var/light_object_range = 1
@@ -161,28 +160,22 @@
 
 /obj/item/organ/eyes/robotic/glow/Initialize()
 	. = ..()
-	START_PROCESSING(SSfastprocess, src)
 	eye_lighting = list()
 	mob_overlay = image('icons/mob/human_face.dmi', "eyes_glow_gs")
 
 /obj/item/organ/eyes/robotic/glow/Destroy()
 	terminate_effects()
-	..()
+	. = ..()
 
 /obj/item/organ/eyes/robotic/glow/Remove()
 	terminate_effects()
-	..()
+	, = ..()
 
 /obj/item/organ/eyes/robotic/glow/proc/terminate_effects()
 	if(owner && active)
 		deactivate()
 	clear_visuals(TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
-
-/obj/item/organ/eyes/robotic/glow/process()
-	if(owner && (olddir != owner.dir) && active)
-		update_visuals()
-		olddir = owner.dir
 
 /obj/item/organ/eyes/robotic/glow/ui_action_click(owner, action)
 	if(istype(action, /datum/action/item_action/organ_action/toggle))
@@ -232,6 +225,9 @@
 /obj/item/organ/eyes/robotic/glow/on_mob_move()
 	if(active)
 		update_visuals()
+
+/obj/item/organ/eyes/robotic/glow/on_mob_turn()
+	update_visuals()
 
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
 	start_visuals()

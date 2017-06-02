@@ -48,9 +48,6 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-	if(.)
-		for(var/obj/O in internal_organs)
-			O.on_mob_move(direct, src)
 	if(. && mob_has_gravity()) //floating is easy
 		if(dna && dna.species && (NOHUNGER in dna.species.species_traits))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
@@ -60,3 +57,13 @@
 				nutrition -= HUNGER_FACTOR/10
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
+
+/mob/living/carbon/Moved(oldLoc, Dir)
+	. = ..()
+	for(var/obj/O in internal_organs)
+		O.on_mob_move(dir, src, oldLoc)
+
+/mob/living/carbon/setDir(newdir)
+	. = ..()
+	for(var/obj/O in internal_organs)
+		O.on_mob_turn(newdir, src)
