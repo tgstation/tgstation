@@ -168,13 +168,12 @@
 
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
-	hidden = TRUE
 	cost = 2000
 	contains = list(/obj/item/weapon/storage/box/emps,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/sleepy,
+					/obj/item/weapon/grenade/chem_grenade/teargas,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
