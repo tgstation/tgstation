@@ -98,20 +98,14 @@
 
 /obj/machinery/door/airlock/Initialize()
 	. = ..()
-	
+	wires = new /datum/wires/airlock(src)
 	if (cyclelinkeddir)
 		cyclelinkairlock()
 	if(frequency)
 		set_frequency(frequency)
-	update_icon()
-	
-	wires = new /datum/wires/airlock(src)
-	if(src.closeOtherId != null)
-		spawn (5)
-			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
-				if(A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
+
+	if(closeOtherId != null)
+		addtimer(CALLBACK(.proc/update_other_id), 5)
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_METAL)
@@ -126,6 +120,15 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
+
+
+	update_icon()
+
+/obj/machinery/door/airlock/proc/update_other_id()
+	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
+		if(A.closeOtherId == closeOtherId && A != src)
+			closeOther = A
+			break
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
