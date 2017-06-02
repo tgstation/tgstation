@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Iron Hawk marine carbine not having a visible sprite."

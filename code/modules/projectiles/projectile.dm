@@ -28,6 +28,9 @@
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+	var/ricochets = 0
+	var/ricochets_max = 2
+	var/ricochet_chance = 30
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
@@ -75,7 +78,7 @@
 		return "chest"
 
 /obj/item/projectile/proc/prehit(atom/target)
-	return
+	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	var/turf/target_loca = get_turf(target)
@@ -90,9 +93,9 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
 			if(isalien(L))
-				new /obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
-				new /obj/effect/overlay/temp/dir_setting/bloodsplatter(target_loca, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)
@@ -132,10 +135,14 @@
 /obj/item/projectile/Bump(atom/A, yes)
 	if(!yes) //prevents double bumps.
 		return
-	if(firer)
+	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
+		ricochets++
+		if(A.handle_ricochet(src))
+			return FALSE
+	if(firer && !ricochets)
 		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
 			loc = A.loc
-			return 0
+			return FALSE
 
 	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
@@ -148,13 +155,14 @@
 
 	var/turf/target_turf = get_turf(A)
 
-	prehit(A)
+	if(!prehit(A))
+		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
-		return 0
+		return FALSE
 	else
 		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
@@ -162,9 +170,21 @@
 				mobs_list += L
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
-				prehit(picked_mob)
+				if(!prehit(picked_mob))
+					return FALSE
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
+	return TRUE
+
+/obj/item/projectile/proc/check_ricochet()
+	if(prob(ricochet_chance))
+		return TRUE
+	return FALSE
+
+/obj/item/projectile/proc/check_ricochet_flag(atom/A)
+	if(A.flags & CHECK_RICOCHET)
+		return TRUE
+	return FALSE
 
 /obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
 	return 1 //Bullets don't drift in space
@@ -224,7 +244,7 @@
 				pixel_y_offset += 32
 				old_pixel_y += 32
 				new_y--
-				
+
 			pixel_x = old_pixel_x
 			pixel_y = old_pixel_y
 			step_towards(src, locate(new_x, new_y, z))
@@ -237,7 +257,7 @@
 				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 			old_pixel_x = pixel_x_offset
 			old_pixel_y = pixel_y_offset
-			
+
 			if(original && (original.layer>=2.75) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
@@ -259,7 +279,6 @@
 							Bump(original, 1)
 				Range()
 			sleep(config.run_speed * 0.9)
-
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
@@ -291,8 +310,8 @@
 			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 
-			var/ox = round(screenview/2) //"origin" x
-			var/oy = round(screenview/2) //"origin" y
+			var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
+			var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
 			// to_chat(world, "Pixel position: [x] [y]")
 			var/angle = Atan2(y - oy, x - ox)
 			// to_chat(world, "Angle: [angle]")

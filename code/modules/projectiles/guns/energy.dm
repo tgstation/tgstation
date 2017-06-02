@@ -26,8 +26,8 @@
 	update_icon()
 
 
-/obj/item/weapon/gun/energy/New()
-	..()
+/obj/item/weapon/gun/energy/Initialize()
+	. = ..()
 	if(cell_type)
 		power_supply = new cell_type(src)
 	else
@@ -138,6 +138,7 @@
 			var/mutable_appearance/charge_overlay = mutable_appearance(icon, iconState)
 			for(var/i = ratio, i >= 1, i--)
 				charge_overlay.pixel_x = ammo_x_offset * (i - 1)
+				charge_overlay.pixel_y = ammo_y_offset * (i - 1)
 				add_overlay(charge_overlay)
 		else
 			add_overlay("[icon_state]_charge[ratio]")

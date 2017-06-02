@@ -128,8 +128,8 @@
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
 	jaunt_in_time = 12
-	jaunt_in_type = /obj/effect/overlay/temp/dir_setting/wraith
-	jaunt_out_type = /obj/effect/overlay/temp/dir_setting/wraith/out
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)
 	return
@@ -256,7 +256,7 @@
 	S.add_atom_colour("#990000", FIXED_COLOUR_PRIORITY)
 	S.faction = list("cult")
 	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, 1)
-	new /obj/effect/overlay/temp/cult/sac(get_turf(S))
+	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
 /obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
 	if(!isanimal(target) || target.stat)
@@ -267,5 +267,5 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem
 	charge_max = 800
-	jaunt_in_type = /obj/effect/overlay/temp/dir_setting/cult/phase
-	jaunt_out_type = /obj/effect/overlay/temp/dir_setting/cult/phase/out
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out

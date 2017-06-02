@@ -8,8 +8,8 @@
 	var/on = 0 //Are we currently active??
 	var/menu_message = ""
 
-/obj/item/radio/integrated/New()
-	..()
+/obj/item/radio/integrated/Initialize()
+	. = ..()
 	if (istype(loc.loc, /obj/item/device/pda))
 		hostpda = loc.loc
 

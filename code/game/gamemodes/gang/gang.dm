@@ -2,7 +2,8 @@
 //Gang War Game Mode
 
 GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
-GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple"))
+GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple", "white"))
+GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/obj/item/clothing/suit/jacket/leather/overcoat,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/jacket/miljacket,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/pirate,/obj/item/clothing/suit/poncho,/obj/item/clothing/suit/apron/overalls,/obj/item/clothing/suit/jacket/letterman))
 
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
@@ -164,6 +165,8 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
+		if(is_in_gang(gangster_mind.current, G.name) && !(gangster_mind in get_gang_bosses()))
+			return 3
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
@@ -193,6 +196,10 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
+	for(var/obj/O in gangster_mind.current.contents)
+		if(istype(O, /obj/item/device/gangtool/soldier))
+			qdel(O)
+
 	if(!gang)
 		return 0
 
@@ -254,6 +261,20 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		gang_bosses += G.bosses
 	return gang_bosses
 
+/datum/game_mode/proc/shuttle_check()
+	if(SSshuttle.emergencyNoRecall)
+		return
+	var/alive = 0
+	for(var/mob/living/L in GLOB.player_list)
+		if(L.stat != DEAD)
+			alive++
+
+	if((alive < (GLOB.joined_player_list.len * 0.4)) && ((SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+
+		SSshuttle.emergencyNoRecall = TRUE
+		SSshuttle.emergency.request(null, set_coefficient = 0.4)
+		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
 
@@ -267,12 +288,12 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		return
 	if(!winner)
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
-		SSblackbox.set_details("round_end_result","loss - gangs failed takeover")
+		SSticker.mode_result = "loss - gangs failed takeover"
 
 		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
-		SSblackbox.set_details("round_end_result","win - gang domination complete")
+		SSticker.mode_result = "win - gang domination complete"
 
 		SSticker.news_report = GANG_TAKEOVER
 

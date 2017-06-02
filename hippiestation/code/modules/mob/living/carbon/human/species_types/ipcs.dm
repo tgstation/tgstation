@@ -6,7 +6,7 @@
 	blacklisted = 0
 	sexes = 0
 	mutant_bodyparts = list("snout")
-	species_traits = list(MUTCOLORS,LIPS)
+	species_traits = list(MUTCOLORS)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
 
 /datum/species/ipc/on_species_gain(mob/living/carbon/human/C)

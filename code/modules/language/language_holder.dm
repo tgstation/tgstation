@@ -110,7 +110,6 @@
 
 /datum/language_holder/construct
 	languages = list(/datum/language/common, /datum/language/narsie)
-	only_speaks_language = /datum/language/narsie
 
 /datum/language_holder/drone
 	languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)

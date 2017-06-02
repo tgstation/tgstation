@@ -16,6 +16,32 @@
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
+	SetupExternalRSC()
+
+	GLOB.config_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	config = new
+
+	SetRoundID()
+
+	SetupLogs()
+
+	GLOB.revdata.DownloadPRDetails()
+
+	load_motd()
+	load_admins()
+	load_menu()
+	if(config.usewhitelist)
+		load_whitelist()
+	LoadBans()
+
+	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
+	Master.Initialize(10, FALSE)
+
+/world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
@@ -25,23 +51,25 @@
 		else
 			external_rsc_urls.Cut(i,i+1)
 #endif
-	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	config = new
-	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+
+/world/proc/SetRoundID()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
-			query_feedback_create_round.Execute()
-			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
-			query_feedback_max_id.Execute()
-			if(query_feedback_max_id.NextRow())
-				GLOB.round_id = query_feedback_max_id.item[1]
-				GLOB.log_directory += "[GLOB.round_id]"
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), COALESCE(INET_ATON('[world.internet_address]'), 0), '[world.port]')")
+			query_round_start.Execute()
+			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
+			query_round_last_id.Execute()
+			if(query_round_last_id.NextRow())
+				GLOB.round_id = query_round_last_id.item[1]
 		else
 			log_world("Your server failed to establish a connection with the database.")
-	if(!GLOB.round_id)
+
+/world/proc/SetupLogs()
+	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+	if(GLOB.round_id)
+		GLOB.log_directory += "[GLOB.round_id]"
+	else
 		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
@@ -58,22 +86,7 @@
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
-	GLOB.revdata.DownloadPRDetails()
-	load_mode()
-	load_motd()
-	load_admins()
 	hippie_initialize()
-	load_menu()
-	if(config.usewhitelist)
-		load_whitelist()
-	LoadBans()
-
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
-
-	GLOB.data_core = new /datum/datacore()
-
-	Master.Initialize(10, FALSE)
-
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
@@ -201,99 +214,21 @@
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
+	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
 	for(var/client/C in GLOB.clients)
-		if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-			C << "<span class='announce'>PR: [announcement]</span>"
-#undef CHAT_PULLR
+		C.AnnouncePR(final_composed)
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
-
-/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
-	if (reason == 1) //special reboot, do none of the normal stuff
+/world/Reboot(reason = 0, fast_track = FALSE)
+	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
-		WORLD_REBOOT(1)
-	var/delay
-	if(time)
-		delay = time
 	else
-		delay = config.round_end_countdown * 10
-	if(SSticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
-		return
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
-	var/round_end_sound_sent = FALSE
-	if(SSticker.round_end_sound)
-		round_end_sound_sent = TRUE
-		for(var/thing in GLOB.clients)
-			var/client/C = thing
-			if (!C)
-				continue
-			C.Export("##action=load_rsc", SSticker.round_end_sound)
-	sleep(delay)
-	if(SSticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
-		return
-	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	WORLD_REBOOT(0)
-#undef WORLD_REBOOT
-
-/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	SSblackbox.set_details("[feedback_c]","[feedback_r]")
-	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	SSblackbox.set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
-	Master.Shutdown()	//run SS shutdowns
-	RoundEndAnimation(round_end_sound_sent)
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	for(var/thing in GLOB.clients)
-		var/client/C = thing
-		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
-
-/world/proc/RoundEndAnimation(round_end_sound_sent)
-	set waitfor = FALSE
-	var/round_end_sound
-	if(SSticker.round_end_sound)
-		round_end_sound = SSticker.round_end_sound
-		if (!round_end_sound_sent)
-			for(var/thing in GLOB.clients)
-				var/client/C = thing
-				if (!C)
-					continue
-				C.Export("##action=load_rsc", round_end_sound)
-	else
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
-		)
-
-	for(var/thing in GLOB.clients)
-		var/obj/screen/splash/S = new(thing, FALSE)
-		S.Fade(FALSE,FALSE)
-
-	world << sound(round_end_sound)
-
-/world/proc/load_mode()
-	var/mode = trim(file2text("data/mode.txt"))
-	if(mode)
-		GLOB.master_mode = mode
-	else
-		GLOB.master_mode = "extended"
-	log_game("Saved mode is '[GLOB.master_mode]'")	
-
-/world/proc/save_mode(the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	F << the_mode
+		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
+		Master.Shutdown()	//run SS shutdowns
+	log_world("World rebooted at [time_stamp()]")
+	..()
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
@@ -326,7 +261,3 @@
 		s += "<b>STARTING</b>"
 
 	status = s
-
-
-/world/proc/has_round_started()
-	return SSticker.HasRoundStarted()

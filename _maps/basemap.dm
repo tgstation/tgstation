@@ -1,11 +1,9 @@
 #ifndef ALL_MAPS
-#include "map_files\generic\SpaceStation.dmm"
+
 #include "map_files\generic\Centcomm.dmm"
+#include "map_files\generic\SpaceStation.dmm"
 #include "map_files\generic\Space.dmm"
 #include "map_files\generic\SpaceDock.dmm"
-<<<<<<< HEAD
-#include "map_files\Mining\lavaland.dmm"
-=======
 #include "map_files\Mining\Lavaland.dmm"
 
 #else
@@ -29,5 +27,4 @@
 #include "templates.dm"
 #endif
 
->>>>>>> 449fb93545... Megafauna and lavaland mobs will no longer spawn directly on top of the mining base (#27476)
 #endif

@@ -554,6 +554,7 @@ BOOZE O MAT
 */
 /obj/machinery/vending/boozeomat
 	name = "\improper Booze-O-Mat"
+	icon = 'icons/obj/vending.dmi'
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"        //////////////18 drink entities below, plus the glasses, in case someone wants to edit the number of bottles
 	icon_deny = "boozeomat-deny"
@@ -951,7 +952,6 @@ PDA TECH
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
-	icon = 'icons/obj/vending.dmi'
 	desc = "Cartridges for PDAs"
 	product_slogans = "Carts to go!"
 	icon_state = "cart"
@@ -966,5 +966,30 @@ PDA TECH
 					/obj/item/weapon/cartridge/captain = 3,
 					/obj/item/weapon/cartridge/quartermaster = 10
 					)
+	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+
+/obj/machinery/vending/toyliberationstation
+	name = "\improper Syndicate Donksoft Toy Vendor"
+	desc = "A ages 8 and up approved vendor that dispenses toys. If you were to find the right wires, you can unlock the adult mode setting!"
+	icon_state = "syndi"
+	req_access_txt = "1"
+	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them to HoPs for all access!;Give them to HoS to get perma briged!"
+	vend_reply = "Come back for more!"
+	products = list(/obj/item/weapon/gun/ballistic/automatic/toy/unrestricted = 10,
+					/obj/item/weapon/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
+					/obj/item/weapon/gun/ballistic/shotgun/toy/unrestricted = 10,
+					/obj/item/toy/sword = 10, /obj/item/ammo_box/foambox = 20,
+					/obj/item/toy/foamblade = 10,
+					/obj/item/toy/syndicateballoon = 10,
+					/obj/item/clothing/suit/syndicatefake = 5,
+					/obj/item/clothing/head/syndicatefake = 5)
+	contraband = list(/obj/item/weapon/gun/ballistic/shotgun/toy/crossbow = 10,
+						/obj/item/weapon/gun/ballistic/automatic/c20r/toy/unrestricted = 10,
+						/obj/item/weapon/gun/ballistic/automatic/l6_saw/toy/unrestricted = 10,
+						/obj/item/ammo_box/foambox/riot = 20,
+						/obj/item/toy/katana = 10,
+						/obj/item/weapon/twohanded/dualsaber/toy = 5,
+						/obj/item/toy/cards/deck/syndicate = 10)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF

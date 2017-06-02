@@ -172,7 +172,7 @@
 	if(default_deconstruction_crowbar(I))
 		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
 		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+		investigate_log("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
 		return
 	else if(panel_open && istype(I, /obj/item/weapon/crowbar))
 		return
@@ -196,7 +196,7 @@
 		var/turf/T = get_turf(src)
 		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
 		log_game("SMES deleted at [A][COORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]","singulo")
+		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]", INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -285,7 +285,7 @@
 
 			if(output_used < 0.0001)		// either from no charge or set to 0
 				outputting = 0
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
 		else if(output_attempt && charge > output_level && output_level > 0)
 			outputting = 1
 		else
@@ -420,7 +420,7 @@
 				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/smes/emp_act(severity)

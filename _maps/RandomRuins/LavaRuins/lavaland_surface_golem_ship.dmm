@@ -122,6 +122,9 @@
 	name = "shrine of the liberator";
 	pixel_x = 0
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -215,6 +218,7 @@
 /obj/item/weapon/storage/firstaid/fire,
 /obj/structure/table/wood,
 /obj/item/weapon/storage/firstaid/fire,
+/obj/machinery/light,
 /turf/open/floor/mineral/titanium/purple{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -259,6 +263,122 @@
 /obj/machinery/door/airlock/titanium,
 /obj/structure/fans/tiny,
 /turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"I" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"J" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"K" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"L" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"M" = (
+/obj/effect/mob_spawn/human/golem/adamantine,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"N" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"O" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"P" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"Q" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"R" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"S" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"T" = (
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"U" = (
+/obj/effect/mob_spawn/human/golem/adamantine,
+/obj/machinery/light/small,
+/turf/open/floor/mineral/titanium/purple{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"V" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"W" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/golem_ship)
+"X" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/golem_ship)
@@ -358,7 +478,7 @@ a
 a
 a
 b
-l
+L
 l
 j
 l
@@ -384,10 +504,10 @@ l
 l
 b
 l
-l
+Q
 G
 l
-l
+T
 b
 b
 b
@@ -427,7 +547,7 @@ j
 l
 l
 b
-l
+P
 l
 G
 l
@@ -444,18 +564,18 @@ a
 a
 b
 c
-f
+I
 b
-m
+M
 o
 b
 l
 l
 G
 o
-m
+U
 b
-f
+V
 F
 b
 a
@@ -510,18 +630,18 @@ a
 a
 b
 c
-f
+J
 b
 l
 l
+O
 l
 l
-l
-l
+S
 l
 z
 b
-f
+W
 F
 b
 a
@@ -598,9 +718,9 @@ a
 a
 b
 e
-f
+K
 b
-l
+N
 l
 l
 l
@@ -609,7 +729,7 @@ v
 l
 B
 b
-f
+X
 f
 b
 a
@@ -670,7 +790,7 @@ h
 h
 b
 t
-l
+R
 b
 h
 h

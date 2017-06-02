@@ -30,7 +30,6 @@
 // DEBUFFS //
 /////////////
 
-#define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
 #define STATUS_EFFECT_MANIAMOTOR /datum/status_effect/maniamotor //disrupts, damages, and confuses the affected as long as they're in range of the motor
@@ -40,3 +39,13 @@
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
 
 #define STATUS_EFFECT_SUMMONEDGHOST /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
+
+#define STATUS_EFFECT_CRUSHERMARK /datum/status_effect/crusher_mark //if struck with a proto-kinetic crusher, takes a ton of damage
+
+/////////////
+// NEUTRAL //
+/////////////
+
+#define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
+
+#define STATUS_EFFECT_CRUSHERDAMAGETRACKING /datum/status_effect/crusher_damage //tracks total kinetic crusher damage on a target

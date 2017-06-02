@@ -12,6 +12,14 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped
 	icon_state = "filter_off_f"
 	flipped = 1
+	
+// These two filter types have critical_machine flagged to on and thus causes the area they are in to be exempt from the Grid Check event.
+	
+/obj/machinery/atmospherics/components/trinary/filter/critical
+	critical_machine = TRUE
+	
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical
+	critical_machine = TRUE
 
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -83,20 +91,20 @@
 
 		if(!removed)
 			return
-		
+
 		var/filtering = filter_type ? TRUE : FALSE
-		
+
 		if(filtering && !istext(filter_type))
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
 			filtering = FALSE
-		
+
 		if(filtering && removed.gases[filter_type])
 			var/datum/gas_mixture/filtered_out = new
-			
+
 			filtered_out.temperature = removed.temperature
 			filtered_out.assert_gas(filter_type)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
-			
+
 			removed.gases[filter_type][MOLES] = 0
 			removed.garbage_collect()
 
@@ -133,7 +141,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -149,7 +157,7 @@
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = ""
 			var/filter_name = "nothing"
@@ -157,6 +165,6 @@
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
-			investigate_log("was set to filter [filter_name] by [key_name(usr)]", "atmos")
+			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()

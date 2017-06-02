@@ -85,40 +85,65 @@
 	character.make_Traitor()
 
 
+/datum/game_mode/proc/forge_single_objective(datum/mind/traitor) //Returns how many objectives are added
+	.=1
+	if(issilicon(traitor.current))
+		var/special_pick = rand(1,4)
+		switch(special_pick)
+			if(1)
+				var/datum/objective/block/block_objective = new
+				block_objective.owner = traitor
+				traitor.objectives += block_objective
+			if(2)
+				var/datum/objective/purge/purge_objective = new
+				purge_objective.owner = traitor
+				traitor.objectives += purge_objective
+			if(3)
+				var/datum/objective/robot_army/robot_objective = new
+				robot_objective.owner = traitor
+				traitor.objectives += robot_objective
+			if(4) //Protect and strand a target
+				var/datum/objective/protect/yandere_one = new
+				yandere_one.owner = traitor
+				traitor.objectives += yandere_one
+				yandere_one.find_target()
+				var/datum/objective/maroon/yandere_two = new
+				yandere_two.owner = traitor
+				yandere_two.target = yandere_one.target
+				yandere_two.update_explanation_text() // normally called in find_target()
+				traitor.objectives += yandere_two
+				.=2
+	else
+		if(prob(50))
+			var/list/active_ais = active_ais()
+			if(active_ais.len && prob(100/GLOB.joined_player_list.len))
+				var/datum/objective/destroy/destroy_objective = new
+				destroy_objective.owner = traitor
+				destroy_objective.find_target()
+				traitor.objectives += destroy_objective
+			else if(prob(30))
+				var/datum/objective/maroon/maroon_objective = new
+				maroon_objective.owner = traitor
+				maroon_objective.find_target()
+				traitor.objectives += maroon_objective
+			else
+				var/datum/objective/assassinate/kill_objective = new
+				kill_objective.owner = traitor
+				kill_objective.find_target()
+				traitor.objectives += kill_objective
+		else
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = traitor
+			steal_objective.find_target()
+			traitor.objectives += steal_objective
+	
+
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
 	if(issilicon(traitor.current))
 		var/objective_count = 0
 
 		if(prob(30))
-			var/special_pick = rand(1,4)
-			switch(special_pick)
-				if(1)
-					var/datum/objective/block/block_objective = new
-					block_objective.owner = traitor
-					traitor.objectives += block_objective
-					objective_count++
-				if(2)
-					var/datum/objective/purge/purge_objective = new
-					purge_objective.owner = traitor
-					traitor.objectives += purge_objective
-					objective_count++
-				if(3)
-					var/datum/objective/robot_army/robot_objective = new
-					robot_objective.owner = traitor
-					traitor.objectives += robot_objective
-					objective_count++
-				if(4) //Protect and strand a target
-					var/datum/objective/protect/yandere_one = new
-					yandere_one.owner = traitor
-					traitor.objectives += yandere_one
-					yandere_one.find_target()
-					objective_count++
-					var/datum/objective/maroon/yandere_two = new
-					yandere_two.owner = traitor
-					yandere_two.target = yandere_one.target
-					yandere_two.update_explanation_text() // normally called in find_target()
-					traitor.objectives += yandere_two
-					objective_count++
+			objective_count+=forge_single_objective(traitor)
 
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 			var/datum/objective/assassinate/kill_objective = new
@@ -142,29 +167,8 @@
 				assign_exchange_role(exchange_red)
 				assign_exchange_role(exchange_blue)
 			objective_count += 1					//Exchange counts towards number of objectives
-		var/list/active_ais = active_ais()
 		for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-			if(prob(50))
-				if(active_ais.len && prob(100/GLOB.joined_player_list.len))
-					var/datum/objective/destroy/destroy_objective = new
-					destroy_objective.owner = traitor
-					destroy_objective.find_target()
-					traitor.objectives += destroy_objective
-				else if(prob(30))
-					var/datum/objective/maroon/maroon_objective = new
-					maroon_objective.owner = traitor
-					maroon_objective.find_target()
-					traitor.objectives += maroon_objective
-				else
-					var/datum/objective/assassinate/kill_objective = new
-					kill_objective.owner = traitor
-					kill_objective.find_target()
-					traitor.objectives += kill_objective
-			else
-				var/datum/objective/steal/steal_objective = new
-				steal_objective.owner = traitor
-				steal_objective.find_target()
-				traitor.objectives += steal_objective
+			forge_single_objective(traitor)
 
 		if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 			if (!(locate(/datum/objective/hijack) in traitor.objectives))
@@ -206,6 +210,7 @@
 	if(issilicon(traitor.current))
 		add_law_zero(traitor.current)
 		traitor.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
+		traitor.current.grant_language(/datum/language/codespeak)
 	else
 		equip_traitor(traitor.current)
 		traitor.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)

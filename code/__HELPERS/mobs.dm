@@ -177,7 +177,7 @@ Proc for attack log creation, because really why not
 
 	if(target && isliving(target))
 		living_target = target
-	
+
 	var/hp =" "
 	if(living_target)
 		hp = "(NEWHP: [living_target.health])"
@@ -254,6 +254,20 @@ Proc for attack log creation, because really why not
 	if (progress)
 		qdel(progbar)
 
+
+//some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
+/mob/proc/break_do_after_checks(list/checked_health, check_clicks)
+	if(check_clicks && next_move > world.time)
+		return FALSE
+	return TRUE
+
+//pass a list in the format list("health" = mob's health var) to check health during this
+/mob/living/break_do_after_checks(list/checked_health, check_clicks)
+	if(islist(checked_health))
+		if(health < checked_health["health"])
+			return FALSE
+		checked_health["health"] = health
+	return ..()
 
 /proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
