@@ -146,8 +146,9 @@
 		gang.gangtools += src
 		icon_state = "gangtool-[gang.color]"
 		if(!(user.mind in gang.bosses))
+			var/cached_influence = gang.gangsters[user.mind]
 			SSticker.mode.remove_gangster(user.mind, 0, 2)
-			gang.bosses += user.mind
+			gang.bosses[user.mind] = cached_influence
 			user.mind.gang_datum = gang
 			user.mind.special_role = "[gang.name] Gang Lieutenant"
 			gang.add_gang_hud(user.mind)
