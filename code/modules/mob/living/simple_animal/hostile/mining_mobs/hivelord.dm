@@ -241,18 +241,18 @@
 				belt = /obj/item/weapon/tank/internals/plasmaman/belt
 			else
 				uniform = /obj/item/clothing/under/rank/miner/lavaland
+				if (prob(4))
+					belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining/alt = 2))
+				else if(prob(10))
+					belt = pickweight(list(/obj/item/weapon/pickaxe = 8, /obj/item/weapon/pickaxe/mini = 4, /obj/item/weapon/pickaxe/silver = 2, /obj/item/weapon/pickaxe/diamond = 1))
+				else
+					belt = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 			if(mob_species != /datum/species/lizard)
 				shoes = /obj/item/clothing/shoes/workboots/mining
 			gloves = /obj/item/clothing/gloves/color/black
 			mask = /obj/item/clothing/mask/gas/explorer
 			if(prob(20))
 				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
-			if (mob_species != /datum/species/plasmaman && prob(4))
-				belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining/alt = 2))
-			else if(prob(10))
-				belt = pickweight(list(/obj/item/weapon/pickaxe = 8, /obj/item/weapon/pickaxe/mini = 4, /obj/item/weapon/pickaxe/silver = 2, /obj/item/weapon/pickaxe/diamond = 1))
-			else if (mob_species != /datum/species/plasmaman)
-				belt = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 			if(prob(30))
 				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
 			if(prob(10))
