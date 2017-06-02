@@ -12,11 +12,16 @@
 	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+	novariants = TRUE
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
+
+/obj/item/stack/tile/update_icon()
+	..(TRUE)
+
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 

@@ -60,6 +60,7 @@
 	origin_tech = "bluespace=6;materials=3"
 	materials = list(MAT_BLUESPACE=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
+	novariants = TRUE
 	var/crystal_type = /obj/item/weapon/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening
