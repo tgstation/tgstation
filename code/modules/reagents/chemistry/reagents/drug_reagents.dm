@@ -104,6 +104,112 @@
 	..()
 	. = 1
 
+/datum/reagent/drug/celeritate
+	name = "Celeritate"
+	id = "celeritate"
+	description = "A chemical that is derived from Omega Cannibis, taking this will heal a lot of damage when low health, speed you up and lower the effects of stuns. Even injecting less than a unit will cause an addiction, overdose makes you hyper and take brain damage."
+	reagent_state = LIQUID
+	color = "#000080"
+	overdose_threshold = 16
+	addiction_threshold = 0.01 //Very addictive
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM //Taking the drug makes your body work faster, so it will metabolize more
+
+/datum/reagent/drug/celeritate/on_mob_life(mob/living/M)
+	M.status_flags |= GOTTAGOFAST
+	if(prob(25)) // (i don't know how to math pls help me) 4 units on average until your healed, on average 7.2 seconds for -10 damage of the 3 basic damage types at 1.8 tick rate
+		if (M.health < 70) //No, you need some regular medicine to get to 100 health
+			M.adjustBruteLoss(-10*REM, 0)
+			M.adjustFireLoss(-10*REM, 0)
+			M.adjustToxLoss(-10*REM, 0)
+			M.adjustBrainLoss(1*REM, 0) //Brain starts to deterirate from the speed for some reason
+			M.Nutrition(-10) //Body uses nutriments to repair skin and process toxins
+			M << "<span class='notice'>You feel your wounds repairing itself!</span>"
+			user.visible_message("<span class='notice'>[user] wounds seems to nearly instantly repair itself!</span>") //Invisible healing is bad, fix with visual text
+			if(M.has_reagent("mannitol", 1))
+				M.reagents.remove_reagent("mannitol", 5) //Prevents using other medicines to counter the brain damage done by the effects of Celeritate, use medicines after the effects expire
+	if(prob(5))
+		M.AdjustParalysis(-2, 0)
+		M.adjustStunned(-2, 0)
+		M.adjustWeakened(-2, 0)
+		M.adjustStaminaLoss(-5, 0)
+		M << "<span class='notice'>You suddenly feel a surge of energy inside of you!</span>"
+		M.visible_message("<span class='notice'>[user] looks much more energetic!</span>")
+
+/datum/reagent/drug/celeritate/overdose_process(mob/living/M)
+	M.status_flags |= GOTTAGOREALLYFAST
+	if (prob(5))
+		M << "<span class='warning'>You feel like you took to much of celeritate! </span>"
+
+	if (prob(5))
+		if (M.age < 101) //Don't want people to get instakilled from stage 4 addiction
+			M.age += 3
+			M << "<span class='notice'>Your body feels a lot older!</span>"
+	if (prob(25)) //Keeps your health down
+		if(M.health > 70)
+			M.adjustBruteLoss(10)
+			M.adjustFireLoss(10)
+			M.adjustToxLoss(10)
+	if (prob(5))
+		M << "<span class='warning'>You feel your mind deteriate from old age!</span>"
+		M.adjustBrainLoss(1 * M.age / 4)
+	if (prob(5))
+		M << "<span class='notice'>Your body feels a bit weird.</span>" //I have no idea what to put here
+		M.adjustCloneLoss(1 * M.age / 4) //Your body is replicating DNA fast enough for the tiny errors to matter
+/datum/reagent/drug/celeritate/addiction_act_stage1(mob/living/carbon/human/M)
+	if (prob(10))
+		M << "<span class='notice'>You feel a slight craving for some celeritate.</span>"
+
+	if (prob(1))
+		if(!M.has_dna())
+			M << "<span class='notice'>Your body suddenly feels just like your old self.</span>"
+			clean_dna() //Kills all mutations
+
+/datum/reagent/celeritate/addiction_act_stage2(mob/living/carbon/human/M)
+	if (prob(10))
+		M << "<span class='notice'>Your body craves for some celeritate.</span>"
+	if(!M.has_dna())
+		if (prob(1))
+			if (prob(80))
+				M << "<span class='notice'>Your body suddenly feels just like your old self.</span>"
+				dna.remove_all_mutations() //Kills all mutations
+			if (prob(20))
+				M << "<span class='notice'>Your body feels slightly different from before.</span>"
+				/mob/living/carbon/proc/randmutg()
+
+/datum/reagent/drug/celeritate/addiction_act_stage3(mob/living/carbon/human/M)
+	if (prob(1))
+		M << "<span class='notice'>Your body feels older than it used to be.</span>"
+		M.age += 1
+		M.adjustBrainLoss(5) //Your getting old, brain is rip
+	if (prob(1))
+		M << "<span class='notice'>Your body feels slightly different from before, some celeritate would really help you out</span>"
+			randmutb()
+	if (prob(1))
+		M << "<span class='warning'>You suddenly throw up! Your body is aching in pain for celeritate!</span>"
+			Vomit(2)
+
+/datum/reagent/drug/celeritate/addiction_act_stage4(mob/living/carbon/human/M)
+	if(prob(10))
+		if (M.age < 101)
+		M.age += 3
+		M << "<span class='notice'>Your body feels much more older.</span>"
+		user.visible_message("<span class='notice'>[user] suddenly looks much more older</span>")
+	if (prob(8))
+		M.adjustBrainLoss(1 * M.age / 4) //Brain damage can be fixed easily with mannitol
+		M.adjustToxLoss(3)
+		M.adjustBruteLoss(3)
+		M << "<span class='warning'>You feel an awful pain inside of you, if only you could get some celeritate!</span>"
+	if (prob(5))
+		if (prob(33))
+			randmutb()
+			M << "<span class='warning'>Your body tries to adept to it's new disability!</span>"
+		if (prob(33))
+			randmutvg() //Impossible to get hulk or dwarfism this way
+			M << "<span class='notice'>Your body tries to adapt to its new evolutionary advantage!</span>"
+		if (prob(34)) //+1% is op
+			clean_dna()
+			M << "<span class='notce'>Your body suddenly feels like it's old self again!</span>"
+
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
 	id = "krokodil"
