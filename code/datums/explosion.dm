@@ -192,13 +192,18 @@ GLOBAL_LIST_EMPTY(explosions)
 								Search.next_exploded_turf = null
 								NextTurf.previous_exploded_turf = null
 							Search.explosion_level = 0
+							#ifdef TESTING
+							Search.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#FF0000")
+							#endif
 							break
 				
 				//add it to the linked list
 				T.previous_exploded_turf = last_exploded
 				last_exploded.next_exploded_turf = T
 				last_exploded = T
-
+				#ifdef TESTING
+				T.add_atom_colour("#FF0000", TEMPORARY_COLOUR_PRIORITY)
+				#endif
 				//and explode
 				T.explosion_level = dist
 				T.ex_act(dist)
@@ -252,6 +257,9 @@ GLOBAL_LIST_EMPTY(explosions)
 	//unfuck the shit
 	while(last_exploded)
 		last_exploded.next_exploded_turf = null
+		#ifdef TESTING
+		last_exploded.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#FF0000")
+		#endif
 		var/temp = last_exploded.previous_exploded_turf
 		last_exploded.previous_exploded_turf = null
 		last_exploded = temp
