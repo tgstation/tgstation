@@ -273,7 +273,7 @@
 		for(var/i in eye_lighting)
 			var/obj/effect/abstract/eye_lighting/L = i
 			L.forceMove(src)
-		if(on_mob)
+		if(!QDELETED(on_mob))
 			on_mob.forceMove(src)
 
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
