@@ -5,7 +5,7 @@
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
- *      Toy minibomb
+ *		Toy minibomb
  *		Crayons
  *		Snap pops
  *		Mech prizes
@@ -277,11 +277,10 @@
 	item_state = "flashbang"
 	var/active = FALSE
 	var/pranksound = 'sound/items/bikehorn.ogg'
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minibomb/attack_self(mob/user)
 	if(!active)
-		playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1) //Commence the panic
+		playsound(src, 'sound/weapons/armbomb.ogg', 60, 1) //Commence the panic
 		active = TRUE
 		user << "<span class='warning'>You prime the [name]! 5 seconds!</span>"
 		icon_state = initial(icon_state) + "_active"
@@ -292,7 +291,7 @@
 			if(prob(25)) //Cool 25% chance for a neat effect
 				var/obj/item/weapon/grenade/chem_grenade/glitter/O = new /obj/item/weapon/grenade/chem_grenade/glitter/blue(get_turf(src))
 				var/explosionsound = pick('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg','sound/effects/Explosion3.ogg')
-				playsound(src.loc, explosionsound, 50, 1) //EVERYONE PANIC AS THERE'S SUDDENLY SMOKE AND NOISES
+				playsound(src, explosionsound, 50, 1) //EVERYONE PANIC AS THERE'S SUDDENLY SMOKE AND NOISES
 				O.det_time = 0 //Instant detonation
 				O.prime()
 				active = FALSE
