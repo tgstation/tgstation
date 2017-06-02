@@ -353,6 +353,16 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/holoparasite
+	name = "Holoparasite Injector"
+	desc = "An injector full of holoparasite nanites, which will defend you and have many varying abilities. \
+			Though capable of near sorcerous feats via use of hardlight holograms, these require an \
+			organic host as a home base and source of fuel."
+	item = /obj/item/weapon/storage/box/syndie_kit/guardian
+	cost = 21
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 25
+
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
 	desc = "A chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
