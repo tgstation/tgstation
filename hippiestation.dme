@@ -2171,7 +2171,6 @@
 #include "hippiestation\code\modules\mentor\mentorpm.dm"
 #include "hippiestation\code\modules\mentor\mentorsay.dm"
 #include "hippiestation\code\modules\mob\nearcrit.dm"
-#include "hippiestation\code\modules\mob\sprite_accessories.dm"
 #include "hippiestation\code\modules\mob\dead\new_player\sprite_accessories.dm"
 #include "hippiestation\code\modules\mob\living\emote.dm"
 #include "hippiestation\code\modules\mob\living\carbon\carbon_defense.dm"
