@@ -181,16 +181,18 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/their_el = T.explosion_level	//let the bigger one have it
 			if(dist > their_el)
 
-				//search for the next turf in the ring and unexplode it
-				for(var/I in GLOB.cardinal)
-					var/turf/Search = get_step(T, I)
-					if(Search && Search.explosion_id == id && !Search.previous_exploded_turf)
-						var/turf/NextTurf = Search.next_exploded_turf
-						if(NextTurf)
-							Search.next_exploded_turf = null
-							NextTurf.previous_exploded_turf = null
-						Search.explosion_level = 0
-						break
+				//don't do this if we're too close to the epicenter
+				if(iteration > 7)
+					//search for the next turf in the ring and unexplode it
+					for(var/I in GLOB.cardinal)
+						var/turf/Search = get_step(T, I)
+						if(Search && Search.explosion_id == id && !Search.previous_exploded_turf)
+							var/turf/NextTurf = Search.next_exploded_turf
+							if(NextTurf)
+								Search.next_exploded_turf = null
+								NextTurf.previous_exploded_turf = null
+							Search.explosion_level = 0
+							break
 				
 				//add it to the linked list
 				T.previous_exploded_turf = last_exploded
