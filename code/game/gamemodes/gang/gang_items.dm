@@ -745,11 +745,12 @@
 
 /obj/mecha/combat/marauder/gangbuster_seraph
 	desc = "Heavy-duty, combat-type exosuit. This is a custom gangbuster model, utilized only by employees who have proven themselves in the line of fire."
-	name = "\improper 'Gangbuster' Seraph"
+	name = "\improper 'Gangbuster' Seraph" // Mostly for theming since this is a Nanotrasen funded initiative
 	icon_state = "seraph"
 	operation_req_access = list()
 	step_in = 2
-	obj_integrity = 400
+	obj_integrity = 300
+	max_integrity = 300
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	max_equip = 4
