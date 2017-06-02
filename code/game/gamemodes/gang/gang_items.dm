@@ -162,7 +162,7 @@
 	. = ..()
 	G = gang
 	name = "[G] reinforcements gateway"
-	addtimer(CALLBACK(src, .proc/reinforce), max(10, (5400 - world.time)))
+	addtimer(CALLBACK(src, .proc/reinforce), max(10, (4500 - world.time)))
 
 /obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
 	for(var/mob/M in contents)
@@ -210,7 +210,7 @@
 	spawn_gangster()
 	if(!we)
 		we = 1
-	cooldown = 200+((we/(rival+we))*100)**2
+	cooldown = 200+((we/(rival+we))*90)**2
 	if(repeat)
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
 
@@ -789,7 +789,7 @@
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
 	id = "pen"
-	cost = 30
+	cost = 20
 	item_path = /obj/item/weapon/pen/gang
 	spawn_msg = "<span class='notice'>More <b>recruitment pens</b> will allow you to recruit gangsters faster. Only gang leaders can recruit with pens.</span>"
 

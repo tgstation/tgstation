@@ -35,7 +35,7 @@
 							cooldown(G)
 						if(2)
 							new /obj/item/device/gangtool/soldier(M)
-							M.Paralyse(5)
+							M.Paralyse(2)
 							cooldown(G)
 						if(1)
 							to_chat(user, "<span class='warning'>This mind is resistant to recruitment!</span>")
@@ -46,9 +46,12 @@
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
 	set waitfor = FALSE
-	var/cooldown_time = 600+(600*gang.bosses.len) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
-
-	cooldown = 1
+	var/living = 0
+	for(var/mob/living/M in gang.gangsters)
+		if(M.stat != DEAD)
+			living++
+	var/cooldown_time = 500+(250*(living)) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
+	cooldown = TRUE
 	icon_state = "pen_blink"
 
 	var/time_passed = world.time - last_used
@@ -63,7 +66,7 @@
 	if(charges)
 		cooldown_time = 50
 	sleep(cooldown_time)
-	cooldown = 0
+	cooldown = FALSE
 	icon_state = "pen"
 	var/mob/M = get(src, /mob)
 	to_chat(M, "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")

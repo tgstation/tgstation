@@ -433,7 +433,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/proc/vigilante_vengeance()
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Would you like be a part of a Vigilante posse?", "pAI", null, FALSE, 100)
 	var/list/mob/dead/observer/finalists = list()
-	var/posse_size = 1+round(GLOB.joined_player_list.len * 0.06)+round(world.time/5000)
+	var/posse_size = 1+round(GLOB.joined_player_list.len * 0.05)+round(world.time/5000)
 	if(candidates.len)
 		for(var/n in 1 to min(candidates.len,posse_size))
 			finalists += pick_n_take(candidates)
