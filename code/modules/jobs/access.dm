@@ -98,9 +98,9 @@ GLOBAL_VAR_CONST(access_away_generic3, 207)
 GLOBAL_VAR_CONST(access_away_generic4, 208)
 
 /obj/var/list/req_access = null
-/obj/var/req_access_txt = "0"
+/obj/var/req_access_txt = "0" as text
 /obj/var/list/req_one_access = null
-/obj/var/req_one_access_txt = "0"
+/obj/var/req_one_access_txt = "0" as text
 
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
