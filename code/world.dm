@@ -8,7 +8,7 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "/tg/ Station 13"
 	fps = 20
-	visibility = 0
+	visibility = 1
 #ifdef GC_FAILURE_HARD_LOOKUP
 	loop_checks = FALSE
 #endif
@@ -288,7 +288,7 @@
 		GLOB.master_mode = mode
 	else
 		GLOB.master_mode = "extended"
-	log_game("Saved mode is '[GLOB.master_mode]'")	
+	log_game("Saved mode is '[GLOB.master_mode]'")
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
