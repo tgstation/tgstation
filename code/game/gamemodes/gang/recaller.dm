@@ -270,7 +270,7 @@
 	var/dat
 	if(gang.is_dominating)
 		dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
-	dat += "Leadership:"
+	dat += "[gang.name] Gang Leadership: "
 	for(var/datum/mind/bossman in gang.bosses)
 		dat += "<b>[bossman.name]</b> - "
 	dat += "<br>"

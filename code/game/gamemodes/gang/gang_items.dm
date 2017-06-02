@@ -235,7 +235,7 @@
 	if(LAZYLEN(finalists))
 		winner = pick(finalists)
 	if(!winner)
-		var/list/mob/dead/observer/dead_vigils
+		var/list/mob/dead/observer/dead_vigils = list()
 		for(var/mob/dead/observer/O in GLOB.player_list)
 			if(!O.mind.gang_datum)
 				dead_vigils += O
