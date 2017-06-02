@@ -27,11 +27,7 @@
 			return 0
 		if(target.mind in SSticker.mode.get_gangsters())
 			SSticker.mode.remove_gangster(target.mind)
-			if(!silent)
-				target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
-			removed(target, 1)
-			qdel(src)
-			return 0
+			vigilize(target)
 		if(target.mind in SSticker.mode.revolutionaries)
 			SSticker.mode.remove_revolutionary(target.mind)
 		if(!silent)

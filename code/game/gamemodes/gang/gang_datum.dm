@@ -8,13 +8,14 @@
 	var/list/datum/mind/gangsters = list() //gang B Members
 	var/list/datum/mind/bosses = list() //gang A Bosses
 	var/list/obj/item/device/gangtool/gangtools = list()
-	var/style
 	var/fighting_style = "normal"
 	var/list/territory = list()
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
 	var/recalls = 1
+	var/gateways = 0
 	var/dom_attempts = 2
+	var/bosses_working = TRUE
 	var/inner_outfit
 	var/outer_outfit
 	var/datum/atom_hud/antag/gang/ganghud
@@ -25,8 +26,9 @@
 
 	var/boss_item_list
 	var/boss_category_list
-	var/static/list/boss_items = list(
+	var/list/boss_items = list(
 		/datum/gang_item/function/gang_ping,
+		/datum/gang_item/function/backup,
 		/datum/gang_item/function/recall,
 
 		/datum/gang_item/clothing/under,
@@ -41,23 +43,25 @@
 		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
 		/datum/gang_item/weapon/improvised,
-		/datum/gang_item/weapon/ammo/improvised_ammo,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/surplus,
 		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/ammo/sleeper_ammo,
 		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/equipment/reviver,
 		/datum/gang_item/equipment/sharpener,
+		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
-		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/stimpack,
-		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/frag,
+		/datum/gang_item/equipment/recruiter,
 		/datum/gang_item/equipment/wetwork_boots,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/dominator
@@ -65,7 +69,9 @@
 
 	var/reg_item_list
 	var/reg_category_list
-	var/static/list/soldier_items = list(
+	var/list/soldier_items = list(
+		/datum/gang_item/function/leadership,
+
 		/datum/gang_item/clothing/under,
 		/datum/gang_item/clothing/suit,
 		/datum/gang_item/clothing/hat,
@@ -78,24 +84,28 @@
 		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
 		/datum/gang_item/weapon/improvised,
-		/datum/gang_item/weapon/ammo/improvised_ammo,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/surplus,
 		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/pump,
+		/datum/gang_item/weapon/ammo/buckshot_ammo,
 		/datum/gang_item/weapon/sniper,
 		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/ammo/sleeper_ammo,
 		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/equipment/reviver,
 		/datum/gang_item/equipment/sharpener,
+		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
-		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/stimpack,
-		/datum/gang_item/equipment/implant_breaker,
-		/datum/gang_item/equipment/wetwork_boots,
+		/datum/gang_item/equipment/frag,
+		/datum/gang_item/equipment/recruiter,
+		/datum/gang_item/equipment/wetwork_boots
 	)
 
 /datum/gang/New(loc,gangname)
@@ -160,6 +170,7 @@
 		else
 			reg_category_list[G.category] = list(G)
 
+
 /datum/gang/proc/add_gang_hud(datum/mind/recruit_mind)
 	ganghud.join_hud(recruit_mind.current)
 	SSticker.mode.set_antag_hud(recruit_mind.current, ((recruit_mind in bosses) ? "gang_boss" : "gangster"))
@@ -198,13 +209,15 @@
 
 
 /datum/gang/proc/income()
-	if(!bosses.len)
-		return
 	var/added_names = ""
 	var/lost_names = ""
-	
-	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
-	
+	bosses_working = FALSE
+	for(var/datum/mind/B in bosses)
+		var/mob/living/bossman = B.current
+		for(var/obj/item/T in bossman.GetAllContents())
+			if(istype(T, /obj/item/device/gangtool) && (bossman.stat != DEAD))
+				bosses_working = TRUE
+				break
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
 	territory |= reclaimed_territories
@@ -237,55 +250,52 @@
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
 	var/sbonus = sqrt(LAZYLEN(territory))  // Bonus given to soldier's for the gang's total territory
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
-	if(is_dominating)
-		var/seconds_remaining = domination_time_remaining()
-		var/new_time = max(180, seconds_remaining - (territory.len * 2))
-		if(new_time < seconds_remaining)
-			message += "Takeover shortened by [seconds_remaining - new_time] seconds for defending [territory.len] territories.<BR>"
-			set_domination_time(new_time)
-		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
-	else
-		for(var/obj/item/device/gangtool/G in gangtools)
-			var/pmessage = message
-			var/points_new = 0
-			if(istype(G, /obj/item/device/gangtool/soldier))
-				points_new = max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(G.tags)/2) // Soldier points
-				pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
-			else
-				points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
-				pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
-			G.points += points_new
-			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
-			var/points_newer = 0
-			var/static/inner = inner_outfit
-			var/static/outer = outer_outfit
-			if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
-				for(var/obj/C in ganger.contents)
-					if(C.type == inner_outfit)
+	for(var/obj/item/device/gangtool/G in gangtools)
+		var/pmessage = message
+		var/points_new = 0
+		if(istype(G, /obj/item/device/gangtool/soldier))
+			var/stags = (LAZYLEN(G.tags)/2)
+			sbonus += max(0,(3 - G.points/10)) + (0.3 * LAZYLEN(territory))
+			points_new = sbonus + stags // Soldier points
+			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [stags] for territories you have personally tagged.<BR>"
+		else
+			points_new = max(0,(4 - G.points/10)) + (0.6 * LAZYLEN(territory)) // Boss points, more focused on big picture
+			pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
+		G.points += points_new
+		var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
+		var/points_newer = 0
+		var/static/inner = inner_outfit
+		var/static/outer = outer_outfit
+		if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
+			for(var/obj/C in ganger.contents)
+				if(C.type == inner_outfit)
+					points_newer += 1
+					continue
+				if(C.type == outer_outfit)
+					points_newer += 1
+					continue
+				switch(C.type)
+					if(/obj/item/clothing/neck/necklace/dope)
 						points_newer += 2
-						continue
-					if(C.type == outer_outfit)
-						points_newer += 2
-						continue
-					switch(C.type)
-						if(/obj/item/clothing/neck/necklace/dope)
-							points_newer += 2
-						if(/obj/item/clothing/head/collectable/petehat/gang)
-							points_newer += 4
-						if(/obj/item/clothing/shoes/gang)
-							points_newer += 6
-						if(/obj/item/clothing/mask/gskull)
-							points_newer += 5
-						if(/obj/item/clothing/gloves/gang)
-							points_newer += 3
-						if(/obj/item/weapon/storage/belt/military/gang)
-							points_newer += 4
-			if(points_newer)
-				G.points += points_newer
-				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
-			pmessage += "You now have <b>[G.points] influence</b>.<BR>"
-			to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
-
+					if(/obj/item/clothing/head/collectable/petehat/gang)
+						points_newer += 4
+					if(/obj/item/clothing/shoes/gang)
+						points_newer += 6
+					if(/obj/item/clothing/mask/gskull)
+						points_newer += 5
+					if(/obj/item/clothing/gloves/gang)
+						points_newer += 3
+					if(/obj/item/weapon/storage/belt/military/gang)
+						points_newer += 4
+		if(points_newer)
+			G.points += points_newer
+			pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
+		pmessage += "You now have <b>[G.points] influence</b>.<BR>"
+		to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
+		if(bosses_working == FALSE)
+			to_chat(ganger, "<span class='danger'><b>Your gang no longer has a functioning leader. Your gangtool has been updated with the option to claim leadership for yourself.</b></span>")
+		if(!gateways)
+			to_chat(ganger, "<span class='danger'><b>Your gang not yet placed its reinforcement gateway. The gateway is crucial to sustaining your forces on this station. [name] leadership should plan where to create your gateway - immediately!</b></span>")
 
 //Multiverse
 
