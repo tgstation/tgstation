@@ -33,7 +33,28 @@
 		/obj/item/device/analyzer,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves
+		/obj/item/clothing/gloves,
+		/obj/item/device/geiger_counter,
+		/obj/item/weapon/tank/internals/emergency_oxygen,
+		/obj/item/device/gps,
+		/obj/item/borg/upgrade/rename,
+		/obj/item/borg/upgrade/restart,
+		/obj/item/clothing/glasses,
+		/obj/item/weapon/electronics,
+		/obj/item/weapon/circuitboard,
+		/obj/item/weapon/hand_labeler,
+		/obj/item/hand_labeler_refill,
+		/obj/item/weapon/holosign_creator,
+		/obj/item/weapon/stock_parts/cell,
+		/obj/item/device/plant_analyzer,
+		/obj/item/weapon/cultivator,
+		/obj/item/weapon/shovel/spade,
+		/obj/item/weapon/hatchet,
+		/obj/item/weapon/shovel/spade,
+		/obj/item/seeds,
+		/obj/item/weapon/disk/plantgene,
+		/obj/item/weapon/disk/design_disk,
+		/obj/item/weapon/disk/tech_disk
 		)
 
 /obj/item/weapon/storage/belt/utility/chief
