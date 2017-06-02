@@ -188,7 +188,7 @@
 /mob/setDir(newDir)
 	. = ..()
 	for(var/obj/O in contents|held_items)
-		O.on_mob_turn(newdir, src)
+		O.on_mob_turn(newDir, src)
 
 ///Process_Grab()
 ///Called by client/Move()

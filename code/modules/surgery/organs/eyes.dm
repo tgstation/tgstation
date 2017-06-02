@@ -188,7 +188,7 @@
 	else
 		activate()
 
-/obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(user)
+/obj/item/organ/eyes/robotic/glow/proc/prompt_for_controls(mob/user)
 	var/C = input(owner, "Select Color", "Select color", "#ffffff") as null|color
 	if(!C || QDELETED(src) || QDELETED(user) || QDELETED(owner) || owner != user)
 		return
