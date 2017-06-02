@@ -219,7 +219,7 @@
 		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(GLOB.latejoin))
+	H.forceMove(get_latejoin_turf())
 	H.uncuff()
 	return
 

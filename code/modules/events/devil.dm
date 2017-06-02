@@ -14,10 +14,7 @@
 
 /datum/round_event/ghost_role/devil/spawn_role()
 	//selecting a spawn_loc
-	var/list/spawn_locs = GLOB.latejoin
-	var/spawn_loc = pick(spawn_locs)
-	if(!spawn_loc)
-		return MAP_ERROR
+	var/spawn_loc = get_latejoin_turf()
 
 	//selecting a candidate player
 	var/list/candidates = get_candidates("devil", null, ROLE_DEVIL)

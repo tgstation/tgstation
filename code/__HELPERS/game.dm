@@ -506,13 +506,30 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new(get_latejoin_turf())//The mob being spawned.
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/get_latejoin_turf()
+	var/turf/D
+	if(GLOB.latejoin.len)
+		D = get_turf(pick(GLOB.latejoin))
+	if(!D)
+		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+			if(!T.density)
+				var/clear = 1
+				for(var/obj/O in T)
+					if(O.density)
+						clear = 0
+						break
+				if(clear)
+					D = T
+					continue
+	return D
 
 /proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)
 	for(var/M in GLOB.player_list)
