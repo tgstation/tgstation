@@ -31,7 +31,7 @@
 	mob_type = /mob/living/simple_animal/hostile/asteroid/goliath/beast
 
 /mob/living/simple_animal/hostile/spawner/lavaland/legion
-	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion
+	mob_type = /mob/living/simple_animal/hostile/asteroid/hivelord/legion{fromtendril = 1}
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
 	. = ..()
