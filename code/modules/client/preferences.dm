@@ -1,5 +1,3 @@
-
-
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 
@@ -383,7 +381,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
-				if(check_rights_for(user.client, R_ADMIN))
+				var/keyname = user.client.ckey
+				load_donator(keyname)
+				var/datum/donator/D = donators[keyname]
+				if(check_rights_for(user.client, R_ADMIN) || (D && D.maxmoney >= 400))
 					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 //				if(unlock_content)
