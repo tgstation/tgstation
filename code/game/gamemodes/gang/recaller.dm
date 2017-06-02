@@ -15,7 +15,6 @@
 	var/outfits = 2
 	var/free_pen = 0
 	var/promotable = 0
-	var/points = 15
 	var/list/tags = list()
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started

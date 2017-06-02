@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	if(!removed)
 		return 0
 
-	if(G.tags_by_mind[gangster_mind] && islist(G.tags_by_mind[gangster_mind])
+	if(G.tags_by_mind[gangster_mind] && islist(G.tags_by_mind[gangster_mind]))
 		var/list/tags_cache = G.tags_by_mind[gangster_mind]
 		for(var/v in tags_cache)
 			var/obj/effect/decal/cleanable/crayon/gang/G = v

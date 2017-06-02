@@ -251,44 +251,47 @@
 		pay_all_clothing_bonuses()
 		announce_all_influence()
 
-		//////////////////////////////////
-		for(var/obj/item/device/gangtool/G in gangtools)
-			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
-			var/points_newer = 0
-			var/static/inner = inner_outfit
-			var/static/outer = outer_outfit
-			if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
-				for(var/obj/C in ganger.contents)
-					if(C.type == inner_outfit)
-						points_newer += 2
-						continue
-					if(C.type == outer_outfit)
-						points_newer += 2
-						continue
-					switch(C.type)
-						if(/obj/item/clothing/neck/necklace/dope)
-							points_newer += 2
-						if(/obj/item/clothing/head/collectable/petehat/gang)
-							points_newer += 4
-						if(/obj/item/clothing/shoes/gang)
-							points_newer += 6
-						if(/obj/item/clothing/mask/gskull)
-							points_newer += 5
-						if(/obj/item/clothing/gloves/gang)
-							points_newer += 3
-						if(/obj/item/weapon/storage/belt/military/gang)
-							points_newer += 4
-			if(points_newer)
-				G.points += points_newer
-				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
-			pmessage += "You now have <b>[G.points] influence</b>.<BR>"
-			to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
-		///////////////////////////////////////////////
+/datum/gang/proc/pay_all_clothing_bonuses()
+	for(var/datum/mind/mind in gangsters|bosses)
+		pay_clothing_bonus(mind)
+
+/datum/gang/proc/pay_clothing_bonus(var/datum/mind/gangsta)
+	var/mob/living/carbon/human/gangbanger = gangsta.current
+	. = 0
+	if(!istype(gangbanger) || gangbanger.stat == DEAD)	//Dead gangsters aren't influential at all!
+		return 0
+	var/static/inner = inner_outfit
+	var/static/outer = outer_outfit
+	for(var/obj/C in gangbanger.contents)
+		if(C.type == inner_outfit)
+			. += 2
+			continue
+		if(C.type == outer_outfit)
+			. += 2
+			continue
+		switch(C.type)
+			if(/obj/item/clothing/neck/necklace/dope)
+				. += 2
+			if(/obj/item/clothing/head/collectable/petehat/gang)
+				. += 4
+			if(/obj/item/clothing/shoes/gang)
+				. += 6
+			if(/obj/item/clothing/mask/gskull)
+				. += 5
+			if(/obj/item/clothing/gloves/gang)
+				. += 3
+			if(/obj/item/weapon/storage/belt/military/gang)
+				. += 4
+	adjust_influence(gangsta, .)
+	if(.)
+		announce_to_mind(gangsta, "<span class='notice'>Your influential choice of clothing has increased your influence by [.] points!</span>")
+	else
+		announce_to_mind(gangsta, "<span class='warning'>Unfortunately, you have not gained any additional influence from your drab, old, boring clothing. Learn to dress like a gangsta, bro!</span>")	//Kek
 
 /datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier, sbonus = 0)
 	. = 0
 	. = max(0,round(3 - gangsters[soldier]/10)) + (sbonus) + (get_soldier_territories(soldier)/2)
-	gangsters[soldier] += .
+	adjust_influence(solder, .)
 
 /datum/gang/proc/get_soldier_territories(datum/mind/soldier)
 	if(!islist(tags_by_mind[soldier]))	//They have no tagged territories!
