@@ -214,11 +214,8 @@
 
 /obj/item/organ/eyes/robotic/glow/proc/cycle_mob_overlay()
 	remove_mob_overlay()
-	sync_mob_overlay()
-	add_mob_overlay()
-
-/obj/item/organ/eyes/robotic/glow/proc/sync_mob_overlay()
 	mob_overlay.color = current_color_string
+	add_mob_overlay()
 
 /obj/item/organ/eyes/robotic/glow/proc/add_mob_overlay()
 	if(owner)
