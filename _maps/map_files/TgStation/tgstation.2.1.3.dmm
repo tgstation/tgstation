@@ -61028,8 +61028,7 @@
 /area/space/nearstation)
 "cDv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -62039,13 +62038,12 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFL" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "co2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4;
+	filter_type = "co2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62062,13 +62060,12 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFN" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4;
+	filter_type = "o2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62089,13 +62086,12 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cFP" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "plasma";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4;
+	filter_type = "plasma"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62112,13 +62108,11 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFR" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
