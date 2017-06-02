@@ -450,7 +450,7 @@
 /datum/gang_item/weapon/riot
 	name = "Riot Shotgun"
 	id = "riot"
-	cost = 35
+	cost = 40
 	item_path = /obj/item/weapon/gun/ballistic/shotgun/riot/lethal
 
 /obj/item/weapon/gun/ballistic/shotgun/riot/lethal
@@ -479,13 +479,13 @@
 /datum/gang_item/weapon/auto
 	name = "Auto Rifle"
 	id = "auto"
-	cost = 30
+	cost = 32
 	item_path = /obj/item/weapon/gun/ballistic/automatic/wt550
 
 /datum/gang_item/weapon/ammo/auto_ammo
 	name = "Standard Auto Rifle Ammo"
 	id = "saber_ammo"
-	cost = 10
+	cost = 12
 	item_path = /obj/item/ammo_box/magazine/wt550m9
 
 /datum/gang_item/weapon/ammo/auto_ammo_AP
@@ -593,7 +593,7 @@
 /datum/gang_item/equipment/sechuds
 	name = "SecHud Sunglasses"
 	id = "sechuds"
-	cost = 2
+	cost = 4
 	item_path = /obj/item/clothing/glasses/hud/security/sunglasses
 
 /datum/gang_item/equipment/sharpener
@@ -738,7 +738,7 @@
 /datum/gang_item/equipment/seraph
 	name = "Seraph 'Gangbuster' Mech"
 	id = "seraph"
-	cost = 200
+	cost = 250
 	item_path = /obj/mecha/combat/marauder/gangbuster_seraph
 	spawn_msg = "<span class='notice'>For employees who go above and beyond... you know what to do with this. </span>"
 
