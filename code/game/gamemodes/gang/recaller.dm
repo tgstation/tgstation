@@ -49,7 +49,7 @@
 		var/isboss = (user.mind == gang.bosses[1])
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Your Influence: <B>[points]</B><br>"
+		dat += "Your Influence: <B>[gang.get_influence(user.mind)]</B><br>"
 		dat += "Time until Influence grows: <B>[time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss")]</B><br>"
 		dat += "<hr>"
 
@@ -245,9 +245,6 @@
 
 ///////////// Internal tool used by gang regulars ///////////
 
-/obj/item/device/gangtool/soldier
-	points = 5
-
 /obj/item/device/gangtool/soldier/New(mob/user)
 	. = ..()
 	gang = user.mind.gang_datum
@@ -263,7 +260,7 @@
 		dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 	dat += "Registration: <B>[gang.name] - Foot Soldier</B><br>"
 	dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
-	dat += "Your Influence: <B>[points]</B><br>"
+	dat += "Your Influence: <B>[gang.get_influence(user.mind)]</B><br>"
 	if(LAZYLEN(tags))
 		dat += "Your tags generate bonus influence for you.<br> You have tagged the following territories:"
 		for(var/obj/effect/decal/cleanable/crayon/gang/T in tags)

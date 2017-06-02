@@ -50,9 +50,9 @@
 	if(istype(user_mind) && istype(gang) && islist(gang.tags_by_mind[user_mind]))	//Clear us out of old ownership
 		gang.tags_by_mind[user_mind] -= src
 	if(istype(mind))
-		if(!islist(G.tags_by_mind[mind]))
-			G.tags_by_mind[mind] = list()
-		G.tags_by_mind[mind] += src
+		if(!islist(gang.tags_by_mind[mind]))
+			gang.tags_by_mind[mind] = list()
+		gang.tags_by_mind[mind] += src
 		user_mind = mind
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()

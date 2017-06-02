@@ -1,6 +1,9 @@
 //gang.dm
 //Gang War Game Mode
 
+#define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
+#define GANGSTER_BOSS_STARTING_INFLUENCE 20
+
 GLOBAL_LIST_INIT(gang_name_pool, list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp"))
 GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","purple", "white"))
 GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/obj/item/clothing/suit/jacket/leather/overcoat,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/jacket/miljacket,/obj/item/clothing/suit/jacket/puffer,/obj/item/clothing/suit/pirate,/obj/item/clothing/suit/poncho,/obj/item/clothing/suit/apron/overalls,/obj/item/clothing/suit/jacket/letterman))
@@ -62,7 +65,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		for(var/n in 1 to 3)
 			var/datum/mind/boss = pick(antag_candidates)
 			antag_candidates -= boss
-			G.bosses[boss] = 0
+			G.bosses[boss] = GANGSTER_BOSS_STARTING_INFLUENCE
 			boss.gang_datum = G
 			var/title
 			if(n == 1)
@@ -170,7 +173,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
-	G.gangsters[gangster_mind] = 0
+	G.gangsters[gangster_mind] = GANGSTER_SOLDIER_STARTING_INFLUENCE
 	gangster_mind.gang_datum = G
 	if(check)
 		if(iscarbon(gangster_mind.current))
@@ -216,16 +219,16 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			G.reclaim_points(G.bosses[gangster_mind])
 			G.bosses -= gangster_mind
 			removed = 1
+		if(G.tags_by_mind[gangster_mind] && islist(G.tags_by_mind[gangster_mind]))
+			var/list/tags_cache = G.tags_by_mind[gangster_mind]
+			for(var/v in tags_cache)
+				var/obj/effect/decal/cleanable/crayon/gang/c = v
+				c.set_mind_owner(null)
+			G.tags_by_mind -= gangster_mind
 
 	if(!removed)
 		return 0
 
-	if(G.tags_by_mind[gangster_mind] && islist(G.tags_by_mind[gangster_mind]))
-		var/list/tags_cache = G.tags_by_mind[gangster_mind]
-		for(var/v in tags_cache)
-			var/obj/effect/decal/cleanable/crayon/gang/G = v
-			G.set_mind_owner(null)
-		G.tags_by_mind -= gangster_mind
 
 	gangster_mind.special_role = null
 	gangster_mind.gang_datum = null

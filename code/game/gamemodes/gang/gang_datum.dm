@@ -291,7 +291,7 @@
 /datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier, sbonus = 0)
 	. = 0
 	. = max(0,round(3 - gangsters[soldier]/10)) + (sbonus) + (get_soldier_territories(soldier)/2)
-	adjust_influence(solder, .)
+	adjust_influence(soldier, .)
 
 /datum/gang/proc/get_soldier_territories(datum/mind/soldier)
 	if(!islist(tags_by_mind[soldier]))	//They have no tagged territories!
@@ -308,7 +308,7 @@
 			announce_to_mind(soldier, "<span class='notice'>You have gained [returned] influence from [get_soldier_territories(soldier)] territories you have personally tagged.</span>")
 
 /datum/gang/proc/announce_all_influence()
-	for(datum/mind/MG in bosses|gangsters)
+	for(var/datum/mind/MG in bosses|gangsters)
 		announce_total_influence(MG)
 
 /datum/gang/proc/pay_territory_income_to_bosses()
@@ -337,6 +337,11 @@
 
 /datum/gang/proc/announce_total_influence(datum/mind/gangster_mind)
 	announce_to_mind(gangster_mind, "<span class='boldnotice'>[name] Gang: You now have a total of [get_influence(gangster_mind)] influence!</span>")
+
+/datum/gang/proc/reclaim_points(amount)
+	for(var/datum/mind/bawss in bosses)
+		adjust_influence(bawss, amount/bosses.len)
+		announce_to_mind(bawss, "<span class='notice'>[name] Gang: [amount/bosses.len] influence given from internal automatic restructuring.</span>")
 
 //Multiverse
 

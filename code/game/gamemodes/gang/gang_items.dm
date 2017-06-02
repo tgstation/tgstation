@@ -11,7 +11,7 @@
 	if(check_canbuy && !can_buy(user, gang, gangtool))
 		return FALSE
 	var/real_cost = get_cost(user, gang, gangtool)
-	gangtool.points -= real_cost
+	gang.adjust_influence(user.mind, -real_cost)
 	spawn_item(user, gang, gangtool)
 	return TRUE
 
@@ -23,7 +23,7 @@
 		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gangtool.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+	return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return TRUE
