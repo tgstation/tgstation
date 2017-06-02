@@ -171,13 +171,14 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		/*
  * Plates
  		*/
-
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	singular_name = "hide plate"
+	max_amount = 6
+	novariants = FALSE
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
@@ -189,6 +190,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "dragon_hide"
 	singular_name = "drake plate"
+	max_amount = 10
+	novariants = FALSE
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER

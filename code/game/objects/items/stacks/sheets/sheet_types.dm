@@ -365,11 +365,11 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	desc = "Someone's been drinking their milk."
 	force = 7
 	throwforce = 5
+	max_amount = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
-	novariants = TRUE
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40), \
