@@ -1448,7 +1448,7 @@
 		special_role = "Wizard"
 		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
-			current.loc = get_latejoin_turf()
+			current.forceMove(get_latejoin_turf())
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)

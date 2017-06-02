@@ -520,15 +520,9 @@
 		D = get_turf(pick(GLOB.latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					D = T
-					continue
+			if(!is_blocked_turf(T))
+				D = T
+				break
 	return D
 
 /proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)

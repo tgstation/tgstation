@@ -395,6 +395,8 @@ SUBSYSTEM_DEF(job)
 						continue
 		if(istype(S, /obj/effect/landmark) && isturf(S.loc))
 			H.loc = S.loc
+		else if(isturf(S))
+			H.forceMove(S)
 
 	if(H.mind)
 		H.mind.assigned_role = rank

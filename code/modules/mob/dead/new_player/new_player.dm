@@ -322,7 +322,7 @@
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	character.loc = get_latejoin_turf()
+	character.forceMove(get_latejoin_turf())
 	character.update_parallax_teleport()
 
 	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
