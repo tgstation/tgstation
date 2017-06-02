@@ -81,7 +81,7 @@
 	id = "noreactsyringe"
 	req_tech = list("materials" = 3, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 2000, MAT_GOLD = 1000)
+	materials = list(MAT_GLASS = 2000)
 	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
 	category = list("Medical Designs")
 
