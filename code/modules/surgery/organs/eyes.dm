@@ -262,13 +262,8 @@
 	on_mob.forceMove(scanfrom)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
-		if(scanning.opacity)
+		if(scanning.opacity || scanning.has_opaque_atom)
 			stop = TRUE
-		else
-			for(var/v in scanning)
-				var/atom/A = v
-				if(A.opacity)
-					stop = TRUE
 		var/obj/effect/abstract/eye_lighting/L = eye_lighting[i]
 		if(stop)
 			L.forceMove(src)
