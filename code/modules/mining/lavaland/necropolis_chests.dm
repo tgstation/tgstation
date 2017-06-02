@@ -44,7 +44,7 @@
 		if(15)
 			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
-			new /obj/item/weapon/guardiancreator(src)
+			new /obj/item/weapon/guardiancreator/tech(src)
 		if(17)
 			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
 		if(18)
