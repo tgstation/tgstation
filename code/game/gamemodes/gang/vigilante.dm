@@ -70,9 +70,9 @@
 		if(!(A in all_territory))
 			newpoints += 0.5
 	to_chat(H, "<span class='notice'>You have received 4 influence for your continued loyalty, [newpoints] for keeping the station tag-free.")
-	points += newpoints + 4
+	points += newpoints + 3
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
-		points += 4
+		points += 3
 		to_chat(H, "<span class='notice'>You have also received 4 influence for possessing a mindshield implant.</span>")
 	addtimer(CALLBACK(src, .proc/earnings), 1500, TIMER_UNIQUE)
 
@@ -140,15 +140,15 @@
 			value = 5
 		if(/obj/item/toy/crayon/spraycan/gang)
 			var/obj/item/toy/crayon/spraycan/gang/SC = I
-			value = 1 + round(SC.charges/5)
+			value = 1 + round(SC.charges/9)
 		if(/obj/item/weapon/grenade/syndieminibomb/concussion/frag)
-			value = 15
+			value = 13
 		if(/obj/item/clothing/shoes/combat/gang)
-			value = 10
+			value = 9
 		if(/obj/item/weapon/pen/gang)
-			value = 20
+			value = 17
 		if(/obj/item/weapon/reviver)
-			value = 25
+			value = 10
 		if(/obj/item/weapon/reagent_containers/pill/patch/gang)
 			value = 4
 		if(/obj/item/device/gangtool)
@@ -156,13 +156,13 @@
 		if(/obj/item/clothing/glasses/hud/security/chameleon)
 			value = 5
 		if(/obj/item/weapon/gun/ballistic/automatic/mini_uzi)
-			value = 45
-		if(/obj/item/weapon/gun/ballistic/automatic/sniper_rifle)
 			value = 30
+		if(/obj/item/weapon/gun/ballistic/automatic/sniper_rifle)
+			value = 20
 		if(/obj/item/ammo_box/magazine/sniper_rounds)
 			value = 5
 		if(/obj/item/weapon/gun/ballistic/shotgun/lethal)
-			value = 25
+			value = 20
 		if(/obj/item/weapon/gun/ballistic/automatic/surplus/gang)
 			value = 8
 		if(/obj/item/weapon/throwing_star)
@@ -170,17 +170,17 @@
 		if(/obj/item/weapon/switchblade)
 			value = 5
 		if(/obj/item/weapon/storage/belt/military/gang)
-			value = 10
+			value = 8
 		if(/obj/item/clothing/gloves/gang)
 			value = 8
 		if(/obj/item/clothing/neck/necklace/dope)
 			value = 6
 		if(/obj/item/clothing/shoes/gang)
-			value = 17
+			value = 14
 		if(/obj/item/clothing/mask/gskull)
-			value = 15
+			value = 11
 		if(/obj/item/clothing/head/collectable/petehat/gang)
-			value = 12
+			value = 10
 	if(istype(I, /obj/item/clothing))
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(I.type == G.outer_outfit && I.armor["bullet"]>=35)
