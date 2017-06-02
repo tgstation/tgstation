@@ -73,7 +73,7 @@
 	points += newpoints + 3
 	for(var/obj/item/weapon/implant/mindshield/I in H.implants)
 		points += 3
-		to_chat(H, "<span class='notice'>You have also received 4 influence for possessing a mindshield implant.</span>")
+		to_chat(H, "<span class='notice'>You have also received 3 influence for possessing a mindshield implant.</span>")
 	addtimer(CALLBACK(src, .proc/earnings), 1500, TIMER_UNIQUE)
 
 /obj/item/device/vigilante_tool/attack_self(mob/user)
