@@ -516,3 +516,12 @@ SUBSYSTEM_DEF(job)
 	newjob.total_positions = J.total_positions
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
+
+/datum/controller/subsystem/job/proc/DisableJob(job_path)
+	for(var/I in occupations)
+		var/datum/job/J = I
+		if(istype(J, job_path))
+			J.total_positions = 0
+			J.spawn_positions = 0
+			J.current_positions = 0
+			return

@@ -7,14 +7,14 @@
 	icon_state = "machinegun"
 	can_buckle = TRUE
 	density = TRUE
-	max_integrity = 100
-	obj_integrity = 100
+	max_integrity = 80
+	obj_integrity = 80
 	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
-	var/view_range = 10
+	var/view_range = 9
 	var/cooldown = 0
 	var/projectile_type = /obj/item/projectile/bullet/weakbullet3
-	var/rate_of_fire = 1
+	var/rate_of_fire = 1.2
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
 	var/atom/target
@@ -38,7 +38,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.reset_perspective()
+			buckled_mob.client.change_view(world.view)
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -46,25 +46,26 @@
 /obj/machinery/manned_turret/user_buckle_mob(mob/living/M, mob/living/carbon/user)
 	if(user.incapacitated() || !istype(user))
 		return
-	M.forceMove(get_turf(src))
-	..()
-	for(var/V in M.held_items)
-		var/obj/item/I = V
-		if(istype(I))
-			if(M.dropItemToGround(I))
+	if(do_after(user, 30, target = M))
+		M.forceMove(get_turf(src))
+		..()
+		for(var/V in M.held_items)
+			var/obj/item/I = V
+			if(istype(I))
+				if(M.dropItemToGround(I))
+					var/obj/item/gun_control/TC = new(src)
+					M.put_in_hands(TC)
+			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				var/obj/item/gun_control/TC = new(src)
 				M.put_in_hands(TC)
-		else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/gun_control/TC = new(src)
-			M.put_in_hands(TC)
-	M.pixel_y = 14
-	layer = ABOVE_MOB_LAYER
-	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
-	anchored = TRUE
-	if(user.client)
-		user.client.change_view(view_range)
-	START_PROCESSING(SSfastprocess, src)
+		M.pixel_y = 14
+		layer = ABOVE_MOB_LAYER
+		setDir(SOUTH)
+		playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+		anchored = TRUE
+		if(user.client)
+			user.client.change_view(view_range)
+		START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
 	if(!LAZYLEN(buckled_mobs))

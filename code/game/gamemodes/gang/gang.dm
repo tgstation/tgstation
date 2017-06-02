@@ -8,15 +8,16 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
 	var/datum/gang_points/gang_points
+	var/posse_timer = 0
 
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
 
-/proc/is_in_gang(var/mob/living/M, var/gang_type)
-	if(!is_gangster(M) || !gang_type)
+/proc/is_in_gang(var/mob/living/M, var/gang_name)
+	if(!is_gangster(M) || !gang_name)
 		return 0
 	var/datum/gang/G = M.mind.gang_datum
-	if(G.name == gang_type)
+	if(G.name == gang_name)
 		return 1
 	return 0
 
@@ -29,6 +30,16 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	var/area/target_armory
+	var/area/target_brig
+	var/area/target_equip
+	var/area/target_hos
+	var/area/target_captain
+	var/area/target_captain2
+	var/area/target_science
+	var/area/target_hop
+	var/area/target_det
+	var/area/target_ward
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -39,6 +50,60 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+
+
+	//turn off sec and captain
+	SSjob.DisableJob(/datum/job/captain)
+	SSjob.DisableJob(/datum/job/hop)
+	SSjob.DisableJob(/datum/job/hos)
+	SSjob.DisableJob(/datum/job/warden)
+	SSjob.DisableJob(/datum/job/detective)
+	SSjob.DisableJob(/datum/job/officer)
+	SSjob.DisableJob(/datum/job/lawyer)
+	SSjob.DisableJob(/datum/job/ai)
+	SSjob.DisableJob(/datum/job/cyborg)
+
+	// For removing problematic items
+	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
+		target_armory = A
+		break
+
+	for(var/area/crew_quarters/heads/hos/S in GLOB.sortedAreas)
+		target_hos = S
+		break
+
+	for(var/area/security/brig/B in GLOB.sortedAreas)
+		target_brig = B
+		break
+
+	for(var/area/security/main/M in GLOB.sortedAreas)
+		target_equip  = M
+		break
+
+	for(var/area/security/warden/W in GLOB.sortedAreas)
+		target_ward = W
+		break
+
+	for(var/area/security/detectives_office/D in GLOB.sortedAreas)
+		target_det = D
+		break
+
+	for(var/area/crew_quarters/heads/captain/private/V in GLOB.sortedAreas)
+		target_captain = V
+		break
+
+	for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
+		if(C != /area/crew_quarters/heads/captain/private)
+			target_captain2 = C
+			break
+	for(var/area/crew_quarters/heads/hop/P in GLOB.sortedAreas)
+		target_hop = P
+		break
+
+	for(var/area/science/mixing/T in GLOB.sortedAreas)
+		target_science = T
+		break
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -49,6 +114,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/gangs_to_create = 2
 	if(prob(num_players() * 2))
 		gangs_to_create ++
+		if(num_players() > 70)
+			gangs_to_create ++
 
 	for(var/i=1 to gangs_to_create)
 		if(!antag_candidates.len)
@@ -72,24 +139,108 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			boss.special_role = "[G.name] Gang [title]"
 			boss.restricted_roles = restricted_jobs
 			log_game("[boss.key] has been selected as the [title] for the [G.name] Gang")
-
-	if(gangs.len < 2) //Need at least two gangs
-		return 0
-
+			gangpocalypse()
 	return 1
+
+
+
+/datum/game_mode/gang/proc/gangpocalypse()
+	set waitfor = FALSE
+	if(target_captain)
+		for(var/turf/T in area_contents(target_captain))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_captain2)
+		for(var/turf/T in area_contents(target_captain2))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_armory)
+		for(var/turf/T in area_contents(target_armory))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_brig)
+		for(var/turf/T in area_contents(target_brig))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_equip)
+		for(var/turf/T in area_contents(target_equip))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_hos)
+		for(var/turf/T in area_contents(target_hos))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_det)
+		for(var/turf/T in area_contents(target_det))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_ward)
+		for(var/turf/T in area_contents(target_ward))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_hop)
+		for(var/turf/T in area_contents(target_hop))
+			for(var/obj/item/I in T.GetAllContents())
+				if(istype(I, /obj/item/weapon))
+					qdel(I)
+				if(istype(I, /obj/item/clothing))
+					qdel(I)
+	if(target_science)
+		for(var/obj/item/device/transfer_valve/TTV in area_contents(target_science))
+			qdel(TTV)
 
 
 /datum/game_mode/gang/post_setup()
 	set waitfor = FALSE
 	..()
-	sleep(rand(10,100))
+	var/list/bosses = list()
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
-			G.add_gang_hud(boss_mind)
+			bosses += boss_mind
 			forge_gang_objectives(boss_mind)
 			greet_gang(boss_mind)
+			G.add_gang_hud(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
+	for(var/mob/living/M in GLOB.player_list)
+		if(!is_gangster(M))
+			vigilize(M)
+	sleep(80)
+	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetics have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance. In the event that criminal enterprises seek to exploit this situation, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals.", "Nanotrasen Board of Directors")
+
+
+/proc/vigilize(mob/living/M)
+	var/datum/objective/escape/E = new
+	E.owner = M.mind
+	M.mind.objectives += E
+	to_chat(M, "<FONT size=3><u><b>You are a Vigilante!</b></u><br> Nanotrasen has given all loyal crew the authority to eliminate gang activity aboard the station.<br> You possess a reverse-engineered gangtool that rewards influence for destroying gangster equipment.<br> You will also receive influence for keeping the station free of gang tags.<br><b>Prevent gangs from taking over the station!<b></FONT>")
+	M.mind.announce_objectives()
+	new /obj/item/device/vigilante_tool(M)
+	M.equip_to_slot_or_del(new /obj/item/weapon/soap/vigilante(M), slot_in_backpack)
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
@@ -186,20 +337,21 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	gangster_mind.current.log_message("<font color='red'>Has been converted to the [G.name] Gang!</font>", INDIVIDUAL_ATTACK_LOG)
 	gangster_mind.special_role = "[G.name] Gangster"
-
+	for(var/obj/item/device/vigilante_tool/O in gangster_mind.current.contents)
+		qdel(O)
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
+	new /obj/item/device/gangtool/soldier(gangster_mind.current)
 	return 2
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
-	for(var/obj/O in gangster_mind.current.contents)
-		if(istype(O, /obj/item/device/gangtool/soldier))
-			qdel(O)
-
+	var/mob/living/gangster = gangster_mind.current
+	for(var/obj/item/device/gangtool/soldier/O in gangster.contents)
+		qdel(O)
 	if(!gang)
 		return 0
 
@@ -262,21 +414,71 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	return gang_bosses
 
 /datum/game_mode/proc/shuttle_check()
+	posse_timer++
 	if(SSshuttle.emergencyNoRecall)
 		return
 	var/alive = 0
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-
-	if((alive < (GLOB.joined_player_list.len * 0.4)) && ((SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
-
+	if(alive < (GLOB.joined_player_list.len * 0.45 && (SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+	if((alive < (GLOB.joined_player_list.len *  0.7)) && posse_timer >= 4)
+		posse_timer = 0
+		vigilante_vengeance()
+
+
+/datum/game_mode/proc/vigilante_vengeance()
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Would you like be a part of a Vigilante posse?", "pAI", null, FALSE, 100)
+	var/list/mob/dead/observer/finalists = list()
+	var/posse_size = 1+round(GLOB.joined_player_list.len * 0.06)+round(world.time/5000)
+	if(candidates.len)
+		for(var/n in 1 to min(candidates.len,posse_size))
+			finalists += pick_n_take(candidates)
+	else
+		message_admins("No ghosts were willing to join the posse")
+		posse_timer = 2
+		return
+	for(var/i in 1 to finalists.len)
+		var/mob/living/carbon/human/character = new(src)
+		var/equip = SSjob.EquipRank(character, "Assistant", 1)
+		character = equip
+		var/D
+		if(GLOB.latejoin.len)
+			D = get_turf(pick(GLOB.latejoin))
+		if(!D)
+			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
+				if(!T.density)
+					var/clear = 1
+					for(var/obj/O in T)
+						if(O.density)
+							clear = 0
+							break
+					if(clear)
+						D = T
+						continue
+		character.loc = D
+		var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
+		if(chair)
+			chair.buckle_mob(character)
+		GLOB.data_core.manifest_inject(character)
+		if(SSshuttle.arrivals)
+			SSshuttle.arrivals.QueueAnnounce(character, "Vigilante")
+		else
+			AnnounceArrival(character, "Vigilante")
+		GLOB.joined_player_list += character.ckey
+		var/mob/dead/observer/spoo = pick_n_take(finalists)
+		character.key = spoo.key
+		vigilize(character)
+		character.put_in_r_hand(new /obj/item/weapon/twohanded/pitchfork/gangfork(character))
+		character.put_in_l_hand(new /obj/item/device/flashlight/flare/torch(character))
+		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(character),slot_wear_suit)
 
 /proc/determine_domination_time(var/datum/gang/G)
 	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -323,16 +525,16 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any
 
-	for(var/datum/gang/G in SSticker.mode.gangs)
-		if(world.time > next_point_time)
+	if(world.time > next_point_time)
+		next_point_time = world.time + next_point_interval
+		SSticker.mode.shuttle_check() // See if its time to start wrapping things up
+		for(var/datum/gang/G in SSticker.mode.gangs)
 			G.income()
 
+	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(G.is_dominating)
 			if(G.domination_time_remaining() < 0)
 				winners += G
-
-	if(world.time > next_point_time)
-		next_point_time = world.time + next_point_interval
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time
@@ -346,4 +548,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = TRUE
+			SSticker.mode.auto_declare_completion_gang(G)
+
+
 
