@@ -75,13 +75,3 @@
 		loc.visible_message("<span class='warning'>The purchase was unsuccessful, and spent telecrystals have been refunded.</span>")
 		U.telecrystals += cost //So the admins don't have to refund you
 	return
-
-
-/datum/uplink_item/dangerous/crossbow
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	desc = "A short bow mounted across a tiller in miniature. Small enough to \
-		fit into a pocket or slip into a bag unnoticed. It will synthesize \
-		and fire bolts tipped with a debilitating toxin that will disorient \
-		targets and cause them to hallucinate. It can produce an \
-		infinite amount of bolts, but takes time to automatically recharge \
-		after each shot."
