@@ -371,7 +371,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
 	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_BACK | SLOT_ID
 	actions_types = list()
 
 
