@@ -143,11 +143,6 @@
 	var/confirm_final = alert(user, "Your gang can only place ONE gateway, make sure it is in a well-secured location.", "Are you ready to place the gateway?", "This location is secure", "I should wait...")
 	if(confirm_final == "No")
 		return FALSE
-	do_sparks(4, TRUE, src)
-	sleep(15)
-	do_sparks(4, TRUE, src)
-	sleep(15)
-	do_sparks(4, TRUE, src)
 	return ..()
 
 /obj/machinery/gang/backup
@@ -168,6 +163,7 @@
 	G = gang
 	name = "[G] reinforcements gateway"
 	addtimer(CALLBACK(src, .proc/reinforce), max(10, (4500 - world.time)))
+	do_sparks(4, TRUE, src)
 
 /obj/machinery/gang/backup/Destroy(mapload, datum/gang/gang)
 	for(var/mob/M in contents)
