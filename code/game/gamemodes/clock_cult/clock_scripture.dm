@@ -170,7 +170,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal() && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L)))
 					for(var/invocation in invocations)
 						clockwork_say(L, text2ratvar(invocation), whispered)
 		else

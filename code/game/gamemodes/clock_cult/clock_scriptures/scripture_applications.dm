@@ -53,7 +53,7 @@
 
 /datum/clockwork_scripture/fellowship_armory/run_scripture()
 	for(var/mob/living/L in orange(1, invoker))
-		if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+		if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal() && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L)))
 			channel_time = max(channel_time - 10, 0)
 	return ..()
 
