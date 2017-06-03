@@ -173,6 +173,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/terminate_effects()
 	if(owner && active)
 		deactivate()
+	active = FALSE
 	clear_visuals(TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -225,13 +226,12 @@
 		deactivate(silent = TRUE)
 
 /obj/item/organ/eyes/robotic/glow/on_mob_move()
-	if(!owner)
+	if(QDELETED(owner) || !active)
 		return
-	if(active)
-		update_visuals()
+	update_visuals()
 
 /obj/item/organ/eyes/robotic/glow/on_mob_turn()
-	if(!owner)
+	if(QDELETED(owner) || !active)
 		return
 	update_visuals()
 
