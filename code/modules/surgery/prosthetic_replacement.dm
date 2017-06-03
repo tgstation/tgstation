@@ -82,7 +82,7 @@
 			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
 		else if(istype(tool, /obj/item/weapon/melee/synthetic_arm_blade))
-			var/obj/item/weapon/melee/arm_blade/new_arm = new(target, silent = TRUE, synthetic = TRUE)
+			var/obj/item/weapon/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
 
