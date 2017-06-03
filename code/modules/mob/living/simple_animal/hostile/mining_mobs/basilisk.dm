@@ -79,3 +79,6 @@
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
+	fromtendril = TRUE

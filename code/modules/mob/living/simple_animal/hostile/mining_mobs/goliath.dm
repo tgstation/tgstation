@@ -91,6 +91,9 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril
+	fromtendril = TRUE
+
 //tentacles
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"

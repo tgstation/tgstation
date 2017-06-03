@@ -111,7 +111,6 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	var/mob/living/carbon/human/stored_mob
-	var/fromtendril = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -125,6 +124,9 @@
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
+	fromtendril = TRUE
 
 //Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
