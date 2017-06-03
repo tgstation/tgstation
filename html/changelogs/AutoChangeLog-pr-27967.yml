@@ -1,4 +1,0 @@
-author: "WJohnston"
-delete-after: True
-changes: 
-  - bugfix: "Deltastation's south nuke op shuttle location should no longer be possible to teleport into by moving off the map and back on, and moved the rest closer to the station."

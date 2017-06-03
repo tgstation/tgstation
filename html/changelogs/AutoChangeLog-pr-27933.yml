@@ -1,5 +1,0 @@
-author: "Expletive"
-delete-after: True
-changes: 
-  - tweak: "Chem Dispensers now store their power in their batteries."
-  - tweak: "Instead of being based on battery and capacitor ratings, recharge delay for portable chem dispensers is now based on their capacitor and matter bin ratings."
