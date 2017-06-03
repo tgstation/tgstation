@@ -36,7 +36,11 @@ Chief Medical Officer
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	
+	if(living_player_count() >= 41)
+		backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	else
+		backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/weapon/gun/energy/gun/mini=1)
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
