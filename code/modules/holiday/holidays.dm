@@ -1,12 +1,12 @@
 /datum/holiday
 	var/name = "Bugsgiving"
-	//Right now, only holidays that take place on a certain day or within a time period are supported
-	//It would be nice to support things like "the second monday in march" or "the first sunday after the second sunday in june"
+
 	var/begin_day = 1
 	var/begin_month = 0
 	var/end_day = 0 // Default of 0 means the holiday lasts a single day
 	var/end_month = 0
-
+	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
+	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
@@ -23,7 +23,7 @@
 	return copytext(name,1,i)
 
 // Return 1 if this holidy should be celebrated today
-/datum/holiday/proc/shouldCelebrate(dd, mm, yy)
+/datum/holiday/proc/shouldCelebrate(dd, mm, yy, var/ww, var/ddd)
 	if(always_celebrate)
 		return TRUE
 
@@ -31,7 +31,9 @@
 		end_day = begin_day
 	if(!end_month)
 		end_month = begin_month
-
+	if(begin_week && begin_weekday)
+		if(begin_week == ww && begin_weekday == ddd)
+			return TRUE
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
 			if(dd <= end_day)
@@ -313,6 +315,30 @@
 	name = "Monkey Day"
 	begin_day = 14
 	begin_month = DECEMBER
+
+/datum/holiday/thanksgiving
+	name = "Thanksgiving"
+	begin_week = 4
+	begin_month = NOVEMBER
+	begin_weekday = THURSDAY
+
+/datum/holiday/columbus
+	name = "Columbus Day"
+	begin_week = 2
+	begin_month = OCTOBER
+	begin_weekday = MONDAY
+
+/datum/holiday/mother
+	name = "Mothers' Day"
+	begin_week = 2
+	begin_month = MAY
+	begin_weekday = SUNDAY
+
+/datum/holiday/father
+	name = "Fathers' Day"
+	begin_week = 3
+	begin_month = JUNE
+	begin_weekday = SUNDAY
 
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
