@@ -859,11 +859,11 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	if(M.health < 50 && M.health > 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
+	M.status_flags |= IGNORESLOWDOWN
+	M.adjustOxyLoss(-3*REM, 0)
+	M.adjustToxLoss(-3*REM, 0)
+	M.adjustBruteLoss(-3*REM, 0)
+	M.adjustFireLoss(-3*REM, 0)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
