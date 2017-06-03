@@ -39,7 +39,7 @@
 
 
 
-/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents, mob/user)
 	main_loop:
 		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
@@ -77,7 +77,7 @@
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
-	for(var/obj/item/I in get_environment(user))
+	for(var/obj/I in get_environment(user))
 		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
 			continue
 		if(istype(I, /obj/item/stack))
@@ -95,11 +95,18 @@
 	if(!R.tools.len)
 		return 1
 	var/list/possible_tools = list()
-	for(var/obj/item/I in user.contents)
+	for(var/obj/I in user.contents)
 		if(istype(I, /obj/item/weapon/storage))
-			for(var/obj/item/SI in I.contents)
+			for(var/obj/SI in I.contents)
 				possible_tools += SI.type
 		possible_tools += I.type
+	possible_tools += contents
+
+	for(var/obj/I2 in spiral_range_turfs(user,1))
+		if(istype(I2, /obj/item/weapon/storage))
+			for(var/obj/SI in I2.contents)
+				possible_tools += SI.type
+		possible_tools += I2.type
 	possible_tools += contents
 
 	main_loop:
@@ -113,7 +120,7 @@
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
-	if(check_contents(R, contents))
+	if(check_contents(R, contents, user))
 		if(check_tools(user, R, contents))
 			if(do_after(user, R.time, target = user))
 				contents = get_surroundings(user)

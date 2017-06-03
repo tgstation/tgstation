@@ -40,6 +40,9 @@
 				current_highest_boozepwr["prefix"] = A["prefix"]
 				current_highest_boozepwr["power"] = A["booze_power"]
 		var/final_name = current_highest_boozepwr["prefix"]
-		AB.name = "[final_name] ale"
+		if(current_highest_boozepwr["prefix"] == "plump-helmet")
+			AB.name = "dwarven wine"
+		else
+			AB.name = "[final_name] ale"
 		brewables = list()
 		already_brewing = list()

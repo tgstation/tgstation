@@ -1,12 +1,15 @@
 /obj/machinery/smelter
 	name = "smelter"
 	desc = "An old Sendarian tool."
-	icon = 'icons/obj/blacksmithing_64.dmi'
-	icon_state = "forge"
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "smelter"
 	density = TRUE
 	anchored = TRUE
 
 /obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
+	if(!isdwarf(user))
+		to_chat(user, "You don't comprehend this tool well enough to use it.")
+		return
 	var/smelting_result = W.on_smelt()
 	if(!smelting_result)
 		return ..()
@@ -31,6 +34,9 @@
 	var/mutable_appearance/my_mold = null
 
 /obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
+	if(!isdwarf(user))
+		to_chat(user, "You don't comprehend this tool well enough to use it.")
+		return
 	if(!istype(W, /obj/item/weapon/smith_hammer))
 		..()
 	if(!current_mold && istype(W, /obj/item/weapon/reagent_containers/glass/mold))
@@ -67,7 +73,9 @@
 				I.smelted_material = new R.type()
 				I.post_smithing()
 			else
-				I = new R.produce_type(get_turf(src), new_amount=5)
+				I = new R.produce_type(get_turf(src))
+				var/obj/item/stack/S = I
+				S.amount = 5
 			qdel(current_mold)
 			cut_overlay(my_mold)
 			my_mold = null
@@ -123,6 +131,20 @@
 	desc = "Helmet plating made of "
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "helmet"
+	mold_type = "offensive"
+
+/obj/item/weapon/mold_result/crossbow_base
+	name = "crossbow base"
+	desc = "Crossbow base made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "dwarf_crossbow"
+	mold_type = "offensive"
+
+/obj/item/weapon/mold_result/shield_backing
+	name = "shield backing"
+	desc = "Shield backing made of "
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "dwarf_shield"
 	mold_type = "offensive"
 
 /obj/item/weapon/mold_result/pickaxe_head
@@ -263,3 +285,43 @@
 
 
 
+/obj/item/weapon/shield/riot/buckler/smith
+	name = "buckler"
+	desc = "A dwarven buckler."
+	icon_state = "dwarf_buckler"
+	item_state = "dwarf_buckler"
+	block_chance = 30
+
+/obj/item/weapon/shield/riot/buckler/smith/CheckParts(list/parts_list)
+	..()
+	var/obj/item/weapon/mold_result/shield_backing/S = locate() in contents
+	if(S)
+		var/image/Q = image('icons/obj/blacksmithing.dmi', "dwarf_shield")
+		Q.color = S.color
+		add_overlay(Q)
+		smelted_material = new S.smelted_material.type()
+		name = "[S.material_type] buckler"
+		block_chance = S.attack_amt*2
+		for(var/A in armor)
+			A = S.attack_amt*2
+
+
+/obj/item/weapon/gun/ballistic/automatic/speargun/crossbow
+	name = "dwarven crossbow"
+	desc = "A dwarven crossbow."
+	icon_state = "dwarf_crossbow"
+	item_state = "crossbow"
+	w_class = WEIGHT_CLASS_BULKY
+	mag_type = /obj/item/ammo_box/magazine/internal/speargun/crossbow
+
+/obj/item/weapon/gun/ballistic/automatic/speargun/crossbow/CheckParts(list/parts_list)
+	..()
+	var/obj/item/weapon/mold_result/crossbow_base/S = locate() in contents
+	if(S)
+		var/image/Q = image('icons/obj/blacksmithing.dmi', "dwarf_crossbow")
+		Q.color = S.color
+		add_overlay(Q)
+		smelted_material = new S.smelted_material.type()
+		name = "[S.material_type] crossbow"
+		force = S.attack_amt
+		desc = "A crossbow with a [S.material_type] base."

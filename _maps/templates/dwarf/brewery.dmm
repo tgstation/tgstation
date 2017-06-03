@@ -1,0 +1,15 @@
+"a" = (/turf/closed/wall,/area/awaymission)
+"b" = (/obj/structure/table/wood,/obj/item/weapon/hatchet,/turf/open/floor/wood,/area/awaymission)
+"c" = (/turf/open/floor/wood,/area/awaymission)
+"d" = (/obj/machinery/hydroponics/soil,/turf/open/floor/wood,/area/awaymission)
+"e" = (/obj/machinery/brewing_barrel,/turf/open/floor/wood,/area/awaymission)
+"f" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/turf/open/floor/wood,/area/awaymission)
+"g" = (/obj/structure/mineral_door/iron,/turf/open/floor/wood,/area/awaymission)
+
+(1,1,1) = {"
+aaaaa
+abcda
+aecda
+aecfa
+aagaa
+"}

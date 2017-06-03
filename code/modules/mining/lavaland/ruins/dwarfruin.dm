@@ -1,4 +1,3 @@
-#define DWARF_COOLDOWN 6000 //10 minutes
 GLOBAL_LIST_INIT(dwarves_list, list())
 
 /*Dwarf Spawner*/
@@ -8,11 +7,17 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	icon = 'icons/obj/device.dmi'
 	icon_state = "dorfportal"
 	anchored = TRUE
-	var/respawn_cooldown = DWARF_COOLDOWN
-	var/list/spawned_dorfs = list()
-	var/list/spawned_mobs = list()
-	var/list/recently_dead_ckeys = list()
+	var/spawns_left = 6
 	var/dorf_gear = /datum/outfit/dorf
+
+/obj/machinery/migrant_spawner/proc/ghost_message()
+	notify_ghosts("A dwarven fortress is ready for a new wave of migrants.", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to migrate)</a>", source = src, action = NOTIFY_ATTACK)
+
+/obj/machinery/migrant_spawner/Topic(href, href_list)
+	if(href_list["ghostjoin"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			attack_ghost(ghost)
 
 /obj/machinery/migrant_spawner/Initialize()
 	. = ..()
@@ -22,41 +27,15 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	GLOB.poi_list.Remove(src)
 	return ..()
 
-/obj/machinery/migrant_spawner/process()
-	for(var/i in spawned_mobs)
-		if(!i)
-			LAZYREMOVE(spawned_mobs, i)
-			continue
-		var/mob/living/M = i
-		if(M.stat == DEAD || !M.key) //adding timer to dead/ghosted dwarfs
-			add_dorf_timer(M)
-
 /obj/machinery/migrant_spawner/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted())
 		return
-	if(user.ckey in spawned_dorfs)
-		if(user.ckey in recently_dead_ckeys)
-			to_chat(user, "It must be more than [respawn_cooldown/600] minutes from your last death to respawn!")
-			return
+	if(spawns_left)
+		spawns_left--
 		var/client/new_dorf = user.client
-		if(user.mind && user.mind.current)
-			add_dorf_timer(user.mind.current)
 		spawn_dorf(new_dorf)
-		return
-
-	spawned_dorfs += user.ckey
-	var/client/new_dorf = user.client
-	if(user.mind && user.mind.current)
-		add_dorf_timer(user.mind.current)
-	spawn_dorf(new_dorf)
-
-/obj/machinery/migrant_spawner/proc/add_dorf_timer(mob/living/body)
-	if(isliving(body))
-		LAZYADD(recently_dead_ckeys, body.ckey)
-		addtimer(CALLBACK(src, .proc/clear_cooldown, body.ckey), respawn_cooldown, TIMER_UNIQUE)
-
-/obj/machinery/migrant_spawner/proc/clear_cooldown(var/ckey)
-	LAZYREMOVE(recently_dead_ckeys, ckey)
+	else
+		to_chat(user, "There's no more room at the fortress for new migrants! Wait for them to build a new dormitory.")
 
 /obj/machinery/migrant_spawner/proc/spawn_dorf(client/new_dorf)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
@@ -70,7 +49,6 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	M.mind.special_role = "Dwarf"
 	var/datum/objective/O = new("Make claim to these hellish lands, constructing a great fortress and mining the rock for its precious metals, in the name of the Dwarven people!")
 	M.mind.objectives += O
-	LAZYADD(spawned_mobs, M)
 	LAZYADD(GLOB.dwarves_list, M)
 
 /obj/machinery/migrant_spawner/attackby(obj/item/weapon/W, mob/user, params)
@@ -98,6 +76,3 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 /obj/item/weapon/sword_hilt
 	name = "leather hilt"
 	desc = "A handle made of leather, meant as base for a sword."
-
-
-#undef DWARF_COOLDOWN

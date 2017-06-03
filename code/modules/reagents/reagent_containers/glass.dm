@@ -328,6 +328,12 @@
 	icon_state = "mold_blade"
 	produce_type = /obj/item/weapon/mold_result/blade
 
+/obj/item/weapon/reagent_containers/glass/mold/hammer
+	name = "hammer head mold"
+	desc = "A clay mold of a hammer head."
+	icon_state = "mold_blade"
+	produce_type = /obj/item/weapon/mold_result/hammer_head
+
 /obj/item/weapon/reagent_containers/glass/mold/pickaxe
 	name = "pickaxe mold"
 	desc = "A clay mold of a pickaxe head."
@@ -351,6 +357,18 @@
 	desc = "A clay mold of armor plating."
 	icon_state = "mold_shovel"
 	produce_type = /obj/item/weapon/mold_result/armor_plating
+
+/obj/item/weapon/reagent_containers/glass/mold/shield
+	name = "shield mold"
+	desc = "A clay mold of a shield backing."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/shield_backing
+
+/obj/item/weapon/reagent_containers/glass/mold/crossbow
+	name = "crossbow mold"
+	desc = "A clay mold of a crossbow base."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/crossbow_base
 
 /obj/item/weapon/reagent_containers/glass/mold/bar
 	name = "bar mold"

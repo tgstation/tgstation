@@ -38,6 +38,7 @@
 	var/pick_speed = 40 //how fast the reagent would mine
 	var/blunt_damage = FALSE //if the reagant would make a good blunt weapon
 	var/produce_type = /obj/item/weapon/ore/slag //what the reagent produces if used in a mold
+	var/durability_reduction = 10 // How much this item loses on hit
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

@@ -1,4 +1,6 @@
 /**********************Mineral deposits**************************/
+var/secret_triggered = FALSE
+
 
 /turf/closed/mineral //wall piece
 	name = "rock"
@@ -393,6 +395,16 @@
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
+
+/turf/closed/mineral/adamantine/gets_drilled()
+	if(!secret_triggered)
+		secret_triggered = TRUE
+		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
+		new /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon(src)
+		new /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat(src)
+		new /mob/living/simple_animal/hostile/swarmer/ai/melee_combat(src)
+		new /mob/living/simple_animal/hostile/swarmer/ai/melee_combat(src)
+	..()
 
 /turf/closed/mineral/clay
 	mineralType = /obj/item/stack/sheet/mineral/clay

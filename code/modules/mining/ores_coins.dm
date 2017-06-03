@@ -444,7 +444,7 @@
 	name = "adamantine ore"
 	icon_state = "ore"
 	origin_tech = "materials=8"
-	points = 5000
+	points = 0
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
-	refined_type = /obj/item/stack/sheet/mineral/adamantine
+	refined_type = null
 	reagent_id = "adamantine"
