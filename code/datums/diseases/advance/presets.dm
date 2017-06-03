@@ -57,3 +57,19 @@
 		name = "Reality Destruction"
 		symptoms = list(new/datum/symptom/sensory_destruction)
 	..(process, D, copy)
+
+// Asthmothia
+
+/datum/disease/advance/asthmosthia/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Atmospheric Asthma"
+		symptoms = list(new/datum/symptom/asthmothia)
+	..(process, D, copy)
+
+// Apoptoplast
+
+/datum/disease/advance/apoptoplast/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Apoptosis Plastos"
+		symptoms = list(new/datum/symptom/apoptoplast)
+	..(process, D, copy)
