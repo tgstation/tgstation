@@ -23,6 +23,17 @@
 		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
 	return
 
+
+/client/verb/gfx()
+	set name = "troubleshooting"
+	set desc = "Visit the troubleshooting page."
+	set hidden = 1
+	if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
+		return
+		src << link("https://tgstation13.org/wiki/Graphics_Troubleshooting")
+	return
+
+
 /client/verb/rules()
 	set name = "rules"
 	set desc = "Show Server Rules."
