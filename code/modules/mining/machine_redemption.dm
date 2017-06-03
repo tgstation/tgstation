@@ -234,8 +234,66 @@
 		data["hasDisk"] = TRUE
 		if(inserted_disk.blueprints.len)
 			for (var/i in 1 to inserted_disk.max_blueprints)
-				var/datum/design/D = inserted_disk.blueprints[i]
-				data["diskDesigns"][i] += list(list("name" = D.name, "index" = i, "canupload" = D.build_type&SMELTER))
+				var/datum/design/thisdesign = inserted_disk.blueprints[i]
+					//if(!istype(thisdesign)) //error: : invalid expression
+					//	continue
+
+				data["diskDesigns"][i] += list(list("name" = thisdesign.name, "index" = i, "canupload" = thisdesign.build_type&SMELTER)) // Runtime in machine_redemption.dm,241: cannot read from list
+/*
+[09:46:20] Runtime in machine_redemption.dm,241: cannot read from list
+  proc name: ui data (/obj/machinery/mineral/ore_redemption/ui_data)
+  usr: Alice Sommer (expletives) (/mob/living/carbon/human)
+  usr.loc: The floor (89,116,2) (/turf/open/floor/plasteel)
+  src: the ore redemption machine (/obj/machinery/mineral/ore_redemption)
+  src.loc: the floor (90,116,2) (/turf/open/floor/plasteel/floorgrime)
+  call stack:
+  the ore redemption machine (/obj/machinery/mineral/ore_redemption): ui data(Alice Sommer (/mob/living/carbon/human))
+  /datum/tgui (/datum/tgui): open()
+  the ore redemption machine (/obj/machinery/mineral/ore_redemption): ui interact(Alice Sommer (/mob/living/carbon/human), "main", /datum/tgui (/datum/tgui), 0, null, /datum/ui_state/default (/datum/ui_state/default))
+  the ore redemption machine (/obj/machinery/mineral/ore_redemption): interact(Alice Sommer (/mob/living/carbon/human), null)
+  the ore redemption machine (/obj/machinery/mineral/ore_redemption): attack hand(Alice Sommer (/mob/living/carbon/human), 1, 1)
+  the ore redemption machine (/obj/machinery/mineral/ore_redemption): attack hand(Alice Sommer (/mob/living/carbon/human))
+  Alice Sommer (/mob/living/carbon/human): UnarmedAttack(the ore redemption machine (/obj/machinery/mineral/ore_redemption), 1)
+  Alice Sommer (/mob/living/carbon/human): ClickOn(the ore redemption machine (/obj/machinery/mineral/ore_redemption), "icon-x=16;icon-y=14;left=1;scr...")
+  the ore redemption machine (/obj/machinery/mineral/ore_redemption): Click(the floor (90,116,2) (/turf/open/floor/plasteel/floorgrime), "mapwindow.map", "icon-x=16;icon-y=14;left=1;scr...")
+  
+  runtime error: bad list
+  proc name: Error (/world/Error)
+  source file: error_handler.dm,20
+Warning: further proc crash messages are being suppressed to prevent overload...
+MC: SoftReset called, resetting MC queue state.
+MC: SoftReset() failed, crashing
+## DEBUG: Sat Jun 03 09:52:10 2017 MC restarted. Reports:
+	 var_edited = 0
+	 processing = 0
+	 iteration = 8845
+	 last_run = 6041
+	 subsystems = /list
+	 init_timeofday = 602037
+	 init_time = 969.5
+	 tickdrift = 392.023
+	 sleep_delta = 1.0214
+	 make_runtime = 0
+	 initializations_finished_with_no_players_logged_in = 0
+	 last_type_processed = Space Drift(/datum/controller/subsystem/spacedrift)
+	 queue_head = Lighting(/datum/controller/subsystem/lighting)
+	 queue_tail = Garbage(/datum/controller/subsystem/garbage)
+	 queue_priority_count = 50
+	 queue_priority_count_bg = 105
+	 map_loading = 0
+	 current_runlevel = 3
+	 restart_clear = 6142
+	 restart_timeout = 6092
+	 restart_count = 1
+	 current_ticklimit = 60
+	 gc_destroyed = 
+	 active_timers = 
+	 isprocessing = 0
+	 ui_screen = home
+	 fingerprintslast = 
+
+*/				
+				CHECK_TICK
 	else
 		data["hasDisk"] = FALSE
 	return data
@@ -282,11 +340,11 @@
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 		if("diskInsert")
-			var/obj/item/weapon/disk/design_disk/D = usr.get_active_held_item()
-			if(istype(D))
-				if(!usr.transferItemToLoc(D,src))
+			var/obj/item/weapon/disk/design_disk/disk = usr.get_active_held_item()
+			if(istype(disk))
+				if(!usr.transferItemToLoc(disk,src))
 					return
-			inserted_disk = D
+			inserted_disk = disk
 		if("diskEject")
 			if(inserted_disk)
 				inserted_disk.forceMove(loc)
@@ -305,7 +363,7 @@
 				materials.use_amount(alloy.materials, amount)
 				var/output = new alloy.build_path(src)
 				if(istype(output, /obj/item/stack/sheet))
-					var/obj/item/stack/sheet/mineral/produced_alloy = output
+					var/obj/item/stack/sheet/produced_alloy = output
 					produced_alloy.amount = amount
 					unload_mineral(produced_alloy)
 				else
@@ -329,6 +387,7 @@
 						unload_mineral(produced_alloy)
 					else
 						unload_mineral(output)
+					CHECK_TICK
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 
