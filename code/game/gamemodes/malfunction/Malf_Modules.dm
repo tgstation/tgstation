@@ -194,7 +194,7 @@
 	set desc = "Detonate all RCDs on the station, while sparing onboard cyborg RCDs."
 	set waitfor = FALSE
 
-	if(!canUseTopic() || malf_cooldown)
+	if(!canUseTopic() || malf_cooldown > world.time)
 		return
 
 	for(var/I in GLOB.rcd_list)
@@ -203,9 +203,7 @@
 			RCD.detonate_pulse()
 
 	to_chat(src, "<span class='warning'>RCD detonation pulse emitted.</span>")
-	malf_cooldown = TRUE
-	sleep(100)
-	malf_cooldown = FALSE
+	malf_cooldown = world.time + 100
 
 /datum/AI_Module/large/mecha_domination
 	module_name = "Viral Mech Domination"
@@ -446,7 +444,7 @@
 	set name = "Reactivate Cameranet"
 	set category = "Malfunction"
 
-	if(!canUseTopic() || malf_cooldown)
+	if(!canUseTopic() || malf_cooldown > world.time)
 		return
 	var/fixedcams = 0 //Tells the AI how many cams it fixed. Stats are fun.
 
@@ -469,9 +467,7 @@
 				break
 	to_chat(src, "<span class='notice'>Diagnostic complete! Operations completed: [fixedcams].</span>")
 
-	malf_cooldown = 1
-	spawn(30) //Lag protection
-		malf_cooldown = 0
+	malf_cooldown = world.time + 30
 
 /datum/AI_Module/large/upgrade_cameras
 	module_name = "Upgrade Camera Network"
