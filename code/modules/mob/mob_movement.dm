@@ -179,7 +179,7 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in user_movement_hooks)
+	for(var/obj/O in mob.user_movement_hooks)
 		O.intercept_user_move(direct, mob, n, oldloc)
 
 	return .
