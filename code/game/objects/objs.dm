@@ -188,6 +188,9 @@
 /obj/proc/on_mob_turn(dir, mob)
 	return
 
+/obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
+	return
+
 /obj/vv_get_dropdown()
 	. = ..()
 	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"

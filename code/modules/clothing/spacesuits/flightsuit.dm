@@ -107,6 +107,13 @@
 	var/atom/movable/cached_pull
 	var/turf/old_pull_turf
 
+/obj/item/device/flightpack/proc/changeWearer(mob/changeto)
+	if(wearer)
+		wearer.user_movement_hooks -= src
+	if(istype(changeto))
+		wearer = changeto
+		wearer.user_movement_hooks += src
+
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/Initialize()
 	ion_trail = new
@@ -196,8 +203,6 @@
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
-	if(wearer != owner)
-		wearer = owner
 	if(!suit && requires_suit)
 		usermessage("The flightpack will not work without being attached to a suit first!", "boldwarning")
 		return FALSE
@@ -249,10 +254,10 @@
 		old_pull_turf = null
 
 /obj/item/device/flightpack/proc/handle_linked_movement(turf/oldTurf, turf/newTurf)
-	var/atom/movable/cached = cached_pull
-	cached.forceMove(oldTurf)
+	if(cached_pull)
+		cached.forceMove(oldTurf)
 
-/obj/item/device/flightpack/on_mob_move(dir, mob, oldLoc)
+/obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
 	if(!flight)
 		return
 	update_cached_pull()
@@ -706,7 +711,7 @@
 
 /obj/item/device/flightpack/equipped(mob/user, slot)
 	if(ishuman(user))
-		wearer = user
+		changeWearer(user)
 	..()
 
 /obj/item/device/flightpack/proc/calculate_momentum_speed()
@@ -957,12 +962,12 @@
 		pack.relink_suit(src)
 	if(user)
 		if(pack)
-			pack.wearer = user
+			pack.changeWearer(user)
 		if(shoes)
 			shoes.wearer = user
 	else
 		if(pack)
-			pack.wearer = null
+			pack.changeWearer(null)
 		if(shoes)
 			shoes.wearer = null
 	if(shoes)
