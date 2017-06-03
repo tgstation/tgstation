@@ -2155,6 +2155,7 @@
 #include "hippiestation\code\game\machinery\computer\arcade.dm"
 #include "hippiestation\code\game\machinery\doors\airlock.dm"
 #include "hippiestation\code\game\machinery\doors\blastco.dm"
+#include "hippiestation\code\game\mecha\equipment\weapons.dm"
 #include "hippiestation\code\game\objects\inflatables.dm"
 #include "hippiestation\code\game\objects\noose.dm"
 #include "hippiestation\code\game\objects\effects\effect_system\effects_foam.dm"
