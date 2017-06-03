@@ -252,9 +252,9 @@
 	var/scandir = owner.dir
 	if(!istype(scanfrom))
 		clear_visuals()
-	var/turf/scanning
+	var/turf/scanning = scanfrom
 	var/stop = FALSE
-	on_mob.forceMove(scanfrom)
+	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
 		if(scanning.opacity || scanning.has_opaque_atom)
