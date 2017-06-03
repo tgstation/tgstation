@@ -1,4 +1,3 @@
 [submodule "tools/tgstation-server"]
 	path = tools/tgstation-server
-	url = https://github.com/tgstation/tgstation-server-tools
-	branch = master
+	url = https://github.com/tgstation/tgstation-server
