@@ -11,7 +11,7 @@
 	var/vig_item_list
 	var/vig_category_list
 	var/static/gang = "Vigilante"
-	var/list/vigilante_items = list(
+	var/static/list/vigilante_items = list(
 		/datum/gang_item/function/implant,
 		/datum/gang_item/weapon/hatchet,
 		/datum/gang_item/weapon/pitchfork,
@@ -36,6 +36,7 @@
 		)
 
 /obj/item/device/vigilante_tool/Initialize()
+	. = ..()
 	if(ismob(loc))
 		vig_item_list = list()
 		vig_category_list = list()
@@ -50,7 +51,9 @@
 		var/mob/living/M = loc
 		linked_action = new(src)
 		linked_action.Grant(M, src)
-		addtimer(CALLBACK(src, .proc/earnings), 1500)
+		addtimer(CALLBACK(src, .proc/earnings), 1500, TIMER_UNIQUE)
+	else
+		return INITIALIZE_HINT_QDEL
 
 /obj/item/device/vigilante_tool/Destroy()
 	var/mob/living/M = loc
@@ -59,8 +62,6 @@
 	return ..()
 
 /obj/item/device/vigilante_tool/proc/earnings()
-	if(!src)
-		return
 	var/all_territory = list()
 	var/newpoints = 0
 	var/mob/living/carbon/human/H = loc
@@ -109,7 +110,7 @@
 
 
 /obj/item/device/vigilante_tool/Topic(href, href_list)
-	if(usr.restrained() || usr.lying || usr.stat || usr.stunned || usr.weakened)
+	if(usr.incapacitated())
 		return 0
 	if(href_list["purchase"])
 		var/datum/gang_item/G = vig_item_list[href_list["purchase"]]
@@ -122,7 +123,7 @@
 /obj/item/device/vigilante_tool/proc/Destroy_Contraband(mob/living/user)
 	var/obj/item/I = user.get_active_held_item()
 	var/value
-	if(!I)
+	if(QDELETED(I))
 		to_chat(user, "<span class='notice'>No item detected.</span>")
 		return
 	switch(I.type)
@@ -189,11 +190,10 @@
 		to_chat(user, "<span class='notice'> No contraband detected!</span>")
 		return
 	playsound(src, 'sound/items/poster_being_created.ogg', 75, 1)
-	if(do_after(usr, 30, target = user))
-		if(I)
-			points += value
-			to_chat(user, "<span class='notice'>[I] has been processed for [value] influence.")
-			qdel(I)
+	if(do_after(user, 30, TRUE, I))
+		points += value
+		to_chat(user, "<span class='notice'>[I] has been processed for [value] influence.")
+		qdel(I)
 
 
 
