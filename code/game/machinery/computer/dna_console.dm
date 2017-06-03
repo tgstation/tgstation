@@ -28,7 +28,7 @@
 
 	var/list/buffer[NUMBER_OF_BUFFERS]
 
-	var/injectorready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
+	var/injectorready = 0	//world timer cooldown var
 	var/current_screen = "mainmenu"
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/diskette = null
@@ -61,8 +61,7 @@
 			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
 			if(!isnull(connected))
 				break
-		spawn(250)
-			injectorready = 1
+		injectorready = world.time + INJECTOR_TIMEOUT
 		return
 	return
 
@@ -213,7 +212,7 @@
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
-							if(injectorready)
+							if(injectorready < world.time)
 								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ue'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
@@ -227,7 +226,7 @@
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
-							if(injectorready)
+							if(injectorready < world.time)
 								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ui'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
@@ -240,7 +239,7 @@
 							else
 								temp_html += "<span class='linkOff'>Occupant</span>"
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
-							if(injectorready)
+							if(injectorready < world.time)
 								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>UI+UE Injector</span>"
@@ -251,7 +250,7 @@
 							else
 								temp_html += "<span class='linkOff'>Occupant</span> "
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
-							if(injectorready)
+							if(injectorready < world.time )
 								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>Injector</span>"
@@ -391,7 +390,7 @@
 					if("mixed")
 						apply_buffer(SCANNER_ACTION_MIXED,num)
 		if("injector")
-			if(num && injectorready)
+			if(num && injectorready < world.time)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
@@ -439,9 +438,7 @@
 								if(connected)
 									I.damage_coeff = connected.damage_coeff
 					if(I)
-						injectorready = 0
-						spawn(INJECTOR_TIMEOUT)
-							injectorready = 1
+						injectorready = world.time + INJECTOR_TIMEOUT
 		if("loaddisk")
 			if(num && diskette && diskette.fields)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
