@@ -1,0 +1,13 @@
+#Visual studio stuff
+.vscode/*
+.vs/*
+
+#VS stuff
+
+*/bin/*
+*/obj/*
+*/Debug/*
+*/Release/*
+
+packages/*
+*.user

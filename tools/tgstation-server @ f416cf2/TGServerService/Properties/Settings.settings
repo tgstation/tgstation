@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TGServerService.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ProjectName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">tgstation</Value>
+    </Setting>
+    <Setting Name="ServerPort" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">1337</Value>
+    </Setting>
+    <Setting Name="PushChangelogToGit" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CommitterName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">tgstation-server</Value>
+    </Setting>
+    <Setting Name="CommitterEmail" Type="System.String" Scope="User">
+      <Value Profile="(Default)">tgstation-server@tgstation13.org</Value>
+    </Setting>
+    <Setting Name="ServerDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:/tgstation-server-3</Value>
+    </Setting>
+    <Setting Name="ServerSecurity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ServerVisiblity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="ChatEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DDAutoStart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PythonPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Python27</Value>
+    </Setting>
+    <Setting Name="ChatProvider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ChatProviderData" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NEEDS INITIALIZING</Value>
+    </Setting>
+    <Setting Name="ChatAdmins" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;theghostofwhibyl1&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ChatChannels" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;#botbus&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ChatAdminChannel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#botbus</Value>
+    </Setting>
+    <Setting Name="ChatProviderEntropy" Type="System.String" Scope="User">
+      <Value Profile="(Default)">John Madden</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
