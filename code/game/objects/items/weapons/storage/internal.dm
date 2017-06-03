@@ -63,6 +63,12 @@
 		/obj/item/weapon/implanter, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool/mini,
 		/obj/item/device/firing_pin, /obj/item/weapon/bikehorn)
 
+/obj/item/weapon/storage/internal/pocket/bandolier
+	can_hold = list(/obj/item/ammo_casing/shotgun)
+	priority = TRUE
+	quickdraw = TRUE
+	storage_slots = 18
+
 /obj/item/weapon/storage/internal/pocket/small/detective
 	priority = TRUE // so the detectives would discover pockets in their hats
 
