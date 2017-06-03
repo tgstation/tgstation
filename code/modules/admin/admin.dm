@@ -423,6 +423,8 @@
 		return
 
 	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	if(world.RunningService())
+		options += "Service Restart (Force restart DD)";
 	var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
 	if(result)
 		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -432,7 +434,10 @@
 			if("Hard Restart (No Delay, No Feeback Reason)")
 				world.Reboot()
 			if("Hardest Restart (No actions, just reboot)")
-				world.Reboot(fast_track = TRUE)
+				world.Reboot(fast_track = TRUE)		
+			if("Service Restart (Force restart DD)")
+				GLOB.reboot_mode = REBOOT_MODE_HARD
+				world.ServiceReboot()
 
 /datum/admins/proc/end_round()
 	set category = "Server"

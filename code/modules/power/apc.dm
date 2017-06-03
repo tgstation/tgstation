@@ -93,11 +93,12 @@
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
 
+/obj/machinery/power/apc/get_cell()
+	return cell
+
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
 	//The terminal is what the power computer looks for anyway.
-	if(!terminal)
-		make_terminal()
 	if(terminal)
 		terminal.connect_to_network()
 
@@ -238,6 +239,8 @@
 			icon_state = "apcemag"
 		else if(update_state & UPSTATE_WIREEXP)
 			icon_state = "apcewires"
+		else if(update_state & UPSTATE_MAINT)
+			icon_state = "apc0"
 
 	if(!(update_state & UPSTATE_ALLGOOD))
 		cut_overlays()
@@ -445,6 +448,8 @@
 				update_icon()
 		else if(emagged)
 			to_chat(user, "<span class='warning'>The interface is broken!</span>")
+		else if((stat & MAINT) && !opened)
+			..() //its an empty closed frame... theres no wires to expose!
 		else
 			panel_open = !panel_open
 			to_chat(user, "The wires have been [panel_open ? "exposed" : "unexposed"]")
@@ -620,16 +625,14 @@
 		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
 			user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
-
+			cell.update_icon()
 			src.cell = null
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
-								 "<span class='notice'>You remove the power cell.</span>")
-			//to_chat(user, "You remove the power cell.")
 			charging = 0
 			src.update_icon()
+		return
+	if((stat & MAINT) && !opened) //no board; no interface
 		return
 	..()
 

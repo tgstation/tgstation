@@ -2443,10 +2443,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "aeg" = (
 /obj/machinery/conveyor{
@@ -2457,10 +2454,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "aeh" = (
 /obj/machinery/conveyor{
@@ -2478,10 +2472,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "aei" = (
 /obj/machinery/conveyor{
@@ -4417,10 +4408,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_end (WEST)";
-	icon_state = "plating_warn_end"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "aho" = (
 /obj/machinery/conveyor{
@@ -4467,10 +4455,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "ahr" = (
 /obj/machinery/conveyor{
@@ -4485,10 +4470,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "ahs" = (
 /obj/machinery/conveyor{
@@ -4510,10 +4492,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	tag = "icon-plating_warn_side (EAST)";
-	icon_state = "plating_warn_side"
-	},
+/turf/open/floor/plating,
 /area/quartermaster/storage)
 "aht" = (
 /obj/machinery/door/poddoor{
@@ -21163,10 +21142,10 @@
 	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	tag = "icon-filter_off_f (EAST)";
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 4;
 	icon_state = "filter_off_f";
-	dir = 4
+	tag = "icon-filter_off_f (EAST)"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -26411,7 +26390,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/trinary/filter{
+/obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4
 	},
 /turf/open/floor/plasteel,

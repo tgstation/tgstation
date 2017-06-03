@@ -225,7 +225,10 @@ This file contains the arcane tome files.
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
-	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
+	var/scribe_mod = initial(rune_to_scribe.scribe_delay)
+	if(istype(get_turf(user), /turf/open/floor/engine/cult))
+		scribe_mod *= 0.5
+	if(!do_after(user, scribe_mod, target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/structure/emergency_shield/sanguine/S = V
 			if(S && !QDELETED(S))

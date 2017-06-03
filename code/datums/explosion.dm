@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(GLOB.Debug2)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
-	if(!stopped)	//if we aren't in a hurry
+	if(running)	//if we aren't in a hurry
 		//Machines which report explosions.
 		for(var/array in GLOB.doppler_arrays)
 			var/obj/machinery/doppler_array/A = array
