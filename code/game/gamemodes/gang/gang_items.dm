@@ -143,6 +143,11 @@
 	var/confirm_final = alert(user, "Your gang can only place ONE gateway, make sure it is in a well-secured location.", "Are you ready to place the gateway?", "This location is secure", "I should wait...")
 	if(confirm_final == "No")
 		return FALSE
+	do_sparks(4, TRUE, src)
+	sleep(15)
+	do_sparks(4, TRUE, src)
+	sleep(15)
+	do_sparks(4, TRUE, src)
 	return ..()
 
 /obj/machinery/gang/backup
@@ -405,7 +410,7 @@
 /datum/gang_item/weapon/surplus
 	name = "Surplus Rifle"
 	id = "surplus"
-	cost = 8
+	cost = 6
 	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus/gang
 
 /obj/item/weapon/gun/ballistic/automatic/surplus/gang
@@ -420,19 +425,19 @@
 /datum/gang_item/weapon/improvised
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
-	cost = 6
+	cost = 9
 	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/buckshot_ammo
 	name = "Box of Buckshot"
 	id = "buckshot"
-	cost = 5
+	cost = 7
 	item_path = /obj/item/weapon/storage/box/lethalshot
 
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
-	cost = 30
+	cost = 35
 	item_path = /obj/item/weapon/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
@@ -444,7 +449,7 @@
 /datum/gang_item/weapon/pump
 	name = "Pump Shotgun"
 	id = "pump"
-	cost = 35
+	cost = 40
 	item_path = /obj/item/weapon/gun/ballistic/shotgun/lethal
 
 /datum/gang_item/weapon/riot
@@ -459,7 +464,7 @@
 /datum/gang_item/weapon/sniper
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
-	cost = 40
+	cost = 45
 	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo
@@ -479,7 +484,7 @@
 /datum/gang_item/weapon/auto
 	name = "Auto Rifle"
 	id = "auto"
-	cost = 32
+	cost = 35
 	item_path = /obj/item/weapon/gun/ballistic/automatic/wt550
 
 /datum/gang_item/weapon/ammo/auto_ammo
@@ -512,7 +517,7 @@
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
 	id = "uzi"
-	cost = 60
+	cost = 65
 	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
 
 

@@ -28,7 +28,7 @@
 				qdel(I)
 
 		if(!target.mind || target.stat == DEAD)
-			return 0
+			return FALSE
 
 		var/success
 		if(target.mind in SSticker.mode.get_gangsters())
@@ -42,8 +42,7 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 				return TRUE
 			else
-				var/datum/gang/G = user.mind.gang_datum
-				SSticker.mode.add_gangster(target.mind,G)
+				SSticker.mode.add_gangster(target.mind,gang)
 				target.Paralyse(3)
 				return TRUE
 
