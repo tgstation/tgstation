@@ -2,3 +2,4 @@
 	path = tools/tgstation-server
 	url = https://github.com/tgstation/tgstation-server
 
+	branch = master
