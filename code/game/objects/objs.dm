@@ -193,3 +193,6 @@
 	..()
 	if(unique_rename)
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+
+/obj/proc/gang_contraband_value()
+	return 0

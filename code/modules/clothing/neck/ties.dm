@@ -164,6 +164,9 @@
 	icon_state = "bling"
 	item_color = "bling"
 
+/obj/item/clothing/neck/necklace/dope/gang_contraband_value()
+	return 2
+
 ////////////////
 //OONGA BOONGA//
 ////////////////

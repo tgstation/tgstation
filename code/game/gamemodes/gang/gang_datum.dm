@@ -262,26 +262,14 @@
 		return 0
 	var/static/inner = inner_outfit
 	var/static/outer = outer_outfit
-	for(var/obj/C in gangbanger.contents)
+	for(var/obj/item/C in gangbanger.contents)
 		if(C.type == inner_outfit)
 			. += 2
 			continue
-		if(C.type == outer_outfit)
+		else if(C.type == outer_outfit)
 			. += 2
 			continue
-		switch(C.type)
-			if(/obj/item/clothing/neck/necklace/dope)
-				. += 2
-			if(/obj/item/clothing/head/collectable/petehat/gang)
-				. += 4
-			if(/obj/item/clothing/shoes/gang)
-				. += 6
-			if(/obj/item/clothing/mask/gskull)
-				. += 5
-			if(/obj/item/clothing/gloves/gang)
-				. += 3
-			if(/obj/item/weapon/storage/belt/military/gang)
-				. += 4
+		. += C.gang_contraband_value()
 	adjust_influence(gangsta, .)
 	if(.)
 		announce_to_mind(gangsta, "<span class='notice'>Your influential choice of clothing has increased your influence by [.] points!</span>")
