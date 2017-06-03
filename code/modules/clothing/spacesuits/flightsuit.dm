@@ -255,7 +255,7 @@
 
 /obj/item/device/flightpack/proc/handle_linked_movement(turf/oldTurf, turf/newTurf)
 	if(cached_pull)
-		cached.forceMove(oldTurf)
+		cached_pull.forceMove(oldTurf)
 
 /obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
 	if(!flight)
