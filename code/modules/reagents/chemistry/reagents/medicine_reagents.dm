@@ -106,8 +106,6 @@
 	if(holder.has_reagent("histamine"))
 		holder.remove_reagent("histamine", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(30))
-		M.adjustToxLoss(1, 0)
 		. = 1
 	..()
 
