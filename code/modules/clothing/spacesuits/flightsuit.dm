@@ -92,6 +92,8 @@
 	var/crash_disabled = FALSE
 	var/crash_dampening = 0
 
+	var/requires_suit = TRUE
+
 	var/datum/effect_system/trail_follow/ion/flight/ion_trail
 
 	var/assembled = FALSE
@@ -175,6 +177,7 @@
 /obj/item/device/flightpack/Destroy()
 	if(suit)
 		delink_suit()
+	disable_flight(TRUE)
 	QDEL_NULL(part_manip)
 	QDEL_NULL(part_scan)
 	QDEL_NULL(part_cap)
@@ -187,13 +190,13 @@
 	var/damage = severity == 1 ? emp_strong_damage : emp_weak_damage
 	if(emp_damage <= (emp_disable_threshold * 1.5))
 		emp_damage += damage
-	usermessage("WARNING: Class [severity] EMP detected! Circuit damage at [(emp_damage/emp_disable_threshold)*100]%!", "boldwarning")
+		usermessage("WARNING: Class [severity] EMP detected! Circuit damage at [(emp_damage/emp_disable_threshold)*100]%!", "boldwarning")
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
 	if(wearer != owner)
 		wearer = owner
-	if(!suit)
+	if(!suit && requires_suit)
 		usermessage("The flightpack will not work without being attached to a suit first!", "boldwarning")
 		return FALSE
 	if(istype(action, /datum/action/item_action/flightpack/toggle_flight))
@@ -275,21 +278,20 @@
 		drift_dir_y = SOUTH
 	if(momentum_speed == 0)
 		return FALSE
-	if(suit)
-		if(wearer)
-			if(!wearer.canmove)
-				losecontrol()
-			momentum_decay()
-			for(var/i in 1 to momentum_speed)
-				var/turf/oldturf = get_turf(wearer)
-				if(momentum_speed_x >= i)
-					step(wearer, drift_dir_x)
-				if(momentum_speed_y >= i)
-					step(wearer, drift_dir_y)
-				if(dragging_through && oldturf)
-					dragging_through.forceMove(oldturf)
-					wearer.pulling = dragging_through
-				sleep(1)
+	if(wearer)
+		if(!wearer.canmove)
+			losecontrol()
+		momentum_decay()
+		for(var/i in 1 to momentum_speed)
+			var/turf/oldturf = get_turf(wearer)
+			if(momentum_speed_x >= i)
+				step(wearer, drift_dir_x)
+			if(momentum_speed_y >= i)
+				step(wearer, drift_dir_y)
+			if(dragging_through && oldturf)
+				dragging_through.forceMove(oldturf)
+				wearer.pulling = dragging_through
+			sleep(1)
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -305,19 +307,18 @@
 
 //Check for gravity, air pressure, and whether this is still linked to a suit. Also, resync the flightpack/flight suit every minute.
 /obj/item/device/flightpack/proc/check_conditions()
-	if(suit)
-		if(wearer)
-			if(wearer.has_gravity())
-				gravity = 1
-			else
-				gravity = 0
-			var/turf/T = get_turf(wearer)
-			var/datum/gas_mixture/gas = T.return_air()
-			var/envpressure =	gas.return_pressure()
-			if(envpressure >= pressure_threshold)
-				pressure = 1
-			else
-				pressure = 0
+	if(wearer)
+		if(wearer.has_gravity())
+			gravity = 1
+		else
+			gravity = 0
+		var/turf/T = get_turf(wearer)
+		var/datum/gas_mixture/gas = T.return_air()
+		var/envpressure =	gas.return_pressure()
+		if(envpressure >= pressure_threshold)
+			pressure = 1
+		else
+			pressure = 0
 	if(flight)
 		if(!assembled)
 			disable_flight(1)
@@ -328,21 +329,21 @@
 	if(!pressure && brake)
 		brake = FALSE
 		usermessage("Airbrakes deactivated due to lack of pressure!", "boldwarning")
-	if(!suit.deployedshoes)
-		if(brake || stabilizer)
-			brake = FALSE
-			stabilizer = FALSE
-			usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", "boldwarning")
+	if(suit)
+		if(!suit.deployedshoes)
+			if(brake || stabilizer)
+				brake = FALSE
+				stabilizer = FALSE
+				usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", "boldwarning")
 
 /obj/item/device/flightpack/proc/update_slowdown()
 	if(!flight)
-		suit.slowdown = slowdown_ground
-		return
+		slowdown = slowdown_ground
 	else
-		suit.slowdown = slowdown_air
+		slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(!suit || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
+	if((!suit && requires_suit) || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	check_conditions()
 	calculate_momentum_speed()
@@ -474,7 +475,7 @@
 			wearer.forceMove(get_turf(L))
 			crashing = FALSE
 			return FALSE
-		suit.user.forceMove(get_turf(unmovablevictim))
+		wearer.forceMove(get_turf(unmovablevictim))
 		crashing = FALSE
 		mobknockback(L, crashpower, crashdir)
 		damage = FALSE
@@ -625,10 +626,16 @@
 		disable_flight(FALSE)
 
 /obj/item/device/flightpack/proc/enable_flight(forced = FALSE)
-	if(!suit)
-		usermessage("Warning: Flightpack not linked to compatible flight-suit mount!", "boldwarning")
-	if(disabled)
-		usermessage("Internal systems recalibrating. Unable to safely proceed.", "boldwarning")
+	if(!forced)
+		if(disabled)
+			usermessage("Internal systems recalibrating. Unable to safely proceed.", "boldwarning")
+			return FALSE
+		if(suit)
+			if(suit.shoes)
+				suit.shoes.toggle(TRUE)
+		else if(!requires_suit)
+			usermessage("Warning: Flightpack not linked to compatible flight-suit mount!", "boldwarning")
+			return FALSE
 	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
 	usermessage("ENGAGING FLIGHT ENGINES.")
@@ -637,8 +644,6 @@
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = TRUE
-	if(suit.shoes)
-		suit.shoes.toggle(TRUE)
 	update_icon()
 	ion_trail.start()
 
@@ -658,7 +663,7 @@
 		wearer.movement_type &= ~FLYING
 		wearer.pass_flags &= ~flight_passflags
 		flight = FALSE
-		if(suit.shoes)
+		if(suit && suit.shoes)
 			suit.shoes.toggle(FALSE)
 		if(isturf(wearer.loc))
 			var/turf/T = wearer.loc
@@ -849,9 +854,10 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/flightshoes/Destroy()
-	if(suit)
-		suit.shoes = null
-	return ..()
+	pack = null
+	wearer = null
+	suit = null
+	. = ..()
 
 /obj/item/clothing/shoes/flightshoes/proc/toggle(toggle)
 	if(suit)
@@ -860,9 +866,6 @@
 			src.flags |= NOSLIP
 		if(!active)
 			src.flags &= ~NOSLIP
-
-/obj/item/clothing/shoes/flightshoes/dropped(mob/wearer)
-	..()
 
 /obj/item/clothing/shoes/flightshoes/item_action_slot_check(slot)
 	if(slot == slot_shoes)
@@ -913,8 +916,8 @@
 	var/maint_panel = FALSE
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/full/New()
-	..()
+/obj/item/clothing/suit/space/hardsuit/flightsuit/full/Initialize()
+	. = ..()
 	makepack()
 	makeshoes()
 	resync()
@@ -935,14 +938,9 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
-	if(pack)
-		pack.delink_suit()
-		qdel(pack)
-	if(shoes)
-		shoes.pack = null
-		shoes.suit = null
-		qdel(shoes)
-	..()
+	QDEL_NULL(pack)
+	QDEL_NULL(shoes)
+	. = ..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/resync()
 	if(pack)
