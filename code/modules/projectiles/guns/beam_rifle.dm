@@ -154,8 +154,15 @@
 		var/obj/effect/temp_visual/projectile_beam/PB = I
 		qdel(PB)
 
+/obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
+	stop_aiming()
+	clear_tracers()
+
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
+		return
+	if(!isturf(current_user.loc) || !(src in current_user.held_items))	//Doesn't work if you're not holding it!
+		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
