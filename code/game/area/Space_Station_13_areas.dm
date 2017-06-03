@@ -1435,8 +1435,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "AI Satellite Atmos"
 	icon_state = "ai"
 	
-	/area/ai_monitored/turret_protected/aisat/atmos
-	name = "AI Satellite Atmos"
+/area/ai_monitored/turret_protected/aisat/foyer
+	name = "AI Satellite Foyer"
 	icon_state = "ai"
 	
 /area/ai_monitored/turret_protected/aisat/service
