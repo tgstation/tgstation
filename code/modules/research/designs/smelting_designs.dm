@@ -26,3 +26,14 @@
 	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
 	build_path = /obj/item/stack/sheet/mineral/abductor
 	category = list("Stock Parts")
+
+//Design disk for test purposes.
+/obj/item/weapon/disk/design_disk/alienalloy
+	name = "Alien Alloy Disk"
+	desc = "A disk containing details on the creation of alien alloy."
+	icon_state = "datadisk1"
+
+/obj/item/weapon/disk/design_disk/alienalloy/Initialize()
+	. = ..()
+	var/datum/design/alienalloy/A = new
+	blueprints[1] = A

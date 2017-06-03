@@ -1,0 +1,103 @@
+<ui-display>
+	<ui-section>
+		This machine only accepts ore. Gibtonite and Slag are not accepted.
+	</ui-section>
+	<ui-section>
+		Current unclaimed points: {{data.unclaimedPoints}}
+		{{#if data.unclaimedPoints}}
+			<ui-button action='Claim'>
+				Claim Points
+			</ui-button>
+		{{/if}}
+	</ui-section>
+	<ui-section>
+		{{#if data.hasID}}
+			<ui-button action='Eject'>
+				Eject ID
+			</ui-button>
+			You have {{data.claimedPoints}} mining points collected.
+		{{else}}
+			<ui-button action='Insert'>
+				Insert ID
+			</ui-button>
+		{{/if}}
+	</ui-section>
+</ui-display>
+<ui-display>
+	{{#if data.hasDisk}}
+		<ui-section>
+			<ui-button action="diskEject" icon="eject">
+				Eject Disk
+			</ui-button>
+		</ui-section>
+		{{#each data.diskDesigns}}
+			<ui-section class=candystripe>
+				File {{index}}: {{name}} <ui-button action="diskUpload" state={{(canupload) ? null : 'disabled'}}  icon="upload" align="right" params='{ "design" : {{index}} }'>Upload<ui-button>
+			</ui-section>
+		{{/each}}
+	{{else}}
+		<ui-section>
+			<ui-button action="diskInsert" icon="floppy-o">
+				Insert Disk
+			</ui-button>
+		</ui-section>
+	{{/if}}
+</ui-display>
+<ui-display>
+	<table>
+			<tr class='candystripe'>
+			<td>
+				Mineral
+			</td>
+			<td>
+				Sheets
+			</td>
+			<td align='right' padding-left='5px'>
+				<ui-button action='Release' params='{"id" : "all"}'>
+					Release All
+				</ui-button>
+			</td>
+			<td align='right'>
+				Ore Value
+			</td>
+		</tr>
+	{{#each data.materials}}
+		<tr class='candystripe'>
+			<td>
+				{{name}}
+			</td>
+			<td align='right'>
+				{{amount}}
+			</td>
+			<td align='right'>
+				<ui-button action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+					Release
+				</ui-button>
+			</td>
+			<td align='right'>
+				{{value}}
+			</td>
+		</tr>
+	{{/each}}
+	{{#each data.alloys}}
+		<tr class='candystripe'>
+			<td>
+				{{name}}
+			</td>
+			<td align='right'>
+				{{amount}}
+			</td>
+			<td align='right'>
+				<ui-button action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+					Smelt
+				</ui-button>
+			</td>
+			<td align='right'>
+				<ui-button action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+					Smelt All
+				</ui-button>
+			</td>
+		</tr>
+	{{/each}}
+	</table>
+</ui-display>
