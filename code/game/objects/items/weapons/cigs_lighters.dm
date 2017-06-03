@@ -110,7 +110,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
-	var/smoketime = 300
+	var/smoketime = 150
 	var/chem_volume = 30
 	var/list/list_reagents = list("nicotine" = 15)
 	heat = 1000
