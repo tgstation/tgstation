@@ -183,11 +183,3 @@
 	suffix = "lavaland_surface_swarmer_crash.dmm"
 	allow_duplicates = FALSE
 	cost = 20
-
-/datum/map_template/ruin/lavaland/marine_crash
-	name = "Crashed Marine Transport"
-	id = "marine"
-	description = "A Marine	 Transport that has crashed, with one sole survivor"
-	suffix = "lavaland_surface_ueg_crash1.dmm"
-	allow_duplicates = FALSE
-	cost = 5
