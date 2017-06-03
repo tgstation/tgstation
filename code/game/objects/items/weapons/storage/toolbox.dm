@@ -151,7 +151,7 @@
 	new /obj/item/weapon/weldingtool/experimental/brass(src)
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
-	var/slab_type = /obj/item/clockwork/slab/scarab
+	var/slab_type = /obj/item/clockwork/slab
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
 	..()
