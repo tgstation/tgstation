@@ -259,3 +259,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		obj_break(damage_type)
 		return TRUE
 	return FALSE
+
+//returns how much the object blocks an explosion
+/obj/proc/GetExplosionBlock()
+	CRASH("Unimplemented GetExplosionBlock()")
