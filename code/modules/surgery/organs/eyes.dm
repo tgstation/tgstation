@@ -225,10 +225,14 @@
 		deactivate(silent = TRUE)
 
 /obj/item/organ/eyes/robotic/glow/on_mob_move()
+	if(!owner)
+		return
 	if(active)
 		update_visuals()
 
 /obj/item/organ/eyes/robotic/glow/on_mob_turn()
+	if(!owner)
+		return
 	update_visuals()
 
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
