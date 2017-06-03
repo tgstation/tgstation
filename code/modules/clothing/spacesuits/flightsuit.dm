@@ -124,10 +124,12 @@
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	..()
 
-/obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice")
+/obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
 	var/mob/targ = owner
 	if(ismob(loc))
 		targ = loc
+	if(istype(mob_override))
+		targ = mob_override
 	if(!istype(targ))
 		return
 	to_chat(targ, "<span class='[span]'>\icon[src]|[message]</span>")
@@ -394,7 +396,6 @@
 	if(wearer)
 		wearer.update_inv_wear_suit()
 		wearer.update_inv_back()
-	..()
 
 /obj/item/device/flightpack/proc/handle_boost()
 	if(boost)
@@ -718,8 +719,13 @@
 		return TRUE
 
 /obj/item/device/flightpack/proc/enable_stabilizers()
+	if(requires_suit)
+		if(suit && !suit.deployedshoes)
+			usermessage("Stabilizers requires flight shoes to be attached and deployed!", "boldwarning")
+			return FALSE
 	usermessage("Activating automatic stabilization controller and enabling maneuvering assistance.")
 	stabilizer = TRUE
+	return TRUE
 
 /obj/item/device/flightpack/proc/disable_stabilizers()
 	if(wearer)
@@ -748,9 +754,9 @@
 
 /obj/item/device/flightpack/proc/enable_airbrake()
 	if(wearer)
-		if(!stabilizer)
-			enable_stabilizers()
-			usermessage("Stabilizers activated!")
+		if(!stabilizer && !enable_stabilizers())
+			usermessage("Airbrake deployment: Stabilizer Errored.", "boldwarning")
+			return FALSE
 		usermessage("Airbrakes extended!")
 	brake = TRUE
 	update_slowdown()
@@ -782,44 +788,37 @@
 	suit = null
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
-	if(ishuman(user) && !ishuman(src.loc))
-		wearer = user
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
-					part_manip = null
 				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
-					part_scan = null
 				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
-					part_laser = null
 				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
-					part_bin = null
 				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
-					part_cap = null
 				part_cap = I
 	update_parts()
 	..()
