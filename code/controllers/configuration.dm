@@ -148,7 +148,6 @@
 	var/show_game_type_odds = 0			//if set this allows players to see the odds of each roundtype on the get revision screen
 	var/mutant_races = 0				//players can choose their mutant race before joining the game
 	var/list/roundstart_races = list()	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
-	var/mutant_humans = 0				//players can pick mutant bodyparts for humans before joining the game
 
 	var/no_summon_guns		//No
 	var/no_summon_magic		//Fun
@@ -739,8 +738,6 @@
 						if(species_id == race_id)
 							roundstart_races += GLOB.species_list[species_id]
 							GLOB.roundstart_species[species_id] = GLOB.species_list[species_id]
-				if("join_with_mutant_humans")
-					mutant_humans			= 1
 				if("assistant_cap")
 					assistant_cap			= text2num(value)
 				if("starlight")
