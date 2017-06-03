@@ -120,7 +120,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
-			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal() && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L)))
 				nearby_servants++
 		if(nearby_servants < invokers_required)
 			to_chat(invoker, "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>")
