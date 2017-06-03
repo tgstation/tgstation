@@ -78,23 +78,23 @@
 	onclose(user, "mob[real_name]")
 	return
 
-/mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
-	var/armorval = 0
+/mob/living/simple_animal/pet/dog/corgi/getarmr(def_zone, type)
+	var/armrval = 0
 
 	if(def_zone)
 		if(def_zone == "head")
 			if(inventory_head)
-				armorval = inventory_head.armor[type]
+				armrval = inventory_head.armr[type]
 		else
 			if(inventory_back)
-				armorval = inventory_back.armor[type]
-		return armorval
+				armrval = inventory_back.armr[type]
+		return armrval
 	else
 		if(inventory_head)
-			armorval += inventory_head.armor[type]
+			armrval += inventory_head.armr[type]
 		if(inventory_back)
-			armorval += inventory_back.armor[type]
-	return armorval*0.5
+			armrval += inventory_back.armr[type]
+	return armrval*0.5
 
 /mob/living/simple_animal/pet/dog/corgi/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/weapon/razor))

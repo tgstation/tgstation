@@ -50,7 +50,7 @@
 	if(linkedwall && wall_generation_cooldown <= world.time)
 		wall_generation_cooldown = world.time + get_production_time()
 		var/component_id = generate_cache_component(null, src)
-		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
+		playsound(linkedwall, 'sound/magic/clockwork/fellowship_armry.ogg', rand(15, 20), 1, -3, 1, 1)
 		visible_message("<span class='[get_component_span(component_id)]'>Something</span><span class='warning'> cl[pick("ank", "ink", "unk", "ang")]s around inside of [src]...</span>")
 
 /obj/structure/destructible/clockwork/cache/attackby(obj/item/I, mob/living/user, params)

@@ -1599,7 +1599,7 @@
 	dir = 9;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adz" = (
 /obj/structure/cable/orange{
 	d1 = 2;
@@ -1611,7 +1611,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adA" = (
 /obj/item/weapon/grenade/barrier{
 	pixel_x = 4
@@ -1627,7 +1627,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/firingpins{
@@ -1643,7 +1643,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adC" = (
 /obj/machinery/door/airlock/security{
 	name = "Prisoner Transfer Center";
@@ -1774,7 +1774,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adR" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/laser{
@@ -1793,7 +1793,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adS" = (
 /obj/item/weapon/ore/glass,
 /turf/open/floor/plating/asteroid,
@@ -1802,7 +1802,7 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof{
+/obj/item/clothing/suit/armr/laserproof{
 	pixel_x = 0
 	},
 /obj/structure/window/reinforced{
@@ -1818,7 +1818,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1826,7 +1826,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adV" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -1849,7 +1849,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adX" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/unexplored{
@@ -2044,7 +2044,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aes" = (
 /obj/machinery/camera{
 	c_tag = "Brig Cell 6";
@@ -2077,14 +2077,14 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aev" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aew" = (
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/circuit{
@@ -2225,14 +2225,14 @@
 /area/security/prison)
 "aeL" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -2259,7 +2259,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aeM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -2276,7 +2276,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aeO" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -2403,7 +2403,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aff" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
@@ -2418,7 +2418,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afg" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2628,7 +2628,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless;
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afz" = (
 /obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 6";
@@ -2662,7 +2662,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -2672,7 +2672,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afD" = (
 /obj/structure/holohoop{
 	tag = "icon-hoop (NORTH)";
@@ -2989,7 +2989,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -3037,7 +3037,7 @@
 /turf/open/floor/plasteel/delivery{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agk" = (
 /turf/closed/mineral,
 /area/security/transfer)
@@ -3500,7 +3500,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aha" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=CellBlockMidRight";
@@ -9210,7 +9210,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "asi" = (
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white{
@@ -9230,7 +9230,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "ask" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin,
@@ -9754,7 +9754,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "atn" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/teargas{
@@ -9775,7 +9775,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "ato" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -10327,7 +10327,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "auu" = (
 /obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 2";
@@ -13465,7 +13465,7 @@
 	req_access_txt = "1"
 	},
 /obj/machinery/button/door{
-	id = "armoryaccess";
+	id = "armryaccess";
 	name = "Armory Shutter Access";
 	pixel_x = 24;
 	pixel_y = 0;
@@ -18745,7 +18745,7 @@
 	on = 1
 	},
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for making sure Cargo isn't hiding an armory bigger than Security's.";
+	desc = "Used for making sure Cargo isn't hiding an armry bigger than Security's.";
 	name = "Cargo Monitor";
 	network = list("QM");
 	pixel_y = -32
@@ -25863,7 +25863,7 @@
 /obj/structure/safe,
 /obj/item/weapon/twohanded/fireaxe,
 /obj/item/clothing/head/bearpelt,
-/obj/item/bear_armor,
+/obj/item/bear_armr,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
 /obj/item/weapon/dice/d20{
 	desc = "A die with twenty sides. You feel absolutely normal while looking at this.";
@@ -75230,7 +75230,7 @@
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEw" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/laser{
@@ -75248,19 +75248,19 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEx" = (
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEy" = (
 /turf/open/floor/plasteel/darkred/side{
 	icon_state = "darkred";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEz" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun{
@@ -75278,7 +75278,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEA" = (
 /mob/living/simple_animal/bot/secbot/beepsky{
 	desc = "It's Officer Gunsky, the most rootin'-tootin'-point-and shootin' security bot on this side of the galaxy!";
@@ -75287,13 +75287,13 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEB" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cEC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -78470,7 +78470,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "cKK" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -83082,7 +83082,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cTV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -84011,7 +84011,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cVy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -84024,7 +84024,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cVz" = (
 /obj/structure/closet/secure_closet/brig{
 	name = "Perma Storage"
@@ -88573,14 +88573,14 @@
 /area/maintenance/asteroid/fore/cargo_west)
 "deY" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "armoryaccess";
+	id = "armryaccess";
 	name = "Armory Shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "deZ" = (
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -88600,7 +88600,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dfc" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -88615,7 +88615,7 @@
 	dir = 9;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dfd" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -88656,7 +88656,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dfj" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -88720,7 +88720,7 @@
 	dir = 4
 	},
 /obj/machinery/button/door{
-	id = "armoryaccess2";
+	id = "armryaccess2";
 	name = "Armory Shutter Access";
 	pixel_x = 0;
 	pixel_y = -28;
@@ -88729,7 +88729,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dfq" = (
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -93102,7 +93102,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -93110,7 +93110,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -93118,7 +93118,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -93126,7 +93126,7 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpr" = (
 /obj/machinery/flasher/portable,
 /obj/effect/turf_decal/delivery,
@@ -93262,37 +93262,37 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpF" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpG" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpH" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpI" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpJ" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "armoryaccess";
+	id = "armryaccess";
 	name = "Armory Shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/orange{
@@ -93382,13 +93382,13 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpT" = (
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpU" = (
 /obj/machinery/light{
 	dir = 1
@@ -93396,7 +93396,7 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -93413,7 +93413,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -93428,10 +93428,10 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpX" = (
 /obj/machinery/button/door{
-	id = "armoryaccess";
+	id = "armryaccess";
 	name = "Armory Shutter Access";
 	pixel_x = 0;
 	pixel_y = 28;
@@ -93446,7 +93446,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -93460,7 +93460,7 @@
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dpZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -93471,7 +93471,7 @@
 	dir = 5;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqa" = (
 /obj/machinery/camera{
 	c_tag = "Brig Cell 2";
@@ -93666,18 +93666,18 @@
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqr" = (
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqs" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -93685,12 +93685,12 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqu" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof{
+/obj/item/clothing/suit/armr/laserproof{
 	pixel_x = 0
 	},
 /obj/structure/window/reinforced{
@@ -93705,7 +93705,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqv" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/lockbox/loyalty,
@@ -93716,7 +93716,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/orange{
@@ -93823,38 +93823,38 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqH" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqI" = (
 /obj/structure/closet/secure_closet{
 	name = "contraband locker";
 	req_access_txt = "3"
 	},
-/obj/effect/spawner/lootdrop/armory_contraband{
+/obj/effect/spawner/lootdrop/armry_contraband{
 	loot = list(/obj/item/weapon/gun/ballistic/automatic/pistol = 5, /obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/weapon/gun/ballistic/revolver/mateba, /obj/item/weapon/gun/ballistic/automatic/pistol/deagle, /obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 3)
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqJ" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqK" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -93887,7 +93887,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqL" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/firingpins{
@@ -93906,7 +93906,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqM" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Perma Cell 5";
@@ -94032,12 +94032,12 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dqZ" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dra" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/advtaser{
@@ -94052,17 +94052,17 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "drb" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -94088,7 +94088,7 @@
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "drc" = (
 /obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -94097,7 +94097,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "drd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -94240,13 +94240,13 @@
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "drt" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dru" = (
 /obj/item/weapon/grenade/barrier{
 	pixel_x = 4
@@ -94262,7 +94262,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "drv" = (
 /obj/machinery/camera{
 	c_tag = "Brig Cell 1";
@@ -94495,7 +94495,7 @@
 /area/security/main)
 "drR" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "armoryaccess2";
+	id = "armryaccess2";
 	name = "Armory Shutters"
 	},
 /turf/open/floor/plating{
@@ -94515,7 +94515,7 @@
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "drT" = (
 /obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 1";
@@ -94728,12 +94728,12 @@
 	dir = 10;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dsq" = (
 /turf/open/floor/plasteel/darkred/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dsr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -94744,7 +94744,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dss" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -94753,7 +94753,7 @@
 /turf/open/floor/plasteel/darkred/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dst" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -94764,7 +94764,7 @@
 	dir = 6;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dsu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	icon_state = "intact";
@@ -95065,7 +95065,7 @@
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/armory)
+/area/security/armry)
 "dsR" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless

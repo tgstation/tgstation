@@ -14,13 +14,13 @@ Contains:
  - Carp hardsuit
 */
 
-	//Death squad armored space suits, not hardsuits!
+	//Death squad armred space suits, not hardsuits!
 /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	name = "MK.III SWAT Helmet"
 	desc = "An advanced tactical space helmet."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
-	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -31,11 +31,11 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/deathsquad
 	name = "MK.III SWAT Suit"
-	desc = "A prototype designed to replace the ageing MK.II SWAT suit. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with plasteel, allowing superior armor against most threats. There's room for some kind of energy projection device on the back."
+	desc = "A prototype designed to replace the ageing MK.II SWAT suit. Based on the streamlined MK.II model, the traditional ceramic and graphene plate construction was replaced with plasteel, allowing superior armr against most threats. There's room for some kind of energy projection device on the back."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -49,24 +49,24 @@ Contains:
 	icon_state = "heavy"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 100, acid = 100)
+	armr = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 100, acid = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/beret
 	name = "officer's beret"
-	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
+	desc = "An armred beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
 	icon_state = "beret_badge"
 	flags = STOPSPRESSUREDMAGE
 	flags_inv = 0
-	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
-	desc = "An armored, space-proof jacket used in special operations."
+	desc = "An armred, space-proof jacket used in special operations."
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
@@ -74,7 +74,7 @@ Contains:
 	flags_inv = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 80, laser = 50, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -82,10 +82,10 @@ Contains:
 	//Marine Armour
 /obj/item/clothing/head/helmet/space/hardsuit/ueg
 	name = "Iron Hawk Marine Helmet"
-	desc = "An armoured, pressurised, military helmet used as standard issue among Iron Hawk Marines."
+	desc = "An armred, pressurised, military helmet used as standard issue among Iron Hawk Marines."
 	icon_state = "ueghelm"
 	item_state = "ueghelm"
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
+	armr = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	actions_types = list()
@@ -95,11 +95,11 @@ Contains:
 
 /obj/item/clothing/suit/space/hardsuit/ueg
 	name = "Iron Hawk Marine Armour"
-	desc = "Modified MK.II SWAT Armour. Used by Iron Hawk Marines in ship to ship action. This model appears to have lost some of its armour plating during the crash."
-	icon_state = "uegarmor"
-	item_state = "uegarmor"
+	desc = "Modified MK.II SWAT Armour. Used by Iron Hawk Marines in ship to ship action. This model appears to have lost some of its armr plating during the crash."
+	icon_state = "uegarmr"
+	item_state = "uegarmr"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
+	armr = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ueg
@@ -145,7 +145,7 @@ Contains:
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
+	armr = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 40
 	put_on_delay = 20
@@ -160,7 +160,7 @@ Contains:
 	flags_inv = 0
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals, /obj/item/weapon/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/weapon/reagent_containers/food/drinks/bottle/rum)
 	slowdown = 0
-	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
+	armr = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	strip_delay = 40
 	put_on_delay = 20
 
@@ -171,7 +171,7 @@ Contains:
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
 	item_color = "ert_commander"
-	armor = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 80, acid = 80)
+	armr = list(melee = 65, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	brightness_on = 7
@@ -183,7 +183,7 @@ Contains:
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 30, bullet = 50, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 0, acid = 95)
+	armr = list(melee = 30, bullet = 50, laser = 30, energy = 50, bomb = 50, bio = 100, rad = 100, fire = 0, acid = 95)
 	slowdown = 0
 	strip_delay = 130
 
@@ -232,7 +232,7 @@ Contains:
 	icon_state = "space"
 	item_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20, fire = 50, acid = 65)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20, fire = 50, acid = 65)
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "EVA helmet"
@@ -240,14 +240,14 @@ Contains:
 	item_state = "space"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20, fire = 50, acid = 65)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20, fire = 50, acid = 65)
 
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
-	armor = list(melee = 20, bullet = 40, laser = 30, energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
+	armr = list(melee = 20, bullet = 40, laser = 30, energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF
@@ -258,7 +258,7 @@ Contains:
 	icon_state = "freedom"
 	item_state = "freedom"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
-	armor = list(melee = 20, bullet = 40, laser = 30,energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
+	armr = list(melee = 20, bullet = 40, laser = 30,energy = 25, bomb = 100, bio = 100, rad = 100, fire = 80, acid = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF
@@ -269,7 +269,7 @@ Contains:
 	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
 	icon_state = "carp_helm"
 	item_state = "syndicate"
-	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75)	//As whimpy as a space carp
+	armr = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
@@ -281,7 +281,7 @@ Contains:
 	icon_state = "carp_suit"
 	item_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
-	armor = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75) //As whimpy whimpy whoo
+	armr = list(melee = -20, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 75, fire = 60, acid = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
@@ -338,7 +338,7 @@ Contains:
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
 	icon_state = "syndicate-helm-orange"
 	item_state = "syndicate-helm-orange"
-	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
+	armr = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile
@@ -348,7 +348,7 @@ Contains:
 	icon_state = "syndicate-orange"
 	item_state = "syndicate-orange"
 	slowdown = 2
-	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
+	armr = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)

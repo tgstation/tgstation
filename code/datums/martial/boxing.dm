@@ -25,21 +25,21 @@
 
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/armr_block = D.run_armr_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, STAMINA, affecting, armor_block)
+	D.apply_damage(damage, STAMINA, affecting, armr_block)
 	add_logs(A, D, "punched (boxing) ")
 	if(D.getStaminaLoss() > 50)
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
 			D.visible_message("<span class='danger'>[A] has knocked [D] out with a haymaker!</span>", \
 								"<span class='userdanger'>[A] has knocked [D] out with a haymaker!</span>")
-			D.apply_effect(10,WEAKEN,armor_block)
+			D.apply_effect(10,WEAKEN,armr_block)
 			D.SetSleeping(5)
 			D.forcesay(GLOB.hit_appends)
 			add_logs(A, D, "knocked out (boxing) ")

@@ -153,7 +153,7 @@
 			body += "<A href='?_src_=holder;simplemake=coffee;mob=\ref[M]'>Coffee</A> | "
 			//body += "<A href='?_src_=holder;simplemake=parrot;mob=\ref[M]'>Parrot</A> | "
 			//body += "<A href='?_src_=holder;simplemake=polyparrot;mob=\ref[M]'>Poly</A> | "
-			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmored;mob=\ref[M]'>Juggernaut</A> , "
+			body += "\[ Construct: <A href='?_src_=holder;simplemake=constructarmred;mob=\ref[M]'>Juggernaut</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructbuilder;mob=\ref[M]'>Artificer</A> , "
 			body += "<A href='?_src_=holder;simplemake=constructwraith;mob=\ref[M]'>Wraith</A> \] "
 			body += "<A href='?_src_=holder;simplemake=shade;mob=\ref[M]'>Shade</A>"

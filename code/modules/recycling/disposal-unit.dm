@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 1
 	on_blueprints = TRUE
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armr = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	obj_integrity = 200
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF

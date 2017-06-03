@@ -80,7 +80,7 @@
 			damage = rand(20, 35)
 		return attack_threshold_check(damage)
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armrcheck = "melee")
 	var/temp_damage = damage
 	if(!damage_coeff[damagetype])
 		temp_damage = 0
@@ -91,7 +91,7 @@
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 		return FALSE
 	else
-		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
+		apply_damage(damage, damagetype, null, getarmr(null, armrcheck))
 		return TRUE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
@@ -105,23 +105,23 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
-	var/bomb_armor = getarmor(null, "bomb")
+	var/bomb_armr = getarmr(null, "bomb")
 	switch (severity)
 		if (1)
-			if(prob(bomb_armor))
+			if(prob(bomb_armr))
 				adjustBruteLoss(500)
 			else
 				gib()
 				return
 		if (2)
 			var/bloss = 60
-			if(prob(bomb_armor))
+			if(prob(bomb_armr))
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 
 		if(3)
 			var/bloss = 30
-			if(prob(bomb_armor))
+			if(prob(bomb_armr))
 				bloss = bloss / 1.5
 			adjustBruteLoss(bloss)
 

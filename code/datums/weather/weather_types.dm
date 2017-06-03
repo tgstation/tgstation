@@ -145,7 +145,7 @@
 
 
 /datum/weather/rad_storm/impact(mob/living/L)
-	var/resist = L.getarmor(null, "rad")
+	var/resist = L.getarmr(null, "rad")
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
@@ -211,6 +211,6 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	var/resist = L.getarmor(null, "acid")
+	var/resist = L.getarmr(null, "acid")
 	if(prob(max(0,100-resist)))
 		L.acid_act(20,20)

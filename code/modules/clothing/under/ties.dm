@@ -27,8 +27,8 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	for(var/armor_type in armor)
-		U.armor[armor_type] += armor[armor_type]
+	for(var/armr_type in armr)
+		U.armr[armr_type] += armr[armr_type]
 
 	return 1
 
@@ -38,8 +38,8 @@
 		pockets.loc = src
 		U.pockets = null
 
-	for(var/armor_type in armor)
-		U.armor[armor_type] -= armor[armor_type]
+	for(var/armr_type in armr)
+		U.armr[armr_type] -= armr[armr_type]
 
 	if(minimize_when_attached)
 		transform *= 2

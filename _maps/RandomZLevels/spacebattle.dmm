@@ -2851,7 +2851,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	dir = 2;
-	id = "spacebattlearmory";
+	id = "spacebattlearmry";
 	name = "Weapon Cache";
 	pixel_x = 0;
 	pixel_y = 0
@@ -2864,7 +2864,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	dir = 2;
-	id = "spacebattlearmory2";
+	id = "spacebattlearmry2";
 	name = "Weapon Cache";
 	pixel_x = 0;
 	pixel_y = 0
@@ -2877,7 +2877,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
 	dir = 2;
-	id = "spacebattlearmory1";
+	id = "spacebattlearmry1";
 	name = "Weapon Cache";
 	pixel_x = 0;
 	pixel_y = 0
@@ -2927,7 +2927,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jG" = (
 /obj/machinery/door/poddoor{
-	id = "spacebattlearmory1";
+	id = "spacebattlearmry1";
 	name = "Secure Cache 1"
 	},
 /turf/open/floor/engine,
@@ -2943,7 +2943,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jJ" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/lootdrop/armry_contraband,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (
@@ -2957,7 +2957,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jL" = (
 /obj/machinery/door/poddoor{
-	id = "spacebattlearmory";
+	id = "spacebattlearmry";
 	name = "Secure Armory"
 	},
 /turf/open/floor/engine,
@@ -2996,7 +2996,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jQ" = (
 /obj/machinery/door/poddoor{
-	id = "spacebattlearmory2";
+	id = "spacebattlearmry2";
 	name = "Secure Cache 2"
 	},
 /turf/open/floor/engine,

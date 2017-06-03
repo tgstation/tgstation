@@ -4,7 +4,7 @@
 	icon_state = "wizard"
 	gas_transfer_coefficient = 0.01 // IT'S MAGICAL OKAY JEEZ +1 TO NOT DIE
 	permeability_coefficient = 0.01
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
+	armr = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
 	strip_delay = 50
 	put_on_delay = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -34,7 +34,7 @@
 	icon_state = "wizard-fake"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	resistance_flags = FLAMMABLE
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
@@ -66,7 +66,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
+	armr = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
@@ -99,13 +99,13 @@
 
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "\improper Magus robe"
-	desc = "A set of armored robes that seem to radiate a dark power."
+	desc = "A set of armred robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
-	desc = "A set of armored robes that seem to radiate a dark power."
+	desc = "A set of armred robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
 
@@ -123,7 +123,7 @@
 	item_state = "wizrobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/head/wizard/marisa/fake
@@ -132,7 +132,7 @@
 	icon_state = "marisa"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
@@ -142,7 +142,7 @@
 	item_state = "marisarobe"
 	gas_transfer_coefficient = 1
 	permeability_coefficient = 1
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/suit/wizrobe/paper
@@ -182,7 +182,7 @@
 //Shielded Armour
 
 /obj/item/clothing/suit/space/hardsuit/shielded/wizard
-	name = "battlemage armour"
+	name = "battlemage armr"
 	desc = "Not all wizards are afraid of getting up close and personal."
 	icon_state = "battlemage"
 	item_state = "battlemage"
@@ -194,7 +194,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
+	armr = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
 	slowdown = 0
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -205,23 +205,23 @@
 	item_state = "battlemage"
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
+	armr = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
 	actions_types = null //No inbuilt light
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard/attack_self(mob/user)
 	return
 
-/obj/item/wizard_armour_charge
+/obj/item/wizard_armr_charge
 	name = "battlemage shield charges"
-	desc = "A powerful rune that will increase the number of hits a suit of battlemage armour can take before failing.."
+	desc = "A powerful rune that will increase the number of hits a suit of battlemage armr can take before failing.."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
 
-/obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user)
+/obj/item/wizard_armr_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user)
 	..()
 	if(!istype(W))
-		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
+		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armr!</span>")
 		return
 	W.current_charges += 8
 	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>")

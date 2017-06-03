@@ -1,5 +1,5 @@
 /obj/mecha/working/ripley
-	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of the EVA mining process."
+	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armr against the dangers of the EVA mining process."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
 	step_in = 4 //Move speed, lower is faster.
@@ -10,7 +10,7 @@
 	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
-	armor = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
+	armr = list(melee = 40, bullet = 20, laser = 10, energy = 20, bomb = 40, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	var/list/cargo = new
@@ -67,8 +67,8 @@
 	max_integrity = 250
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-	max_equip = 5 // More armor, less tools
+	armr = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	max_equip = 5 // More armr, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
 
 

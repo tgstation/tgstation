@@ -142,7 +142,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "C" = (
-/mob/living/simple_animal/hostile/construct/armored,
+/mob/living/simple_animal/hostile/construct/armred,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "D" = (

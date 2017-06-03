@@ -14,7 +14,7 @@
 
 	resistance_flags = FIRE_PROOF
 
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
+	armr = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
 	obj_integrity = 100
 	max_integrity = 100
 	integrity_failure = 50
@@ -229,7 +229,7 @@
 
 	return ..()
 
-/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/camera/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 12 && !(stat & BROKEN))
 		return 0
 	. = ..()

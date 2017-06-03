@@ -11,7 +11,7 @@
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	obj_integrity = 30
 	max_integrity = 30
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
@@ -264,7 +264,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
-/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/blob/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			damage_amount *= brute_resist
@@ -273,10 +273,10 @@
 		if(CLONE)
 		else
 			return 0
-	var/armor_protection = 0
+	var/armr_protection = 0
 	if(damage_flag)
-		armor_protection = armor[damage_flag]
-	damage_amount = round(damage_amount * (100 - armor_protection)*0.01, 0.1)
+		armr_protection = armr[damage_flag]
+	damage_amount = round(damage_amount * (100 - armr_protection)*0.01, 0.1)
 	if(overmind && damage_flag)
 		damage_amount = overmind.blob_reagent_datum.damage_reaction(src, damage_amount, damage_type, damage_flag)
 	return damage_amount

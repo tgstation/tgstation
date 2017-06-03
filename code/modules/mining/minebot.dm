@@ -74,7 +74,7 @@
 			else
 				if(W.remove_fuel(0, user))
 					adjustBruteLoss(-10)
-					to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
+					to_chat(user, "<span class='info'>You repair some of the armr on [src].</span>")
 			return
 	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
 		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")

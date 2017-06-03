@@ -2674,7 +2674,7 @@
 /area/security/prison)
 "afQ" = (
 /turf/closed/wall/r_wall,
-/area/security/armory)
+/area/security/armry)
 "afR" = (
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -2946,7 +2946,7 @@
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agm" = (
 /obj/structure/closet/secure_closet{
 	anchored = 1;
@@ -2957,7 +2957,7 @@
 /obj/item/weapon/poster/random_contraband,
 /obj/item/weapon/grenade/smokebomb,
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agn" = (
 /obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/camera/motion{
@@ -2966,11 +2966,11 @@
 	name = "motion-sensitive security camera"
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ago" = (
 /obj/vehicle/secway,
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agp" = (
 /obj/item/weapon/grenade/barrier{
 	pixel_x = 4
@@ -2981,7 +2981,7 @@
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agq" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/showroomfloor,
@@ -3162,10 +3162,10 @@
 	layer = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agN" = (
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agO" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -3174,7 +3174,7 @@
 	tag = ""
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agP" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/firingpins,
@@ -3192,7 +3192,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "agQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -3338,7 +3338,7 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armr/laserproof,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
@@ -3350,15 +3350,15 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahh" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -3381,7 +3381,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahi" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3389,7 +3389,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahj" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/rubbershot{
@@ -3418,7 +3418,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahk" = (
 /obj/effect/landmark/start/security_officer,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -3646,7 +3646,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
@@ -3654,17 +3654,17 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahM" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -3682,7 +3682,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahN" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3693,7 +3693,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahO" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/laser{
@@ -3706,7 +3706,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "ahP" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -4074,11 +4074,11 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "aiz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "aiA" = (
 /obj/effect/landmark/event_spawn,
 /mob/living/simple_animal/bot/secbot{
@@ -4091,7 +4091,7 @@
 	weaponscheck = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "aiB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4100,7 +4100,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "aiC" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/shotgun/riot{
@@ -4113,7 +4113,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/black,
-/area/security/armory)
+/area/security/armry)
 "aiD" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4516,7 +4516,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/security/armory)
+/area/security/armry)
 "ajq" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -9830,7 +9830,7 @@
 	c_tag = "Captain's Quarters";
 	dir = 2
 	},
-/obj/item/clothing/suit/armor/riot/knight/blue,
+/obj/item/clothing/suit/armr/riot/knight/blue,
 /obj/item/clothing/head/helmet/knight/blue,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)

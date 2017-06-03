@@ -189,17 +189,17 @@
 	..()
 
 
-//Rite of Arming: Equips cultist armor on the user, where available
-/obj/item/weapon/paper/talisman/armor
+//Rite of Arming: Equips cultist armr on the user, where available
+/obj/item/weapon/paper/talisman/armr
 	cultist_name = "Talisman of Arming"
 	cultist_desc = "A talisman that will equip the invoker with cultist equipment if there is a slot to equip it to."
 	color = "#33cc33" // green
 	invocation = "N'ath reth sh'yro eth draggathnor!"
 	creation_time = 80
 
-/obj/item/weapon/paper/talisman/armor/invoke(mob/living/user, successfuluse = 1)
+/obj/item/weapon/paper/talisman/armr/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	user.visible_message("<span class='warning'>Otherworldly armor suddenly appears on [user]!</span>", \
+	user.visible_message("<span class='warning'>Otherworldly armr suddenly appears on [user]!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, arming yourself!</span>")
 	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), slot_head)
 	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), slot_wear_suit)
@@ -209,7 +209,7 @@
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 	user.put_in_hands(new /obj/item/weapon/restraints/legcuffs/bola/cult(user))
 
-/obj/item/weapon/paper/talisman/armor/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/paper/talisman/armr/attack(mob/living/target, mob/living/user)
 	if(iscultist(user) && iscultist(target))
 		user.drop_item()
 		invoke(target)

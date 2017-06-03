@@ -199,7 +199,7 @@
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return 1
-	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
+	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armr!</span>")
 	return 0
 
 /obj/item/device/firing_pin/tag/red

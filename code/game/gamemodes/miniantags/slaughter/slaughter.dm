@@ -3,7 +3,7 @@
 /mob/living/simple_animal/slaughter
 	name = "slaughter demon"
 	real_name = "slaughter demon"
-	desc = "A large, menacing creature covered in armored black scales."
+	desc = "A large, menacing creature covered in armred black scales."
 	speak_emote = list("gurgles")
 	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
@@ -118,7 +118,7 @@
 	// them so much, it wants to hug everyone at once!
 	name = "laughter demon"
 	real_name = "laughter demon"
-	desc = "A large, adorable creature covered in armor with pink bows."
+	desc = "A large, adorable creature covered in armr with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
 	emote_hear = list("guffaws","laughs")
 	response_help  = "hugs"

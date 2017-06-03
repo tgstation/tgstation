@@ -2,7 +2,7 @@
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability) //0 = Summon Guns, 1 = Summon Magic
 	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
-	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "whistle", "battlemage", "immortality", "ghostsword", "special")
+	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armr", "scrying","staffdoor","voodoo", "whistle", "battlemage", "immortality", "ghostsword", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic", "bloodcontract")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
@@ -164,7 +164,7 @@
 					new /obj/item/weapon/gun/magic/staff/healing(get_turf(H))
 				if("staffdoor")
 					new /obj/item/weapon/gun/magic/staff/door(get_turf(H))
-				if("armor")
+				if("armr")
 					new /obj/item/clothing/suit/space/hardsuit/wizard(get_turf(H))
 				if("scrying")
 					new /obj/item/weapon/scrying(get_turf(H))

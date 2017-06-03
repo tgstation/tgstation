@@ -168,7 +168,7 @@
 	stat = 2
 	},
 /obj/item/clothing/under/rank/security,
-/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armr/vest,
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

@@ -10,7 +10,7 @@
 	power_channel = ENVIRON
 	obj_integrity = 350
 	max_integrity = 350
-	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
+	armr = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	flags = PREVENT_CLICK_UNDER
 
@@ -166,7 +166,7 @@
 		return 1
 	return ..()
 
-/obj/machinery/door/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/door/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < damage_deflection)
 		return 0
 	. = ..()

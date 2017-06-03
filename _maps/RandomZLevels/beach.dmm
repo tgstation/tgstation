@@ -166,7 +166,7 @@
 	head = null;
 	id_access = "Bartender";
 	id_job = "Bartender";
-	suit = /obj/item/clothing/suit/armor/vest;
+	suit = /obj/item/clothing/suit/armr/vest;
 	uniform = /obj/item/clothing/under/rank/bartender;
 	death = 0;
 	desc = "Looks secure.";

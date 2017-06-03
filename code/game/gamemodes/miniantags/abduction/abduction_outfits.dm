@@ -20,7 +20,7 @@
 
 	var/obj/machinery/abductor/console/console = get_team_console(team_number)
 	if(console)
-		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
+		var/obj/item/clothing/suit/armr/abductor/vest/V = locate() in H
 		if(V)
 			console.AddVest(V)
 			V.flags |= NODROP
@@ -39,7 +39,7 @@
 /datum/outfit/abductor/agent
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
-	suit = /obj/item/clothing/suit/armor/abductor/vest
+	suit = /obj/item/clothing/suit/armr/abductor/vest
 	suit_store = /obj/item/weapon/abductor_baton
 	belt = /obj/item/weapon/storage/belt/military/abductor/full
 

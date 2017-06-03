@@ -205,7 +205,7 @@
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	resistance_flags = 0
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -221,14 +221,14 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/clothing/suit/chameleon
-	name = "armor"
-	desc = "A slim armored vest that protects against most types of damage."
-	icon_state = "armor"
-	item_state = "armor"
-	blood_overlay_type = "armor"
+	name = "armr"
+	desc = "A slim armred vest that protects against most types of damage."
+	icon_state = "armr"
+	item_state = "armr"
+	blood_overlay_type = "armr"
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -237,7 +237,7 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armr/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
@@ -250,7 +250,7 @@
 	item_state = "meson"
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -272,7 +272,7 @@
 	item_state = "ygloves"
 
 	resistance_flags = 0
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -294,7 +294,7 @@
 	item_color = "grey"
 
 	resistance_flags = 0
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -313,7 +313,7 @@
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
 	flags = NODROP
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// which means it offers no protection, it's just air and light
 
 /obj/item/clothing/head/chameleon/drone/New()
@@ -330,7 +330,7 @@
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 	resistance_flags = 0
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
@@ -361,7 +361,7 @@
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
 	flags = NODROP
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
 
@@ -386,7 +386,7 @@
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 

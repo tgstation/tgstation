@@ -1,34 +1,34 @@
-/mob/living/carbon/human/getarmor(def_zone, type)
-	var/armorval = 0
+/mob/living/carbon/human/getarmr(def_zone, type)
+	var/armrval = 0
 	var/organnum = 0
 
 	if(def_zone)
 		if(islimb(def_zone))
-			return checkarmor(def_zone, type)
+			return checkarmr(def_zone, type)
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(def_zone))
-		return checkarmor(affecting, type)
+		return checkarmr(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		armorval += checkarmor(BP, type)
+		armrval += checkarmr(BP, type)
 		organnum++
-	return (armorval/max(organnum, 1))
+	return (armrval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
+/mob/living/carbon/human/proc/checkarmr(obj/item/bodypart/def_zone, d_type)
 	if(!d_type)
 		return 0
 	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armred, gloves or hats for example, would double up on the armr)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor[d_type]
+				protection += C.armr[d_type]
 	return protection
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
@@ -70,7 +70,7 @@
 
 				return -1 // complete projectile permutation
 
-		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
+		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armr_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
 
@@ -85,20 +85,20 @@
 			return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armr_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
 
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (Clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (Clamp((armr_penetration-I.armr_penetration)/2,0,100)) + block_chance_modifier //So armr piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
 				return 1
 	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_suit.block_chance - (Clamp((armr_penetration-wear_suit.armr_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = w_uniform.block_chance - (Clamp((armr_penetration-w_uniform.armr_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	return 0
@@ -222,7 +222,7 @@
 			if(check_shields(damage))
 				return 0
 			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+				apply_damage(damage, BRUTE, affecting, run_armr_check(affecting, "melee"))
 				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 		return 1
 
@@ -244,7 +244,7 @@
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
 			if(!affecting)
 				affecting = get_bodypart("chest")
-			var/armor_block = run_armor_check(affecting, "melee","","",10)
+			var/armr_block = run_armr_check(affecting, "melee","","",10)
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
@@ -252,7 +252,7 @@
 			add_logs(M, src, "attacked")
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
 				return 1
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, affecting, armr_block)
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
@@ -279,8 +279,8 @@
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 			if(!affecting)
 				affecting = get_bodypart("chest")
-			var/armor_block = run_armor_check(affecting, "melee")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			var/armr_block = run_armr_check(affecting, "melee")
+			apply_damage(damage, BRUTE, affecting, armr_block)
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 
@@ -288,7 +288,7 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
+		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armr_penetration))
 			return FALSE
 		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
@@ -296,8 +296,8 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")
-		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
-		apply_damage(damage, M.melee_damage_type, affecting, armor)
+		var/armr = run_armr_check(affecting, "melee", armr_penetration = M.armr_penetration)
+		apply_damage(damage, M.melee_damage_type, affecting, armr)
 		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
 
@@ -317,8 +317,8 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")
-		var/armor_block = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor_block)
+		var/armr_block = run_armr_check(affecting, "melee")
+		apply_damage(damage, BRUTE, affecting, armr_block)
 		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
@@ -365,15 +365,15 @@
 	..()
 	var/b_loss = 0
 	var/f_loss = 0
-	var/bomb_armor = getarmor(null, "bomb")
+	var/bomb_armr = getarmr(null, "bomb")
 
 	switch (severity)
 		if (1)
-			if(prob(bomb_armor))
+			if(prob(bomb_armr))
 				b_loss = 500
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
-				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
+				damage_clothes(400 - bomb_armr, BRUTE, "bomb")
 			else
 				gib()
 				return
@@ -381,33 +381,33 @@
 		if (2)
 			b_loss = 60
 			f_loss = 60
-			if(bomb_armor)
-				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
+			if(bomb_armr)
+				b_loss = 30*(2 - round(bomb_armr*0.01, 0.05))
 				f_loss = b_loss
-			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
+			damage_clothes(200 - bomb_armr, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(max(70 - (bomb_armor * 0.5), 0)))
+			if (prob(max(70 - (bomb_armr * 0.5), 0)))
 				Paralyse(10)
 
 		if(3)
 			b_loss = 30
-			if(bomb_armor)
-				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
-			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
+			if(bomb_armr)
+				b_loss = 15*(2 - round(bomb_armr*0.01, 0.05))
+			damage_clothes(max(50 - bomb_armr, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(max(50 - (bomb_armor * 0.5), 0)))
+			if (prob(max(50 - (bomb_armr * 0.5), 0)))
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)
 
 	//attempt to dismember bodyparts
-	if(severity <= 2 || !bomb_armor)
+	if(severity <= 2 || !bomb_armr)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+			if(prob(50/severity) && !prob(getarmr(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
@@ -421,7 +421,7 @@
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
+	apply_damage(5, BRUTE, affecting, run_armr_check(affecting, "melee"))
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
@@ -602,7 +602,7 @@
 		update_damage_overlays()
 
 	//MELTING INVENTORY ITEMS//
-	//these items are all outside of armour visually, so melt regardless.
+	//these items are all outside of armr visually, so melt regardless.
 	if(!bodyzone_hit)
 		if(back)
 			inventory_items_to_kill += back

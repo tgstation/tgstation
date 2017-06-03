@@ -11,7 +11,7 @@
 	heat = 3500
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 	var/brightness_on = 3
 
@@ -55,7 +55,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	w_class_on = WEIGHT_CLASS_HUGE
 	flags = CONDUCT
-	armour_penetration = 100
+	armr_penetration = 100
 	origin_tech = "combat=4;magnets=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
@@ -77,7 +77,7 @@
 	sharpness = IS_SHARP
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
-	armour_penetration = 35
+	armr_penetration = 35
 	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 	possible_colors = list("red", "blue", "green", "purple")

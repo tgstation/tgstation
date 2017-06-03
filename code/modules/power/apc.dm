@@ -105,8 +105,8 @@
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
 		req_access = list(GLOB.access_engine_equip)
-	if (!armor)
-		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
+	if (!armr)
+		armr = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
 	GLOB.apcs_list += src
 
@@ -584,7 +584,7 @@
 	else
 		return ..()
 
-/obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/power/apc/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 15 && (!(stat & BROKEN) || malfai))
 		return 0
 	. = ..()

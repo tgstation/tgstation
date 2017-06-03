@@ -141,7 +141,7 @@
 	dir = 0// dir will contain dominant direction for junction pipes
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armr = list(melee = 25, bullet = 10, laser = 10, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
 	var/obj/structure/disposalconstruct/stored
@@ -284,7 +284,7 @@
 		H.contents_explosion(severity, target)
 
 
-/obj/structure/disposalpipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/disposalpipe/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 10)
 		return 0
 	. = ..()

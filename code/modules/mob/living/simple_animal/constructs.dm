@@ -100,10 +100,10 @@
 		update_health_hud()
 
 /////////////////Juggernaut///////////////
-/mob/living/simple_animal/hostile/construct/armored
+/mob/living/simple_animal/hostile/construct/armred
 	name = "Juggernaut"
 	real_name = "Juggernaut"
-	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
+	desc = "A massive, armred construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
 	maxHealth = 250
@@ -113,7 +113,7 @@
 	obj_damage = 90
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	attacktext = "smashes their armored gauntlet into"
+	attacktext = "smashes their armred gauntlet into"
 	speed = 3
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch3.ogg'
@@ -124,17 +124,17 @@
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand extreme punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
-/mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
+/mob/living/simple_animal/hostile/construct/armred/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //only token destruction, don't smash the cult wall NO STOP
 
-/mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/construct/armred/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
-			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
-							"<span class='userdanger'>The [P.name] is reflected by your armored shell!</span>")
+			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armred shell!</span>", \
+							"<span class='userdanger'>The [P.name] is reflected by your armred shell!</span>")
 
 			// Find a turf near or on the original location to bounce to
 			if(P.starting)

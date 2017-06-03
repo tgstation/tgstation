@@ -59,7 +59,7 @@
 		check_weapon(user, I)
 
 
-//Parent to space suits and armor.
+//Parent to space suits and armr.
 /obj/effect/proc_holder/changeling/suit
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this"
@@ -439,7 +439,7 @@
 	desc = "A huge, bulky mass of pressure and temperature-resistant organic tissue, evolved to facilitate space travel."
 	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/tank/internals/oxygen)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armor at all.
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90) //No armr at all.
 
 /obj/item/clothing/suit/space/changeling/Initialize()
 	. = ..()
@@ -457,46 +457,46 @@
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Again, no THICKMATERIAL.
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /***************************************\
 |*****************ARMOR*****************|
 \***************************************/
-/obj/effect/proc_holder/changeling/suit/armor
+/obj/effect/proc_holder/changeling/suit/armr
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
+	helptext = "Upkeep of the armr requires a low expenditure of chemicals. The armr is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
 	recharge_slowdown = 0.25
 
-	suit_type = /obj/item/clothing/suit/armor/changeling
+	suit_type = /obj/item/clothing/suit/armr/changeling
 	helmet_type = /obj/item/clothing/head/helmet/changeling
-	suit_name_simple = "armor"
+	suit_name_simple = "armr"
 	helmet_name_simple = "helmet"
 
-/obj/item/clothing/suit/armor/changeling
+/obj/item/clothing/suit/armr/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
-	icon_state = "lingarmor"
+	icon_state = "lingarmr"
 	flags = NODROP | DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
+	armr = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
 
-/obj/item/clothing/suit/armor/changeling/Initialize()
+/obj/item/clothing/suit/armr/changeling/Initialize()
 	. = ..()
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armr!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
-	icon_state = "lingarmorhelmet"
+	icon_state = "lingarmrhelmet"
 	flags = NODROP | DROPDEL
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
+	armr = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE

@@ -76,7 +76,7 @@ list(rad = 0)
 list(fire = 90)
 list(acid = 90)
 Total Unquoted List Associations: 32
-..code\game\gamemodes\clock_cult\clock_items\clockwork_armor.dm 
+..code\game\gamemodes\clock_cult\clock_items\clockwork_armr.dm 
 list(bullet = 70)
 list(energy = 0)
 list(bomb = 60)
@@ -2248,7 +2248,7 @@ list(rad = 30)
 list(fire = 80)
 list(acid = 85)
 Total Unquoted List Associations: 16
-..code\modules\clothing\suits\armor.dm 
+..code\modules\clothing\suits\armr.dm 
 list(bullet = 30)
 list(laser = 30)
 list(energy = 10)

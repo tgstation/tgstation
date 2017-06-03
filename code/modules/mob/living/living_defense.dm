@@ -1,28 +1,28 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text)
-	var/armor = getarmor(def_zone, attack_flag)
+/mob/living/proc/run_armr_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armr_penetration, penetrated_text)
+	var/armr = getarmr(def_zone, attack_flag)
 
-	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor && armour_penetration)
-		armor = max(0, armor - armour_penetration)
+	//the if "armr" check is because this is used for everything on /living, including humans
+	if(armr && armr_penetration)
+		armr = max(0, armr - armr_penetration)
 		if(penetrated_text)
 			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
 		else
-			to_chat(src, "<span class='userdanger'>Your armor was penetrated!</span>")
-	else if(armor >= 100)
+			to_chat(src, "<span class='userdanger'>Your armr was penetrated!</span>")
+	else if(armr >= 100)
 		if(absorb_text)
 			to_chat(src, "<span class='userdanger'>[absorb_text]</span>")
 		else
-			to_chat(src, "<span class='userdanger'>Your armor absorbs the blow!</span>")
-	else if(armor > 0)
+			to_chat(src, "<span class='userdanger'>Your armr absorbs the blow!</span>")
+	else if(armr > 0)
 		if(soften_text)
 			to_chat(src, "<span class='userdanger'>[soften_text]</span>")
 		else
-			to_chat(src, "<span class='userdanger'>Your armor softens the blow!</span>")
-	return armor
+			to_chat(src, "<span class='userdanger'>Your armr softens the blow!</span>")
+	return armr
 
 
-/mob/living/proc/getarmor(def_zone, type)
+/mob/living/proc/getarmr(def_zone, type)
 	return 0
 
 //this returns the mob's protection against eye damage (number between -1 and 2)
@@ -37,12 +37,12 @@
 	return
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
+	var/armr = run_armr_check(def_zone, P.flag, "","",P.armr_penetration)
 	if(!P.nodamage)
-		apply_damage(P.damage, P.damage_type, def_zone, armor)
+		apply_damage(P.damage, P.damage_type, def_zone, armr)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor)
+	return P.on_hit(src, armr)
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
@@ -80,8 +80,8 @@
 		if(!blocked)
 			visible_message("<span class='danger'>[src] has been hit by [I].</span>", \
 							"<span class='userdanger'>[src] has been hit by [I].</span>")
-			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
-			apply_damage(I.throwforce, dtype, zone, armor)
+			var/armr = run_armr_check(zone, "melee", "Your armr has protected your [parse_zone(zone)].", "Your armr has softened hit to your [parse_zone(zone)].",I.armr_penetration)
+			apply_damage(I.throwforce, dtype, zone, armr)
 			if(I.thrownby)
 				add_logs(I.thrownby, src, "hit", I)
 		else
@@ -319,7 +319,7 @@
 	else
 		switch(rand(1, 6))
 			if(1)
-				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
+				new /mob/living/simple_animal/hostile/construct/armred/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
 			if(3 to 6)

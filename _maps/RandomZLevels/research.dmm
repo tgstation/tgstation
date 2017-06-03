@@ -1324,7 +1324,7 @@
 /area/awaymission/research/interior/security)
 "dG" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armr/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/machinery/light/small{
 	dir = 8
@@ -1340,8 +1340,8 @@
 /area/awaymission/research/interior/security)
 "dJ" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armr/bulletproof,
+/obj/item/clothing/suit/armr/bulletproof,
 /obj/item/clothing/head/helmet/alt,
 /obj/item/clothing/head/helmet/alt,
 /obj/machinery/light/small{
@@ -1446,8 +1446,8 @@
 /area/awaymission/research/interior/security)
 "dV" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armr/vest,
+/obj/item/clothing/suit/armr/vest,
 /obj/item/clothing/head/helmet,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plasteel/red,
@@ -1576,7 +1576,7 @@
 /area/awaymission/research/interior/security)
 "eq" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armr/laserproof,
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "er" = (

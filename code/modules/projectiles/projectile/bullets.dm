@@ -31,9 +31,9 @@
 /obj/item/projectile/bullet/incendiary/firebullet
 	damage = 10
 
-/obj/item/projectile/bullet/armourpiercing
+/obj/item/projectile/bullet/armrpiercing
 	damage = 15
-	armour_penetration = 40
+	armr_penetration = 40
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
@@ -85,11 +85,11 @@
 
 /obj/item/projectile/bullet/midbullet3/hp
 	damage = 40
-	armour_penetration = -50
+	armr_penetration = -50
 
 /obj/item/projectile/bullet/midbullet3/ap
 	damage = 27
-	armour_penetration = 40
+	armr_penetration = 40
 
 /obj/item/projectile/bullet/midbullet3/fire/on_hit(atom/target, blocked = 0)
 	if(..(target, blocked))
@@ -275,7 +275,7 @@
 	stun = 5
 	weaken = 5
 	dismemberment = 50
-	armour_penetration = 50
+	armr_penetration = 50
 	var/breakthings = TRUE
 
 /obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0)
@@ -288,7 +288,7 @@
 	stun = 1
 	weaken = 1
 	dismemberment = 15
-	armour_penetration = 25
+	armr_penetration = 25
 
 /obj/item/projectile/bullet/sniper/gang/sleeper
 	nodamage = 1
@@ -308,7 +308,7 @@
 	return 1
 
 /obj/item/projectile/bullet/sniper/soporific
-	armour_penetration = 0
+	armr_penetration = 0
 	nodamage = 1
 	stun = 0
 	dismemberment = 0
@@ -323,7 +323,7 @@
 
 
 /obj/item/projectile/bullet/sniper/haemorrhage
-	armour_penetration = 15
+	armr_penetration = 15
 	damage = 15
 	stun = 0
 	dismemberment = 0
@@ -354,11 +354,11 @@
 
 /obj/item/projectile/bullet/saw
 	damage = 45
-	armour_penetration = 5
+	armr_penetration = 5
 
 /obj/item/projectile/bullet/saw/bleeding
 	damage = 20
-	armour_penetration = 0
+	armr_penetration = 0
 
 /obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -368,15 +368,15 @@
 
 /obj/item/projectile/bullet/saw/hollow
 	damage = 60
-	armour_penetration = -10
+	armr_penetration = -10
 
 /obj/item/projectile/bullet/saw/ap
 	damage = 40
-	armour_penetration = 75
+	armr_penetration = 75
 
 /obj/item/projectile/bullet/saw/incen
 	damage = 7
-	armour_penetration = 0
+	armr_penetration = 0
 
 /obj/item/projectile/bullet/saw/incen/Move()
 	..()

@@ -87,7 +87,7 @@
 
 /datum/design/piercesyringe
 	name = "Piercing Syringe"
-	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	desc = "A diamond-tipped syringe that pierces armr when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
 	req_tech = list("materials" = 7, "combat" = 3, "engineering" = 5)
 	build_type = PROTOLATHE

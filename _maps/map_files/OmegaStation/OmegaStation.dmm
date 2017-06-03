@@ -4994,14 +4994,14 @@
 /area/security/brig)
 "aio" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -5397,7 +5397,7 @@
 "aiT" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armr/laserproof,
 /obj/item/weapon/gun/energy/temperature/security,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
@@ -6063,12 +6063,12 @@
 /area/security/brig)
 "ajT" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -11939,14 +11939,14 @@
 /area/security/brig)
 "asK" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/vest{
+/obj/item/clothing/suit/armr/vest{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/vest{
+/obj/item/clothing/suit/armr/vest{
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/armor/vest{
+/obj/item/clothing/suit/armr/vest{
 	pixel_x = 3;
 	pixel_y = -3
 	},

@@ -109,7 +109,7 @@
 	I.force = max(0,I.force + quality_mod)
 	I.throwforce = max(0,I.throwforce + quality_mod)
 
-	for(var/value in I.armor)
-		I.armor[value] += quality
+	for(var/value in I.armr)
+		I.armr[value] += quality
 
 	rename()

@@ -165,7 +165,7 @@
 	obj_integrity = 70
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	var/list/debris = list()
 
 /obj/structure/table/glass/New()
@@ -299,7 +299,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
+	armr = list(melee = 10, bullet = 30, laser = 30, energy = 100, bomb = 20, bio = 0, rad = 0, fire = 80, acid = 70)
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/weldingtool))

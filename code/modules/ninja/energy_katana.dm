@@ -5,7 +5,7 @@
 	item_state = "energy_katana"
 	force = 40
 	throwforce = 20
-	armour_penetration = 50
+	armr_penetration = 50
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 

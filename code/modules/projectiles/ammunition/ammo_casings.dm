@@ -44,7 +44,7 @@
 /obj/item/ammo_casing/c9mmap
 	desc = "A 9mm bullet casing."
 	caliber = "9mm"
-	projectile_type =/obj/item/projectile/bullet/armourpiercing
+	projectile_type =/obj/item/projectile/bullet/armrpiercing
 
 /obj/item/ammo_casing/c9mmtox
 	desc = "A 9mm bullet casing."
@@ -64,7 +64,7 @@
 /obj/item/ammo_casing/c46x30mmap
 	desc = "A 4.6x30mm bullet casing."
 	caliber = "4.6x30mm"
-	projectile_type =/obj/item/projectile/bullet/armourpiercing
+	projectile_type =/obj/item/projectile/bullet/armrpiercing
 
 /obj/item/ammo_casing/c46x30mmtox
 	desc = "A 4.6x30mm bullet casing."
@@ -159,11 +159,11 @@
 	projectile_type = /obj/item/projectile/bullet/saw/bleeding
 
 /obj/item/ammo_casing/mm195x129/hollow
-	desc = "A 1.95x129mm bullet casing designed to cause more damage to unarmored targets."
+	desc = "A 1.95x129mm bullet casing designed to cause more damage to unarmred targets."
 	projectile_type = /obj/item/projectile/bullet/saw/hollow
 
 /obj/item/ammo_casing/mm195x129/ap
-	desc = "A 1.95x129mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
+	desc = "A 1.95x129mm bullet casing designed with a hardened-tipped core to help penetrate armred targets."
 	projectile_type = /obj/item/projectile/bullet/saw/ap
 
 /obj/item/ammo_casing/mm195x129/incen

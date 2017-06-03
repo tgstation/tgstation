@@ -46,7 +46,7 @@ Difficulty: Hard
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
 	faction = list("boss") //asteroid mobs? get that shit out of my beautiful square house
 	speak_emote = list("preaches")
-	armour_penetration = 50
+	armr_penetration = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = 1
@@ -608,8 +608,8 @@ Difficulty: Hard
 		playsound(L,'sound/weapons/sear.ogg', 50, 1, -4)
 		to_chat(L, "<span class='userdanger'>You're struck by a [name]!</span>")
 		var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
-		var/armor = L.run_armor_check(limb_to_hit, "melee", "Your armor absorbs [src]!", "Your armor blocks part of [src]!", 50, "Your armor was penetrated by [src]!")
-		L.apply_damage(damage, BURN, limb_to_hit, armor)
+		var/armr = L.run_armr_check(limb_to_hit, "melee", "Your armr absorbs [src]!", "Your armr blocks part of [src]!", 50, "Your armr was penetrated by [src]!")
+		L.apply_damage(damage, BURN, limb_to_hit, armr)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
 			L.adjustBruteLoss(damage)
 		add_logs(caster, L, "struck with a [name]")

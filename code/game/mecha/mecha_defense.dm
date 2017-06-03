@@ -1,4 +1,4 @@
-/obj/mecha/proc/get_armour_facing(relative_dir)
+/obj/mecha/proc/get_armr_facing(relative_dir)
 	switch(relative_dir)
 		if(0) // BACKSTAB!
 			return facing_modifiers[BACK_ARMOUR]
@@ -23,29 +23,29 @@
 			occupant_message("<span class='userdanger'>Taking damage!</span>")
 		log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
 
-/obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/mecha/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
 	var/booster_deflection_modifier = 1
 	var/booster_damage_modifier = 1
 	if(damage_flag == "bullet" || damage_flag == "laser" || damage_flag == "energy")
-		for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster/B in equipment)
+		for(var/obj/item/mecha_parts/mecha_equipment/antiproj_armr_booster/B in equipment)
 			if(B.projectile_react())
 				booster_deflection_modifier = B.deflect_coeff
 				booster_damage_modifier = B.damage_coeff
 				break
 	else if(damage_flag == "melee")
-		for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/B in equipment)
+		for(var/obj/item/mecha_parts/mecha_equipment/anticcw_armr_booster/B in equipment)
 			if(B.attack_react())
 				booster_deflection_modifier *= B.deflect_coeff
 				booster_damage_modifier *= B.damage_coeff
 				break
 
 	if(attack_dir)
-		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
+		var/facing_modifier = get_armr_facing(dir2angle(attack_dir) - dir2angle(src))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
-		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
+		visible_message("<span class='danger'>[src]'s armr deflects the attack!</span>")
 		log_append_to_last("Armor saved.")
 		return 0
 	if(.)

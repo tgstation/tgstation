@@ -13,7 +13,7 @@
 
 	uniform = /obj/item/clothing/under/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armr/vest
 	head = /obj/item/clothing/head/helmet/thunderdome
 	r_hand = /obj/item/weapon/gun/energy/pulse/destroyer
 	l_hand = /obj/item/weapon/kitchen/knife
@@ -185,7 +185,7 @@
 	name = "Centcom Commander"
 
 	uniform = /obj/item/clothing/under/rank/centcom_commander
-	suit = /obj/item/clothing/suit/armor/bulletproof
+	suit = /obj/item/clothing/suit/armr/bulletproof
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset/headset_cent/commander

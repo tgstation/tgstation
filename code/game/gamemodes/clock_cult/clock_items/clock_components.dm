@@ -86,13 +86,13 @@
 	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"" = FALSE)
 	message_span = "sevtug"
 
-/obj/item/clockwork/component/geis_capacitor/fallen_armor
-	name = "fallen armor"
-	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
-	clockwork_desc = "The armor from a former clockwork marauder. <b>Serviceable as a substitute for a geis capacitor.</b>"
-	icon_state = "fallen_armor"
+/obj/item/clockwork/component/geis_capacitor/fallen_armr
+	name = "fallen armr"
+	desc = "Lifeless chunks of armr. They're designed in a strange way and won't fit on you."
+	clockwork_desc = "The armr from a former clockwork marauder. <b>Serviceable as a substitute for a geis capacitor.</b>"
+	icon_state = "fallen_armr"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
-	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
+	servant_of_ratvar_messages = list("A piece of armr hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/clockwork/component/geis_capacitor/antennae

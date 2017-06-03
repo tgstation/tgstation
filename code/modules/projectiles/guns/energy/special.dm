@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/ionrifle
 	name = "ion rifle"
-	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
+	desc = "A man-portable anti-armr weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	origin_tech = "combat=4;magnets=4"

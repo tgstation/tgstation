@@ -18,7 +18,7 @@
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/armred/hostile = 8,\
 						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event/portal_storm

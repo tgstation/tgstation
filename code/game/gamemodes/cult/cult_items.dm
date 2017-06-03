@@ -78,7 +78,7 @@
 	desc = "A torn, dust-caked hood. Strange letters line the inside."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
-	armor = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
+	armr = list(melee = 30, bullet = 10, laser = 5,energy = 5, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -91,7 +91,7 @@
 	item_state = "cultrobes"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
+	armr = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
@@ -101,7 +101,7 @@
 
 /obj/item/clothing/head/culthood/alt
 	name = "cultist hood"
-	desc = "An armored hood worn by the followers of Nar-Sie."
+	desc = "An armred hood worn by the followers of Nar-Sie."
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
@@ -110,7 +110,7 @@
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
-	desc = "An armored set of robes worn by the followers of Nar-Sie."
+	desc = "An armred set of robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
 
@@ -124,36 +124,36 @@
 	item_state = "magus"
 	desc = "A helm worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
-	armor = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
+	armr = list(melee = 30, bullet = 30, laser = 30,energy = 20, bomb = 0, bio = 0, rad = 0, fire = 10, acid = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie"
+	desc = "A set of armred robes worn by the followers of Nar-Sie"
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	armor = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
+	armr = list(melee = 50, bullet = 30, laser = 50,energy = 20, bomb = 25, bio = 10, rad = 0, fire = 10, acid = 10)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
 	name = "nar-sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
+	desc = "A heavily-armred helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
+	armr = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	brightness_on = 0
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
-	name = "nar-sien hardened armor"
-	icon_state = "cult_armor"
-	item_state = "cult_armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
+	name = "nar-sien hardened armr"
+	icon_state = "cult_armr"
+	item_state = "cult_armr"
+	desc = "A heavily-armred exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_SMALL
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade,/obj/item/weapon/tank/internals/)
-	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
+	armr = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
 
 /obj/item/weapon/sharpener/cult
@@ -165,22 +165,22 @@
 	prefix = "darkened"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
-	name = "empowered cultist armor"
+	name = "empowered cultist armr"
 	desc = "Empowered garb which creates a powerful shield around the user."
-	icon_state = "cult_armor"
-	item_state = "cult_armor"
+	icon_state = "cult_armr"
+	item_state = "cult_armr"
 	w_class = WEIGHT_CLASS_BULKY
-	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
+	armr = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	var/current_charges = 3
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
 /obj/item/clothing/head/hooded/cult_hoodie
-	name = "empowered cultist armor"
+	name = "empowered cultist armr"
 	desc = "Empowered garb which creates a powerful shield around the user."
 	icon_state = "cult_hoodalt"
-	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 50)
+	armr = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 50)
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
@@ -195,7 +195,7 @@
 			user.Weaken(5)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
-			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
+			to_chat(user, "<span class='userdanger'>The armr squeezes at your body!</span>")
 			user.emote("scream")
 			user.adjustBruteLoss(25)
 			user.dropItemToGround(src, TRUE)
@@ -224,7 +224,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
+	armr = list(melee = -50, bullet = -50, laser = -50,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 	slowdown = -1
 	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 
@@ -234,7 +234,7 @@
 	icon_state = "culthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	armor = list(melee = -50, bullet = -50, laser = -50, energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
+	armr = list(melee = -50, bullet = -50, laser = -50, energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()

@@ -431,7 +431,7 @@
 
 /obj/item/weapon/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
-	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
+	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armr before being able to be used."
 	illustration = "id"
 
 /obj/item/weapon/storage/box/lasertagpins/PopulateContents()

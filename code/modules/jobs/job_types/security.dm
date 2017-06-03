@@ -23,11 +23,11 @@ Head of Security
 
 	outfit = /datum/outfit/job/hos
 
-	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons,
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_weapons,
 			            GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_all_personal_lockers,
 			            GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction, GLOB.access_mailsorting,
 			            GLOB.access_heads, GLOB.access_hos, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_maint_tunnels)
-	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons,
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_weapons,
 			            GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_all_personal_lockers,
 			            GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction, GLOB.access_mailsorting,
 			            GLOB.access_heads, GLOB.access_hos, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_maint_tunnels)
@@ -41,7 +41,7 @@ Head of Security
 	ears = /obj/item/device/radio/headset/heads/hos/alt
 	uniform = /obj/item/clothing/under/rank/head_of_security
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
+	suit = /obj/item/clothing/suit/armr/hos/trenchcoat
 	gloves = /obj/item/clothing/gloves/color/black/hos
 	head = /obj/item/clothing/head/HoS/beret
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -74,8 +74,8 @@ Warden
 
 	outfit = /datum/outfit/job/warden
 
-	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
-	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons) //See /datum/job/warden/get_access()
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_weapons) //See /datum/job/warden/get_access()
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -90,7 +90,7 @@ Warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
 	uniform = /obj/item/clothing/under/rank/warden
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/vest/warden/alt
+	suit = /obj/item/clothing/suit/armr/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
@@ -270,7 +270,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	uniform = /obj/item/clothing/under/rank/security
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest/alt
+	suit = /obj/item/clothing/suit/armr/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/device/assembly/flash/handheld

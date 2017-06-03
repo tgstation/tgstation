@@ -2,7 +2,7 @@
 
 GLOBAL_VAR_CONST(access_security, 1) // Security equipment
 GLOBAL_VAR_CONST(access_brig, 2) // Brig timers and permabrig
-GLOBAL_VAR_CONST(access_armory, 3)
+GLOBAL_VAR_CONST(access_armry, 3)
 GLOBAL_VAR_CONST(access_forensics_lockers, 4)
 GLOBAL_VAR_CONST(access_medical, 5)
 GLOBAL_VAR_CONST(access_morgue, 6)
@@ -235,7 +235,7 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 			return list(GLOB.access_cent_general, GLOB.access_cent_living, GLOB.access_cent_bar)
 
 /proc/get_all_accesses()
-	return list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_forensics_lockers, GLOB.access_court,
+	return list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_forensics_lockers, GLOB.access_court,
 	            GLOB.access_medical, GLOB.access_genetics, GLOB.access_morgue, GLOB.access_rd,
 	            GLOB.access_tox, GLOB.access_tox_storage, GLOB.access_chemistry, GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_maint_tunnels,
 	            GLOB.access_external_airlocks, GLOB.access_change_ids, GLOB.access_ai_upload,
@@ -271,7 +271,7 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 		if(1) //station general
 			return list(GLOB.access_kitchen,GLOB.access_bar, GLOB.access_hydroponics, GLOB.access_janitor, GLOB.access_chapel_office, GLOB.access_crematorium, GLOB.access_library, GLOB.access_theatre, GLOB.access_lawyer)
 		if(2) //security
-			return list(GLOB.access_sec_doors, GLOB.access_weapons, GLOB.access_security, GLOB.access_brig, GLOB.access_armory, GLOB.access_forensics_lockers, GLOB.access_court, GLOB.access_hos)
+			return list(GLOB.access_sec_doors, GLOB.access_weapons, GLOB.access_security, GLOB.access_brig, GLOB.access_armry, GLOB.access_forensics_lockers, GLOB.access_court, GLOB.access_hos)
 		if(3) //medbay
 			return list(GLOB.access_medical, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_morgue, GLOB.access_chemistry, GLOB.access_virology, GLOB.access_surgery, GLOB.access_cmo)
 		if(4) //research
@@ -366,7 +366,7 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 			return "Atmospherics"
 		if(GLOB.access_crematorium)
 			return "Crematorium"
-		if(GLOB.access_armory)
+		if(GLOB.access_armry)
 			return "Armory"
 		if(GLOB.access_construction)
 			return "Construction"

@@ -108,7 +108,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack //goliath kiting
 	name = "stimpack medipen"
-	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
+	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armr."
 	icon_state = "stimpen"
 	volume = 20
 	amount_per_transfer_from_this = 20

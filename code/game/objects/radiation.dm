@@ -31,7 +31,7 @@
 
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)
-		var/blocked = getarmor(null, "rad")
+		var/blocked = getarmr(null, "rad")
 
 		if(!silent)
 			to_chat(src, "Your skin feels warm.")

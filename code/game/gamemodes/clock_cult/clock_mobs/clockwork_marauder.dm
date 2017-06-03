@@ -13,7 +13,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
-	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armor)
+	loot = list(/obj/item/clockwork/component/geis_capacitor/fallen_armr)
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/global/list/possible_true_names = list("Servant", "Warden", "Serf", "Page", "Usher", "Knave", "Vassal", "Escort")
 	var/mob/living/host //The mob that the marauder is living inside of
@@ -157,7 +157,7 @@
 	if(amount > 0)
 		for(var/mob/living/L in view(2, src))
 			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
-				to_chat(src, "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>")
+				to_chat(src, "<span class='userdanger'>The presence of a brandished holy artifact weakens your armr!</span>")
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
 	. = ..()
@@ -271,7 +271,7 @@
 			target.do_attack_animation(src)
 			target.changeNext_move(CLICK_CD_MELEE)
 		blockchance = initial(blockchance)
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 30, 1, 0, 1) //clang
+		playsound(src, 'sound/magic/clockwork/fellowship_armry.ogg', 30, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
 		if(target && Adjacent(target))

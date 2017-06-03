@@ -106,7 +106,7 @@
 	result = /mob/living/simple_animal/bot/ed209
 	reqs = list(/obj/item/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
-				/obj/item/clothing/suit/armor/vest = 1,
+				/obj/item/clothing/suit/armr/vest = 1,
 				/obj/item/bodypart/l_leg/robot = 1,
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 1,
@@ -381,9 +381,9 @@
 	time = 50
 	category = CAT_WEAPON
 
-/datum/crafting_recipe/bonearmor
+/datum/crafting_recipe/bonearmr
 	name = "Bone Armor"
-	result = /obj/item/clothing/suit/armor/bone
+	result = /obj/item/clothing/suit/armr/bone
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 6)
 	category = CAT_PRIMAL

@@ -181,7 +181,7 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armred, A, user, 0, T.loc)
 
 					if("Wraith")
 						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)

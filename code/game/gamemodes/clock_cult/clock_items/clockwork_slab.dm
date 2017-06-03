@@ -61,7 +61,7 @@
 
 /obj/item/clockwork/slab/cyborg/medical //five scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/ranged_ability/sentinels_compromise, \
-	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armory)
+	/datum/clockwork_scripture/create_object/vitality_matrix, /datum/clockwork_scripture/channeled/mending_mantra, /datum/clockwork_scripture/fellowship_armry)
 
 /obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
@@ -77,7 +77,7 @@
 
 /obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
-	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
+	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armry, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)

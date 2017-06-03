@@ -311,7 +311,7 @@
 	name = "Hotel Secuirty"
 	uniform = /obj/item/clothing/under/rank/security/blueshirt
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	suit = /obj/item/clothing/suit/armr/vest/blueshirt
 	head = /obj/item/clothing/head/helmet/blueshirt
 	back = /obj/item/weapon/storage/backpack/security
 	belt = /obj/item/weapon/storage/belt/security/full
@@ -403,7 +403,7 @@
 	name = "Syndicate Battlecruiser Ensign"
 	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armr/vest
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
 	name = "Syndicate Battlecruiser Captain"
@@ -415,7 +415,7 @@
 	name = "Syndicate Battlecruiser Captain"
 	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
-	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	suit = /obj/item/clothing/suit/armr/vest/capcarapace/syndicate
 	back = /obj/item/weapon/storage/backpack/satchel/leather
 	head = /obj/item/clothing/head/HoS/beret/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana

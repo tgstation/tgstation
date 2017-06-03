@@ -56,7 +56,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
-	var/armour_penetration = 0 //percentage of armour effectiveness to remove
+	var/armr_penetration = 0 //percentage of armr effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
 	var/strip_delay = 40
@@ -93,7 +93,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/toolspeed = 1
 
 	var/block_chance = 0
-	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
+	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armr piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.

@@ -4,15 +4,15 @@
 #define GIZMO_MARK 2
 
 //AGENT VEST
-/obj/item/clothing/suit/armor/abductor/vest
+/obj/item/clothing/suit/armr/abductor/vest
 	name = "agent vest"
 	desc = "A vest outfitted with advanced stealth technology. It has two modes - combat and stealth."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "vest_stealth"
-	item_state = "armor"
-	blood_overlay_type = "armor"
+	item_state = "armr"
+	blood_overlay_type = "armr"
 	origin_tech = "magnets=7;biotech=4;powerstorage=4;abductor=4"
-	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15, fire = 70, acid = 70)
+	armr = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15, fire = 70, acid = 70)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/device/abductor,
@@ -25,24 +25,24 @@
 	var/stealth_active = 0
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15, fire = 70, acid = 70)
-	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50, fire = 90, acid = 90)
+	var/stealth_armr = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15, fire = 70, acid = 70)
+	var/combat_armr = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50, fire = 90, acid = 90)
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
+/obj/item/clothing/suit/armr/abductor/vest/proc/toggle_nodrop()
 	flags ^= NODROP
 	if(ismob(loc))
 		to_chat(loc, "<span class='notice'>Your vest is now [flags & NODROP ? "locked" : "unlocked"].</span>")
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
+/obj/item/clothing/suit/armr/abductor/vest/proc/flip_mode()
 	switch(mode)
 		if(VEST_STEALTH)
 			mode = VEST_COMBAT
 			DeactivateStealth()
-			armor = combat_armor
+			armr = combat_armr
 			icon_state = "vest_combat"
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
-			armor = stealth_armor
+			armr = stealth_armr
 			icon_state = "vest_stealth"
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -51,14 +51,14 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
+/obj/item/clothing/suit/armr/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot == slot_wear_suit) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return 1
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
+/obj/item/clothing/suit/armr/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
+/obj/item/clothing/suit/armr/abductor/vest/proc/ActivateStealth()
 	if(disguise == null)
 		return
 	stealth_active = 1
@@ -72,7 +72,7 @@
 		M.add_overlay(disguise.overlays)
 		M.update_inv_hands()
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
+/obj/item/clothing/suit/armr/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
 		return
 	stealth_active = 0
@@ -83,15 +83,15 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction()
+/obj/item/clothing/suit/armr/abductor/vest/hit_reaction()
 	DeactivateStealth()
 	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
+/obj/item/clothing/suit/armr/abductor/vest/IsReflect()
 	DeactivateStealth()
 	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
+/obj/item/clothing/suit/armr/abductor/vest/ui_action_click()
 	switch(mode)
 		if(VEST_COMBAT)
 			Adrenaline()
@@ -101,7 +101,7 @@
 			else
 				ActivateStealth()
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
+/obj/item/clothing/suit/armr/abductor/vest/proc/Adrenaline()
 	if(ishuman(loc))
 		if(combat_cooldown != initial(combat_cooldown))
 			to_chat(loc, "<span class='warning'>Combat injection is still recharging.</span>")
@@ -114,12 +114,12 @@
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/armor/abductor/vest/process()
+/obj/item/clothing/suit/armr/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/clothing/suit/armor/abductor/Destroy()
+/obj/item/clothing/suit/armr/abductor/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	for(var/obj/machinery/abductor/console/C in GLOB.machines)
 		if(C.vest == src)

@@ -180,7 +180,7 @@
 			continue
 	listclearnulls(spooky_scaries)
 
-//Funny gimmick, skeletons always seem to wear roman/ancient armour
+//Funny gimmick, skeletons always seem to wear roman/ancient armr
 /obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
@@ -340,7 +340,7 @@
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/swat(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armr/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas(M),slot_wear_mask)
 			M.put_in_hands_or_del(sword)
 

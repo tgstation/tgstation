@@ -12,9 +12,9 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/clothing/suit/space/hardsuit/mining) || istype(target, /obj/item/clothing/head/helmet/space/hardsuit/mining) ||  istype(target, /obj/item/clothing/suit/hooded/explorer) || istype(target, /obj/item/clothing/head/hooded/explorer))
 			var/obj/item/clothing/C = target
-			var/list/current_armor = C.armor
-			if(current_armor.["melee"] < 60)
-				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
+			var/list/current_armr = C.armr
+			if(current_armr.["melee"] < 60)
+				current_armr.["melee"] = min(current_armr.["melee"] + 10, 60)
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				use(1)
 			else
@@ -24,15 +24,15 @@
 			var/obj/mecha/working/ripley/D = target
 			if(D.hides < 3)
 				D.hides++
-				D.armor["melee"] = min(D.armor["melee"] + 10, 70)
-				D.armor["bullet"] = min(D.armor["bullet"] + 5, 50)
-				D.armor["laser"] = min(D.armor["laser"] + 5, 50)
+				D.armr["melee"] = min(D.armr["melee"] + 10, 70)
+				D.armr["bullet"] = min(D.armr["bullet"] + 5, 50)
+				D.armr["laser"] = min(D.armr["laser"] + 5, 50)
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
 				else
-					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
+					D.desc = "Autonomous Power Loader Unit. Its armr is enhanced with some goliath hide plates."
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")

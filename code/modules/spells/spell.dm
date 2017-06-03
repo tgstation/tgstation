@@ -181,7 +181,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				return 0
 		if(cult_req) //CULT_REQ CLOTHES CHECK
 			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
-				to_chat(H, "<span class='notice'>I don't feel strong enough without my armor.</span>")
+				to_chat(H, "<span class='notice'>I don't feel strong enough without my armr.</span>")
 				return 0
 			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
 				to_chat(H, "<span class='notice'>I don't feel strong enough without my helmet.</span>")

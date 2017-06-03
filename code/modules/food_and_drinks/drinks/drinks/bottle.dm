@@ -9,7 +9,7 @@
 	volume = 100
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
-	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
+	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armr (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
@@ -59,48 +59,48 @@
 
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
-	var/armor_block = 0 //Get the target's armor values for normal attack damage.
-	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+	var/armr_block = 0 //Get the target's armr values for normal attack damage.
+	var/armr_duration = 0 //The more force the bottle has, the longer the duration.
 
 	//Calculating duration and calculating damage.
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
-		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, "melee","","",armour_penetration) // For normal attack damage
+		var/headarmr = 0 // Target's head armr
+		armr_block = H.run_armr_check(affecting, "melee","","",armr_penetration) // For normal attack damage
 
 		//If they have a hat/helmet and the user is targeting their head.
 		if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
 
-			// If their head has an armor value, assign headarmor to it, else give it 0.
-			if(H.head.armor["melee"])
-				headarmor = H.head.armor["melee"]
+			// If their head has an armr value, assign headarmr to it, else give it 0.
+			if(H.head.armr["melee"])
+				headarmr = H.head.armr["melee"]
 			else
-				headarmor = 0
+				headarmr = 0
 		else
-			headarmor = 0
+			headarmr = 0
 
 		//Calculate the weakening duration for the target.
-		armor_duration = (duration - headarmor) + force
+		armr_duration = (duration - headarmr) + force
 
 	else
-		//Only humans can have armor, right?
-		armor_block = target.run_armor_check(affecting, "melee")
+		//Only humans can have armr, right?
+		armr_block = target.run_armr_check(affecting, "melee")
 		if(affecting == "head")
-			armor_duration = duration + force
-	armor_duration /= 10
+			armr_duration = duration + force
+	armr_duration /= 10
 
 	//Apply the damage!
-	armor_block = min(90,armor_block)
-	target.apply_damage(force, BRUTE, affecting, armor_block)
+	armr_block = min(90,armr_block)
+	target.apply_damage(force, BRUTE, affecting, armr_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
 	if(affecting == "head" && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
 		//Weaken the target for the duration that we calculated and divide it by 5.
-		if(armor_duration)
-			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
+		if(armr_duration)
+			target.apply_effect(min(armr_duration, 10) , WEAKEN) // Never weaken more than a flash!
 
 	//Display an attack message.
 	if(target != user)

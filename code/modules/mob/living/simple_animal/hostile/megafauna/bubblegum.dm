@@ -36,7 +36,7 @@ Difficulty: Hard
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("gurgles")
-	armour_penetration = 40
+	armr_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
@@ -255,7 +255,7 @@ Difficulty: Hard
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
-			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
+			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armr_check(limb_to_hit, "melee", null, null, armr_penetration))
 	sleep(3)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)

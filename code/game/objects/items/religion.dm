@@ -51,19 +51,19 @@
 	icon_state = "bannerpack-blue"
 
 //this is all part of one item set
-/obj/item/clothing/suit/armor/plate/crusader
+/obj/item/clothing/suit/armr/plate/crusader
 	name = "Crusader's Armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
+	armr = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
-/obj/item/clothing/suit/armor/plate/crusader/red
+/obj/item/clothing/suit/armr/plate/crusader/red
 	icon_state = "crusader-red"
 
-/obj/item/clothing/suit/armor/plate/crusader/blue
+/obj/item/clothing/suit/armr/plate/crusader/blue
 	icon_state = "crusader-blue"
 
 /obj/item/clothing/head/helmet/plate/crusader
@@ -72,7 +72,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
+	armr = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -86,7 +86,7 @@
 	desc = "A religious-looking hat."
 	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags = 0
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50, fire = 60, acid = 60) //religion protects you from disease and radiation, honk.
+	armr = list(melee = 60, bullet = 60, laser = 60, energy = 50, bomb = 70, bio = 50, rad = 50, fire = 60, acid = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
@@ -143,7 +143,7 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
+	armr = list(melee = 50, bullet = 50, laser = 50, energy = 40, bomb = 60, bio = 0, rad = 0, fire = 60, acid = 60) //does this even do anything on boots?
 	flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -160,14 +160,14 @@
 
 /obj/item/weapon/storage/box/itemset/crusader
 	name = "Crusader's Armour Set" //i can't into ck2 references
-	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
+	desc = "This armr is said to be based on the armr of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
 
 
 /obj/item/weapon/storage/box/itemset/crusader/blue/New()
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
+	new /obj/item/clothing/suit/armr/plate/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
@@ -177,7 +177,7 @@
 	..()
 	contents = list()
 	sleep(1)
-	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
+	new /obj/item/clothing/suit/armr/plate/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
 	new /obj/item/clothing/shoes/plate/red(src)
@@ -186,4 +186,4 @@
 /obj/item/weapon/claymore/weak
 	desc = "This one is rusted."
 	force = 30
-	armour_penetration = 15
+	armr_penetration = 15

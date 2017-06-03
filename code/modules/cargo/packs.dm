@@ -229,13 +229,13 @@
 					/obj/item/clothing/head/helmet/sec)
 	crate_name = "helmet crate"
 
-/datum/supply_pack/security/armor
+/datum/supply_pack/security/armr
 	name = "Armor Crate"
 	cost = 1000
-	contains = list(/obj/item/clothing/suit/armor/vest,
-					/obj/item/clothing/suit/armor/vest,
-					/obj/item/clothing/suit/armor/vest)
-	crate_name = "armor crate"
+	contains = list(/obj/item/clothing/suit/armr/vest,
+					/obj/item/clothing/suit/armr/vest,
+					/obj/item/clothing/suit/armr/vest)
+	crate_name = "armr crate"
 
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
@@ -289,11 +289,11 @@
 	                /obj/item/clothing/head/det_hat)
 	crate_name = "forensics crate"
 
-/datum/supply_pack/security/armory
-	access = GLOB.access_armory
+/datum/supply_pack/security/armry
+	access = GLOB.access_armry
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
-/datum/supply_pack/security/armory/riothelmets
+/datum/supply_pack/security/armry/riothelmets
 	name = "Riot Helmets Crate"
 	cost = 1500
 	contains = list(/obj/item/clothing/head/helmet/riot,
@@ -301,15 +301,15 @@
 					/obj/item/clothing/head/helmet/riot)
 	crate_name = "riot helmets crate"
 
-/datum/supply_pack/security/armory/riotarmor
+/datum/supply_pack/security/armry/riotarmr
 	name = "Riot Armor Crate"
 	cost = 1500
-	contains = list(/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/suit/armor/riot)
-	crate_name = "riot armor crate"
+	contains = list(/obj/item/clothing/suit/armr/riot,
+					/obj/item/clothing/suit/armr/riot,
+					/obj/item/clothing/suit/armr/riot)
+	crate_name = "riot armr crate"
 
-/datum/supply_pack/security/armory/riotshields
+/datum/supply_pack/security/armry/riotshields
 	name = "Riot Shields Crate"
 	cost = 2000
 	contains = list(/obj/item/weapon/shield/riot,
@@ -317,15 +317,15 @@
 					/obj/item/weapon/shield/riot)
 	crate_name = "riot shields crate"
 
-/datum/supply_pack/security/armory/bulletarmor
+/datum/supply_pack/security/armry/bulletarmr
 	name = "Bulletproof Armor Crate"
 	cost = 1500
-	contains = list(/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/suit/armor/bulletproof)
-	crate_name = "bulletproof armor crate"
+	contains = list(/obj/item/clothing/suit/armr/bulletproof,
+					/obj/item/clothing/suit/armr/bulletproof,
+					/obj/item/clothing/suit/armr/bulletproof)
+	crate_name = "bulletproof armr crate"
 
-/datum/supply_pack/security/armory/swat
+/datum/supply_pack/security/armry/swat
 	name = "SWAT Crate"
 	cost = 6000
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
@@ -340,7 +340,7 @@
 					/obj/item/clothing/gloves/combat)
 	crate_name = "swat crate"
 
-/datum/supply_pack/security/armory/combatknives
+/datum/supply_pack/security/armry/combatknives
 	name = "Combat Knives Crate"
 	cost = 3000
 	contains = list(/obj/item/weapon/kitchen/knife/combat,
@@ -348,15 +348,15 @@
 					/obj/item/weapon/kitchen/knife/combat)
 	crate_name = "combat knife crate"
 
-/datum/supply_pack/security/armory/laserarmor
+/datum/supply_pack/security/armry/laserarmr
 	name = "Reflector Vest Crate"
 	cost = 2000
-	contains = list(/obj/item/clothing/suit/armor/laserproof,
-					/obj/item/clothing/suit/armor/laserproof)
+	contains = list(/obj/item/clothing/suit/armr/laserproof,
+					/obj/item/clothing/suit/armr/laserproof)
 	crate_name = "reflector vest crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/security/armory/ballistic
+/datum/supply_pack/security/armry/ballistic
 	name = "Combat Shotguns Crate"
 	cost = 8000
 	contains = list(/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
@@ -367,7 +367,7 @@
 					/obj/item/weapon/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
 
-/datum/supply_pack/security/armory/energy
+/datum/supply_pack/security/armry/energy
 	name = "Energy Guns Crate"
 	cost = 2500
 	contains = list(/obj/item/weapon/gun/energy/e_gun,
@@ -375,7 +375,7 @@
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/security/armory/fire
+/datum/supply_pack/security/armry/fire
 	name = "Incendiary Weapons Crate"
 	cost = 1500
 	access = GLOB.access_heads
@@ -390,14 +390,14 @@
 	crate_type = /obj/structure/closet/crate/secure/plasma
 	dangerous = TRUE
 
-/datum/supply_pack/security/armory/wt550
+/datum/supply_pack/security/armry/wt550
 	name = "WT-550 Auto Rifle Crate"
 	cost = 3500
 	contains = list(/obj/item/weapon/gun/ballistic/automatic/wt550,
 					/obj/item/weapon/gun/ballistic/automatic/wt550)
 	crate_name = "auto rifle crate"
 
-/datum/supply_pack/security/armory/wt550ammo
+/datum/supply_pack/security/armry/wt550ammo
 	name = "WT-550 Auto Rifle Ammo Crate"
 	cost = 3000
 	contains = list(/obj/item/ammo_box/magazine/wt550m9,
@@ -406,25 +406,25 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/mindshield
+/datum/supply_pack/security/armry/mindshield
 	name = "mindshield implants Crate"
 	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
 	crate_name = "mindshield implant crate"
 
-/datum/supply_pack/security/armory/trackingimp
+/datum/supply_pack/security/armry/trackingimp
 	name = "Tracking Implants Crate"
 	cost = 2000
 	contains = list(/obj/item/weapon/storage/box/trackimp)
 	crate_name = "tracking implant crate"
 
-/datum/supply_pack/security/armory/chemimp
+/datum/supply_pack/security/armry/chemimp
 	name = "Chemical Implants Crate"
 	cost = 2000
 	contains = list(/obj/item/weapon/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
-/datum/supply_pack/security/armory/exileimp
+/datum/supply_pack/security/armry/exileimp
 	name = "Exile Implants Crate"
 	cost = 3000
 	contains = list(/obj/item/weapon/storage/box/exileimp)

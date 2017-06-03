@@ -126,7 +126,7 @@
 	description = "Well, looks like Centcomm only had this ship in the area, they probably weren't expecting you to need evac for a while. \
 	Probably best if you don't rifle around in whatever equipment they were transporting. I hope you're friendly with your coworkers, because there is very little space in this thing.\n\
 	\n\
-	Contains contraband armory guns, maintenance loot, and abandoned crates!"
+	Contains contraband armry guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
 
 /datum/map_template/shuttle/emergency/meta

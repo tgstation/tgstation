@@ -40,7 +40,7 @@ Possible to do for anyone motivated enough:
 	active_power_usage = 100
 	obj_integrity = 300
 	max_integrity = 300
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	armr = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	var/list/masters = list()//List of living mobs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.

@@ -38,7 +38,7 @@
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
 	var/list/mutant_organs = list()		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
-	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
+	var/armr = 0		// overall defense for the race... or less defense, if it's negative.
 	var/brutemod = 1	// multiplier for brute damage
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
@@ -1060,7 +1060,7 @@
 			return 0
 
 
-		var/armor_block = target.run_armor_check(affecting, "melee")
+		var/armr_block = target.run_armr_check(affecting, "melee")
 
 		playsound(target.loc, user.dna.species.attack_sound, 25, 1, -1)
 
@@ -1069,12 +1069,12 @@
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
-		target.apply_damage(damage, BRUTE, affecting, armor_block)
+		target.apply_damage(damage, BRUTE, affecting, armr_block)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has weakened [target]!</span>", \
 							"<span class='userdanger'>[user] has weakened [target]!</span>")
-			target.apply_effect(4, WEAKEN, armor_block)
+			target.apply_effect(4, WEAKEN, armr_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
@@ -1109,7 +1109,7 @@
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
+			target.apply_effect(2, WEAKEN, target.run_armr_check(affecting, "melee", "Your armr prevents your fall!", "Your armr softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return
@@ -1170,7 +1170,7 @@
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armr_penetration))
 			return 0
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
@@ -1183,12 +1183,12 @@
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
 
-	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
-	armor_block = min(90,armor_block) //cap damage reduction at 90%
+	var/armr_block = H.run_armr_check(affecting, "melee", "<span class='notice'>Your armr has protected your [hit_area].</span>", "<span class='notice'>Your armr has softened a hit to your [hit_area].</span>",I.armr_penetration)
+	armr_block = min(90,armr_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	var/weakness = H.check_weakness(I, user)
-	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
+	apply_damage(I.force * weakness, I.damtype, def_zone, armr_block, H)
 	H.damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 
 	H.send_item_attack_message(I, user, hit_area)
@@ -1217,7 +1217,7 @@
 
 		switch(hit_area)
 			if("head")
-				if(H.stat == CONSCIOUS && armor_block < 50)
+				if(H.stat == CONSCIOUS && armr_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
 										"<span class='userdanger'>[H] has been knocked senseless!</span>")
@@ -1239,11 +1239,11 @@
 						H.update_inv_glasses()
 
 			if("chest")
-				if(H.stat == CONSCIOUS && armor_block < 50)
+				if(H.stat == CONSCIOUS && armr_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
-						H.apply_effect(3, WEAKEN, armor_block)
+						H.apply_effect(3, WEAKEN, armr_block)
 
 				if(bloody)
 					if(H.wear_suit)
@@ -1258,7 +1258,7 @@
 	return TRUE
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
-	var/hit_percent = (100-(blocked+armor))/100
+	var/hit_percent = (100-(blocked+armr))/100
 	if(!damage || hit_percent <= 0)
 		return 0
 

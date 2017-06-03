@@ -1,4 +1,4 @@
-//Clockwork armor: High melee protection but weak to lasers
+//Clockwork armr: High melee protection but weak to lasers
 /obj/item/clothing/head/helmet/clockwork
 	name = "clockwork helmet"
 	desc = "A heavy helmet made of brass."
@@ -6,7 +6,7 @@
 	icon_state = "clockwork_helmet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/head/helmet/clockwork/Initialize()
 	. = ..()
@@ -19,12 +19,12 @@
 
 /obj/item/clothing/head/helmet/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		armr = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 		flags |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		armr = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 		flags &= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
@@ -51,7 +51,7 @@
 		return 0
 	return ..()
 
-/obj/item/clothing/suit/armor/clockwork
+/obj/item/clothing/suit/armr/clockwork
 	name = "clockwork cuirass"
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
@@ -61,36 +61,36 @@
 	cold_protection = CHEST|GROIN|LEGS
 	heat_protection = CHEST|GROIN|LEGS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
-/obj/item/clothing/suit/armor/clockwork/Initialize()
+/obj/item/clothing/suit/armr/clockwork/Initialize()
 	. = ..()
 	ratvar_act()
 	GLOB.all_clockwork_objects += src
 
-/obj/item/clothing/suit/armor/clockwork/Destroy()
+/obj/item/clothing/suit/armr/clockwork/Destroy()
 	GLOB.all_clockwork_objects -= src
 	return ..()
 
-/obj/item/clothing/suit/armor/clockwork/ratvar_act()
+/obj/item/clothing/suit/armr/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		armr = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 		flags |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		armr = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 		flags &= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
-/obj/item/clothing/suit/armor/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/clothing/suit/armr/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
 		return 0
 	return ..()
 
-/obj/item/clothing/suit/armor/clockwork/equipped(mob/living/user, slot)
+/obj/item/clothing/suit/armr/clockwork/equipped(mob/living/user, slot)
 	..()
 	if(slot == slot_wear_suit && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
@@ -100,7 +100,7 @@
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
 		else
-			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
+			to_chat(user, "<span class='heavy_brass'>\"I think this armr is too hot for you to handle.\"</span>")
 			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
 			user.emote("scream")
 			user.apply_damage(15, BURN, "chest")
@@ -123,7 +123,7 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+	armr = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
 /obj/item/clothing/gloves/clockwork/Initialize()
 	. = ..()
@@ -136,12 +136,12 @@
 
 /obj/item/clothing/gloves/clockwork/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+		armr = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 		flags |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
-		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
+		armr = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 		flags &= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)

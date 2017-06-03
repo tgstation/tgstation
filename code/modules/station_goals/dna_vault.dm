@@ -277,7 +277,7 @@
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
 			to_chat(H, "<span class='notice'>You feel tough.</span>")
-			S.armor = 30
+			S.armr = 30
 
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")

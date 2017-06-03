@@ -24,7 +24,7 @@
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
 	new /obj/item/weapon/storage/box/beanbag(src)
-	new /obj/item/clothing/suit/armor/vest/alt(src)
+	new /obj/item/clothing/suit/armr/vest/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)
 	new /obj/item/weapon/storage/belt/bandolier(src)
 
@@ -115,7 +115,7 @@
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
 	new /obj/item/clothing/head/helmet/knight/templar(src)
-	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
+	new /obj/item/clothing/suit/armr/riot/knight/templar(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
 	return

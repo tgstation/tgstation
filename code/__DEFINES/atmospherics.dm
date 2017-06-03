@@ -108,8 +108,8 @@
 
 #define HELMET_MIN_TEMP_PROTECT				160		//For normal helmets
 #define HELMET_MAX_TEMP_PROTECT				600		//For normal helmets
-#define ARMOR_MIN_TEMP_PROTECT				160		//For armor
-#define ARMOR_MAX_TEMP_PROTECT				600		//For armor
+#define ARMOR_MIN_TEMP_PROTECT				160		//For armr
+#define ARMOR_MAX_TEMP_PROTECT				600		//For armr
 
 #define GLOVES_MIN_TEMP_PROTECT				2.0		//For some gloves (black and)
 #define GLOVES_MAX_TEMP_PROTECT				1500	//For some gloves

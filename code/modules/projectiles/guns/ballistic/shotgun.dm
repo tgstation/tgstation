@@ -78,7 +78,7 @@
 
 // RIOT SHOTGUN //
 
-/obj/item/weapon/gun/ballistic/shotgun/riot //for spawn in the armory
+/obj/item/weapon/gun/ballistic/shotgun/riot //for spawn in the armry
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"

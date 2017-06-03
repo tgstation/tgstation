@@ -93,12 +93,12 @@
 		if(ishuman(ML))
 			var/mob/living/carbon/human/H = ML
 			affecting = H.get_bodypart(ran_zone(dam_zone))
-		var/armor = ML.run_armor_check(affecting, "melee")
+		var/armr = ML.run_armr_check(affecting, "melee")
 		if(prob(75))
-			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
+			ML.apply_damage(rand(1,3), BRUTE, affecting, armr)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 							"<span class='userdanger'>[name] bites [ML]!</span>")
-			if(armor >= 2)
+			if(armr >= 2)
 				return
 			for(var/datum/disease/D in viruses)
 				ML.ForceContractDisease(D)

@@ -349,13 +349,13 @@
 	item_path = /obj/item/weapon/storage/belt/wands/full
 	category = "Defensive"
 
-/datum/spellbook_entry/item/armor
+/datum/spellbook_entry/item/armr
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	desc = "An artefact suit of armr that allows you to cast spells while providing more protection against attacks and the void of space."
 	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
 	category = "Defensive"
 
-/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+/datum/spellbook_entry/item/armr/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
 		new /obj/item/clothing/shoes/sandal/magic(get_turf(user)) //In case they've lost them.
@@ -412,15 +412,15 @@
 
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
-	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
+	desc = "An ensorcelled suit of armr, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
 	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
 	limit = 1
 	category = "Defensive"
 
 /datum/spellbook_entry/item/battlemage_charge
 	name = "Battlemage Armour Charges"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
-	item_path = /obj/item/wizard_armour_charge
+	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armr."
+	item_path = /obj/item/wizard_armr_charge
 	category = "Defensive"
 	cost = 1
 

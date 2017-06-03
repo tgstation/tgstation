@@ -17,7 +17,7 @@
 /datum/outfit/syndicatesoldiercorpse
 	name = "Syndicate Operative Corpse"
 	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armr/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset
@@ -115,7 +115,7 @@
 /datum/outfit/russiancorpse/ranged/trooper
 	name = "Ranged Russian Trooper Corpse"
 	uniform = /obj/item/clothing/under/syndicate/camo
-	suit = /obj/item/clothing/suit/armor/bulletproof
+	suit = /obj/item/clothing/suit/armr/bulletproof
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset
@@ -157,7 +157,7 @@
 /datum/outfit/nanotrasensoldiercorpse2
 	name = "NT Private Security Officer Corpse"
 	uniform = /obj/item/clothing/under/rank/security
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armr/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset

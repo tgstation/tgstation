@@ -248,7 +248,7 @@
 
 /obj/item/weapon/reagent_containers/syringe/piercing
 	name = "piercing syringe"
-	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	desc = "A diamond-tipped syringe that pierces armr when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
 	origin_tech = "combat=3;materials=4;engineering=5"

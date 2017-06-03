@@ -20,8 +20,8 @@
 			lootcount--
 	qdel(src)
 
-/obj/effect/spawner/lootdrop/armory_contraband
-	name = "armory contraband gun spawner"
+/obj/effect/spawner/lootdrop/armry_contraband
+	name = "armry contraband gun spawner"
 	lootdoubles = FALSE
 
 	loot = list(

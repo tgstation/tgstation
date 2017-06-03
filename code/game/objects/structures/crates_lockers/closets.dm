@@ -15,7 +15,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	integrity_failure = 50
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
+	armr = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = TRUE

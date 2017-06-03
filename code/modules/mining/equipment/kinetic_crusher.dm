@@ -14,7 +14,7 @@
 	throwforce = 5
 	throw_speed = 4
 	luminosity = 4
-	armour_penetration = 10
+	armr_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
@@ -97,7 +97,7 @@
 				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
 			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 			var/backstab_dir = get_dir(user, L)
-			var/def_check = L.getarmor(type = "bomb")
+			var/def_check = L.getarmr(type = "bomb")
 			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
 				if(!QDELETED(C))
 					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item

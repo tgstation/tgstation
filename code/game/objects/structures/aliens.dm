@@ -12,7 +12,7 @@
 	obj_integrity = 100
 	max_integrity = 100
 
-/obj/structure/alien/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/alien/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee")
 		switch(damage_type)
 			if(BRUTE)

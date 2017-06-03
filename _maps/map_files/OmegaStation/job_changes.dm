@@ -38,8 +38,8 @@
 	MAP_JOB_CHECK
 	total_positions = 3
 	spawn_positions = 3
-	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
-	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
 
 /datum/outfit/job/officer/New()
 	..()
@@ -49,8 +49,8 @@
 /datum/job/detective/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
-	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armry, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
 
 /datum/outfit/job/detective/New()
 	..()

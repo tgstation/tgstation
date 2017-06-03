@@ -1063,7 +1063,7 @@
 /datum/outfit/orionsecurity
 	name = "Orion Spaceport Security"
 	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armr/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset

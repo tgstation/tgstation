@@ -50,7 +50,7 @@ As the AI, you can take pictures with your camera and upload them to newscasters
 As a Cyborg, choose your module carefully, as only a roboticist can let you repick it. If possible, refrain from choosing a module until a situation that requires one occurs.
 As a Cyborg, you are immune to most forms of stunning, and excel at almost everything far better than humans. However, flashes can easily stunlock you and you cannot do any precision work as you lack hands.
 As a Cyborg, you are impervious to fires and heat. If you are rogue, you can release plasma fires everywhere and walk through them without a care in the world!
-As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armory or a traitor with an EMP kit can kill you in seconds.
+As a Cyborg, you are extremely vulnerable to EMPs as EMPs both stun you and damage you. The ion rifle in the armry or a traitor with an EMP kit can kill you in seconds.
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
 As the Chief Engineer, your hardsuit is significantly better than everybody else's. It boasts better protection, and is completely heat and fire proof.
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
@@ -64,11 +64,11 @@ As an Engineer, you can lock emitters using your ID card to prevent others from 
 As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
 As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, nanofrost sprays, and a completely heat and fire proof rigsuit.
-As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armory to handle a blob, sometimes it means being ruthless during a revolution or cult.
+As the Head of Security, you are expected to coordinate your security force to handle any threat that comes to the station. Sometimes it means making use of the armry to handle a blob, sometimes it means being ruthless during a revolution or cult.
 As the Head of Security, you can call for executions or forced cyborgization, but may require the Captain's approval.
 As the Head of Security, don't let the power go to your head. You may have high access, great equipment, and a miniature army at your side, but being a terrible person without a good reason is grounds for banning.
 As the Warden, your duty is to be the watchdog of the brig and handler of prisoners when little is happening, and to hand out equipment and weapons to the security officers when a crisis strikes.
-As the Warden, keep a close eye on the armory at all times, as it is a favored strike point of nuclear operatives and cocky traitors.
+As the Warden, keep a close eye on the armry at all times, as it is a favored strike point of nuclear operatives and cocky traitors.
 As the Warden, if a prisoner's crimes are heinous enough you can put them in permabrig or the gulag. Make sure to check on them once in a while!
 As the Warden, you can implant criminals you suspect might re-offend with devices that will track their location and allow you to remotely inject them with disabling chemicals. 
 As the Warden, you can use handcuffs on orange prisoner shoes to turn them into cuffed shoes, forcing prisoners to walk and potentially thwarting an escape.
@@ -146,7 +146,7 @@ As the Blob, talking will send a message to all other overminds and all Blobbern
 As a Blobbernaut, you can communicate with overminds and other Blobbernauts via :b.
 As a Blobbernaut, your HUD shows your health and the core health of the overmind that created you.
 As a Revolutionary, you cannot convert a head of staff or someone who has a loyalty implant, such as a security officer or those they implant. Implants can however be surgically removed, and do not carry over with cloning. Take control of medbay to keep control of conversions!
-As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armor, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
+As a Revolutionary, cargo can be your best friend or your worst nightmare. In the best case scenario you will be able to order a limitless amount of guns and armr, in the worst case scenario security will take control and order a limitless number of loyalty implants to turn your fellow revolutionaries against you.
 As a Revolutionary, your main power comes from how quickly you spread. Convert people as fast as you can and overwhelm the heads of staff before security can arm up.
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
 As a Changeling, you can absorb someone by strangling them and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
@@ -169,7 +169,7 @@ As a Servant, placing components in a slab or cache places those components in a
 As a Servant, you can stack different types of Sigils on the same turf; try stacking a Sigil of Transgression and a Sigil of Submission for a subtle conversion trap.
 As a Servant, you can deconstruct a Clockwork Wall with a Clockwork Proselytizer to regain 1000W power. You can also construct Clockwork Walls on Clockwork Floors for a cost of 1000W power.
 As a Servant, Volt Void will drain power from nearby Sigils of Transmission to up to double the damage of each volt ray. It'll even use your own power if you happen to be a cyborg!
-As a Servant, Fellowship Armory invokes much faster for each nearby servant and attempts to provide each affected servant with powerful armor against melee, bullet, and bomb attacks. The gauntlets provided are also immune to elecricity.
+As a Servant, Fellowship Armory invokes much faster for each nearby servant and attempts to provide each affected servant with powerful armr against melee, bullet, and bomb attacks. The gauntlets provided are also immune to elecricity.
 As a Servant, Spatial Gateway can teleport to any living Servant or Clockwork Obelisk, and gains additional uses and duration for each Servant assisting in the invocation.
 As a Servant, creating and activating the Gateway to the Celestial Derelict is your ultimate goal, and you must defend it with all the tools you have available.
 As a Servant, once Ratvar has arrived, all of your tools gain a massive boost in power and will, in general, have no cost and work at double speed.

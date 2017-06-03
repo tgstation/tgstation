@@ -130,7 +130,7 @@ This file contains the arcane tome files.
 	text += "<font color='red'><b>Talisman of Stunning</b></font><br>Attacking a target will knock them down for a long duration in addition to inhibiting their speech. \
 	Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armored robes, a backpack, an eldritch longsword, an empowered bola, and a pair of boots. Any items that cannot \
+	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armred robes, a backpack, an eldritch longsword, an empowered bola, and a pair of boots. Any items that cannot \
 	be equipped will not be summoned. Attacking a fellow cultist with it will instead equip them.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Horrors</b></font><br>The Talisman of Horror, unlike other talismans, can be applied at range, without the victim noticing. It will cause the victim to have severe hallucinations after a short while.<br><br>"
@@ -145,7 +145,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Cult Bola</b></font><br>Cult bolas are strong bolas, useful for snaring targets. These bolas are produced by the Talisman of Arming.<br><br>"
 
-	text += "<font color='red'><b>Cult Robes</b></font><br>Cult robes are heavily armored robes. These robes are produced by the Talisman of Arming.<br><br>"
+	text += "<font color='red'><b>Cult Robes</b></font><br>Cult robes are heavily armred robes. These robes are produced by the Talisman of Arming.<br><br>"
 
 	text += "<font color='red'><b>Soulstone</b></font><br>A soulstone is a simple piece of magic, produced either via the starter talisman or by sacrificing humans. Using it on an unconscious or dead human, or on a Shade, will trap their soul in the stone, allowing its use in construct shells. \
 	<br>The soul within can also be released as a Shade by using it in-hand.<br><br>"

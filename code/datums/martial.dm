@@ -57,20 +57,20 @@
 		return 0
 
 	var/obj/item/bodypart/affecting = D.get_bodypart(ran_zone(A.zone_selected))
-	var/armor_block = D.run_armor_check(affecting, "melee")
+	var/armr_block = D.run_armr_check(affecting, "melee")
 
 	playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
 	D.visible_message("<span class='danger'>[A] has [atk_verb]ed [D]!</span>", \
 			"<span class='userdanger'>[A] has [atk_verb]ed [D]!</span>", null, COMBAT_MESSAGE_RANGE)
 
-	D.apply_damage(damage, BRUTE, affecting, armor_block)
+	D.apply_damage(damage, BRUTE, affecting, armr_block)
 
 	add_logs(A, D, "punched")
 
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
 								"<span class='userdanger'>[A] has weakened [D]!</span>")
-		D.apply_effect(4, WEAKEN, armor_block)
+		D.apply_effect(4, WEAKEN, armr_block)
 		D.forcesay(GLOB.hit_appends)
 	else if(D.lying)
 		D.forcesay(GLOB.hit_appends)

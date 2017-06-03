@@ -24668,7 +24668,7 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs,
-/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armr/vest,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side,
 /area/security/prison)
@@ -32839,7 +32839,7 @@
 "bpF" = (
 /obj/structure/closet/secure_closet/hos,
 /obj/item/clothing/head/HoS/beret,
-/obj/item/clothing/suit/armor/hos/trenchcoat,
+/obj/item/clothing/suit/armr/hos/trenchcoat,
 /obj/item/clothing/under/rank/head_of_security/grey,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -42251,7 +42251,7 @@
 /area/security/warden)
 "bHi" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bHj" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -43304,7 +43304,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bJg" = (
 /obj/item/weapon/grenade/barrier{
 	pixel_x = -3;
@@ -43327,7 +43327,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bJh" = (
 /obj/item/weapon/storage/box/chemimp{
 	pixel_x = 6
@@ -43343,7 +43343,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bJi" = (
 /obj/item/weapon/storage/box/firingpins,
 /obj/item/weapon/storage/box/firingpins,
@@ -43352,7 +43352,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bJj" = (
 /obj/item/weapon/storage/box/teargas{
 	pixel_x = 3;
@@ -43367,7 +43367,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bJk" = (
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -44304,13 +44304,13 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bLk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bLl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
@@ -44320,13 +44320,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bLm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bLn" = (
 /obj/structure/closet/secure_closet{
 	anchored = 1;
@@ -44339,7 +44339,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bLo" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -45182,7 +45182,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bNg" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/shotgun/riot{
@@ -45193,21 +45193,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bNh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bNi" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/vest{
+/obj/item/clothing/suit/armr/vest{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/suit/armor/vest{
+/obj/item/clothing/suit/armr/vest,
+/obj/item/clothing/suit/armr/vest{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -45227,7 +45227,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bNj" = (
 /obj/structure/lattice,
 /obj/structure/window/reinforced,
@@ -46104,7 +46104,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bOW" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/laser{
@@ -46119,15 +46119,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bOX" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof,
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -46150,7 +46150,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bOY" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armoury - Exterior";
@@ -47380,13 +47380,13 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bRb" = (
 /obj/vehicle/secway,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bRc" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/advtaser{
@@ -47401,15 +47401,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bRd" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -47437,7 +47437,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bRe" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -48677,7 +48677,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bTs" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -48689,7 +48689,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bTt" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -48701,7 +48701,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bTu" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun{
@@ -48722,7 +48722,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bTv" = (
 /obj/structure/cable/white{
 	icon_state = "2-8"
@@ -48731,16 +48731,16 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bTw" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armr/laserproof,
 /obj/item/weapon/gun/energy/temperature/security,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bTx" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -49814,17 +49814,17 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bVy" = (
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bVz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bVA" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -49833,7 +49833,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bVB" = (
 /obj/structure/closet/secure_closet/lethalshots,
 /obj/machinery/light{
@@ -49842,7 +49842,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bVC" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal{
@@ -50336,7 +50336,7 @@
 /area/crew_quarters/heads/captain/private)
 "bWH" = (
 /obj/structure/closet/secure_closet/captains,
-/obj/item/clothing/suit/armor/vest/capcarapace,
+/obj/item/clothing/suit/armr/vest/capcarapace,
 /obj/item/clothing/head/caphat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -50578,7 +50578,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bXi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -50589,10 +50589,10 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bXj" = (
 /obj/machinery/button/door{
-	id = "armouryaccess";
+	id = "armryaccess";
 	name = "Armoury Access";
 	pixel_x = -26;
 	pixel_y = -26;
@@ -50602,7 +50602,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bXk" = (
 /obj/structure/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -50612,7 +50612,7 @@
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bXl" = (
 /obj/structure/cable/white,
 /obj/machinery/power/apc{
@@ -50629,7 +50629,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bXm" = (
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
@@ -50650,7 +50650,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bXn" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -51465,14 +51465,14 @@
 /area/security/brig)
 "bYT" = (
 /obj/machinery/door/poddoor{
-	id = "armouryaccess";
+	id = "armryaccess";
 	name = "Armoury Access"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bYU" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -51487,7 +51487,7 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bYV" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -65585,7 +65585,7 @@
 	name = "Replica Centcom officer's jumpsuit"
 	},
 /obj/item/clothing/head/centhat{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
+	armr = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
 	name = "Replica Centcom hat"
 	},
@@ -65661,7 +65661,7 @@
 /obj/item/weapon/folder/red,
 /obj/item/toy/gun,
 /obj/item/clothing/head/beret/sec{
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
+	armr = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
 	desc = "A replica beret resembling that of a special operations officer under Nanotrasen.";
 	name = "replica officer's beret"
 	},

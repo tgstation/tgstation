@@ -9,21 +9,21 @@
  * Lasertag
  */
 /obj/item/clothing/suit/bluetag
-	name = "blue laser tag armor"
-	desc = "A piece of plastic armor. It has sensors that react to red light." //Lasers are concentrated light
+	name = "blue laser tag armr"
+	desc = "A piece of plastic armr. It has sensors that react to red light." //Lasers are concentrated light
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armr"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
 	resistance_flags = 0
 
 /obj/item/clothing/suit/redtag
-	name = "red laser tag armor"
-	desc = "A piece of plastic armor. It has sensors that react to blue light."
+	name = "red laser tag armr"
+	desc = "A piece of plastic armr. It has sensors that react to blue light."
 	icon_state = "redtag"
 	item_state = "redtag"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armr"
 	body_parts_covered = CHEST
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
 	resistance_flags = 0
@@ -302,7 +302,7 @@
 
 /obj/item/clothing/suit/security/officer/russian
 	name = "russian officer's jacket"
-	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armor."
+	desc = "This jacket is for those special occasions when a russian officer isn't required to wear their armr."
 	icon_state = "officertanjacket"
 	item_state = "officertanjacket"
 	body_parts_covered = CHEST|ARMS
@@ -370,16 +370,16 @@
 	desc = "A thick jacket with a rubbery, water-resistant shell."
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
 	desc = "A thick vest with a rubbery, water-resistant shell."
 	icon_state = "puffervest"
-	item_state = "armor"
+	item_state = "armr"
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0, fire = 0, acid = 0)
 
 /obj/item/clothing/suit/jacket/miljacket
 	name = "military jacket"
@@ -432,7 +432,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 
 /obj/item/clothing/head/hooded/winterhood
@@ -448,7 +448,7 @@
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
 	item_state = "coatcaptain"
-	armor = list(melee = 25, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 50)
+	armr = list(melee = 25, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 50)
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
@@ -459,7 +459,7 @@
 	name = "security winter coat"
 	icon_state = "coatsecurity"
 	item_state = "coatsecurity"
-	armor = list(melee = 25, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 45)
+	armr = list(melee = 25, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 0, acid = 45)
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/device/flashlight/seclite,/obj/item/weapon/melee/classic_baton/telescopic)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
@@ -471,7 +471,7 @@
 	icon_state = "coatmedical"
 	item_state = "coatmedical"
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/weapon/melee/classic_baton/telescopic)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0, fire = 0, acid = 45)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0, fire = 0, acid = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical
 
 /obj/item/clothing/head/hooded/winterhood/medical
@@ -482,7 +482,7 @@
 	icon_state = "coatscience"
 	item_state = "coatscience"
 	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/weapon/melee/classic_baton/telescopic)
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 10, bio = 0, rad = 0, fire = 0, acid = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science
 
 /obj/item/clothing/head/hooded/winterhood/science
@@ -492,7 +492,7 @@
 	name = "engineering winter coat"
 	icon_state = "coatengineer"
 	item_state = "coatengineer"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20, fire = 30, acid = 45)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20, fire = 30, acid = 45)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/construction/rcd, /obj/item/weapon/pipe_dispenser)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
 
@@ -532,7 +532,7 @@
 	icon_state = "coatminer"
 	item_state = "coatminer"
 	allowed = list(/obj/item/weapon/pickaxe,/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
-	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armr = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
 /obj/item/clothing/head/hooded/winterhood/miner

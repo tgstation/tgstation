@@ -1,7 +1,7 @@
 
 /obj/item/bodypart/proc/can_dismember(obj/item/I)
 	if(dismemberable)
-		. = (get_damage() >= (max_damage - I.armour_penetration/2))
+		. = (get_damage() >= (max_damage - I.armr_penetration/2))
 
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)

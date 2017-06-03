@@ -12,7 +12,7 @@
 	anchored = 1
 	obj_integrity = 500
 	max_integrity = 500
-	armor = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
+	armr = list(melee = 70, bullet = 70, laser = 70, energy = 70, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked

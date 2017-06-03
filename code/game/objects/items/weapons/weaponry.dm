@@ -13,7 +13,7 @@
 	attack_verb = list("banned")
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
@@ -58,7 +58,7 @@
 	sharpness = IS_SHARP
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
@@ -203,7 +203,7 @@
 	sharpness = IS_SHARP
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/katana/cursed
@@ -351,7 +351,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armour_penetration = 100
+	armr_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 	resistance_flags = FLAMMABLE
 
@@ -502,7 +502,7 @@
 
 /obj/item/weapon/melee/baseball_bat/ablative
 	name = "metal baseball bat"
-	desc = "This bat is made of highly reflective, highly armored material."
+	desc = "This bat is made of highly reflective, highly armred material."
 	icon_state = "baseball_bat_metal"
 	item_state = "baseball_bat_metal"
 	force = 12

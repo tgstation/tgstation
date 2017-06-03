@@ -14,7 +14,7 @@
 		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 
-/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/spider/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee")
 		switch(damage_type)
 			if(BURN)

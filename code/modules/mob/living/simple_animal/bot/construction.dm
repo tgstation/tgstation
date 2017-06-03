@@ -79,13 +79,13 @@
 				newcolor = "r"
 			else if(istype(W, /obj/item/clothing/suit/bluetag))
 				newcolor = "b"
-			if(newcolor || istype(W, /obj/item/clothing/suit/armor/vest))
+			if(newcolor || istype(W, /obj/item/clothing/suit/armr/vest))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				lasercolor = newcolor
 				qdel(W)
 				build_step++
-				to_chat(user, "<span class='notice'>You add the armor to [src].</span>")
+				to_chat(user, "<span class='notice'>You add the armr to [src].</span>")
 				name = "vest/legs/frame assembly"
 				item_state = "[lasercolor]ed209_shell"
 				icon_state = "[lasercolor]ed209_shell"

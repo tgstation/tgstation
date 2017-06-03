@@ -460,7 +460,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/mask/facehugger/impregnated,
 /obj/item/clothing/under/rank/security,
-/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armr/vest,
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid{
@@ -4566,7 +4566,7 @@
 	name = "security officer's locker";
 	req_access_txt = "201"
 	},
-/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armr/vest,
 /obj/item/weapon/reagent_containers/spray/pepper,
 /obj/item/weapon/grenade/flashbang,
 /obj/item/weapon/storage/belt/security,

@@ -2200,7 +2200,7 @@
 /area/security/prison)
 "aeq" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aer" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle{
@@ -2210,11 +2210,11 @@
 	dir = 1
 	},
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armr/laserproof,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aes" = (
 /obj/structure/closet/secure_closet{
 	name = "contraband locker";
@@ -2224,13 +2224,13 @@
 	lootcount = 3;
 	name = "3maintenance loot spawner"
 	},
-/obj/effect/spawner/lootdrop/armory_contraband{
+/obj/effect/spawner/lootdrop/armry_contraband{
 	loot = list(/obj/item/weapon/gun/ballistic/automatic/pistol = 5, /obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5, /obj/item/weapon/gun/ballistic/revolver/mateba, /obj/item/weapon/gun/ballistic/automatic/pistol/deagle, /obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 3)
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aet" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/security_unit{
@@ -2272,7 +2272,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aey" = (
 /turf/closed/wall,
 /area/security/range)
@@ -2773,24 +2773,24 @@
 	on = 1
 	},
 /obj/item/weapon/storage/secure/safe{
-	name = "armory safe A";
+	name = "armry safe A";
 	pixel_x = 6;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afi" = (
 /obj/structure/closet/secure_closet/hos,
 /obj/machinery/light{
@@ -3193,7 +3193,7 @@
 	on = 1
 	},
 /obj/item/weapon/storage/secure/safe{
-	name = "armory safe B";
+	name = "armry safe B";
 	pixel_x = 6;
 	pixel_y = 28
 	},
@@ -3201,11 +3201,11 @@
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afZ" = (
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -3230,7 +3230,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aga" = (
 /mob/living/simple_animal/bot/secbot{
 	arrest_type = 1;
@@ -3244,7 +3244,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agb" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/advtaser{
@@ -3260,10 +3260,10 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agc" = (
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agd" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/laser{
@@ -3278,7 +3278,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "age" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -3661,16 +3661,16 @@
 /area/security/prison)
 "agQ" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armr/bulletproof,
 /obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armr/bulletproof,
 /obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/suit/armr/bulletproof,
 /obj/item/clothing/head/helmet/alt,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agR" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -3683,13 +3683,13 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agS" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agT" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -3707,7 +3707,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agU" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun{
@@ -3722,7 +3722,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agV" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -3989,9 +3989,9 @@
 /area/security/warden)
 "ahC" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
@@ -4002,7 +4002,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -4016,7 +4016,7 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahE" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -4034,7 +4034,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahF" = (
 /obj/machinery/power/apc{
 	cell_type = 5000;
@@ -4054,7 +4054,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/vault,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -4070,12 +4070,12 @@
 /turf/open/floor/plasteel/vault{
 	dir = 6
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahH" = (
 /turf/open/floor/plasteel/vault{
 	dir = 10
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahI" = (
 /obj/structure/rack,
 /obj/item/weapon/shield/riot{
@@ -4088,7 +4088,7 @@
 	pixel_y = -3
 	},
 /obj/machinery/button/door{
-	id = "armory";
+	id = "armry";
 	name = "Armory Shutters";
 	pixel_x = 28;
 	req_access_txt = "3"
@@ -4096,7 +4096,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahJ" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/firealarm{
@@ -4207,7 +4207,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ahQ" = (
 /obj/item/clothing/head/festive,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -4567,7 +4567,7 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aiB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -4581,7 +4581,7 @@
 /obj/structure/cable/yellow,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aiD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -4952,13 +4952,13 @@
 /area/security/warden)
 "ajs" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "armory shutters"
+	id = "armry";
+	name = "armry shutters"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ajt" = (
 /obj/structure/closet{
 	name = "Evidence Closet 5"
@@ -15125,7 +15125,7 @@
 "aCh" = (
 /obj/structure/safe,
 /obj/item/weapon/storage/secure/briefcase{
-	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/suppressor,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/weapon/soap/nanotrasen)
+	contents = newlist(/obj/item/clothing/suit/armr/vest,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/suppressor,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/weapon/soap/nanotrasen)
 	},
 /obj/item/weapon/storage/backpack/dufflebag{
 	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/tie/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
@@ -82220,8 +82220,8 @@
 	},
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/suit/armr/vest,
+/obj/item/clothing/suit/armr/vest,
 /obj/structure/table,
 /obj/item/clothing/head/helmet/swat/nanotrasen,
 /obj/item/clothing/head/helmet/swat/nanotrasen,

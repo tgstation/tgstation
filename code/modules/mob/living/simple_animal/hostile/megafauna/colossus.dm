@@ -9,7 +9,7 @@ The colossus has a degree of sentience, proving this in speech during its attack
 
 It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
 
-The colossus' true danger lies in its ranged capabilities. It fires immensely damaging death bolts that penetrate all armor in a variety of ways:
+The colossus' true danger lies in its ranged capabilities. It fires immensely damaging death bolts that penetrate all armr in a variety of ways:
  1. The colossus fires death bolts in alternating patterns: the cardinal directions and the diagonal directions.
  2. The colossus fires death bolts in a shotgun-like pattern, instantly downing anything unfortunate enough to be hit by all of them.
  3. The colossus fires a spiral of death bolts.
@@ -36,7 +36,7 @@ Difficulty: Very Hard
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armr_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
@@ -245,7 +245,7 @@ Difficulty: Very Hard
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 25
-	armour_penetration = 100
+	armr_penetration = 100
 	speed = 2
 	eyeblur = 0
 	damage_type = BRUTE

@@ -107,23 +107,23 @@
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
 							"backkey"=/obj/item/weapon/wrench,
-							"desc"="External armor is wrenched."),
+							"desc"="External armr is wrenched."),
 					//2
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is installed."),
+					 		"desc"="External armr is installed."),
 					 //3
 					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
-					 		"desc"="Internal armor is welded."),
+					 		"desc"="Internal armr is welded."),
 					 //4
 					 list("key"=/obj/item/weapon/weldingtool,
 					 		"backkey"=/obj/item/weapon/wrench,
-					 		"desc"="Internal armor is wrenched."),
+					 		"desc"="Internal armr is wrenched."),
 					 //5
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Internal armor is installed."),
+					 		"desc"="Internal armr is installed."),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -230,48 +230,48 @@
 				holder.icon_state = "ripley6"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the internal armr layer to the [holder].", "<span class='notice'>You install the internal armr layer to the [holder].</span>")
 				holder.icon_state = "ripley9"
 			else
 				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
 				holder.icon_state = "ripley7"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[user] secures the internal armr layer.", "<span class='notice'>You secure the internal armr layer.</span>")
 				holder.icon_state = "ripley10"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[user] pries internal armr layer from the [holder].", "<span class='notice'>You pry internal armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "ripley8"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the internal armr layer to the [holder].", "<span class='notice'>You weld the internal armr layer to the [holder].</span>")
 				holder.icon_state = "ripley11"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[user] unfastens the internal armr layer.", "<span class='notice'>You unfasten the internal armr layer.</span>")
 				holder.icon_state = "ripley9"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the external reinforced armr layer to the [holder].", "<span class='notice'>You install the external reinforced armr layer to the [holder].</span>")
 				holder.icon_state = "ripley12"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[user] cuts the internal armr layer from the [holder].", "<span class='notice'>You cut the internal armr layer from the [holder].</span>")
 				holder.icon_state = "ripley10"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("[user] secures the external armr layer.", "<span class='notice'>You secure the external reinforced armr layer.</span>")
 				holder.icon_state = "ripley13"
 			else
-				user.visible_message("[user] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>")
+				user.visible_message("[user] pries external armr layer from the [holder].", "<span class='notice'>You pry external armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "ripley11"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the external armr layer to the [holder].", "<span class='notice'>You weld the external armr layer to the [holder].</span>")
 			else
-				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
+				user.visible_message("[user] unfastens the external armr layer.", "<span class='notice'>You unfasten the external armr layer.</span>")
 				holder.icon_state = "ripley12"
 	return 1
 
@@ -316,23 +316,23 @@
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
 							"backkey"=/obj/item/weapon/wrench,
-							"desc"="External armor is wrenched."),
+							"desc"="External armr is wrenched."),
 					 //2
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is installed."),
+					 		"desc"="External armr is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/gygax_armor,
+					 list("key"=/obj/item/mecha_parts/part/gygax_armr,
 					 		"backkey"=/obj/item/weapon/weldingtool,
-					 		"desc"="Internal armor is welded."),
+					 		"desc"="Internal armr is welded."),
 					 //4
 					 list("key"=/obj/item/weapon/weldingtool,
 					 		"backkey"=/obj/item/weapon/wrench,
-					 		"desc"="Internal armor is wrenched."),
+					 		"desc"="Internal armr is wrenched."),
 					 //5
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Internal armor is installed."),
+					 		"desc"="Internal armr is installed."),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -515,26 +515,26 @@
 				holder.icon_state = "gygax12"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the internal armr layer to the [holder].", "<span class='notice'>You install the internal armr layer to the [holder].</span>")
 				holder.icon_state = "gygax15"
 			else
 				user.visible_message("[user] unfastens the capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
 				holder.icon_state = "gygax13"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[user] secures the internal armr layer.", "<span class='notice'>You secure the internal armr layer.</span>")
 				holder.icon_state = "gygax16"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[user] pries internal armr layer from the [holder].", "<span class='notice'>You pry internal armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "gygax14"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the internal armr layer to the [holder].", "<span class='notice'>You weld the internal armr layer to the [holder].</span>")
 				holder.icon_state = "gygax17"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[user] unfastens the internal armr layer.", "<span class='notice'>You unfasten the internal armr layer.</span>")
 				holder.icon_state = "gygax15"
 		if(3)
 			if(diff==FORWARD)
@@ -542,7 +542,7 @@
 				qdel(used_atom)
 				holder.icon_state = "gygax18"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[user] cuts the internal armr layer from the [holder].", "<span class='notice'>You cut the internal armr layer from the [holder].</span>")
 				holder.icon_state = "gygax16"
 		if(2)
 			if(diff==FORWARD)
@@ -550,7 +550,7 @@
 				holder.icon_state = "gygax19"
 			else
 				user.visible_message("[user] pries Gygax Armor Plates from the [holder].", "<span class='notice'>You pry Gygax Armor Plates from the [holder].</span>")
-				new /obj/item/mecha_parts/part/gygax_armor(get_turf(holder))
+				new /obj/item/mecha_parts/part/gygax_armr(get_turf(holder))
 				holder.icon_state = "gygax17"
 		if(1)
 			if(diff==FORWARD)
@@ -601,27 +601,27 @@
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
 							"backkey"=/obj/item/weapon/wrench,
-							"desc"="External armor is wrenched."),
+							"desc"="External armr is wrenched."),
 					//2
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is installed."),
+					 		"desc"="External armr is installed."),
 					 //3
 					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is being installed."),
+					 		"desc"="External armr is being installed."),
 					 //4
 					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
-					 		"desc"="Internal armor is welded."),
+					 		"desc"="Internal armr is welded."),
 					 //5
 					 list("key"=/obj/item/weapon/weldingtool,
 					 		"backkey"=/obj/item/weapon/wrench,
-					 		"desc"="Internal armor is wrenched."),
+					 		"desc"="Internal armr is wrenched."),
 					 //6
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Internal armor is installed."),
+					 		"desc"="Internal armr is installed."),
 
 					 //7
 					 list("key"=/obj/item/stack/sheet/plasteel,
@@ -729,7 +729,7 @@
 				holder.icon_state = "fireripley6"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the internal armr layer to the [holder].", "<span class='notice'>You install the internal armr layer to the [holder].</span>")
 				holder.icon_state = "fireripley9"
 			else
 				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
@@ -737,50 +737,50 @@
 
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[user] secures the internal armr layer.", "<span class='notice'>You secure the internal armr layer.</span>")
 				holder.icon_state = "fireripley10"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[user] pries internal armr layer from the [holder].", "<span class='notice'>You pry internal armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "fireripley8"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the internal armr layer to the [holder].", "<span class='notice'>You weld the internal armr layer to the [holder].</span>")
 				holder.icon_state = "fireripley11"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[user] unfastens the internal armr layer.", "<span class='notice'>You unfasten the internal armr layer.</span>")
 				holder.icon_state = "fireripley9"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] starts to install the external armor layer to the [holder].", "<span class='notice'>You install the external armor layer to the [holder].</span>")
+				user.visible_message("[user] starts to install the external armr layer to the [holder].", "<span class='notice'>You install the external armr layer to the [holder].</span>")
 				holder.icon_state = "fireripley12"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[user] cuts the internal armr layer from the [holder].", "<span class='notice'>You cut the internal armr layer from the [holder].</span>")
 				holder.icon_state = "fireripley10"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the external reinforced armor layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the external reinforced armr layer to the [holder].", "<span class='notice'>You install the external reinforced armr layer to the [holder].</span>")
 				holder.icon_state = "fireripley13"
 			else
-				user.visible_message("[user] removes the external armor from the [holder].", "<span class='notice'>You remove the external armor from the [holder].</span>")
+				user.visible_message("[user] removes the external armr from the [holder].", "<span class='notice'>You remove the external armr from the [holder].</span>")
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "fireripley11"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("[user] secures the external armr layer.", "<span class='notice'>You secure the external reinforced armr layer.</span>")
 				holder.icon_state = "fireripley14"
 			else
-				user.visible_message("[user] pries external armor layer from the [holder].", "<span class='notice'>You pry external armor layer from the [holder].</span>")
+				user.visible_message("[user] pries external armr layer from the [holder].", "<span class='notice'>You pry external armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "fireripley12"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the external armr layer to the [holder].", "<span class='notice'>You weld the external armr layer to the [holder].</span>")
 			else
-				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
+				user.visible_message("[user] unfastens the external armr layer.", "<span class='notice'>You unfasten the external armr layer.</span>")
 				holder.icon_state = "fireripley13"
 	return 1
 
@@ -900,23 +900,23 @@
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
 							"backkey"=/obj/item/weapon/wrench,
-							"desc"="External armor is wrenched."),
+							"desc"="External armr is wrenched."),
 					 //2
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is installed."),
+					 		"desc"="External armr is installed."),
 					 //3
-					 list("key"=/obj/item/mecha_parts/part/durand_armor,
+					 list("key"=/obj/item/mecha_parts/part/durand_armr,
 					 		"backkey"=/obj/item/weapon/weldingtool,
-					 		"desc"="Internal armor is welded."),
+					 		"desc"="Internal armr is welded."),
 					 //4
 					 list("key"=/obj/item/weapon/weldingtool,
 					 		"backkey"=/obj/item/weapon/wrench,
-					 		"desc"="Internal armor is wrenched."),
+					 		"desc"="Internal armr is wrenched."),
 					 //5
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Internal armor is installed."),
+					 		"desc"="Internal armr is installed."),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -1100,26 +1100,26 @@
 				holder.icon_state = "durand12"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the internal armr layer to the [holder].", "<span class='notice'>You install the internal armr layer to the [holder].</span>")
 				holder.icon_state = "durand15"
 			else
 				user.visible_message("[user] unfastens the super capacitor.", "<span class='notice'>You unfasten the capacitor.</span>")
 				holder.icon_state = "durand13"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[user] secures the internal armr layer.", "<span class='notice'>You secure the internal armr layer.</span>")
 				holder.icon_state = "durand16"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[user] pries internal armr layer from the [holder].", "<span class='notice'>You pry internal armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "durand14"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the internal armr layer to the [holder].", "<span class='notice'>You weld the internal armr layer to the [holder].</span>")
 				holder.icon_state = "durand17"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[user] unfastens the internal armr layer.", "<span class='notice'>You unfasten the internal armr layer.</span>")
 				holder.icon_state = "durand15"
 		if(3)
 			if(diff==FORWARD)
@@ -1127,7 +1127,7 @@
 				qdel(used_atom)
 				holder.icon_state = "durand18"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[user] cuts the internal armr layer from the [holder].", "<span class='notice'>You cut the internal armr layer from the [holder].</span>")
 				holder.icon_state = "durand16"
 		if(2)
 			if(diff==FORWARD)
@@ -1135,7 +1135,7 @@
 				holder.icon_state = "durand19"
 			else
 				user.visible_message("[user] pries Durand Armor Plates from the [holder].", "<span class='notice'>You pry Durand Armor Plates from the [holder].</span>")
-				new /obj/item/mecha_parts/part/durand_armor(get_turf(holder))
+				new /obj/item/mecha_parts/part/durand_armr(get_turf(holder))
 				holder.icon_state = "durand17"
 		if(1)
 			if(diff==FORWARD)
@@ -1193,23 +1193,23 @@
 					//2
 					list("key"=/obj/item/weapon/weldingtool,
 							"backkey"=/obj/item/weapon/wrench,
-							"desc"="External armor is wrenched."),
+							"desc"="External armr is wrenched."),
 					 //3
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is installed."),
+					 		"desc"="External armr is installed."),
 					 //4
-					 list("key"=/obj/item/mecha_parts/part/phazon_armor,
+					 list("key"=/obj/item/mecha_parts/part/phazon_armr,
 					 		"backkey"=/obj/item/weapon/weldingtool,
-					 		"desc"="Phase armor is welded."),
+					 		"desc"="Phase armr is welded."),
 					 //5
 					 list("key"=/obj/item/weapon/weldingtool,
 					 		"backkey"=/obj/item/weapon/wrench,
-					 		"desc"="Phase armor is wrenched."),
+					 		"desc"="Phase armr is wrenched."),
 					 //6
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Phase armor is installed."),
+					 		"desc"="Phase armr is installed."),
 					 //7
 					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -1428,26 +1428,26 @@
 				holder.icon_state = "phazon15"
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the phase armor layer to the [holder].", "<span class='notice'>You install the phase armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the phase armr layer to the [holder].", "<span class='notice'>You install the phase armr layer to the [holder].</span>")
 				holder.icon_state = "phazon18"
 			else
 				user.visible_message("[user] disengages the bluespace crystal.", "<span class='notice'>You disengage the bluespace crystal.</span>")
 				holder.icon_state = "phazon16"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the phase armor layer.", "<span class='notice'>You secure the phase armor layer.</span>")
+				user.visible_message("[user] secures the phase armr layer.", "<span class='notice'>You secure the phase armr layer.</span>")
 				holder.icon_state = "phazon19"
 			else
-				user.visible_message("[user] pries the phase armor layer from the [holder].", "<span class='notice'>You pry the phase armor layer from the [holder].</span>")
+				user.visible_message("[user] pries the phase armr layer from the [holder].", "<span class='notice'>You pry the phase armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "phazon17"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the phase armor layer to the [holder].", "<span class='notice'>You weld the phase armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the phase armr layer to the [holder].", "<span class='notice'>You weld the phase armr layer to the [holder].</span>")
 				holder.icon_state = "phazon20"
 			else
-				user.visible_message("[user] unfastens the phase armor layer.", "<span class='notice'>You unfasten the phase armor layer.</span>")
+				user.visible_message("[user] unfastens the phase armr layer.", "<span class='notice'>You unfasten the phase armr layer.</span>")
 				holder.icon_state = "phazon18"
 		if(4)
 			if(diff==FORWARD)
@@ -1455,7 +1455,7 @@
 				qdel(used_atom)
 				holder.icon_state = "phazon21"
 			else
-				user.visible_message("[user] cuts phase armor layer from the [holder].", "<span class='notice'>You cut the phase armor layer from the [holder].</span>")
+				user.visible_message("[user] cuts phase armr layer from the [holder].", "<span class='notice'>You cut the phase armr layer from the [holder].</span>")
 				holder.icon_state = "phazon19"
 		if(3)
 			if(diff==FORWARD)
@@ -1463,7 +1463,7 @@
 				holder.icon_state = "phazon22"
 			else
 				user.visible_message("[user] pries Phazon Armor Plates from the [holder].", "<span class='notice'>You pry Phazon Armor Plates from the [holder].</span>")
-				new /obj/item/mecha_parts/part/phazon_armor(get_turf(holder))
+				new /obj/item/mecha_parts/part/phazon_armr(get_turf(holder))
 				holder.icon_state = "phazon20"
 		if(2)
 			if(diff==FORWARD)
@@ -1520,23 +1520,23 @@
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
 							"backkey"=/obj/item/weapon/wrench,
-							"desc"="External armor is wrenched."),
+							"desc"="External armr is wrenched."),
 					//2
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="External armor is installed."),
+					 		"desc"="External armr is installed."),
 					 //3
 					 list("key"=/obj/item/stack/sheet/plasteel,
 					 		"backkey"=/obj/item/weapon/weldingtool,
-					 		"desc"="Internal armor is welded."),
+					 		"desc"="Internal armr is welded."),
 					 //4
 					 list("key"=/obj/item/weapon/weldingtool,
 					 		"backkey"=/obj/item/weapon/wrench,
-					 		"desc"="Internal armor is wrenched."),
+					 		"desc"="Internal armr is wrenched."),
 					 //5
 					 list("key"=/obj/item/weapon/wrench,
 					 		"backkey"=/obj/item/weapon/crowbar,
-					 		"desc"="Internal armor is installed."),
+					 		"desc"="Internal armr is installed."),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
 					 		"backkey"=/obj/item/weapon/screwdriver,
@@ -1643,38 +1643,38 @@
 				holder.icon_state = "odysseus6"
 		if(6)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs the internal armor layer to the [holder].", "<span class='notice'>You install the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] installs the internal armr layer to the [holder].", "<span class='notice'>You install the internal armr layer to the [holder].</span>")
 				holder.icon_state = "odysseus9"
 			else
 				user.visible_message("[user] unfastens the peripherals control module.", "<span class='notice'>You unfasten the peripherals control module.</span>")
 				holder.icon_state = "odysseus7"
 		if(5)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the internal armor layer.", "<span class='notice'>You secure the internal armor layer.</span>")
+				user.visible_message("[user] secures the internal armr layer.", "<span class='notice'>You secure the internal armr layer.</span>")
 				holder.icon_state = "odysseus10"
 			else
-				user.visible_message("[user] pries internal armor layer from the [holder].", "<span class='notice'>You pry internal armor layer from the [holder].</span>")
+				user.visible_message("[user] pries internal armr layer from the [holder].", "<span class='notice'>You pry internal armr layer from the [holder].</span>")
 				var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
 				MS.amount = 5
 				holder.icon_state = "odysseus8"
 		if(4)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the internal armor layer to the [holder].", "<span class='notice'>You weld the internal armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the internal armr layer to the [holder].", "<span class='notice'>You weld the internal armr layer to the [holder].</span>")
 				holder.icon_state = "odysseus11"
 			else
-				user.visible_message("[user] unfastens the internal armor layer.", "<span class='notice'>You unfasten the internal armor layer.</span>")
+				user.visible_message("[user] unfastens the internal armr layer.", "<span class='notice'>You unfasten the internal armr layer.</span>")
 				holder.icon_state = "odysseus9"
 		if(3)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs [used_atom] layer to the [holder].", "<span class='notice'>You install the external reinforced armor layer to the [holder].</span>")
+				user.visible_message("[user] installs [used_atom] layer to the [holder].", "<span class='notice'>You install the external reinforced armr layer to the [holder].</span>")
 
 				holder.icon_state = "odysseus12"
 			else
-				user.visible_message("[user] cuts the internal armor layer from the [holder].", "<span class='notice'>You cut the internal armor layer from the [holder].</span>")
+				user.visible_message("[user] cuts the internal armr layer from the [holder].", "<span class='notice'>You cut the internal armr layer from the [holder].</span>")
 				holder.icon_state = "odysseus10"
 		if(2)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures the external armor layer.", "<span class='notice'>You secure the external reinforced armor layer.</span>")
+				user.visible_message("[user] secures the external armr layer.", "<span class='notice'>You secure the external reinforced armr layer.</span>")
 				holder.icon_state = "odysseus13"
 			else
 				var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
@@ -1683,10 +1683,10 @@
 				holder.icon_state = "odysseus11"
 		if(1)
 			if(diff==FORWARD)
-				user.visible_message("[user] welds the external armor layer to the [holder].", "<span class='notice'>You weld the external armor layer to the [holder].</span>")
+				user.visible_message("[user] welds the external armr layer to the [holder].", "<span class='notice'>You weld the external armr layer to the [holder].</span>")
 				holder.icon_state = "odysseus14"
 			else
-				user.visible_message("[user] unfastens the external armor layer.", "<span class='notice'>You unfasten the external armor layer.</span>")
+				user.visible_message("[user] unfastens the external armr layer.", "<span class='notice'>You unfasten the external armr layer.</span>")
 				holder.icon_state = "odysseus12"
 	return 1
 

@@ -10,7 +10,7 @@
 	buckle_lying = 0
 	obj_integrity = 300
 	max_integrity = 300
-	armor = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
+	armr = list(melee = 30, bullet = 30, laser = 30, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 60, acid = 60)
 	var/auto_door_open = TRUE
 	var/view_range = 7
 	var/datum/riding/riding_datum = null
@@ -85,7 +85,7 @@
 	pressure_resistance = INFINITY
 
 
-/obj/vehicle/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/vehicle/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < 20)
 		return 0
 	. = ..()

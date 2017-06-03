@@ -161,5 +161,5 @@
 	name = "Lavaland Syndicate Comms Agent"
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
-	suit = /obj/item/clothing/suit/armor/vest
+	suit = /obj/item/clothing/suit/armr/vest
 	l_pocket = /obj/item/weapon/card/id/syndicate/anyone

@@ -18,7 +18,7 @@
 	obj_integrity = 250
 	max_integrity = 250
 	integrity_failure = 100
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6

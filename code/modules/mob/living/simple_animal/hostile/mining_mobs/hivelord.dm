@@ -268,7 +268,7 @@
 				head = /obj/item/clothing/head/helmet/gladiator
 			else
 				head = /obj/item/clothing/head/helmet/skull
-				suit = /obj/item/clothing/suit/armor/bone
+				suit = /obj/item/clothing/suit/armr/bone
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
 				back = pickweight(list(/obj/item/weapon/twohanded/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
@@ -307,7 +307,7 @@
 			gloves = /obj/item/clothing/gloves/color/white
 			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
-			suit = /obj/item/clothing/suit/armor/riot/knight
+			suit = /obj/item/clothing/suit/armr/riot/knight
 			back = /obj/item/weapon/shield/riot/buckler
 			belt = /obj/item/weapon/nullrod/claymore
 			r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen

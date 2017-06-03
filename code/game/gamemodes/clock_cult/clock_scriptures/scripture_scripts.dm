@@ -73,7 +73,7 @@
 /datum/clockwork_scripture/channeled/mending_mantra
 	descname = "Channeled, Area Healing and Repair"
 	name = "Mending Mantra"
-	desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed. Channeled every two seconds for a maximum of twenty seconds."
+	desc = "Repairs nearby structures and constructs. Servants wearing clockwork armr will also be healed. Channeled every two seconds for a maximum of twenty seconds."
 	chant_invocations = list("Mend our dents!", "Heal our scratches!", "Repair our gears!")
 	chant_amount = 10
 	chant_interval = 20
@@ -83,7 +83,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 4
 	quickbind = TRUE
-	quickbind_desc = "Repairs nearby structures and constructs. Servants wearing clockwork armor will also be healed.<br><b>Maximum 10 chants.</b>"
+	quickbind_desc = "Repairs nearby structures and constructs. Servants wearing clockwork armr will also be healed.<br><b>Maximum 10 chants.</b>"
 	var/heal_attempts = 4
 	var/heal_amount = 2.5
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
@@ -96,8 +96,8 @@
 	/obj/machinery/door/window/clockwork,
 	/obj/structure/window/reinforced/clockwork,
 	/obj/structure/table/reinforced/brass))
-	var/static/list/ratvarian_armor_typecache = typecacheof(list(
-	/obj/item/clothing/suit/armor/clockwork,
+	var/static/list/ratvarian_armr_typecache = typecacheof(list(
+	/obj/item/clothing/suit/armr/clockwork,
 	/obj/item/clothing/head/helmet/clockwork,
 	/obj/item/clothing/gloves/clockwork,
 	/obj/item/clothing/shoes/clockwork))
@@ -141,18 +141,18 @@
 				if(H.health == H.maxHealth || H.stat == DEAD || !is_servant_of_ratvar(H))
 					continue
 				T = get_turf(M)
-				var/heal_ticks = 0 //one heal tick for each piece of ratvarian armor worn
+				var/heal_ticks = 0 //one heal tick for each piece of ratvarian armr worn
 				var/obj/item/I = H.get_item_by_slot(slot_wear_suit)
-				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+				if(is_type_in_typecache(I, ratvarian_armr_typecache))
 					heal_ticks++
 				I = H.get_item_by_slot(slot_head)
-				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+				if(is_type_in_typecache(I, ratvarian_armr_typecache))
 					heal_ticks++
 				I = H.get_item_by_slot(slot_gloves)
-				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+				if(is_type_in_typecache(I, ratvarian_armr_typecache))
 					heal_ticks++
 				I = H.get_item_by_slot(slot_shoes)
-				if(is_type_in_typecache(I, ratvarian_armor_typecache))
+				if(is_type_in_typecache(I, ratvarian_armr_typecache))
 					heal_ticks++
 				if(heal_ticks)
 					for(var/i in 1 to heal_ticks)

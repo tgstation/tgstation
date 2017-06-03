@@ -8,7 +8,7 @@
 	desc = "A basic blue apron."
 	icon_state = "apron"
 	item_state = "apron"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armr"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 
@@ -82,7 +82,7 @@
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
 	item_state = "apronchef"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armr"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/weapon/kitchen)
 
@@ -95,7 +95,7 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/ballistic,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder,/obj/item/weapon/melee/classic_baton)
-	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
+	armr = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
@@ -111,7 +111,7 @@
 	desc = "A high-visibility vest used in work zones."
 	icon_state = "hazard"
 	item_state = "hazard"
-	blood_overlay_type = "armor"
+	blood_overlay_type = "armr"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/device/radio)
 	resistance_flags = 0
 //Lawyer
@@ -143,12 +143,12 @@
 	desc = "They suspend the illusion of the mime's play."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "suspenders"
-	blood_overlay_type = "armor" //it's the less thing that I can put here
+	blood_overlay_type = "armr" //it's the less thing that I can put here
 
 //Security
 /obj/item/clothing/suit/security/officer
 	name = "security officer's jacket"
-	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armor."
+	desc = "This jacket is for those special occasions when a security officer isn't required to wear their armr."
 	icon_state = "officerbluejacket"
 	item_state = "officerbluejacket"
 	body_parts_covered = CHEST|ARMS
@@ -177,12 +177,12 @@
 //Curator
 /obj/item/clothing/suit/curator
 	name = "treasure hunter's coat"
-	desc = "Both fashionable and lightly armoured, this jacket is favoured by treasure hunters the galaxy over."
+	desc = "Both fashionable and lightly armred, this jacket is favoured by treasure hunters the galaxy over."
 	icon_state = "curator"
 	item_state = "curator"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/weapon/melee/curator_whip)
-	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
+	armr = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS

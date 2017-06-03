@@ -105,7 +105,7 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
-	armour_penetration = 20
+	armr_penetration = 20
 	slot_flags = SLOT_BACK
 	origin_tech = "materials=3;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")

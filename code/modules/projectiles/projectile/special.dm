@@ -44,12 +44,12 @@
 	return 1
 
 /obj/item/projectile/bullet/a84mm
-	name ="anti-armour rocket"
+	name ="anti-armr rocket"
 	desc = "USE A WEEL GUN"
 	icon_state= "atrocket"
 	damage = 80
-	var/anti_armour_damage = 200
-	armour_penetration = 100
+	var/anti_armr_damage = 200
+	armr_penetration = 100
 	dismemberment = 100
 
 /obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
@@ -58,10 +58,10 @@
 
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
-		M.take_damage(anti_armour_damage)
+		M.take_damage(anti_armr_damage)
 	if(istype(target, /mob/living/silicon))
 		var/mob/living/silicon/S = target
-		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
+		S.take_overall_damage(anti_armr_damage*0.75, anti_armr_damage*0.25)
 	return 1
 
 /obj/item/projectile/bullet/srmrocket

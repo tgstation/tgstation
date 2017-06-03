@@ -20,7 +20,7 @@
 	response_harm   = "hits"
 	maxHealth = 60
 	health = 60
-	var/armored = FALSE
+	var/armred = FALSE
 
 	obj_damage = 60
 	melee_damage_lower = 20
@@ -52,48 +52,48 @@
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
-	desc = "A ferocious brown bear decked out in armor plating, a red star with yellow outlining details the shoulder plating."
+	desc = "A ferocious brown bear decked out in armr plating, a red star with yellow outlining details the shoulder plating."
 	icon_state = "combatbear"
 	icon_living = "combatbear"
 	icon_dead = "combatbear_dead"
 	faction = list("russian")
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armr = 1)
 	melee_damage_lower = 25
 	melee_damage_upper = 35
-	armour_penetration = 20
+	armr_penetration = 20
 	health = 120
 	maxHealth = 120
-	armored = TRUE
+	armred = TRUE
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
-	if(armored)
-		add_overlay("armor_bear")
+	if(armred)
+		add_overlay("armr_bear")
 
-/obj/item/bear_armor
-	name = "pile of bear armor"
-	desc = "A scattered pile of various shaped armor pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
+/obj/item/bear_armr
+	name = "pile of bear armr"
+	desc = "A scattered pile of various shaped armr pieces fitted for a bear, some duct tape, and a nail filer. Crude instructions \
 		are written on the back of one of the plates in russian. This seems like an awful idea."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "bear_armor_upgrade"
+	icon_state = "bear_armr_upgrade"
 
-/obj/item/bear_armor/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/bear_armr/afterattack(atom/target, mob/user, proximity_flag)
 	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
 		var/mob/living/simple_animal/hostile/bear/A = target
-		if(A.armored)
-			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")
+		if(A.armred)
+			to_chat(user, "<span class='warning'>[A] has already been armred up!</span>")
 			return
-		A.armored = TRUE
+		A.armred = TRUE
 		A.maxHealth += 60
 		A.health += 60
-		A.armour_penetration += 20
+		A.armr_penetration += 20
 		A.melee_damage_lower += 5
 		A.melee_damage_upper += 5
 		A.update_icons()
-		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
+		to_chat(user, "<span class='info'>You strap the armr plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
 		qdel(src)
 
 

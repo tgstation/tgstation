@@ -15,7 +15,7 @@
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
 	var/salvageable = 1
-	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
+	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armr plates
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)

@@ -4,7 +4,7 @@
 	use_power = 0
 	obj_integrity = 250
 	max_integrity = 250
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
 
 
 	var/datum/gas_mixture/air_contents

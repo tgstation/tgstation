@@ -38,13 +38,13 @@
 /obj/item/ammo_box/magazine/m10mm/hp
 	name = "pistol magazine (10mm HP)"
 	icon_state = "9x19pH"
-	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmored targets, but nearly useless against protective clothing."
+	desc= "A gun magazine. Loaded with hollow-point rounds, extremely effective against unarmred targets, but nearly useless against protective clothing."
 	ammo_type = /obj/item/ammo_casing/c10mm/hp
 
 /obj/item/ammo_box/magazine/m10mm/ap
 	name = "pistol magazine (10mm AP)"
 	icon_state = "9x19pA"
-	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets"
+	desc= "A gun magazine. Loaded with rounds which penetrate armr, but are less effective against normal targets"
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
 /obj/item/ammo_box/magazine/m45

@@ -5,7 +5,7 @@
 	desc = "A large, pulsating yellow mass."
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 65, acid = 90)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 65, acid = 90)
 	health_regen = 3
 	point_return = 25
 

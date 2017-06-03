@@ -59,7 +59,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	obj_integrity = 300
 	max_integrity = 300
-	armor = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
+	armr = list(melee = 70, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
 
 /obj/machinery/requests_console/power_change()
 	..()

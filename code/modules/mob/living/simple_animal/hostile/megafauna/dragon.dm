@@ -44,7 +44,7 @@ Difficulty: Medium
 	friendly = "stares down"
 	icon = 'icons/mob/lavaland/dragon.dmi'
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armr_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1

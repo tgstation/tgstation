@@ -28,7 +28,7 @@
 	density = 1
 	obj_integrity = 500
 	max_integrity = 500
-	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 80)
+	armr = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 80)
 
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = PA_CONSTRUCTION_UNSECURED

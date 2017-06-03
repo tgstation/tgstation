@@ -187,7 +187,7 @@
 	)
 
 /datum/industry/mining/generateProductName(var/company)
-	var/list/equipment = list("drill", "pickaxe", "shovel", "jackhammer", "mini-pickaxe", "power hammer", "power gloves", "power armor", "hardsuit", "kinetic accelerator", "resonator", "oxygen tank", "emergency bike horn")
+	var/list/equipment = list("drill", "pickaxe", "shovel", "jackhammer", "mini-pickaxe", "power hammer", "power gloves", "power armr", "hardsuit", "kinetic accelerator", "resonator", "oxygen tank", "emergency bike horn")
 	var/list/material = list("mauxite", "pharosium", "molitz", "adamantium", "mithril", "cobryl", "bohrum", "claretine", "viscerite", "syreline", "cerenkite", "plasmastone", "gold", "koshmarite", "phoron", "carbon dioxide")
 	return "the [pick(material)] [pick(equipment)]"
 

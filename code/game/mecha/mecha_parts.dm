@@ -142,11 +142,11 @@
 	icon_state = "gygax_r_leg"
 	origin_tech = "programming=2;materials=4;engineering=3"
 
-/obj/item/mecha_parts/part/gygax_armor
+/obj/item/mecha_parts/part/gygax_armr
 	gender = PLURAL
-	name = "\improper Gygax armor plates"
-	desc = "A set of armor plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
-	icon_state = "gygax_armor"
+	name = "\improper Gygax armr plates"
+	desc = "A set of armr plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
+	icon_state = "gygax_armr"
 	origin_tech = "materials=6;combat=4;engineering=4"
 
 
@@ -195,11 +195,11 @@
 	icon_state = "durand_r_leg"
 	origin_tech = "programming=2;materials=3;engineering=3"
 
-/obj/item/mecha_parts/part/durand_armor
+/obj/item/mecha_parts/part/durand_armr
 	gender = PLURAL
-	name = "\improper Durand armor plates"
-	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
-	icon_state = "durand_armor"
+	name = "\improper Durand armr plates"
+	desc = "A set of armr plates for the Durand. Built heavy to resist an incredible amount of brute force."
+	icon_state = "durand_armr"
 	origin_tech = "materials=5;combat=4;engineering=4"
 
 ////////// Firefighter
@@ -275,13 +275,13 @@
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="\improper Phazon left arm"
-	desc="A Phazon left arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
+	desc="A Phazon left arm. Several microtool arrays are located under the armr plating, which can be adjusted to the situation at hand."
 	icon_state = "phazon_l_arm"
 	origin_tech = "materials=3;bluespace=3;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_right_arm
 	name="\improper Phazon right arm"
-	desc="A Phazon right arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
+	desc="A Phazon right arm. Several microtool arrays are located under the armr plating, which can be adjusted to the situation at hand."
 	icon_state = "phazon_r_arm"
 	origin_tech = "materials=3;bluespace=3;magnets=3"
 
@@ -297,10 +297,10 @@
 	icon_state = "phazon_r_leg"
 	origin_tech = "materials=3;bluespace=3;magnets=3"
 
-/obj/item/mecha_parts/part/phazon_armor
-	name="Phazon armor"
-	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
-	icon_state = "phazon_armor"
+/obj/item/mecha_parts/part/phazon_armr
+	name="Phazon armr"
+	desc="Phazon armr plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
+	icon_state = "phazon_armr"
 	origin_tech = "materials=4;bluespace=4;plasmatech=5"
 
 

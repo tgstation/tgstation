@@ -307,24 +307,24 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_ccw_armor
+/datum/design/mech_ccw_armr
 	name = "Exosuit Module (Reactive Armor Booster Module)"
-	desc = "Exosuit-mounted armor booster."
-	id = "mech_ccw_armor"
+	desc = "Exosuit-mounted armr booster."
+	id = "mech_ccw_armr"
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 4)
-	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster
+	build_path = /obj/item/mecha_parts/mecha_equipment/anticcw_armr_booster
 	materials = list(MAT_METAL=20000,MAT_SILVER=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/mech_proj_armor
+/datum/design/mech_proj_armr
 	name = "Exosuit Module (Reflective Armor Booster Module)"
-	desc = "Exosuit-mounted armor booster."
-	id = "mech_proj_armor"
+	desc = "Exosuit-mounted armr booster."
+	id = "mech_proj_armr"
 	build_type = MECHFAB
 	req_tech = list("materials" = 5, "combat" = 5, "engineering"=3)
-	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+	build_path = /obj/item/mecha_parts/mecha_equipment/antiproj_armr_booster
 	materials = list(MAT_METAL=20000,MAT_GOLD=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")

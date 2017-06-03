@@ -346,7 +346,7 @@
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
 	desc = "An upgrade to a cyborg's hypospray, allowing it to \
-		pierce armor and thick material."
+		pierce armr and thick material."
 	origin_tech = "materials=5;engineering=7;combat=3"
 	icon_state = "cyborg_upgrade3"
 

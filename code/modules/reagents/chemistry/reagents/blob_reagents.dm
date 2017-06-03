@@ -415,13 +415,13 @@
 	else
 		return damage * 1.25
 
-//does brute damage through armor and bio resistance
+//does brute damage through armr and bio resistance
 /datum/reagent/blob/reactive_spines
 	name = "Reactive Spines"
 	id = "reactive_spines"
-	description = "will do medium brute damage through armor and bio resistance."
+	description = "will do medium brute damage through armr and bio resistance."
 	effectdesc = "will also react when attacked with brute damage, attacking all near the attacked blob."
-	analyzerdescdamage = "Does medium brute damage, ignoring armor and bio resistance."
+	analyzerdescdamage = "Does medium brute damage, ignoring armr and bio resistance."
 	analyzerdesceffect = "When attacked with brute damage, will lash out, attacking everything near it."
 	color = "#9ACD32"
 	complementary_color = "#FFA500"

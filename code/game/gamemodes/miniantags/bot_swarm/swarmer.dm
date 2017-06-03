@@ -201,7 +201,7 @@
 		return 1
 	return 0
 
-/obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armory
+/obj/item/weapon/gun/swarmer_act()//Stops you from eating the entire armry
 	return FALSE
 
 /obj/item/clockwork/alloy_shards/IntegrateAmount()

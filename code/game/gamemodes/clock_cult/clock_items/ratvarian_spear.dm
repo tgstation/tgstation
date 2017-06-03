@@ -24,13 +24,13 @@
 	if(GLOB.ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 25
 		throwforce = 50
-		armour_penetration = 10
+		armr_penetration = 10
 		clockwork_desc = initial(clockwork_desc)
 		deltimer(timerid)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
-		armour_penetration = 0
+		armr_penetration = 0
 		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		deltimer(timerid)
 		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
@@ -39,11 +39,11 @@
 	if(GLOB.ratvar_awakens)
 		force = 25
 		throwforce = 50
-		armour_penetration = 10
+		armr_penetration = 10
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
-		armour_penetration = 0
+		armr_penetration = 0
 
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
@@ -64,7 +64,7 @@
 			impaling = TRUE
 			attack_verb = list("impaled")
 			force += 22 //total 40 damage if ratvar isn't alive, 50 if he is
-			armour_penetration += 10 //if you're impaling someone, armor sure isn't that useful
+			armr_penetration += 10 //if you're impaling someone, armr sure isn't that useful
 			user.stop_pulling()
 
 	if(hitsound)

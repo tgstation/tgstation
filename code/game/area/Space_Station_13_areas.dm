@@ -1039,9 +1039,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Brig Control"
 	icon_state = "Warden"
 
-/area/security/armory
+/area/security/armry
 	name = "Armory"
-	icon_state = "armory"
+	icon_state = "armry"
 
 /area/security/detectives_office
 	name = "Detective's Office"
@@ -1391,9 +1391,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	
 
 //AI
-/area/ai_monitored/security/armory
+/area/ai_monitored/security/armry
 	name = "Armory"
-	icon_state = "armory"
+	icon_state = "armry"
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"

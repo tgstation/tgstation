@@ -53,7 +53,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
-	armour_penetration = 75
+	armr_penetration = 75
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
 	attack_verb = list("slashed", "cut")
@@ -181,7 +181,7 @@
 	slot_flags = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
-	armour_penetration = 1000
+	armr_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 	origin_tech = "combat=7;materials=6"

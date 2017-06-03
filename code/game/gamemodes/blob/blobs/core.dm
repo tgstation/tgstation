@@ -5,7 +5,7 @@
 	desc = "A huge, pulsating yellow mass."
 	obj_integrity = 400
 	max_integrity = 400
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 90)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 90)
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed

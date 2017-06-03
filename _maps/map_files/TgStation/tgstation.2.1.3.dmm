@@ -331,7 +331,7 @@
 /area/security/prison)
 "aaZ" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aba" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -412,7 +412,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abn" = (
 /obj/structure/rack,
 /obj/machinery/firealarm{
@@ -423,7 +423,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abo" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -573,15 +573,15 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abI" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot{
+/obj/item/clothing/suit/armr/riot,
+/obj/item/clothing/suit/armr/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -609,17 +609,17 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abJ" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_y = 0
 	},
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/armr/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -644,7 +644,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abK" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
@@ -696,7 +696,7 @@
 "abN" = (
 /obj/structure/closet/secure_closet/lethalshots,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abO" = (
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -711,11 +711,11 @@
 	},
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armr/laserproof,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "abR" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/light{
@@ -869,7 +869,7 @@
 "aci" = (
 /obj/vehicle/secway,
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acj" = (
 /obj/machinery/light{
 	dir = 4;
@@ -883,13 +883,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acm" = (
 /obj/machinery/power/apc{
 	cell_type = 5000;
@@ -907,7 +907,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acn" = (
 /obj/item/weapon/storage/secure/safe/HoS{
 	pixel_x = 35
@@ -963,7 +963,7 @@
 	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acw" = (
 /obj/structure/sign/securearea{
 	pixel_y = -32
@@ -1065,7 +1065,7 @@
 /area/security/prison)
 "acF" = (
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -1129,7 +1129,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acM" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun{
@@ -1154,7 +1154,7 @@
 /turf/open/floor/plasteel{
 	dir = 2
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acN" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel/bar,
@@ -1197,16 +1197,16 @@
 /area/crew_quarters/heads/hos)
 "acT" = (
 /obj/machinery/door/window/eastleft{
-	name = "armoury desk";
+	name = "armry desk";
 	req_access_txt = "1"
 	},
 /obj/machinery/door/window/westleft{
-	name = "armoury desk";
+	name = "armry desk";
 	req_access_txt = "3"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "acU" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -1321,7 +1321,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adh" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -1332,7 +1332,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adj" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/advtaser{
@@ -1357,7 +1357,7 @@
 /turf/open/floor/plasteel{
 	dir = 2
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adk" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/ballistic/shotgun/riot{
@@ -1382,14 +1382,14 @@
 /turf/open/floor/plasteel{
 	dir = 2
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adl" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "armory";
+	id = "armry";
 	name = "Armoury Shutter"
 	},
 /obj/machinery/button/door{
-	id = "armory";
+	id = "armry";
 	name = "Armory Shutters";
 	pixel_x = 0;
 	pixel_y = -26;
@@ -1399,7 +1399,7 @@
 /turf/open/floor/plasteel{
 	name = "floor"
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adm" = (
 /obj/structure/grille,
 /obj/structure/disposalpipe/segment,
@@ -1644,7 +1644,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adL" = (
 /obj/structure/closet{
 	name = "Evidence Closet"
@@ -1694,7 +1694,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "adR" = (
 /turf/closed/wall/r_wall,
 /area/security/main)
@@ -2022,13 +2022,13 @@
 	},
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel/red/side,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aet" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aeu" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2037,7 +2037,7 @@
 	},
 /obj/machinery/suit_storage_unit/security,
 /turf/open/floor/plasteel/red/side,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aev" = (
 /obj/machinery/light{
 	dir = 4;
@@ -2354,7 +2354,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aeY" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2371,7 +2371,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "aeZ" = (
 /obj/structure/grille,
 /obj/structure/cable{
@@ -2387,7 +2387,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "afa" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -2980,7 +2980,7 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "agr" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4615,7 +4615,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ajD" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5508,7 +5508,7 @@
 "alt" = (
 /obj/structure/reagent_dispensers/peppertank,
 /turf/closed/wall/r_wall,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "alu" = (
 /obj/machinery/nuclearbomb/selfdestruct,
 /turf/open/floor/plasteel/vault{
@@ -8014,7 +8014,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "ard" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
@@ -9857,7 +9857,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "avC" = (
 /obj/structure/chair{
 	dir = 8
@@ -27568,7 +27568,7 @@
 "bkA" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "bkB" = (
 /obj/machinery/button/door{
 	id = "Disposal Exit";
@@ -28278,7 +28278,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "blU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -54484,7 +54484,7 @@
 /turf/open/floor/plasteel{
 	dir = 2
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "coT" = (
 /obj/item/pipe{
 	dir = 4;
@@ -54600,7 +54600,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cph" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
@@ -54800,7 +54800,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cpB" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -55337,7 +55337,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cqH" = (
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plating,
@@ -58217,7 +58217,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cwN" = (
 /obj/machinery/computer/security,
 /turf/open/floor/mineral/titanium,
@@ -58504,7 +58504,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/security/armory)
+/area/ai_monitored/security/armry)
 "cxB" = (
 /obj/structure/chair,
 /turf/open/floor/pod/dark,

@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/ammo/pistolhp
 	name = "10mm Hollow Point Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armor."
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armr."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
 
@@ -495,13 +495,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/ammo/machinegun/hollow
 	name = "1.95x129mm (Hollow-Point) Box Magazine"
 	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
-			with the unarmored masses of crew."
+			with the unarmred masses of crew."
 	item = /obj/item/ammo_box/magazine/mm195x129/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
 	name = "1.95x129mm (Armor Penetrating) Box Magazine"
 	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
-			to puncture even the most durable armor."
+			to puncture even the most durable armr."
 	item = /obj/item/ammo_box/magazine/mm195x129/ap
 
 /datum/uplink_item/ammo/machinegun/incen
@@ -844,10 +844,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/hardsuit
 	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
+	desc = "The feared suit of a syndicate nuclear agent. Features slightly better armring and a built in jetpack \
 			that runs off standard atmospheric tanks. When the built in helmet is deployed your identity will be \
 			protected, even in death, as the suit cannot be removed by outside forces. Toggling the suit in and out of \
-			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
+			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armring. \
 			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
@@ -856,7 +856,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
-	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate Hardsuit."
+	desc = "An advanced hardsuit with superior armr and mobility to the standard Syndicate Hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear)

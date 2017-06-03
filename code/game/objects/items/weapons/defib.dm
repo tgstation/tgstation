@@ -13,7 +13,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	origin_tech = "biotech=4"
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/on = 0 //if the paddles are equipped (1) or on the defib (0)
 	var/safety = 1 //if you can zap people with the defibs on harm mode
@@ -283,7 +283,7 @@
 	var/busy = 0
 	var/obj/item/weapon/defibrillator/defib
 	var/req_defib = 1
-	var/combat = 0 //If it penetrates armor and gives additional functionality
+	var/combat = 0 //If it penetrates armr and gives additional functionality
 	var/grab_ghost = FALSE
 
 /obj/item/weapon/twohanded/shockpaddles/proc/recharge(var/time)
@@ -588,7 +588,7 @@
 
 /obj/item/weapon/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armr and to deliver powerful shocks offensively."
 	combat = TRUE
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "defibpaddles0"

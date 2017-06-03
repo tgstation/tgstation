@@ -79,7 +79,7 @@
 	obj_integrity = INFINITY
 	max_integrity = INFINITY
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	armor = list(melee = 0, bullet = 25, laser = 50, energy = 50, bomb = 25, bio = 100, rad = 100, fire = 100, acid = 100)
+	armr = list(melee = 0, bullet = 25, laser = 50, energy = 50, bomb = 25, bio = 100, rad = 100, fire = 100, acid = 100)
 	var/obj/item/device/forcefield/generator
 
 /obj/structure/projected_forcefield/Initialize(mapload, obj/item/device/forcefield/origin)

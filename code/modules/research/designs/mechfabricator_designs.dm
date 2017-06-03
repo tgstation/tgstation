@@ -191,11 +191,11 @@
 	construction_time = 130
 	category = list("Odysseus")
 
-/*/datum/design/odysseus_armor
+/*/datum/design/odysseus_armr
 	name = "Exosuit Armor (\"Odysseus\")"
-	id = "odysseus_armor"
+	id = "odysseus_armr"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/part/odysseus_armor
+	build_path = /obj/item/mecha_parts/part/odysseus_armr
 	materials = list(MAT_METAL=15000)
 	construction_time = 200
 	category = list("Odysseus")
@@ -265,11 +265,11 @@
 	construction_time = 200
 	category = list("Gygax")
 
-/datum/design/gygax_armor
+/datum/design/gygax_armr
 	name = "Exosuit Armor (\"Gygax\")"
-	id = "gygax_armor"
+	id = "gygax_armr"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/part/gygax_armor
+	build_path = /obj/item/mecha_parts/part/gygax_armr
 	materials = list(MAT_METAL=15000,MAT_DIAMOND=10000,MAT_TITANIUM=10000)
 	construction_time = 600
 	category = list("Gygax")
@@ -338,11 +338,11 @@
 	construction_time = 200
 	category = list("Durand")
 
-/datum/design/durand_armor
+/datum/design/durand_armr
 	name = "Exosuit Armor (\"Durand\")"
-	id = "durand_armor"
+	id = "durand_armr"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/part/durand_armor
+	build_path = /obj/item/mecha_parts/part/durand_armr
 	materials = list(MAT_METAL=30000,MAT_URANIUM=25000,MAT_TITANIUM=20000)
 	construction_time = 600
 	category = list("Durand")
@@ -476,11 +476,11 @@
 	construction_time = 200
 	category = list("Phazon")
 
-/datum/design/phazon_armor
+/datum/design/phazon_armr
 	name = "Exosuit Armor (\"Phazon\")"
-	id = "phazon_armor"
+	id = "phazon_armr"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/part/phazon_armor
+	build_path = /obj/item/mecha_parts/part/phazon_armr
 	materials = list(MAT_METAL=25000,MAT_PLASMA=20000,MAT_TITANIUM=20000)
 	construction_time = 300
 	category = list("Phazon")

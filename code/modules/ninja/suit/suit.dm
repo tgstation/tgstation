@@ -13,13 +13,13 @@ Contents:
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
-	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	desc = "A unique, vaccum-proof suit of nano-enhanced armr designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
 	resistance_flags = LAVA_PROOF | ACID_PROOF
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
+	armr = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
 	strip_delay = 12
 
 	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjajaunt, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)

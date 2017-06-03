@@ -21,7 +21,7 @@ Borg Hypospray
 	var/charge_cost = 50
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
-	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
+	var/bypass_protection = 0 //If the hypospray can go through armr or thick material
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin", "salglu_solution")

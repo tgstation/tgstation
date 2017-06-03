@@ -807,7 +807,7 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armr/heavy,
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "cb" = (

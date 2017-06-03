@@ -51,7 +51,7 @@
 	loot = list(/obj/effect/gibspawner/human)
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	armour_penetration = 28
+	armr_penetration = 28
 	status_flags = 0
 	maxHealth = 170
 	health = 170

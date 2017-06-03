@@ -1,5 +1,5 @@
 /obj/structure/closet/syndicate
-	name = "armory closet"
+	name = "armry closet"
 	desc = "Why is this here?"
 	icon_state = "syndicate"
 

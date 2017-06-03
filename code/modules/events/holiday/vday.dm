@@ -98,7 +98,7 @@
 	               "I'd risk the wrath of the gods to bwoink you.",
 	               "You look as beautiful now as the last time you were cloned.",
 	               "Someone check the gravitational generator, because I'm only attracted to you.",
-	               "If I were the warden I'd always let you into my armory.",
+	               "If I were the warden I'd always let you into my armry.",
 	               "The virologist is rogue, and the only cure is a kiss from you.",
 	               "Would you spend some time in my upgraded sleeper?",
 	               "You must be a silicon, because you've unbolted my heart.",

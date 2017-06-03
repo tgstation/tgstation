@@ -4,7 +4,7 @@
 	if(sound_effect)
 		play_attack_sound(damage_amount, damage_type, damage_flag)
 	if(!(resistance_flags & INDESTRUCTIBLE) && obj_integrity > 0)
-		damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir)
+		damage_amount = run_obj_armr(damage_amount, damage_type, damage_flag, attack_dir)
 		if(damage_amount >= 1)
 			. = damage_amount
 			obj_integrity = max(obj_integrity - damage_amount, 0)
@@ -14,17 +14,17 @@
 				if(obj_integrity <= integrity_failure)
 					obj_break(damage_flag)
 
-//returns the damage value of the attack after processing the obj's various armor protections
-/obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+//returns the damage value of the attack after processing the obj's various armr protections
+/obj/proc/run_obj_armr(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 		if(BURN)
 		else
 			return 0
-	var/armor_protection = 0
+	var/armr_protection = 0
 	if(damage_flag)
-		armor_protection = armor[damage_flag]
-	return round(damage_amount * (100 - armor_protection)*0.01, 0.1)
+		armr_protection = armr[damage_flag]
+	return round(damage_amount * (100 - armr_protection)*0.01, 0.1)
 
 //the sound played when the obj is damaged.
 /obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -69,7 +69,7 @@
 	take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180))
 
 /obj/proc/hulk_damage()
-	return 150 //the damage hulks do on punches to this object, is affected by melee armor
+	return 150 //the damage hulks do on punches to this object, is affected by melee armr
 
 /obj/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
@@ -168,9 +168,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/acid_processing()
 	. = 1
 	if(!(resistance_flags & ACID_PROOF))
-		for(var/armour_value in armor)
-			if(armour_value != "acid" && armour_value != "fire")
-				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
+		for(var/armr_value in armr)
+			if(armr_value != "acid" && armr_value != "fire")
+				armr[armr_value] = max(armr[armr_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
 			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)

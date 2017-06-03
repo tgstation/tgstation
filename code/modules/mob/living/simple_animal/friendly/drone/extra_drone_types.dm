@@ -172,7 +172,7 @@
 		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
 	return TRUE
 
-/mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
+/mob/living/simple_animal/drone/cogscarab/get_armr_effectiveness()
 	if(GLOB.ratvar_awakens)
 		return 1
 	return ..()

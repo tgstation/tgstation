@@ -261,18 +261,18 @@
 				<li>Secure the mainboard with a screwdriver.</li>
 				<li>Install the peripherals control module (Not included. Use supplied datadisk to create one).</li>
 				<li>Secure the peripherals control module with a screwdriver</li>
-				<li>Install the internal armor plating (Not included due to Nanotrasen regulations. Can be made using 5 metal sheets.)</li>
-				<li>Secure the internal armor plating with a wrench</li>
-				<li>Weld the internal armor plating to the chassis</li>
-				<li>Install the external reinforced armor plating (Not included due to Nanotrasen regulations. Can be made using 5 reinforced metal sheets.)</li>
-				<li>Secure the external reinforced armor plating with a wrench</li>
-				<li>Weld the external reinforced armor plating to the chassis</li>
+				<li>Install the internal armr plating (Not included due to Nanotrasen regulations. Can be made using 5 metal sheets.)</li>
+				<li>Secure the internal armr plating with a wrench</li>
+				<li>Weld the internal armr plating to the chassis</li>
+				<li>Install the external reinforced armr plating (Not included due to Nanotrasen regulations. Can be made using 5 reinforced metal sheets.)</li>
+				<li>Secure the external reinforced armr plating with a wrench</li>
+				<li>Weld the external reinforced armr plating to the chassis</li>
 				<li></li>
 				<li>Additional Information:</li>
 				<li>The firefighting variation is made in a similar fashion.</li>
 				<li>A firesuit must be connected to the Firefighter chassis for heat shielding.</li>
-				<li>Internal armor is plasteel for additional strength.</li>
-				<li>External armor must be installed in 2 parts, totaling 10 sheets.</li>
+				<li>Internal armr is plasteel for additional strength.</li>
+				<li>External armr must be installed in 2 parts, totaling 10 sheets.</li>
 				<li>Completed mech is more resiliant against fire, and is a bit more durable overall</li>
 				<li>Nanotrasen is determined to the safety of its <s>investments</s> employees.</li>
 				</ol>

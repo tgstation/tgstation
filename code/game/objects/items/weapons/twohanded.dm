@@ -210,7 +210,7 @@
 	sharpness = IS_SHARP
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
@@ -251,7 +251,7 @@
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 35
+	armr_penetration = 35
 	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
 	light_color = "#00ff00"//green
@@ -259,7 +259,7 @@
 	block_chance = 75
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 	var/hacked = 0
 	var/brightness_on = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
@@ -412,14 +412,14 @@
 	throwforce = 20
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
-	armour_penetration = 10
+	armr_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/obj/item/weapon/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
@@ -519,7 +519,7 @@
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
-	armour_penetration = 100
+	armr_penetration = 100
 	force_on = 30
 
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
@@ -569,7 +569,7 @@
 	sharpness = IS_SHARP
 	obj_integrity = 200
 	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	armr = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/twohanded/pitchfork/demonic
@@ -638,7 +638,7 @@
 	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
 	force_unwielded = 20
 	force_wielded = 40
-	armour_penetration = 100
+	armr_penetration = 100
 	block_chance = 40
 	throwforce = 20
 	throw_speed = 4
@@ -692,7 +692,7 @@
 	throwforce = 22
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
-	armour_penetration = 15				//Enhanced armor piercing
+	armr_penetration = 15				//Enhanced armr piercing
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP

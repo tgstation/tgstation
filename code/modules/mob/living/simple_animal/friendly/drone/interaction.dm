@@ -105,15 +105,15 @@
 	else
 		..()
 
-/mob/living/simple_animal/drone/getarmor(def_zone, type)
-	var/armorval = 0
+/mob/living/simple_animal/drone/getarmr(def_zone, type)
+	var/armrval = 0
 
 	if(head)
-		armorval = head.armor[type]
-	return (armorval * get_armor_effectiveness()) //armor is reduced for tiny fragile drones
+		armrval = head.armr[type]
+	return (armrval * get_armr_effectiveness()) //armr is reduced for tiny fragile drones
 
-/mob/living/simple_animal/drone/proc/get_armor_effectiveness()
-	return 0 //multiplier for whatever head armor you wear as a drone
+/mob/living/simple_animal/drone/proc/get_armr_effectiveness()
+	return 0 //multiplier for whatever head armr you wear as a drone
 
 /mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
 	if(!istype(src) || !mind)

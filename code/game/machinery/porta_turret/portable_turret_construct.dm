@@ -39,7 +39,7 @@
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
 				if(M.use(2))
-					to_chat(user, "<span class='notice'>You add some metal armor to the interior frame.</span>")
+					to_chat(user, "<span class='notice'>You add some metal armr to the interior frame.</span>")
 					build_step = PTURRET_START_INTERNAL_ARMOUR
 					icon_state = "turret_frame2"
 				else
@@ -57,7 +57,7 @@
 		if(PTURRET_START_INTERNAL_ARMOUR)
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, I.usesound, 100, 1)
-				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
+				to_chat(user, "<span class='notice'>You bolt the metal armr into place.</span>")
 				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
 
@@ -70,12 +70,12 @@
 					return
 
 				playsound(loc, WT.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You start to remove the turret's interior metal armor...</span>")
+				to_chat(user, "<span class='notice'>You start to remove the turret's interior metal armr...</span>")
 				if(do_after(user, 20*I.toolspeed, target = src))
 					if(!WT.isOn() || !WT.remove_fuel(5, user))
 						return
 					build_step = PTURRET_BOLTED
-					to_chat(user, "<span class='notice'>You remove the turret's interior metal armor.</span>")
+					to_chat(user, "<span class='notice'>You remove the turret's interior metal armr.</span>")
 					new /obj/item/stack/sheet/metal( loc, 2)
 					return
 
@@ -93,7 +93,7 @@
 
 			else if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, I.usesound, 100, 1)
-				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
+				to_chat(user, "<span class='notice'>You remove the turret's metal armr bolts.</span>")
 				build_step = PTURRET_START_INTERNAL_ARMOUR
 				return
 
@@ -119,7 +119,7 @@
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
 				if(M.use(2))
-					to_chat(user, "<span class='notice'>You add some metal armor to the exterior frame.</span>")
+					to_chat(user, "<span class='notice'>You add some metal armr to the exterior frame.</span>")
 					build_step = PTURRET_START_EXTERNAL_ARMOUR
 				else
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
@@ -140,12 +140,12 @@
 					to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
 
 				playsound(loc, WT.usesound, 50, 1)
-				to_chat(user, "<span class='notice'>You begin to weld the turret's armor down...</span>")
+				to_chat(user, "<span class='notice'>You begin to weld the turret's armr down...</span>")
 				if(do_after(user, 30*I.toolspeed, target = src))
 					if(!WT.isOn() || !WT.remove_fuel(5, user))
 						return
 					build_step = PTURRET_EXTERNAL_ARMOUR_ON
-					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")
+					to_chat(user, "<span class='notice'>You weld the turret's armr down.</span>")
 
 					//The final step: create a full turret
 
@@ -162,7 +162,7 @@
 
 			else if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, I.usesound, 75, 1)
-				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
+				to_chat(user, "<span class='notice'>You pry off the turret's exterior armr.</span>")
 				new /obj/item/stack/sheet/metal(loc, 2)
 				build_step = PTURRET_CLOSED
 				return

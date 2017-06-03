@@ -8,10 +8,10 @@
 	unit_name = "helmet"
 	export_types = list(/obj/item/clothing/head/helmet/sec)
 
-/datum/export/gear/sec_armor
+/datum/export/gear/sec_armr
 	cost = 100
-	unit_name = "armor vest"
-	export_types = list(/obj/item/clothing/suit/armor/vest)
+	unit_name = "armr vest"
+	export_types = list(/obj/item/clothing/suit/armr/vest)
 	include_subtypes = FALSE
 
 
@@ -20,20 +20,20 @@
 	unit_name = "riot helmet"
 	export_types = list(/obj/item/clothing/head/helmet/riot)
 
-/datum/export/gear/riot_armor
+/datum/export/gear/riot_armr
 	cost = 250
-	unit_name = "riot armor suit"
-	export_types = list(/obj/item/clothing/suit/armor/riot)
+	unit_name = "riot armr suit"
+	export_types = list(/obj/item/clothing/suit/armr/riot)
 
-/datum/export/gear/bulletproof_armor
+/datum/export/gear/bulletproof_armr
 	cost = 250
-	unit_name = "bulletproof armor vest"
-	export_types = list(/obj/item/clothing/suit/armor/bulletproof)
+	unit_name = "bulletproof armr vest"
+	export_types = list(/obj/item/clothing/suit/armr/bulletproof)
 
-/datum/export/gear/reflector_armor
+/datum/export/gear/reflector_armr
 	cost = 650
-	unit_name = "reflector armor vest"
-	export_types = list(/obj/item/clothing/suit/armor/laserproof)
+	unit_name = "reflector armr vest"
+	export_types = list(/obj/item/clothing/suit/armr/laserproof)
 
 
 /datum/export/gear/riot_shield

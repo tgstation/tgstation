@@ -799,7 +799,7 @@
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
+	var/acidpwr = 10 //the amount of protection removed from the armr
 	taste_description = "acid"
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)

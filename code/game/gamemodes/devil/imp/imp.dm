@@ -3,7 +3,7 @@
 /mob/living/simple_animal/imp
 	name = "imp"
 	real_name = "imp"
-	desc = "A large, menacing creature covered in armored black scales."
+	desc = "A large, menacing creature covered in armred black scales."
 	speak_emote = list("cackles")
 	emote_hear = list("cackles","screeches")
 	response_help  = "thinks better of touching"

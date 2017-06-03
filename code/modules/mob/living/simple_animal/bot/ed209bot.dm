@@ -384,7 +384,7 @@ Auto Patrol[]"},
 			new /obj/item/clothing/head/helmet(Tsec)
 		else
 			if(!lasercolor)
-				new /obj/item/clothing/suit/armor/vest(Tsec)
+				new /obj/item/clothing/suit/armr/vest(Tsec)
 			if(lasercolor == "b")
 				new /obj/item/clothing/suit/bluetag(Tsec)
 			if(lasercolor == "r")

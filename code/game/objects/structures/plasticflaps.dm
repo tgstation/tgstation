@@ -3,7 +3,7 @@
 	desc = "Definitely can't get past those. No way."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
-	armor = list(melee = 100, bullet = 80, laser = 80, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 50, acid = 50)
+	armr = list(melee = 100, bullet = 80, laser = 80, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 50, acid = 50)
 	density = 0
 	anchored = 1
 	layer = ABOVE_MOB_LAYER

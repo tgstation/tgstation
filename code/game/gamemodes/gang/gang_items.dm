@@ -102,7 +102,7 @@
 /datum/gang_item/clothing/suit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(gang.outer_outfit)
 		var/obj/item/O = new gang.outer_outfit(user.loc)
-		O.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
+		O.armr = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
 		O.desc += " Tailored for the [gang.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 		user.put_in_hands(O)
 		to_chat(user, "<span class='notice'> This is your gang's official outerwear, wearing it will increase your influence")
