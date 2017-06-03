@@ -294,7 +294,7 @@
 		if(bosses_working == FALSE)
 			to_chat(ganger, "<span class='danger'><b>Your gang no longer has a functioning leader. Your gangtool has been updated with the option to claim leadership for yourself.</b></span>")
 		if(!gateways)
-			to_chat(ganger, "<span class='danger'><b>Your gang not yet placed its reinforcement gateway. The gateway is crucial to sustaining your forces on this station. [name] leadership should plan where to create your gateway - immediately!</b></span>")
+			to_chat(ganger, "<span class='danger'><b>Your gang not yet placed its reinforcement gateway. The gateway is crucial to sustaining your forces on this station and <b>does NOT require influence</b>. [name] leadership should plan where to create your gateway - immediately!</b></span>")
 
 //Multiverse
 
