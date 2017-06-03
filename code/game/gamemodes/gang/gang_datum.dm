@@ -248,14 +248,13 @@
 	territory_new = list()
 	territory_lost = list()
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
-	var/sbonus = sqrt(LAZYLEN(territory))  // Bonus given to soldier's for the gang's total territory
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
 	for(var/obj/item/device/gangtool/G in gangtools)
 		var/pmessage = message
 		var/points_new = 0
 		if(istype(G, /obj/item/device/gangtool/soldier))
 			var/stags = (LAZYLEN(G.tags)/2)
-			sbonus += max(0,(3 - G.points/10)) + (0.3 * LAZYLEN(territory))
+			var/sbonus = max(0,(3 - G.points/10)) + (0.3 * LAZYLEN(territory))
 			points_new = sbonus + stags // Soldier points
 			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [stags] for territories you have personally tagged.<BR>"
 		else

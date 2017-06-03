@@ -34,7 +34,6 @@
 							to_chat(user, "<span class='warning'>You inject [M] with a new gangtool!</span>")
 							cooldown(G)
 						if(2)
-							new /obj/item/device/gangtool/soldier(M)
 							M.Paralyse(2)
 							cooldown(G)
 						if(1)
