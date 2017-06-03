@@ -125,7 +125,7 @@
 	..()
 
 /obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
-	var/mob/targ = owner
+	var/mob/targ = wearer
 	if(ismob(loc))
 		targ = loc
 	if(istype(mob_override))
