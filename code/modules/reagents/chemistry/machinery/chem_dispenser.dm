@@ -387,6 +387,19 @@
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
-	name = "mutagen and saltpeter dispenser"
-	desc = "Creates and dispenses mutagen and even saltpeter."
-	dispensable_reagents = list("mutagen", "saltpetre")
+	name = "botanical chemical dispenser"
+	desc = "Creates and dispenses chemicals useful for botany."
+	dispensable_reagents = list(
+		"mutagen",
+		"saltpetre",
+		"eznutriment",
+		"left4zednutriment",
+		"robustharvestnutriment",
+		"water",
+		"plantbgone",
+		"weedkiller",
+		"pestkiller",
+		"cryoxadone",
+		"ammonia",
+		"ash",
+		"diethylamine")
