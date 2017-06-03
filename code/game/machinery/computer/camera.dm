@@ -134,12 +134,10 @@
 	D["Cancel"] = "Cancel"
 	for(var/obj/machinery/camera/C in L)
 		if(!C.network)
-			spawn(0)
-				throw EXCEPTION("Camera in a cameranet has no camera network")
+			stack_trace("Camera in a cameranet has no camera network")
 			continue
 		if(!(istype(C.network,/list)))
-			spawn(0)
-				throw EXCEPTION("Camera in a cameranet has a non-list camera network")
+			stack_trace("Camera in a cameranet has a non-list camera network")
 			continue
 		var/list/tempnetwork = C.network&network
 		if(tempnetwork.len)
