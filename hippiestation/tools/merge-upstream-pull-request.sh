@@ -36,7 +36,7 @@ curl -v \
 -H "User-Agent: myBotThing (http://some.url, v0.1)" \
 -H "Content-Type: application/json" \
 -X POST \
--d '{"content":"Mirroring $1 from /tg/ to Hippie"}' \
+-d '{"content":"Mirroring [$1] from /tg/ to Hippie"}' \
 https://discordapp.com/api/channels/$CHANNELID/messages
 
 # We need to make sure we are always on a clean master when creating the new branch.
