@@ -286,7 +286,6 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	else
 		gangtool.register_device(mob)
 		to_chat(mob, "The <b>Gangtool</b> in your [where] will allow you to purchase weapons and equipment, send messages to your gang, and recall the emergency shuttle from anywhere on the station.")
-		to_chat(mob, "As the gang boss, you can also promote your gang members to <b>lieutenant</b>. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools.")
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)
@@ -421,11 +420,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-	if(alive < (GLOB.joined_player_list.len * 0.45 && (SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+	if(alive < (GLOB.joined_player_list.len * 0.5 && (SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
-	if((alive < (GLOB.joined_player_list.len *  0.7)) && posse_timer >= 4)
+	if((alive < (GLOB.joined_player_list.len *  0.75)) && posse_timer >= 4)
 		posse_timer = 0
 		vigilante_vengeance()
 

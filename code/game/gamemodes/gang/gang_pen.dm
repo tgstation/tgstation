@@ -4,12 +4,6 @@
 /obj/item/weapon/pen/gang
 	origin_tech = "materials=2;syndicate=3"
 	var/cooldown
-	var/last_used = 0
-	var/charges = 1
-
-/obj/item/weapon/pen/gang/New()
-	..()
-	last_used = world.time
 
 /obj/item/weapon/pen/gang/attack(mob/living/M, mob/user, stealth = TRUE)
 	if(!istype(M))
@@ -44,27 +38,17 @@
 	..()
 
 /obj/item/weapon/pen/gang/proc/cooldown(datum/gang/gang)
-	set waitfor = FALSE
+	icon_state = "pen_blink"
+	cooldown = TRUE
 	var/living = 0
 	for(var/mob/living/M in gang.gangsters)
 		if(M.stat != DEAD)
 			living++
-	var/cooldown_time = 500+(250*(living)) // 1recruiter=2mins, 2recruiters=3mins, 3recruiters=4mins
-	cooldown = TRUE
-	icon_state = "pen_blink"
+	var/cooldown_time = 500+(250*(living))
+	addtimer(CALLBACK(src, .proc/cooldown_refresh), cooldown_time, TIMER_UNIQUE)
 
-	var/time_passed = world.time - last_used
-	var/time
-	for(time=time_passed, time>=cooldown_time, time-=cooldown_time) //get 1 charge every cooldown interval
-		charges++
 
-	charges = max(0,charges-1)
-
-	last_used = world.time - time
-
-	if(charges)
-		cooldown_time = 50
-	sleep(cooldown_time)
+/obj/item/weapon/pen/gang/proc/cooldown_refresh(datum/gang/gang)
 	cooldown = FALSE
 	icon_state = "pen"
 	var/mob/M = get(src, /mob)

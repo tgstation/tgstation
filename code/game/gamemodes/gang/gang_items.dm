@@ -183,6 +183,7 @@
 	var/we = 0
 	var/rival = 0
 	var/cooldown = 0
+	queue = list()
 	for(var/datum/gang/baddies in SSticker.mode.gangs)
 		if(baddies == G)
 			for(var/datum/mind/M in G.gangsters)
@@ -210,7 +211,7 @@
 				rival++
 	if(!we)
 		we = 1
-	cooldown = 200+((we/(rival+we))*90)**2
+	cooldown = 200+((we/(rival+we))*100)**2
 	if(repeat)
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
 	spawn_gangster()
