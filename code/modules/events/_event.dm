@@ -8,6 +8,8 @@
 								//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
 								//0 here does NOT disable the event, it just makes it extremely unlikely
 
+	var/dead_weight_multiplier = 0  //How much more likely the event grows with each dead player: the final weight is weight*(dead_weight_multiplier*dead_players+1)
+
 	var/earliest_start = 12000	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
 	var/min_players = 0			//The minimum amount of alive, non-AFK human players on server required to start the event.
 

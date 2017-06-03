@@ -2,6 +2,7 @@
 	name = "Abductors"
 	typepath = /datum/round_event/ghost_role/abductor
 	weight = 5
+	dead_weight_multiplier = DEAD_WEIGHT_MEDIUM
 	max_occurrences = 1
 
 	min_players = 5

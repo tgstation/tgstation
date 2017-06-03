@@ -2,6 +2,7 @@
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
+	dead_weight_multiplier = DEAD_WEIGHT_MEDIUM
 
 	min_players = 10
 	max_occurrences = 1
