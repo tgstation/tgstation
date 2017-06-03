@@ -254,7 +254,7 @@
 		var/points_new = 0
 		if(istype(G, /obj/item/device/gangtool/soldier))
 			var/stags = (LAZYLEN(G.tags)/2)
-			var/sbonus = max(0,(3 - G.points/10)) + (0.3 * LAZYLEN(territory))
+			var/sbonus = max(0,(2 - G.points/10)) + (0.3 * LAZYLEN(territory))
 			points_new = sbonus + stags // Soldier points
 			pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [stags] for territories you have personally tagged.<BR>"
 		else

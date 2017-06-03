@@ -212,12 +212,12 @@
 				if(R.current.stat == DEAD)
 					continue
 				rival++
-	spawn_gangster()
 	if(!we)
 		we = 1
 	cooldown = 200+((we/(rival+we))*90)**2
 	if(repeat)
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
+	spawn_gangster()
 
 
 /obj/machinery/gang/backup/proc/spawn_gangster()
@@ -236,9 +236,10 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/switchblade(H),slot_r_store)
 	var/equip = SSjob.EquipRank(H, "Assistant", 1)
 	H = equip
-	var/list/mob/dead/observer/finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 100, ignore_category = "gang war", group = queue)
-	if(LAZYLEN(finalists))
-		winner = pick(finalists)
+	if(LAZYLEN(queue))
+		var/list/mob/dead/observer/finalists = pollCandidates("Would you like to be a [G.name] gang reinforcement?", jobbanType = ROLE_GANG, poll_time = 100, ignore_category = "gang war", group = queue)
+		if(LAZYLEN(finalists))
+			winner = pick(finalists)
 	if(!winner)
 		var/list/mob/dead/observer/dead_vigils = list()
 		for(var/mob/dead/observer/O in GLOB.player_list)
