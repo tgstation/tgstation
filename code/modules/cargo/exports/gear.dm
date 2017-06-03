@@ -2,6 +2,12 @@
 
 /datum/export/gear
 
+/datum/export/gear/liz_hat
+	cost = 2000
+	contraband = TRUE
+	unit_name = "lizard cloche hat"
+	export_types = list(/obj/item/clothing/head/lizard)
+
 // Security gear
 /datum/export/gear/sec_helmet
 	cost = 100
