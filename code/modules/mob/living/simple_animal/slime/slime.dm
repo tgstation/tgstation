@@ -394,11 +394,7 @@
 	if(buckled)
 		Feedstop(silent=1) //we unbuckle the slime from the mob it latched onto.
 
-	spawn(0)
-		SStun = 1
-		sleep(rand(20,60))
-		SStun = 0
-
+	SStun = world.time + rand(20,60)
 	spawn(0)
 		canmove = 0
 		if(user)
