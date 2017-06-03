@@ -1,5 +1,5 @@
 /**********************Mineral deposits**************************/
-var/secret_triggered = FALSE
+GLOBAL_VAR_INIT(secret_triggered, FALSE)
 
 
 /turf/closed/mineral //wall piece
@@ -397,8 +397,8 @@ var/secret_triggered = FALSE
 	defer_change = 1
 
 /turf/closed/mineral/adamantine/gets_drilled()
-	if(!secret_triggered)
-		secret_triggered = TRUE
+	if(!GLOB.secret_triggered)
+		GLOB.secret_triggered = TRUE
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
 		new /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon(src)
 		new /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat(src)

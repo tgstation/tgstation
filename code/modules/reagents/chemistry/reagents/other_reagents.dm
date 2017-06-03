@@ -894,6 +894,7 @@
 	attack_force = 2
 	pick_speed = 15
 	durability_reduction = 13
+	blunt_damage = TRUE
 
 /datum/reagent/uranium/on_mob_life(mob/living/M)
 	M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
