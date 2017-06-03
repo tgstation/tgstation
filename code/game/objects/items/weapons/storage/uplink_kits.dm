@@ -17,7 +17,7 @@
 			new /obj/item/device/chameleon(src) // 7 tc
 
 		if("stealth") // 31 tc
-			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/crossbow_hippie(src)
+			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
 			new /obj/item/weapon/pen/sleepy(src)
 			new /obj/item/device/healthanalyzer/rad_laser(src)
 			new /obj/item/device/chameleon(src)

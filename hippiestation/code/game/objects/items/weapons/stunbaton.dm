@@ -3,7 +3,7 @@
 	var/stamforce = 80
 
 /obj/item/weapon/melee/baton/cattleprod/hippie_cattleprod
-
+	w_class = WEIGHT_CLASS_NORMAL
 	stunforce = 0.1
 
 

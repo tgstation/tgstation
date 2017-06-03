@@ -1,4 +1,4 @@
-/obj/item/ammo_casing/c38/c38_hippie
+/obj/item/ammo_casing/c38
 	projectile_type = /obj/item/projectile/bullet/weakbullet2/weakbullet2_hippie
 
 /obj/item/ammo_casing/shotgun/stunslug/stunslug_hippie
