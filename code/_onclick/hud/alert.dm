@@ -361,7 +361,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	name = "Next Tier Requirements"
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
 	icon_state = "no-servants-caches"
-	var/static/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 
 /obj/screen/alert/clockwork/scripture_reqs/Initialize()
 	. = ..()
@@ -374,12 +373,11 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/scripture_reqs/process()
 	if(GLOB.clockwork_gateway_activated)
-		qdel(src)
+		mob_viewer.clear_alert("scripturereq")
 		return
 	var/current_state
-	scripture_states = scripture_unlock_check()
-	for(var/i in scripture_states)
-		if(!scripture_states[i])
+	for(var/i in SSticker.scripture_states)
+		if(!SSticker.scripture_states[i])
 			current_state = i
 			break
 	icon_state = "no"
@@ -459,7 +457,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/servants = 0
 		var/validservants = 0
 		var/unconverted_ais_exist = get_unconverted_ais()
-		var/list/scripture_states = scripture_unlock_check()
 		var/list/textlist
 		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L))
@@ -496,7 +493,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
 				textlist += "<b>An unconverted AI exists!</b><br>"
-		if(scripture_states[SCRIPTURE_REVENANT])
+		if(SSticker.scripture_states[SCRIPTURE_REVENANT])
 			var/inathneq_available = GLOB.clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = GLOB.clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = GLOB.clockwork_generals_invoked["nezbere"] <= world.time
@@ -508,9 +505,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "Generals available: <b>NONE</b><br>"
 		else
 			textlist += "Generals available: <b>NONE</b><br>"
-		for(var/i in scripture_states)
+		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		desc = textlist.Join()
 	..()
 
