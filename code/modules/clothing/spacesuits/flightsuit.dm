@@ -585,6 +585,7 @@
 	var/turf/old = get_turf(wearer)
 	var/turf/T = get_turf(victim)
 	wearer.forceMove(T)
+	handle_linked_movement(old, T)
 	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
