@@ -109,7 +109,6 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
-	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
