@@ -437,7 +437,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/list/image/delusions = list()
 
 /obj/effect/hallucination/delusion/Initialize(mapload, mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
-	..()
+	. = ..()
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
