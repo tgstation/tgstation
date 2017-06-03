@@ -104,8 +104,8 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
-	var/atom/movable/dragging_through = FALSE
-
+	var/atom/movable/cached_pull
+	var/turf/old_pull_turf
 
 //Start/Stop processing the item to use momentum and flight mechanics.
 /obj/item/device/flightpack/Initialize()
@@ -239,10 +239,23 @@
 	momentum_y = Clamp(momentum_y + amounty, -momentum_max, momentum_max)
 	calculate_momentum_speed()
 
-//Called by the pair of shoes the wearer is required to wear to detect movement.
-/obj/item/device/flightpack/proc/wearer_movement(dir)
+/obj/item/device/flightpack/proc/update_cached_pull()
+	if(!wearer)
+		return
+	cached_pull = wearer.pulling
+	if(istype(cached_pull))
+		old_pull_turf = get_turf(cached_pull)
+	else if(old_pull_turf)
+		old_pull_turf = null
+
+/obj/item/device/flightpack/proc/handle_linked_movement(turf/oldTurf, turf/newTurf)
+	var/atom/movable/cached = cached_pull
+	cached.forceMove(oldTurf)
+
+/obj/item/device/flightpack/on_mob_move(dir, mob, oldLoc)
 	if(!flight)
 		return
+	update_cached_pull()
 	var/momentum_increment = momentum_gain
 	if(boost)
 		momentum_increment = boost_power
@@ -259,15 +272,14 @@
 			adjust_momentum(momentum_increment, 0)
 		if(WEST)
 			adjust_momentum(-momentum_increment, 0)
+	handle_linked_movement(oldLoc, get_turf(wearer))
 
 //The wearer has momentum left. Move them and take some away, while negating the momentum that moving the wearer would gain. Or force the wearer to lose control if they are incapacitated.
 /obj/item/device/flightpack/proc/momentum_drift()
-	if(!flight)
+	if(!flight || !wearer)
 		return FALSE
-	if(wearer.pulling)
-		dragging_through = wearer.pulling
-	else if(dragging_through)
-		dragging_through = null
+	else if(!wearer.canmove)
+		losecontrol()
 	var/drift_dir_x = 0
 	var/drift_dir_y = 0
 	if(momentum_x > 0)
@@ -280,20 +292,17 @@
 		drift_dir_y = SOUTH
 	if(momentum_speed == 0)
 		return FALSE
-	if(wearer)
-		if(!wearer.canmove)
-			losecontrol()
-		momentum_decay()
-		for(var/i in 1 to momentum_speed)
-			var/turf/oldturf = get_turf(wearer)
-			if(momentum_speed_x >= i)
-				step(wearer, drift_dir_x)
-			if(momentum_speed_y >= i)
-				step(wearer, drift_dir_y)
-			if(dragging_through && oldturf)
-				dragging_through.forceMove(oldturf)
-				wearer.pulling = dragging_through
-			sleep(1)
+	momentum_decay()
+	for(var/i in 1 to momentum_speed)
+		var/turf/oldturf = get_turf(wearer)
+		update_cached_pull()
+		if(momentum_speed_x >= i)
+			if(step(wearer, drift_dir_x))
+				handle_linked_movement(oldturf, get_turf(wearer))
+		if(momentum_speed_y >= i)
+			if(step(wearer, drift_dir_y))
+				handle_linked_movement(oldturf, get_turf(wearer))
+		sleep(1)
 
 //Make the wearer lose some momentum.
 /obj/item/device/flightpack/proc/momentum_decay()
@@ -530,10 +539,11 @@
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
 	spawn()
 		door.Open()
-	wearer.forceMove(get_turf(door))
-	if(dragging_through)
-		dragging_through.forceMove(get_turf(door))
-		wearer.pulling = dragging_through
+	update_cached_pull()
+	var/turf/old = get_turf(wearer)
+	var/turf/T = get_turf(door)
+	wearer.forceMove(T)
+	handle_linked_movement(old, T)
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
@@ -559,19 +569,22 @@
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
 		var/turf/target = get_turf(A)
+		var/turf/old = get_turf(wearer)
 		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
 			target = get_step(A, A.dir)
+		update_cached_pull()
 		wearer.forceMove(target)
-		if(dragging_through)
-			dragging_through.forceMove(target)
-			wearer.pulling = dragging_through
+		handle_linked_movement(old, target)
 	return pass
 
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
 		return FALSE
-	wearer.forceMove(get_turf(victim))
+	update_cached_pull()
+	var/turf/old = get_turf(wearer)
+	var/turf/T = get_turf(victim)
+	wearer.forceMove(T)
 	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
@@ -766,9 +779,6 @@
 		usermessage("Airbrakes retracted!", "boldwarning")
 	brake = FALSE
 	update_slowdown()
-
-/obj/item/device/flightpack/on_mob_move(dir, mob)
-	wearer_movement(dir)
 
 /obj/item/device/flightpack/proc/relink_suit(obj/item/clothing/suit/space/hardsuit/flightsuit/F)
 	if(suit && suit == F)
