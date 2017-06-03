@@ -28,7 +28,7 @@
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
 	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
-		if(!bcell)
+		if(!cell)
 			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
 			remove_item_from_storage(user)
 			qdel(src)

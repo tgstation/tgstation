@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - tweak: "The Seed Vault's chemical dispenser now has all the chemicals a pod person could want."

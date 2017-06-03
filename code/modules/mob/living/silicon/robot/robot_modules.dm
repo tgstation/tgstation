@@ -149,8 +149,8 @@
 			F.update_icon()
 		else if(istype(I, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = I
-			if(B.bcell)
-				B.bcell.charge = B.bcell.maxcharge
+			if(B.cell)
+				B.cell.charge = B.cell.maxcharge
 		else if(istype(I, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/EG = I
 			if(!EG.chambered)
@@ -347,9 +347,9 @@
 	..()
 	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
 	if(T)
-		if(T.power_supply.charge < T.power_supply.maxcharge)
+		if(T.cell.charge < T.cell.maxcharge)
 			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.power_supply.give(S.e_cost * coeff)
+			T.cell.give(S.e_cost * coeff)
 			T.update_icon()
 		else
 			T.charge_tick = 0

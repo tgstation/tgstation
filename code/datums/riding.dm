@@ -45,7 +45,7 @@
 					if(offsetdir == ridden_dir)
 						var/list/diroffsets = offsets[offsetdir]
 						buckled_mob.pixel_x = diroffsets[1]
-						if(diroffsets.len == 2)
+						if(diroffsets.len >= 2)
 							buckled_mob.pixel_y = diroffsets[2]
 						if(diroffsets.len == 3)
 							buckled_mob.layer = diroffsets[3]
@@ -164,7 +164,7 @@
 
 
 /datum/riding/janicart/get_offsets(pass_index) // list(dir = x, y, layer)
-	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(-12, 7), "[EAST]" = list(0, 7), "[WEST]" = list( 12, 7))
+	return list("[NORTH]" = list(0, 4), "[SOUTH]" = list(0, 7), "[EAST]" = list(-12, 7), "[WEST]" = list( 12, 7))
 
 //scooter
 /datum/riding/scooter/handle_vehicle_layer()

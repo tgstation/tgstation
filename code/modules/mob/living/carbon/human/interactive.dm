@@ -1540,7 +1540,7 @@
 									if(stunning && stunCheck.stunned)
 										shouldFire = 0
 									if(shouldFire)
-										if(P.power_supply.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
+										if(P.cell.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
 											P.update_icon()
 											npcDrop(P,1)
 										else
