@@ -68,6 +68,7 @@
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
+	martial_art = default_martial_art
 
 /datum/mind/Destroy()
 	SSticker.minds -= src

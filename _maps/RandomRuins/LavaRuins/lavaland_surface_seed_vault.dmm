@@ -19,31 +19,31 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "e" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/disks_plantgene,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "f" = (
 /obj/machinery/plantgenes/seedvault,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "g" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "h" = (
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "i" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/structure/beebox,
@@ -57,7 +57,7 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "j" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
@@ -71,13 +71,13 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "l" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "m" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
@@ -90,7 +90,7 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "o" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/weapon/cultivator,
@@ -108,13 +108,13 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "p" = (
 /obj/machinery/hydroponics/constructable,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "q" = (
 /obj/item/weapon/hatchet,
 /obj/item/weapon/storage/bag/plants,
@@ -123,7 +123,7 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "r" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/bag/plants,
@@ -133,7 +133,7 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "s" = (
 /obj/structure/table/wood,
 /obj/item/weapon/gun/energy/floragun,
@@ -144,13 +144,13 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "t" = (
 /obj/effect/mob_spawn/human/seed_vault,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "u" = (
 /obj/structure/sink{
 	icon_state = "sink";
@@ -161,19 +161,19 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "v" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "w" = (
 /obj/machinery/vending/hydroseeds,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "x" = (
 /obj/machinery/reagentgrinder{
 	pixel_y = 5
@@ -186,7 +186,7 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "y" = (
 /obj/structure/sink{
 	dir = 4;
@@ -197,13 +197,13 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "z" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "A" = (
 /obj/machinery/door/airlock/external,
 /obj/structure/fans/tiny,
@@ -217,31 +217,31 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "C" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "D" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "E" = (
 /obj/machinery/chem_dispenser/mutagensaltpeter,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "F" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "G" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/clothing/under/rank/hydroponics,
@@ -251,13 +251,13 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "H" = (
 /obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "I" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -267,14 +267,14 @@
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "J" = (
 /obj/item/weapon/storage/toolbox/syndicate,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/seedvault)
 "K" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
@@ -292,6 +292,102 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"N" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/box/disks_plantgene,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"O" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"P" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"Q" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"R" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"S" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"T" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"U" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"V" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"W" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"X" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
+"Y" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/light,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/seedvault)
 
 (1,1,1) = {"
 a
@@ -346,10 +442,10 @@ a
 a
 c
 c
+T
 h
 h
-h
-h
+U
 c
 c
 a
@@ -389,12 +485,12 @@ c
 k
 c
 n
-h
+R
 u
 h
 h
 u
-h
+V
 u
 c
 a
@@ -429,17 +525,17 @@ a
 a
 a
 c
-e
+N
 h
 c
-p
+P
 h
 p
 h
 h
 p
 h
-p
+X
 c
 a
 a
@@ -539,17 +635,17 @@ a
 b
 a
 c
-h
+O
 h
 c
-p
+Q
 h
 h
 h
 h
 h
 h
-p
+Y
 c
 a
 a
@@ -587,12 +683,12 @@ c
 i
 c
 s
-h
+S
 y
 h
 h
 y
-h
+W
 J
 c
 a

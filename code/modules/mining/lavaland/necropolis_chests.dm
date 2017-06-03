@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,26)
+	var/loot = rand(1,27)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -28,9 +28,7 @@
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
-			new /obj/item/clothing/head/culthood(src)
-			new /obj/item/clothing/suit/cultrobes(src)
-			new /obj/item/weapon/bedsheet/cult(src)
+			new /obj/item/borg/upgrade/modkit/resonator_blasts(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
@@ -40,7 +38,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/weapon/sord(src)
+			new /obj/item/borg/upgrade/modkit/cooldown/repeater(src)
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
@@ -68,6 +66,9 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(26)
 			new /obj/item/book_of_babel(src)
+		if(27)
+			new /obj/item/borg/upgrade/modkit/lifesteal(src)
+			new /obj/item/weapon/bedsheet/cult(src)
 
 
 

@@ -10,7 +10,7 @@
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
-		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
+		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
 		"Laughter Demon", "Private Security Officer")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
@@ -142,6 +142,10 @@
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
 				alpha = 75 //Spooky sneaking!
+		if("Xenomorph Maid")
+			name = "lusty xenomorph maid ([rand(1, 999)])"
+			desc = "A cardboard cutout of a xenomorph maid."
+			icon_state = "cutout_lusty"
 		if("Swarmer")
 			name = "Swarmer ([rand(1, 999)])"
 			desc = "A cardboard cutout of a swarmer."

@@ -1,25 +1,36 @@
 /datum/personal_crafting
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,
-				CAT_AMMO,
+	var/viewing_subcategory = 1
+	var/list/categories = list(
+				CAT_WEAPONRY,
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
 				CAT_SMITH,
-				CAT_BREAD,
-				CAT_BURGER,
-				CAT_CAKE,
-				CAT_EGG,
-				CAT_MEAT,
-				CAT_MISCFOOD,
-				CAT_PASTRY,
-				CAT_PIE,
-				CAT_PIZZA,
-				CAT_SALAD,
-				CAT_SANDWICH,
-				CAT_SOUP,
-				CAT_SPAGHETTI)
+				CAT_FOOD)
+	var/list/subcategories = list(
+						list(	//Weapon subcategories
+							CAT_WEAPON,
+							CAT_AMMO),
+						CAT_NONE, //Robot subcategories
+						CAT_NONE, //Misc subcategories
+						CAT_NONE, //Tribal subcategories
+						list(	//Food subcategories
+							CAT_BREAD,
+							CAT_BURGER,
+							CAT_CAKE,
+							CAT_EGG,
+							CAT_MEAT,
+							CAT_MISCFOOD,
+							CAT_PASTRY,
+							CAT_PIE,
+							CAT_PIZZA,
+							CAT_SALAD,
+							CAT_SANDWICH,
+							CAT_SOUP,
+							CAT_SPAGHETTI))
+
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
@@ -39,7 +50,7 @@
 
 
 
-/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents, mob/user)
+/datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
 	main_loop:
 		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
@@ -77,7 +88,7 @@
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
-	for(var/obj/I in get_environment(user))
+	for(var/obj/item/I in get_environment(user))
 		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
 			continue
 		if(istype(I, /obj/item/stack))
@@ -95,18 +106,11 @@
 	if(!R.tools.len)
 		return 1
 	var/list/possible_tools = list()
-	for(var/obj/I in user.contents)
+	for(var/obj/item/I in user.contents)
 		if(istype(I, /obj/item/weapon/storage))
-			for(var/obj/SI in I.contents)
+			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
 		possible_tools += I.type
-	possible_tools += contents
-
-	for(var/obj/I2 in spiral_range_turfs(user,1))
-		if(istype(I2, /obj/item/weapon/storage))
-			for(var/obj/SI in I2.contents)
-				possible_tools += SI.type
-		possible_tools += I2.type
 	possible_tools += contents
 
 	main_loop:
@@ -120,7 +124,7 @@
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
-	if(check_contents(R, contents, user))
+	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
 			if(do_after(user, R.time, target = user))
 				contents = get_surroundings(user)
@@ -270,11 +274,19 @@
 
 /datum/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
+	var/list/subs = list()
+	var/cur_subcategory = CAT_NONE
 	var/cur_category = categories[viewing_category]
+	if (islist(subcategories[viewing_category]))
+		subs = subcategories[viewing_category]
+		cur_subcategory = subs[viewing_subcategory]
 	data["busy"] = busy
 	data["prev_cat"] = categories[prev_cat()]
+	data["prev_subcat"] = subs[prev_subcat()]
 	data["category"] = cur_category
+	data["subcategory"] = cur_subcategory
 	data["next_cat"] = categories[next_cat()]
+	data["next_subcat"] = subs[next_subcat()]
 	data["display_craftable_only"] = display_craftable_only
 	data["display_compact"] = display_compact
 
@@ -283,7 +295,7 @@
 	var/list/cant_craft = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		if(R.category != cur_category)
+		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
 			can_craft += list(build_recipe_data(R))
@@ -310,35 +322,59 @@
 			busy = 0
 			ui_interact(usr)
 		if("forwardCat") //Meow
-			viewing_category = next_cat()
-			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
+			viewing_category = next_cat(FALSE)
 			. = TRUE
 		if("backwardCat")
-			viewing_category = prev_cat()
-			to_chat(usr, "<span class='notice'>Category is now [categories[viewing_category]].</span>")
+			viewing_category = prev_cat(FALSE)
+			. = TRUE
+		if("forwardSubCat")
+			viewing_subcategory = next_subcat()
+			. = TRUE
+		if("backwardSubCat")
+			viewing_subcategory = prev_subcat()
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
-			to_chat(usr, "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>")
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
-			to_chat(usr, "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>")
 			. = TRUE
 
 
 //Next works nicely with modular arithmetic
-/datum/personal_crafting/proc/next_cat()
+/datum/personal_crafting/proc/next_cat(readonly = TRUE)
+	if (!readonly)
+		viewing_subcategory = 1
 	. = viewing_category % categories.len + 1
 
+/datum/personal_crafting/proc/next_subcat()
+	if(islist(subcategories[viewing_category]))
+		var/list/subs = subcategories[viewing_category]
+		. = viewing_subcategory % subs.len + 1
+
+
 //Previous can go fuck itself
-/datum/personal_crafting/proc/prev_cat()
+/datum/personal_crafting/proc/prev_cat(readonly = TRUE)
+	if (!readonly)
+		viewing_subcategory = 1
 	if(viewing_category == categories.len)
 		. = viewing_category-1
 	else
 		. = viewing_category % categories.len - 1
 	if(. <= 0)
 		. = categories.len
+
+/datum/personal_crafting/proc/prev_subcat()
+	if(islist(subcategories[viewing_category]))
+		var/list/subs = subcategories[viewing_category]
+		if(viewing_subcategory == subs.len)
+			. = viewing_subcategory-1
+		else
+			. = viewing_subcategory % subs.len - 1
+		if(. <= 0)
+			. = subs.len
+	else
+		. = null
 
 
 /datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
