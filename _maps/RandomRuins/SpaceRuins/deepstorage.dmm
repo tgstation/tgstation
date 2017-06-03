@@ -183,7 +183,7 @@
 "dA" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 9},/turf/closed/wall/mineral/iron{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage/dorm)
 "dB" = (/turf/closed/wall/mineral/iron{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage/dorm)
 "dC" = (/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/floorgrime{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage)
-"dD" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/obj/structure/dresser,/turf/open/floor/plasteel/floorgrime{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage)
+"dD" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 5},/turf/open/floor/plasteel/floorgrime{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage)
 "dE" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plasteel/floorgrime{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage)
 "dF" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/turf/open/floor/plasteel/floorgrime{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage)
 "dG" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plasteel/floorgrime{baseturf = /turf/open/floor/plating/asteroid/airless},/area/ruin/deepstorage)
