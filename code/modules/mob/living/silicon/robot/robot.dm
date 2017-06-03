@@ -97,6 +97,9 @@
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
 
+/mob/living/silicon/robot/get_cell()
+	return cell
+
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)

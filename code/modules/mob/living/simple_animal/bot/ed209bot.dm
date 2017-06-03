@@ -364,15 +364,15 @@ Auto Patrol[]"},
 
 	if(!lasercolor)
 		var/obj/item/weapon/gun/energy/e_gun/advtaser/G = new /obj/item/weapon/gun/energy/e_gun/advtaser(Tsec)
-		G.power_supply.charge = 0
+		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "b")
 		var/obj/item/weapon/gun/energy/laser/bluetag/G = new /obj/item/weapon/gun/energy/laser/bluetag(Tsec)
-		G.power_supply.charge = 0
+		G.cell.charge = 0
 		G.update_icon()
 	else if(lasercolor == "r")
 		var/obj/item/weapon/gun/energy/laser/redtag/G = new /obj/item/weapon/gun/energy/laser/redtag(Tsec)
-		G.power_supply.charge = 0
+		G.cell.charge = 0
 		G.update_icon()
 
 	if(prob(50))
