@@ -200,6 +200,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(!client)
 		return
+	if(ismob(speaker))
+		var/mob/potential_pax = speaker
+		if(potential_pax.ckey == "IcePacks")
+			return message
 	var/deaf_message
 	var/deaf_type
 	if(speaker != src)
