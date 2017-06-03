@@ -32,7 +32,7 @@
 	canMouseDown = TRUE
 	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 10
+	var/aiming_time = 7
 	var/aiming_time_fire_threshold = 2
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
