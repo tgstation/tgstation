@@ -256,14 +256,6 @@ update_label("John Doe", "Clowny")
 	access = get_all_accesses()+get_ert_access("med")-GLOB.access_change_ids
 	..()
 
-/obj/item/weapon/card/id/marine
-	name = "\improper Marine ID"
-	desc = "A Marine Rifleman ID card"
-	access = list(GLOB.access_away_generic1)
-	icon_state = "centcom"
-	registered_name = "Iron Hawk Marine"
-	assignment = "Marine Rifleman"
-
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
