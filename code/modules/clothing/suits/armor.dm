@@ -105,7 +105,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = 0
 	strip_delay = 80
 	put_on_delay = 60
 
