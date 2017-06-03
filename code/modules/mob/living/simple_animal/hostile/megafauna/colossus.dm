@@ -801,6 +801,67 @@ Difficulty: Very Hard
 	user.gib()
 	target_mind.RemoveSpell(/obj/effect/proc_holder/spell/targeted/exit_possession)
 
+/obj/machinery/anomalous_crystal/strangedog
+
+/obj/machinery/anomalous_crystal/strangedog/ActivationReaction(mob/user, method)
+	if(..())
+		var/mob/living/simple_animal/hostile/strangedog/whataweirdpet = new(get_turf(src))
+		if(user.client)
+			whataweirdpet.target = user
+
+/mob/living/simple_animal/hostile/strangedog
+	name = "alien pet"
+	desc = "A really strange sort of seemingly docile animal. It seems to look really, really happy."
+	icon_state = "mushroom_cap" //for testing, do not merge with this, new sprite needed
+	faction = list("neutral")
+	response_help = "pets"
+	attack_same = 2
+	stat_attack = UNCONSCIOUS
+	robust_searching = TRUE
+	see_invisible = INVISIBILITY_MAXIMUM
+	environment_smash = FALSE
+	speed = 0
+	move_to_delay = 2
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+
+/mob/living/simple_animal/hostile/strangedog/AttackingTarget()
+	return
+
+/mob/living/simple_animal/hostile/strangedog/Found(atom/A)
+	if(target && A == target)
+		return 1
+
+/mob/living/simple_animal/hostile/strangedog/ListTargets(passthrough = 0)
+	. = ..()
+	if(!passthrough && target)
+		. += target
+
+/mob/living/simple_animal/hostile/strangedog/CanAttack(atom/the_target)
+	var/mob/M_target = the_target
+	if(..() && ismob(the_target) && M_target.client)
+		if(pulledby && pulledby != the_target) //you can steal it by pulling it (it won't mind)
+			return 0
+		if(target && M_target == target)
+			if(!(M_target in ListTargets(1)))
+				var/list/teleturfs = RANGE_TURFS(world.view + 1, M_target) - RANGE_TURFS(world.view, M_target)
+				if(teleturfs && teleturfs.len)
+					for(var/turf/T in shuffle(teleturfs))
+						if(istype(T, /turf/open) && Move(T))
+							break
+			if(M_target.dir == get_dir(M_target, src))
+				minimum_distance = 3
+				retreat_distance = 2
+			else
+				minimum_distance = 1
+				retreat_distance = null
+		return 1
+
+/mob/living/simple_animal/hostile/strangedog/examine(mob/user)
+	. = ..()
+	if(target)
+		user << "<span class='notice'>It appears to have taken a liking to [user == target ? "you." : "[target.name][faction_check(user) ? ", but it still occasionally glances at you." : "."]"] </span>"
+
 
 #undef ACTIVATE_TOUCH
 #undef ACTIVATE_SPEECH
