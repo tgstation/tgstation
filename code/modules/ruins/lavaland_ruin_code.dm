@@ -148,6 +148,7 @@
 	back = /obj/item/weapon/storage/backpack
 	r_pocket = /obj/item/weapon/gun/ballistic/automatic/pistol
 	id = /obj/item/weapon/card/id
+	implants = list(/obj/item/weapon/implant/weapons_auth)
 
 /datum/outfit/lavaland_syndicate/post_equip(mob/living/carbon/human/H)
 	H.faction |= "syndicate"
