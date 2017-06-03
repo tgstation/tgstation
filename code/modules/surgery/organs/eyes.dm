@@ -173,6 +173,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/terminate_effects()
 	if(owner && active)
 		deactivate()
+	active = FALSE
 	clear_visuals(TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
 
@@ -225,10 +226,13 @@
 		deactivate(silent = TRUE)
 
 /obj/item/organ/eyes/robotic/glow/on_mob_move()
-	if(active)
-		update_visuals()
+	if(QDELETED(owner) || !active)
+		return
+	update_visuals()
 
 /obj/item/organ/eyes/robotic/glow/on_mob_turn()
+	if(QDELETED(owner) || !active)
+		return
 	update_visuals()
 
 /obj/item/organ/eyes/robotic/glow/proc/activate(silent = FALSE)
@@ -252,9 +256,9 @@
 	var/scandir = owner.dir
 	if(!istype(scanfrom))
 		clear_visuals()
-	var/turf/scanning
+	var/turf/scanning = scanfrom
 	var/stop = FALSE
-	on_mob.forceMove(scanfrom)
+	on_mob.forceMove(scanning)
 	for(var/i in 1 to light_beam_distance)
 		scanning = get_step(scanning, scandir)
 		if(scanning.opacity || scanning.has_opaque_atom)
