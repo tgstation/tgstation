@@ -491,23 +491,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						if (!P.toff && cartridge:shock_charges > 0)
 							cartridge:shock_charges--
 
-							var/difficulty = 0
-
-							if(P.cartridge)
-								difficulty += P.cartridge.access_medical
-								difficulty += P.cartridge.access_security
-								difficulty += P.cartridge.access_engine
-								difficulty += P.cartridge.access_clown
-								difficulty += P.cartridge.access_janitor
-								difficulty += P.cartridge.access_manifest * 2
-							else
-								difficulty += 2
-
-							if(prob(difficulty * 15) || (P.hidden_uplink))
-								U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
-							else
-								U.show_message("<span class='notice'>Success!</span>", 1)
-								P.explode()
+							U.show_message("<span class='notice'>Success!</span>", 1)
+							P.explode()
 					else
 						to_chat(U, "PDA not found.")
 				else
@@ -897,9 +882,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(T)
 		T.hotspot_expose(700,125)
 		if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
-			explosion(T, -1, 1, 3, 4)
+			explosion(T, -1, 8, 12, 16)
 		else
-			explosion(T, -1, -1, 2, 3)
+			explosion(T, -1, 4, 6, 8)
 	qdel(src)
 	return
 
