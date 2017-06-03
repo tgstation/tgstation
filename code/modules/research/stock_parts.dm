@@ -27,7 +27,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		if(istype(T))
 			if(T.component_parts)
 				T.exchange_parts(user, src)
-				user.Beam(T,icon_state="rped_upgrade",time=5)
+				user.Beam(T,icon_state="bsa_beam",time=5)
 	return
 
 /obj/item/weapon/storage/part_replacer/bluespace
@@ -47,7 +47,7 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		if(get_dist(user, dest_object) < 8)
 			if(dest_object.storage_contents_dump_act(src, user))
 				play_rped_sound()
-				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
+				user.Beam(dest_object,icon_state="bsa_beam",time=5)
 				return 1
 		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
