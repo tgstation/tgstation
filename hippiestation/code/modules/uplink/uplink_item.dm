@@ -77,7 +77,7 @@
 	return
 
 
-/datum/uplink_item/dangerous/crossbow/crossbow_hippie
+/datum/uplink_item/dangerous/crossbow
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	desc = "A short bow mounted across a tiller in miniature. Small enough to \
 		fit into a pocket or slip into a bag unnoticed. It will synthesize \

@@ -11,9 +11,3 @@
 /obj/item/ammo_box/magazine/g17/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[Ceiling(ammo_count(0)/14)*14]"
-
-/obj/item/ammo_box/magazine/m12g //Instead of being a child it needs to be this way to make bulldog shotguns and other mag based weapons work.
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug/stunslug_hippie
-
-/obj/item/ammo_box/magazine/sniper_rounds
-	ammo_type = /obj/item/ammo_casing/point50/point50_hippie
