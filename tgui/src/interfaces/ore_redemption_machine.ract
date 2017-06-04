@@ -32,7 +32,10 @@
 		</ui-section>
 		{{#each data.diskDesigns}}
 			<ui-section class=candystripe>
-				File {{index}}: {{name}} <ui-button action="diskUpload" state={{(canupload) ? null : 'disabled'}}  icon="upload" align="right" params='{ "design" : "{{index}}" }'>Upload</ui-button>
+				<ui-button action="diskUpload" state={{(canupload) ? null : 'disabled'}}  icon="upload" align="right" params='{ "design" : "{{index}}" }'>
+					Upload
+				</ui-button>
+				File {{index}}: {{name}}
 			</ui-section>
 		{{/each}}
 	{{else}}
@@ -53,7 +56,7 @@
 				Sheets
 			</td>
 			<td align='right'>
-				<ui-button action='Release' params='{"id" : "all"}' style='width:100%'>
+				<ui-button action='Release' params='{"id" : "all"}'>
 					Release All
 				</ui-button>
 			</td>
@@ -70,7 +73,7 @@
 				{{amount}}
 			</td>
 			<td align='right'>
-				<ui-button action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}' style='width:100%'>
+				<ui-button action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Release
 				</ui-button>
 			</td>
@@ -88,12 +91,12 @@
 				{{amount}}
 			</td>
 			<td align='right'>
-				<ui-button action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}' style='width:100%'>
+				<ui-button action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Smelt
 				</ui-button>
 			</td>
 			<td align='right'>
-				<ui-button action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}' style='width:100%'>
+				<ui-button action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Smelt All
 				</ui-button>
 			</td>
