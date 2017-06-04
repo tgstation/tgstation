@@ -444,24 +444,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		var/mob/living/carbon/human/character = new(src)
 		var/equip = SSjob.EquipRank(character, "Assistant", 1)
 		character = equip
-		var/D
-		if(GLOB.latejoin.len)
-			D = get_turf(pick(GLOB.latejoin))
-		if(!D)
-			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-				if(!T.density)
-					var/clear = 1
-					for(var/obj/O in T)
-						if(O.density)
-							clear = 0
-							break
-					if(clear)
-						D = T
-						continue
-		character.loc = D
-		var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
-		if(chair)
-			chair.buckle_mob(character)
+		SSjob.SendToLateJoin(character)
 		GLOB.data_core.manifest_inject(character)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(character, "Vigilante")
