@@ -396,7 +396,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
-	flavour_text = "<font size=3>You are a crewmember aboard the syndicate flaship: the SBC Starfury. <span class='danger'><b>Your job is to follow your captain's orders, maintain the ship, and keep the engine running.</b></span> If you are not familiar with how the supermatter engine functions: <b>do not attempt to start it.</b><br><br><span class='danger'><b>The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives.</b></span></font>"
+	flavour_text = "<font size=3>You are a crewmember aboard the syndicate flagship: the SBC Starfury. <span class='danger'><b>Your job is to follow your captain's orders, maintain the ship, and keep the engine running.</b></span> If you are not familiar with how the supermatter engine functions: <b>do not attempt to start it.</b><br><br><span class='danger'><b>The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives.</b></span></font>"
 	outfit = /datum/outfit/syndicate_empty/SBC
 
 /datum/outfit/syndicate_empty/SBC
@@ -407,7 +407,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
-	flavour_text = "<font size=3>You are an assault operative aboard the syndicate flaship: the SBC Starfury. <span class='danger'><b>Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13.</b></span> There is an armory, multiple assault ships, and beam cannons to attack the station with.<br><br><span class='danger'><b>Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!</b></span></font>"
+	flavour_text = "<font size=3>You are an assault operative aboard the syndicate flagship: the SBC Starfury. <span class='danger'><b>Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13.</b></span> There is an armory, multiple assault ships, and beam cannons to attack the station with.<br><br><span class='danger'><b>Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!</b></span></font>"
 	outfit = /datum/outfit/syndicate_empty/SBC/assault
 
 /datum/outfit/syndicate_empty/SBC/assault
@@ -423,7 +423,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
 	name = "Syndicate Battlecruiser Captain"
-	flavour_text = "<font size=3>You are the captain aboard the syndicate flaship: the SBC Starfury. <span class='danger'><b>Your job is to oversee your crew, defend the ship, and destroy Space Station 13.</b></span> The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal.<br><br><span class='danger'><b>As the captain, this whole operation falls on your shoulders.</b></span> You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough.</font>"
+	flavour_text = "<font size=3>You are the captain aboard the syndicate flagship: the SBC Starfury. <span class='danger'><b>Your job is to oversee your crew, defend the ship, and destroy Space Station 13.</b></span> The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal.<br><br><span class='danger'><b>As the captain, this whole operation falls on your shoulders.</b></span> You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough.</font>"
 	outfit = /datum/outfit/syndicate_empty/SBC/assault/captain
 	id_access_list = list(150,151)
 
