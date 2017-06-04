@@ -48285,10 +48285,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;

@@ -462,7 +462,7 @@
 /datum/gang_item/weapon/sniper
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
-	cost = 45
+  cost = 45
 	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo

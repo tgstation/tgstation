@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - experiment: "Gang turrets now follow the mouse of the person using them! Yay!"
