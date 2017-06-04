@@ -48,59 +48,59 @@
 </ui-display>
 <ui-display>
 		<table>
-			<tr>
-			<td>
+			<section class="candystripe">
+			<section class="content">
 				Mineral
-			</td>
-			<td>
+			</section>
+			<section class="content">
 				Sheets
-			</td>
-			<td align='right'>
-				<ui-button action='Release' params='{"id" : "all"}'>
+			</section>
+			<section class="content" align='right'>
+				<ui-button grid action='Release' params='{"id" : "all"}'>
 					Release All
 				</ui-button>
-			</td>
-			<td align='right'>
+			</section>
+			<section class="content" align='right'>
 				Ore Value
-			</td>
-		</tr>
+			</section>
+		</section>
 	{{#each data.materials}}
-		<tr>
-			<td>
+		<section class="candystripe">
+			<section class="content">
 				{{name}}
-			</td>
-			<td align='right'>
+			</section>
+			<section class="content" align='right'>
 				{{amount}}
-			</td>
-			<td align='right'>
-				<ui-button action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+			</section>
+			<section class="content" align='right'>
+				<ui-button grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Release
 				</ui-button>
-			</td>
-			<td align='right'>
+			</section>
+			<section class="content" align='right'>
 				{{value}}
-			</td>
-		</tr>
+			</section>
+		</section>
 	{{/each}}
 	{{#each data.alloys}}
-		<tr>
-			<td>
+		<section class="candystripe">
+			<section class="content">
 				{{name}}
-			</td>
-			<td align='right'>
+			</section>
+			<section class="content" align='right'>
 				{{amount}}
-			</td>
-			<td align='right'>
-				<ui-button action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+			</section>
+			<section class="content" align='right'>
+				<ui-button grid action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Smelt
 				</ui-button>
-			</td>
-			<td align='right'>
-				<ui-button action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+			</section>
+			<section class="content" align='right'>
+				<ui-button grid action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Smelt All
 				</ui-button>
-			</td>
-		</tr>
+			</section>
+		</section>
 	{{/each}}
 	</table>
 </ui-display>
