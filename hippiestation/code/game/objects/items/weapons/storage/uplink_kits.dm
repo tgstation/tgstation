@@ -29,6 +29,18 @@
 	new /obj/item/weapon/bowling(src)
 	new /obj/item/weapon/bowling(src)
 
+/obj/item/weapon/storage/box/syndie_kit/imp_mindslave
+	name = "Mindslave Implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_mindslave/PopulateContents()
+	new /obj/item/weapon/implanter/mindslave(src)
+
+/obj/item/weapon/storage/box/syndie_kit/imp_gmindslave
+	name = "Greater Mindslave Implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_gmindslave/PopulateContents()
+	new /obj/item/weapon/implanter/mindslave/greater(src)
+
 /obj/item/weapon/storage/box/syndie_kit/wrestling
 	name = "\improper Squared-Circle smackdown set"
 	desc = "For millenia, man has dreamed of wrestling. In 1980, it was invented by the great Macho\

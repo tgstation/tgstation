@@ -3,7 +3,7 @@
 **Website:** http://www.hippiestation.com <BR>
 **Code:** https://github.com/hippiestation/hippiestation <BR>
 **Wiki** https://wiki.hippiestation.com/index.php?title=Main_Page <BR>
-**Discord:** https://discordapp.com/invite/RBm2HJt <BR>
+**Discord:** [Request access here.](https://hippiestation.com/threads/discord-invites.6055) <BR>
 
 ## ABOUT
 
