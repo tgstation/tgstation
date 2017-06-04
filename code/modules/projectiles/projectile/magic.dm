@@ -147,7 +147,7 @@
 						path = /mob/living/silicon/robot/syndicate/medical
 					new_mob = new path(M.loc)
 				if("drone")
-					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
+					new_mob = new /mob/living/simple_animal/drone/free/no_equipment(M.loc)
 			if(issilicon(new_mob))
 				new_mob.gender = M.gender
 				new_mob.invisibility = 0
