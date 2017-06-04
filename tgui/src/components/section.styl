@@ -31,3 +31,10 @@ section
   .line
     @extend $cell
     width: 100%
+
+  .cell
+    @extend $cell
+    &:not(:first-child)
+      text-align: center
+  &:not(:last-child)
+      padding-right: 4px
