@@ -3,9 +3,17 @@
 INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/Initialize()
-	. = ..()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+	tag = "mob_[next_mob_id++]"
+	GLOB.mob_list += src
+
+	prepare_huds()
+
 	if(config.cross_allowed)
 		verbs += /mob/dead/proc/server_hop
+	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/dust()	//ghosts can't be vaporised.
 	return

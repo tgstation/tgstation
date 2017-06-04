@@ -273,7 +273,7 @@
 
 //Medbot Assembly
 /obj/item/weapon/firstaid_arm_assembly
-	name = "incomplete medibot assembly."
+	name = "incomplete medibot assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "firstaid_arm"

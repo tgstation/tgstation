@@ -15,6 +15,8 @@
 	// without external aid (earmuffs, drugs)
 	var/ear_damage = 0
 
+	var/bang_protect = 0	//Resistance against loud noises
+
 /obj/item/organ/ears/on_life()
 	if(!iscarbon(owner))
 		return

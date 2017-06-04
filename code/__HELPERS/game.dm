@@ -6,6 +6,7 @@
   )
 
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+#define CULT_POLL_WAIT 2400
 
 /proc/get_area(atom/A)
 	if (!istype(A))
@@ -414,68 +415,81 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
+/proc/showCandidatePollWindow(mob/M, poll_time, Question, list/candidates, ignore_category, time_passed, flashwindow = TRUE)
 	set waitfor = 0
 
-	G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	M << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 	if(flashwindow)
-		window_flash(G.client)
-	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+		window_flash(M.client)
+	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
-			to_chat(G, "<span class='notice'>Choice registered: Yes.</span>")
-			if((world.time-time_passed)>poll_time)
-				to_chat(G, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
-				G << 'sound/machines/buzz-sigh.ogg'
+			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
+			if(time_passed + poll_time <= world.time)
+				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
+				M << 'sound/machines/buzz-sigh.ogg'
+				candidates -= M
 			else
-				candidates += G
+				candidates += M
 		if(2)
-			to_chat(G, "<span class='danger'>Choice registered: No.</span>")
+			to_chat(M, "<span class='danger'>Choice registered: No.</span>")
+			candidates -= M
 		if(3)
 			var/list/L = GLOB.poll_ignore[ignore_category]
 			if(!L)
 				GLOB.poll_ignore[ignore_category] = list()
-			GLOB.poll_ignore[ignore_category] += G.ckey
-			to_chat(G, "<span class='danger'>Choice registered: Never for this round.</span>")
+			GLOB.poll_ignore[ignore_category] += M.ckey
+			to_chat(M, "<span class='danger'>Choice registered: Never for this round.</span>")
+			candidates -= M
+		else
+			candidates -= M
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null, flashwindow = TRUE)
-	var/list/mob/dead/observer/candidates = list()
+/proc/pollGhostCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE)
+	var/list/candidates = list()
+
+	for(var/mob/dead/observer/G in GLOB.player_list)
+		candidates += G
+
+	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
+
+/proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
-
-	for(var/mob/dead/observer/G in GLOB.player_list)
-		if(!G.key || !G.client || (ignore_category && GLOB.poll_ignore[ignore_category] && G.ckey in GLOB.poll_ignore[ignore_category]))
+	var/list/result = list()
+	for(var/m in group)
+		var/mob/M = m
+		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
 			continue
 		if(be_special_flag)
-			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
+			if(!(M.client.prefs) || !(be_special_flag in M.client.prefs.be_special))
 				continue
-		if (gametypeCheck)
-			if(!gametypeCheck.age_check(G.client))
+		if(gametypeCheck)
+			if(!gametypeCheck.age_check(M.client))
 				continue
-		if (jobbanType)
-			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
+		if(jobbanType)
+			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
 				continue
 
-		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed, flashwindow)
+		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)
 
-	//Check all our candidates, to make sure they didn't log off during the wait period.
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key || !G.client)
-			candidates.Remove(G)
+	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
+	for(var/mob/M in result)
+		if(!M.key || !M.client)
+			result -= M
 
-	listclearnulls(candidates)
+	listclearnulls(result)
 
-	return candidates
+	return result
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
 	if(!M || QDELETED(M) || !M.loc)
 		return list()
 	return L
 
 /proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
 	var/i=1
 	for(var/v in mobs)
 		var/atom/A = v
@@ -484,6 +498,8 @@
 		else
 			++i
 	return L
+
+/proc/poll_helper(var/mob/living/M)
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)

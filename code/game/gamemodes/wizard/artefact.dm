@@ -175,6 +175,7 @@
 			continue
 		var/mob/living/carbon/human/H = X
 		if(H.stat == DEAD)
+			H.dust(TRUE)
 			spooky_scaries.Remove(X)
 			continue
 	listclearnulls(spooky_scaries)
@@ -584,7 +585,7 @@
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
 	user.canmove = 0
-	new /obj/effect/overlay/temp/tornado(T)
+	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return
@@ -602,7 +603,7 @@
 			T = potential_T
 			break
 		breakout += 1
-	new /obj/effect/overlay/temp/tornado(T)
+	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return
@@ -620,7 +621,7 @@
 		last_user.canmove = 1
 	return ..()
 
-/obj/effect/overlay/temp/tornado
+/obj/effect/temp_visual/tornado
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "tornado"
 	name = "tornado"
@@ -630,6 +631,6 @@
 	duration = 40
 	pixel_x = 500
 
-/obj/effect/overlay/temp/tornado/Initialize()
+/obj/effect/temp_visual/tornado/Initialize()
 	. = ..()
 	animate(src, pixel_x = -500, time = 40)

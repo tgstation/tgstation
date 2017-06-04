@@ -71,9 +71,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	qdel(src)
 
 /obj/item/stack/sheet/metal/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
@@ -163,6 +162,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
+	novariants = TRUE
 
 /obj/item/stack/sheet/mineral/wood/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.wood_recipes
@@ -240,6 +240,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	origin_tech = "materials=1"
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/cardboard
+	novariants = TRUE
 
 /obj/item/stack/sheet/cardboard/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cardboard_recipes
@@ -269,6 +270,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
+	novariants = TRUE
 
 /obj/item/stack/sheet/runed_metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -286,12 +288,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
@@ -320,11 +325,11 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	throw_speed = 1
 	throw_range = 3
 	turf_type = /turf/open/floor/clockwork
+	novariants = FALSE
 
 /obj/item/stack/tile/brass/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes
@@ -338,6 +343,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	singular_name = "lesser gem"
 	icon_state = "sheet-lessergem"
 	origin_tech = "materials=4"
+	novariants = TRUE
 
 
 /obj/item/stack/sheet/greatergem
@@ -346,6 +352,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
 	origin_tech = "materials=7"
+	novariants = TRUE
 
 	/*
  * Bones
@@ -358,13 +365,17 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	desc = "Someone's been drinking their milk."
 	force = 7
 	throwforce = 5
+	max_amount = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
-	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40)))
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = 1, on_floor = 1, time = 40), \
+	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"

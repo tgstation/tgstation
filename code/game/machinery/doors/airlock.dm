@@ -97,14 +97,15 @@
 	var/static/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/Initialize()
-	..()
+	. = ..()
 	wires = new /datum/wires/airlock(src)
-	if(src.closeOtherId != null)
-		spawn (5)
-			for (var/obj/machinery/door/airlock/A in GLOB.airlocks)
-				if(A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
+	if (cyclelinkeddir)
+		cyclelinkairlock()
+	if(frequency)
+		set_frequency(frequency)
+
+	if(closeOtherId != null)
+		addtimer(CALLBACK(.proc/update_other_id), 5)
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_METAL)
@@ -120,13 +121,14 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-/obj/machinery/door/airlock/Initialize()
-	..()
-	if (cyclelinkeddir)
-		cyclelinkairlock()
-	if(frequency)
-		set_frequency(frequency)
+
 	update_icon()
+
+/obj/machinery/door/airlock/proc/update_other_id()
+	for(var/obj/machinery/door/airlock/A in GLOB.airlocks)
+		if(A.closeOtherId == closeOtherId && A != src)
+			closeOther = A
+			break
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -179,18 +181,17 @@
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
-	if(prob(20))
-		if(glass)
-			if(runed)
-				new/obj/machinery/door/airlock/cult/glass(T)
-			else
-				new/obj/machinery/door/airlock/cult/unruned/glass(T)
+	if(glass)
+		if(runed)
+			new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			if(runed)
-				new/obj/machinery/door/airlock/cult(T)
-			else
-				new/obj/machinery/door/airlock/cult/unruned(T)
-		qdel(src)
+			new/obj/machinery/door/airlock/cult/unruned/glass(T)
+	else
+		if(runed)
+			new/obj/machinery/door/airlock/cult(T)
+		else
+			new/obj/machinery/door/airlock/cult/unruned(T)
+	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
 	if(glass)
@@ -200,14 +201,11 @@
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
-	qdel(wires)
-	wires = null
+	QDEL_NULL(wires)
 	if(charge)
 		qdel(charge)
 		charge = null
-	if(electronics)
-		qdel(electronics)
-		electronics = null
+	QDEL_NULL(electronics)
 	if (cyclelinkedairlock)
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
@@ -335,16 +333,14 @@
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if(!hasPower())		// unpowered, no shock
 		return FALSE
-	if(hasShocked)
+	if(hasShocked > world.time)
 		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
 	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
-		hasShocked = TRUE
-		spawn(10)
-			hasShocked = FALSE
+		hasShocked = world.time + 10
 		return TRUE
 	else
 		return FALSE

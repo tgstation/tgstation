@@ -1,4 +1,4 @@
-#define SCRAMBLE_CACHE_LEN 20
+#define SCRAMBLE_CACHE_LEN 50 //maximum of 50 specific scrambled lines per language
 
 /*
 	Datum based languages. Easily editable and modular.
@@ -12,13 +12,14 @@
 	var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
 	var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
 	var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
-	var/key = "x"                     // Character used to speak in language
+	var/key                           // Character used to speak in language
+	// If key is null, then the language isn't real or learnable.
 	var/flags                         // Various language flags.
 	var/list/syllables                // Used when scrambling text for a non-speaker.
-	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
-	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
+	var/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
+	var/space_chance = 55        // Likelihood of getting a space in the random scramble string
 	var/list/spans = list()
-	var/static/list/scramble_cache = list()
+	var/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
 	// if you are seeing someone speak popcorn language, then something is wrong.
@@ -55,16 +56,27 @@
 
 	return "[trim(full_name)]"
 
+/datum/language/proc/check_cache(input)
+	var/lookup = scramble_cache[input]
+	if(lookup)
+		scramble_cache -= input
+		scramble_cache[input] = lookup
+	. = lookup
+
+/datum/language/proc/add_to_cache(input, scrambled_text)
+	// Add it to cache, cutting old entries if the list is too long
+	scramble_cache[input] = scrambled_text
+	if(scramble_cache.len > SCRAMBLE_CACHE_LEN)
+		scramble_cache.Cut(1, scramble_cache.len-SCRAMBLE_CACHE_LEN-1)
+
 /datum/language/proc/scramble(input)
 
 	if(!syllables || !syllables.len)
 		return stars(input)
 
 	// If the input is cached already, move it to the end of the cache and return it
-	var/lookup = scramble_cache[input]
+	var/lookup = check_cache(input)
 	if(lookup)
-		scramble_cache -= input
-		scramble_cache[input] = lookup
 		return lookup
 
 	var/input_size = length(input)
@@ -92,10 +104,7 @@
 	if(input_ending in list("!","?","."))
 		scrambled_text += input_ending
 
-	// Add it to cache, cutting old entries if the list is too long
-	scramble_cache[input] = scrambled_text
-	if(scramble_cache.len > SCRAMBLE_CACHE_LEN)
-		scramble_cache.Cut(1, scramble_cache.len-SCRAMBLE_CACHE_LEN-1)
+	add_to_cache(input, scrambled_text)
 
 	return scrambled_text
 
@@ -108,13 +117,3 @@
 	return speech_verb
 
 #undef SCRAMBLE_CACHE_LEN
-
-/proc/get_language_instance(langtype)
-	if(!ispath(langtype, /datum/language))
-		return
-
-	if(!GLOB.language_datums[langtype])
-		var/datum/language/langdatum = new langtype
-		GLOB.language_datums[langtype] = langdatum
-
-	. = GLOB.language_datums[langtype]

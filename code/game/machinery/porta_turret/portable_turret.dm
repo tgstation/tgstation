@@ -1,6 +1,9 @@
 #define TURRET_STUN 0
 #define TURRET_LETHAL 1
 
+#define POPUP_ANIM_TIME 5
+#define POPDOWN_ANIM_TIME 5 //Be sure to change the icon animation at the same time or it'll look bad
+
 /obj/machinery/porta_turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
@@ -84,6 +87,9 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
+		var/mutable_appearance/base = mutable_appearance('icons/obj/turrets.dmi', "basedark")
+		base.layer = NOT_HIGH_OBJ_LAYER
+		underlays += base
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
@@ -221,7 +227,6 @@
 			spawn(rand(0, 15))
 				stat |= NOPOWER
 				update_icon()
-
 
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
@@ -364,6 +369,10 @@
 	var/list/targets = list()
 	var/turretview = view(scan_range, base)
 	for(var/A in turretview)
+		var/atom/AA = A
+		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+			continue
+
 		if(check_anomalies)//if it's set to check for simple animals
 			if(istype(A, /mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = A
@@ -418,7 +427,7 @@
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(10)
+	sleep(POPUP_ANIM_TIME)
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -434,7 +443,7 @@
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(10)
+	sleep(POPDOWN_ANIM_TIME)
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"
@@ -538,13 +547,13 @@
 	emagged = TRUE
 	installation = /obj/item/weapon/gun/energy/laser
 
-
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
 	use_power = 0
 	has_cover = 0
 	scan_range = 9
+	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
@@ -554,6 +563,14 @@
 	faction = "syndicate"
 	emp_vunerable = 0
 
+/obj/machinery/porta_turret/syndicate/energy
+	icon_state = "standard_stun"
+	base_icon_state = "standard"
+	stun_projectile = /obj/item/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
+	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+
 /obj/machinery/porta_turret/syndicate/setup()
 	return
 
@@ -561,6 +578,8 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
+	max_integrity = 40
+	integrity_failure = 20
 	obj_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3

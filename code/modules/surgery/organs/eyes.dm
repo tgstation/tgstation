@@ -64,6 +64,9 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	sight_flags = SEE_MOBS
 
+/obj/item/organ/eyes/night_vision/zombie
+	name = "undead eyes"
+	desc = "Somewhat counterintuitively, these half rotten eyes actually have superior vision to those of a living human."
 
 ///Robotic
 

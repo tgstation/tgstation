@@ -23,6 +23,7 @@
 	var/list/ore_buffer = list()
 	var/datum/material_container/materials
 	var/datum/research/files
+	var/obj/item/weapon/disk/design_disk/inserted_disk
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
@@ -73,18 +74,18 @@
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
 
-	else if(!materials.has_space(material_amount)) //if there is no space, eject it
+	else if(!materials.has_space(material_amount * sheet_per_ore)) //if there is no space, eject it
 		unload_mineral(O)
 
 	else
-		materials.insert_item(O) //insert it
+		materials.insert_item(O, sheet_per_ore) //insert it
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	if(D.make_reagents.len)
 		return 0
 
-	var/build_amount = 1
+	var/build_amount = 0
 
 	for(var/mat_id in D.materials)
 		var/M = D.materials[mat_id]
@@ -93,7 +94,15 @@
 		if(!M || !redemption_mat)
 			return 0
 
-		build_amount = min(build_amount, round(redemption_mat.amount / M))
+		var/smeltable_sheets = round(redemption_mat.amount / M)
+
+		if(!smeltable_sheets)
+			return 0
+
+		if(!build_amount)
+			build_amount = smeltable_sheets
+
+		build_amount = min(build_amount, smeltable_sheets)
 
 	return build_amount
 
@@ -152,6 +161,7 @@
 	if(exchange_parts(user, W))
 		return
 	if(default_pry_open(W))
+		materials.retrieve_all()
 		return
 	if(default_unfasten_wrench(user, W))
 		return
@@ -178,6 +188,11 @@
 		output_dir = turn(output_dir, -90)
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
 		return
+
+	if(istype(W, /obj/item/weapon/disk/design_disk))
+		if(user.transferItemToLoc(W, src))
+			inserted_disk = W
+			return TRUE
 
 	return ..()
 
@@ -210,6 +225,8 @@
 			else
 				dat += "<span  class='linkOff'>Release</span><br>"
 
+	dat += "<br><b>Alloys: </b><br>"
+
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
 		if(can_smelt_alloy(D))
@@ -218,6 +235,20 @@
 			dat += "[D.name]: <span class='linkOff'>Smelt</span><br>"
 
 	dat += "<br><div class='statusDisplay'><b>Mineral Value List:</b><br>[get_ore_values()]</div>"
+
+	if(inserted_disk)
+		dat += "<A href='?src=\ref[src];eject_disk=1'>Eject disk</A><br>"
+		dat += "<div class='statusDisplay'><b>Uploadable designs: </b><br>"
+
+		for(var/i in 1 to inserted_disk.max_blueprints)
+			if(inserted_disk.blueprints[i])
+				var/datum/design/D = inserted_disk.blueprints[i]
+				if(D.build_type & SMELTER)
+					dat += "Name: [D.name] <A href='?src=\ref[src];upload=[i]'>Upload to smelter</A>"
+
+		dat += "</div><br>"
+	else
+		dat += "<A href='?src=\ref[src];insert_disk=1'>Insert design disk</A><br><br>"
 
 	var/datum/browser/popup = new(user, "ore_redemption_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
@@ -248,12 +279,26 @@
 	else if(href_list["insert_id"])
 		var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 		if(istype(I))
-			if(!usr.drop_item())
+			if(!usr.transferItemToLoc(I,src))
 				return
-			I.forceMove(src)
 			inserted_id = I
 		else
 			to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
+	if(href_list["eject_disk"])
+		if(inserted_disk)
+			inserted_disk.forceMove(loc)
+			inserted_disk = null
+	if(href_list["insert_disk"])
+		var/obj/item/weapon/disk/design_disk/D = usr.get_active_held_item()
+		if(istype(D))
+			if(!usr.transferItemToLoc(D,src))
+				return
+			inserted_disk = D
+	if(href_list["upload"])
+		var/n = text2num(href_list["upload"])
+		if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
+			files.AddDesign2Known(inserted_disk.blueprints[n])
+
 	if(href_list["release"])
 		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
 			var/mat_id = href_list["release"]

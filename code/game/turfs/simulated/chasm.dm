@@ -22,6 +22,10 @@
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
 
+/turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
 
 /turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
@@ -111,6 +115,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	light_range = 1.9 //slightly less range than lava
+	light_power = 0.65 //less bright, too
+	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
@@ -143,14 +150,14 @@
 		qdel(S.mmi)
 
 	qdel(AM)
-	
+
 	if(AM && !QDELETED(AM))	//It's indestructible
 		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
 		AM.alpha = oldalpha
 		AM.color = oldcolor
 		AM.transform = oldtransform
 		AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
-	
+
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
@@ -158,3 +165,22 @@
 
 /turf/open/chasm/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
+
+
+
+//Jungle
+
+/turf/open/chasm/jungle
+	icon = 'icons/turf/floors/junglechasm.dmi'
+	planetary_atmos = TRUE
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "dirt"
+	return TRUE
+
+/turf/open/chasm/straight_down/jungle
+	icon = 'icons/turf/floors/junglechasm.dmi'
+	planetary_atmos = TRUE
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"

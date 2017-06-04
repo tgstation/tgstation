@@ -58,7 +58,7 @@
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
 			if(!is_servant_of_ratvar(user) || !input || !user.canUseTopic(src, !issilicon(user)))
 				return
-			if(anchored)
+			if(!anchored)
 				to_chat(user, "<span class='warning'>[src] is no longer secured!</span>")
 				return FALSE
 			if(active)
@@ -84,7 +84,8 @@
 				return
 			if(procure_gateway(user, round(100 * get_efficiency_mod(), 1), round(5 * get_efficiency_mod(), 1), 1))
 				process()
-				if(!active)
+				if(!active) //we won't be active if nobody has sent a gateway to us
+					active = TRUE
 					clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 					return
 			return_power(gateway_cost) //if we didn't return above, ie, successfully create a gateway, we give the power back
@@ -92,7 +93,8 @@
 /obj/structure/destructible/clockwork/powered/clockwork_obelisk/process()
 	if(!anchored)
 		return
-	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
+	var/obj/effect/clockwork/spatial_gateway/SG = locate(/obj/effect/clockwork/spatial_gateway) in loc
+	if(SG && SG.timerid) //it's a valid gateway, we're active
 		icon_state = active_icon
 		density = 0
 		active = TRUE

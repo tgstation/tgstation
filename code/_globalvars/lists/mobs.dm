@@ -19,5 +19,7 @@ GLOBAL_LIST_EMPTY(silicon_mobs)				//all silicon mobs
 GLOBAL_LIST_EMPTY(ai_list)
 GLOBAL_LIST_EMPTY(pai_list)
 GLOBAL_LIST_EMPTY(available_ai_shells)
-GLOBAL_LIST_EMPTY(language_datums)
 GLOBAL_LIST_EMPTY(simple_animals)
+
+GLOBAL_LIST_EMPTY(language_datum_instances)
+GLOBAL_LIST_EMPTY(all_languages)

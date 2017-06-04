@@ -5,11 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-	 // ME TARZAN, YOU JANEBOT
-	initial_languages = list(/datum/language/common)
-
-
-
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -41,8 +36,6 @@
 	//initialise organs
 	create_internal_organs()
 
-	martial_art = default_martial_art
-
 	handcrafting = new()
 
 	..()
@@ -58,8 +51,9 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
-	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutanteyes
 	internal_organs += new dna.species.mutantears
+	internal_organs += new dna.species.mutanttongue
 	internal_organs += new /obj/item/organ/brain
 	..()
 
@@ -414,7 +408,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return

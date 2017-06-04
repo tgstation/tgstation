@@ -58,29 +58,22 @@
 	A.add_fingerprint(H)
 
 	draining = 1
-	var/drained = A.ninjadrain_act(suit,H,src)
+	. = A.ninjadrain_act(suit,H,src)
 	draining = 0
 
-	if(isnum(drained)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
-		if(drained)
-			to_chat(H, "<span class='notice'>Gained <B>[drained]</B> energy from \the [A].</span>")
+	if(isnum(.)) //Numerical values of drained handle their feedback here, Alpha values handle it themselves (Research hacking)
+		if(.)
+			to_chat(H, "<span class='notice'>Gained <B>[.]</B> energy from \the [A].</span>")
 		else
 			to_chat(H, "<span class='danger'>\The [A] has run dry of power, you must find another source!</span>")
 	else
-		drained = 0 //as to not cancel attack_hand()
-
-	return drained
+		. = 0 //as to not cancel attack_hand()
 
 
-/obj/item/clothing/gloves/space_ninja/proc/toggled()
-	set name = "Toggle Interaction"
-	set desc = "Toggles special interaction on or off."
-	set category = "Ninja Equip"
-
+/obj/item/clothing/gloves/space_ninja/proc/toggledrain()
 	var/mob/living/carbon/human/U = loc
 	to_chat(U, "You <b>[candrain?"disable":"enable"]</b> special interaction.")
 	candrain=!candrain
-
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)
 	..()

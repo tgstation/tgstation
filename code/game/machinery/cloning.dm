@@ -44,8 +44,8 @@
 		"corazone", // prevents cardiac arrest damage
 		"mimesbane") // stops them gasping from lack of air.
 
-/obj/machinery/clonepod/New()
-	..()
+/obj/machinery/clonepod/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
 	B.apply_default_parts(src)
 
@@ -273,6 +273,17 @@
 		else if((mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
+
+			// If the cloner is upgraded to debugging high levels, sometimes
+			// organs and limbs can be missing.
+			for(var/i in unattached_flesh)
+				if(isorgan(i))
+					var/obj/item/organ/O = i
+					O.Insert(mob_occupant)
+				else if(isbodypart(i))
+					var/obj/item/bodypart/BP = i
+					BP.attach_limb(mob_occupant)
+
 			go_out()
 
 	else if (!mob_occupant || mob_occupant.loc != src)
@@ -320,8 +331,8 @@
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
 		else
-			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
+			connected_message("Emergency Ejection")
+			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
@@ -347,8 +358,12 @@
 /obj/machinery/clonepod/proc/go_out()
 	countdown.stop()
 	var/mob/living/mob_occupant = occupant
+	var/turf/T = get_turf(src)
 
 	if(mess) //Clean that mess and dump those gibs!
+		for(var/obj/fl in unattached_flesh)
+			fl.forceMove(T)
+		unattached_flesh.Cut()
 		mess = FALSE
 		new /obj/effect/gibspawner/generic(loc)
 		audible_message("<span class='italics'>You hear a splat.</span>")
@@ -364,10 +379,12 @@
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
 
-	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
 	mob_occupant.domutcheck(1) //Waiting until they're out before possible monkeyizing. The 1 argument forces powers to manifest.
+	for(var/fl in unattached_flesh)
+		qdel(fl)
+	unattached_flesh.Cut()
 
 	occupant = null
 
@@ -378,8 +395,7 @@
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
 			technician, as your warranty may be affected.")
 		mess = TRUE
-		for(var/obj/item/O in unattached_flesh)
-			qdel(O)
+		maim_clone(mob_occupant)	//Remove every bit that's grown back so far to drop later, also destroys bits that haven't grown yet
 		icon_state = "pod_g"
 		if(mob_occupant.mind != clonemind)
 			clonemind.transfer_to(mob_occupant)
@@ -439,9 +455,10 @@
 	var/static/list/zones = list("r_arm", "l_arm", "r_leg", "l_leg")
 	for(var/zone in zones)
 		var/obj/item/bodypart/BP = H.get_bodypart(zone)
-		BP.drop_limb()
-		BP.forceMove(src)
-		unattached_flesh += BP
+		if(BP)
+			BP.drop_limb()
+			BP.forceMove(src)
+			unattached_flesh += BP
 
 	for(var/o in H.internal_organs)
 		var/obj/item/organ/organ = o

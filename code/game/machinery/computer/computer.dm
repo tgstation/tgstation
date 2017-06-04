@@ -52,7 +52,7 @@
 		update_icon()
 
 /obj/machinery/computer/narsie_act()
-	if(clockwork && clockwork != initial(clockwork) && prob(20)) //if it's clockwork but isn't normally clockwork
+	if(clockwork && clockwork != initial(clockwork)) //if it's clockwork but isn't normally clockwork
 		clockwork = FALSE
 		icon_screen = initial(icon_screen)
 		icon_keyboard = initial(icon_keyboard)

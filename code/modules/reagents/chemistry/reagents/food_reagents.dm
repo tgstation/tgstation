@@ -29,16 +29,11 @@
 
 	var/brute_heal = 1
 	var/burn_heal = 0
-	var/blood_gain = 0.4
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume += blood_gain
 	..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
@@ -60,7 +55,10 @@
 	// data for nutriment is one or more (flavour -> ratio)
 	// where all the ratio values adds up to 1
 
-	var/list/taste_amounts = data.Copy()
+	var/list/taste_amounts = list()
+	if(data)
+		taste_amounts = data.Copy()
+
 	counterlist_scale(taste_amounts, volume)
 
 	var/list/other_taste_amounts = newdata.Copy()
@@ -79,7 +77,6 @@
 
 	brute_heal = 1
 	burn_heal = 1
-	blood_gain = 0.5
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
 	if(M.satiety < 600)
@@ -513,17 +510,27 @@
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar."
+	description = "Sweet sweet honey, decays into sugar and has natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
-	if(prob(20))
-		M.heal_bodypart_damage(3,1)
+	if(prob(55))
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		M.adjustOxyLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REM, 0)
 	..()
 
+/datum/reagent/consumable/mayonnaise
+	name = "Mayonnaise"
+	id = "mayonnaise"
+	description = "An white and oily mixture of mixed egg yolks."
+	color = "#DFDFDF"
+	taste_description = "mayonnaise"
 
 ////Lavaland Flora Reagents////
 

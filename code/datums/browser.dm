@@ -169,7 +169,7 @@
 	opentime = 0
 
 /datum/browser/alert/proc/wait()
-	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout >= world.time))
+	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
 		stoplag()
 
 /datum/browser/alert/Topic(href,href_list)

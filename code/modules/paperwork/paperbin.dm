@@ -110,7 +110,7 @@
 		papers.Add(P)
 		total_paper++
 		update_icon()
-	else if(istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen) && !bin_pen)
 		var/obj/item/weapon/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return

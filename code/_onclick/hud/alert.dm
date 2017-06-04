@@ -42,6 +42,7 @@
 		thealert.override_alerts = override
 		if(override)
 			thealert.timeout = null
+	thealert.mob_viewer = src
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -96,6 +97,7 @@
 	var/severity = 0
 	var/alerttooltipstyle = ""
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
+	var/mob/mob_viewer //the mob viewing this alert
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
@@ -255,6 +257,101 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You have no factory, and are slowly dying!"
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
+
+// BLOODCULT
+
+/obj/screen/alert/bloodsense
+	name = "Blood Sense"
+	desc = "Allows you to sense blood that is manipulated by dark magicks."
+	icon_state = "cult_sense"
+	alerttooltipstyle = "cult"
+	var/static/image/narnar
+	var/angle = 0
+	var/mob/living/simple_animal/hostile/construct/Cviewer = null
+
+/obj/screen/alert/bloodsense/Initialize()
+	. = ..()
+	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	START_PROCESSING(SSprocessing, src)
+
+/obj/screen/alert/bloodsense/Destroy()
+	Cviewer = null
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/screen/alert/bloodsense/process()
+	var/atom/blood_target
+	if(GLOB.blood_target)
+		if(!get_turf(GLOB.blood_target))
+			GLOB.blood_target = null
+		else
+			blood_target = GLOB.blood_target
+	if(Cviewer && Cviewer.seeking && Cviewer.master)
+		blood_target = Cviewer.master
+		desc = "Your blood sense is leading you to [Cviewer.master]"
+	if(!blood_target)
+		if(!GLOB.sac_complete)
+			if(icon_state == "runed_sense0")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense0"
+			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
+			add_overlay(GLOB.sac_image)
+		else
+			if(icon_state == "runed_sense1")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense1"
+			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
+			add_overlay(narnar)
+		return
+	var/turf/P = get_turf(blood_target)
+	var/turf/Q = get_turf(mob_viewer)
+	var/area/A = get_area(P)
+	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
+		icon_state = "runed_sense2"
+		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
+		return
+	desc = "You are currently tracking [blood_target] in [A.name]."
+	var/target_angle = Get_Angle(Q, P)
+	var/target_dist = get_dist(P, Q)
+	cut_overlays()
+	switch(target_dist)
+		if(0 to 1)
+			icon_state = "runed_sense2"
+		if(2 to 8)
+			icon_state = "arrow8"
+		if(9 to 15)
+			icon_state = "arrow7"
+		if(16 to 22)
+			icon_state = "arrow6"
+		if(23 to 29)
+			icon_state = "arrow5"
+		if(30 to 36)
+			icon_state = "arrow4"
+		if(37 to 43)
+			icon_state = "arrow3"
+		if(44 to 50)
+			icon_state = "arrow2"
+		if(51 to 57)
+			icon_state = "arrow1"
+		if(58 to 64)
+			icon_state = "arrow0"
+		if(65 to 400)
+			icon_state = "arrow"
+	var/difference = target_angle - angle
+	angle = target_angle
+	if(!difference)
+		return
+	var/matrix/final = matrix(transform)
+	final.Turn(difference)
+	animate(src, transform = final, time = 5, loop = 0)
+
+
 
 // CLOCKCULT
 /obj/screen/alert/clockwork

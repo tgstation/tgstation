@@ -63,6 +63,6 @@
 			else
 				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>")
 				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
-				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(summoner))
+				new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
 				summoner.forceMove(get_turf(src))
-				new /obj/effect/overlay/temp/guardian/phase(get_turf(summoner))
+				new /obj/effect/temp_visual/guardian/phase(get_turf(summoner))

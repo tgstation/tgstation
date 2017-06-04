@@ -105,7 +105,7 @@
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
-	new /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube(src)
+	new /obj/item/weapon/gun/ballistic/shotgun/automatic/combat/compact(src)
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"

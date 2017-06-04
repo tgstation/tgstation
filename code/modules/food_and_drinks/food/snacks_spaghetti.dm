@@ -85,3 +85,12 @@
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "liquidgibs" = 3)
 	tastes = list("noodle" = 1, "meat" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/butternoodles
+	name = "butter noodles"
+	desc = "Noodles covered in savory butter. Simple and slippery, but delicious."
+	icon = 'icons/obj/food/pizzaspaghetti.dmi'
+	icon_state = "butternoodles"
+	trash = /obj/item/trash/plate
+	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
+	tastes = list("noodle" = 1, "butter" = 1)

@@ -111,17 +111,8 @@
 	if(contents.len)
 		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return
-	if(isorgan(I))
-		var/obj/item/organ/O = I
-		if(O.status != ORGAN_ORGANIC)
-			to_chat(user, "<span class='notice'>[src] can only hold organic body parts!</span>")
-			return
-	else if(isbodypart(I))
-		var/obj/item/bodypart/BP = I
-		if(BP.status != BODYPART_ORGANIC)
-			to_chat(user, "<span class='notice'>[src] can only hold organic body parts!</span>")
-			return
-	else
+	if(!isorgan(I) && !isbodypart(I))
+		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
 		return
 		
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>")

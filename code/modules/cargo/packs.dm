@@ -543,6 +543,13 @@
 	crate_name = "electrical maintenance crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/datum/supply_pack/engineering/inducers
+	name = "NT-75 Electromagnetic Power Inducers Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0},/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0}) //FALSE doesn't work in modified type paths apparently.
+	crate_name = "inducer crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
 /datum/supply_pack/engineering/engiequipment
 	name = "Engineering Gear Crate"
 	cost = 1300
@@ -827,6 +834,14 @@
 	contains = list(/obj/item/weapon/defibrillator/loaded,
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
+
+/datum/supply_pack/medical/vending
+	name = "Medical Vending Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical)
+	crate_name = "medical vending crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
@@ -1574,7 +1589,7 @@
 	name = "Contraband Crate"
 	contraband = TRUE
 	cost = 3000
-	num_contained = 6
+	num_contained = 5
 	contains = list(/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
@@ -1679,15 +1694,6 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
-
-/datum/supply_pack/misc/soapstone
-	name = "Curator Engraving/Scribbling Crate"
-	crate_name = "curator engraving/scribbling crate"
-	cost = 3000
-	contains = list(/obj/item/soapstone)
-	access = GLOB.access_library
-	crate_type = /obj/structure/closet/crate/secure
-
 
 /datum/supply_pack/misc/bsa
 	name = "Bluespace Artillery Parts"

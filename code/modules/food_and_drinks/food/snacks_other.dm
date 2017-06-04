@@ -468,3 +468,11 @@
 	list_reagents = list("nutriment" = 3, "vitamin" = 2, "sodiumchloride" = 5)
 	bonus_reagents = list("sodiumchloride" = 10)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/butter
+	name = "stick of butter"
+	desc = "A stick of delicious, golden, fatty goodness."
+	icon_state = "butter"
+	list_reagents = list("nutriment" = 5)
+	filling_color = "#FFD700"
+	tastes = list("butter" = 1)

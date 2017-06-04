@@ -528,6 +528,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))
+		if(is_hot() && isliving(A))
+			var/mob/living/L = A
+			L.IgniteMob()
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything

@@ -107,10 +107,8 @@
 
 /datum/game_mode/monkey/declare_completion()
 	if(check_monkey_victory())
-		SSblackbox.set_details("round_end_result","win - monkey win")
-		SSblackbox.set_val("round_end_result",escaped_monkeys)
+		SSticker.mode_result = "win - monkey win"
 		to_chat(world, "<span class='userdanger'>The monkeys have overthrown their captors! Eeek eeeek!!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the monkeys")
-		SSblackbox.set_val("round_end_result",escaped_monkeys)
+		SSticker.mode_result = "loss - staff stopped the monkeys"
 		to_chat(world, "<span class='userdanger'>The staff managed to contain the monkey infestation!</span>")

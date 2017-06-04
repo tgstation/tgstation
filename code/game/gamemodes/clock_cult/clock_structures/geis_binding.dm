@@ -31,7 +31,7 @@
 	return
 
 /obj/structure/destructible/clockwork/geis_binding/emp_act(severity)
-	new /obj/effect/overlay/temp/emp(loc)
+	new /obj/effect/temp_visual/emp(loc)
 	qdel(src)
 
 /obj/structure/destructible/clockwork/geis_binding/post_buckle_mob(mob/living/M)
@@ -54,8 +54,8 @@
 		if(!can_resist)
 			repair_and_interrupt()
 	else
-		var/obj/effect/overlay/temp/ratvar/geis_binding/G = new /obj/effect/overlay/temp/ratvar/geis_binding(M.loc)
-		var/obj/effect/overlay/temp/ratvar/geis_binding/T = new /obj/effect/overlay/temp/ratvar/geis_binding/top(M.loc)
+		var/obj/effect/temp_visual/ratvar/geis_binding/G = new /obj/effect/temp_visual/ratvar/geis_binding(M.loc)
+		var/obj/effect/temp_visual/ratvar/geis_binding/T = new /obj/effect/temp_visual/ratvar/geis_binding/top(M.loc)
 		G.layer = mob_layer - 0.01
 		T.layer = mob_layer + 0.01
 		G.alpha = alpha
@@ -93,10 +93,10 @@
 				var/mob/living/carbon/C = L
 				C.silent += 4
 	visible_message("<span class='sevtug'>[src] flares brightly!</span>")
-	var/obj/effect/overlay/temp/ratvar/geis_binding/G1 = new /obj/effect/overlay/temp/ratvar/geis_binding(loc)
-	var/obj/effect/overlay/temp/ratvar/geis_binding/G2 = new /obj/effect/overlay/temp/ratvar/geis_binding(loc)
-	var/obj/effect/overlay/temp/ratvar/geis_binding/T1 = new /obj/effect/overlay/temp/ratvar/geis_binding/top(loc)
-	var/obj/effect/overlay/temp/ratvar/geis_binding/T2 = new /obj/effect/overlay/temp/ratvar/geis_binding/top(loc)
+	var/obj/effect/temp_visual/ratvar/geis_binding/G1 = new /obj/effect/temp_visual/ratvar/geis_binding(loc)
+	var/obj/effect/temp_visual/ratvar/geis_binding/G2 = new /obj/effect/temp_visual/ratvar/geis_binding(loc)
+	var/obj/effect/temp_visual/ratvar/geis_binding/T1 = new /obj/effect/temp_visual/ratvar/geis_binding/top(loc)
+	var/obj/effect/temp_visual/ratvar/geis_binding/T2 = new /obj/effect/temp_visual/ratvar/geis_binding/top(loc)
 	G1.layer = mob_layer - 0.01
 	G2.layer = mob_layer - 0.01
 	T1.layer = mob_layer + 0.01

@@ -242,6 +242,15 @@
 	R.set_frequency(GLOB.CENTCOM_FREQ)
 	R.freqlock = 1
 
+/datum/outfit/ghost_cultist
+	name = "Cultist Ghost"
+
+	uniform = /obj/item/clothing/under/color/black/ghost
+	suit = /obj/item/clothing/suit/cultrobes/alt/ghost
+	shoes = /obj/item/clothing/shoes/cult/alt/ghost
+	head = /obj/item/clothing/head/culthood/alt/ghost
+	r_hand = /obj/item/weapon/melee/cultblade/ghost
+
 /datum/outfit/wizard
 	name = "Blue Wizard"
 

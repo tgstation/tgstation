@@ -151,13 +151,13 @@ obj/machinery/computer/camera_advanced/attack_ai(mob/user)
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	remote_eye.origin.current_user = null
 	remote_eye.origin.jump_action.Remove(C)
-	remote_eye.eye_user = null
 	if(C.client)
 		C.reset_perspective(null)
 		if(remote_eye.visible_icon)
 			C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			C.client.images -= chunk.obscured
+			chunk.remove(remote_eye)
+	remote_eye.eye_user = null
 	C.remote_control = null
 	C.unset_machine()
 	Remove(C)

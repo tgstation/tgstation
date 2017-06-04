@@ -309,7 +309,6 @@ SUBSYSTEM_DEF(job)
 					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
 
-
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
@@ -319,6 +318,7 @@ SUBSYSTEM_DEF(job)
 						AssignRole(player, job.title)
 						unassigned -= player
 						break
+
 
 	// Hand out random jobs to the people who didn't get any in the last check
 	// Also makes sure that they got their preference correct

@@ -3,7 +3,6 @@
 	desc = "We debase ourselves and become lesser. We become a monkey."
 	chemical_cost = 5
 	dna_cost = 1
-	genetic_damage = 3
 	req_human = 1
 
 //Transform into a monkey.

@@ -16,12 +16,6 @@
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/dead/new_player/Initialize()
-	if(initialized)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
-	tag = "mob_[next_mob_id++]"
-	GLOB.mob_list += src
-
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
@@ -30,7 +24,10 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
-	return INITIALIZE_HINT_NORMAL
+	. = ..()
+
+/mob/dead/new_player/prepare_huds()
+	return
 
 /mob/dead/new_player/proc/new_player_panel()
 
@@ -303,7 +300,7 @@
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
 		return 0
-	
+
 	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE

@@ -37,6 +37,13 @@
 	else
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
 
+	if(M.client)
+		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br><b>Show related accounts by:</b> "
+		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
+		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
+
+
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
 	body += "<a href='?_src_=holder;traitor=\ref[M]'>TP</a> - "
@@ -414,13 +421,23 @@
 	set desc="Restarts the world immediately"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Yes")
-		SSticker.delay_end = 0
+
+	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	if(world.RunningService())
+		options += "Service Restart (Force restart DD)";
+	var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+	if(result)
 		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+		switch(result)
+			if("Regular Restart")
+				SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+			if("Hard Restart (No Delay, No Feeback Reason)")
+				world.Reboot()
+			if("Hardest Restart (No actions, just reboot)")
+				world.Reboot(fast_track = TRUE)		
+			if("Service Restart (Force restart DD)")
+				GLOB.reboot_mode = REBOOT_MODE_HARD
+				world.ServiceReboot()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -597,7 +614,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == 1)
+				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)
@@ -610,41 +627,20 @@
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	return usr.client.spawn_atom_impl(object, FALSE)
-
-/datum/admins/proc/spawn_atom_adv(object as text)
-	set category = "Debug"
-	set desc = "(atom path) Spawn an atom with New() parameters"
-	set name = "Advanced Spawn"
-
-	return usr.client.spawn_atom_impl(object, TRUE)
-
-
-/client/proc/spawn_atom_impl(object, params)
 	if(!check_rights(R_SPAWN))
 		return
 
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
-
-	var/list/arguments
 	if(ispath(chosen,/turf))
 		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		if(params)
-			arguments = usr.client.get_callproc_args(TRUE)
-		
-		if(!usr)
-			return
-		
-		arguments = list(usr.loc) + arguments
-
-		var/atom/A = new chosen(arglist(arguments))
+		var/atom/A = new chosen(usr.loc)
 		A.admin_spawned = TRUE
 
-	log_admin("[key_name(usr)] spawned [chosen] at [COORD(usr)][LAZYLEN(arguments) > 1 ? " with parameters [print_single_line(arguments)]": ""]")
+	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
 	SSblackbox.add_details("admin_verb","Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -720,7 +716,7 @@
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
-	if(istype(M) && M.mind && M.mind.devilinfo)
+	if(is_devil(M))
 		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")

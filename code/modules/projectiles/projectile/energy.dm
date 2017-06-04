@@ -5,6 +5,8 @@
 	damage_type = BURN
 	flag = "energy"
 
+/obj/item/projectile/energy/chameleon
+	nodamage = TRUE
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"
@@ -133,7 +135,7 @@
 	damage = 20
 	damage_type = CLONE
 	irradiate = 10
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
@@ -159,44 +161,34 @@
 /obj/item/projectile/energy/bolt/large
 	damage = 20
 
-/obj/item/projectile/energy/tesla_revolver
+/obj/item/projectile/energy/tesla
 	name = "tesla bolt"
 	icon_state = "tesla_projectile"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	var/chain
 
-/obj/item/projectile/energy/tesla_revolver/fire(setAngle)
+/obj/item/projectile/energy/tesla/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
-/obj/item/projectile/energy/tesla_revolver/on_hit(atom/target)
+/obj/item/projectile/energy/tesla/Destroy()
+	qdel(chain)
+	return ..()
+
+/obj/item/projectile/energy/tesla/revolver
+	name = "energy orb"
+
+/obj/item/projectile/energy/tesla/revolver/on_hit(atom/target)
 	. = ..()
 	if(isliving(target))
-		tesla_zap(src, 3, 10000)
+		tesla_zap(target, 3, 10000)
 	qdel(src)
 
-/obj/item/projectile/energy/tesla_revolver/Destroy()
-	qdel(chain)
-	return ..()
+/obj/item/projectile/energy/tesla/cannon
+	name = "tesla orb"
 
-
-/obj/item/projectile/energy/tesla_cannon
-	name = "tesla bolt"
-	icon_state = "tesla_projectile"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
-	var/chain
-
-/obj/item/projectile/energy/tesla_cannon/fire(setAngle)
-	if(firer)
-		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
-	..()
-
-/obj/item/projectile/energy/tesla_cannon/on_hit(atom/target)
+/obj/item/projectile/energy/tesla/cannon/on_hit(atom/target)
 	. = ..()
-	tesla_zap(src, 3, 10000, explosive = FALSE, stun_mobs = FALSE)
+	tesla_zap(target, 3, 10000, explosive = FALSE, stun_mobs = FALSE)
 	qdel(src)
-
-/obj/item/projectile/energy/tesla_cannon/Destroy()
-	qdel(chain)
-	return ..()

@@ -210,6 +210,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
+* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
+
 #### Enforced not enforced
 The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
 

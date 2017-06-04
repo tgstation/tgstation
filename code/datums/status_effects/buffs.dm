@@ -228,3 +228,32 @@
 	name = "Wish Granter's Immortality"
 	desc = "You are being resurrected!"
 	icon_state = "wish_granter"
+
+/datum/status_effect/cult_master
+	id = "The Cult Master"
+	duration = -1
+	tick_interval = 100
+	alert_type = null
+	var/alive = TRUE
+
+/datum/status_effect/cult_master/proc/deathrattle()
+	var/area/A = get_area(owner)
+	for(var/datum/mind/B in SSticker.mode.cult)
+		if(isliving(B.current))
+			var/mob/living/M = B.current
+			M << 'sound/hallucinations/veryfar_noise.ogg'
+			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in the [A]!")
+			
+			
+/datum/status_effect/cult_master/tick()
+	if(owner.stat != DEAD && !alive)
+		alive = TRUE
+		return
+	if(owner.stat == DEAD && alive)
+		alive = FALSE
+		deathrattle()
+
+/datum/status_effect/cult_master/on_remove()
+	deathrattle()
+	. = ..()
+

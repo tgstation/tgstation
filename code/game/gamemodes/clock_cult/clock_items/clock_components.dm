@@ -162,14 +162,15 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
 	var/randomspritemax = 2
+	var/sprite_shift = 9
 
 /obj/item/clockwork/alloy_shards/Initialize()
 	. = ..()
 	if(randomsinglesprite)
 		replace_name_desc()
 		icon_state = "[icon_state][rand(1, randomspritemax)]"
-		pixel_x = rand(-9, 9)
-		pixel_y = rand(-9, 9)
+		pixel_x = rand(-sprite_shift, sprite_shift)
+		pixel_y = rand(-sprite_shift, sprite_shift)
 
 /obj/item/clockwork/alloy_shards/proc/replace_name_desc()
 	name = "replicant alloy shard"
@@ -177,16 +178,21 @@
 	clockwork_desc = "A broken shard of replicant alloy. Can be proselytized for additional power."
 
 /obj/item/clockwork/alloy_shards/large
+	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
 	icon_state = "shard_large"
+	sprite_shift = 9
 
 /obj/item/clockwork/alloy_shards/medium
+	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
 	icon_state = "shard_medium"
+	sprite_shift = 10
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit
 	randomspritemax = 4
 	icon_state = "gear_bit"
+	sprite_shift = 12
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/replace_name_desc()
 	name = "gear bit"
@@ -200,9 +206,11 @@
 	name = "complex gear bit"
 
 /obj/item/clockwork/alloy_shards/small
+	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
 	randomspritemax = 3
 	icon_state = "shard_small"
+	sprite_shift = 12
 
 /obj/item/clockwork/alloy_shards/pinion_lock
 	name = "pinion lock"

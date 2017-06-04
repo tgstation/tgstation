@@ -35,7 +35,8 @@ Clown
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/device/megaphone/clown = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,
+		/obj/item/weapon/pneumatic_cannon/pie = 1
 		)
 
 	implants = list(/obj/item/weapon/implant/sad_trombone)
@@ -128,7 +129,7 @@ Curator
 	outfit = /datum/outfit/job/curator
 
 	access = list(GLOB.access_library)
-	minimal_access = list(GLOB.access_library)
+	minimal_access = list(GLOB.access_library, GLOB.access_construction,GLOB.access_mining_station)
 
 /datum/outfit/job/curator
 	name = "Curator"
@@ -137,11 +138,12 @@ Curator
 	belt = /obj/item/device/pda/curator
 	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/weapon/storage/bag/books
-	r_pocket = /obj/item/weapon/barcodescanner
+	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
 	backpack_contents = list(
 		/obj/item/weapon/melee/curator_whip = 1,
-		/obj/item/soapstone = 1
+		/obj/item/soapstone = 1,
+		/obj/item/weapon/barcodescanner = 1
 	)
 
 

@@ -84,6 +84,7 @@
 /area/ruin/powered)
 "p" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/storage/bag/ore,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plating/asteroid/basalt,

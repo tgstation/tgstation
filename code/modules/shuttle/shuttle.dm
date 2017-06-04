@@ -217,6 +217,8 @@
 
 	var/launch_status = NOLAUNCH
 
+	var/knockdown = TRUE //Will it knock down mobs when it docks?
+
 	// A timid shuttle will not register itself with the shuttle subsystem
 	// All shuttle templates are timid
 	var/timid = FALSE
@@ -402,7 +404,7 @@
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1, animate_time)
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
-		ripples += new /obj/effect/overlay/temp/ripple(t, animate_time)
+		ripples += new /obj/effect/temp_visual/ripple(t, animate_time)
 
 /obj/docking_port/mobile/proc/remove_ripples()
 	for(var/R in ripples)
@@ -517,7 +519,7 @@
 
 			//move mobile to new location
 			for(var/atom/movable/AM in T0)
-				if(AM.onShuttleMove(T1, rotation))
+				if(AM.onShuttleMove(T1, rotation, knockdown))
 					moved_atoms += AM
 
 		if(rotation)
@@ -578,10 +580,7 @@
 					if(M.pulledby)
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
-					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple!</span>",
-							"<span class='userdanger'>You feel an immense \
-							crushing pressure as the space around you ripples.</span>")
+					M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
 					if(M.key || M.get_ghost(TRUE))
 						SSblackbox.add_details("shuttle_gib", "[type]")
 					else
@@ -754,5 +753,17 @@
 	for(var/A in areas)
 		for(var/obj/machinery/door/E in A)	//dumb, I know, but playing it on the engines doesn't do it justice
 			playsound(E, s, 100, FALSE, max(width, height) - world.view)
+
+/obj/docking_port/mobile/proc/is_in_shuttle_bounds(atom/A)
+	var/turf/T = get_turf(A)
+	if(T.z != z)
+		return FALSE
+	var/list/bounds= return_coords()
+	var/turf/T0 = locate(bounds[1],bounds[2],z)
+	var/turf/T1 = locate(bounds[3],bounds[4],z)
+	if(T in block(T0,T1))
+		return TRUE
+	return FALSE
+
 
 #undef DOCKING_PORT_HIGHLIGHT

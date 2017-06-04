@@ -198,8 +198,8 @@
 /area/awaymission/research/interior/engineering)
 "aL" = (
 /obj/structure/table,
-/obj/item/weapon/c4,
-/obj/item/weapon/c4,
+/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4,
 /obj/item/weapon/storage/toolbox/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)

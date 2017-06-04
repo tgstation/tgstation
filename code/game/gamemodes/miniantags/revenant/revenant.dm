@@ -14,7 +14,8 @@
 	var/icon_reveal = "revenant_revealed"
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
-	incorporeal_move = 3
+	var/stasis = FALSE
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
@@ -94,12 +95,14 @@
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()
+	if(stasis)
+		return
 	if(revealed && essence <= 0)
 		death()
 	if(unreveal_time && world.time >= unreveal_time)
 		unreveal_time = 0
 		revealed = FALSE
-		incorporeal_move = 3
+		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
 	if(unstun_time && world.time >= unstun_time)
@@ -200,9 +203,9 @@
 	death()
 
 /mob/living/simple_animal/revenant/death()
-	if(!revealed || stat == DEAD) //Revenants cannot die if they aren't revealed //or are already dead
+	if(!revealed || stasis) //Revenants cannot die if they aren't revealed //or are already dead
 		return 0
-	..(1)
+	stasis = TRUE
 	to_chat(src, "<span class='revendanger'>NO! No... it's too late, you can feel your essence [pick("breaking apart", "drifting away")]...</span>")
 	notransform = TRUE
 	revealed = TRUE
@@ -217,9 +220,11 @@
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
 	var/obj/item/weapon/ectoplasm/revenant/R = new(get_turf(src))
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
-	R.client_to_revive = src.client //If the essence reforms, the old revenant is put back in the body
-	ghostize()
-	qdel(src)
+	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
+	R.revenant = src
+	invisibility = INVISIBILITY_ABSTRACT
+	revealed = FALSE
+	ghostize(0)//Don't re-enter invisible corpse
 	return
 
 
@@ -231,7 +236,7 @@
 		return
 	revealed = TRUE
 	invisibility = 0
-	incorporeal_move = 0
+	incorporeal_move = FALSE
 	if(!unreveal_time)
 		to_chat(src, "<span class='revendanger'>You have been revealed!</span>")
 		unreveal_time = world.time + time
@@ -302,6 +307,18 @@
 			to_chat(src, "<span class='revenminor'>Lost [essence_amt]E[source ? " from [source]":""].</span>")
 	return 1
 
+/mob/living/simple_animal/revenant/proc/death_reset()
+	revealed = FALSE
+	unreveal_time = 0
+	notransform = 0
+	unstun_time = 0
+	inhibited = FALSE
+	draining = FALSE
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
+	invisibility = INVISIBILITY_REVENANT
+	alpha=255
+	stasis = FALSE
+
 
 //reforming
 /obj/item/weapon/ectoplasm/revenant
@@ -314,10 +331,14 @@
 	var/reforming = TRUE
 	var/inert = FALSE
 	var/client/client_to_revive
+	var/mob/living/simple_animal/revenant/revenant
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
+
+/obj/item/weapon/ectoplasm/revenant/proc/scatter()
+	qdel(src)
 
 /obj/item/weapon/ectoplasm/revenant/proc/try_reform()
 	if(reforming)
@@ -333,14 +354,14 @@
 	user.visible_message("<span class='notice'>[user] scatters [src] in all directions.</span>", \
 						 "<span class='notice'>You scatter [src] across the area. The particles slowly fade away.</span>")
 	user.drop_item()
-	qdel(src)
+	scatter()
 
 /obj/item/weapon/ectoplasm/revenant/throw_impact(atom/hit_atom)
 	..()
 	if(inert)
 		return
 	visible_message("<span class='notice'>[src] breaks into particles upon impact, which fade away to nothingness.</span>")
-	qdel(src)
+	scatter()
 
 /obj/item/weapon/ectoplasm/revenant/examine(mob/user)
 	..()
@@ -350,47 +371,51 @@
 		to_chat(user, "<span class='revenwarning'>It is shifting and distorted. It would be wise to destroy this.</span>")
 
 /obj/item/weapon/ectoplasm/revenant/proc/reform()
-	if(QDELETED(src) || inert)
+	if(QDELETED(src) || QDELETED(revenant) || inert)
 		return
 	var/key_of_revenant
 	message_admins("Revenant ectoplasm was left undestroyed for 1 minute and is reforming into a new revenant.")
 	loc = get_turf(src) //In case it's in a backpack or someone's hand
-	var/mob/living/simple_animal/revenant/R = new(get_turf(src))
+	revenant.forceMove(loc)
 	if(client_to_revive)
 		for(var/mob/M in GLOB.dead_mob_list)
 			if(M.client == client_to_revive) //Only recreates the mob if the mob the client is in is dead
-				R.client = client_to_revive
+				revenant.client = client_to_revive
 				key_of_revenant = client_to_revive.key
 	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
-		var/list/candidates = get_candidates(ROLE_REVENANT)
+		var/list/candidates = pollCandidatesForMob("Do you want to be [revenant.name] (reforming)?", "revenant", null, ROLE_REVENANT, 50, revenant)
 		if(!candidates.len)
-			qdel(R)
+			qdel(revenant)
 			message_admins("No candidates were found for the new revenant. Oh well!")
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
 		var/client/C = pick(candidates)
+		revenant.client = C
 		key_of_revenant = C.key
 		if(!key_of_revenant)
-			qdel(R)
+			qdel(revenant)
 			message_admins("No ckey was found for the new revenant. Oh well!")
 			inert = TRUE
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
 			return
-	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
-	R.essence_regen_cap = essence
-	R.essence = R.essence_regen_cap
-	player_mind.active = 1
-	player_mind.transfer_to(R)
-	player_mind.assigned_role = "revenant"
-	player_mind.special_role = "Revenant"
-	SSticker.mode.traitors |= player_mind
+
 	message_admins("[key_of_revenant] has been [client_to_revive ? "re":""]made into a revenant by reforming ectoplasm.")
 	log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")
+
+	revenant.essence = essence
+	revenant.essence_regen_cap = essence
+	revenant.death_reset()
+	revenant.key = key_of_revenant
+	revenant = null
 	qdel(src)
 
+/obj/item/weapon/ectoplasm/revenant/Destroy()
+	if(!QDELETED(revenant))
+		qdel(revenant)
+	..()
 
 //objectives
 /datum/objective/revenant

@@ -102,8 +102,8 @@
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
-	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	return

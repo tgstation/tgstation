@@ -9,7 +9,7 @@ if [ "$BUILD_TOOLS" = false ]; then
     	echo "step_[xy] variables detected in maps, please remove them."
     	exit 1
 	fi;
-	if grep '/turf\s*[,\){]' _maps/**/*.dmm; then
+	if grep '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
     	echo "base /turf path use detected in maps, please replace with proper paths."
     	exit 1
 	fi;

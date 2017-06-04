@@ -14,7 +14,7 @@
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
-	initial_languages = list(/datum/language/xenocommon)
+	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	var/nightvision = 1

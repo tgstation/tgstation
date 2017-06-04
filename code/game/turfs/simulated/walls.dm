@@ -28,6 +28,20 @@
 /turf/closed/wall/attack_tk()
 	return
 
+/turf/closed/wall/handle_ricochet(obj/item/projectile/P)			//A huge pile of shitcode!
+	var/turf/p_turf = get_turf(P)
+	var/face_direction = get_dir(src, p_turf)
+	var/face_angle = dir2angle(face_direction)
+	var/incidence_s = get_angle_of_incidence(face_angle, P.Angle)
+	var/new_angle = face_angle + incidence_s
+	var/new_angle_s = new_angle
+	while(new_angle_s > 180)	// Translate to regular projectile degrees
+		new_angle_s -= 360
+	while(new_angle_s < -180)
+		new_angle_s += 360
+	P.Angle = new_angle_s
+	return TRUE
+
 /turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)
 		devastate_wall()
@@ -50,7 +64,8 @@
 
 /turf/closed/wall/proc/devastate_wall()
 	new sheet_type(src, sheet_amount)
-	new /obj/item/stack/sheet/metal(src)
+	if(girder_type)
+		new /obj/item/stack/sheet/metal(src)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)
@@ -238,8 +253,9 @@
 		if(prob(30))
 			dismantle_wall()
 
-/turf/closed/wall/narsie_act()
-	if(prob(20))
+/turf/closed/wall/narsie_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force, ignore_mobs)

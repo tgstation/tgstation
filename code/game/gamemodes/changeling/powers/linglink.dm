@@ -4,7 +4,6 @@
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
-	max_genetic_damage = 100
 
 /obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())

@@ -8,7 +8,7 @@
 
 /obj/effect/decal/cleanable/crayon/Initialize(mapload, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
 	..()
-	
+
 	name = e_name
 	desc = "A [name] vandalizing the station."
 	if(type == "poseur tag")
@@ -30,22 +30,25 @@
 	layer = HIGH_OBJ_LAYER //Harder to hide
 	do_icon_rotate = FALSE //These are designed to always face south, so no rotation please.
 	var/datum/gang/gang
+	var/obj/item/device/gangtool/linked_tool
+	var/area/territory
 
-/obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0)
+/obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0,  var/mob/user)
 	if(!type || !G)
 		qdel(src)
-
-	var/area/territory = get_area(src)
+	territory = get_area(src)
 	gang = G
 	var/newcolor = G.color_hex
 	icon_state = G.name
 	G.territory_new |= list(territory.type = territory.name)
-
+	linked_tool = locate(/obj/item/device/gangtool) in user.contents
+	if(linked_tool)
+		linked_tool.tags += src
 	..(mapload, newcolor, icon_state, e_name, rotation)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
-	var/area/territory = get_area(src)
-
+	if(linked_tool)
+		linked_tool.tags -= src
 	if(gang)
 		gang.territory -= territory.type
 		gang.territory_new -= territory.type

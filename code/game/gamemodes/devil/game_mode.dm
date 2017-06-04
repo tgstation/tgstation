@@ -29,25 +29,6 @@
 		text += "<br>"
 	to_chat(world, text)
 
-
-/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind, ascendable = FALSE)
-	set waitfor = FALSE
-	var/trueName= randomDevilName()
-
-	devil_mind.devilinfo = devilInfo(trueName, 1)
-	devil_mind.devilinfo.ascendable = ascendable
-	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[GLOB.lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[GLOB.lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[GLOB.lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[GLOB.lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
-	devil_mind.devilinfo.owner = devil_mind
-	devil_mind.devilinfo.give_base_spells(1)
-	if(issilicon(devil_mind.current))
-		add_law_sixsixsix(devil_mind.current)
-	sleep(10)
-	devil_mind.devilinfo.update_hud()
-	if(devil_mind.assigned_role == "Clown" && ishuman(devil_mind.current))
-		var/mob/living/carbon/human/S = devil_mind.current
-		to_chat(S, "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
-		S.dna.remove_mutation(CLOWNMUT)
-
 /datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
 	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
 	for(var/i = 1 to quantity)
@@ -60,28 +41,16 @@
 		else
 			objective.find_target()
 
-/datum/mind/proc/announceDevilLaws()
+/datum/game_mode/proc/printdevilinfo(mob/living/ply)
+	var/datum/antagonist/devil/devilinfo = is_devil(ply)
 	if(!devilinfo)
-		return
-	to_chat(current, "<span class='warning'><b>You remember your link to the infernal.  You are [src.devilinfo.truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
-	to_chat(current, "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
-	to_chat(current, "You may not use violence to coerce someone into selling their soul.")
-	to_chat(current, "You may not directly and knowingly physically harm a devil, other than yourself.")
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.bane])
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.ban])
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.obligation])
-	to_chat(current, GLOB.lawlorify[LAW][src.devilinfo.banish])
-	to_chat(current, "<br/><br/><span class='warning'>Remember, the crew can research your weaknesses if they find out your devil name.</span><br>")
-
-/datum/game_mode/proc/printdevilinfo(datum/mind/ply)
-	if(!ply.devilinfo)
 		return "Target is not a devil."
-	var/text = "</br>The devil's true name is: [ply.devilinfo.truename]</br>"
+	var/text = "</br>The devil's true name is: [devilinfo.truename]</br>"
 	text += "The devil's bans were:</br>"
-	text += "	[GLOB.lawlorify[LORE][ply.devilinfo.ban]]</br>"
-	text += "	[GLOB.lawlorify[LORE][ply.devilinfo.bane]]</br>"
-	text += "	[GLOB.lawlorify[LORE][ply.devilinfo.obligation]]</br>"
-	text += "	[GLOB.lawlorify[LORE][ply.devilinfo.banish]]</br></br>"
+	text += "	[GLOB.lawlorify[LORE][devilinfo.ban]]</br>"
+	text += "	[GLOB.lawlorify[LORE][devilinfo.bane]]</br>"
+	text += "	[GLOB.lawlorify[LORE][devilinfo.obligation]]</br>"
+	text += "	[GLOB.lawlorify[LORE][devilinfo.banish]]</br></br>"
 	return text
 
 /datum/game_mode/proc/update_devil_icons_added(datum/mind/devil_mind)

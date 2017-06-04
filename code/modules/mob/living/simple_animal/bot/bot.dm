@@ -20,7 +20,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_languages = list(/datum/language/common, /datum/language/machine)
+	initial_language_holder = /datum/language_holder/synthetic
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon" , "turret")
@@ -299,7 +299,7 @@
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	new /obj/effect/overlay/temp/emp(loc)
+	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
 		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
@@ -797,7 +797,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/mob/living/simple_animal/bot/owner = null
 
 /obj/machinery/bot_core/Initialize()
-	..()
+	. = ..()
 	owner = loc
 	if(!istype(owner))
 		qdel(src)

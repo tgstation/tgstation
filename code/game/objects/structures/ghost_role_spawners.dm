@@ -29,6 +29,7 @@
 	return ..()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
+
 /obj/effect/mob_spawn/human/ash_walker
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
@@ -36,8 +37,7 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator/ash_walker
+	outfit = /datum/outfit/ashwalker
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0
@@ -48,16 +48,27 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+
+	new_spawn.grant_language(/datum/language/draconic)
+	var/datum/language_holder/holder = new_spawn.get_language_holder()
+	holder.selected_default_language = /datum/language/draconic
+
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
 
-/obj/effect/mob_spawn/human/ash_walker/New()
-	..()
+/obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
+	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+
+/datum/outfit/ashwalker
+	name ="Ashwalker"
+	head = /obj/item/clothing/head/helmet/gladiator
+	uniform = /obj/item/clothing/under/gladiator/ash_walker
+
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
@@ -91,7 +102,7 @@
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
-	name = "inert golem shell"
+	name = "inert free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
 	icon = 'icons/obj/wizard.dmi'
@@ -101,13 +112,14 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
 	var/mob/living/owner = null //golem's owner if it has one
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
+/obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
 	..()
 	if(species)
 		name += " ([initial(species.prefix)])"
@@ -134,14 +146,19 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
 		if(!name)
-			H.real_name = H.dna.species.random_name()
+			if(has_owner)
+				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
+			else
+				H.real_name = H.dna.species.random_name()
 		else
 			H.real_name = name
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
 	if(isgolem(user) && can_transfer)
-		var/transfer = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
-		if(!transfer)
+		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		if(transfer_choice != "Yes")
+			return
+		if(QDELETED(src) || uses <= 0)
 			return
 		log_game("[user.ckey] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
@@ -150,13 +167,15 @@
 		return
 	..()
 
+/obj/effect/mob_spawn/human/golem/servant
+	has_owner = TRUE
+	name = "inert servant golem shell"
+
 
 /obj/effect/mob_spawn/human/golem/adamantine
-	name = "dust-caked golem shell"
+	name = "dust-caked free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
-	anchored = 1
-	density = 1
 	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
@@ -175,38 +194,38 @@
 	conditions of your makeshift shelter, the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
 
-/obj/effect/mob_spawn/human/hermit/New()
+/obj/effect/mob_spawn/human/hermit/Initialize(mapload)
+	. = ..()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(1)
 			flavour_text += "you were a [pick("arms dealer", "shipwright", "docking manager")]'s assistant on a small trading station several sectors from here. Raiders attacked, and there was \
 			only one pod left when you got to the escape bay. You took it and launched it alone, and the crowd of terrified faces crowding at the airlock door as your pod's engines burst to \
 			life and sent you to this hell are forever branded into your memory.</b>"
-			uniform = /obj/item/clothing/under/assistantformal
-			shoes = /obj/item/clothing/shoes/sneakers/black
-			back = /obj/item/weapon/storage/backpack
+			outfit.uniform = /obj/item/clothing/under/assistantformal
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
+			outfit.back = /obj/item/weapon/storage/backpack
 		if(2)
 			flavour_text += "you're an exile from the Tiger Cooperative. Their technological fanaticism drove you to question the power and beliefs of the Exolitics, and they saw you as a \
 			heretic and subjected you to hours of horrible torture. You were hours away from execution when a high-ranking friend of yours in the Cooperative managed to secure you a pod, \
 			scrambled its destination's coordinates, and launched it. You awoke from stasis when you landed and have been surviving - barely - ever since.</b>"
-			uniform = /obj/item/clothing/under/rank/prisoner
-			shoes = /obj/item/clothing/shoes/sneakers/orange
-			back = /obj/item/weapon/storage/backpack
+			outfit.uniform = /obj/item/clothing/under/rank/prisoner
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/orange
+			outfit.back = /obj/item/weapon/storage/backpack
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there.</b>"
-			uniform = /obj/item/clothing/under/rank/medical
-			suit = /obj/item/clothing/suit/toggle/labcoat
-			back = /obj/item/weapon/storage/backpack/medic
-			shoes = /obj/item/clothing/shoes/sneakers/black
+			outfit.uniform = /obj/item/clothing/under/rank/medical
+			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
+			outfit.back = /obj/item/weapon/storage/backpack/medic
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
 		if(4)
 			flavour_text += "you were always joked about by your friends for \"not playing with a full deck\", as they so <i>kindly</i> put it. It seems that they were right when you, on a tour \
 			at one of Nanotrasen's state-of-the-art research facilities, were in one of the escape pods alone and saw the red button. It was big and shiny, and it caught your eye. You pressed \
 			it, and after a terrifying and fast ride for days, you landed here. You've had time to wisen up since then, and you think that your old friends wouldn't be laughing now.</b>"
-			uniform = /obj/item/clothing/under/color/grey/glorf
-			shoes = /obj/item/clothing/shoes/sneakers/black
-			back = /obj/item/weapon/storage/backpack
-	..()
+			outfit.uniform = /obj/item/clothing/under/color/grey/glorf
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
+			outfit.back = /obj/item/weapon/storage/backpack
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
@@ -228,10 +247,7 @@
 	mob_name = "an escaped prisoner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	outfit = /datum/outfit/lavalandprisoner
 	roundstart = FALSE
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
@@ -241,12 +257,20 @@
 	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
 	L.name = L.real_name
 
-/obj/effect/mob_spawn/human/prisoner_transport/New()
+/obj/effect/mob_spawn/human/prisoner_transport/Initialize(mapload)
+	. = ..()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
 	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
 	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
-	..()
+
+/datum/outfit/lavalandprisoner
+	name = "Lavaland Prisoner"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
@@ -259,31 +283,188 @@
 	mob_name = "hotel staff member"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	uniform = /obj/item/clothing/under/assistantformal
-	shoes = /obj/item/clothing/shoes/laceup
-	pocket1 = /obj/item/device/radio/off
-	back = /obj/item/weapon/storage/backpack
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
-	implants = list(/obj/item/weapon/implant/mindshield)
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
+	outfit = /datum/outfit/hotelstaff
 	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
 		dereliction of duty!"
+
+/datum/outfit/hotelstaff
+	name = "Hotel Staff"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	r_pocket = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
 	mob_name = "hotel security memeber"
-	uniform = /obj/item/clothing/under/rank/security/blueshirt
-	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/vest/blueshirt
-	helmet = /obj/item/clothing/head/helmet/blueshirt
-	back = /obj/item/weapon/storage/backpack/security
-	belt = /obj/item/weapon/storage/belt/security/full
+	outfit = /datum/outfit/hotelstaff/security
 	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
 		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
 
+/datum/outfit/hotelstaff/security
+	name = "Hotel Secuirty"
+	uniform = /obj/item/clothing/under/rank/security/blueshirt
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	head = /obj/item/clothing/head/helmet/blueshirt
+	back = /obj/item/weapon/storage/backpack/security
+	belt = /obj/item/weapon/storage/belt/security/full
+
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+
+/obj/effect/mob_spawn/human/demonic_friend
+	name = "Essence of friendship"
+	desc = "Oh boy! Oh boy! A friend!"
+	mob_name = "Demonic friend"
+	icon = 'icons/obj/cardboard_cutout.dmi'
+	icon_state = "cutout_basic"
+	outfit = /datum/outfit/demonic_friend
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	id_job = "SuperFriend"
+	id_access = "assistant"
+	var/obj/effect/proc_holder/spell/targeted/summon_friend/spell
+	var/datum/mind/owner
+
+/obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
+	. = ..()
+	owner = owner_mind
+	flavour_text = "You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for their short mortal coil.  Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell."
+	var/area/A = get_area(src)
+	if(!mapload && A)
+		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	objectives = "Be [owner.name]'s friend, and keep [owner.name] alive, so you don't get sent back to hell."
+	spell = summoning_spell
+
+
+/obj/effect/mob_spawn/human/demonic_friend/special(mob/living/L)
+	if(!QDELETED(owner.current) && owner.current.stat != DEAD)
+		L.real_name = "[owner.name]'s best friend"
+		L.name = L.real_name
+		soullink(/datum/soullink/oneway, owner.current, L)
+		spell.friend = L
+		spell.charge_counter = spell.charge_max
+		L.mind.hasSoul = FALSE
+		var/mob/living/carbon/human/H = L
+		var/obj/item/worn = H.wear_id
+		var/obj/item/weapon/card/id/id = worn.GetID()
+		id.registered_name = L.real_name
+		id.update_label()
+	else
+		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
+		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
+
+/datum/outfit/demonic_friend
+	name = "Demonic Friend"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	r_pocket = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
+	id = /obj/item/weapon/card/id
+
+/obj/effect/mob_spawn/human/syndicate
+	name = "Syndicate Operative"
+	roundstart = FALSE
+	death = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	id_access_list = list(GLOB.access_syndicate)
+	outfit = /datum/outfit/syndicate_empty
+
+/datum/outfit/syndicate_empty
+	name = "Syndicate Operative Empty"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset/syndicate/alt
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/weapons_auth)
+	id = /obj/item/weapon/card/id
+
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+	H.faction |= "syndicate"
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser
+	name = "Syndicate Battlecruiser Ensign"
+	flavour_text = "<font size=3>You are a syndicate ensign aboard a state of the art weapons platform -- the SBC Starfury. <b>Follow your captain's orders, maintain the ship, and protect both with your life.</b>"
+	outfit = /datum/outfit/syndicate_empty/SBC
+
+/datum/outfit/syndicate_empty/SBC
+	name = "Syndicate Battlecruiser Ensign"
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
+	suit = /obj/item/clothing/suit/armor/vest
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
+	name = "Syndicate Battlecruiser Captain"
+	flavour_text = "<font size=3>You are a syndicate admiral in command of a state of the art weapons platform -- the SBC Starfury. <b>You are to destroy Nanotrasens' Space Station 13.</b> Do not let the enemy take control of your ship under any circumstances."
+	outfit = /datum/outfit/syndicate_empty/SBC/captain
+	id_access_list = list(150,151)
+
+/datum/outfit/syndicate_empty/SBC/captain
+	name = "Syndicate Battlecruiser Captain"
+	belt = /obj/item/weapon/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	back = /obj/item/weapon/storage/backpack/satchel/leather
+	head = /obj/item/clothing/head/HoS/beret/syndicate
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+
+//UEG Marine
+/obj/effect/mob_spawn/human/marine
+	name = "marine cryostasis sleeper"
+	desc = "A humming sleeper with a occupant inside. Desperatly attempting to revive the occupant despite its low power state."
+	mob_name = "a iron hawk marine"
+	icon = 'icons/obj/lavaland/spawners.dmi'
+	icon_state = "cryostasis_sleeper"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Iron Hawk Marine, apart of a unalligned mercenary organization. You were, until recently, stationed on board the IHSS Inheritor, a capital ship. As you struggle \
+	to exit your cryostasis sleeper, you slowly start to recall exactly what cause of events has thrown you into your current predicament... "
+
+/obj/effect/mob_spawn/human/marine/Initialize(mapload)
+	. = ..()
+	var/lorpee = rand(1,4)
+	switch(lorpee)
+		if(1)
+			flavour_text += "Your ship intercepted a distress call from a distant space station. As the Inheritor moved into investigate, suddenly and without warning the ship was being assaulted \
+			by a massive lovecraftian nightmare, you heard the name 'Nar-Sie' being uttered by the barely Human flesh monsters and constructs that poured out of every crack that was torn into the \
+			ship by the monster. With most of the crew dead, you and your squad retreated to the hanger bay, rescued a group of pilots and attempted to flee aboard the only functional heavy troop transport. \
+			 Your attempt to fly away was halted when Nar-Sie somehow was able to start attempting to drag the transport into her grasp. In one final desperate move, the pilots turnd the ship around \
+			 and ramed it directly into Nar-Sie's head, her screams somehow echoed throughout the transport as she released her grasp on the transport, unfortunately taking half the engines with her. \
+			 Your final thoughts were panic as you quickly dove into your cryosleep pod, hoping you'll survive the crash landing.</b>"
+		if(2)
+			flavour_text += "Panic and paranoia ran high as a group of changelings somehow infiltrated the Inheritor. Utterly unprepared to deal with this threat, the crew tore itself apart. \
+			In a final desperate move to end the changeling threat, the ship's Commander activated the Inheritor's self destruct sequence and remotely shut down all escape pods. You and your \
+			squadmates, who were already on the brink of a psychological breakdown, made a run for the last remaining heavy troop transport. You arrive to discover the changelings had a similar plan \
+			, with minutes until the ship exploded, the changelings abandoned any pretense of subtly and revealed their true forms. After a intense gun fight you and your squad were able to board \
+			the transport. However as you take off, one of the surviving Changelings was able to plant an explosive charge on your engines. The explosion disabled your ship, and you got caught in a \
+			nearby planets gravity well. The survivors were forced into cryo sleep, as you're last thoughts were hoping to god none of your squad mates were secretly changelings.</b>"
+		if(3)
+			flavour_text += "The deeper reaches of space are home to hoards of pirates and marauders, usually they are no threat to a Iron Hawk capital ship. However, the Inheritor had conducted a \
+			large series of anti-piracy raids in your assigned sector, so crippling that every pirate in the local sector network formed a massive fleet in a attempt to destroy the Inheritor. The \
+			Inheritor won against all odds, but it was a pyrrhic victory as the Inheritor was byond repair. The acting Commander ordered all hands to abandon ship before it was scuttled. You and \
+			your remaining squad members were assigned to troop transport 5. Unbeknown to you or your pilots, your fuel tanks had suffered a massive leak during the fighting, leaving you with minimal \
+			fuel, thus your pilots had no choice but to land on a nearby planet. Strapping into your cryochamber, you can only hope that the pilots could land this thing safely.</b>"
+		if(4)
+			flavour_text += "The Inheritor was sent on a high level covert recon contract to Space Station 13, a Nanotrasen research and development station. The contract details were minimal sans that \
+			you were to locate and ping any Nanotrasen mining bases on a class-H planet. You and your squad were dispatched in a recon heavy transport \
+			to attempt to fly over the planet and locate any hidden Nanotrasen mining bases. About two hours into the recon mission, a giant, dragon like, creature swooped up and took a large part of your \
+			engines with it. With insufficient thrust power to leave the planet's atmosphere, the crew were ordered into cryostasis as the pilots attempted an emergency landing.</b>"
+
+/obj/effect/mob_spawn/human/marine/Destroy()
+	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
+	return ..()

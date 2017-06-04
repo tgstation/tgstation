@@ -129,7 +129,7 @@
 	name = "footprints"
 	icon = 'icons/effects/footprints.dmi'
 	icon_state = "nothingwhatsoever"
-	desc = "where might they lead?"
+	desc = "WHOSE FOOTPRINTS ARE THESE?"
 	random_icon_states = null
 	var/entered_dirs = 0
 	var/exited_dirs = 0

@@ -19,20 +19,19 @@
 /obj/machinery/gibber/autogibber
 	var/turf/input_plate
 
-/obj/machinery/gibber/autogibber/New()
-	..()
-	spawn(5)
-		for(var/i in GLOB.cardinal)
-			var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
-			if(input_obj)
-				if(isturf(input_obj.loc))
-					input_plate = input_obj.loc
-					qdel(input_obj)
-					break
+/obj/machinery/gibber/autogibber/Initialize()
+	. = ..()
+	for(var/i in GLOB.cardinal)
+		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
+		if(input_obj)
+			if(isturf(input_obj.loc))
+				input_plate = input_obj.loc
+				qdel(input_obj)
+				break
 
-		if(!input_plate)
-			GLOB.world_game_log << "a [src] didn't find an input plate."
-			return
+	if(!input_plate)
+		CRASH("Didn't find an input plate.")
+		return
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)
 	if(!input_plate) return
@@ -45,10 +44,10 @@
 			M.gib()
 
 
-/obj/machinery/gibber/New()
-	..()
+/obj/machinery/gibber/Initialize()
+	. = ..()
 	add_overlay("grjam")
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
+	var/obj/item/weapon/circuitboard/machine/gibber/B = new
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/gibber
@@ -175,7 +174,6 @@
 		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
-	var/sourcetotalreagents = mob_occupant.reagents.total_volume
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
 	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin = /obj/item/stack/sheet/animalhide/human
@@ -208,7 +206,6 @@
 			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 		allskin = newskin
 

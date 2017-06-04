@@ -26,10 +26,10 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/New()
-	..()
+/obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
+	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
+	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
 	B.apply_default_parts(src)
 
 	radio = new(src)

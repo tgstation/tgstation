@@ -35,7 +35,12 @@
 	var/morphed = 0
 	var/atom/movable/form = null
 	var/morph_time = 0
-
+	var/static/list/blacklist_typecache = typecacheof(list(
+	/obj/screen,
+	/obj/singularity,
+	/mob/living/simple_animal/hostile/morph,
+	/obj/effect))
+	
 	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
 							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
@@ -67,13 +72,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
-	if(istype(A,/obj/screen))
-		return 0
-	if(istype(A,/obj/singularity))
-		return 0
-	if(istype(A,/mob/living/simple_animal/hostile/morph))
-		return 0
-	return 1
+	return !is_type_in_typecache(A, blacklist_typecache)
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
@@ -100,6 +99,7 @@
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
+	copy_overlays(target)
 	alpha = max(alpha, 150)	//fucking chameleons
 	transform = initial(transform)
 	pixel_y = initial(pixel_y)

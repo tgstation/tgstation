@@ -608,6 +608,23 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
 
+/datum/mutation/human/stoner
+	name = "Stoner"
+	quality = NEGATIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>You feel...totally chill, man!</span>"
+	text_lose_indication = "<span class='notice'>You feel like you have a better sense of time.</span>"
+
+/datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
+	..()
+	owner.grant_language(/datum/language/beachbum)
+	owner.remove_language(/datum/language/common)
+
+/datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
+	..()
+	owner.grant_language(/datum/language/common)
+	owner.remove_language(/datum/language/beachbum)
+
 /datum/mutation/human/laser_eyes
 	name = "Laser Eyes"
 	quality = POSITIVE

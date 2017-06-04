@@ -60,7 +60,6 @@
 	obj_integrity = 1000
 	max_integrity = 1000
 	verb_say = "chants"
-	initial_languages = list(/datum/language/common)
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
 	var/list/mob/living/sleepers = list()
 	var/never_spoken = TRUE
@@ -148,11 +147,11 @@
 		3. Don't get messed up in their affairs."
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
+	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= GLOB.access_cent_bar
-	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -163,6 +162,7 @@
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
+	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
@@ -171,8 +171,6 @@
 	access_card.access = C.get_access()
 	access_card.access |= GLOB.access_cent_bar
 	access_card.flags |= NODROP
-
-	grant_all_languages(omnitongue=TRUE)
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
@@ -256,7 +254,7 @@
 /mob/living/simple_animal/hostile/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /obj/effect/decal/hammerandsickle
 	name = "hammer and sickle"

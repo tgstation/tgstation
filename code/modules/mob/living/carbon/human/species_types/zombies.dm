@@ -17,6 +17,7 @@
 	no_equip = list(slot_wear_mask, slot_head)
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 2
+	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()

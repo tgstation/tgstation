@@ -3948,7 +3948,7 @@
 	},
 /area/awaymission/snowdin)
 "kB" = (
-/obj/item/weapon/c4{
+/obj/item/weapon/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = 1
 	},

@@ -3,7 +3,7 @@
 	return
 
 // Called when shuttle attempts to move an atom.
-/atom/movable/proc/onShuttleMove(turf/T1, rotation)
+/atom/movable/proc/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = T1
@@ -47,11 +47,11 @@
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/carbon/onShuttleMove()
+/mob/living/carbon/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	. = ..()
 	if(!.)
 		return
-	if(!buckled)
+	if(!buckled && knockdown)
 		Weaken(3)
 
 /obj/effect/abstract/proximity_checker/onShuttleMove()

@@ -218,6 +218,14 @@
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
+
+	//Handle dental implants
+	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
+		AP.Remove(owner)
+		var/obj/pill = AP.target
+		if(pill)
+			pill.forceMove(src)
+
 	name = "[owner.real_name]'s head"
 	..()
 
@@ -286,10 +294,11 @@
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
 	//Transfer some head appearance vars over
 	if(brain)
-		brainmob.container = null //Reset brainmob head var.
-		brainmob.loc = brain //Throw mob into brain.
-		brain.brainmob = brainmob //Set the brain to use the brainmob
-		brainmob = null //Set head brainmob var to null
+		if(brainmob)
+			brainmob.container = null //Reset brainmob head var.
+			brainmob.loc = brain //Throw mob into brain.
+			brain.brainmob = brainmob //Set the brain to use the brainmob
+			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper
 		brain = null //No more brain in the head
 
@@ -305,6 +314,14 @@
 		C.real_name = real_name
 	real_name = ""
 	name = initial(name)
+
+	//Handle dental implants
+	for(var/obj/item/weapon/reagent_containers/pill/P in src)
+		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
+			P.forceMove(C)
+			AP.Grant(C)
+			break
+
 	..()
 
 

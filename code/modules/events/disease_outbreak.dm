@@ -25,7 +25,7 @@
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(T.z != 1)
+		if(T.z != ZLEVEL_STATION)
 			continue
 		var/foundAlready = 0	// don't infect someone that already has the virus
 		for(var/datum/disease/D in H.viruses)
