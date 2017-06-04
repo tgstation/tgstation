@@ -190,11 +190,25 @@
 	if(P == orange)
 		orange = null
 
+/obj/item/weapon/gun/energy/wormhole_projector/proc/has_blue_portal()
+	if(istype(blue) && !QDELETED(blue))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/has_orange_portal()
+	if(istype(orange) && !QDELETED(orange))
+		return TRUE
+	return FALSE
+
 /obj/item/weapon/gun/energy/wormhole_projector/proc/crosslink()
-	if(!(istype(blue) || QDELETED(blue)) && (istype(orange) && !QDELETED(orange)))
+	if(!has_blue_portal() && !has_orange_portal())
+		return
+	if(!has_blue_portal() && has_orange_portal())
 		orange.link_portal(null)
-	if(!(istype(orange) || QDELETED(orange)) && (istype(blue) && !QDELETED(blue)))
+		return
+	if(!has_orange_portal() && has_blue_portal())
 		blue.link_portal(null)
+		return
 	orange.link_portal(blue)
 	blue.link_portal(orange)
 
