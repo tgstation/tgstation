@@ -1335,3 +1335,27 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+	
+/obj/item/toy/fidgetspinner
+	name = "fidget spinner"
+	desc = "A stress relieving piece of plastic that revolves around a bearing."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "fidgetspinner"
+	var spinning = 0
+
+/obj/item/toy/fidgetspinner/attack_self(mob/user)
+	if(spinning == 0)
+		to_chat(user,  "You spin the fidget spinner!")
+		spinning = 1
+		icon_state  = "fidgetspinner_m"
+		sleep(15)
+		icon_state = "fidgetspinner"
+		spinning = 0
+	else
+		to_chat(user, "The spinner is already spinning!")
+
+/obj/item/toy/fidgetspinner/throw_impact(atom/hit_atom)
+	if(!..())
+		if(istype(hit_atom,/mob/living/carbon/))
+			var /mob/living/carbon/C = hit_atom
+			C.adjustBrainLoss(4)
