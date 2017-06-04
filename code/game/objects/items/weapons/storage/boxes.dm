@@ -89,7 +89,6 @@
 /obj/item/weapon/storage/box/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 /obj/item/weapon/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
@@ -99,14 +98,12 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 
 // Engineer survival box
 /obj/item/weapon/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 /obj/item/weapon/storage/box/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
@@ -121,7 +118,6 @@
 /obj/item/weapon/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
 /obj/item/weapon/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
