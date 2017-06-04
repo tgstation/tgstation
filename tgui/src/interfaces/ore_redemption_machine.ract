@@ -66,36 +66,36 @@
 		</section>
 	{{#each data.materials}}
 		<section class="candystripe">
-			<section class="cell" ">
+			<section class="cell">
 				{{name}}
 			</section>
-			<section class="cell" " align='right'>
+			<section class="cell" align='right'>
 				{{amount}}
 			</section>
-			<section class="cell" " align='right'>
+			<section class="cell" align='right'>
 				<ui-button class='center' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Release
 				</ui-button>
 			</section>
-			<section class="cell" " align='right'>
+			<section class="cell" align='right'>
 				{{value}}
 			</section>
 		</section>
 	{{/each}}
 	{{#each data.alloys}}
 		<section class="candystripe">
-			<section class="cell" ">
+			<section class="cell">
 				{{name}}
 			</section>
-			<section class="cell" " align='right'>
+			<section class="cell" align='right'>
 				{{amount}}
 			</section>
-			<section class="cell" " align='right'>
+			<section class="cell" align='right'>
 				<ui-button class='center' grid action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Smelt
 				</ui-button>
 			</section>
-			<section class="cell" " align='right'>
+			<section class="cell" align='right'>
 				<ui-button class='center' grid action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
 					Smelt All
 				</ui-button>
