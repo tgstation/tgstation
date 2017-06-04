@@ -12,6 +12,7 @@
 	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+	novariants = TRUE
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
@@ -106,6 +107,13 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/carpet/black
+	name = "black carpet"
+	icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/black
+
+/obj/item/stack/tile/carpet/black/fifty
+	amount = 50
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
