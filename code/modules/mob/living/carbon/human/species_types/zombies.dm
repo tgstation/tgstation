@@ -24,7 +24,7 @@
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
-	C.heal_overall_damage(5,5)
+	C.heal_overall_damage(4,4)
 	if(C.InCritical())
 		C.death()
 		// Zombies only move around when not in crit, they instantly
