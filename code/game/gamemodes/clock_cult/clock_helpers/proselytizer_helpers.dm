@@ -49,6 +49,9 @@
 /turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer, silent)
 	if(locate(/obj/structure/table) in src)
 		return FALSE
+	if(locate(/obj/structure/falsewall) in contents)
+		to_chat(user, "<span class='warning'>There is a false wall in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
+		return
 	if(is_blocked_turf(src, TRUE))
 		to_chat(user, "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 		return TRUE
