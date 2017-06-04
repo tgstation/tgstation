@@ -36,6 +36,12 @@
 		A.UpdateButtonIcon()
 	return 1
 
+/obj/item/device/flashlight/suicide_act(mob/user)
+	var/mob/living/carbon/human/H = user
+	user.visible_message("<span class='suicide'>[user] is putting the [src] close to [user.p_their()] and turning it on! It looks like [user.p_theyre()] trying to commit suicide by burning their brains out!</span>")
+	adjustFireLoss(400)
+	
+
 
 /obj/item/device/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
