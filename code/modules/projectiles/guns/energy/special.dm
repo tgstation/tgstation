@@ -185,10 +185,10 @@
 	select_fire()
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
-	if(P == blue)
-		blue = null
-	if(P == orange)
-		orange = null
+	if(P == p_blue)
+		p_blue = null
+	if(P == p_orange)
+		p_orange = null
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/has_blue_portal()
 	if(istype(p_blue) && !QDELETED(p_blue))
@@ -209,14 +209,14 @@
 	if(!has_orange_portal() && has_blue_portal())
 		p_blue.link_portal(null)
 		return
-	p_orange.link_portal(blue)
-	p_blue.link_portal(orange)
+	p_orange.link_portal(p_blue)
+	p_blue.link_portal(p_orange)
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
-		o_orange = P
+		p_orange = P
 		P.icon_state = "portal1"
 	else
 		qdel(p_blue)
