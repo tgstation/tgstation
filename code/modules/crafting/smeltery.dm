@@ -64,7 +64,7 @@
 	category = CAT_SMITH
 
 /datum/crafting_recipe/dwarf/bolts
-	name = "Crossbow Bolts(5) (Needs an Anvil)"
+	name = "Crossbow Bolts(5)(Stand next to anvil)"
 	result = /obj/item/crossbow_bolt_spawner
 	reqs = list(/obj/item/stack/sheet/metal = 10)
 	tools = list(/obj/machinery/anvil)
@@ -81,7 +81,7 @@
 	category = CAT_SMITH
 
 /datum/crafting_recipe/dwarf/smeltery // Smelt shit.
-	name = "Fort-In-A-Box (Smeltery) (Needs an Anvil)"
+	name = "Fort-In-A-Box (Smeltery) (Stand next to anvil)"
 	result = /obj/item/weapon/survivalcapsule/fort_in_a_box/smeltery
 	reqs = list(/obj/item/stack/sheet/metal = 10, /obj/item/stack/sheet/mineral/wood = 5)
 	tools = list(/obj/machinery/anvil)

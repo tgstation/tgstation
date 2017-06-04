@@ -305,7 +305,7 @@
 		var/datum/crafting_recipe/R = rec
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
-		if(check_contents(R, surroundings))
+		if(check_contents(R, surroundings, user))
 			can_craft += list(build_recipe_data(R))
 		else
 			cant_craft += list(build_recipe_data(R))
