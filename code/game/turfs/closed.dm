@@ -121,3 +121,9 @@
 	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "wall"
+
+/turf/closed/indestructible/reebe_wall
+	name = "coremetal wall"
+	desc = "Thick metal cogs that make up the walls of Reebe. A dense, translucent material serves as a window."
+	icon_state = "reebe_wall"
+	opacity = FALSE

@@ -53,6 +53,20 @@
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
 
+/turf/open/indestructible/reebe_floor
+	name = "coremetal plating"
+	desc = "Warm, dense metal plating that makes up the walls of Reebe. It seems indestructible by normal means."
+	icon_state = "reebe_floor"
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
+/turf/open/indestructible/reebe_void
+	name = "\proper the Void"
+	icon_state = "reebe_void"
+
+/turf/open/indestructible/reebe_void/Initialize()
+	..()
+	add_overlay(/obj/effect/fullbright)
+
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()

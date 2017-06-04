@@ -162,6 +162,14 @@
 	GLOB.wizardstart += loc
 	qdel(src)
 
+/obj/effect/landmark/start/servant
+	name = "servant spawn location"
+
+/obj/effect/landmark/start/servant/Initialize(mapload)
+	..()
+	GLOB.servant_start += loc
+	qdel(src)
+
 /obj/effect/landmark/start/new_player
 	name = "New Player"
 

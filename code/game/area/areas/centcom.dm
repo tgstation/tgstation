@@ -106,7 +106,24 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+//Clockcult
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = 0
+	noteleport = 1
+	has_gravity = 1
+	flags = NONE
 
+/area/reebe/Initialize()
+	..()
+	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult) || 1) //ghosts can teleport over to Reebe if it's a clockcult round (or admin override)
+		noteleport = FALSE
+
+/area/reebe/constructed
+	name = "City of Cogs"
+	icon_state = "purple"
 
 //CAPTURE THE FLAG
 
