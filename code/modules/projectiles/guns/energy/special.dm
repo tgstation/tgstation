@@ -172,8 +172,8 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	origin_tech = "combat=4;bluespace=6;plasmatech=4;engineering=4"
-	var/obj/effect/portal/blue
-	var/obj/effect/portal/orange
+	var/obj/effect/portal/p_blue
+	var/obj/effect/portal/p_orange
 
 /obj/item/weapon/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
@@ -191,12 +191,12 @@
 		orange = null
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/has_blue_portal()
-	if(istype(blue) && !QDELETED(blue))
+	if(istype(p_blue) && !QDELETED(p_blue))
 		return TRUE
 	return FALSE
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/has_orange_portal()
-	if(istype(orange) && !QDELETED(orange))
+	if(istype(p_orange) && !QDELETED(p_orange))
 		return TRUE
 	return FALSE
 
@@ -204,23 +204,23 @@
 	if(!has_blue_portal() && !has_orange_portal())
 		return
 	if(!has_blue_portal() && has_orange_portal())
-		orange.link_portal(null)
+		p_orange.link_portal(null)
 		return
 	if(!has_orange_portal() && has_blue_portal())
-		blue.link_portal(null)
+		p_blue.link_portal(null)
 		return
-	orange.link_portal(blue)
-	blue.link_portal(orange)
+	p_orange.link_portal(blue)
+	p_blue.link_portal(orange)
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
-		qdel(orange)
-		orange = P
+		qdel(p_orange)
+		o_orange = P
 		P.icon_state = "portal1"
 	else
-		qdel(blue)
-		blue = P
+		qdel(p_blue)
+		p_blue = P
 	crosslink()
 
 /* 3d printer 'pseudo guns' for borgs */
