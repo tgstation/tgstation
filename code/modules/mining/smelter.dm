@@ -226,13 +226,13 @@
 		if(M.blunt_bonus == TRUE)// club'em real good
 			force = M.attack_amt * 2
 			force_unwielded = M.attack_amt * 2
-			force_wielded = M.attack_amt * 4
+			force_wielded = M.attack_amt * 3
 		else
 			force = M.attack_amt * 0.75
 			force_unwielded = M.attack_amt * 0.75
 			force_wielded = M.attack_amt * 2
 		desc = "A warhammer made of [M.material_type]."
-		armour_penetration = M.armour_penetration * 3 //haha what armor??
+		armour_penetration = M.armour_penetration
 		sharpness = M.sharpness
 
 /*Pickaxe*/
@@ -323,5 +323,8 @@
 		add_overlay(Q)
 		smelted_material = new S.smelted_material.type()
 		name = "[S.material_type] crossbow"
-		force = S.attack_amt
+		if(S.blunt_bonus == TRUE)
+			force = S.attack_amt * 1.25
+		else
+			force = S.attack_amt * 0.75
 		desc = "A crossbow with a [S.material_type] base."
