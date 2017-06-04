@@ -105,11 +105,11 @@
 	descname = "Global Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
-	clockwork proselytizers will charge very rapidly."
+	replica fabricators will charge very rapidly."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
 	consumed_components = list(BELLIGERENT_EYE = 6, VANGUARD_COGWHEEL = 6, GEIS_CAPACITOR = 6, REPLICANT_ALLOY = 10)
-	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
+	usage_tip = "Ocular wardens will become empowered, tinkerer's daemons will produce twice as quickly, \
 	and interdiction lenses, mania motors, tinkerer's daemons, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
 	primary_component = REPLICANT_ALLOY
