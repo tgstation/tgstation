@@ -5,7 +5,7 @@
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
 	var/obj/effect/portal/P1 = new(source, _creator, _lifespan, null, FALSE)
 	var/obj/effect/portal/P2 = new(actual_destination, _creator, _lifespan, P1, TRUE)
-	P1.linked = P2
+	P1.link_portal(P2)
 	P1.hardlinked = TRUE
 	return list(P1, P2)
 
@@ -52,15 +52,24 @@
 
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
+	if(newlink)
+		var/turf/T = get_turf(src)
+		T.atmos_adjacent_turfs[get_turf(newlink)] = TRUE
 
 /obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.
 	if(creator && hascall(creator, "on_portal_destroy"))
 		call(creator, "on_portal_destroy")(src, src.loc)
 	creator = null
 	GLOB.portals -= src
-	if(hardlinked)
+	var/turf/T = get_turf(src)
+	if(linked)
+		var/turf/LT = get_turf(linked)
+		if(!T.Adjacent(LT)) //if we're adjacent, we're probably meant to be atmos-adjacent
+			T.atmos_adjacent_turfs -= LT
+	if(hardlinked && !QDELETED(linked))
 		QDEL_NULL(linked)
-	linked = null
+	else
+		linked = null
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M)

@@ -67,8 +67,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
-	spawn(rand(150,300))
-		QDEL_LIST(created)
+	QDEL_LIST_IN(created, rand(150,300))
 	return 1
 
 

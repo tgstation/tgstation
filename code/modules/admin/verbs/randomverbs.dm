@@ -1206,3 +1206,4 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	message_admins("[key_name_admin(usr)] triggered a Centcom recall, with the admiral message of: [message]")
 	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")
+	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
