@@ -333,16 +333,14 @@
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
 	if(!hasPower())		// unpowered, no shock
 		return FALSE
-	if(hasShocked)
+	if(hasShocked > world.time)
 		return FALSE	//Already shocked someone recently?
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
 	do_sparks(5, TRUE, src)
 	var/tmp/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
-		hasShocked = TRUE
-		spawn(10)
-			hasShocked = FALSE
+		hasShocked = world.time + 10
 		return TRUE
 	else
 		return FALSE

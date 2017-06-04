@@ -263,6 +263,7 @@
 	icon_state = "dshotgun"
 	item_state = "shotgun"
 	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
 	force = 10
 	flags = CONDUCT
 	slot_flags = SLOT_BACK

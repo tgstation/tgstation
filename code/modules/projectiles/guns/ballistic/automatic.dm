@@ -253,6 +253,7 @@
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
 	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -270,8 +271,8 @@
 	update_icon()
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("[magazine.icon_state]")
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
