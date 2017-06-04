@@ -331,8 +331,8 @@
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
 		else
-			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
+			connected_message("Emergency Ejection")
+			SPEAK("An emergency ejection of [clonemind.name] has occurred. Survival not guaranteed.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
