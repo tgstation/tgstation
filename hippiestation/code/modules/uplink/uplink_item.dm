@@ -8,6 +8,7 @@
 	cost = 5
 	surplus = 90
 
+/* Implants */
 /datum/uplink_item/implants/adrenal
 	name = "Combat Stimulant Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will inject a chemical \
@@ -15,6 +16,20 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_comstimms
 	cost = 8
 	player_minimum = 0 //Healing like this, while strong as heck, isn't going to help you murderbone like antistuns can.
+
+/datum/uplink_item/implants/mindslave
+	name = "Mindslave Implant"
+	desc = "An implant injected into another body, forcing the victim to obey any command by the user for around 15 to 20 mintues."
+	exclude_modes = list(/datum/game_mode/nuclear)
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_mindslave
+	cost = 8
+	surplus = 20
+
+/datum/uplink_item/implants/greatermindslave
+	name = "Greater Mindslave Implant"
+	desc = "An implant injected into another body, forcing the victim to obey any command by the user, it does not expire like a regular mindslave implant."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_gmindslave
+	cost = 16
 
 /* Botany */
 /datum/uplink_item/role_restricted/lawnmower
