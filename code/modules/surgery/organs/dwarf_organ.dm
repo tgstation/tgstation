@@ -9,7 +9,8 @@
 	var/max_alcohol = 500
 	var/heal_rate = 0.5
 	var/alcohol_rate = 10
-
+	var/cooldown = 35
+	var/current_cooldown = 0
 /obj/item/organ/alcoholvessel/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("ethanol", stored_alcohol/10)
@@ -17,6 +18,10 @@
 
 
 /obj/item/organ/alcoholvessel/on_life()
+	//BEARD SENSE
+	if(current_cooldown <= world.time)
+		current_cooldown = world.time + cooldown
+		mineral_scan_pulse(get_turf(owner))
 	// MIASMA HANDLING
 	var/miasma_counter = 0
 	for(var/fuck in view(owner,7))

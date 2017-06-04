@@ -832,9 +832,10 @@
 	color = "#F7C430" // rgb: 247, 196, 48
 	taste_description = "expensive metal"
 	produce_type = /obj/item/stack/sheet/mineral/gold
-	attack_force = 1
+	attack_force = 10
 	pick_speed = 30
-	durability_reduction = 15
+	durability_reduction = 10
+	penetration_value = 35
 
 /datum/reagent/silver
 	name = "Silver"
@@ -844,9 +845,11 @@
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
 	produce_type = /obj/item/stack/sheet/mineral/silver
-	attack_force = 2
+	attack_force = 10
 	pick_speed = 35
-	durability_reduction = 10
+	durability_reduction = 8
+	blunt_damage = TRUE
+	penetration_value = 25
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!isliving(M))

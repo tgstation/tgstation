@@ -400,10 +400,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	if(!GLOB.secret_triggered)
 		GLOB.secret_triggered = TRUE
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
-		new /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon(src)
-		new /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat(src)
-		new /mob/living/simple_animal/hostile/swarmer/ai/melee_combat(src)
-		new /mob/living/simple_animal/hostile/swarmer/ai/melee_combat(src)
+		new /obj/structure/rend/hfs(src)
 	..()
 
 /turf/closed/mineral/clay
