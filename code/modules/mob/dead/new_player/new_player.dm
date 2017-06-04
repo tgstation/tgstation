@@ -360,7 +360,8 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-
+		if(SSticker.mode.name == "gang war")
+			vigilize(humanc)
 	GLOB.joined_player_list += character.ckey
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.

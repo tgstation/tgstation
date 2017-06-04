@@ -35,6 +35,7 @@
 	l_hand = null
 	r_pocket = /obj/item/ammo_box/c10mm
 
+
 /datum/outfit/tournament/janitor
 	name = "tournament janitor"
 
