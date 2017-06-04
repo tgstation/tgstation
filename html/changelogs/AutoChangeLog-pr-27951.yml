@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Rod Form now costs 2 points, from 3."
+  - balance: "Rod Form now does 70 damage, from 160, but gains 20 damage, per upgrade, when upgraded. This means you'll need to spend 6 points on it to instantly crit people from full health."
