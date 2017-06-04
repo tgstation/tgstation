@@ -24,6 +24,7 @@
 	resistance_flags = ACID_PROOF
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
+	var/real_explosion_block	//ignore this, just use explosion_block
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -72,6 +73,10 @@
 		debris += new /obj/item/weapon/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
+		
+	//windows only block while reinforced and fulltile, so we'll use the proc
+	real_explosion_block = explosion_block
+	explosion_block = EXPLOSION_BLOCK_PROC
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -399,6 +404,9 @@
 		return 0
 
 	return 1
+
+/obj/structure/window/GetExplosionBlock()
+	return reinf && fulltile ? real_explosion_block : 0
 
 /obj/structure/window/unanchored
 	anchored = FALSE
