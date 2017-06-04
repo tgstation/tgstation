@@ -290,7 +290,7 @@
 	name = "paradox bag"
 	desc = "Somehow, it's in two places at once."
 	icon = 'icons/obj/storage.dmi'
-	icon_state = "cultpack"
+	icon_state = "duffle-gaphag"
 	slot_flags = SLOT_BACK
 	var/obj/item/weapon/storage/backpack/shared/bag
 
