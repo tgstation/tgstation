@@ -131,12 +131,9 @@
 	return
 
 //Removes any null entries from the list
-//Returns TRUE if the list had nulls, FALSE otherwise
 /proc/listclearnulls(list/L)
-	var/start_len = L.len
-	var/list/N = new(start_len)
+	var/list/N = new(L.len)
 	L -= N
-	return L.len < start_len
 
 /*
  * Returns list containing all the entries from first list that are not present in second.

@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
+	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
