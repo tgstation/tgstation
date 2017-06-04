@@ -14,7 +14,9 @@
 
 /datum/round_event/ghost_role/devil/spawn_role()
 	//selecting a spawn_loc
-	if(!SSjob.latejoin_trackers.len)
+	var/list/spawn_locs = GLOB.latejoin
+	var/spawn_loc = pick(spawn_locs)
+	if(!spawn_loc)
 		return MAP_ERROR
 
 	//selecting a candidate player
@@ -28,7 +30,7 @@
 	var/datum/mind/Mind = create_devil_mind(key)
 	Mind.active = 1
 
-	var/mob/living/carbon/human/devil = create_event_devil()
+	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
 	Mind.transfer_to(devil)
 	add_devil(devil, ascendable = FALSE)
 
@@ -43,8 +45,6 @@
 
 /proc/create_event_devil(spawn_loc)
 	var/mob/living/carbon/human/new_devil = new(spawn_loc)
-	if(!spawn_loc)
-		SSjob.SendToLateJoin(new_devil)
 	var/datum/preferences/A = new() //Randomize appearance for the devil.
 	A.copy_to(new_devil)
 	new_devil.dna.update_dna_identity()

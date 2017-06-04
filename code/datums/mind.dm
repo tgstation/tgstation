@@ -1447,7 +1447,7 @@
 		special_role = "Wizard"
 		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
-			SSjob.SendToLateJoin(current)
+			current.loc = pick(GLOB.latejoin)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)
