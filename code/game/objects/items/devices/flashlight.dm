@@ -38,7 +38,7 @@
 
 /obj/item/device/flashlight/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is putting the [src] close to [user.p_their()] and turning it on! It looks like [user.p_theyre()] trying to commit suicide by burning their brains out!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting the [src] close to [user.p_their()] and turning it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	H.adjustFireLoss(400)
 	
 
