@@ -2168,6 +2168,7 @@
 #include "hippiestation\code\game\objects\items\meat.dm"
 #include "hippiestation\code\game\objects\items\staples.dm"
 #include "hippiestation\code\game\objects\items\weapons\cigs_lighters.dm"
+#include "hippiestation\code\game\objects\items\weapons\twohanded.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implant_mindslave.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implant_misc.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implantcase.dm"
