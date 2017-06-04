@@ -78,7 +78,7 @@
 	list_reagents = list("chloralhydrate" = 15)
 
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal
-	name = "antitoxin bottle"
+	name = "charcoal bottle"
 	desc = "A small bottle of charcoal."
 	icon_state = "bottle17"
 	list_reagents = list("charcoal" = 30)

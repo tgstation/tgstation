@@ -115,13 +115,13 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list("mannitol" = 50)
+	list_reagents = list("mannitol" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
-	list_reagents = list("mutadone" = 50)
+	list_reagents = list("mutadone" = 10)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
