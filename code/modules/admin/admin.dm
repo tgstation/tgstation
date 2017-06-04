@@ -434,7 +434,7 @@
 			if("Hard Restart (No Delay, No Feeback Reason)")
 				world.Reboot()
 			if("Hardest Restart (No actions, just reboot)")
-				world.Reboot(fast_track = TRUE)		
+				world.Reboot(fast_track = TRUE)
 			if("Service Restart (Force restart DD)")
 				GLOB.reboot_mode = REBOOT_MODE_HARD
 				world.ServiceReboot()
@@ -595,7 +595,7 @@
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOM)
-		M.loc = pick(GLOB.latejoin)
+		M.forceMove(get_latejoin_turf())
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
