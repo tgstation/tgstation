@@ -11,6 +11,7 @@
 #define SERVICE_CMD_HARD_REBOOT "hard_reboot"
 #define SERVICE_CMD_GRACEFUL_SHUTDOWN "graceful_shutdown"
 #define SERVICE_CMD_WORLD_ANNOUNCE "world_announce"
+#define SERVICE_CMD_IRC_CHECK "irc_check"
 #define SERVICE_CMD_IRC_STATUS "irc_status"
 #define SERVICE_CMD_ADMIN_MSG "adminmsg"
 #define SERVICE_CMD_NAME_CHECK "namecheck"
