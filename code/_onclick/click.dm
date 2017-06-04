@@ -324,8 +324,6 @@
 		ML.pulled(src)
 
 /mob/living/carbon/human/CtrlClick(mob/user)
-	if(world.time < user.next_click)
-		return FALSE
 	if(ishuman(user) && Adjacent(user))
 		if(world.time < user.next_move)
 			return FALSE
