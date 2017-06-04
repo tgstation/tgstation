@@ -29,16 +29,40 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	force_report = TRUE
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
 	<span class='danger'>Gangsters</span>: Take over the station with a dominator.\n\
 	<span class='notice'>Crew</span>: Prevent the gangs from expanding and initiating takeover."
 
+	var/turf/target_armory
+	var/turf/target_equipment
+
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+	//for blowing up the armory
+	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			target_armory = pick(get_area_turfs(A))
+			if(target_armory)
+				break
+	
+	//also need to find 1 sec closet to hit the equipment room
+	for(var/area/security/main/A in GLOB.sortedAreas)
+		if(A.z == ZLEVEL_STATION)
+			var/obj/structure/closet/secure_closet/security/C = locate() in A
+			if(C)
+				target_equipment = get_turf(C)
+				break
+
+	if(!target_armory || !target_equipment)
+		message_admins("No armory/equipment room detected, unable to start gang!")
+		return FALSE
+	
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -76,18 +100,54 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
 
+	//turn off sec and captain
+	SSjob.DisableJob(/datum/job/captain)
+	SSjob.DisableJob(/datum/job/hos)
+	SSjob.DisableJob(/datum/job/warden)
+	SSjob.DisableJob(/datum/job/detective)
+	SSjob.DisableJob(/datum/job/officer)
+
 	return 1
 
-
-/datum/game_mode/gang/post_setup()
+/datum/game_mode/gang/send_intercept()
 	set waitfor = FALSE
-	..()
-	sleep(rand(10,100))
+	..(FALSE, FALSE)
+
+	priority_announce("Ballas Federation Announcement", "SECURITY SHOULD OF SIDED WITH THE BALLAS!", 'sound/machines/Alarm.ogg')
+
+	sleep(100)
+
+	explosion(target_armory, 7, 14, 28, 30, TRUE, TRUE)
+	explosion(target_equipment, 7, 14, 28, 30, TRUE, TRUE)
+
+	sleep(1200)
+
+	var/list/bosses = list()
+
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			bosses += boss_mind
+
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			var/list/other_bosses = bosses.Copy() - boss_mind
+			var/msg = "<span class='danger'>You've decided to take charge of the situation and form the [G.name] gang."
+			for(var/J in 1 to other_bosses.len)
+				var/datum/mind/other_mind = other_bosses[J]
+				if(J == other_bosses.len)
+					msg += " and"
+				msg += " [other_mind.current]"
+				if(J != other_bosses.len)
+					msg += ","
+			to_chat(boss_mind.current, "[msg] are your ganghead rivals. [syndicate_name()] has offered an uplink to help you take over, it will be delivered in five minutes.</span>")
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
+	
+	sleep(3000)
+	
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
 			G.add_gang_hud(boss_mind)
-			forge_gang_objectives(boss_mind)
-			greet_gang(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
 
