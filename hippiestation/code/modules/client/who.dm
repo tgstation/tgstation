@@ -4,7 +4,7 @@
 	var/msg = "<b>Current Mentors:</b>\n"
 	for(var/X in GLOB.admins)
 		var/client/C = X
-		if(!check_rights_for(C, R_ADMIN))
+		if(check_rights_for(C, R_ADMIN))
 			continue
 		if(check_rights_for(C, R_MENTOR))
 			var/suffix = ""
