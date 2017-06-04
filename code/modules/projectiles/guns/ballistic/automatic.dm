@@ -271,8 +271,8 @@
 	update_icon()
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("[magazine.icon_state]")
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
