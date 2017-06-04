@@ -184,30 +184,30 @@
 	..()
 	select_fire()
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(obj/effect/portal/P)
-	if(P.icon_state == "portal")
+/obj/item/weapon/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
+	if(P == blue)
 		blue = null
-		if(orange)
-			orange.target = null
-	else
+	if(P == orange)
 		orange = null
-		if(blue)
-			blue.target = null
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W)
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
-	P.precision = 0
-	if(W.name == "bluespace beam")
+/obj/item/weapon/gun/energy/wormhole_projector/proc/crosslink()
+	if(!(istype(blue) || QDELETED(blue)) && (istype(orange) && !QDELETED(orange)))
+		orange.link_portal(null)
+	if(!(istype(orange) || QDELETED(orange)) && (istype(blue) && !QDELETED(blue)))
+		blue.link_portal(null)
+	orange.link_portal(blue)
+	blue.link_portal(orange)
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
+	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
+		qdel(orange)
+		orange = P
+		P.icon_state = "portal1"
+	else
 		qdel(blue)
 		blue = P
-	else
-		qdel(orange)
-		P.icon_state = "portal1"
-		orange = P
-	if(orange && blue)
-		blue.target = get_turf(orange)
-		orange.target = get_turf(blue)
-
+	crosslink()
 
 /* 3d printer 'pseudo guns' for borgs */
 

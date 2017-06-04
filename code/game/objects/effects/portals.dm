@@ -1,25 +1,25 @@
 
+/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0)
+	if(!istype(source) || !istype(destination))
+		return
+	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
+	var/obj/effect/portal/P1 = new(source, _creator, _lifespan, null, FALSE)
+	var/obj/effect/portal/P2 = new(actual_destination, _creator, _lifespan, P1, TRUE)
+	P1.linked = P2
+	P1.hardlinked = TRUE
+	return list(P1, P2)
+
 /obj/effect/portal
 	name = "portal"
 	desc = "Looks unstable. Best to test it with the clown."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
-	density = 1
-	var/obj/item/target = null
-	var/creator = null
-	anchored = 1
-	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
+	anchored = TRUE
 	var/mech_sized = FALSE
-
-/obj/effect/portal/Bumped(mob/M as mob|obj)
-	teleport(M)
-
-/obj/effect/portal/attack_tk(mob/user)
-	return
-
-/obj/effect/portal/attack_hand(mob/user)
-	if(Adjacent(user))
-		teleport(user)
+	var/obj/effect/portal/linked
+	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/creator
+	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 
 /obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
 	if(user && Adjacent(user))
@@ -28,42 +28,56 @@
 /obj/effect/portal/make_frozen_visual()
 	return
 
-/obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
-	..()
+/obj/effect/portal/Crossed(atom/movable/AM)
+	if(!teleport(AM))
+		return ..()
+
+/obj/effect/portal/attack_tk(mob/user)
+	return
+
+/obj/effect/portal/attack_hand(mob/user)
+	if(Adjacent(user))
+		teleport(user)
+
+/obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked = null, automatic_link = TRUE, hard_target_override = null)
+	. = ..()
 	GLOB.portals += src
-	src.target = target
-	src.creator = creator
+	if(!istype(_linked) && automatic_link)
+		return INITIALIZE_HINT_QDEL
+	if(_lifespan > 0)
+		QDEL_IN(src, _lifespan)
+	link_portal(_linked)
+	hardlinked = automatic_link
+	creator = _creator
 
-	var/area/A = get_area(target)
-	if(A && A.noteleport) // No point in persisting if the target is unreachable.
-		qdel(src)
-		return
-	if(lifespan > 0)
-		QDEL_IN(src, lifespan)
+/obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
+	linked = newlink
 
-/obj/effect/portal/Destroy()
-	GLOB.portals -= src
-	if(istype(creator, /obj/item/weapon/hand_tele))
-		var/obj/item/weapon/hand_tele/O = creator
-		O.active_portals--
-	else if(istype(creator, /obj/item/weapon/gun/energy/wormhole_projector))
-		var/obj/item/weapon/gun/energy/wormhole_projector/P = creator
-		P.portal_destroyed(src)
+/obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.
+	if(creator && hascall(creator, "on_portal_destroy"))
+		call(creator, "on_portal_destroy")(src, src.loc)
 	creator = null
+	GLOB.portals -= src
+	if(hardlinked)
+		QDEL_NULL(linked)
+	linked = null
 	return ..()
 
-/obj/effect/portal/proc/teleport(atom/movable/M as mob|obj)
-	if(istype(M, /obj/effect)) //sparks don't teleport
+/obj/effect/portal/proc/teleport(atom/movable/M)
+	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
 		return
-	if(M.anchored)
-		if(!(istype(M, /obj/mecha) && mech_sized))
+	var/turf/real_target
+	if(!istype(linked) || QDELETED(linked))
+		if(hardlinked)
+			qdel(src)
+		if(!istype(hard_target) || QDELETED(hard_target))
+			hard_target = null
 			return
-	if (!( target ))
-		qdel(src)
-		return
-	if (istype(M, /atom/movable))
-		if(ismegafauna(M))
-			message_admins("[M] [ADMIN_FLW(M)] has teleported through [src].")
-		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
-
-
+		else
+			real_target = hard_target
+			linked = null
+	else
+		real_target = get_turf(linked)
+	if(ismegafauna(M))
+		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
+	do_teleport(M, real_target, 0)
