@@ -411,10 +411,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				req_servants = APPLICATION_SERVANT_REQ
 				req_caches = APPLICATION_CACHE_REQ
 				req_cv = APPLICATION_CV_REQ
-			if(SCRIPTURE_REVENANT)
-				req_servants = REVENANT_SERVANT_REQ
-				req_caches = REVENANT_CACHE_REQ
-				req_cv = REVENANT_CV_REQ
 			if(SCRIPTURE_JUDGEMENT)
 				req_servants = JUDGEMENT_SERVANT_REQ
 				req_caches = JUDGEMENT_CACHE_REQ
@@ -496,18 +492,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
 				textlist += "<b>An unconverted AI exists!</b><br>"
-		if(scripture_states[SCRIPTURE_REVENANT])
-			var/inathneq_available = GLOB.clockwork_generals_invoked["inath-neq"] <= world.time
-			var/sevtug_available = GLOB.clockwork_generals_invoked["sevtug"] <= world.time
-			var/nezbere_available = GLOB.clockwork_generals_invoked["nezbere"] <= world.time
-			var/nezcrentr_available = GLOB.clockwork_generals_invoked["nzcrentr"] <= world.time
-			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				textlist += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
-				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
-			else
-				textlist += "Generals available: <b>NONE</b><br>"
-		else
-			textlist += "Generals available: <b>NONE</b><br>"
 		for(var/i in scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
 				textlist += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
