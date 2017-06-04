@@ -94,7 +94,7 @@
 		if(!M || !redemption_mat)
 			return 0
 
-		var/smeltable_sheets = round(redemption_mat.amount / M)
+		var/smeltable_sheets = Floor(redemption_mat.amount / M)
 
 		if(!smeltable_sheets)
 			return 0
@@ -230,69 +230,15 @@
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
 		data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
+	data["diskDesigns"] = list()
 	if(inserted_disk)
 		data["hasDisk"] = TRUE
 		if(inserted_disk.blueprints.len)
-			for (var/i in 1 to inserted_disk.max_blueprints)
-				var/datum/design/thisdesign = inserted_disk.blueprints[i]
-					//if(!istype(thisdesign)) //error: : invalid expression
-					//	continue
-
-				data["diskDesigns"][i] += list(list("name" = thisdesign.name, "index" = i, "canupload" = thisdesign.build_type&SMELTER)) // Runtime in machine_redemption.dm,241: cannot read from list
-/*
-[09:46:20] Runtime in machine_redemption.dm,241: cannot read from list
-  proc name: ui data (/obj/machinery/mineral/ore_redemption/ui_data)
-  usr: Alice Sommer (expletives) (/mob/living/carbon/human)
-  usr.loc: The floor (89,116,2) (/turf/open/floor/plasteel)
-  src: the ore redemption machine (/obj/machinery/mineral/ore_redemption)
-  src.loc: the floor (90,116,2) (/turf/open/floor/plasteel/floorgrime)
-  call stack:
-  the ore redemption machine (/obj/machinery/mineral/ore_redemption): ui data(Alice Sommer (/mob/living/carbon/human))
-  /datum/tgui (/datum/tgui): open()
-  the ore redemption machine (/obj/machinery/mineral/ore_redemption): ui interact(Alice Sommer (/mob/living/carbon/human), "main", /datum/tgui (/datum/tgui), 0, null, /datum/ui_state/default (/datum/ui_state/default))
-  the ore redemption machine (/obj/machinery/mineral/ore_redemption): interact(Alice Sommer (/mob/living/carbon/human), null)
-  the ore redemption machine (/obj/machinery/mineral/ore_redemption): attack hand(Alice Sommer (/mob/living/carbon/human), 1, 1)
-  the ore redemption machine (/obj/machinery/mineral/ore_redemption): attack hand(Alice Sommer (/mob/living/carbon/human))
-  Alice Sommer (/mob/living/carbon/human): UnarmedAttack(the ore redemption machine (/obj/machinery/mineral/ore_redemption), 1)
-  Alice Sommer (/mob/living/carbon/human): ClickOn(the ore redemption machine (/obj/machinery/mineral/ore_redemption), "icon-x=16;icon-y=14;left=1;scr...")
-  the ore redemption machine (/obj/machinery/mineral/ore_redemption): Click(the floor (90,116,2) (/turf/open/floor/plasteel/floorgrime), "mapwindow.map", "icon-x=16;icon-y=14;left=1;scr...")
-  
-  runtime error: bad list
-  proc name: Error (/world/Error)
-  source file: error_handler.dm,20
-Warning: further proc crash messages are being suppressed to prevent overload...
-MC: SoftReset called, resetting MC queue state.
-MC: SoftReset() failed, crashing
-## DEBUG: Sat Jun 03 09:52:10 2017 MC restarted. Reports:
-	 var_edited = 0
-	 processing = 0
-	 iteration = 8845
-	 last_run = 6041
-	 subsystems = /list
-	 init_timeofday = 602037
-	 init_time = 969.5
-	 tickdrift = 392.023
-	 sleep_delta = 1.0214
-	 make_runtime = 0
-	 initializations_finished_with_no_players_logged_in = 0
-	 last_type_processed = Space Drift(/datum/controller/subsystem/spacedrift)
-	 queue_head = Lighting(/datum/controller/subsystem/lighting)
-	 queue_tail = Garbage(/datum/controller/subsystem/garbage)
-	 queue_priority_count = 50
-	 queue_priority_count_bg = 105
-	 map_loading = 0
-	 current_runlevel = 3
-	 restart_clear = 6142
-	 restart_timeout = 6092
-	 restart_count = 1
-	 current_ticklimit = 60
-	 gc_destroyed = 
-	 active_timers = 
-	 isprocessing = 0
-	 ui_screen = home
-	 fingerprintslast = 
-
-*/				
+			var/index = 1
+			for (var/datum/design/thisdesign in inserted_disk.blueprints)
+				if(thisdesign) //error: : invalid expression
+					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type&SMELTER))
+				index++
 				CHECK_TICK
 	else
 		data["hasDisk"] = FALSE
@@ -307,6 +253,7 @@ MC: SoftReset() failed, crashing
 				return
 			usr.put_in_hands(inserted_id)
 			inserted_id = null
+			return TRUE
 		if("Insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
 			if(istype(I))
@@ -315,10 +262,12 @@ MC: SoftReset() failed, crashing
 				inserted_id = I
 			else
 				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
+			return TRUE
 		if("Claim")
 			if(inserted_id)
 				inserted_id.mining_points += points
 				points = 0
+			return TRUE
 		if("Release")
 			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
 				var/out = get_step(src, output_dir)
@@ -339,20 +288,26 @@ MC: SoftReset() failed, crashing
 
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			return TRUE
 		if("diskInsert")
 			var/obj/item/weapon/disk/design_disk/disk = usr.get_active_held_item()
 			if(istype(disk))
 				if(!usr.transferItemToLoc(disk,src))
 					return
-			inserted_disk = disk
+				inserted_disk = disk
+			else
+				to_chat(usr, "<span class='warning'>Not a valid Design Disk!</span>")
+			return TRUE
 		if("diskEject")
 			if(inserted_disk)
 				inserted_disk.forceMove(loc)
 				inserted_disk = null
+			return TRUE
 		if("diskUpload")
-			var/n = params["design"]
+			var/n = text2num(params["design"])
 			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
 				files.AddDesign2Known(inserted_disk.blueprints[n])
+			return TRUE
 		if("Smelt")
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = files.FindDesignByID(alloy_id)
@@ -370,27 +325,21 @@ MC: SoftReset() failed, crashing
 					unload_mineral(output)
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			return TRUE
 		if("SmeltAll")
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = files.FindDesignByID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
-				while(smelt_amount >= 1)
+				while(smelt_amount > 0)
 					materials.use_amount(alloy.materials)
 					smelt_amount--
 					var/output = new alloy.build_path(src)
-					if(istype(output, /obj/item/stack/sheet))
-						var/obj/item/stack/sheet/mineral/produced_alloy = output
-						produced_alloy.amount = min(produced_alloy.max_amount, can_smelt_alloy(alloy))
-						materials.use_amount(alloy.materials, produced_alloy.amount-1)
-						smelt_amount -= produced_alloy.amount-1
-						unload_mineral(produced_alloy)
-					else
-						unload_mineral(output)
+					unload_mineral(output)
 					CHECK_TICK
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
-
+			return TRUE
 
 
 

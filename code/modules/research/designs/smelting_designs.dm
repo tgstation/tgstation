@@ -29,11 +29,18 @@
 
 //Design disk for test purposes.
 /obj/item/weapon/disk/design_disk/alienalloy
-	name = "Alien Alloy Disk"
-	desc = "A disk containing details on the creation of alien alloy."
+	name = "Alloy Design Disk"
+	desc = "A disk containing details on the creation of alloys."
 	icon_state = "datadisk1"
+	max_blueprints = 5
 
 /obj/item/weapon/disk/design_disk/alienalloy/Initialize()
 	. = ..()
 	var/datum/design/alienalloy/A = new
+	var/datum/design/plastitanium_alloy/B = new
+	var/datum/design/plasteel_alloy/C = new
+	var/datum/design/board/ore_redemption/D = new
 	blueprints[1] = A
+	blueprints[2] = B
+	blueprints[3] = C
+	blueprints[4] = D

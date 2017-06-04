@@ -32,7 +32,7 @@
 		</ui-section>
 		{{#each data.diskDesigns}}
 			<ui-section class=candystripe>
-				File {{index}}: {{name}} <ui-button action="diskUpload" state={{(canupload) ? null : 'disabled'}}  icon="upload" align="right" params='{ "design" : {{index}} }'>Upload<ui-button>
+				File {{index}}: {{name}} <ui-button action="diskUpload" state={{(canupload) ? null : 'disabled'}}  icon="upload" align="right" params='{ "design" : "{{index}}" }'>Upload</ui-button>
 			</ui-section>
 		{{/each}}
 	{{else}}
@@ -44,16 +44,16 @@
 	{{/if}}
 </ui-display>
 <ui-display>
-	<table>
-			<tr class='candystripe'>
+		<table>
+			<tr>
 			<td>
 				Mineral
 			</td>
 			<td>
 				Sheets
 			</td>
-			<td align='right' padding-left='5px'>
-				<ui-button action='Release' params='{"id" : "all"}'>
+			<td align='right'>
+				<ui-button action='Release' params='{"id" : "all"}' style='width:100%'>
 					Release All
 				</ui-button>
 			</td>
@@ -62,7 +62,7 @@
 			</td>
 		</tr>
 	{{#each data.materials}}
-		<tr class='candystripe'>
+		<tr>
 			<td>
 				{{name}}
 			</td>
@@ -70,7 +70,7 @@
 				{{amount}}
 			</td>
 			<td align='right'>
-				<ui-button action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+				<ui-button action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}' style='width:100%'>
 					Release
 				</ui-button>
 			</td>
@@ -80,7 +80,7 @@
 		</tr>
 	{{/each}}
 	{{#each data.alloys}}
-		<tr class='candystripe'>
+		<tr>
 			<td>
 				{{name}}
 			</td>
@@ -88,12 +88,12 @@
 				{{amount}}
 			</td>
 			<td align='right'>
-				<ui-button action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+				<ui-button action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}' style='width:100%'>
 					Smelt
 				</ui-button>
 			</td>
 			<td align='right'>
-				<ui-button action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+				<ui-button action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}' style='width:100%'>
 					Smelt All
 				</ui-button>
 			</td>
