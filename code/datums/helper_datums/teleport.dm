@@ -99,7 +99,7 @@
 
 	var/turf/destturf
 	var/turf/curturf = get_turf(teleatom)
-	destturf = get_teleport_turf(destturf, precision)
+	destturf = get_teleport_turf(get_turf(destination), precision)
 
 	if(!destturf || !curturf || destturf.is_transition_turf())
 		return 0
