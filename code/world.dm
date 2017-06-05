@@ -24,7 +24,6 @@
 
 	config = new
 
-	GLOBAL_VAR_INIT(ip_address, HTTPSGet("https://api.ipify.org/"))
 	SetRoundID()
 
 	SetupLogs()
