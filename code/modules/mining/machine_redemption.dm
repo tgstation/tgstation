@@ -17,7 +17,7 @@
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
 	var/point_upgrade = 1
-	var/list/ore_values = list("sand" = 1, "iron" = 1, "plasma" = 15, "silver" = 16, "gold" = 18, "titanium" = 30, "uranium" = 30, "diamond" = 50, "bluespace crystal" = 50, "bananium" = 60)
+	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
 	speed_process = 1
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
@@ -94,7 +94,7 @@
 		if(!M || !redemption_mat)
 			return 0
 
-		var/smeltable_sheets = round(redemption_mat.amount / M)
+		var/smeltable_sheets = Floor(redemption_mat.amount / M)
 
 		if(!smeltable_sheets)
 			return 0
@@ -194,6 +194,12 @@
 			inserted_disk = W
 			return TRUE
 
+	if(istype(W, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = W
+		var/inserted = materials.insert_stack(S, S.amount)
+		to_chat(user, "<span class='notice'>You add [inserted] [S] sheets to \the [src].</span>")
+		return
+
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/on_deconstruction()
@@ -205,142 +211,147 @@
 		return
 	interact(user)
 
-/obj/machinery/mineral/ore_redemption/interact(mob/user)
-	var/dat = "This machine only accepts ore. Gibtonite and Slag are not accepted.<br><br>"
-	dat += "Current unclaimed points: [points]<br>"
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 550, master_ui, state)
+		ui.open()
 
+/obj/machinery/mineral/ore_redemption/ui_data(mob/user)
+	var/list/data = list()
+	data["unclaimedPoints"] = points
 	if(inserted_id)
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject_id=1'>Eject ID.</A><br>"
-		dat += "<A href='?src=\ref[src];claim=1'>Claim points.</A><br><br>"
-	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];insert_id=1'>Insert ID.</A><br><br>"
+		data["hasID"] = TRUE
+		data["claimedPoints"] = inserted_id.mining_points
 
+	data["materials"] = list()
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
-		if(M.amount)
-			var/sheet_amount = M.amount / MINERAL_MATERIAL_AMOUNT
-			dat += "[capitalize(M.name)]: [sheet_amount] "
-			if(sheet_amount >= 1)
-				dat += "<A href='?src=\ref[src];release=[mat_id]'>Release</A><br>"
-			else
-				dat += "<span  class='linkOff'>Release</span><br>"
+		var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
+		data["materials"] += list(list("name" = M.name, "id" = M.id, "amount" = sheet_amount, "value" = ore_values[M.id] * point_upgrade))
 
-	dat += "<br><b>Alloys: </b><br>"
-
+	data["alloys"] = list()
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
-		if(can_smelt_alloy(D))
-			dat += "[D.name]: <A href='?src=\ref[src];alloy=[D.id]'>Smelt</A><br>"
-		else
-			dat += "[D.name]: <span class='linkOff'>Smelt</span><br>"
-
-	dat += "<br><div class='statusDisplay'><b>Mineral Value List:</b><br>[get_ore_values()]</div>"
-
+		data["alloys"] += list(list("name" = D.name, "id" = D.id, "amount" = can_smelt_alloy(D)))
+	data["diskDesigns"] = list()
 	if(inserted_disk)
-		dat += "<A href='?src=\ref[src];eject_disk=1'>Eject disk</A><br>"
-		dat += "<div class='statusDisplay'><b>Uploadable designs: </b><br>"
+		data["hasDisk"] = TRUE
+		if(inserted_disk.blueprints.len)
+			var/index = 1
+			for (var/datum/design/thisdesign in inserted_disk.blueprints)
+				if(thisdesign)
+					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type&SMELTER))
+				index++
+	return data
 
-		for(var/i in 1 to inserted_disk.max_blueprints)
-			if(inserted_disk.blueprints[i])
-				var/datum/design/D = inserted_disk.blueprints[i]
-				if(D.build_type & SMELTER)
-					dat += "Name: [D.name] <A href='?src=\ref[src];upload=[i]'>Upload to smelter</A>"
-
-		dat += "</div><br>"
-	else
-		dat += "<A href='?src=\ref[src];insert_disk=1'>Insert design disk</A><br><br>"
-
-	var/datum/browser/popup = new(user, "ore_redemption_machine", "Ore Redemption Machine", 400, 500)
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/obj/machinery/mineral/ore_redemption/proc/get_ore_values()
-	var/dat = "<table border='0' width='300'>"
-	for(var/ore in ore_values)
-		var/value = ore_values[ore]
-		dat += "<tr><td>[capitalize(ore)]</td><td>[value * point_upgrade]</td></tr>"
-	dat += "</table>"
-	return dat
-
-/obj/machinery/mineral/ore_redemption/Topic(href, href_list)
+/obj/machinery/mineral/ore_redemption/ui_act(action, params)
 	if(..())
 		return
-	if(href_list["eject_id"])
-		usr.put_in_hands(inserted_id)
-		inserted_id = null
-	if(href_list["claim"])
-		if(inserted_id)
-			if(req_access_reclaim in inserted_id.access)
+	switch(action)
+		if("Eject")
+			if(!inserted_id)
+				return
+			usr.put_in_hands(inserted_id)
+			inserted_id = null
+			return TRUE
+		if("Insert")
+			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
+			if(istype(I))
+				if(!usr.transferItemToLoc(I,src))
+					return
+				inserted_id = I
+			else
+				to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
+			return TRUE
+		if("Claim")
+			if(inserted_id)
 				inserted_id.mining_points += points
 				points = 0
+			return TRUE
+		if("Release")
+
+			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
+				var/out = get_step(src, output_dir)
+				if(params["id"] == "all")
+					materials.retrieve_all(out)
+				else
+					var/mat_id = params["id"]
+					if(!materials.materials[mat_id])
+						return
+					var/datum/material/mat = materials.materials[mat_id]
+					var/stored_amount = mat.amount / MINERAL_MATERIAL_AMOUNT
+
+					if(!stored_amount)
+						return
+
+					var/desired = 0
+					if (params["sheets"])
+						desired = text2num(params["sheets"])
+					else
+						desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+
+					var/sheets_to_remove = round(min(desired,50,stored_amount))
+					materials.retrieve_sheets(sheets_to_remove, mat_id, out)
+
 			else
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
-	else if(href_list["insert_id"])
-		var/obj/item/weapon/card/id/I = usr.get_active_held_item()
-		if(istype(I))
-			if(!usr.transferItemToLoc(I,src))
-				return
-			inserted_id = I
-		else
-			to_chat(usr, "<span class='warning'>Not a valid ID!</span>")
-	if(href_list["eject_disk"])
-		if(inserted_disk)
-			inserted_disk.forceMove(loc)
-			inserted_disk = null
-	if(href_list["insert_disk"])
-		var/obj/item/weapon/disk/design_disk/D = usr.get_active_held_item()
-		if(istype(D))
-			if(!usr.transferItemToLoc(D,src))
-				return
-			inserted_disk = D
-	if(href_list["upload"])
-		var/n = text2num(href_list["upload"])
-		if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
-			files.AddDesign2Known(inserted_disk.blueprints[n])
-
-	if(href_list["release"])
-		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
-			var/mat_id = href_list["release"]
-			if(!materials.materials[mat_id])
-				return
-
-			var/datum/material/mat = materials.materials[mat_id]
-			var/stored_amount = mat.amount / MINERAL_MATERIAL_AMOUNT
-
-			if(!stored_amount)
-				return
-
-			var/desired = input("How many sheets?", "How many sheets to eject?", 1) as null|num
-			var/sheets_to_remove = round(min(desired,50,stored_amount))
-
-			var/out = get_step(src, output_dir)
-			materials.retrieve_sheets(sheets_to_remove, mat_id, out)
-
-		else
-			to_chat(usr, "<span class='warning'>Required access not found.</span>")
-
-	if(href_list["alloy"])
-		var/alloy_id = href_list["alloy"]
-		var/datum/design/alloy = files.FindDesignByID(alloy_id)
-		if((check_access(inserted_id) || allowed(usr)) && alloy)
-			var/desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
-			var/smelt_amount = can_smelt_alloy(alloy)
-			var/amount = round(min(desired,50,smelt_amount))
-			materials.use_amount(alloy.materials, amount)
-
-			var/output = new alloy.build_path(src)
-			if(istype(output, /obj/item/stack/sheet))
-				var/obj/item/stack/sheet/mineral/produced_alloy = output
-				produced_alloy.amount = amount
-				unload_mineral(produced_alloy)
+			return TRUE
+		if("diskInsert")
+			var/obj/item/weapon/disk/design_disk/disk = usr.get_active_held_item()
+			if(istype(disk))
+				if(!usr.transferItemToLoc(disk,src))
+					return
+				inserted_disk = disk
 			else
-				unload_mineral(output)
-
-		else
-			to_chat(usr, "<span class='warning'>Required access not found.</span>")
-	updateUsrDialog()
-	return
+				to_chat(usr, "<span class='warning'>Not a valid Design Disk!</span>")
+			return TRUE
+		if("diskEject")
+			if(inserted_disk)
+				usr.put_in_hands(inserted_disk)
+				inserted_disk = null
+			return TRUE
+		if("diskUpload")
+			var/n = text2num(params["design"])
+			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
+				files.AddDesign2Known(inserted_disk.blueprints[n])
+			return TRUE
+		if("Smelt")
+			var/alloy_id = params["id"]
+			var/datum/design/alloy = files.FindDesignByID(alloy_id)
+			if((check_access(inserted_id) || allowed(usr)) && alloy)
+				var/smelt_amount = can_smelt_alloy(alloy)
+				var/desired = 0
+				if (params["sheets"])
+					desired = text2num(params["sheets"])
+				else
+					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+				var/amount = round(min(desired,50,smelt_amount))
+				materials.use_amount(alloy.materials, amount)
+				var/output = new alloy.build_path(src)
+				if(istype(output, /obj/item/stack/sheet))
+					var/obj/item/stack/sheet/produced_alloy = output
+					produced_alloy.amount = amount
+					unload_mineral(produced_alloy)
+				else
+					unload_mineral(output)
+			else
+				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			return TRUE
+		if("SmeltAll")
+			var/alloy_id = params["id"]
+			var/datum/design/alloy = files.FindDesignByID(alloy_id)
+			if((check_access(inserted_id) || allowed(usr)) && alloy)
+				var/smelt_amount = can_smelt_alloy(alloy)
+				while(smelt_amount > 0)
+					materials.use_amount(alloy.materials)
+					smelt_amount--
+					var/output = new alloy.build_path(src)
+					unload_mineral(output)
+					CHECK_TICK
+			else
+				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+			return TRUE
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
