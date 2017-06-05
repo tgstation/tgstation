@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - spellcheck: "Renames Clockwork Proselytizers to Replica Fabricators."
+  - balance: "Replica Fabricators can directly consume floor tiles, rods, metal, and plasteel for power instead of needing to convert to brass first."
