@@ -99,21 +99,23 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/static/list/removable_devil_spells = list(
 		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork,
-		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
-		/obj/effect/proc_holder/spell/targeted/infernal_jaunt,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater,
-		/obj/effect/proc_holder/spell/targeted/sintouch,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended,
+		/obj/effect/proc_holder/spell/targeted/infernal_jaunt,
+		/obj/effect/proc_holder/spell/targeted/sintouch,
 		/obj/effect/proc_holder/spell/targeted/sintouch/ascended)
 	var/static/list/devil_spells = list(
 		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork,
-		/obj/effect/proc_holder/spell/aimed/fireball/hellish,
-		/obj/effect/proc_holder/spell/targeted/infernal_jaunt,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater,
-		/obj/effect/proc_holder/spell/targeted/sintouch,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended,
+		/obj/effect/proc_holder/spell/targeted/infernal_jaunt,
+		/obj/effect/proc_holder/spell/targeted/sintouch,
 		/obj/effect/proc_holder/spell/targeted/sintouch/ascended,
+		/obj/effect/proc_holder/spell/targeted/summon_contract,
+		/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
+		/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
+	var/static/list/basic_devil_spells = list(
 		/obj/effect/proc_holder/spell/targeted/summon_contract,
 		/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
 		/obj/effect/proc_holder/spell/targeted/summon_dancefloor)
@@ -218,7 +220,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	to_chat(D, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
 	D.oldform.loc = D.loc
 	owner.transfer_to(D.oldform)
-	give_lizard_spells()
+	give_blood_spells()
 	qdel(D)
 	form = BLOOD_LIZARD
 	update_hud()
@@ -237,7 +239,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		H.regenerate_icons()
 	else //Did the devil get hit by a staff of transmutation?
 		owner.current.color = "#501010"
-	give_lizard_spells()
+	give_blood_spells()
 	form = BLOOD_LIZARD
 
 
@@ -254,7 +256,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	give_true_spells()
 	form = TRUE_DEVIL
 	update_hud()
-
 
 /datum/antagonist/devil/proc/increase_arch_devil()
 	if(!ascendable)
@@ -313,27 +314,43 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			owner.RemoveSpell(S)
 
 /datum/antagonist/devil/proc/give_summon_contract()
+	for(var/X in owner.spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(is_type_in_typecache(S, basic_devil_spells))
+			owner.RemoveSpell(S)
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_contract(null))
+	if(obligation == OBLIGATION_FIDDLE)
+		owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/violin(null))
+	else if(obligation == OBLIGATION_DANCEOFF)
+		owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_dancefloor(null))
 
+/datum/antagonist/devil/proc/give_appropriate_spells()
+	if(SOULVALUE<0)
+		give_summon_contract()
+	else if (SOULVALUE < BLOOD_THRESHOLD)
+		give_base_spells()
+	else if (SOULVALUE < TRUE_THRESHOLD)
+		give_blood_spells()
+	else if (SOULVALUE < ARCH_THRESHOLD)
+		give_true_spells()
+	else
+		give_arch_spells()
 
-/datum/antagonist/devil/proc/give_base_spells(give_summon_contract = 0)
+/datum/antagonist/devil/proc/give_base_spells()
+	give_summon_contract()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
-	if(give_summon_contract)
-		give_summon_contract()
-		if(obligation == OBLIGATION_FIDDLE)
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/violin(null))
-		if(obligation == OBLIGATION_DANCEOFF)
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_dancefloor(null))
 
-/datum/antagonist/devil/proc/give_lizard_spells()
+/datum/antagonist/devil/proc/give_blood_spells()
+	give_summon_contract()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 
 /datum/antagonist/devil/proc/give_true_spells()
+	give_summon_contract()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball/hellish(null))
@@ -341,6 +358,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null))
 
 /datum/antagonist/devil/proc/give_arch_spells()
+	give_summon_contract()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch/ascended(null))
@@ -502,7 +520,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	.=..()
 
 /datum/antagonist/devil/apply_innate_effects(mob/living/mob_override)
-	give_base_spells(1)
+	give_appropriate_spells()
 	owner.current.grant_all_languages(TRUE)
 	update_hud()
 	.=..()
@@ -521,6 +539,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/obligation
 	var/ban
 	var/banish
+	var/ascendable
 
 /datum/fakeDevil/New(name = randomDevilName())
 	truename = name
@@ -528,3 +547,4 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	obligation = randomdevilobligation()
 	ban = randomdevilban()
 	banish = randomdevilbanish()
+	ascendable = prob(25)
