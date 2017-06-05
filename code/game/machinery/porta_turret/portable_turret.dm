@@ -675,8 +675,7 @@
 	if(!mapload)
 		return
 	if(control_area && istext(control_area))
-		for(var/V in GLOB.sortedAreas)
-			var/area/A = V
+		for(var/area/A in world)
 			if(A.name == control_area)
 				control_area = A
 				break
