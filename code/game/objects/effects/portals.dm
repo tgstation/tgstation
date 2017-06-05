@@ -112,6 +112,8 @@
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M)
+	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
+		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
@@ -125,8 +127,6 @@
 	return FALSE
 
 /obj/effect/portal/proc/get_link_target_turf()
-	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
-		return
 	var/turf/real_target
 	if(!istype(linked) || QDELETED(linked))
 		if(hardlinked)
