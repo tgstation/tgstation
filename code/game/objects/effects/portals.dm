@@ -78,17 +78,19 @@
 			atmos_destination = hard_target
 	else
 		return FALSE
-	if((atmos_source.atmos_adjacent_turfs[atmos_destination]) || (atmos_destination.atmos_adjacent_turfs[atmos_source]))	//Already linked!
+	LAZYINITLIST(atmos_source.atmos_adjacent_turfs)
+	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
+	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source])	//Already linked!
 		return FALSE
 	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
 	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
-		atmos_source.atmos_adjacent_turfs -= atmos_destination
+		LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
 		atmos_source = null
 	if(istype(atmos_destination))
-		atmos_destination.atmos_adjacent_turfs -= atmos_source
+		LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
 		atmos_destination = null
 
 /obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.
@@ -120,4 +122,7 @@
 		real_target = get_turf(linked)
 	if(ismegafauna(M))
 		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
-	do_teleport(M, real_target, 0)
+	if(do_teleport(M, real_target, 0))
+		if(istype(M, /obj/item/projectile))
+			var/obj/item/projectile/P = M
+			P.ignore_source_check = TRUE
