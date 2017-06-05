@@ -263,9 +263,9 @@
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A][COORD(bombturf)]")
-		det_timer = addtimer(CALLBACK(src, .proc/detonate), det_time)
+		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time)
 	
-/obj/item/weapon/twohanded/required/gibtonite/proc/detonate()
+/obj/item/weapon/twohanded/required/gibtonite/proc/detonate(notify_admins)
 	if(primed)
 		if(quality == 3)
 			explosion(src.loc,2,4,9,adminlog = notify_admins)
