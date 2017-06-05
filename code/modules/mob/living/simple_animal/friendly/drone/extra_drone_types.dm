@@ -168,7 +168,7 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	return FALSE
+	return GLOB.ratvar_awakens
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
 	if(GLOB.ratvar_awakens)
