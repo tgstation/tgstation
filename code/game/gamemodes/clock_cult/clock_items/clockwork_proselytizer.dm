@@ -114,10 +114,6 @@
 		charge_delay = 2
 
 /obj/item/clockwork/clockwork_proselytizer/ratvar_act()
-	if(GLOB.nezbere_invoked)
-		charge_rate = 1250
-	else
-		charge_rate = initial(charge_rate)
 	if(GLOB.ratvar_awakens)
 		uses_power = FALSE
 		speed_multiplier = initial(speed_multiplier) * 0.25

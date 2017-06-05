@@ -8,12 +8,10 @@
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_daemons, 0) //How many daemons exist in the world
-GLOBAL_LIST_INIT(clockwork_generals_invoked, list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE)) //How many generals have been recently invoked
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
 GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
-GLOBAL_VAR_INIT(nezbere_invoked, 0) //If Nezbere has been invoked; not a boolean, for proper handling of multiple Nezberes
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
@@ -27,10 +25,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define APPLICATION_SERVANT_REQ 8
 #define APPLICATION_CACHE_REQ 3
 #define APPLICATION_CV_REQ 100
-#define SCRIPTURE_REVENANT "Revenant"
-#define REVENANT_SERVANT_REQ 10
-#define REVENANT_CACHE_REQ 4
-#define REVENANT_CV_REQ 200
 #define SCRIPTURE_JUDGEMENT "Judgement"
 #define JUDGEMENT_SERVANT_REQ 12
 #define JUDGEMENT_CACHE_REQ 5
@@ -50,10 +44,6 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
 
 #define MAX_COMPONENTS_BEFORE_RAND (10*LOWER_PROB_PER_COMPONENT) //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
-
-#define GLOBAL_CLOCKWORK_GENERAL_COOLDOWN 3000 //how long globally-affecting clockwork generals go on cooldown after use, defaults to 5 minutes
-
-#define CLOCKWORK_GENERAL_COOLDOWN 2000 //how long clockwork generals go on cooldown after use, defaults to 3 minutes 20 seconds
 
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
