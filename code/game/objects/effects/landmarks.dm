@@ -190,7 +190,7 @@
 
 /obj/effect/landmark/latejoin/Initialize(mapload)
 	..()
-	GLOB.latejoin += loc
+	SSjob.latejoin_trackers += loc
 	qdel(src)
 
 // carp.

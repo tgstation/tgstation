@@ -17,7 +17,6 @@
 			<ui-button state='{{data.selected == "Driver" ? "selected" : null}}' action='select' params='{"category": "Driver"}'>Driver</ui-button> 
 			<ui-button state='{{data.selected == "Script" ? "selected" : null}}' action='select' params='{"category": "Script"}'>Scripts</ui-button> 
 			<ui-button state='{{data.selected == "Application" ? "selected" : null}}' action='select' params='{"category": "Application"}'>Applications</ui-button> 
-			<ui-button state='{{data.selected == "Revenant" ? "selected" : null}}' action='select' params='{"category": "Revenant"}'>Revenant</ui-button> 
 			<ui-button state='{{data.selected == "Judgement" ? "selected" : null}}' action='select' params='{"category": "Judgement"}'>Judgement</ui-button>
 			<br>{{{data.tier_info}}}
 		</ui-section><hr>
