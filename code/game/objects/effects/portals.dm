@@ -78,12 +78,16 @@
 			atmos_destination = hard_target
 	else
 		return FALSE
+	if(!istype(atmos_source) || !istype(atmos_destination))
+		return FALSE
 	LAZYINITLIST(atmos_source.atmos_adjacent_turfs)
 	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
 	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source])	//Already linked!
 		return FALSE
 	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
 	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
+	atmos_source.air_update_turf(FALSE)
+	atmos_destination.air_update_turf(FALSE)
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
