@@ -32,8 +32,8 @@
 
 		var/success
 		if(target.mind in SSticker.mode.get_gangsters())
-			if(SSticker.mode.remove_gangster(target.mind))
-				success = TRUE     //Was not a gang boss, convert as usual
+			if(SSticker.mode.remove_gangster(target.mind) && (target.mind.gang_datum != gang))
+				success = TRUE
 		else
 			success = TRUE
 

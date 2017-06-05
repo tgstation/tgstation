@@ -190,7 +190,7 @@
 		to_chat(user, "<span class='notice'> No contraband detected!</span>")
 		return
 	playsound(src, 'sound/items/poster_being_created.ogg', 75, 1)
-	if(do_after(user, 30, TRUE, I))
+	if(do_after(user, 20, TRUE, I))
 		points += value
 		to_chat(user, "<span class='notice'>[I] has been processed for [value] influence.")
 		qdel(I)

@@ -154,8 +154,8 @@
 	icon_state = "gang_teleporter_on"
 	var/datum/gang/G
 	var/list/mob/dead/observer/queue = list()
-	max_integrity = 500
-	obj_integrity = 500
+	max_integrity = 400
+	obj_integrity = 400
 	var/final_guard = TRUE
 
 /obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
@@ -173,7 +173,7 @@
 /obj/machinery/gang/backup/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
 	if(.)
-		if((obj_integrity < 400) && final_guard == TRUE)
+		if((obj_integrity < 300) && final_guard == TRUE)
 			final_guard = FALSE
 			reinforce(FALSE)
 
@@ -211,7 +211,7 @@
 				rival++
 	if(!we)
 		we = 1
-	cooldown = 200+((we/(rival+we))*100)**2
+	cooldown = 250+((we/(rival+we))*100)**2
 	if(repeat)
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
 	spawn_gangster()

@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/area/target_hop
 	var/area/target_det
 	var/area/target_ward
+	var/area/target_atmos
 
 	announce_span = "danger"
 	announce_text = "A violent turf war has erupted on the station!\n\
@@ -102,6 +103,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	for(var/area/science/mixing/T in GLOB.sortedAreas)
 		target_science = T
+		break
+
+	for(var/area/engine/atmos/O in GLOB.sortedAreas)
+		target_atmos = O
 		break
 
 	if(config.protect_roles_from_antagonist)
@@ -212,6 +217,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	if(target_science)
 		for(var/obj/item/device/transfer_valve/TTV in area_contents(target_science))
 			qdel(TTV)
+	if(target_atmos)
+		for(var/turf/open/floor/engine/plasma/T in area_contents(target_atmos))
+			qdel(T)
+			new /turf/open/floor/engine(T)
+			new /obj/structure/barricade/wooden(T)
 
 
 /datum/game_mode/gang/post_setup()
@@ -420,7 +430,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-	if(alive < (GLOB.joined_player_list.len * 0.5 && (SSshuttle.emergency.mode == SHUTTLE_RECALL) || (SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+	if((alive <= (GLOB.joined_player_list.len * 0.5)) && (SSshuttle.emergency.mode == SHUTTLE_RECALL || SSshuttle.emergency.mode == SHUTTLE_IDLE || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
