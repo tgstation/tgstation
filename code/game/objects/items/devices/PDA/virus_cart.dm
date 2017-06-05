@@ -1,6 +1,5 @@
 /obj/item/weapon/cartridge/virus
 	name = "Generic Virus PDA cart"
-	desc = "If you see this, let a coder know that there is a generic PDA virus cart."
 	var/charges = 5
 
 obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/living/U)
@@ -68,5 +67,29 @@ obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/
 		to_chat(U, "<span class='notice'>Virus Sent!</span>")
 		target.silent = 1
 		target.ttone = "silence"
+	else
+		to_chat(U, "PDA not found.")
+
+/obj/item/weapon/cartridge/virus/frame
+	name = "\improper F.R.A.M.E. cartridge"
+	icon_state = "cart"
+
+/obj/item/weapon/cartridge/virus/frame/send_virus(obj/item/device/pda/target, mob/living/U)
+	if(charges <= 0)
+		to_chat(U, "<span class='notice'>Out of charges.</span>")
+		return
+	if(!isnull(target) && !target.toff)
+		charges--
+		var/lock_code = "[rand(100,999)] [pick("Alpha","Bravo","Charlie","Delta","Echo","Foxtrot","Golf","Hotel","India","Juliet","Kilo","Lima","Mike","November","Oscar","Papa","Quebec","Romeo","Sierra","Tango","Uniform","Victor","Whiskey","X-ray","Yankee","Zulu")]"
+		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
+		if(!target.hidden_uplink)
+			var/obj/item/device/uplink/uplink = new(target)
+			target.hidden_uplink = uplink
+			target.lock_code = lock_code
+			target.hidden_uplink.telecrystals = 0
+		else
+			target.hidden_uplink.hidden_crystals = target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't force open other PDAs.
+			target.hidden_uplink.telecrystals = 0
+		target.hidden_uplink.active = TRUE
 	else
 		to_chat(U, "PDA not found.")

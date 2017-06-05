@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"
 
 				if (istype(cartridge, /obj/item/weapon/cartridge/virus))
-					var/obj/item/weapon/cartridge/virus/viral_cart
+					var/obj/item/weapon/cartridge/virus/viral_cart = cartridge
 					dat += "<b>[viral_cart.charges] viral files left.</b><HR>"
 
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
@@ -417,16 +417,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 				tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
-				if(in_range(src, U) && loc == U)
-					if(t)
-						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
-							hidden_uplink.interact(U)
-							to_chat(U, "The PDA softly beeps.")
-							U << browse(null, "window=pda")
-							src.mode = 0
-						else
-							t = copytext(sanitize(t), 1, 20)
-							ttone = t
+				if(in_range(src, U) && loc == U && t)
+					if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+						hidden_uplink.interact(U)
+						to_chat(U, "The PDA softly beeps.")
+						U << browse(null, "window=pda")
+						src.mode = 0
+					else
+						t = copytext(sanitize(t), 1, 20)
+						ttone = t
 				else
 					U << browse(null, "window=pda")
 					return
