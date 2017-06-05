@@ -147,8 +147,7 @@
 	user.reset_perspective(eye)
 	eye.setLoc(H.loc)
 
-	hangup = new(src)
-	hangup.Grant(eye)
+	hangup = new(eye, src)
 
 //Checks the validity of a holocall and qdels itself if it's not. Returns TRUE if valid, FALSE otherwise
 /datum/holocall/proc/Check()
@@ -178,7 +177,7 @@
 	button_icon_state = "camera_off"
 	var/datum/holocall/hcall
 
-/datum/action/innate/end_holocall/New(datum/holocall/HC)
+/datum/action/innate/end_holocall/New(Target, datum/holocall/HC)
 	..()
 	hcall = HC
 
