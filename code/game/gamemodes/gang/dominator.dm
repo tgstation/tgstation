@@ -1,5 +1,6 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 #define DOM_REQUIRED_TURFS 30
+#define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
 	name = "dominator"
@@ -21,7 +22,7 @@
 	var/obj/effect/countdown/dominator/countdown
 
 /obj/machinery/dominator/hulk_damage()
-	return 20
+	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
 
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
