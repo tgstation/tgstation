@@ -428,7 +428,6 @@
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_cyborg.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_drivers.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_judgement.dm"
-#include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_revenant.dm"
 #include "code\game\gamemodes\clock_cult\clock_scriptures\scripture_scripts.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ark_of_the_clockwork_justicar.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\clock_shells.dm"
