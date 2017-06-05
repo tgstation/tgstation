@@ -163,6 +163,7 @@
 	range = 3
 	log_override = TRUE
 
+	var/pressure_decrease_active = FALSE
 	var/pressure_decrease = 0.25
 	var/obj/item/weapon/gun/energy/kinetic_accelerator/kinetic_gun
 
@@ -179,6 +180,7 @@
 	if(pressure > 50)
 		name = "weakened [name]"
 		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
 	. = ..()
 
 /obj/item/projectile/kinetic/on_range()
@@ -194,7 +196,10 @@
 	if(!target_turf)
 		target_turf = get_turf(src)
 	if(kinetic_gun) //hopefully whoever shot this was not very, very unfortunate.
-		for(var/obj/item/borg/upgrade/modkit/M in kinetic_gun.get_modkits())
+		var/list/mods = kinetic_gun.get_modkits()
+		for(var/obj/item/borg/upgrade/modkit/M in mods)
+			M.projectile_strike_predamage(src, target_turf, target, kinetic_gun)
+		for(var/obj/item/borg/upgrade/modkit/M in mods)
 			M.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
@@ -265,6 +270,9 @@
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 
+//use this one for effects you want to trigger before mods that do damage
+/obj/item/borg/upgrade/modkit/proc/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+//and this one for things that don't need to trigger before other damage-dealing mods
 /obj/item/borg/upgrade/modkit/proc/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 
 //Range
@@ -394,7 +402,7 @@
 	modifier = -14 //Makes the cooldown 3 seconds(with no cooldown mods) if you miss. Don't miss.
 	cost = 50
 
-/obj/item/borg/upgrade/modkit/cooldown/repeater/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/cooldown/repeater/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	var/valid_repeat = FALSE
 	if(isliving(target))
 		var/mob/living/L = target
@@ -404,7 +412,7 @@
 		valid_repeat = TRUE
 	if(valid_repeat)
 		KA.overheat = FALSE
-	KA.attempt_reload(KA.overheat_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
+		KA.attempt_reload(KA.overheat_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"
@@ -415,7 +423,7 @@
 	cost = 20
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
-/obj/item/borg/upgrade/modkit/lifesteal/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/lifesteal/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target) && isliving(K.firer))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
@@ -438,6 +446,42 @@
 			R.burst()
 			return
 		new /obj/effect/temp_visual/resonance(target_turf, K.firer, null, 30)
+
+/obj/item/borg/upgrade/modkit/bounty
+	name = "death syphon"
+	desc = "Killing or assisting in killing a creature permenantly increases your damage against that type of creature."
+	denied_type = /obj/item/borg/upgrade/modkit/bounty
+	modifier = 1.25
+	cost = 30
+	var/maximum_bounty = 25
+	var/list/bounties_reaped = list()
+
+/obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	if(isliving(target))
+		var/mob/living/L = target
+		var/list/existing_marks = L.has_status_effect_list(STATUS_EFFECT_SYPHONMARK)
+		for(var/i in existing_marks)
+			var/datum/status_effect/syphon_mark/SM = i
+			if(SM.reward_target == src) //we want to allow multiple people with bounty modkits to use them, but we need to replace our own marks so we don't multi-reward
+				SM.reward_target = null
+				qdel(SM)
+		var/datum/status_effect/syphon_mark/SM = L.apply_status_effect(STATUS_EFFECT_SYPHONMARK)
+		SM.reward_target = src
+		if(bounties_reaped[L.type])
+			var/kill_modifier = 1
+			if(K.pressure_decrease_active)
+				kill_modifier *= K.pressure_decrease
+			var/armor = L.run_armor_check(K.def_zone, K.flag, "", "", K.armour_penetration)
+			L.apply_damage(bounties_reaped[L.type]*kill_modifier, K.damage_type, K.def_zone, armor)
+
+/obj/item/borg/upgrade/modkit/bounty/proc/get_kill(mob/living/L)
+	var/bonus_mod = 1
+	if(ismegafauna(L)) //megafauna reward
+		bonus_mod = 4
+	if(!bounties_reaped[L.type])
+		bounties_reaped[L.type] = min(modifier * bonus_mod, maximum_bounty)
+	else
+		bounties_reaped[L.type] = min(bounties_reaped[L.type] + (modifier * bonus_mod), maximum_bounty)
 
 //Indoors
 /obj/item/borg/upgrade/modkit/indoors
