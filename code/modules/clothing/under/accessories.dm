@@ -1,7 +1,7 @@
 /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/ties.dmi'
+	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	item_color = "bluetie"
@@ -55,6 +55,10 @@
 
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
+
+/obj/item/clothing/accessory/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -113,7 +117,7 @@
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
-/obj/item/clothing/accessory/medal/nobel_science
+/obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
 	desc = "A bronze medal which represents significant contributions to the field of science or engineering."
 
@@ -147,6 +151,17 @@
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+
+/obj/item/clothing/accessory/medal/plasma/nobel_science
+	name = "nobel sciences award"
+	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
+
+/obj/item/clothing/accessory/medal/plasma
+	name = "plasma medal"
+	desc = "An eccentric medal made of plasma."
+	item_state = "plasma"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
+	materials = list(MAT_PLASMA=1000)
 
 ////////////
 //Armbands//
@@ -228,3 +243,14 @@
 	var/mob/living/L = user
 	if(L)
 		L.bubble_icon = initial(L.bubble_icon)
+
+////////////////
+//OONGA BOONGA//
+////////////////
+
+/obj/item/clothing/accessory/talisman
+	name = "bone talisman"
+	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
+	icon_state = "talisman"
+	item_color = "talisman"
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)

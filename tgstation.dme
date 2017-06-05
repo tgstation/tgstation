@@ -1169,7 +1169,7 @@
 #include "code\modules\clothing\masks\gasmask.dm"
 #include "code\modules\clothing\masks\hailer.dm"
 #include "code\modules\clothing\masks\miscellaneous.dm"
-#include "code\modules\clothing\neck\ties.dm"
+#include "code\modules\clothing\neck\neck.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\standard.dm"
 #include "code\modules\clothing\shoes\bananashoes.dm"

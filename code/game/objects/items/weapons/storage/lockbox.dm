@@ -112,5 +112,6 @@
 		new /obj/item/clothing/accessory/medal/conduct(src)
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
 	new /obj/item/clothing/accessory/medal/silver/security(src)
-	new /obj/item/clothing/accessory/medal/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/plasma(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 	new /obj/item/clothing/accessory/medal/gold/heroism(src)

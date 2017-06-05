@@ -545,7 +545,7 @@ BLIND     // can't see anything
 			var/accessory_color = hasaccessory.item_color
 			if(!accessory_color)
 				accessory_color = hasaccessory.icon_state
-			var/mutable_appearance/accessory = mutable_appearance('icons/mob/ties.dmi', "[accessory_color]")
+			var/mutable_appearance/accessory = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
 			accessory.alpha = hasaccessory.alpha
 			accessory.color = hasaccessory.color
 			. += accessory
