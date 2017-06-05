@@ -223,6 +223,9 @@
 				return
 		A.Bumped(src)
 
+/atom/movable/Crossed(atom/movable/O, oldloc)
+	. = ..(O)
+
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
 		if(pulledby)
@@ -247,7 +250,7 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				AM.Crossed(src)
+				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
 		return 1
