@@ -45,7 +45,7 @@
 	var/temp = getBruteLoss()
 	if(temp)
 		if (temp < 30)
-			if(prob(50)
+			if(prob(50))
 				msg += "[t_He] [t_has] small bruises.\n"
 			else
 				msg += "[t_He] [t_has] minor bruising.\n"
