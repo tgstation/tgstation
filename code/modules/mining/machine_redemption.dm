@@ -243,7 +243,6 @@
 				if(thisdesign)
 					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type&SMELTER))
 				index++
-				CHECK_TICK
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
