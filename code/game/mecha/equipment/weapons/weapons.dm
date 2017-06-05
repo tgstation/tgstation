@@ -172,7 +172,7 @@
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+			if(H.ears && (H.ears.flags & EARBANGPROTECT))
 				continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
