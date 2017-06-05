@@ -20,6 +20,9 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
 
+/obj/machinery/dominator/hulk_damage()
+	return 20
+
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
 	for(var/turf/T in view(3, A))
