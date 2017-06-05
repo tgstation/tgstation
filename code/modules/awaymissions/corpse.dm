@@ -121,7 +121,7 @@
 	var/id = -1
 	var/neck = -1
 	var/backpack_contents = -1
-	var/suit_store
+	var/suit_store = -1
 
 /obj/effect/mob_spawn/human/Initialize()
 	if(ispath(outfit))
