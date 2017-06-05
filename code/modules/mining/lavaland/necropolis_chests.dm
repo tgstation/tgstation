@@ -70,7 +70,7 @@
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/weapon/bedsheet/cult(src)
 		if(28)
-			new /obj/item/borg/upgrade/modkit/bounty(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
 
 //KA modkit design discs
 /obj/item/weapon/disk/design_disk/modkit_disc
@@ -95,6 +95,10 @@
 /obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast
 	name = "Resonator Blast Mod Disk"
 	modkit_design = /datum/design/unique_modkit/resonator_blast
+
+/obj/item/weapon/disk/design_disk/modkit_disc/bounty
+	name = "Death Syphon Mod Disk"
+	modkit_design = /datum/design/unique_modkit/bounty
 
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
@@ -121,6 +125,13 @@
 	id = "resonatormod"
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
+
+/datum/design/unique_modkit/bounty
+	name = "Kinetic Accelerator Death Syphon Mod"
+	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
+	id = "resonatormod"
+	materials = list(MAT_GLASS = 4000, MAT_SILVER = 4000, MAT_DIAMOND = 4000, MAT_BLUESPACE = 8000)
+	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
 /obj/item/device/wisp_lantern
