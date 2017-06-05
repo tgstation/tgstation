@@ -53,10 +53,10 @@
 			if(4)
 				to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
 			if(5)
-				to_chat(user, "<span class='danger'>The [src]'s Big Guy synthesizer cannot be modified!</span>")
+				to_chat(user, "<span class='danger'>\The [src]'s Big Guy synthesizer cannot be modified!</span>")
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(emagged)
-			to_chat(user, "<span class='danger'>The [src]'s Big Guy synthesizer cannot be broken!</span>")
+			to_chat(user, "<span class='danger'>\The [src]'s Big Guy synthesizer cannot be broken!</span>")
 		else if(aggressiveness != 4)
 			to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 			aggressiveness = 4
