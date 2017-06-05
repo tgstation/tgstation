@@ -1037,7 +1037,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/device/sbeacondrop/bomb
-	cost = 11
+	cost = 8
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
