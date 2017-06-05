@@ -14011,7 +14011,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/clothing/neck/tie/black,
@@ -15128,7 +15128,7 @@
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/suppressor,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/weapon/soap/nanotrasen)
 	},
 /obj/item/weapon/storage/backpack/dufflebag{
-	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/tie/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
+	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/accessory/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
 	desc = "A large dufflebag for holding extra things. There is a NanoTrasen logo on the back.";
 	icon_state = "duffle-syndieammo";
 	item_state = "duffle-syndieammo"
@@ -57181,7 +57181,7 @@
 "ccz" = (
 /obj/item/weapon/wrench,
 /obj/item/clothing/suit/apron,
-/obj/item/clothing/tie/armband/hydro,
+/obj/item/clothing/accessory/armband/hydro,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9

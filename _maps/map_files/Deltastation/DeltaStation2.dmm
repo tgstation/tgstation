@@ -30601,11 +30601,11 @@
 "blx" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -103261,7 +103261,7 @@
 /obj/item/weapon/wirerod,
 /obj/item/weapon/wrench,
 /obj/item/clothing/under/waiter,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
