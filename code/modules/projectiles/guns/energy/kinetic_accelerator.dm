@@ -479,7 +479,7 @@
 	if(ismegafauna(L)) //megafauna reward
 		bonus_mod = 4
 	if(!bounties_reaped[L.type])
-		bounties_reaped[L.type] = modifier * bonus_mod
+		bounties_reaped[L.type] = min(modifier * bonus_mod, maximum_bounty)
 	else
 		bounties_reaped[L.type] = min(bounties_reaped[L.type] + (modifier * bonus_mod), maximum_bounty)
 
