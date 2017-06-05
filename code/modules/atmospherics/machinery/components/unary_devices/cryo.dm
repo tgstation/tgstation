@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
-	name = "cryo cell"
+	name = "Cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "cell-off"
 	density = 1
