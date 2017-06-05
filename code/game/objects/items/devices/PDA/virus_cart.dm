@@ -73,6 +73,7 @@ obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/
 /obj/item/weapon/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"
 	icon_state = "cart"
+	var/telecrystals = 0
 
 /obj/item/weapon/cartridge/virus/frame/send_virus(obj/item/device/pda/target, mob/living/U)
 	if(charges <= 0)
@@ -86,10 +87,10 @@ obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/
 			var/obj/item/device/uplink/uplink = new(target)
 			target.hidden_uplink = uplink
 			target.lock_code = lock_code
-			target.hidden_uplink.telecrystals = 0
 		else
-			target.hidden_uplink.hidden_crystals = target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't force open other PDAs.
-			target.hidden_uplink.telecrystals = 0
+			target.hidden_uplink.hidden_crystals = target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
+		target.hidden_uplink.telecrystals = telecrystals
+		telecrystals = 0
 		target.hidden_uplink.active = TRUE
 	else
 		to_chat(U, "PDA not found.")
