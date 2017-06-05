@@ -493,19 +493,34 @@ NUTRIMAX
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	products = list(
-		/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez = 30,
-		/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z = 20,
-		/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh = 10,
-		/obj/item/weapon/reagent_containers/spray/pestspray = 20,
-		/obj/item/weapon/reagent_containers/syringe = 5,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/eznutriment = 30,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/left4zed = 20,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/robustharvest = 10,
+//		/obj/item/weapon/reagent_containers/glass/bottle/precision/mutagen = 30,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/ash = 25,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/ammonia = 20,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/saltpetre = 15,
+		/obj/item/weapon/reagent_containers/glass/bottle/precision/diethylamine = 10,
+		/obj/item/weapon/reagent_containers/spray/plantbgone = 5,
+		/obj/item/weapon/reagent_containers/spray/weedspray = 5,
+		/obj/item/weapon/reagent_containers/spray/pestspray = 5,
+		/obj/item/weapon/reagent_containers/syringe = 3,
 		/obj/item/weapon/storage/bag/plants = 5,
+		/obj/item/weapon/storage/box/disks_plantgene = 1,
+		/obj/item/device/plant_analyzer = 4,
 		/obj/item/weapon/cultivator = 3,
 		/obj/item/weapon/shovel/spade = 3,
-		/obj/item/device/plant_analyzer = 4
 		)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,
-		/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5
+		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 5,
+		/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone = 5,
+		/obj/item/weapon/reagent_containers/dropper = 3,
+		/obj/item/weapon/hatchet = 3
+		)
+	premium = list(
+		/obj/item/weapon/watertank = 2,
+		/obj/item/weapon/scythe = 3
 		)
 
 /*
