@@ -744,6 +744,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 20
 
+/datum/uplink_item/stealthy_weapons/frame
+	name = "F.R.A.M.E. PDA Cartridge"
+	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
+			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked.  \
+			You will recieve the unlock code upon activating the virus, and the new uplink may be charged with \
+			telecrystals normally."
+	item = /obj/item/weapon/cartridge/virus/frame
+	cost = 4
+
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
