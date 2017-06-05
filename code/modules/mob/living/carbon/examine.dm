@@ -45,26 +45,50 @@
 	var/temp = getBruteLoss()
 	if(temp)
 		if (temp < 30)
-			msg += "[t_He] [t_has] minor bruising.\n"
+			if(prob(50)
+				msg += "[t_He] [t_has] small bruises.\n"
+			else
+				msg += "[t_He] [t_has] minor bruising.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+			if(prob(33))
+				msg += "<B>[t_He] [t_is] bloodied!</B>\n"
+			else if(prob(33))
+				msg += "<B>[t_his] body is mangled!</B>\n"
+			else
+				msg += "<B>[t_his] body is battered and bruised!</B>\n"
 
 	temp = getFireLoss()
 	if(temp)
 		if (temp < 30)
-			msg += "[t_He] [t_has] minor burns.\n"
+			if(prob(50))
+				msg += "[t_his] skin is bright red.\n"
+			else
+				msg += "[t_his] skin is covered in small burns.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+			if(prob(33))
+				msg += "<B>[t_his] skin is covered in large blisters!</B>\n"
+			else if(prob(33))
+				msg += "<B>[t_his] skin is charred and blistering!</B>\n"
+			else
+				msg += "<B>[t_his] skin is blackened and burned!</B>\n"
 
 	temp = getCloneLoss()
 	if(temp)
 		if(getCloneLoss() < 30)
-			msg += "[t_He] [t_is] slightly deformed.\n"
+			if(prob(50))
+				msg += "[t_He] [t_is] covered in minor deformities.\n"
+			else
+				msg += "[t_his] body is deformed.\n"
 		else
-			msg += "<b>[t_He] [t_is] severely deformed.</b>\n"
+			if(prob(33))
+				msg += "<B>[t_his] skin is covered in large, unnatural genetic deformities!</B>\n"
+			else if(prob(33))
+				msg += "<B>[t_his] body is covered in lumps and warts!</B>\n"
+			else
+				msg += "<B>[t_his] body and limbs are severely deformed in several areas!</B>\n"
 
 	if(getBrainLoss() > 60)
-		msg += "[t_He] seems to be clumsy and unable to think.\n"
+		msg += "[t_He] has a blank, dumb look on his face.\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
