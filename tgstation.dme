@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
+#include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
 #include "code\__DATASTRUCTURES\linked_lists.dm"
