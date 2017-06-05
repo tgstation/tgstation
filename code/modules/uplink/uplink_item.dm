@@ -686,7 +686,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			detonate PDAs of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen \
 			them for longer. Beware, it has a chance to detonate your PDA."
-	item = /obj/item/weapon/cartridge/syndicate
+	item = /obj/item/weapon/cartridge/virus/syndicate
 	cost = 6
 
 /datum/uplink_item/stealthy_weapons/suppressor
