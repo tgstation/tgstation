@@ -96,7 +96,7 @@
 	return FALSE
 
 /obj/machinery/atmospherics/miner/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(broken)
 		add_overlay("broken")
 	else if(active)
