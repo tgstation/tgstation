@@ -143,7 +143,8 @@
 	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/PopulateContents()
-	new proselytizer_type(src)
+	if(proselytizer_type)
+		new proselytizer_type(src)
 	new /obj/item/weapon/screwdriver/brass(src)
 	new /obj/item/weapon/wirecutters/brass(src)
 	new /obj/item/weapon/wrench/brass(src)
@@ -154,12 +155,20 @@
 	var/slab_type = /obj/item/clockwork/slab/scarab
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
-	..()
 	new slab_type(src)
+	..()
 
 /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
 	slab_type = /obj/item/clockwork/slab/debug
 	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
+
+/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/worker //fits on a belt, but holds less, and doesn't start with a proselytizer
+	desc = "A brass box with several indentations in its surface. It has hooks to latch onto a belt and it's been shrunk down to make that possible."
+	slot_flags = SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
+	storage_slots = 10
+	proselytizer_type = null
+	slab_type = /obj/item/clockwork/slab/starter
 
 
 /obj/item/weapon/storage/toolbox/artistic

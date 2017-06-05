@@ -89,13 +89,14 @@ Credit where due:
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
+	var/time_to_prepare = 20 //Time in minutes that the servants have to build their base before the Central Command alert comes in
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 24
-	required_enemies = 3
+	required_players = 1
+	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
@@ -112,20 +113,23 @@ Credit where due:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = 3 //Guaranteed three servants
+	var/starter_servants = 1 //Guaranteed three servants
 	var/number_players = num_players()
 	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 15 players
 		number_players -= 30
 		starter_servants += round(number_players/15)
+	time_to_prepare = max(20, min(number_players / 2, 30))
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
 		antag_candidates -= servant
 		modePlayer += servant
+		servant.assigned_role = "Servant of Ratvar"
 		servant.special_role = "Servant of Ratvar"
-		servant.restricted_roles = restricted_jobs
 		starter_servants--
+	addtimer(CALLBACK(src, .proc/open_portals_to_reebe), 100)
+	//addtimer(CALLBACK(src, .proc/open_portals_to_reebe), time_to_prepare * 600) //600 deciseconds in a minute, so multiply the number of minutes to prepare times 600
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
@@ -133,6 +137,9 @@ Credit where due:
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
+		var/turf/T = pick(GLOB.servant_start)
+		servant.current.loc = T
+		LAZYREMOVE(GLOB.servant_start, T)
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
@@ -142,34 +149,35 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
 		return 0
-	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
-	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
-	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
+	var/greeting_text = "<br><span class='large_brass bold'>You are a servant of Ratvar!</span>\n\
+	<i>You have [round(time_to_prepare)] minutes to prepare before the crew is alerted of your presence and portals open across [station_name()].</i>\n\
+	<i>Need help? Look inside the box on your belt for an item called a clockwork slab, and click the Recollection button in the top left."
 	to_chat(M, greeting_text)
-	M.playsound_local('sound/ambience/antag/ClockCultAlr.ogg',100,0)
+	to_chat(M, sound('sound/ambience/antag/ClockCultAlr.ogg'))
 	return 1
 
-/datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
+/datum/game_mode/proc/equip_servant(mob/living/carbon/human/L) //Grants a clockwork slab to the mob, with one of each component
 	if(!L || !istype(L))
-		return FALSE
-	var/obj/item/clockwork/slab/starter/S = new/obj/item/clockwork/slab/starter(null) //start it off in null
-	var/slot = "At your feet"
-	var/list/slots = list("In your left pocket" = slot_l_store, "In your right pocket" = slot_r_store, "In your backpack" = slot_in_backpack, "On your belt" = slot_belt)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		slot = H.equip_in_one_of_slots(S, slots)
-		if(slot == "In your backpack")
-			slot = "In your [H.back.name]"
-	if(slot == "At your feet")
-		if(!S.forceMove(get_turf(L)))
-			qdel(S)
-	if(S && !QDELETED(S))
-		to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>")
-		to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
-		return TRUE
-	return FALSE
+		return
+	L.set_species(/datum/species/human)
+	L.equipOutfit(/datum/outfit/servant_of_ratvar)
+	return TRUE
+
+/datum/game_mode/proc/open_portals_to_reebe()
+	priority_announce("Massive spacetime anomalies appearing across the station. All personnel are hereby directed to enter the anomalies and neutralize the source. This is not a drill.", "Spacetime Anomaly Alert", 'sound/magic/clockwork/gateways_open.ogg')
+	if(get_security_level() != "delta")
+		set_security_level("red")
+	var/obj/effect/landmark/L
+	var/turf/T
+	for(var/V in GLOB.generic_event_spawns)
+		L = V
+		T = get_turf(L)
+		addtimer(CALLBACK(src, .proc/open_portal, T), rand(50, 1200))
+
+/datum/game_mode/proc/open_portal(turf/portal_loc)
+	var/obj/effect/clockwork/reebe_rift/R = new(portal_loc)
+	R.visible_message("<span class='warning'>The air above [portal_loc] screeches and shimmers as a portal appears!</span>")
+	playsound(portal_loc, 'sound/effects/supermatter.ogg', 50, 0)
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
@@ -179,11 +187,11 @@ Credit where due:
 			return TRUE
 	else
 		SSticker.news_report = CULT_FAILURE
-	return FALSE
+	return
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
-	return 0 //Doesn't end until the round does
+	return //Doesn't end until the round does
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""

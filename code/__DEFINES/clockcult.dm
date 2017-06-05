@@ -8,6 +8,7 @@
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_daemons, 0) //How many daemons exist in the world
+GLOBAL_VAR_INIT(clockwork_potential, 0) //The amount of potential left to build with
 GLOBAL_LIST_INIT(clockwork_generals_invoked, list("nezbere" = FALSE, "sevtug" = FALSE, "nzcrentr" = FALSE, "inath-neq" = FALSE)) //How many generals have been recently invoked
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
@@ -15,6 +16,7 @@ GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_C
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
 GLOBAL_VAR_INIT(nezbere_invoked, 0) //If Nezbere has been invoked; not a boolean, for proper handling of multiple Nezberes
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
+GLOBAL_VAR_INIT(city_of_cogs_beckoner, FALSE) //The machine that rifts to Reebe lead to. It can also be used as a one-way trip to the station.
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
 //Scripture tiers and requirements; peripherals should never be used

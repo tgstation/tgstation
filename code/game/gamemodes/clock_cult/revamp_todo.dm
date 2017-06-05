@@ -1,0 +1,7 @@
+// TO-DO //
+
+#warn Change the gamemode player values to what they should be
+#warn Remove admin overrides in the Reebe area objects
+#warn Replace the servants' placeholder starter outfit
+#warn Redo Recollection
+#warn Implement timed portal opening

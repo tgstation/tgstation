@@ -392,6 +392,28 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/weapon/tank/internals/oxygen
 
+/datum/outfit/servant_of_ratvar
+	name = "Servant of Ratvar"
+	uniform = /obj/item/clothing/under/color/yellow
+	head = /obj/item/clothing/head/hardhat/white
+	back = /obj/item/weapon/storage/backpack/industrial
+	belt = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/worker
+	shoes = /obj/item/clothing/shoes/sneakers/green
+	id = /obj/item/weapon/card/id
+	ears = /obj/item/device/radio/headset/headset_eng
+
+	backpack_contents = list(/obj/item/weapon/storage/box/engineer = 1)
+
+/datum/outfit/servant_of_ratvar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/weapon/card/id/W = H.wear_id
+	W.assignment = "Assistant"
+	W.desc = "[W.desc] It seems unusually rigid."
+	W.registered_name = H.real_name
+	W.update_label()
+
+
 
 
 

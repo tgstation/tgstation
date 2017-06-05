@@ -59,3 +59,7 @@
 //changes construction value
 /proc/change_construction_value(amount)
 	GLOB.clockwork_construction_value += amount
+
+/proc/change_clockwork_potential(amount)
+	GLOB.clockwork_potential += amount
+	GLOB.clockwork_potential = max(0, GLOB.clockwork_potential)

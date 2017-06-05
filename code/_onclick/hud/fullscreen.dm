@@ -103,6 +103,9 @@
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
 
+/obj/screen/fullscreen/city_of_cogs_beckoner
+	icon_state = "city_of_cogs_beckoner"
+
 /obj/screen/fullscreen/blurry
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"

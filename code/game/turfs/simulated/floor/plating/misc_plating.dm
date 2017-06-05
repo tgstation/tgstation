@@ -157,4 +157,8 @@
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
 
-
+/turf/open/floor/plating/reebe_floor
+	name = "coremetal plating"
+	desc = "Warm, dense metal plating that makes up the walls of Reebe. It seems indestructible by normal means."
+	icon_state = "reebe_floor"
+	baseturf = /turf/open/floor/plating/reebe_floor //it's reebe floors all the way down
