@@ -12,48 +12,6 @@
 	floor_tile = /obj/item/stack/tile/wood
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 
-/turf/open/floor/wood/attackby(obj/item/C, mob/user, params)
-	if(..())
-		return
-	if(istype(C, /obj/item/weapon/screwdriver))
-		pry_tile(C, user)
-		return
-
-/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	if(T.turf_type == type)
-		return
-	var/obj/item/weapon/tool = user.is_holding_item_of_type(/obj/item/weapon/screwdriver)
-	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/weapon/crowbar)
-	if(!tool)
-		return
-	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
-	if(!istype(P))
-		return
-	P.attackby(T, user, params)
-
-/turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
-	var/is_screwdriver = istype(C, /obj/item/weapon/screwdriver)
-	playsound(src, C.usesound, 80, 1)
-	return remove_tile(user, silent, make_tile = is_screwdriver)
-
-/turf/open/floor/wood/remove_tile(mob/user, silent = FALSE, make_tile = TRUE)
-	if(broken || burnt)
-		broken = 0
-		burnt = 0
-		if(user && !silent)
-			to_chat(user, "<span class='danger'>You remove the broken planks.</span>")
-	else
-		if(make_tile)
-			if(user && !silent)
-				to_chat(user, "<span class='danger'>You unscrew the planks.</span>")
-			if(floor_tile)
-				new floor_tile(src)
-		else
-			if(user && !silent)
-				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
-	return make_plating()
-
 /turf/open/floor/wood/cold
 	temperature = 255.37
 
