@@ -140,9 +140,13 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
+	if(istype(A, /obj/) && !is_type_in_typecache(A, blacklisted_tesla_types))
+		qdel(A)
 
 /obj/singularity/energy_ball/Bumped(atom/A)
 	dust_mobs(A)
+	if(istype(A, /obj/) && !is_type_in_typecache(A, blacklisted_tesla_types))
+		qdel(A)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
