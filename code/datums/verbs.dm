@@ -65,12 +65,12 @@
 	for (var/verbpath in verbs)
 		verblist[verbpath] = verb_parent_type
 
-/datum/verbs/proc/Generate_list()
+/datum/verbs/proc/Generate_list(...)
 	. = list()
 	if (length(children))
 		for (var/thing in children)
 			var/datum/verbs/child = thing
-			var/list/childlist = child.Generate_list(C)
+			var/list/childlist = child.Generate_list(arglist(args))
 			if (childlist)
 				var/childname = "[child]"
 				if (childname == "[child.type]")
@@ -91,7 +91,7 @@
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
 		
-		HandleVerb(argslist(list(entry, verbpath) + args))
+		HandleVerb(arglist(list(entry, verbpath) + args))
 		.[verbpath] = entry
 
 /world/proc/LoadVerbs(verb_type)
