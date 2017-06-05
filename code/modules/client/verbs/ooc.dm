@@ -55,9 +55,6 @@
 	mob.log_message("[key]: [raw_msg]", INDIVIDUAL_OOC_LOG)
 
 	var/keyname = key
-	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
 
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -100,9 +97,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
+	/*
+	Not sure how analy retarded you made this exactly TG.
 	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())
 			return
+	*/
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
@@ -116,12 +116,15 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set desc = "Returns your OOC Color to default"
 	set category = "Preferences"
 
+	/*
+	Again
 	if(!holder || check_rights_for(src, R_ADMIN))
 		if(!is_content_unlocked())
 			return
+	*/
 
-		prefs.ooccolor = initial(prefs.ooccolor)
-		prefs.save_preferences()
+	prefs.ooccolor = initial(prefs.ooccolor)
+	prefs.save_preferences()
 
 //Checks admin notice
 /client/verb/admin_notice()
