@@ -414,12 +414,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			blur_eyes(5)
 
 		if(drunkenness >= 81)
-			adjustToxLoss(0.2)
+			adjustToxLoss(0.1)
 			if(prob(5) && !stat)
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
-			adjustBrainLoss(0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
@@ -428,6 +427,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					Sleeping(45)
 
 		if(drunkenness >= 101)
-			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+			adjustToxLoss(0.9)
 
 #undef HUMAN_MAX_OXYLOSS
