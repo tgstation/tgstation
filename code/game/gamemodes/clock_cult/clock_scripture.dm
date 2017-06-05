@@ -15,6 +15,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
+	var/potential_cost = 0 //The amount of potential this scripture needs to recite
 	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
@@ -70,6 +71,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 						else
 							GLOB.clockwork_component_cache[i]--
 							used_cache_components[i]++
+			GLOB.clockwork_potential -= potential_cost
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
@@ -117,6 +119,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			component_printout += "</span>"
 			to_chat(invoker, component_printout)
 			return FALSE
+		if(potential_cost && GLOB.clockwork_potential - potential_cost < 0)
+			to_chat(invoker, "<span class='warning'>You don't have enough potential to recite this scripture! ([GLOB.clockwork_potential]/[potential_cost])")
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))

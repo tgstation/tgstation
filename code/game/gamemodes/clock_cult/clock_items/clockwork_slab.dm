@@ -381,6 +381,7 @@
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
 	data["components"] = stored_components.Copy()
+	data["potential"] = GLOB.clockwork_potential
 	var/list/temp_data = list("<font color=#B18B25>")
 	for(var/i in data["components"]) //display the slab's components
 		temp_data += "<font color=[get_component_color_bright(i)]>[get_component_acronym(i)] <b>[data["components"][i]]</b></font>"
@@ -435,6 +436,7 @@
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
 			"tip" = "[S.desc]\n[S.usage_tip]",
 			"required" = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0),
+			"potential_cost" = S.potential_cost,
 			"type" = "[S.type]",
 			"quickbind" = S.quickbind)
 			var/found = quickbound.Find(S.type)

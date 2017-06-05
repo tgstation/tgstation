@@ -120,6 +120,7 @@ Credit where due:
 		number_players -= 30
 		starter_servants += round(number_players/15)
 	time_to_prepare = max(20, min(number_players / 2, 30))
+	GLOB.clockwork_potential = 25 + (number_players * 2)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
