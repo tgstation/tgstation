@@ -20,12 +20,13 @@
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
-	var/atmos_link = TRUE			//Link source/destination atmos.
+	var/atmos_link = FALSE			//Link source/destination atmos.
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
 
 /obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
 	if(user && Adjacent(user))
+		user.forceMove(get_turf(src))
 		teleport(user)
 
 /obj/effect/portal/make_frozen_visual()
@@ -42,6 +43,7 @@
 
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
+		user.forceMove(get_turf(src))
 		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked = null, automatic_link = TRUE, hard_target_override = null, atmos_link_override = null)
@@ -110,6 +112,19 @@
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M)
+	var/turf/real_target = get_link_target_turf()
+	if(!istype(real_target))
+		return FALSE
+	if(ismegafauna(M))
+		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
+	if(do_teleport(M, real_target, 0))
+		if(istype(M, /obj/item/projectile))
+			var/obj/item/projectile/P = M
+			P.ignore_source_check = TRUE
+		return TRUE
+	return FALSE
+
+/obj/effect/portal/proc/get_link_target_turf()
 	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target
@@ -124,9 +139,5 @@
 			linked = null
 	else
 		real_target = get_turf(linked)
-	if(ismegafauna(M))
-		message_admins("[M] has used a portal at [ADMIN_COORDJMP(src)] made by [usr].")
-	if(do_teleport(M, real_target, 0))
-		if(istype(M, /obj/item/projectile))
-			var/obj/item/projectile/P = M
-			P.ignore_source_check = TRUE
+	return real_target
+
