@@ -508,7 +508,6 @@
 #include "code\game\gamemodes\traitor\double_agents.dm"
 #include "code\game\gamemodes\traitor\traitor.dm"
 #include "code\game\gamemodes\wizard\artefact.dm"
-#include "code\game\gamemodes\wizard\raginmages.dm"
 #include "code\game\gamemodes\wizard\soulstone.dm"
 #include "code\game\gamemodes\wizard\spellbook.dm"
 #include "code\game\gamemodes\wizard\wizard.dm"

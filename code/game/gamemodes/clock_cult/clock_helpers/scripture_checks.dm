@@ -59,3 +59,6 @@
 //changes construction value
 /proc/change_construction_value(amount)
 	GLOB.clockwork_construction_value += amount
+
+/proc/can_recite_scripture(mob/living/L)
+	return (is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal() && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L))))
