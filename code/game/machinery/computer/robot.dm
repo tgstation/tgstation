@@ -1,6 +1,3 @@
-
-
-
 /obj/machinery/computer/robotics
 	name = "robotics control console"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
@@ -78,6 +75,8 @@
 	for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 		if(D.hacked)
 			continue
+		if(!D.can_detonate)
+			continue
 		drones++
 		dat += "[D.name] |"
 		if(D.stat)
@@ -114,7 +113,7 @@
 						R.ResetSecurityCodes()
 					else
 						var/turf/T = get_turf(R)
-						message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name(R, R.client)][ADMIN_JMP(T)]!</span>")
+						message_admins("<span class='notice'>[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R)][ADMIN_JMP(T)]!</span>")
 						log_game("\<span class='notice'>[key_name(usr)] detonated [key_name(R)]!</span>")
 						if(R.connected_ai)
 							to_chat(R.connected_ai, "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>")
@@ -159,14 +158,17 @@
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))
 			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			if(!D.can_detonate)
+				return
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, D)
-				s.start()
-				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
-				D.gib()
+				var/turf/T = get_turf(D)
+				do_sparks(3, TRUE, D)
+				D.visible_message("<span class='danger'>[D] shuts down!</span>", "<span class='userdanger'>Your body automatically shuts down, in response to a kill code.</span>")
+				D.death()
+
+				message_admins("[ADMIN_LOOKUPFLW(usr)] shut down [key_name_admin(D)][ADMIN_JMP(T)]!")
+				log_game("[key_name(usr)] shut down [key_name(D)]!")
 
 	src.updateUsrDialog()
-	return
