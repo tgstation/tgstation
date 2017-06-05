@@ -93,35 +93,26 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	set category = "Fun"
 	GLOB.normal_ooc_colour = OOC_COLOR
 
-/client/verb/colorooc()
+/client/proc/colorooc()
 	set name = "Set Your OOC Color"
 	set category = "Preferences"
 
-	/*
-	Not sure how analy retarded you made this exactly TG.
-	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
-	*/
+	if(!check_rights_for(src, R_ADMIN))
+		return
 
 	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()
 	SSblackbox.add_details("admin_verb","Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
 
-/client/verb/resetcolorooc()
+/client/proc/resetcolorooc()
 	set name = "Reset Your OOC Color"
 	set desc = "Returns your OOC Color to default"
 	set category = "Preferences"
 
-	/*
-	Again
-	if(!holder || check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
-	*/
+	if(!check_rights_for(src, R_ADMIN))
+		return
 
 	prefs.ooccolor = initial(prefs.ooccolor)
 	prefs.save_preferences()
