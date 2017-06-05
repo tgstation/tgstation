@@ -50,7 +50,7 @@
 			else
 				msg += "[t_He] [t_has] minor bruising.\n"
 		else
-			if(prob(50))
+			if(prob(33))
 				msg += "<B>[t_He] [t_is] bloodied!</B>\n"
 			else if(prob(50))
 				msg += "<B>[t_his] body is mangled!</B>\n"
@@ -65,7 +65,7 @@
 			else
 				msg += "[t_his] skin is covered in small burns.\n"
 		else
-			if(prob(50))
+			if(prob(33))
 				msg += "<B>[t_his] skin is covered in large blisters!</B>\n"
 			else if(prob(50))
 				msg += "<B>[t_his] skin is charred and blistering!</B>\n"
@@ -80,7 +80,7 @@
 			else
 				msg += "[t_his] body is deformed.\n"
 		else
-			if(prob(50))
+			if(prob(33))
 				msg += "<B>[t_his] skin is covered in large, unnatural genetic deformities!</B>\n"
 			else if(prob(50))
 				msg += "<B>[t_his] body is covered in lumps and warts!</B>\n"
