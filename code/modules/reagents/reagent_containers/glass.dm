@@ -292,7 +292,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "smallbottle"
 	item_state = "bottle"
-	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	list_reagents = list("water" = 50)
 	materials = list(MAT_GLASS=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
