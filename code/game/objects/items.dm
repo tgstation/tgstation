@@ -245,8 +245,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
+	var/old_loc = loc
 	if(throwing)
 		throwing.finalize(FALSE)
+	
+	if(loc != old_loc) //It was moved/picked up during the throw finalize. It might not be reachable anymore
+		return
+
 	if(loc == user)
 		if(!user.dropItemToGround(src))
 			return
