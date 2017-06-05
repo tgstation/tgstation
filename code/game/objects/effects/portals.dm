@@ -96,7 +96,6 @@
 		call(creator, "on_portal_destroy")(src, src.loc)
 	creator = null
 	GLOB.portals -= src
-	var/turf/T = get_turf(src)
 	unlink_atmos()
 	if(hardlinked && !QDELETED(linked))
 		QDEL_NULL(linked)
