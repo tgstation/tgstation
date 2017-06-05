@@ -91,3 +91,10 @@
 			if(isliving(A))
 				to_chat(A, "<span class='userdanger'>You're suddenly forced into a tiny, compressed space!</span>")
 		qdel(src)
+
+/obj/structure/closet/body_bag/bluespace/syndicate
+	name = "suspicious body bag"
+	desc = "A very suspicious-looking body bag that has locks and displays on it. Huh."
+	icon_state = "bluebodybag_s"
+	foldedbag_path = /obj/item/bodybag/bluespace/syndicate
+	mob_storage_capacity = 1

@@ -68,3 +68,44 @@
 		return
 	loc.visible_message("<span class='warning'>[user] suddenly appears in front of [loc]!</span>", "<span class='userdanger'>[user] breaks free of [src]!</span>")
 	qdel(src)
+
+/obj/item/bodybag/bluespace/syndicate
+	name = "suspicious bluespace body bag"
+	desc = "A folded bluespace body bag with a different coloration scheme than standard bags. Looks suspicious!"
+	icon_state = "bluebodybag_folded_s"
+	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace/syndicate
+	origin_tech = "bluespace=5;materials=5;plasmatech=5;illegal=4"
+	var/breaking_out = FALSE					//Don't just leave your target in some corner of maint in a cookie box handcuffed!
+	var/breakout_time = 1200
+	var/breakout = 0
+	var/turf/oldturf
+
+/obj/item/bodybag/bluespace/syndicate/container_resist(mob/living/user)
+	if(user.incapacitated())
+		to_chat(user, "<span class='warning'>You can't get out while you're restrained like this!</span>")
+		return
+	if(user.mind in SSticker.mode.traitors)
+		to_chat(user, "<span class='boldwarning'>You hit the emergency release switch, and the [src] unfolds automatically, recognizing your syndicate biometrics!</span>")
+		deploy_bodybag(user, get_turf(src))
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	if(!breaking_out)
+		to_chat(user, "<span class='notice'>You hit the faintly visible emergency release switch on [src]...</span>")
+		breakout = world.time + breakout_time
+		breaking_out = TRUE
+		START_PROCESSING(SSobj, src)
+		oldturf = get_turf(src)
+
+/obj/item/bodybag/bluespace/syndicate/process()
+	if(oldturf != get_turf(src))
+		breaking_out = FALSE
+		STOP_PROCESSING(SSobj, src)
+		for(var/mob/M in contents)
+			to_chat(M, "<span class='boldwarning'>A hidden display panel in the fabric flashes \'RELEASE HALTED: MOTION TRIGGER.\'</span>")
+		return
+	if(breakout >= world.time)
+		break_out()
+
+/obj/item/bodybag/bluespace/syndicate/proc/break_out()
+	visible_message("<span class='boldwarning'>[src] rapidly unfolds!</span>")
+	deploy_bodybag(null, get_turf(src))
