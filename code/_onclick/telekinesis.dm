@@ -14,7 +14,8 @@
 	if(user.stat)
 		return
 	new /obj/effect/temp_visual/telekinesis(loc)
-	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
+	if(Adjacent(user))
+		user.UnarmedAttack(src, TRUE) // attack_hand, attack_paw, etc
 	return
 
 /obj/attack_tk(mob/user)
