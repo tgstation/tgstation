@@ -1,10 +1,10 @@
 /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
-	name = "tie"
-	desc = "A neosilk clip-on tie."
+	name = "Accessory"
+	desc = "Something has gone wrong!"
 	icon = 'icons/obj/clothing/accessories.dmi'
-	icon_state = "bluetie"
+	icon_state = "plasma"
 	item_state = ""	//no inhands
-	item_color = "bluetie"
+	item_color = "plasma" //On accessories, this controls the worn sprite. That's a bit weird.
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -152,16 +152,24 @@
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
+/obj/item/clothing/accessory/medal/plasma
+	name = "plasma medal"
+	desc = "An eccentric medal made of plasma."
+	icon_state = "plasma"
+	item_color = "plasma"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
+	materials = list(MAT_PLASMA=1000)
+
+/obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > 300)
+		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
+		visible_message("<span class='danger'[usr]'s [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
+
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
 	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
 
-/obj/item/clothing/accessory/medal/plasma
-	name = "plasma medal"
-	desc = "An eccentric medal made of plasma."
-	item_state = "plasma"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
-	materials = list(MAT_PLASMA=1000)
+
 
 ////////////
 //Armbands//
