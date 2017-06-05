@@ -75,5 +75,14 @@
 	gender = FEMALE
 	speak_emote = list("squeaks")
 	gold_core_spawnable = 0
+	speed = 1
 	faction = list("syndicate")
 	AIStatus = AI_OFF
+	
+	harm_intent_damage = 0
+	obj_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+
+/mob/living/simple_animal/hostile/carp/cayenne/start_pulling(atom/movable/AM) 
+	return FALSE
