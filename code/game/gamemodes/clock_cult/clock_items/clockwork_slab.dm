@@ -14,7 +14,6 @@
 	var/target_component_id //the target component ID to create, if any
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
-	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
@@ -33,13 +32,9 @@
 	no_cost = TRUE
 	produces_components = FALSE
 
-/obj/item/clockwork/slab/scarab
-	nonhuman_usable = TRUE
-
 /obj/item/clockwork/slab/debug
 	speed_multiplier = 0
 	no_cost = TRUE
-	nonhuman_usable = TRUE
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
@@ -49,7 +44,6 @@
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and proselytizer
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-	nonhuman_usable = TRUE
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
@@ -106,12 +100,6 @@
 	slab_ability = null
 	return ..()
 
-/obj/item/clockwork/slab/ratvar_act()
-	if(GLOB.ratvar_awakens)
-		nonhuman_usable = TRUE
-	else
-		nonhuman_usable = initial(nonhuman_usable)
-
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
@@ -138,7 +126,7 @@
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && is_servant_of_ratvar(L) && (nonhuman_usable || ishuman(L)))
+	if(istype(L) && can_recite_scripture(L))
 		var/component_to_generate = target_component_id
 		if(!component_to_generate)
 			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
@@ -268,7 +256,7 @@
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
 		return 0
-	if(!nonhuman_usable && !ishuman(user))
+	if(!can_recite_scripture(user))
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
@@ -288,7 +276,7 @@
 		ui.open()
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
-	if(!scripture || !user || !user.canUseTopic(src) || (!nonhuman_usable && !ishuman(user)))
+	if(!scripture || !user || !user.canUseTopic(src) || !can_recite_scripture(user))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
