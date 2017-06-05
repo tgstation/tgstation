@@ -208,38 +208,43 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
-	switch(config.default_laws)
-		if(0)
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-		if(1)
-			var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
-			inherent = templaws.inherent
-		if(2)
-			var/list/randlaws = list()
-			for(var/lpath in subtypesof(/datum/ai_laws))
-				var/datum/ai_laws/L = lpath
-				if(initial(L.id) in config.lawids)
-					randlaws += lpath
-			var/datum/ai_laws/lawtype
-			if(randlaws.len)
-				lawtype = pick(randlaws)
-			else
-				lawtype = pick(subtypesof(/datum/ai_laws/default))
+	if(!config) // Someone named Joan thinks it's a good idea to call this before the config file is loaded!
+		spawn(1)
+			src.set_laws_config()
 
-			var/datum/ai_laws/templaws = new lawtype()
-			inherent = templaws.inherent
+	else
+		switch(config.default_laws)
+			if(0)
+				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+			if(1)
+				var/datum/ai_laws/templaws = new /datum/ai_laws/custom()
+				inherent = templaws.inherent
+			if(2)
+				var/list/randlaws = list()
+				for(var/lpath in subtypesof(/datum/ai_laws))
+					var/datum/ai_laws/L = lpath
+					if(initial(L.id) in config.lawids)
+						randlaws += lpath
+				var/datum/ai_laws/lawtype
+				if(randlaws.len)
+					lawtype = pick(randlaws)
+				else
+					lawtype = pick(subtypesof(/datum/ai_laws/default))
 
-		if(3)
-			pick_weighted_lawset()
+				var/datum/ai_laws/templaws = new lawtype()
+				inherent = templaws.inherent
 
-		else:
-			log_law("Invalid law config. Please check silicon_laws.txt")
-			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-			add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
-			WARNING("Invalid custom AI laws, check silicon_laws.txt")
+			if(3)
+				pick_weighted_lawset()
+
+			else:
+				log_law("Invalid law config. Please check silicon_laws.txt")
+				add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
+				add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
+				add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+				WARNING("Invalid custom AI laws, check silicon_laws.txt")
 
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
