@@ -185,7 +185,7 @@ Frequency:
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") as null|anything in L
 	if (!t1 || user.get_active_held_item() != src || user.incapacitated())
 		return
-	if(active_portal_pairs.len > max_portal_pairs)
+	if(active_portal_pairs.len >= max_portal_pairs)
 		user.show_message("<span class='notice'>\The [src] is recharging!</span>")
 		return
 	var/atom/T = L[t1]
