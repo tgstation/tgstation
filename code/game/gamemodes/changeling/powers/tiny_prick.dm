@@ -57,7 +57,7 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others."
+	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
 	sting_icon = "sting_transform"
 	chemical_cost = 50
 	dna_cost = 3
@@ -96,9 +96,10 @@
 	. = TRUE
 	if(istype(C))
 		C.real_name = NewDNA.real_name
-		NewDNA.transfer_identity(C, transfer_SE=1)
+		NewDNA.transfer_identity(C)
+		if(ismonkey(C)
+			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
 		C.updateappearance(mutcolor_update=1)
-		C.domutcheck()
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade
