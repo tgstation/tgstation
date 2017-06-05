@@ -46,9 +46,8 @@
 		</ui-section>
 	{{/if}}
 </ui-display>
-<ui-display>
-		<table>
-			<section class="candystripe">
+<div class="display tabular">
+	<section class="candystripe">
 			<section class="cell">
 				Mineral
 			</section>
@@ -56,7 +55,9 @@
 				Sheets
 			</section>
 			<section class="cell">
-				<ui-button class='center' grid action='Release' params='{"id" : "all"}'>
+			</section>
+			<section class="cell">
+				<ui-button class='center mineral' grid action='Release' params='{"id" : "all"}'>
 					Release All
 				</ui-button>
 			</section>
@@ -72,8 +73,11 @@
 			<section class="cell" align='right'>
 				{{amount}}
 			</section>
+			<section class="cell">
+				<input value={{sheets}} placeholder='###' class="number"/>
+			</section>
 			<section class="cell" align='right'>
-				<ui-button class='center' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+				<ui-button class='center' grid action='Release' state={{(amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}}, "sheets" : {{sheets}} }' >
 					Release
 				</ui-button>
 			</section>
@@ -90,17 +94,19 @@
 			<section class="cell" align='right'>
 				{{amount}}
 			</section>
+			<section class="cell">
+				<input value={{sheets}} placeholder='###' class="number"/>
+			</section>
 			<section class="cell" align='right'>
-				<ui-button class='center' grid action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+				<ui-button class='center' grid action='Smelt' state={{ (amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}}, "sheets" : {{sheets}} }'>
 					Smelt
 				</ui-button>
 			</section>
 			<section class="cell" align='right'>
-				<ui-button class='center' grid action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{"id" : "{{id}}"}'>
+				<ui-button class='center' grid action='SmeltAll' state={{ (amount >= 1) ? null : 'disabled'}} params='{ "id" : {{id}} }'>
 					Smelt All
 				</ui-button>
 			</section>
 		</section>
 	{{/each}}
-	</table>
-</ui-display>
+</div>

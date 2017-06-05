@@ -194,6 +194,12 @@
 			inserted_disk = W
 			return TRUE
 
+	if(istype(W, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = W
+		var/inserted = materials.insert_stack(S, S.amount)
+		to_chat(user, "<span class='notice'>You add [inserted] [S] sheets to \the [src].</span>")
+		return
+
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/on_deconstruction()
@@ -208,7 +214,7 @@
 /obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 530, 580, master_ui, state)
+		ui = new(user, src, ui_key, "ore_redemption_machine", "Ore Redemption Machine", 440, 650, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
@@ -234,7 +240,7 @@
 		if(inserted_disk.blueprints.len)
 			var/index = 1
 			for (var/datum/design/thisdesign in inserted_disk.blueprints)
-				if(thisdesign) //error: : invalid expression
+				if(thisdesign)
 					data["diskDesigns"] += list(list("name" = thisdesign.name, "index" = index, "canupload" = thisdesign.build_type&SMELTER))
 				index++
 				CHECK_TICK
@@ -265,6 +271,7 @@
 				points = 0
 			return TRUE
 		if("Release")
+
 			if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user
 				var/out = get_step(src, output_dir)
 				if(params["id"] == "all")
@@ -278,7 +285,13 @@
 
 					if(!stored_amount)
 						return
-					var/desired = input("How many sheets?", "How many sheets to eject?", 1) as null|num
+
+					var/desired = 0
+					if (params["sheets"])
+						desired = text2num(params["sheets"])
+					else
+						desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+
 					var/sheets_to_remove = round(min(desired,50,stored_amount))
 					materials.retrieve_sheets(sheets_to_remove, mat_id, out)
 
@@ -296,7 +309,7 @@
 			return TRUE
 		if("diskEject")
 			if(inserted_disk)
-				inserted_disk.forceMove(loc)
+				usr.put_in_hands(inserted_disk)
 				inserted_disk = null
 			return TRUE
 		if("diskUpload")
@@ -309,7 +322,11 @@
 			var/datum/design/alloy = files.FindDesignByID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
-				var/desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+				var/desired = 0
+				if (params["sheets"])
+					desired = text2num(params["sheets"])
+				else
+					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
 				var/amount = round(min(desired,50,smelt_amount))
 				materials.use_amount(alloy.materials, amount)
 				var/output = new alloy.build_path(src)
