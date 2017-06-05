@@ -63,3 +63,7 @@
 
 /proc/can_recite_scripture(mob/living/L)
 	return (is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal() && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L))))
+
+/proc/change_clockwork_potential(amount)
+	GLOB.clockwork_potential += amount
+	GLOB.clockwork_potential = max(0, GLOB.clockwork_potential)

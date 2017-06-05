@@ -6,6 +6,7 @@
 #define HIEROPHANT_ANSIBLE "hierophant_ansible"
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
+GLOBAL_VAR_INIT(clockwork_potential, 0) //The amount of potential left to build with
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_daemons, 0) //How many daemons exist in the world
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
