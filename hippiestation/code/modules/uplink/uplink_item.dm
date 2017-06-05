@@ -91,12 +91,12 @@
 		U.telecrystals += cost //So the admins don't have to refund you
 	return
 
-
 /datum/uplink_item/role_restricted/fire_axe
 	name = "Fire Axe"
 	desc = "A rather blunt fire axe recovered from the burnt out wreck of an old space station. \
 	Warm to the touch , this axe will set fire to anyone struck with it as long as you hold it with\
-	two hands. The more you strike them, the hotter they burn."
+	two hands. The more you strike them, the hotter they burn, it will deal bonus fire damage to lit\
+	targets and will enable you to shoot gouts of fire that can burn targets."
 	cost = 10
 	item = /obj/item/weapon/twohanded/fireaxe/fireyaxe
 	restricted_roles = list("Atmospheric Technician")
