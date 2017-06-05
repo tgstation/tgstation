@@ -22,6 +22,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	icon_state = "marker"
 	merge_type = /obj/item/stack/marker_beacon
 	max_amount = 100
+	novariants = TRUE
 	var/picked_color = "random"
 
 /obj/item/stack/marker_beacon/ten //miners start with 10 of these

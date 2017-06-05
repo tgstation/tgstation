@@ -36,6 +36,7 @@
 	var/aiming_time_fire_threshold = 2
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
+	var/scoped_slow = 1
 	var/aiming_time_increase_angle_multiplier = 0.6
 
 	var/lastangle = 0
@@ -85,8 +86,14 @@
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 
-/obj/item/weapon/gun/energy/beam_rifle/New()
-	..()
+/obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
+	if(scoped)
+		slowdown = scoped_slow
+	else
+		slowdown = initial(slowdown)
+
+/obj/item/weapon/gun/energy/beam_rifle/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
@@ -116,6 +123,7 @@
 		recoil = hipfire_recoil
 		scoped = FALSE
 		user << "<span class='boldnotice'>You lower your [src].</span>"
+	update_slowdown()
 
 /obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
 	if(!scoped && !noscope)
@@ -154,14 +162,23 @@
 		var/obj/effect/temp_visual/projectile_beam/PB = I
 		qdel(PB)
 
+/obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
+	stop_aiming()
+	clear_tracers()
+
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
+		return
+	if(!isturf(current_user.loc) || !(src in current_user.held_items))	//Doesn't work if you're not holding it!
+		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
 	if(current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
+		if(isturf(current_user.client.mouseLocation))
+			current_user.face_atom(current_user.client.mouseLocation)
 		if(mouse_control["screen-loc"])
 			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
 			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
@@ -233,11 +250,13 @@
 	var/structure_piercing = 2
 	var/structure_bleed_coeff = 0.7
 	var/do_pierce = TRUE
+	var/obj/item/weapon/gun/energy/beam_rifle/host
 
 /obj/item/ammo_casing/energy/beam_rifle/proc/sync_stats()
 	var/obj/item/weapon/gun/energy/beam_rifle/BR = loc
-	if(!BR)
+	if(!istype(BR))
 		stack_trace("Beam rifle syncing error")
+	host = BR
 	do_pierce = BR.projectile_setting_pierce
 	wall_pierce_amount = BR.wall_pierce_amount
 	wall_devastate = BR.wall_devastate
@@ -273,6 +292,7 @@
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
+	HS_BB.gun = host	
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
@@ -457,7 +477,7 @@
 		cached = get_turf(src)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
-	new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+	QDEL_IN((new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)), 5)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/temp_visual/projectile_beam/tracer/aiming
