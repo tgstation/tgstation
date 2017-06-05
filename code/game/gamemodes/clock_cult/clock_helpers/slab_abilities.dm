@@ -159,7 +159,7 @@
 		successful = TRUE
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
 		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
-		var/turf/T = get_turf(target)
+		T = get_turf(target)
 		new/obj/effect/temp_visual/ratvar/volt_hit(T, ranged_ability_user)
 		add_logs(ranged_ability_user, T, "fired a volt ray")
 		remove_ranged_ability()
