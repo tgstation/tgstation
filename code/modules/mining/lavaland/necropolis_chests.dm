@@ -130,7 +130,8 @@
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
 	id = "resonatormod"
-	materials = list(MAT_GLASS = 4000, MAT_SILVER = 4000, MAT_DIAMOND = 4000, MAT_BLUESPACE = 8000)
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
+	reagents_list = list("blood" = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
