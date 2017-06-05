@@ -346,19 +346,12 @@
 
 /obj/item/ammo_box/magazine/toy/pistol
 	name = "foam force pistol magazine"
-	icon_state = "9x19p-8-toy"
+	icon_state = "9x19-[ammo_count() ? "8" : "0"]-toy"
 	max_ammo = 8
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/toy/pistol/riot
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
-
-/obj/item/ammo_box/magazine/toy/pistol/update_icon()
-	..()
-	if(ammo_count())
-		icon_state = "9x19p-8-toy"
-	else
-		icon_state = "9x19p-0-toy"
 
 /obj/item/ammo_box/magazine/toy/smgm45
 	name = "donksoft SMG magazine"
