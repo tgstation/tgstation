@@ -387,5 +387,4 @@
 			remove_mousepointer(ranged_ability_user.client)
 			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [attached_action.throwee] through time and space.</span>")
 			caller.update_action_buttons_icon()
-			sleep(attached_action.base_cooldown)
-			caller.update_action_buttons_icon()
+			addtimer(CALLBACK(mob, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)
