@@ -379,9 +379,12 @@ SUBSYSTEM_DEF(job)
 				continue
 			S = sloc
 			break
+		if(S)
+			SendToAtom(H, S, buckle = FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
 			SendToLateJoin(H)
+
 
 	if(H.mind)
 		H.mind.assigned_role = rank
@@ -531,7 +534,7 @@ SUBSYSTEM_DEF(job)
 				if(avail.len)
 					SendToAtom(M, pick(avail), FALSE)
 					return
-		
+
 		//pick an open spot on arrivals and dump em
 		var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
 		if(arrivals_turfs.len)
