@@ -1,4 +1,4 @@
-/obj/item/clothing/tie //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
+/obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
 	name = "tie"
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/ties.dmi'
@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
 
-/obj/item/clothing/tie/proc/attach(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	if(pockets) // Attach storage to jumpsuit
 		if(U.pockets) // storage items conflict
 			return 0
@@ -33,7 +33,7 @@
 	return 1
 
 
-/obj/item/clothing/tie/proc/detach(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
 	if(pockets && pockets == U.pockets)
 		pockets.loc = src
 		U.pockets = null
@@ -50,13 +50,13 @@
 	U.cut_overlays()
 	U.hastie = null
 
-/obj/item/clothing/tie/proc/on_uniform_equip(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/tie/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/tie/waistcoat
+/obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
@@ -68,7 +68,7 @@
 //Medals//
 //////////
 
-/obj/item/clothing/tie/medal
+/obj/item/clothing/accessory/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
@@ -77,7 +77,7 @@
 	resistance_flags = FIRE_PROOF
 
 //Pinning medals on people
-/obj/item/clothing/tie/medal/attack(mob/living/carbon/human/M, mob/living/user)
+/obj/item/clothing/accessory/medal/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && (user.a_intent == INTENT_HELP))
 
 		if(M.wear_suit)
@@ -104,47 +104,47 @@
 		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
 	else ..()
 
-/obj/item/clothing/tie/medal/conduct
+/obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
 	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
 
-/obj/item/clothing/tie/medal/bronze_heart
+/obj/item/clothing/accessory/medal/bronze_heart
 	name = "bronze heart medal"
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
-/obj/item/clothing/tie/medal/nobel_science
+/obj/item/clothing/accessory/medal/nobel_science
 	name = "nobel sciences award"
 	desc = "A bronze medal which represents significant contributions to the field of science or engineering."
 
-/obj/item/clothing/tie/medal/silver
+/obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
 	materials = list(MAT_SILVER=1000)
 
-/obj/item/clothing/tie/medal/silver/valor
+/obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
 	desc = "A silver medal awarded for acts of exceptional valor."
 
-/obj/item/clothing/tie/medal/silver/security
+/obj/item/clothing/accessory/medal/silver/security
 	name = "robust security award"
 	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
 
-/obj/item/clothing/tie/medal/gold
+/obj/item/clothing/accessory/medal/gold
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
 	materials = list(MAT_GOLD=1000)
 
-/obj/item/clothing/tie/medal/gold/captain
+/obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/tie/medal/gold/heroism
+/obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
 
@@ -152,47 +152,47 @@
 //Armbands//
 ////////////
 
-/obj/item/clothing/tie/armband
+/obj/item/clothing/accessory/armband
 	name = "red armband"
 	desc = "An fancy red armband!"
 	icon_state = "redband"
 	item_color = "redband"
 
-/obj/item/clothing/tie/armband/deputy
+/obj/item/clothing/accessory/armband/deputy
 	name = "security deputy armband"
 	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
 
-/obj/item/clothing/tie/armband/cargo
+/obj/item/clothing/accessory/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."
 	icon_state = "cargoband"
 	item_color = "cargoband"
 
-/obj/item/clothing/tie/armband/engine
+/obj/item/clothing/accessory/armband/engine
 	name = "engineering guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is orange with a reflective strip!"
 	icon_state = "engieband"
 	item_color = "engieband"
 
-/obj/item/clothing/tie/armband/science
+/obj/item/clothing/accessory/armband/science
 	name = "science guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is purple."
 	icon_state = "rndband"
 	item_color = "rndband"
 
-/obj/item/clothing/tie/armband/hydro
+/obj/item/clothing/accessory/armband/hydro
 	name = "hydroponics guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is green and blue."
 	icon_state = "hydroband"
 	item_color = "hydroband"
 
-/obj/item/clothing/tie/armband/med
+/obj/item/clothing/accessory/armband/med
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white."
 	icon_state = "medband"
 	item_color = "medband"
 
-/obj/item/clothing/tie/armband/medblue
+/obj/item/clothing/accessory/armband/medblue
 	name = "medical guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is white and blue."
 	icon_state = "medblueband"
@@ -202,29 +202,29 @@
 //OBJECTION!//
 //////////////
 
-/obj/item/clothing/tie/lawyers_badge
+/obj/item/clothing/accessory/lawyers_badge
 	name = "attorney's badge"
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
 
-/obj/item/clothing/tie/lawyers_badge/attach(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/lawyers_badge/attach(obj/item/clothing/under/U, user)
 	if(!..())
 		return 0
 	if(isliving(U.loc))
 		on_uniform_equip(U, user)
 
-/obj/item/clothing/tie/lawyers_badge/detach(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/lawyers_badge/detach(obj/item/clothing/under/U, user)
 	..()
 	if(isliving(U.loc))
 		on_uniform_dropped(U, user)
 
-/obj/item/clothing/tie/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L)
 		L.bubble_icon = "lawyer"
 
-/obj/item/clothing/tie/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, user)
+/obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L)
 		L.bubble_icon = initial(L.bubble_icon)

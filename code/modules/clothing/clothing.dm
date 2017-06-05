@@ -529,7 +529,7 @@ BLIND     // can't see anything
 	var/can_adjust = 1
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
-	var/obj/item/clothing/tie/hastie = null
+	var/obj/item/clothing/accessory/hastie = null
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
@@ -600,8 +600,8 @@ BLIND     // can't see anything
 		..()
 
 /obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user, notifyAttach = 1)
-	if(istype(I, /obj/item/clothing/tie))
-		var/obj/item/clothing/tie/T = I
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/T = I
 		if(hastie)
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
@@ -628,7 +628,7 @@ BLIND     // can't see anything
 		return
 
 	if(hastie)
-		var/obj/item/clothing/tie/T = hastie
+		var/obj/item/clothing/accessory/T = hastie
 		hastie.detach(src, user)
 		if(user.put_in_hands(T))
 			to_chat(user, "<span class='notice'>You detach [T] from [src].</span>")

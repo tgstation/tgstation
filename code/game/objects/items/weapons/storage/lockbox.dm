@@ -106,11 +106,11 @@
 	icon_broken = "medalbox+b"
 
 /obj/item/weapon/storage/lockbox/medal/PopulateContents()
-	new /obj/item/clothing/tie/medal/silver/valor(src)
-	new /obj/item/clothing/tie/medal/bronze_heart(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/bronze_heart(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/gold/captain(src)
-	new /obj/item/clothing/tie/medal/silver/security(src)
-	new /obj/item/clothing/tie/medal/nobel_science(src)
-	new /obj/item/clothing/tie/medal/gold/heroism(src)
+		new /obj/item/clothing/accessory/medal/conduct(src)
+	new /obj/item/clothing/accessory/medal/gold/captain(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/gold/heroism(src)
