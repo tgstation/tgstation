@@ -176,11 +176,11 @@
 /datum/action/innate/end_holocall
 	name = "End Holocall"
 	button_icon_state = "camera_off"
-	var/datum/holocall/call
+	var/datum/holocall/hcall
 
 /datum/action/innate/end_holocall/New(datum/holocall/HC)
 	..()
-	call = HC
+	hcall = HC
 
 /datum/action/innate/end_holocall/Activate()
-	call.Disconnect(call.calling_holopad)
+	hcall.Disconnect(hcall.calling_holopad)
