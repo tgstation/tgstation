@@ -29,3 +29,8 @@
 	desc = "Helps with burn injuries."
 	list_reagents = list("silver_sulfadiazine" = 20)
 	icon_state = "bandaid_burn"
+	
+/obj/item/weapon/reagent_containers/pill/patch/synth_flesh
+	name = "synthflesh patch"
+	desc = "Helps with burn and brute injuries."
+	list_reagents = list("synthflesh" = 20, "inacusiate" = 1)

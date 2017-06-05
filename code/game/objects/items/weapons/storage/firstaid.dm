@@ -112,8 +112,8 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/weapon/defibrillator/compact/combat/loaded(src)
 	new /obj/item/weapon/reagent_containers/hypospray/combat(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/synth_flesh(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/synth_flesh(src)
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
