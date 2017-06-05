@@ -23,7 +23,7 @@
 	return copytext(name,1,i)
 
 // Return 1 if this holidy should be celebrated today
-/datum/holiday/proc/shouldCelebrate(dd, mm, yy, var/ww, var/ddd)
+/datum/holiday/proc/shouldCelebrate(dd, mm, yy, ww, ddd)
 	if(always_celebrate)
 		return TRUE
 
