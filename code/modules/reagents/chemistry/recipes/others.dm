@@ -50,13 +50,24 @@
 /datum/chemical_reaction/plasmasolidification
 	name = "Solid Plasma"
 	id = "solidplasma"
-	required_reagents = list("iron" = 5, "frostoil" = 5, "plasma" = 20)
+	required_reagents = list("frostoil" = 5, "plasma" = 20)
 	mob_react = 1
 
 /datum/chemical_reaction/plasmasolidification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/plasma(location)
+		
+/datum/chemical_reaction/goldsolidification
+	name = "Solid Gold"
+	id = "solidgold"
+	required_reagents = list("frostoil" = 5, "gold" = 20)
+	mob_react = 1
+
+/datum/chemical_reaction/goldsolidification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/sheet/mineral/gold(location)
 
 /datum/chemical_reaction/goldsolidification
 	name = "Solid Gold"
