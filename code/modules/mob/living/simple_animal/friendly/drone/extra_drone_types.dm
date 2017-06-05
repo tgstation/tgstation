@@ -145,6 +145,10 @@
 	add_servant_of_ratvar(src, TRUE)
 	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
 
+	// All hail the ClockcultEmperess.
+	if(client && client.key == "changelingrain" && !head)
+		equip_to_slot_or_del(new /obj/item/clothing/head/crown(src), slot_head)
+
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
 
