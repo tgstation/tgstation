@@ -197,7 +197,7 @@
 		return 0
 
 	var/turf/userturf = get_turf(user)
-	if(userturf.z != 1) //Shuttle can only be recalled while on station
+	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
 		to_chat(user, "<span class='warning'>\icon[src]Error: Device out of range of station communication arrays.</span>")
 		recalling = 0
 		return 0
@@ -215,7 +215,7 @@
 	log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 	message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
 	userturf = get_turf(user)
-	if(userturf.z == 1) //Check one more time that they are on station.
+	if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
 		if(SSshuttle.cancelEvac(user))
 			gang.recalls -= 1
 			return 1

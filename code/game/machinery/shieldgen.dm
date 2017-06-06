@@ -86,23 +86,24 @@
 	req_access = list(GLOB.access_engine)
 	max_integrity = 100
 	obj_integrity = 100
-	var/active = 0
-	var/list/deployed_shields = list()
+	var/active = FALSE
+	var/list/deployed_shields
 	var/locked = 0
 	var/shield_range = 4
 
-/obj/machinery/shieldgen/Destroy()
-	for(var/obj/structure/emergency_shield/ES in deployed_shields)
-		qdel(ES)
+/obj/machinery/shieldgen/Initialize(mapload)
+	. = ..()
 	deployed_shields = list()
+	if(mapload && active && anchored)
+		shields_up()
+
+/obj/machinery/shieldgen/Destroy()
+	QDEL_LIST(deployed_shields)
 	return ..()
 
 
 /obj/machinery/shieldgen/proc/shields_up()
-	if(active)
-		return 0 //If it's already turned on, how did this get called?
-
-	active = 1
+	active = TRUE
 	update_icon()
 
 	for(var/turf/target_tile in range(shield_range, src))
@@ -111,15 +112,9 @@
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
-	if(!active)
-		return 0 //If it's already off, how did this get called?
-
-	active = 0
+	active = FALSE
 	update_icon()
-
-	for(var/obj/structure/emergency_shield/ES in deployed_shields)
-		qdel(ES)
-	deployed_shields.Cut()
+	QDEL_LIST(deployed_shields)
 
 /obj/machinery/shieldgen/process()
 	if((stat & BROKEN) && active)

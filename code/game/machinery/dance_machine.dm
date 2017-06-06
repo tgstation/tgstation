@@ -317,7 +317,7 @@
 
 
 /obj/machinery/disco/proc/dance(var/mob/living/M) //Show your moves
-
+	set waitfor = FALSE
 	switch(rand(0,9))
 		if(0 to 1)
 			dance2(M)

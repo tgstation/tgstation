@@ -1,35 +1,43 @@
 /datum/getrev
-	var/parentcommit
+	var/originmastercommit
 	var/commit
 	var/list/testmerge = list()
-	var/has_pr_details = FALSE	//example data in a testmerge entry when this is true: https://api.github.com/repositories/3234987/pulls/22586
+	var/has_pr_details = FALSE	//tgs2 support
 	var/date
 
 /datum/getrev/New()
-	var/head_file = file2text(".git/logs/HEAD")
-	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
+	if(fexists(SERVICE_PR_TEST_JSON))
+		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
 		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
-	var/testlen = max(testmerge.len - 1, 0)
-	var/regex/head_log = new("(\\w{40}) .+> (\\d{10}).+(?=(\n.*(\\w{40}).*){[testlen]}\n*\\Z)")
-	head_log.Find(head_file)
-	parentcommit = head_log.group[1]
-	date = unix2date(text2num(head_log.group[2]))
-	commit = head_log.group[4]
 	log_world("Running /tg/ revision:")
-	log_world("[date]")
+	var/list/logs = world.file2list(".git/logs/HEAD")
+	if(logs)
+		logs = splittext(logs[logs.len - 1], " ")
+		date = unix2date(text2num(logs[5]))
+		commit = logs[2]
+		log_world("[date]")
+	logs = world.file2list(".git/logs/refs/remotes/origin/master")
+	if(logs)
+		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+
 	if(testmerge.len)
 		log_world(commit)
 		for(var/line in testmerge)
 			if(line)
-				log_world("Test merge active of PR #[line]")
-				SSblackbox.add_details("testmerged_prs","[line]")
-		log_world("Based off master commit [parentcommit]")
+				if(world.RunningService())
+					var/tmcommit = testmerge[line]["commit"]
+					log_world("Test merge active of PR #[line] commit [tmcommit]")
+					SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
+				else //tgs2 support
+					log_world("Test merge active of PR #[line]")
+					SSblackbox.add_details("testmerged_prs","[line]")
+		log_world("Based off origin/master commit [originmastercommit]")
 	else
-		log_world(parentcommit)
-
+		log_world(originmastercommit)
 /datum/getrev/proc/DownloadPRDetails()
 	if(!config.githubrepoid)
 		if(testmerge.len)
@@ -63,8 +71,11 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/details = ""
-		if(has_pr_details)
+		var/details 
+		if(world.RunningService())
+			var/cm = testmerge[line]["commit"]
+			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
+		else if(has_pr_details)	//tgs2 support
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
 		. += "<a href='[config.githuburl]/pull/[line]'>#[line][details]</a><br>"
 
@@ -73,13 +84,13 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
-	if(GLOB.revdata.parentcommit)
+	if(GLOB.revdata.originmastercommit)
 		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
 		var/prefix = ""
 		if(GLOB.revdata.testmerge.len)
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
-			prefix = "Based off master commit: "
-		var/pc = GLOB.revdata.parentcommit
+			prefix = "Based off origin/master commit: "
+		var/pc = GLOB.revdata.originmastercommit
 		to_chat(src, "[prefix]<a href='[config.githuburl]/commit/[pc]'>[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")

@@ -279,6 +279,29 @@
 		target.ex_act(rand(1,2))
 	return ..()
 
+/obj/item/projectile/bullet/sniper/gang
+	damage = 55
+	stun = 1
+	weaken = 1
+	dismemberment = 15
+	armour_penetration = 25
+
+/obj/item/projectile/bullet/sniper/gang/sleeper
+	nodamage = 1
+	stun = 0
+	weaken = 0
+	dismemberment = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/gang/sleeper/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.blur_eyes(8)
+		if(L.staminaloss >= 40)
+			L.Sleeping(20)
+		else
+			L.adjustStaminaLoss(55)
+	return 1
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0

@@ -104,6 +104,9 @@
 
 	return ..()
 
+/atom/proc/handle_ricochet(obj/item/projectile/P)
+	return
+
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return (!density || !height)
 
@@ -274,6 +277,7 @@
 	return
 
 /atom/proc/ex_act(severity, target)
+	set waitfor = FALSE
 	contents_explosion(severity, target)
 
 /atom/proc/blob_act(obj/structure/blob/B)

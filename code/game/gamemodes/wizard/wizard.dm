@@ -180,7 +180,7 @@
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
-		SSblackbox.set_details("round_end_result","loss - wizard killed")
+		SSticker.mode_result = "loss - wizard killed"
 		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
 
 		SSticker.news_report = WIZARD_KILLED

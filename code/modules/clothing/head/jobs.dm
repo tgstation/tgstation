@@ -99,8 +99,12 @@
 	name = "beret"
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
-
 	dog_fashion = /datum/dog_fashion/head/beret
+
+/obj/item/clothing/head/beret/black
+	name = "black beret"
+	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
+	icon_state = "beretblack"
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
@@ -116,10 +120,18 @@
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
 
+/obj/item/clothing/head/HoS/syndicate
+	name = "syndicate cap"
+	desc = "A black cap fit for a high ranking syndicate officer."
+
 /obj/item/clothing/head/HoS/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+
+/obj/item/clothing/head/HoS/beret/syndicate
+	name = "syndicate beret"
+	desc = "A black beret with thick armor padding inside. Stylish and robust."
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"

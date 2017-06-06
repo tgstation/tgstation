@@ -111,7 +111,7 @@
 /datum/gang_item/clothing/hat
 	name = "Pimp Hat"
 	id = "hat"
-	cost = 18
+	cost = 16
 	item_path = /obj/item/clothing/head/collectable/petehat/gang
 
 /obj/item/clothing/head/collectable/petehat/gang
@@ -121,7 +121,7 @@
 /datum/gang_item/clothing/mask
 	name = "Golden Death Mask"
 	id = "mask"
-	cost = 20
+	cost = 18
 	item_path = /obj/item/clothing/mask/gskull
 
 /obj/item/clothing/mask/gskull
@@ -133,7 +133,7 @@
 /datum/gang_item/clothing/shoes
 	name = "Bling Boots"
 	id = "boots"
-	cost = 25
+	cost = 22
 	item_path = /obj/item/clothing/shoes/gang
 
 /obj/item/clothing/shoes/gang
@@ -144,14 +144,14 @@
 /datum/gang_item/clothing/neck
 	name = "Gold Necklace"
 	id = "necklace"
-	cost = 10
+	cost = 9
 	item_path = /obj/item/clothing/neck/necklace/dope
 
 
 /datum/gang_item/clothing/hands
 	name = "Decorative Brass Knuckles"
 	id = "hand"
-	cost = 12
+	cost = 11
 	item_path = /obj/item/clothing/gloves/gang
 
 /obj/item/clothing/gloves/gang
@@ -163,7 +163,7 @@
 /datum/gang_item/clothing/belt
 	name = "Badass Belt"
 	id = "belt"
-	cost = 15
+	cost = 13
 	item_path = /obj/item/weapon/storage/belt/military/gang
 
 /obj/item/weapon/storage/belt/military/gang
@@ -215,7 +215,6 @@
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
 	cost = 6
-	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
 	name = "Box of Buckshot"
@@ -236,16 +235,24 @@
 	item_path = /obj/item/ammo_box/magazine/m10mm
 
 /datum/gang_item/weapon/sniper
-	name = ".50cal Sniper Rifle"
+	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
 	cost = 40
-	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
+	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo
-	name = "Standard .50cal Sniper Rounds"
+	name = "Smuggled .50cal Sniper Rounds"
 	id = "sniper_ammo"
 	cost = 15
-	item_path = /obj/item/ammo_box/magazine/sniper_rounds
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang
+
+
+/datum/gang_item/weapon/ammo/sleeper_ammo
+	name = "Illicit Tranquilizer Cartridges"
+	id = "sniper_ammo"
+	cost = 15
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang/sleeper
+
 
 /datum/gang_item/weapon/machinegun
 	name = "Mounted Machine Gun"
@@ -325,13 +332,13 @@
 		user.put_in_hands(O)
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
-		
+
 /datum/gang_item/equipment/wetwork_boots
 	name = "Wetwork boots"
 	id = "wetwork"
 	cost = 20
 	item_path = /obj/item/clothing/shoes/combat/gang
-	
+
 /obj/item/clothing/shoes/combat/gang
 	name = "Wetwork boots"
 	desc = "A gang's best hitmen are prepared for anything."
@@ -412,7 +419,7 @@
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
+	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != ZLEVEL_STATION)
 		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
 		return FALSE
 
@@ -422,7 +429,7 @@
 			return FALSE
 
 	if(dominator_excessive_walls(user))
-		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
+		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
 		return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))

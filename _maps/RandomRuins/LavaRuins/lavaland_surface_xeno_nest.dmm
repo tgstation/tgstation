@@ -8,185 +8,81 @@
 	},
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "c" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "d" = (
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "e" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "f" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "g" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "h" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "i" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "j" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "k" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "l" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "m" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "n" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /obj/structure/bed/nest,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "o" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -198,43 +94,19 @@
 	},
 /obj/item/weapon/gun/ballistic/automatic/pistol,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "p" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "q" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "r" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -242,112 +114,48 @@
 /obj/structure/alien/resin/wall,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "s" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /obj/structure/alien/egg,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "t" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "u" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "v" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "w" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "x" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "y" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "z" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -364,28 +172,12 @@
 /obj/item/weapon/melee/baton/loaded,
 /obj/item/clothing/head/helmet,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "A" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "B" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -393,59 +185,27 @@
 /obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "C" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/egg/burst,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "D" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "E" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "F" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/queen/large{
@@ -455,15 +215,7 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "G" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -472,28 +224,12 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "H" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "I" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -507,56 +243,24 @@
 /obj/item/clothing/under/syndicate,
 /obj/item/clothing/glasses/night,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "J" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/alien/sentinel,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "K" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "L" = (
 /obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/alien/drone{
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "M" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -573,15 +277,7 @@
 	stat = 2
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "N" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/wall,
@@ -590,15 +286,7 @@
 "O" = (
 /obj/structure/alien/weeds/node,
 /turf/template_noop,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "P" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -615,41 +303,17 @@
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "R" = (
 /obj/structure/alien/weeds,
 /turf/template_noop,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "S" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
 /turf/template_noop,
-/area/awaycontent/a5{
-	always_unpowered = 1;
-	has_gravity = 1;
-	name = "The Hive";
-	power_environ = 0;
-	power_equip = 0;
-	power_light = 0;
-	poweralm = 0
-	})
+/area/ruin/xenonest)
 "T" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/resin/wall,

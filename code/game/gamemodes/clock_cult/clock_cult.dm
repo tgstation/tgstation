@@ -191,7 +191,7 @@ Credit where due:
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			SSblackbox.set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
+			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
 		else
 			var/half_victory = FALSE
 			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
@@ -200,17 +200,16 @@ Credit where due:
 			if(half_victory)
 				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
 				was successfully constructed!</b></span>"
-				SSblackbox.set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
+				SSticker.mode_result = "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)"
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				SSblackbox.set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
+				SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
 		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
 		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
-		var/list/scripture_states = scripture_unlock_check()
-		for(var/i in scripture_states)
+		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER)
-				text += "<br><b>[i] scripture</b> was: <b>[scripture_states[i] ? "UN":""]LOCKED</b>"
+				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(servants_of_ratvar.len)
 		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)

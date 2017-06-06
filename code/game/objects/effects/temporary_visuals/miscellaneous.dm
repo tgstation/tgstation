@@ -169,7 +169,9 @@
 /obj/effect/temp_visual/fire
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "3"
-	duration = 20
+	light_range = 3
+	light_color = LIGHT_COLOR_FIRE
+	duration = 10
 
 /obj/effect/temp_visual/revenant
 	name = "spooky lights"

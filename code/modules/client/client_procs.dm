@@ -452,7 +452,7 @@ GLOBAL_LIST(external_rsc_urls)
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),COALESCE(INET_ATON('[world.internet_address]'), 0),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 
 /client/proc/findJoinDate()

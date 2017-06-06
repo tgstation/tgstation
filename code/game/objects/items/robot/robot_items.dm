@@ -111,7 +111,7 @@
 							"<span class='warning'>You bop [M] on the head!</span>")
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 		if(2)
-			if(!scooldown)
+			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
 						M.electrocute_act(5, "[user]", safety = 1)
@@ -128,11 +128,9 @@
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 500
-					scooldown = TRUE
-					spawn(20)
-					scooldown = FALSE
+					scooldown = world.time + 20
 		if(3)
-			if(!ccooldown)
+			if(ccooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M))
 						user.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
@@ -143,9 +141,7 @@
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
-					ccooldown = TRUE
-					spawn(10)
-					ccooldown = FALSE
+					ccooldown = world.time + 10
 
 /obj/item/borg/cyborghug/peacekeeper
 	shockallowed = TRUE
@@ -548,7 +544,7 @@
 	return ..()
 
 /obj/item/borg/projectile_dampen/attack_self(mob/user)
-	if(cycle_delay < world.time)
+	if(cycle_delay > world.time)
 		to_chat(user, "<span class='boldwarning'>\the [src] is still recycling its projectors!</span>")
 		return
 	cycle_delay = world.time + PKBORG_DAMPEN_CYCLE_DELAY

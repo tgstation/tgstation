@@ -16,26 +16,32 @@
 "e" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/gun/ballistic/revolver/russian/soul,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "f" = (
 /obj/structure/cursed_slot_machine,
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "g" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/coin/mythril,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "h" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/coin/diamond,
@@ -43,13 +49,13 @@
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "i" = (
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "j" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/coin/adamantine,
@@ -57,7 +63,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	icon_state = "carpetsymbol"
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "k" = (
 /obj/machinery/computer/arcade/battle{
 	emagged = 1
@@ -65,46 +71,50 @@
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "l" = (
 /obj/item/weapon/coin/gold,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "m" = (
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "n" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c1000,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "o" = (
 /obj/item/weapon/storage/bag/money,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "p" = (
 /obj/structure/table/wood/poker,
 /obj/item/weapon/ore/gold,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "q" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c20,
 /obj/item/stack/spacecash/c50,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "r" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c500,
@@ -113,21 +123,47 @@
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "s" = (
 /obj/structure/table/wood/poker,
 /obj/item/stack/spacecash/c200,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/ruin/powered)
+/area/ruin/powered/greed)
 "t" = (
 /obj/machinery/door/airlock/gold,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/obj/structure/fans/tiny/invisible,
 /area/ruin/powered)
+"u" = (
+/obj/structure/table/wood/poker,
+/obj/item/stack/spacecash/c500,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c1000,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/greed)
+"v" = (
+/obj/item/weapon/coin/gold,
+/obj/machinery/light/small,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/greed)
+"w" = (
+/obj/item/weapon/storage/bag/money,
+/obj/machinery/light/small,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/greed)
 
 (1,1,1) = {"
 a
@@ -320,7 +356,7 @@ m
 m
 l
 m
-l
+v
 d
 d
 a
@@ -364,7 +400,7 @@ m
 l
 m
 l
-o
+w
 d
 d
 a
@@ -404,7 +440,7 @@ c
 d
 d
 p
-r
+u
 r
 d
 c

@@ -99,10 +99,9 @@
 /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/c20r/Initialize()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/c20r/afterattack()
 	..()
@@ -150,20 +149,18 @@
 	fire_delay = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
 
-/obj/item/weapon/gun/ballistic/automatic/m90/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/m90/Initialize()
+	. = ..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher(src)
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/m90/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/m90/unrestricted/Initialize()
+	. = ..()
 	underbarrel = new /obj/item/weapon/gun/ballistic/revolver/grenadelauncher/unrestricted(src)
 	update_icon()
-	return
 
 /obj/item/weapon/gun/ballistic/automatic/m90/afterattack(atom/target, mob/living/user, flag, params)
 	if(select == 2)
@@ -237,8 +234,6 @@
 	burst_size = 3
 	fire_delay = 1
 
-
-
 // Bulldog shotgun //
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog
@@ -247,6 +242,7 @@
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
 	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -259,13 +255,13 @@
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/New()
-	..()
+/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("[magazine.icon_state]")
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
@@ -382,7 +378,10 @@
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
 
-
+/obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
+	name = "black market sniper rifle"
+	desc = "A long ranged weapon that does significant damage. It is well worn from years of service."
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/gang
 
 // Old Semi-Auto Rifle //
 

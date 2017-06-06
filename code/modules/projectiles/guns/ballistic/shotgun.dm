@@ -147,8 +147,8 @@
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
 
-/obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/New()
-	..()
+/obj/item/weapon/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
+	. = ..()
 	bolt_open = 1
 	pump()
 	gun_type = type
@@ -213,8 +213,8 @@
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
-/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/New()
-	..()
+/obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
+	. = ..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)
 

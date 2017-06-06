@@ -18,6 +18,8 @@
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
+	var/burn_damage = 0
+	var/mob_color //Change the mob's color
 	density = 1
 	anchored = 1
 	var/banType = "lavaland"
@@ -68,6 +70,8 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
+	M.adjustFireLoss(burn_damage)
+	M.color = mob_color
 	equip(M)
 
 	if(ckey)
@@ -115,23 +119,29 @@
 	var/l_pocket = -1
 	var/back = -1
 	var/id = -1
+	var/neck = -1
+	var/backpack_contents = -1
+	var/suit_store = -1
 
 /obj/effect/mob_spawn/human/Initialize()
-	. = ..()
 	if(ispath(outfit))
 		outfit = new outfit()
 	if(!outfit)
 		outfit = new /datum/outfit
-
+	return ..()
 
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)
 		H.set_species(mob_species)
 	if(husk)
 		H.Drain()
-
+	else //Because for some reason I can't track down, things are getting turned into husks even if husk = false. It's in some damage proc somewhere.
+		H.cure_husk()
+	H.underwear = "Nude"
+	H.undershirt = "Nude"
+	H.socks = "Nude"
 	if(outfit)
-		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id")
+		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)
 			var/T = vars[slot]
 			if(!isnum(T))
@@ -352,7 +362,7 @@
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
 	id_job = "Commander"
-	id_access_list = list(GLOB.access_cent_captain)
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage)
 	outfit = /datum/outfit/nanotrasencommandercorpse
 
 /datum/outfit/nanotrasencommandercorpse
@@ -372,7 +382,7 @@
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
 	id_job = "Private Security Force"
-	id_access_list = list(GLOB.access_cent_specops)
+	id_access_list = list(GLOB.access_cent_captain, GLOB.access_cent_general, GLOB.access_cent_specops, GLOB.access_cent_medical, GLOB.access_cent_storage, GLOB.access_security)
 	outfit = /datum/outfit/nanotrasensoldiercorpse
 
 /datum/outfit/nanotrasensoldiercorpse
@@ -395,6 +405,16 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	flavour_text = "You are a Nanotrasen Commander!"
+
+/obj/effect/mob_spawn/human/nanotrasensoldier/alive
+	death = FALSE
+	roundstart = FALSE
+	mob_name = "Private Security Officer"
+	name = "sleeper"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	faction = "nanotrasenprivate"
+	flavour_text = "You are a Nanotrasen Private Security Officer!"
 
 
 /////////////////Spooky Undead//////////////////////

@@ -79,7 +79,6 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"

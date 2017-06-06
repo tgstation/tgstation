@@ -36271,7 +36271,7 @@
 	},
 /obj/effect/landmark/blobstart,
 /obj/item/weapon/melee/baton/cattleprod{
-	bcell = new /obj/item/weapon/stock_parts/cell/high()
+	cell = new /obj/item/weapon/stock_parts/cell/high()
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/exam_room)

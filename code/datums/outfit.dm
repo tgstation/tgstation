@@ -23,6 +23,8 @@
 	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
 	var/list/implants = null
 
+	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
+
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overriden for customization depending on client prefs,species etc
 	return

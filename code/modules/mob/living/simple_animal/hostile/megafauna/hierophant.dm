@@ -78,6 +78,9 @@ Difficulty: Hard
 	internal = new/obj/item/device/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
+	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
 	if(. && spawned_beacon && !QDELETED(spawned_beacon) && !client)
@@ -120,6 +123,11 @@ Difficulty: Hard
 	visible_message("<span class='hierophant_warning'>[src] annihilates [L]!</span>","<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
+	. = ..()
+	if(istype(the_target, /mob/living/simple_animal/hostile/asteroid/hivelordbrood)) //ignore temporary targets in favor of more permenant targets
+		return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
@@ -461,6 +469,12 @@ Difficulty: Hard
 	return ..()
 
 /obj/effect/temp_visual/hierophant/wall/CanPass(atom/movable/mover, turf/target, height = 0)
+	if(mover == caster.pulledby)
+		return TRUE
+	if(istype(mover, /obj/item/projectile))
+		var/obj/item/projectile/P = mover
+		if(P.firer == caster)
+			return TRUE
 	if(mover == caster)
 		return TRUE
 	return FALSE
@@ -479,7 +493,7 @@ Difficulty: Hard
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 	var/monster_damage_boost = TRUE
-	var/damage = 10 
+	var/damage = 10
 
 /obj/effect/temp_visual/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
 	. = ..()
@@ -588,6 +602,8 @@ Difficulty: Hard
 		do_damage(get_turf(src))
 
 /obj/effect/temp_visual/hierophant/blast/proc/do_damage(turf/T)
+	if(!damage)
+		return
 	for(var/mob/living/L in T.contents - hit_things) //find and damage mobs...
 		hit_things += L
 		if((friendly_fire_check && caster && caster.faction_check_mob(L)) || L.stat == DEAD)

@@ -16,8 +16,8 @@
 
 	weapon_weight = WEAPON_MEDIUM
 
-/obj/item/weapon/gun/medbeam/New()
-	..()
+/obj/item/weapon/gun/medbeam/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/medbeam/Destroy(mob/user)
@@ -128,6 +128,6 @@
 /obj/item/weapon/gun/medbeam/mech
 	mounted = 1
 
-/obj/item/weapon/gun/medbeam/mech/New()
-	..()
+/obj/item/weapon/gun/medbeam/mech/Initialize()
+	. = ..()
 	STOP_PROCESSING(SSobj, src) //Mech mediguns do not process until installed, and are controlled by the holder obj

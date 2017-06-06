@@ -10,7 +10,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candiedapple
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
 	name = "Choco coin"
@@ -19,7 +19,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chococoin
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/fudgedice
 	name = "Fudge dice"
@@ -28,7 +28,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fudgedice
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chocoorange
 	name = "Choco orange"
@@ -37,7 +37,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocoorange
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/loadedbakedpotato
 	name = "Loaded baked potato"
@@ -47,7 +47,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/cheesyfries
 	name = "Cheesy fries"
@@ -56,7 +56,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/wrap
 	name = "Wrap"
@@ -65,7 +65,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/eggwrap
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/beans
 	name = "Beans"
@@ -74,7 +74,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/beans
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/eggplantparm
 	name ="Eggplant parmigiana"
@@ -83,7 +83,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/baguette
 	name = "Baguette"
@@ -93,7 +93,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/baguette
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
@@ -104,7 +104,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/jelliedyoast
 	name = "Jellied toast"
@@ -113,7 +113,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/twobread
 	name = "Two bread"
@@ -122,7 +122,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/twobread
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/burrito
 	name ="Burrito"
@@ -131,7 +131,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burrito
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/cheesyburrito
 	name ="Cheesy burrito"
@@ -141,7 +141,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesyburrito
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/carneburrito
 	name ="Carne de asada burrito"
@@ -151,7 +151,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/carneburrito
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/fuegoburrito
 	name ="Fuego plasma burrito"
@@ -161,7 +161,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/melonfruitbowl
 	name ="Melon fruit bowl"
@@ -174,7 +174,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/spacefreezy
 	name ="Space freezy"
@@ -184,7 +184,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/sundae
 	name ="Sundae"
@@ -195,7 +195,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sundae
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/honkdae
 	name ="Honkdae"
@@ -207,7 +207,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/icecream = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/honkdae
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/nachos
 	name ="Nachos"
@@ -216,7 +216,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/nachos
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/cheesynachos
 	name ="Cheesy nachos"
@@ -226,7 +226,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cheesynachos
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/cubannachos
 	name ="Cuban nachos"
@@ -236,7 +236,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/tortilla = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/cubannachos
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/melonkeg
 	name ="Melon keg"
@@ -247,7 +247,7 @@
 	)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka = 1)
 	result = /obj/item/weapon/reagent_containers/food/snacks/melonkeg
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/honeybar
 	name = "Honey nut bar"
@@ -256,7 +256,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/honeybar
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 
 /datum/crafting_recipe/food/stuffedlegion
@@ -264,12 +264,12 @@
 	time = 40
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath = 1,
-		/obj/item/organ/hivelord_core/legion = 1,
+		/obj/item/organ/regenerative_core/legion = 1,
 		/datum/reagent/consumable/ketchup = 2,
 		/datum/reagent/consumable/capsaicin = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 
 /datum/crafting_recipe/food/lizardwine
@@ -280,7 +280,7 @@
 		/datum/reagent/consumable/ethanol = 100
 	)
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 
 /datum/crafting_recipe/food/powercrepe
@@ -294,7 +294,7 @@
 		/obj/item/weapon/melee/sabre = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/powercrepe
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/taco
 	name ="Classic Taco"
@@ -305,7 +305,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/tacoplain
 	name ="Plain Taco"
@@ -315,7 +315,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/branrequests
 	name = "Bran Requests Cereal"
@@ -324,4 +324,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD

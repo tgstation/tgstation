@@ -208,12 +208,10 @@
 /datum/game_mode/cult/declare_completion()
 
 	if(!check_cult_victory())
-		SSblackbox.set_details("round_end_result","win - cult win")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "win - cult win"
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 
 	var/text = ""
@@ -257,22 +255,15 @@
 
 /datum/game_mode/proc/datum_cult_completion()
 	var/text = ""
-	var/acolytes_survived = 0
-	for(var/datum/mind/cult_mind in cult)
-		if (cult_mind.current && cult_mind.current.stat != DEAD)
-			if(cult_mind.current.onCentcom() || cult_mind.current.onSyndieBase())
-				acolytes_survived++
 	var/cult_fail = 0
 	cult_fail += eldergod
 	if(!GLOB.sac_complete)
 		cult_fail++
 	if(!cult_fail)
-		SSblackbox.set_details("round_end_result","win - cult win")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "win - cult win"
 		to_chat(world, "<span class='greentext'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>")
 	else
-		SSblackbox.set_details("round_end_result","loss - staff stopped the cult")
-		SSblackbox.set_val("round_end_result",acolytes_survived)
+		SSticker.mode_result = "loss - staff stopped the cult"
 		to_chat(world, "<span class='redtext'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>")
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
