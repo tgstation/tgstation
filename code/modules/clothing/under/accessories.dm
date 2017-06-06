@@ -117,10 +117,6 @@
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
-/obj/item/clothing/accessory/medal/plasma/nobel_science
-	name = "nobel sciences award"
-	desc = "A bronze medal which represents significant contributions to the field of science or engineering."
-
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
 	desc = "A silver medal."
@@ -163,9 +159,8 @@
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
-		visible_message("<span class='danger'[usr]'s [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
+		visible_message("<span class='danger'> \The [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
 		qdel(src)
-		usr.update_inv_w_uniform()
 
 /obj/item/clothing/accessory/medal/plasma/nobel_science
 	name = "nobel sciences award"
