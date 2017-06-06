@@ -42,18 +42,23 @@
 
 //cleans up ALL references :)
 /datum/holocall/Destroy()
-	user.reset_perspective()
-	if(user.client)
-		for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-			chunk.remove(eye)
-	user.remote_control = null
-	QDEL_NULL(eye)
+	var/user_good = !QDELETED(user)
+	if(user_good)
+		user.reset_perspective()
+		user.remote_control = null
+	
+	if(!QDELETED(eye))
+		if(user_good && user.client)
+			for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
+				chunk.remove(eye)
+		qdel(eye)
+	eye = null
 	
 	user = null
+	
 	if(hologram)
 		hologram.HC = null
-	hologram = null
-	calling_holopad.outgoing_call = null
+		hologram = null
 
 	for(var/I in dialed_holopads)
 		var/obj/machinery/holopad/H = I
@@ -61,6 +66,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)
+		calling_holopad.outgoing_call = null
 		calling_holopad.SetLightsAndPower()
 		calling_holopad = null
 	if(connected_holopad)
@@ -85,7 +91,7 @@
 /datum/holocall/proc/ConnectionFailure(obj/machinery/holopad/H, graceful = FALSE)
 	testing("Holocall connection failure: graceful [graceful]")
 	if(H == connected_holopad || H == calling_holopad)
-		if(!graceful)
+		if(!graceful && H != calling_holopad)
 			calling_holopad.say("Connection failure.")
 		qdel(src)
 		return
@@ -151,9 +157,7 @@
 	. = !QDELETED(user) && !user.incapacitated() && !QDELETED(calling_holopad) && calling_holopad.is_operational() && user.loc == calling_holopad.loc
 
 	if(.)
-		if(connected_holopad)
-			. = !QDELETED(connected_holopad) && connected_holopad.is_operational()
-		else
+		if(!connected_holopad)
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer recieved.")

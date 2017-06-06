@@ -200,7 +200,7 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
-		/obj/item/organ/hivelord_core,
+		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,
 		/obj/item/weapon/storage/bag/plants,
 		/obj/item/stack/marker_beacon
@@ -249,8 +249,8 @@
 /obj/item/weapon/storage/belt/military
 	name = "chest rig"
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
-	icon_state = "explorer1"
-	item_state = "explorer1"
+	icon_state = "militarywebbing"
+	item_state = "militarywebbing"
 	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/abductor

@@ -44,6 +44,7 @@
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/dog/Initialize()
+	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
 		if(!D.owner)

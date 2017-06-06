@@ -1,3 +1,11 @@
+30 May 2017, by MrStonedOne
+
+Z levels changed, this query allows you to convert old ss13 death records:
+
+UPDATE death SET coord = CONCAT(SUBSTRING_INDEX(coord, ',', 2), ', ', CASE TRIM(SUBSTRING_INDEX(coord, ',', -1)) WHEN 1 THEN 2 WHEN 2 THEN 1 ELSE TRIMSUBSTRING_INDEX(coord, ',', -1) END)
+
+---------------------------------------------------
+
 26 May 2017, by Jordie0608
 
 Modified table 'ban', adding the column 'round_id'.
