@@ -1050,9 +1050,7 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
+	loot = list(/obj/effect/gibspawner/human)
 
 /obj/effect/mob_spawn/human/corpse/orionsecurity
 	name = "Spaceport Security"
