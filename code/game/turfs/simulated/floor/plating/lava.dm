@@ -1,7 +1,7 @@
 ///LAVA
 
 /turf/open/floor/plating/lava
-	name = "lava"
+	name = "\proper lava"
 	icon_state = "lava"
 	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
