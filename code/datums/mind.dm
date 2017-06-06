@@ -1412,7 +1412,9 @@
 			if("uplink")
 				if(!equip_traitor())
 					to_chat(usr, "<span class='danger'>Equipping a syndicate failed!</span>")
-				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
+					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
+				else
+					log_admin("[key_name(usr)] gave [current] an uplink.")
 
 	else if (href_list["obj_announce"])
 		announce_objectives()
@@ -1440,7 +1442,7 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
-	if(!(src in SSticker.mode.traitors))
+	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
 		
