@@ -8,7 +8,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	var/static/list/spooks = list('sound/hallucinations/growl1','sound/hallucinations/growl2','sound/hallucinations/growl3','sound/hallucinations/veryfar_noise','sound/hallucinations/wail')
+	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -26,7 +26,7 @@
 	. = ..()
 	C.a_intent = INTENT_HARM // THE SUFFERING MUST FLOW
 	C.heal_overall_damage(4,4)
-	prob(4)
+	if(prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 	if(C.InCritical())
 		C.death()
