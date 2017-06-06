@@ -455,8 +455,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
-	name = "12g Ammo Duffelbag"
-	desc = "A duffelbag filled with enough 12g ammo to supply an entire team, at a discounted price."
+	name = "12g Ammo Duffel bag"
+	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
 	cost = 12
 
@@ -890,8 +890,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 1
 
 /datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery Duffle bag"
-	desc = "The Syndicate surgery duffle bag is a toolkit containing all surgery tools, surgical drapes, \
+	name = "Syndicate Surgery Duffel bag"
+	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 3
