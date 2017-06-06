@@ -475,15 +475,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
-			if(G.still_needs_components())
-				textlist += "Ark Components required: "
-				for(var/i in G.required_components)
-					if(G.required_components[i])
-						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
-				textlist += "<br>"
-			else
+			textlist += "<b>Health:</b> [G.obj_integrity]/[G.max_integrity]<br>"
+			if(G.countdown)
 				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
-			break
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"

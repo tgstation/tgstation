@@ -10,6 +10,7 @@ GLOBAL_VAR_INIT(clockwork_potential, 0) //The amount of potential left to build 
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
 GLOBAL_VAR_INIT(clockwork_daemons, 0) //How many daemons exist in the world
 GLOBAL_VAR_INIT(city_of_cogs_beckoner, null) //The destination for all rifts to Reebe
+GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, null) //The Ark. The servants have to defend this to win.
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
 GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from

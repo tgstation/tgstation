@@ -174,51 +174,55 @@ Credit where due:
 		L = V
 		T = get_turf(L)
 		addtimer(CALLBACK(src, .proc/open_portal, T), rand(50, 1200))
+	var/obj/structure/destructible/clockwork/massive/celestial_gateway/C = GLOB.ark_of_the_clockwork_justiciar
+	C.spawn_animation() //get this party started!
 
 /datum/game_mode/proc/open_portal(turf/portal_loc)
 	var/obj/effect/clockwork/reebe_rift/R = new(portal_loc)
 	R.visible_message("<span class='warning'>The air above [portal_loc] screeches and shimmers as a portal appears!</span>")
 	playsound(portal_loc, 'sound/effects/supermatter.ogg', 50, 0)
 
+/datum/game_mode/clockwork_cult/check_finished()
+	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(GLOB.clockwork_gateway_activated || !GLOB.ark_of_the_clockwork_justiciar)
+		return TRUE
+	..()
+
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
-	if(GLOB.clockwork_gateway_activated)
-		SSticker.news_report = CLOCK_PROSELYTIZATION //failure, technically, but we have the station
-		if(GLOB.ratvar_awakens)
-			SSticker.news_report = CLOCK_SUMMON
-			return TRUE
-	else
-		SSticker.news_report = CULT_FAILURE
+	if(GLOB.clockwork_gateway_activated || GLOB.ark_of_the_clockwork_justiciar)
+		SSticker.news_report = CLOCK_SUMMON
+		return TRUE
+	SSticker.news_report = CULT_FAILURE
 	return
 
 /datum/game_mode/clockwork_cult/declare_completion()
-	..()
-	return //Doesn't end until the round does
+	var/text = ""
+	var/snd
+	if(check_clockwork_victory())
+		if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark and summoned Ratvar!</b></span>"
+			snd = sound('sound/ambience/antag/ClockCultAlr.ogg', volume = 50)
+			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
+		else
+			text += "<span class='large_brass'><b>The crew ran away like wimps, allowing Ratvar to rise unopposed!</b></span>"
+			snd = sound('sound/ambience/antag/ClockCultAlr.ogg', volume = 50)
+			SSticker.mode_result = "win - crew fled"
+	else
+		text += "<span class='userdanger'>The Ark has been destroyed! Ratvar will rust away in Reebe for all eternity!</span>"
+		snd = sound('sound/magic/clockwork/ratvar_attack.ogg', volume = 50)
+		SSticker.mode_result = "win - crew fled"
+	to_chat(world, text)
+	to_chat(world, snd) //Yes, this actually works
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = SSticker.mode
-		if(C.check_clockwork_victory())
-			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
-		else
-			var/half_victory = FALSE
-			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
-			if(G)
-				half_victory = TRUE
-			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
-				was successfully constructed!</b></span>"
-				SSticker.mode_result = "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)"
-			else
-				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				SSticker.mode_result = "loss - servants failed their objective (summon ratvar)"
-		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
+		/*xt += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
 		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER)
-				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
+				text += "<br><b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"*/
 	if(servants_of_ratvar.len)
 		text += "<br><b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
