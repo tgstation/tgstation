@@ -587,13 +587,6 @@
 	item_color = "geisha"
 	can_adjust = 0
 
-/obj/item/clothing/under/villain
-	name = "villain suit"
-	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
-	icon_state = "villain"
-	item_color = "villain"
-	can_adjust = 0
-
 /obj/item/clothing/under/sailor
 	name = "sailor suit"
 	desc = "Skipper's in the wardroom drinkin gin'."
