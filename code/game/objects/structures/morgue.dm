@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	// Make sure we don't delete the actual morgue and its tray
 	var/list/conts = GetAllContents() - src - connected
 
-	if(conts.len <= 1)
+	if(!conts.len)
 		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
