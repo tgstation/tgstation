@@ -1,5 +1,5 @@
 
-#define DUALWIELD_PENALTY_MULTIPLIER 1.4
+#define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
 
 /obj/item/weapon/gun
 	name = "gun"
@@ -232,7 +232,7 @@
 					break
 			if(chambered && chambered.BB)
 				if(randomspread)
-					sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+					sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 				else //Smart spread
 					sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
 
@@ -253,7 +253,7 @@
 		firing_burst = 0
 	else
 		if(chambered)
-			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
+			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return
