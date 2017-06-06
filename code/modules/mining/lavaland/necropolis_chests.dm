@@ -368,10 +368,9 @@
 
 
 //Boat
-
 /obj/vehicle/lavaboat
 	name = "lava boat"
-	desc = "A boat used for traversing lava."
+	desc = "A boat used for traversing lava. Take care to not spend too many years on the boat."
 	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
