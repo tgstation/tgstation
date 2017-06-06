@@ -169,7 +169,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
-	if(!isturf(current_user.loc) || !(src in current_user.held_items))	//Doesn't work if you're not holding it!
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
 		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
