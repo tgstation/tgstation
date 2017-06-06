@@ -116,7 +116,7 @@
 			return
 
 	if(isturf(source.loc))
-		for(var/mob/living/carbon/C in spiral_range_turfs(spread_range, source))
+		for(var/mob/living/carbon/C in oview(spread_range, source))
 			if(isturf(C.loc))
 				C.ContractDisease(src)
 			CHECK_TICK
