@@ -1223,17 +1223,15 @@
 					make_Traitor()
 
 			if("autoobjectives")
-				if(!(src in SSticker.mode.traitors))
+				var/datum/antagonist/traitor/traitordatum = has_antag_datum(ANTAG_DATUM_TRAITOR)
+				if(!traitordatum)
 					message_admins("[key_name_admin(usr)] has traitor'ed [current] as part of autoobjectives.")
 					log_admin("[key_name(usr)] has traitor'ed [current] as part of autoobjectives.")
 					make_Traitor()
 				else
-					var/datum/antagonist/traitor/traitordatum = has_antag_datum(ANTAG_DATUM_TRAITOR)
-					if(!traitordatum)
-						message_admins("Could not generate objectives for [current] with mind [src] - they have no traitor datum despite being in SSticker.mode.traitors! This is a bug.")
-					else
-						traitordatum.forge_traitor_objectives()
-						to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
+					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
+					traitordatum.forge_traitor_objectives()
+					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
