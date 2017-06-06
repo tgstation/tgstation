@@ -100,10 +100,12 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 10
+	max_combined_w_class = 20
 	req_access = list(GLOB.access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
+	can_hold = list(/obj/item/clothing/accessory/medal)
 
 /obj/item/weapon/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/silver/valor(src)
