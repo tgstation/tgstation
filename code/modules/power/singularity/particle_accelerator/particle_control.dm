@@ -12,6 +12,8 @@
 	var/strength_upper_limit = 2
 	var/interface_control = 1
 	var/list/obj/structure/particle_accelerator/connected_parts
+	var/obj/item/device/radio/radio
+	var/list/fieldcount = list()
 	var/assembled = 0
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
 	var/active = 0
@@ -19,14 +21,20 @@
 	var/powered = 0
 	mouse_opacity = 2
 
-/obj/machinery/particle_accelerator/control_box/New()
+/obj/machinery/particle_accelerator/control_box/Initialize()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
 	connected_parts = list()
+	radio = new(src)
+	radio.listening = 0
+	radio.frequency = 1357
 	..()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)
 		toggle_power()
+	if(radio)
+		qdel(radio)
+		radio = null
 	for(var/CP in connected_parts)
 		var/obj/structure/particle_accelerator/part = CP
 		part.master = null
@@ -208,6 +216,10 @@
 	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
+		for (var/obj/machinery/field/containment/C in range(30, src))
+			fieldcount += C		
+		if (fieldcount.len<24)
+			radio.talk_into(src,"ALERT: Particle Accelerator has been activated with a non-standard containment field configuration. Please inspect containment status to ensure that a Class 5 Extinction Event is not imminent!", ENG_FREQ)
 		use_power = 2
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
