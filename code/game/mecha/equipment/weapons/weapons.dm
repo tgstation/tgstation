@@ -92,13 +92,13 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
-	name = "\improper MKIV ion heavy cannon"
-	desc = "A weapon for combat exosuits. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
+	name = "\improper MKIV Tesla Cannon"
+	desc = "A weapon for combat exosuits. Shoots rounds based off of the experimental engine!"
 	icon_state = "mecha_ion"
 	origin_tech = "materials=4;combat=5;magnets=4"
 	energy_drain = 120
-	projectile = /obj/item/projectile/ion
-	fire_sound = 'sound/weapons/Laser.ogg'
+	projectile = /obj/item/projectile/energy/tesla_revolver
+	fire_sound = 'sound/magic/lightningbolt.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
 	equip_cooldown = 35
