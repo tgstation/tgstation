@@ -36,6 +36,12 @@
 	message_mime = "appears to moan!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/dab
+	key = "dab"
+	key_third_person = "dabs"
+	message = "dabs."
+	message_mime = "makes a cool dab!"
+
 /datum/emote/living/carbon/roll
 	key = "roll"
 	key_third_person = "rolls"
@@ -79,6 +85,7 @@
 	key = "tail"
 	message = "waves their tail."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
+
 
 /datum/emote/living/carbon/wink
 	key = "wink"
