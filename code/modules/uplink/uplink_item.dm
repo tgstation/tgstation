@@ -208,6 +208,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 8
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/dangerous/cycler_shotgun
+       name = "Cycler Shotgun"
+       desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
+       item = /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube
+       cost = 16
+       surplus = 0
+       include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
