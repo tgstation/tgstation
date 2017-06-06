@@ -246,8 +246,6 @@ This file contains the arcane tome files.
 	SSblackbox.add_details("cult_runes_scribed", R.cultist_name)
 
 /obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
-	var/area/A = get_area(T)
-
 	if(isspaceturf(T))
 		to_chat(user, "<span class='warning'>You cannot scribe runes in space!</span>")
 		return FALSE
