@@ -582,6 +582,7 @@
 					H.AIStatus = AI_OFF
 					H.LoseTarget()
 				stopped_atoms |= M
+				M.add_atom_colour("#704214", TEMPORARY_COLOUR_PRIORITY)//sepia brown
 			else if(istype(A, /obj/item/projectile))
 				var/obj/item/projectile/P = A
 				P.paused = TRUE
@@ -610,6 +611,7 @@
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)
+	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#704214")
 
 
 /obj/effect/timestop/wizard
