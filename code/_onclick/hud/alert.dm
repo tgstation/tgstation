@@ -306,7 +306,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
-			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(GLOB.summon_spots)]!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
