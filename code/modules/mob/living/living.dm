@@ -294,7 +294,11 @@
 /mob/living/proc/lay_down()
 	set name = "Rest"
 	set category = "IC"
-
+	
+	if(resting)//prevents wavedashing
+		src << "You start to get to your feet."
+		sleep(3)
+	
 	resting = !resting
 	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 	update_canmove()
