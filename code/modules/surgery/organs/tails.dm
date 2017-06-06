@@ -4,8 +4,6 @@
 	zone = "groin"
 	slot = "tail"
 
-/obj/item/organ/tail/lizard
-
 /obj/item/organ/tail/cat
 	name = "cat tail"
 	desc = "Who's wagging now?"
