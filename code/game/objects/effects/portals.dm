@@ -46,11 +46,12 @@
 		user.forceMove(get_turf(src))
 		teleport(user)
 
-/obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked = null, automatic_link = TRUE, hard_target_override = null, atmos_link_override = null)
+/obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked, automatic_link = TRUE, hard_target_override, atmos_link_override)
 	. = ..()
 	GLOB.portals += src
 	if(!istype(_linked) && automatic_link)
-		return INITIALIZE_HINT_QDEL
+		. = INITIALIZE_HINT_QDEL
+		CRASH("Somebody fucked up.")
 	if(_lifespan > 0)
 		QDEL_IN(src, _lifespan)
 	if(!isnull(atmos_link_override))
@@ -62,12 +63,10 @@
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
 	if(atmos_link)
-		unlink_atmos()
 		link_atmos()
 
 /obj/effect/portal/proc/link_atmos()
-	if(atmos_source || atmos_destination)
-		unlink_atmos()
+	unlink_atmos()
 	if(!isopenturf(get_turf(src)))
 		return FALSE
 	if(linked)
@@ -93,10 +92,12 @@
 
 /obj/effect/portal/proc/unlink_atmos()
 	if(istype(atmos_source))
-		LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
+		if(istype(atmos_destination) && !atmos_source.Adjacent(atmos_destination) && !CANATMOSPASS(atmos_destination, atmos_source))
+			LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
 		atmos_source = null
 	if(istype(atmos_destination))
-		LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
+		if(istype(atmos_source) && !atmos_destination.Adjacent(atmos_source) && !CANATMOSPASS(atmos_source, atmos_destination))
+			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
 		atmos_destination = null
 
 /obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal) on creator if creator has such call.

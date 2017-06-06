@@ -224,7 +224,7 @@
 		A.Bumped(src)
 
 /atom/movable/Crossed(atom/movable/O, oldloc)
-	. = ..(O)
+	. = ..()
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
