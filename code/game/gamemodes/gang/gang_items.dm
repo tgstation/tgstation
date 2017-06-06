@@ -211,8 +211,10 @@
 				rival++
 	if(!we)
 		we = 1
-	cooldown = 250+((we/(rival+we))*100)**2
 	if(repeat)
+		cooldown = 250+((we/(rival+we))*100)**2
+		if(!SSticker.mode.vigilantes)
+			cooldown += 650
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
 	spawn_gangster()
 
@@ -593,6 +595,12 @@
 	item_path = /obj/item/toy/crayon/spraycan/gang
 
 
+/datum/gang_item/equipment/shades
+	name = "Signature Shades"
+	id = "shades"
+	cost = 2
+	item_path = /obj/item/clothing/glasses/sunglasses/garb
+
 /datum/gang_item/equipment/sechuds
 	name = "SecHud Sunglasses"
 	id = "sechuds"
@@ -619,7 +627,18 @@
 	cost = 10
 	item_path = /obj/item/weapon/shield/riot/tele
 
-/obj/item/weapon/shield/riot/tele
+/datum/gang_item/equipment/sandbag
+	name = "Sandbags"
+	id = "sandbag"
+	cost = 6
+	item_path = /obj/item/stack/sheet/mineral/sandbags
+
+/datum/gang_item/equipment/sandbag/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(!SSticker.mode.vigilantes) // Seems fair when defending against security, probably OP against a disorganized rabble of vigilantes
+		return TRUE
+	else
+		return FALSE
+
 
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"

@@ -27,7 +27,6 @@
 			return 0
 		if(target.mind in SSticker.mode.get_gangsters())
 			SSticker.mode.remove_gangster(target.mind)
-			vigilize(target)
 		if(target.mind in SSticker.mode.revolutionaries)
 			SSticker.mode.remove_revolutionary(target.mind)
 		if(!silent)

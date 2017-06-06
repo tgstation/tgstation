@@ -341,7 +341,7 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(SSticker.mode.name == "gang war")
+		if(SSticker.mode.name == "gang war" && SSticker.mode.vigilantes)
 			vigilize(humanc)
 	GLOB.joined_player_list += character.ckey
 

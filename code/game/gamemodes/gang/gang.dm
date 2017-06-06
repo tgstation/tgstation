@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	var/list/datum/gang/gangs = list()
 	var/datum/gang_points/gang_points
 	var/posse_timer = 0
+	var/vigilantes = FALSE
 
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
@@ -22,7 +23,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	return 0
 
 /datum/game_mode/gang
-	name = "gang war no security"
+	name = "gang war"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
@@ -51,70 +52,65 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
+	if(prob(50)) // 50% chance for Vigilantes to appear in place of security
+		name = "vigilante gang war"
+		vigilantes = TRUE
+		//turn off sec and captain
+		SSjob.DisableJob(/datum/job/captain)
+		SSjob.DisableJob(/datum/job/hop)
+		SSjob.DisableJob(/datum/job/hos)
+		SSjob.DisableJob(/datum/job/warden)
+		SSjob.DisableJob(/datum/job/detective)
+		SSjob.DisableJob(/datum/job/officer)
+		SSjob.DisableJob(/datum/job/lawyer)
+		SSjob.DisableJob(/datum/job/ai)
+		SSjob.DisableJob(/datum/job/cyborg)
 
-
-	//turn off sec and captain
-	SSjob.DisableJob(/datum/job/captain)
-	SSjob.DisableJob(/datum/job/hop)
-	SSjob.DisableJob(/datum/job/hos)
-	SSjob.DisableJob(/datum/job/warden)
-	SSjob.DisableJob(/datum/job/detective)
-	SSjob.DisableJob(/datum/job/officer)
-	SSjob.DisableJob(/datum/job/lawyer)
-	SSjob.DisableJob(/datum/job/ai)
-	SSjob.DisableJob(/datum/job/cyborg)
-
-	// For removing problematic items
-	for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
-		target_armory = A
-		break
-
-	for(var/area/crew_quarters/heads/hos/S in GLOB.sortedAreas)
-		target_hos = S
-		break
-
-	for(var/area/security/brig/B in GLOB.sortedAreas)
-		target_brig = B
-		break
-
-	for(var/area/security/main/M in GLOB.sortedAreas)
-		target_equip  = M
-		break
-
-	for(var/area/security/warden/W in GLOB.sortedAreas)
-		target_ward = W
-		break
-
-	for(var/area/security/detectives_office/D in GLOB.sortedAreas)
-		target_det = D
-		break
-
-	for(var/area/crew_quarters/heads/captain/private/V in GLOB.sortedAreas)
-		target_captain = V
-		break
-
-	for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
-		if(C != /area/crew_quarters/heads/captain/private)
-			target_captain2 = C
+		// For removing problematic items
+		for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
+			target_armory = A
 			break
-	for(var/area/crew_quarters/heads/hop/P in GLOB.sortedAreas)
-		target_hop = P
-		break
 
-	for(var/area/science/mixing/T in GLOB.sortedAreas)
-		target_science = T
-		break
+		for(var/area/crew_quarters/heads/hos/S in GLOB.sortedAreas)
+			target_hos = S
+			break
 
-	for(var/area/engine/atmos/O in GLOB.sortedAreas)
-		target_atmos = O
-		break
+		for(var/area/security/brig/B in GLOB.sortedAreas)
+			target_brig = B
+			break
 
-	if(config.protect_roles_from_antagonist)
-		restricted_jobs += protected_jobs
+		for(var/area/security/main/M in GLOB.sortedAreas)
+			target_equip  = M
+			break
 
-	if(config.protect_assistant_from_antagonist)
-		restricted_jobs += "Assistant"
+		for(var/area/security/warden/W in GLOB.sortedAreas)
+			target_ward = W
+			break
 
+		for(var/area/security/detectives_office/D in GLOB.sortedAreas)
+			target_det = D
+			break
+
+		for(var/area/crew_quarters/heads/captain/private/V in GLOB.sortedAreas)
+			target_captain = V
+			break
+
+		for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
+			if(C != /area/crew_quarters/heads/captain/private)
+				target_captain2 = C
+				break
+		for(var/area/crew_quarters/heads/hop/P in GLOB.sortedAreas)
+			target_hop = P
+			break
+
+		for(var/area/science/mixing/T in GLOB.sortedAreas)
+			target_science = T
+			break
+
+		for(var/area/engine/atmos/O in GLOB.sortedAreas)
+			target_atmos = O
+			break
+		gangpocalypse()
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
 	if(prob(num_players() * 2))
@@ -144,7 +140,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			boss.special_role = "[G.name] Gang [title]"
 			boss.restricted_roles = restricted_jobs
 			log_game("[boss.key] has been selected as the [title] for the [G.name] Gang")
-			gangpocalypse()
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		restricted_jobs += "Assistant"
 	return 1
 
 
@@ -236,11 +235,12 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			G.add_gang_hud(boss_mind)
 			equip_gang(boss_mind.current,G)
 			modePlayer += boss_mind
-	for(var/mob/living/M in GLOB.player_list)
-		if(!is_gangster(M))
-			vigilize(M)
-	sleep(80)
-	priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetics have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance. In the event that criminal enterprises seek to exploit this situation, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals.", "Nanotrasen Board of Directors")
+	if(vigilantes)
+		for(var/mob/living/M in GLOB.player_list)
+			if(!is_gangster(M))
+				vigilize(M)
+		sleep(80)
+		priority_announce("Excessive costs associated with lawsuits from employees injured by Security and Synthetics have compelled us to re-evaluate the personnel budget for new stations. Accordingly, this station will be expected to operate without Security or Synthetic assistance. In the event that criminal enterprises seek to exploit this situation, we have implanted all crew with a device that will assist and incentivize the removal of all contraband and criminals.", "Nanotrasen Board of Directors")
 
 
 /proc/vigilize(mob/living/M)
@@ -346,8 +346,9 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		gangster_mind.store_memory("You are a member of the [G.name] Gang!")
 	gangster_mind.current.log_message("<font color='red'>Has been converted to the [G.name] Gang!</font>", INDIVIDUAL_ATTACK_LOG)
 	gangster_mind.special_role = "[G.name] Gangster"
-	for(var/obj/item/device/vigilante_tool/O in gangster_mind.current.contents)
-		qdel(O)
+	if(vigilantes)
+		for(var/obj/item/device/vigilante_tool/O in gangster_mind.current.contents)
+			qdel(O)
 	G.add_gang_hud(gangster_mind)
 	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
@@ -396,8 +397,9 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
 			to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>")
 			gangster_mind.memory = ""
-
 	gang.remove_gang_hud(gangster_mind)
+	if(vigilantes)
+		vigilize(gangster_mind.current)
 	return 1
 
 ////////////////
@@ -423,7 +425,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	return gang_bosses
 
 /datum/game_mode/proc/shuttle_check()
-	posse_timer++
+
 	if(SSshuttle.emergencyNoRecall)
 		return
 	var/alive = 0
@@ -434,9 +436,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
-	if((alive < (GLOB.joined_player_list.len *  0.75)) && posse_timer >= 4)
-		posse_timer = 0
-		vigilante_vengeance()
+	if(vigilantes)
+		posse_timer++
+		if((alive < (GLOB.joined_player_list.len *  0.75)) && posse_timer >= 4)
+			posse_timer = 0
+			vigilante_vengeance()
 
 
 /datum/game_mode/proc/vigilante_vengeance()
