@@ -1394,7 +1394,7 @@
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTPRESSURE in species_traits))
+			if(RESISTPRESSURE in species_traits)
 				H.clear_alert("pressure")
 			else
 				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )

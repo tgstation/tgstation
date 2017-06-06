@@ -185,11 +185,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/cold_resistance/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
 
-/datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
-	if(owner.getFireLoss())
-		if(prob(1))
-			owner.heal_bodypart_damage(0,1)   //Is this really needed?
-
 /datum/mutation/human/x_ray
 
 	name = "X Ray Vision"
