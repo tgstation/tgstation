@@ -516,6 +516,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT //this needed to be added a long fucking time ago
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/captain
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 	//Clown
 /obj/item/clothing/head/helmet/space/hardsuit/clown
