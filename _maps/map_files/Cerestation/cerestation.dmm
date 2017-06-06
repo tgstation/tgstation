@@ -1710,8 +1710,7 @@
 /obj/machinery/computer/message_monitor,
 /obj/machinery/camera{
 	c_tag = "Telecomms Control Room 2";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1730,8 +1729,6 @@
 /obj/machinery/camera{
 	c_tag = "AI Hallway";
 	dir = 5;
-	icon_state = "camera";
-	tag = ""
 	},
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2019,7 +2016,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 5";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2049,7 +2045,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 6";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2755,8 +2750,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Telecomms Control Room";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2885,7 +2879,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 4";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3409,7 +3402,6 @@
 /obj/machinery/camera{
 	c_tag = "AI Asteroid Hallway 4";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/item/device/radio/beacon,
@@ -3532,9 +3524,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Cell 2";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -4259,9 +4249,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Cell 5";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -4397,8 +4385,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "AI Asteroid Hallway 3";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -4523,7 +4510,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 3";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -5809,7 +5795,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Disposals";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
@@ -6352,8 +6337,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "AI Asteroid Hallway 2";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -6574,9 +6558,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Cell 3";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -7540,7 +7522,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 9";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -7697,8 +7678,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Escape Pod";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -7868,7 +7848,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cellblock South";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel{
@@ -7947,7 +7926,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 7";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/item/weapon/bedsheet,
@@ -8236,7 +8214,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Western Loading Bay 2";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
@@ -8422,8 +8399,7 @@
 "aqJ" = (
 /obj/machinery/camera{
 	c_tag = "Fore Asteroid Maintenance APCs 2";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -8653,7 +8629,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Eastern Loading Bay 1";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
@@ -8852,8 +8827,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Dorm Commons North";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -9872,7 +9846,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 6";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/item/weapon/bedsheet,
@@ -10278,7 +10251,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Equipment North";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -10393,9 +10365,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma South";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plating/asteroid,
 /area/security/prison)
@@ -11824,9 +11794,7 @@
 /obj/machinery/camera{
 	c_tag = "Mining Bay";
 	dir = 8;
-	icon_state = "camera";
-	network = list("SS13","QM");
-	tag = "icon-camera (WEST)"
+	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -12525,7 +12493,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Western Loading Bay 1";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
@@ -12880,8 +12847,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
+	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13301,7 +13267,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Eastern Loading Bay 2";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/brown/corner{
@@ -13662,8 +13627,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Dorm SMES";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -13941,7 +13905,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Equipment East";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -14213,7 +14176,6 @@
 /obj/machinery/camera{
 	c_tag = "Bridge Main 2";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14587,7 +14549,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Main West";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -14683,7 +14644,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Main Middle";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /obj/machinery/computer/security/telescreen{
@@ -14840,8 +14800,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Courtroom North";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -14927,8 +14886,6 @@
 /obj/machinery/camera{
 	c_tag = "Dorm Commons South";
 	dir = 10;
-	icon_state = "camera";
-	tag = "icon-camera (SOUTHWEST)"
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -15210,7 +15167,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Hall";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
@@ -15237,7 +15193,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Hall East";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel{
@@ -17075,7 +17030,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Desk";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/machinery/status_display{
@@ -17739,7 +17693,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Lobby West";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -17814,7 +17767,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Lobby Checkpoint";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/showroomfloor{
@@ -18110,7 +18062,6 @@
 /obj/machinery/camera{
 	c_tag = "Bridge Midway 2";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -18781,7 +18732,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Security Checkpoint";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -18821,8 +18771,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Detective's Office";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -19266,7 +19215,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Holding Cell";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /obj/item/device/radio/intercom{
@@ -19441,7 +19389,6 @@
 /obj/machinery/camera{
 	c_tag = "Head of Personnel's Office";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/machinery/recharger,
@@ -19595,8 +19542,7 @@
 "aLi" = (
 /obj/machinery/camera{
 	c_tag = "Command SMES";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -19682,7 +19628,6 @@
 /obj/machinery/camera{
 	c_tag = "Docking Quantum Pad";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/machinery/airalarm{
@@ -19996,8 +19941,7 @@
 "aLQ" = (
 /obj/machinery/camera{
 	c_tag = "Courtroom Jury East";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -20047,8 +19991,7 @@
 /obj/structure/closet/wardrobe/mixed,
 /obj/machinery/camera{
 	c_tag = "Dorm Lockers";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -20549,7 +20492,6 @@
 /obj/machinery/camera{
 	c_tag = "Courtroom South";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/vault{
@@ -20619,7 +20561,6 @@
 /obj/machinery/camera{
 	c_tag = "Dorm Bathroom";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/freezer{
@@ -20631,7 +20572,6 @@
 /obj/machinery/camera{
 	c_tag = "Dorm Laundry Room";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/barber{
@@ -20658,8 +20598,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Head of Personnel's Queue Line";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/blue/side{
 	tag = "icon-blue (NORTHWEST)";
@@ -20695,7 +20634,6 @@
 /obj/machinery/camera{
 	c_tag = "Bridge Midway 3";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -21439,7 +21377,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Lobby";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/structure/disposalpipe/segment,
@@ -21614,8 +21551,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 2";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -21825,8 +21761,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 4";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -21918,8 +21853,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 5";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -22028,8 +21962,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 6";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -22075,8 +22008,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 7";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/blue/corner{
 	tag = "icon-bluecorner (EAST)";
@@ -22288,8 +22220,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 8";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -22452,8 +22383,7 @@
 "aPy" = (
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 9";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -23705,7 +23635,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Asteroid Hall 1";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -24478,8 +24407,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Vault Airlock";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/black,
@@ -24776,8 +24704,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Cargo Asteroid Hall 2";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
@@ -24976,8 +24903,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Atmospherics Checkpoint";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -25037,8 +24963,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Atmospherics Checkpoint";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -25291,8 +25216,7 @@
 "aUm" = (
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hallway 1";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -25370,8 +25294,7 @@
 /obj/item/key/janitor,
 /obj/machinery/camera{
 	c_tag = "Custodials";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /obj/item/key/janitor,
 /turf/open/floor/plasteel{
@@ -25504,8 +25427,7 @@
 "aUH" = (
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 10";
-	dir = 8;
-	icon_state = "camera"
+	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -25615,8 +25537,7 @@
 "aUQ" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Bay SMES";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -26398,8 +26319,7 @@
 "aWg" = (
 /obj/machinery/camera{
 	c_tag = "Vault";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
@@ -26753,8 +26673,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Asteroid Hall 3";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
@@ -28494,7 +28413,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Asteroid Hallway 7";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -28628,8 +28546,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Service Asteroid Hallway 1";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -28953,8 +28870,7 @@
 "baZ" = (
 /obj/machinery/camera{
 	c_tag = "Bar Backroom";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -29173,8 +29089,7 @@
 "bbx" = (
 /obj/machinery/camera{
 	c_tag = "EVA Equipment";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -29868,8 +29783,7 @@
 "bcN" = (
 /obj/machinery/camera{
 	c_tag = "Medical SMES";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/floorgrime{
@@ -29924,7 +29838,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Asteroid Hallway 6";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -31634,7 +31547,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Asteroid Hallway 3";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -31680,7 +31592,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Asteroid Hallway 4";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -32202,8 +32113,7 @@
 "bgN" = (
 /obj/machinery/camera{
 	c_tag = "Bar";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
@@ -32480,8 +32390,7 @@
 "bhk" = (
 /obj/machinery/camera{
 	c_tag = "EVA Storage";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/blue/side{
 	tag = "icon-blue (EAST)";
@@ -32806,8 +32715,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Engineering Asteroid Hallway 5";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -32912,7 +32820,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Asteroid Hallway 4";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -32941,7 +32848,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Asteroid Hallway 5";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -33020,8 +32926,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Service Asteroid Hallway 2";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/sign/map/left/ceres{
 	pixel_x = -32
@@ -33195,8 +33100,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Service Atmospherics Checkpoint";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -35086,8 +34990,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Surgery Observation";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -35495,8 +35398,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Engineering Asteroid Hallway 2";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (EAST)";
@@ -35832,7 +35734,6 @@
 /obj/machinery/camera{
 	c_tag = "Chief Medical Officer's Office";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/machinery/button/door{
@@ -35934,9 +35835,7 @@
 /obj/machinery/camera{
 	c_tag = "Surgery";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -36035,7 +35934,6 @@
 /obj/machinery/camera{
 	c_tag = "Virology Breakroom";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
@@ -36108,8 +36006,7 @@
 /obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Primary Tool Storage North";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37332,7 +37229,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Asteroid Hallway 3";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -37399,8 +37295,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Security Checkpoint";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_y = 32
@@ -37640,7 +37535,6 @@
 /obj/machinery/camera{
 	c_tag = "Virology 2";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
@@ -37664,7 +37558,6 @@
 /obj/machinery/camera{
 	c_tag = "Virology";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","CMO")
 	},
 /obj/machinery/requests_console{
@@ -38008,7 +37901,6 @@
 /obj/machinery/camera{
 	c_tag = "SM North";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/engine{
@@ -38345,7 +38237,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay North";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/effect/landmark/lightsout,
@@ -39436,7 +39327,6 @@
 /obj/machinery/camera{
 	c_tag = "Virology Airlocks";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -39952,7 +39842,6 @@
 /obj/machinery/camera{
 	c_tag = "SM East";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
@@ -41513,7 +41402,6 @@
 /obj/machinery/camera{
 	c_tag = "SM West";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
@@ -41677,8 +41565,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Atmospherics Checkpoint";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -41794,8 +41681,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Medbay East";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /obj/structure/noticeboard{
 	dir = 8;
@@ -41845,8 +41731,7 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/camera{
 	c_tag = "Cyrotubes";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -42048,8 +41933,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Service Asteroid Hallway 3";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -42618,8 +42502,7 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/camera{
 	c_tag = "Primary Tool Storage South";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -43074,7 +42957,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay West";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/white{
@@ -43989,7 +43871,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Lobby West";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/machinery/newscaster{
@@ -44412,7 +44293,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Lobby";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/white{
@@ -44911,7 +44791,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Lobby East";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -44986,8 +44865,7 @@
 /obj/machinery/recharger,
 /obj/machinery/camera{
 	c_tag = "Engineering Security Checkpoint";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -45157,9 +45035,7 @@
 /obj/machinery/camera{
 	c_tag = "Cloning";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","CMO")
 	},
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -45397,7 +45273,6 @@
 /obj/machinery/camera{
 	c_tag = "SM South";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/engine{
@@ -45544,7 +45419,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Asteroid Hallway 2";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -45685,8 +45559,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay South";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -45884,7 +45757,6 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Bee Reserve South";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/grass{
@@ -47472,7 +47344,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics North-West";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
@@ -48773,9 +48644,7 @@
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -49143,7 +49012,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Storage";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/machinery/portable_atmospherics/scrubber,
@@ -49224,7 +49092,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering West";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/machinery/vending/tool,
@@ -49329,7 +49196,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering East";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -49709,7 +49575,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics North";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/structure/closet/secure_closet/atmospherics,
@@ -50051,9 +49916,7 @@
 /obj/machinery/camera{
 	c_tag = "Genetics";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","CMO");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -50264,8 +50127,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Service Asteroid Hallway 4";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -50393,7 +50255,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Airlock";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
@@ -50539,7 +50400,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering South";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/item/device/radio/intercom{
@@ -50664,7 +50524,6 @@
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Airlock";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
@@ -50732,7 +50591,6 @@
 /obj/machinery/camera{
 	c_tag = "Gravity Generator";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
@@ -51045,7 +50903,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
 	dir = 10;
-	icon_state = "camera";
 	network = list("SS13","CMO")
 	},
 /turf/open/floor/plasteel/white{
@@ -51257,8 +51114,7 @@
 "bNj" = (
 /obj/machinery/camera{
 	c_tag = "Library East";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -51719,8 +51575,7 @@
 /obj/structure/table/wood,
 /obj/machinery/camera{
 	c_tag = "Library West";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53143,7 +52998,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospheric Tanks 2";
 	dir = 5;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/black{
@@ -53332,7 +53186,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Power Storage";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
@@ -53795,7 +53648,6 @@
 /obj/machinery/camera{
 	c_tag = "Engineering Power Storage 2";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/structure/cable{
@@ -53906,7 +53758,6 @@
 /obj/machinery/camera{
 	c_tag = "Medbay Asteroid Hallway 1";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -54332,7 +54183,6 @@
 /obj/machinery/camera{
 	c_tag = "Fitness South";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -54424,8 +54274,7 @@
 "bSU" = (
 /obj/machinery/camera{
 	c_tag = "Library Explicits";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -54820,7 +54669,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Distro";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel{
@@ -55585,7 +55433,6 @@
 /obj/machinery/camera{
 	c_tag = "Fitness Bathrooms";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -55947,8 +55794,7 @@
 "bVK" = (
 /obj/machinery/camera{
 	c_tag = "Chapel West";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plasteel/chapel{
 	tag = "icon-chapel (NORTH)";
@@ -56076,7 +55922,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospheric Tanks 1";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
@@ -56175,8 +56020,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Service Asteroid Hallway 5";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -56417,8 +56261,7 @@
 "bWL" = (
 /obj/machinery/camera{
 	c_tag = "Chapel East";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -57776,8 +57619,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Chapel Office";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -58157,8 +57999,7 @@
 /obj/structure/closet/coffin,
 /obj/machinery/camera{
 	c_tag = "Chapel Coffins";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -58449,7 +58290,6 @@
 /obj/machinery/camera{
 	c_tag = "Holodeck South";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/structure/closet/lasertag/blue,
@@ -58549,8 +58389,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Service Asteroid Hallway 6";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
@@ -58763,8 +58602,7 @@
 "cbA" = (
 /obj/machinery/camera{
 	c_tag = "Crematorium";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -59362,8 +59200,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Atmospherics Checkpoint";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -59528,8 +59365,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Service-Research Bridge";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -59695,8 +59531,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 16";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -60283,8 +60118,7 @@
 /obj/structure/chair,
 /obj/machinery/camera{
 	c_tag = "Docking Security Holding Area";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -61250,8 +61084,7 @@
 "cgr" = (
 /obj/machinery/camera{
 	c_tag = "Arrivals SMES";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61768,8 +61601,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
 	c_tag = "Research Asteroid Hallway 1";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	tag = "icon-neutralcorner (NORTH)";
@@ -62348,8 +62180,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Research Atmospherics Checkpoint";
-	dir = 5;
-	icon_state = "camera"
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -62525,8 +62356,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 15";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	icon_state = "neutralcorner";
@@ -63079,8 +62909,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 6";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -63257,8 +63086,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Aux Base Construction";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/machinery/computer/camera_advanced/base_construction,
 /obj/structure/cable{
@@ -63464,7 +63292,6 @@
 /obj/machinery/camera{
 	c_tag = "Docking Quantum Pad";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/machinery/airalarm{
@@ -64281,8 +64108,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Teleporter";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -64584,8 +64410,7 @@
 /obj/machinery/computer/card,
 /obj/machinery/camera{
 	c_tag = "Docking Security Checkpoint";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -65476,8 +65301,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 1";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -66274,7 +66098,6 @@
 /obj/machinery/camera{
 	c_tag = "Research-Docking Bridge 1";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/structure/cable{
@@ -66493,8 +66316,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 5";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/structure/sign/map/left/ceres{
 	pixel_y = 32
@@ -66757,8 +66579,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 2";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/arrival/corner{
 	tag = "icon-arrivalcorner (NORTH)";
@@ -66828,8 +66649,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 3";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -67012,8 +66832,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 4";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/red/corner{
 	tag = "icon-redcorner (EAST)";
@@ -67454,7 +67273,6 @@
 /obj/machinery/camera{
 	c_tag = "Science SMES";
 	dir = 8;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -68961,7 +68779,6 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Mixing";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /obj/structure/closet/bombcloset,
@@ -70643,8 +70460,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 13";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -70663,8 +70479,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 11";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -70712,8 +70527,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 9";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -70727,8 +70541,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 7";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -70923,7 +70736,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Western Wing";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/white{
@@ -70979,7 +70791,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Eastern Wing";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/white{
@@ -71100,7 +70911,6 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology 1";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white{
@@ -71402,7 +71212,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Xenobiology-Testing Airlock";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white{
@@ -71992,7 +71801,6 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology 2";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel/white{
@@ -72197,7 +72005,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Treatment Center";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/item/clothing/neck/stethoscope,
@@ -72564,7 +72371,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Server Room";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
@@ -72627,7 +72433,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Security Checkpoint";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -73203,7 +73008,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -73276,7 +73080,6 @@
 /obj/machinery/camera{
 	c_tag = "Xenobiology Killroom";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /turf/open/floor/circuit{
@@ -73569,8 +73372,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 14";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73607,8 +73409,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 12";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73618,8 +73419,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 10";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73649,8 +73449,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Docking Asteroid Hall 8";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/plasteel/neutral{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73728,7 +73527,6 @@
 /obj/machinery/camera{
 	c_tag = "Testing Lab";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /turf/open/floor/plasteel{
@@ -73989,7 +73787,6 @@
 /obj/machinery/camera{
 	c_tag = "Research Testing Containment";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /turf/open/floor/plating{
@@ -76780,7 +76577,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Lobby East";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -76802,7 +76598,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Holding Cell";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -77042,8 +76837,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 3";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/red/corner{
 	icon_state = "redcorner";
@@ -78262,8 +78056,7 @@
 /obj/structure/flora/tree/palm,
 /obj/machinery/camera{
 	c_tag = "Genetics Monkey Dome";
-	dir = 9;
-	icon_state = "camera"
+	dir = 9
 	},
 /turf/open/floor/grass{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -78808,7 +78601,6 @@
 /obj/machinery/camera{
 	c_tag = "Cargo Hall West";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -79107,7 +78899,6 @@
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/brown{
@@ -79410,7 +79201,6 @@
 /obj/machinery/camera{
 	c_tag = "Service SMES";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","QM")
 	},
 /obj/structure/table,
@@ -79778,8 +79568,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Theatre Backstage";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -79807,8 +79596,7 @@
 /obj/item/device/instrument/violin,
 /obj/machinery/camera{
 	c_tag = "Theatre Stage";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -80252,7 +80040,6 @@
 /obj/machinery/camera{
 	c_tag = "Theatre";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -80898,8 +80685,7 @@
 /obj/item/weapon/folder,
 /obj/machinery/camera{
 	c_tag = "Morgue North";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -81111,7 +80897,6 @@
 /obj/machinery/camera{
 	c_tag = "Morgue South";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/effect/landmark/revenantspawn,
@@ -81820,7 +81605,6 @@
 /obj/machinery/camera{
 	c_tag = "Aux Base Construction North";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/plating{
@@ -81887,8 +81671,7 @@
 "cRB" = (
 /obj/machinery/camera{
 	c_tag = "Aux Base Construction South";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -82217,7 +82000,6 @@
 /obj/machinery/camera{
 	c_tag = "Toxins Storage";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","RD")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -84101,9 +83883,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Cell 1";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -84485,8 +84265,7 @@
 "cWl" = (
 /obj/machinery/camera{
 	c_tag = "Command-Service Bridge";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/hallway/secondary/bridges/com_serv)
@@ -84585,8 +84364,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
 	c_tag = "Medbay-Cargo Bridge";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -84961,7 +84739,6 @@
 /obj/machinery/camera{
 	c_tag = "Research-Docking Bridge 5";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/structure/cable{
@@ -84979,7 +84756,6 @@
 /obj/machinery/camera{
 	c_tag = "Research-Docking Bridge 2";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /obj/structure/cable{
@@ -85003,7 +84779,6 @@
 /obj/machinery/camera{
 	c_tag = "Research-Docking Bridge 3";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/engine,
@@ -85015,7 +84790,6 @@
 /obj/machinery/camera{
 	c_tag = "Research-Docking Bridge 4";
 	dir = 1;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/engine,
@@ -87401,7 +87175,6 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Bee Reserve North";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13")
 	},
 /turf/open/floor/grass{
@@ -88143,7 +87916,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Distro";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -88160,7 +87932,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics South";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","CE")
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -91139,7 +90910,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Labor Shuttle Dock North";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel{
@@ -91300,9 +91070,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Wing 4";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -91617,7 +91385,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma North";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plating/asteroid,
@@ -91732,7 +91499,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 7";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -91743,7 +91509,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Wing 3";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -92093,7 +91858,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Labor Shuttle Dock main";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel{
@@ -92460,7 +92224,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 8";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -92590,9 +92353,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cellblock North";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92625,7 +92386,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Middle 1";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plating/astplate{
@@ -92679,7 +92439,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Labor Shuttle Dock South";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel{
@@ -92878,7 +92637,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Wing 2";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /obj/structure/cable/orange{
@@ -93476,7 +93234,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 2";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -93569,9 +93326,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Cell 4";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -93606,7 +93361,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Middle 2";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plating{
@@ -94267,7 +94021,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 1";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -94328,7 +94081,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Cell 10";
 	dir = 9;
-	icon_state = "camera";
 	network = list("SS13","Security","PrisonCell")
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -94339,7 +94091,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Wing 1";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -94880,9 +94631,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Perma Cell 6";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security","PrisonCell");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security","PrisonCell")
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -95185,7 +94934,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Evidence Room";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -95228,7 +94976,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Control Room";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/showroomfloor{
@@ -95275,7 +95022,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Medbay";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -95305,7 +95051,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Interrogation";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/black{
@@ -95365,7 +95110,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Interrogation 2";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/black{
@@ -96099,7 +95843,6 @@
 /obj/machinery/camera{
 	c_tag = "Head of Security's Office";
 	dir = 4;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/carpet,
@@ -96508,7 +96251,6 @@
 /obj/machinery/camera{
 	c_tag = "Brig Main East";
 	dir = 6;
-	icon_state = "camera";
 	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -97274,9 +97016,7 @@
 /obj/machinery/camera{
 	c_tag = "Brig Equipment South";
 	dir = 10;
-	icon_state = "camera";
-	network = list("SS13","Security");
-	tag = "icon-camera (SOUTHWEST)"
+	network = list("SS13","Security")
 	},
 /turf/open/floor/plasteel/red/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -97804,8 +97544,7 @@
 "dyb" = (
 /obj/machinery/camera{
 	c_tag = "Lawyer's Office";
-	dir = 4;
-	icon_state = "camera"
+	dir = 4
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -98245,8 +97984,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Command Asteroid Hall 10";
-	dir = 6;
-	icon_state = "camera"
+	dir = 6
 	},
 /turf/open/floor/plasteel/red/corner{
 	icon_state = "redcorner";
