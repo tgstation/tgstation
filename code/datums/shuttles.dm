@@ -215,6 +215,12 @@
 	Definitely high quality meat, nothin' wrong with it, nothin' added, definitely no zombifyin' reagents!"
 	admin_notes = "Meat currently contains no zombifying reagents, lizard on meatspike must be spawned in."
 
+/datum/map_template/shuttle/emergency/steel
+	suffix = "steel"
+	name = "The Steel Corridor"
+	description = "Reinforced plasteel walls, high-tech secure airlocks, but at what price is the cold, harsh, steel corridor?."
+	credit_cost = 7000
+
 /datum/map_template/shuttle/ferry/lighthouse
 	suffix = "lighthouse"
 	name = "The Lighthouse(?)"
