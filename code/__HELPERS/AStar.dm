@@ -107,7 +107,7 @@ Actual Adjacent procs :
 /datum/AStar/proc/Start()
 	if(!ready)
 		return FALSE
-	START_PROCESSING(SSpathing)
+	START_PROCESSING(SSpathing, src)
 	processing = TRUE
 	return TRUE
 
