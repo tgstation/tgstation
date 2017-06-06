@@ -185,7 +185,6 @@
 	name = "Oh, Hi Daniel"
 	description = "How was space work today? Oh, pretty good. We got a new space station and the company will make a lot of money. What space station? I cannot tell you; it's space confidential. \
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
-	credit_cost = -5000
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
