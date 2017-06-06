@@ -81,8 +81,7 @@
 
 /obj/item/weapon/disk/design_disk/modkit_disc/Initialize()
 	. = ..()
-	var/datum/design/D = new modkit_design
-	blueprints[1] = D
+	blueprints[1] = new modkit_design
 
 /obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
