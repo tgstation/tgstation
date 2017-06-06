@@ -1,6 +1,5 @@
 <ui-display>
   <ui-button action='toggle'>{{data.recollection ? "Recital":"Recollection"}}</ui-button>
-  <ui-button action='component'>Target Component: {{{data.target_comp}}}</ui-button>
 </ui-display>
 {{#if data.recollection}}
 	 <ui-display>
@@ -9,7 +8,6 @@
 {{else}}
 	<ui-display title='Resources' button>
  	 <ui-section>
- 	   {{{data.components}}}
 	   {{{data.potential}}}
  	 </ui-section>
 	</ui-display>
@@ -23,7 +21,7 @@
 		</ui-section><hr>
 		<ui-section>
 		{{#each data.scripture}}
-			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite{{{required}}}, {{{potential}}} potential</ui-button>
+			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite: {{{potential_cost}}} Potential</ui-button>
 		 	 {{#if quickbind}}
 				{{#if bound}}
 					<ui-button action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>

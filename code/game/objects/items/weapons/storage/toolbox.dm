@@ -168,7 +168,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	storage_slots = 10
 	proselytizer_type = null
-	slab_type = /obj/item/clockwork/slab/starter
 
 
 /obj/item/weapon/storage/toolbox/artistic

@@ -67,16 +67,6 @@
 			user.drop_item()
 			qdel(C)
 		return 1
-	else if(istype(I, /obj/item/clockwork/slab))
-		var/obj/item/clockwork/slab/S = I
-		if(!anchored)
-			to_chat(user, "<span class='warning'>[src] needs to be secured to offload your slab's components into it!</span>")
-		else
-			for(var/i in S.stored_components)
-				GLOB.clockwork_component_cache[i] += S.stored_components[i]
-				S.stored_components[i] = 0
-			update_slab_info()
-			user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else
 		return ..()

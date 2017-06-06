@@ -16,7 +16,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/potential_cost = 0 //The amount of potential this scripture needs to recite
-	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
@@ -29,11 +28,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/quickbind_desc = "This shouldn't be quickbindable. File a bug report!"
 	var/primary_component
 	var/sort_priority = 1 //what position the scripture should have in a list of scripture. Should be based off of component costs/reqs, but you can't initial() lists.
-
-//components the scripture used from a slab
-	var/list/used_slab_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
-//components the scripture used from the global cache
-	var/list/used_cache_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 
 //messages for offstation scripture recital, courtesy ratvar's generals(and neovgre)
 	var/static/list/neovgre_penalty = list("Go to the station.", "Useless.", "Don't waste time.", "Pathetic.", "Wasteful.")
@@ -62,28 +56,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
-			for(var/i in consumed_components)
-				if(consumed_components[i])
-					for(var/j in 1 to consumed_components[i])
-						if(slab.stored_components[i])
-							slab.stored_components[i]--
-							used_slab_components[i]++
-						else
-							GLOB.clockwork_component_cache[i]--
-							used_cache_components[i]++
 			GLOB.clockwork_potential -= potential_cost
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
-		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
-			for(var/i in used_slab_components)
-				if(used_slab_components[i])
-					if(slab)
-						slab.stored_components[i] += consumed_components[i]
-					else //if we can't find a slab add to the global cache
-						GLOB.clockwork_component_cache[i] += consumed_components[i]
-			for(var/i in used_cache_components)
-				if(used_cache_components[i])
-					GLOB.clockwork_component_cache[i] += consumed_components[i]
+		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund potential used
+			GLOB.clockwork_potential += potential_cost
 			update_slab_info()
 		else
 			successful = TRUE
@@ -105,22 +82,9 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
 	if(!GLOB.ratvar_awakens && !slab.no_cost)
-		checked_penalty = check_offstation_penalty()
-		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
-		var/failed = FALSE
-		for(var/i in consumed_components)
-			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
-			var/total_components = slab.stored_components[i] + cache_components
-			if(consumed_components[i] && total_components < consumed_components[i])
-				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
-				[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""].</span>"
-				failed = TRUE
-		if(failed)
-			component_printout += "</span>"
-			to_chat(invoker, component_printout)
-			return FALSE
 		if(potential_cost && GLOB.clockwork_potential - potential_cost < 0)
 			to_chat(invoker, "<span class='warning'>You don't have enough potential to recite this scripture! ([GLOB.clockwork_potential]/[potential_cost])")
+			return
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
@@ -156,16 +120,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
 			invoker << 'sound/magic/clockwork/invoke_general.ogg'
 	return TRUE
-
-/datum/clockwork_scripture/proc/check_offstation_penalty()
-	var/turf/T = get_turf(invoker)
-	if(!T || (T.z != ZLEVEL_STATION && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND))
-		channel_time *= 2
-		for(var/i in consumed_components)
-			if(consumed_components[i])
-				consumed_components[i] *= 2
-		return TRUE
-	return FALSE
 
 /datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked multiple times during invocation
 	return TRUE
@@ -203,11 +157,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/list/chant_invocations = list("AYY LMAO")
 	var/chant_amount = 5 //Times the chant is spoken
 	var/chant_interval = 10 //Amount of deciseconds between times the chant is actually spoken aloud
-
-/datum/clockwork_scripture/channeled/check_offstation_penalty()
-	. = ..()
-	if(.)
-		chant_interval *= 2
 
 /datum/clockwork_scripture/channeled/scripture_effects()
 	for(var/i in 1 to chant_amount)

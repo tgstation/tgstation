@@ -5,3 +5,4 @@
 #warn Replace the servants' placeholder starter outfit
 #warn Redo Recollection
 #warn Implement timed portal opening
+#warn Balance Potential costs on scripture etc
