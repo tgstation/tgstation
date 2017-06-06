@@ -1728,7 +1728,7 @@
 "adL" = (
 /obj/machinery/camera{
 	c_tag = "AI Hallway";
-	dir = 5;
+	dir = 5
 	},
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -14885,7 +14885,7 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Dorm Commons South";
-	dir = 10;
+	dir = 10
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
