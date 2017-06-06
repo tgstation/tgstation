@@ -1,0 +1,5 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "The cult master has finally acquired their 3rd spell, Eldritch Pulse. This ability allows the cult master to quickly teleport any cultist or cult structure in visual range to another tile in visual range. This spell has an obvious spell effect that will indicate where the target has gone but without explicitly revealing who the master is. This spell should assist with moving obstinate cultists off an important rune,  getting wandering cultists back onto an important rune, save a cultist from an untimely arrest/summary execution, assist in getting your allies into secure areas, etc."
+  - bugfix: "The void torch now only works on items that have been placed on surfaces, this prevents the inventory bugs associated with this item."
