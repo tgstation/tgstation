@@ -529,7 +529,7 @@ BLIND     // can't see anything
 	var/can_adjust = 1
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
-	var/obj/item/clothing/accessory/hasaccessory = null
+	var/obj/item/clothing/accessory/has_accessory
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
@@ -541,13 +541,13 @@ BLIND     // can't see anything
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
-		if(hasaccessory)
-			var/accessory_color = hasaccessory.item_color
+		if(has_accessory)
+			var/accessory_color = has_accessory.item_color
 			if(!accessory_color)
-				accessory_color = hasaccessory.icon_state
+				accessory_color = has_accessory.icon_state
 			var/mutable_appearance/accessory = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
-			accessory.alpha = hasaccessory.alpha
-			accessory.color = hasaccessory.color
+			accessory.alpha = has_accessory.alpha
+			accessory.color = has_accessory.color
 			. += accessory
 
 /obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
@@ -587,22 +587,22 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hasaccessory && slot != slot_hands)
-		hasaccessory.on_uniform_equip(src, user)
+	if(has_accessory && slot != slot_hands)
+		has_accessory.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)
-	if(hasaccessory)
-		hasaccessory.on_uniform_dropped(src, user)
+	if(has_accessory)
+		has_accessory.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attachAccessory(I, user))
+	if(!attach_accessory(I, user))
 		..()
 
-/obj/item/clothing/under/proc/attachAccessory(obj/item/I, mob/user, notifyAttach = 1)
+/obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
-		if(hasaccessory)
+		if(has_accessory)
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return 0
@@ -621,15 +621,15 @@ BLIND     // can't see anything
 
 			return 1
 
-/obj/item/clothing/under/proc/removeaccessory(mob/user)
+/obj/item/clothing/under/proc/remove_accessory(mob/user)
 	if(!isliving(user))
 		return
 	if(!can_use(user))
 		return
 
-	if(hasaccessory)
-		var/obj/item/clothing/accessory/A = hasaccessory
-		hasaccessory.detach(src, user)
+	if(has_accessory)
+		var/obj/item/clothing/accessory/A = has_accessory
+		has_accessory.detach(src, user)
 		if(user.put_in_hands(A))
 			to_chat(user, "<span class='notice'>You detach [A] from [src].</span>")
 		else
@@ -659,8 +659,8 @@ BLIND     // can't see anything
 				to_chat(user, "Its vital tracker appears to be enabled.")
 			if(SENSOR_COORDS)
 				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
-	if(hasaccessory)
-		to_chat(user, "\A [hasaccessory] is attached to it.")
+	if(has_accessory)
+		to_chat(user, "\A [has_accessory] is attached to it.")
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
@@ -721,8 +721,8 @@ BLIND     // can't see anything
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
-		if(hasaccessory)
-			removeaccessory(user)
+		if(has_accessory)
+			remove_accessory(user)
 		else
 			rolldown()
 

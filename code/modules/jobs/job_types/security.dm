@@ -227,7 +227,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
-		U.attachAccessory(new accessory)
+		U.attach_accessory(new accessory)
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)

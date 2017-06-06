@@ -154,7 +154,7 @@
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
-	U.attachAccessory(new /obj/item/clothing/accessory/waistcoat(H))
+	U.attach_accessory(new /obj/item/clothing/accessory/waistcoat(H))
 
 	if(visualsOnly)
 		return

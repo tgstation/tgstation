@@ -17,7 +17,7 @@
 		pockets.loc = U
 		U.pockets = pockets
 
-	U.hasaccessory = src
+	U.has_accessory = src
 	loc = U
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
@@ -48,7 +48,7 @@
 	layer = initial(layer)
 	plane = initial(plane)
 	U.cut_overlays()
-	U.hasaccessory = null
+	U.has_accessory = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
@@ -98,7 +98,7 @@
 				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			if(do_after(user, delay, target = M))
-				if(U.attachAccessory(src, user, 0)) //Attach it, do not notify the user of the attachment
+				if(U.attach_accessory(src, user, 0)) //Attach it, do not notify the user of the attachment
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
