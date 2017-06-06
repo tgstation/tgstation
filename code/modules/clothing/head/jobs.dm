@@ -120,6 +120,10 @@
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
 
+/obj/item/clothing/head/HoS/syndicate
+	name = "syndicate cap"
+	desc = "A black cap fit for a high ranking syndicate officer."
+
 /obj/item/clothing/head/HoS/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
