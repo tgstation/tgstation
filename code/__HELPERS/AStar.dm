@@ -60,15 +60,22 @@ Actual Adjacent procs :
 /proc/HeapPathWeightCompare(PathNode/a, PathNode/b)
 	return b.f - a.f
 
-//wrapper that returns an empty list if A* failed to find a path
+//wrapper that returns the AStar datum or null if it is unable to be started
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-	if(!path)
-		path = list()
-	return path
+	return AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 
 /datum/proc/recieveAStarResult(path)
 	return
+
+/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/datum/AStar/alg = new
+	if(!alg.Setup(caller, get_turf(caller), end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, id, exclude, simulated_only))
+		qdel(alg)
+		return FALSE
+	if(!alg.Start())
+		qdel(alg)
+		return FALSE
+	return alg	//Return AStar datum
 
 /datum/AStar
 	var/caller
@@ -81,16 +88,32 @@ Actual Adjacent procs :
 	var/ready = FALSE
 	var/processing = FALSE
 	var/finished = FALSE
-
-/datum/AStar/proc/sendPath()
-	INVOKE_ASYNC(caller, .proc/recieveAStarResult, path)
+	var/end
+	var/dist
+	var/maxnodes
+	var/maxnodedepth
+	var/mintargetdist
+	var/adjacent
+	var/id
+	var/exclude
+	var/simulated_only
 
 //Set the algorithm up
-/datum/AStar/proc/Setup(_caller, turf/starting, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = TRUE)
+/datum/AStar/proc/Setup(_caller, turf/starting, _end, _dist, _maxnodes, _maxnodedepth = 30, _mintargetdist, _adjacent = /turf/proc/reachableAdjacentTurfs, _id=null, turf/_exclude=null, _simulated_only = TRUE)
 	if(!caller)
 		return FALSE
 	_caller = caller
 	start = starting
+	end = _end
+	dist = _dist
+	maxnodes = _maxnodes
+	maxnodedepth = _maxnodedepth
+	mintargetdist = _mintargetdist
+	adjacent = _adjacent
+	id = _id
+	exclude = _exclude
+	simulated_only = _simulated_only
+
 	if(!istype(start))
 		return FALSE
 	if(maxnodes)
@@ -103,6 +126,9 @@ Actual Adjacent procs :
 	ready = TRUE
 	return TRUE
 
+/datum/AStar/proc/sendPath()
+	INVOKE_ASYNC(caller, .proc/recieveAStarResult, path)
+
 //Initiate!
 /datum/AStar/proc/Start()
 	if(!ready)
@@ -110,16 +136,6 @@ Actual Adjacent procs :
 	START_PROCESSING(SSpathing, src)
 	processing = TRUE
 	return TRUE
-
-/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/datum/AStar/alg = new
-	if(!alg.Setup(caller, get_turf(caller), end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, id, exclude, simulated_only))
-		qdel(alg)
-		return FALSE
-	if(!alg.Start())
-		qdel(alg)
-		return FALSE
-	return alg	//Return AStar datum
 
 //Primary loop
 /datum/AStar/process()
@@ -137,7 +153,7 @@ Actual Adjacent procs :
 
 	//If too many steps, abandon path
 	if(maxnodedepth && (cur.nt > maxnodedepth))
-		continue
+		return
 
 	//Found target turf/close enough, create path
 	if(cur.source == end || closeenough)
@@ -152,7 +168,7 @@ Actual Adjacent procs :
 	//Get adjacent turfs using adjacent proc, checking for access with id
 	var/list/L = call(cur.source,adjacent)(caller,id,simulated_only)
 	for(var/turf/T in L)
-		if(T == exclode || (T in closed))
+		if(T == exclude || (T in closed))
 			continue
 		var/newg = cur.g + call(cur.source,dist)(T)
 		var/PathNode/P = pnodelist[T]
