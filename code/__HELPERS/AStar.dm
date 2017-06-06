@@ -67,87 +67,119 @@ Actual Adjacent procs :
 		path = list()
 	return path
 
-//the actual algorithm
-/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+/datum/proc/recieveAStarResult(path)
+	return
+
+/datum/AStar
+	var/caller
 	var/list/pnodelist = list()
-	//sanitation
-	var/start = get_turf(caller)
-	if(!start)
-		return 0
+	var/turf/start
+	var/Heap/open
+	var/list/closed = list()
+	var/list/path = null
+	var/PathNode/cur
+	var/ready = FALSE
+	var/processing = FALSE
+	var/finished = FALSE
 
+/datum/AStar/proc/sendPath()
+	INVOKE_ASYNC(caller, .proc/recieveAStarResult, path)
+
+//Set the algorithm up
+/datum/AStar/proc/Setup(_caller, turf/starting, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = TRUE)
+	if(!caller)
+		return FALSE
+	_caller = caller
+	start = starting
+	if(!istype(start))
+		return FALSE
 	if(maxnodes)
-		//if start turf is farther than maxnodes from end turf, no need to do anything
+		//If start turf is farther than maxnodes don't bother.
 		if(call(start, dist)(end) > maxnodes)
-			return 0
-		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
-
-	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare) //the open list
-	var/list/closed = new() //the closed list
-	var/list/path = null //the returned path, if any
-	var/PathNode/cur //current processed turf
-
-	//initialization
+			return FALSE
+		maxnodedepth = maxnodes	//No need to consider path longer than maxnodes
+	open = new /Heap(/proc/HeapPathWeightCompare)
 	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
+	ready = TRUE
+	return TRUE
 
-	//then run the main loop
-	while(!open.IsEmpty() && !path)
-		//get the lower f node on the open list
-		cur = open.Pop() //get the lower f turf in the open list
-		closed.Add(cur.source) //and tell we've processed it
+//Initiate!
+/datum/AStar/proc/Start()
+	if(!ready)
+		return FALSE
+	START_PROCESSING(SSpathing)
+	processing = TRUE
+	return TRUE
 
-		//if we only want to get near the target, check if we're close enough
-		var/closeenough
-		if(mintargetdist)
-			closeenough = call(cur.source,dist)(end) <= mintargetdist
+/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/datum/AStar/alg = new
+	if(!alg.Setup(caller, get_turf(caller), end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, id, exclude, simulated_only))
+		qdel(alg)
+		return FALSE
+	if(!alg.Start())
+		qdel(alg)
+		return FALSE
+	return alg	//Return AStar datum
 
-		//if too many steps, abandon that path
-		if(maxnodedepth && (cur.nt > maxnodedepth))
-			continue
+//Primary loop
+/datum/AStar/process()
+	if(open.IsEmpty() && path)	//We're done
+		return Finish()
 
-		//found the target turf (or close enough), let's create the path to it
-		if(cur.source == end || closeenough)
-			path = new()
+	//Get the lower F node on the open list
+	cur = open.Pop()	//Get the lower F turf in the open list
+	closed.Add(cur.source)	//And tell we've processed it
+
+	//If we don't need to be exactly on the target, check if we're close enough
+	var/closeenough
+	if(mintargetdist)
+		closeenough = call(cur.source,dist)(end) <= mintargetdist
+
+	//If too many steps, abandon path
+	if(maxnodedepth && (cur.nt > maxnodedepth))
+		continue
+
+	//Found target turf/close enough, create path
+	if(cur.source == end || closeenough)
+		path = new()
+		path.Add(cur.source)
+		while(cur.prevNode)
+			cur = cur.prevNode
 			path.Add(cur.source)
+			CHECK_TICK
+		return Finish()
 
-			while(cur.prevNode)
-				cur = cur.prevNode
-				path.Add(cur.source)
+	//Get adjacent turfs using adjacent proc, checking for access with id
+	var/list/L = call(cur.source,adjacent)(caller,id,simulated_only)
+	for(var/turf/T in L)
+		if(T == exclode || (T in closed))
+			continue
+		var/newg = cur.g + call(cur.source,dist)(T)
+		var/PathNode/P = pnodelist[T]
+		if(!P)
+			//Isn't already in open list, add!
+			var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
+			open.Insert(newnode)
+			pnodelist[T] = newnode
+		else
+			//Already in open list, check if it's a better way from the current turf.
+			if(newg < P.g)
+				P.prevNode = cur
+				P.g = (newg * L.len / 9)
+				P.calc_f()
+				P.nt = cur.nt + 1
+				open.ReSort(P)	//Reorder the changed element in the list
 
-			break
-
-		//get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
-		for(var/turf/T in L)
-			if(T == exclude || (T in closed))
-				continue
-
-			var/newg = cur.g + call(cur.source,dist)(T)
-
-			var/PathNode/P = pnodelist[T]
-			if(!P)
-			 //is not already in open list, so add it
-				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
-				open.Insert(newnode)
-				pnodelist[T] = newnode
-			else //is already in open list, check if it's a better way from the current turf
-				if(newg < P.g)
-					P.prevNode = cur
-					P.g = (newg * L.len / 9)
-					P.calc_f()
-					P.nt = cur.nt + 1
-					open.ReSort(P)//reorder the changed element in the list
-		CHECK_TICK
-
-
-	//cleaning after us
-	pnodelist = null
-
-	//reverse the path to get it from start to finish
-	if(path)
+/datum/AStar/proc/Finish()
+	finished = TRUE
+	ready = FALSE
+	processing = FALSE
+	pnodelist = null	//Clean up
+	if(path)			//Reverse path for start to finish.
 		for(var/i = 1; i <= path.len/2; i++)
-			path.Swap(i,path.len-i+1)
-
-	return path
+			path.Swap(i, path.len-i+1)
+	sendPath()
+	return PROCESS_KILL
 
 //Returns adjacent turfs in cardinal directions that are reachable
 //simulated_only controls whether only simulated turfs are considered or not
@@ -173,9 +205,9 @@ Actual Adjacent procs :
 
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
-			return 1
+			return TRUE
 	for(var/obj/O in T)
 		if(!O.CanAStarPass(ID, rdir, caller))
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
