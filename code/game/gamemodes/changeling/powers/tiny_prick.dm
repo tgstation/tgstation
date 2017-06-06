@@ -86,7 +86,6 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	set waitfor = FALSE
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
