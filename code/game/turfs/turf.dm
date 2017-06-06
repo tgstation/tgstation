@@ -487,6 +487,8 @@
 	return T
 
 /turf/handle_fall(mob/faller, forced)
+	if(!faller)
+		return
 	faller.lying = pick(90, 270)
 	if(!forced)
 		return
