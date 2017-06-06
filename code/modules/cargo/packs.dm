@@ -851,6 +851,24 @@
 	group = "Science"
 	crate_type = /obj/structure/closet/crate/science
 
+/datum/supply_pack/science/stock_parts
+	name = "Advanced Stock Parts"
+	cost = 2000
+	contains = list(/obj/item/weapon/stock_parts/manipulator/pico,
+					/obj/item/weapon/stock_parts/manipulator/pico,
+					/obj/item/weapon/stock_parts/manipulator/pico,
+					/obj/item/weapon/stock_parts/matter_bin/super,
+					/obj/item/weapon/stock_parts/matter_bin/super,
+					/obj/item/weapon/stock_parts/matter_bin/super,
+					/obj/item/weapon/stock_parts/micro_laser/high,
+					/obj/item/weapon/stock_parts/micro_laser/high,
+					/obj/item/weapon/stock_parts/scanning_module/adv,
+					/obj/item/weapon/stock_parts/scanning_module/adv,
+					/obj/item/weapon/stock_parts/capacitor/adv,
+					/obj/item/weapon/stock_parts/capacitor/adv)
+	crate_name = "stock parts crate"
+
+
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
 	cost = 1000
