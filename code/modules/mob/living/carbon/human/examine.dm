@@ -18,8 +18,8 @@
 		var/accessory_msg
 		if(istype(w_uniform,/obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
-			if(U.has_accessory)
-				accessory_msg += " with \icon[U.has_accessory] \a [U.has_accessory]"
+			if(U.attached_accessory)
+				accessory_msg += " with \icon[U.attached_accessory] \a [U.attached_accessory]"
 
 		if(w_uniform.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"

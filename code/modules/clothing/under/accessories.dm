@@ -12,12 +12,12 @@
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	if(pockets) // Attach storage to jumpsuit
 		if(U.pockets) // storage items conflict
-			return 0
+			return FALSE
 
 		pockets.loc = U
 		U.pockets = pockets
 
-	U.has_accessory = src
+	U.attached_accessory = src
 	loc = U
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
@@ -30,7 +30,10 @@
 	for(var/armor_type in armor)
 		U.armor[armor_type] += armor[armor_type]
 
-	return 1
+	if(isliving(user))
+		on_uniform_equip(U, user)
+
+	return TRUE
 
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
@@ -41,6 +44,9 @@
 	for(var/armor_type in armor)
 		U.armor[armor_type] -= armor[armor_type]
 
+	if(isliving(user))
+		on_uniform_dropped(U, user)
+
 	if(minimize_when_attached)
 		transform *= 2
 		pixel_x -= 8
@@ -48,7 +54,7 @@
 	layer = initial(layer)
 	plane = initial(plane)
 	U.cut_overlays()
-	U.has_accessory = null
+	U.attached_accessory = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
@@ -227,17 +233,6 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
-
-/obj/item/clothing/accessory/lawyers_badge/attach(obj/item/clothing/under/U, user)
-	if(!..())
-		return 0
-	if(isliving(U.loc))
-		on_uniform_equip(U, user)
-
-/obj/item/clothing/accessory/lawyers_badge/detach(obj/item/clothing/under/U, user)
-	..()
-	if(isliving(U.loc))
-		on_uniform_dropped(U, user)
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
