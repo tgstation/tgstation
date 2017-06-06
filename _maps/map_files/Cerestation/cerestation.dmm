@@ -1782,8 +1782,7 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof{
-	},
+/obj/item/clothing/suit/armor/laserproof,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -2200,8 +2199,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
-	},
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
@@ -11440,8 +11438,7 @@
 	},
 /area/security/warden)
 "awM" = (
-/obj/structure/closet/secure_closet/warden{
-	},
+/obj/structure/closet/secure_closet/warden,
 /obj/item/device/radio,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -15799,8 +15796,7 @@
 /area/bridge)
 "aEN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
-	},
+/obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -46820,8 +46816,7 @@
 /area/library)
 "bGs" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder{
-	},
+/obj/item/device/taperecorder,
 /obj/item/device/camera,
 /obj/item/device/radio/intercom{
 	pixel_y = 25
@@ -49742,8 +49737,7 @@
 /area/hallway/primary/port)
 "bLF" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
@@ -60505,8 +60499,7 @@
 	height = 9;
 	width = 9
 	},
-/obj/machinery/computer/auxillary_base{
-	},
+/obj/machinery/computer/auxillary_base,
 /obj/docking_port/stationary/public_mining_dock,
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -62133,8 +62126,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/cloning{
-	},
+/obj/item/weapon/circuitboard/computer/cloning,
 /obj/item/weapon/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
@@ -70113,10 +70105,8 @@
 /obj/item/device/transfer_valve{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
-	},
-/obj/item/device/transfer_valve{
-	},
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve{
 	pixel_x = 5
 	},
@@ -92827,8 +92817,7 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof{
-	},
+/obj/item/clothing/suit/armor/laserproof,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -93194,8 +93183,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
-	},
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
@@ -94572,8 +94560,7 @@
 /area/crew_quarters/heads/hos)
 "dtF" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder{
-	},
+/obj/item/device/taperecorder,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -94844,8 +94831,7 @@
 /area/security/brig)
 "duj" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
-	},
+/obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
