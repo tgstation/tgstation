@@ -446,6 +446,8 @@
 		off_station = NUKE_SYNDICATE_BASE
 	else
 		off_station = NUKE_NEAR_MISS
+	if (istype(A, /area/ruin))
+		off_station = NUKE_MISS_STATION
 
 	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
