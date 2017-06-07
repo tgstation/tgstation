@@ -245,6 +245,7 @@
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
+		/obj/item/weapon/storage/bag/trash/cyborg,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
 	ratvar_modules = list(
@@ -304,6 +305,7 @@
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
 		/obj/item/device/assembly/signaler/cyborg,
+		/obj/item/device/lightreplacer/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/stack/sheet/metal/cyborg,
 		/obj/item/stack/sheet/glass/cyborg,
