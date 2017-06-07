@@ -45,22 +45,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(!owner)
 		return
 
-	var/static/list/chatResources = list(
-		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
-		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
-		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
-		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
-		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
-		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
-		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
-		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
-		"browserOutput.html"	   = 'code/modules/goonchat/browserassets/html/browserOutput.html'
-	)
-
-	for(var/asset in chatResources)
-		owner << browse_rsc(file(chatResources[asset]), asset)
+	var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/goonchat)
+	stuff.register()
+	stuff.send(owner)
 
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
 
