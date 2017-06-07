@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\runtimestation.dm"
+#include "_maps\basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
@@ -226,7 +226,6 @@
 #include "code\datums\map_config.dm"
 #include "code\datums\martial.dm"
 #include "code\datums\material_container.dm"
-#include "code\datums\medals.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\mutations.dm"
