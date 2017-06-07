@@ -1583,7 +1583,12 @@
 	for(var/i in 1 to num_contained)
 		var/item = pick_n_take(L)
 		new item(C)
-
+		
+/datum/supply_pack/medical/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
 
 /datum/supply_pack/misc/randomised/contraband
 	name = "Contraband Crate"
@@ -1596,6 +1601,21 @@
 					/obj/item/seeds/ambrosia/deus,
 					/obj/item/clothing/neck/necklace/dope)
 	crate_name = "crate"
+
+/datum/supply_pack/medical/randomised/contraband/organs
+	name = "Organ Crate"
+	contraband = TRUE
+	cost = 3000
+	var/num_contained = 3
+	contains = list(/obj/item/organ/appendix,
+					/obj/item/organ/eyes,
+					/obj/item/organ/tongue,
+					/obj/item/organ/brain,
+					/obj/item/organ/heart,
+					/obj/item/organ/lungs,
+					/obj/effect/mob_spawn/human/corpse)
+	crate_name = "freezer"
+	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/misc/randomised/toys
 	name = "Toy Crate"
