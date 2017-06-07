@@ -148,6 +148,15 @@
 	strip_delay = 60
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 50)
 
+/obj/item/clothing/gloves/color/captain/Touch(atom/A, proximity)
+	if(ishuman(A) && ishuman(loc) && proximity)
+		var/mob/living/carbon/human/shaker = loc
+		var/mob/living/carbon/human/shakee = A
+		if(!(shaker.a_intent == INTENT_HELP))
+			return ..()
+		shaker.visible_message("<span class='notice'>[shaker] formally shakes hands with [shakee]!</span>")
+	return ..()
+
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
 	desc = "Cheap sterile gloves made from latex."
