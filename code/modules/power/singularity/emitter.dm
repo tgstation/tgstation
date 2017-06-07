@@ -26,6 +26,9 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = 0
+	var/power_fails = 0
+
+	var/obj/item/device/radio/Radio
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
@@ -39,6 +42,8 @@
 	B.apply_default_parts(src)
 	RefreshParts()
 	wires = new /datum/wires/emitter(src)
+	Radio = new/obj/item/device/radio(src)
+	Radio.listening = 0
 
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "Emitter (Machine Board)"
@@ -170,14 +175,18 @@
 			add_load(active_power_usage)
 			if(!powered)
 				powered = 1
+				power_fails = 0;
 				update_icon()
 				investigate_log("regained power and turned <font color='green'>on</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 		else
-			if(powered)
+			power_fails++
+			if(powered && power_fails > 3)
 				powered = 0
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font> at [get_area(src)]", INVESTIGATE_SINGULO)
 				log_game("Emitter lost power in ([x],[y],[z])")
+				Radio.set_frequency(ENG_FREQ)
+				Radio.talk_into(src, "Alert! Emitter power failure!", ENG_FREQ)
 			return
 		if(charge <=80)
 			charge+=5
