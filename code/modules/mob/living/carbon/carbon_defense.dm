@@ -303,7 +303,7 @@
 			Weaken(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
-			adjustEarDamage(damage_pwr * effect_amount,(ears.deaf ? 0 : deafen_pwr * effect_amount))
+			adjustEarDamage(damage_pwr * effect_amount,max(0,(deafen_pwr * effect_amount)-ears.deaf))
 
 			if(ears.ear_damage >= 15)
 				to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")
