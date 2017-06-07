@@ -2383,8 +2383,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/backpack/dufflebag/sec{
 	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
-	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
-	name = "dufflebag";
+	desc = "A large duffle bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
+	name = "duffle bag";
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,
