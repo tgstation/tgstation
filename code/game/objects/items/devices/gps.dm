@@ -135,11 +135,11 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	..()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = uppertext(copytext(sanitize(a), 1, 5))
+		a = (copytext(sanitize(a), 1, 20))
 		if(in_range(src, usr))
 			gpstag = a
-			name = "global positioning system ([gpstag])"
 			attack_self(usr)
+
 
 /obj/item/device/gps/science
 	icon_state = "gps-s"
