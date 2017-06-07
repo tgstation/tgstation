@@ -215,6 +215,8 @@
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in GLOB.machines)
 			D.removeMe(src)
+	if(note)
+		qdel(note)
 	return ..()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
