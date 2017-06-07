@@ -605,6 +605,10 @@
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
 		threatcount += 2
+	
+	//Medals are status symbols
+	if(istype(tie, /obj/item/clothing/tie/medal/nobel_science) || istype(tie, /obj/item/clothing/tie/medal/silver/valor) || istype(tie, /obj/item/clothing/tie/medal/conduct))
+		threatcount -=1
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != "human")
