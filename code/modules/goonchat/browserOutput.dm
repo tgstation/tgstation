@@ -215,7 +215,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	
 	if(islist(target))
 		for(var/I in target)
-			to_chat(target, message)
+			to_chat(I, message)
 		return
 
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
