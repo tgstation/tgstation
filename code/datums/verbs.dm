@@ -12,6 +12,7 @@
 //do things for each entry in Generate_list
 //return value sets Generate_list[verbpath]
 /datum/verbs/proc/HandleVerb(list/entry, atom/verb/verbpath, ...)
+	return entry
 
 /datum/verbs/New()
 	var/mainlist = GetList()
