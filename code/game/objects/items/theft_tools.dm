@@ -19,6 +19,10 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
+/obj/item/nuke_core/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
 /obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
 	if(istype(container))
 		container.load(src, user)
@@ -133,7 +137,7 @@
 	else
 		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
 		radiation_pulse(get_turf(user), 1, 2, 10, 1)
-		playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
+		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 		qdel(W)
 		qdel(src)
 
@@ -171,7 +175,7 @@
 	if(istype(sliver))
 		STOP_PROCESSING(SSobj, sliver)
 		icon_state = "core_container_sealed"
-		playsound(loc, 'sound/items/Deconstruct.ogg', 60, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 60, 1)
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [sliver] is safely contained.</span>")
 
