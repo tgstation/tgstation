@@ -31,6 +31,23 @@ AI
 		return 1
 	return 0
 
+
+//Drone
+/datum/job/drone
+	title = "Drone"
+	flag = DRONE
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 0
+	spawn_positions = 1
+	selection_color = "#ccffcc"
+	supervisors = "your laws"
+	req_admin_notify = 1
+	minimal_player_age = 30
+
+/datum/job/drone/equip(mob/living/carbon/human/H)
+	return H.dronize()
+
 /*
 Cyborg
 */

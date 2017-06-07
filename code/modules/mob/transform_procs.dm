@@ -495,6 +495,25 @@
 	. = new_corgi
 	qdel(src)
 
+/mob/living/carbon/human/proc/dronize()
+	if (notransform)
+		return
+	for(var/obj/item/W in src)
+		dropItemToGround(W)
+	regenerate_icons()
+	notransform = 1
+	canmove = 0
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	for(var/t in bodyparts)	//this really should not be necessary
+		qdel(t)
+
+	var/mob/living/simple_animal/drone/D = new /mob/living/simple_animal/drone (loc)
+	D.key = key
+
+	. = D
+	qdel(src)
+
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
