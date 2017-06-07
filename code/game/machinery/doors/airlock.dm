@@ -72,6 +72,7 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
+	var/obj/item/weapon/paper/note //Any papers pinned to the airlock
 	var/detonated = 0
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/AirlockClose.ogg'
@@ -369,6 +370,7 @@
 	var/mutable_appearance/weld_overlay
 	var/mutable_appearance/damag_overlay
 	var/mutable_appearance/sparks_overlay
+	var/mutable_appearance/note_overlay
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -393,6 +395,8 @@
 					lights_overlay = get_airlock_overlay("lights_bolts", overlays_file)
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("note", overlays_file)
 
 		if(AIRLOCK_DENY)
 			if(!hasPower())
@@ -414,6 +418,8 @@
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("note", overlays_file)
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -433,6 +439,8 @@
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("note", overlays_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -447,6 +455,8 @@
 					panel_overlay = get_airlock_overlay("panel_closing_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("note_closing", overlays_file)
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -475,6 +485,8 @@
 					panel_overlay = get_airlock_overlay("panel_opening_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("note_opening", overlays_file)
 
 	cut_overlays()
 	add_overlay(frame_overlay)
@@ -484,6 +496,7 @@
 	add_overlay(weld_overlay)
 	add_overlay(sparks_overlay)
 	add_overlay(damag_overlay)
+	add_overlay(note_overlay)
 
 /proc/get_airlock_overlay(icon_state, icon_file)
 	var/obj/machinery/door/airlock/A
@@ -512,6 +525,12 @@
 		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
 	if(charge && panel_open)
 		to_chat(user, "<span class='warning'>Something is wired up to the airlock's electronics!</span>")
+	if(note)
+		if(!in_range(user, src))
+			to_chat(user, "There's a [note.name] pinned to the front. You can't read it from here.")
+		else
+			to_chat(user, "There's a [note.name] pinned to the front...")
+			note.examine(user)
 
 	if(panel_open)
 		switch(security_level)
@@ -1094,6 +1113,12 @@
 		to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the airlock.</span>")
 		playsound(src.loc, C.usesound, 50, 1)
 		src.update_icon()
+	else if(istype(C, /obj/item/weapon/wirecutters) && note)
+		user.visible_message("<span class='notice'>[user] cuts down [note] from [src].</span>", "<span class='notice'>You remove [note] from [src].</span>")
+		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+		note.forceMove(get_turf(user))
+		note = null
+		update_icon()
 	else if(is_wire_tool(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))
@@ -1119,6 +1144,15 @@
 		update_icon()
 		C.forceMove(src)
 		charge = C
+	else if(istype(C, /obj/item/weapon/paper))
+		if(note)
+			to_chat(user, "<span class='warning'>There's already a note pinned to this airlock! Use wirecutters to remove it.<spa>")
+			return
+		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
+		user.drop_item()
+		note = C
+		C.forceMove(src)
+		update_icon()
 	else
 		return ..()
 
