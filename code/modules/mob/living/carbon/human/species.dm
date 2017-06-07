@@ -1253,6 +1253,24 @@
 						H.w_uniform.add_mob_blood(H)
 						H.update_inv_w_uniform()
 
+			if("l_hand")//might be l_arm
+				if(H.stat == CONSCIOUS && armor_block < 50)
+					if(prob(I.force))
+						if(H.held_items[1])//left = 1, right = 2
+							var/obj/item/itemToThrow = H.held_items[1]
+							if(H.dropItemToGround(itemToThrow))
+								itemToThrow.throw_at(pick(oview(rand(3,5),get_turf(H))),1,1)
+								H.visible_message("<span class='warning'>[itemToThrow] is knocked flying from [H]s hands!</span>")
+
+			if("r_hand")
+				if(H.stat == CONSCIOUS && armor_block < 50)
+					if(prob(I.force))
+						if(H.held_items[2])//left = 1, right = 2
+							var/obj/item/itemToThrow = H.held_items[2]
+							if(H.dropItemToGround(itemToThrow))
+								itemToThrow.throw_at(pick(oview(rand(3,5),get_turf(H))),1,1)
+								H.visible_message("<span class='warning'>[itemToThrow] is knocked flying from [H]s hands!</span>")
+
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
