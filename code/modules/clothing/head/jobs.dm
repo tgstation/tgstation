@@ -76,6 +76,7 @@
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
+	dynamic_hair_suffix = "+detective"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	var/candy_cooldown = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/small/detective
@@ -170,5 +171,6 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+	dynamic_hair_suffix = "+detective"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	pockets = /obj/item/weapon/storage/internal/pocket/small

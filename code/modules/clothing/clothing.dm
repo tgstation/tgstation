@@ -293,6 +293,16 @@ BLIND     // can't see anything
 		var/mob/M = loc
 		M.update_inv_head()
 
+/obj/item/clothing/head/equipped(mob/user, slot)
+	..()
+	if((slot & SLOT_HEAD) && dynamic_hair_suffix)
+		update_hair()
+
+/obj/item/clothing/head/dropped(mob/user)
+	..()
+	if(dynamic_hair_suffix)
+		update_hair()
+
 
 //Neck
 /obj/item/clothing/neck
