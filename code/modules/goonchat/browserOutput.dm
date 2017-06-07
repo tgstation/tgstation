@@ -62,7 +62,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	for(var/asset in chatResources)
 		owner << browse_rsc(file(chatResources[asset]), asset)
 
-	owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
+	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
 
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
