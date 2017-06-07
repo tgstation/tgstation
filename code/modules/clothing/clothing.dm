@@ -278,6 +278,11 @@ BLIND     // can't see anything
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 
+/obj/item/clothing/head/Initialize()
+	. = ..()
+	if(istype(loc, /mob/living/carbon/human) && dynamic_hair_suffix)
+		var/mob/living/carbon/human/H = loc
+		H.update_hair()
 
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -295,7 +300,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/equipped(mob/user, slot)
 	..()
-	if((slot & SLOT_HEAD) && dynamic_hair_suffix)
+	if(dynamic_hair_suffix)
 		user.update_hair()
 
 /obj/item/clothing/head/dropped(mob/user)

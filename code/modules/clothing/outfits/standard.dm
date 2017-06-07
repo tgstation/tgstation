@@ -30,7 +30,7 @@
 	uniform = /obj/item/clothing/under/rank/det
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
-	head = /obj/item/clothing/head/det_hat
+	head = /obj/item/clothing/head/fedora/det_hat
 	r_hand = /obj/item/weapon/gun/ballistic
 	l_hand = null
 	r_pocket = /obj/item/ammo_box/c10mm
