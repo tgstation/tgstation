@@ -68,7 +68,7 @@ To draw a rune, use an arcane tome.
 		to_chat(user, "<span class='warning'>You aren't able to understand the words of [src].</span>")
 		return
 	var/list/invokers = can_invoke(user)
-	if(invokers.len >= req_cultists)
+	if(islist(invokers) && invokers.len >= req_cultists)
 		invoke(invokers)
 	else
 		fail_invoke()
@@ -107,6 +107,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		chanters += user
 		invokers += user
+
+	// Your god has no further use for you.
+	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
+		return FALSE
+
 	if(req_cultists > 1 || allow_excess_invokers)
 		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
