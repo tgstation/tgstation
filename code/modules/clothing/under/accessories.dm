@@ -111,7 +111,7 @@
 					else
 						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
-						var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 50)
+						var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 140)
 						if(input && !commended)
 							GLOB.commendations += "<b>[M.real_name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
 							commended = TRUE
