@@ -77,7 +77,7 @@
 	icon_state = "mecha_laser"
 	origin_tech = "magnets=3;combat=3;engineering=3"
 	energy_drain = 30
-	projectile = /obj/item/projectile/beam/laser
+	projectile = /obj/item/projectile/beam/mediumlaser
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy

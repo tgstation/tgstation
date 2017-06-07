@@ -29,6 +29,10 @@
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
 
+/obj/item/projectile/beam/mediumlaser
+	name = "medium laser"
+	damage = 30
+
 /obj/item/projectile/beam/weak
 	damage = 15
 	armour_penetration = 50
