@@ -93,6 +93,11 @@
 	select_name = "ion"
 	fire_sound = 'sound/weapons/IonRifle.ogg'
 
+/obj/item/ammo_casing/energy/weakion
+	projectile_type = /obj/item/projectile/ion/weak
+	select_name = "ion"
+	fire_sound = 'sound/weapons/IonRifle.ogg'
+
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone
 	select_name = "declone"
