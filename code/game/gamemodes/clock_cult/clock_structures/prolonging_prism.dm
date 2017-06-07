@@ -125,11 +125,16 @@
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/proc/seven_random_hexes(turf/T, efficiency)
 	var/static/list/hex_states = list("prismhex1", "prismhex2", "prismhex3", "prismhex4", "prismhex5", "prismhex6", "prismhex7")
-	var/list/hex_combo = list()
+	var/mutable_appearance/hex_combo
 	for(var/n in hex_states) //BUILD ME A HEXAGON
 		if(prob(50 * efficiency))
-			hex_combo += mutable_appearance('icons/effects/64x64.dmi', n)
-	if(LAZYLEN(hex_combo)) //YOU BUILT A HEXAGON
-		var/obj/effect/temp_visual/ratvar/prolonging_prism/P = new /obj/effect/temp_visual/ratvar/prolonging_prism(T)
-		P.icon_state = null
-		P.add_overlay(hex_combo)
+			if(!hex_combo)
+				hex_combo = mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
+			else
+				hex_combo.overlays += mutable_appearance('icons/effects/64x64.dmi', n, RIPPLE_LAYER)
+	if(hex_combo) //YOU BUILT A HEXAGON
+		hex_combo.pixel_x = -16
+		hex_combo.pixel_y = -16
+		hex_combo.mouse_opacity = 0
+		hex_combo.plane = GAME_PLANE
+		new /obj/effect/temp_visual/ratvar/prolonging_prism(T, hex_combo)

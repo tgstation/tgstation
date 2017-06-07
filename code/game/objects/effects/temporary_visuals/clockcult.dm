@@ -154,8 +154,10 @@
 	pixel_x = -16
 	duration = 30
 
-/obj/effect/temp_visual/ratvar/prolonging_prism/Initialize()
+/obj/effect/temp_visual/ratvar/prolonging_prism/Initialize(mapload, set_appearance)
 	. = ..()
+	if(set_appearance)
+		appearance = set_appearance
 	animate(src, alpha = 0, time = duration, easing = BOUNCE_EASING)
 
 /obj/effect/temp_visual/ratvar/spearbreak
