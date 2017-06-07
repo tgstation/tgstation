@@ -6,6 +6,10 @@
 	density = 0
 	anchored = 1
 
+/obj/structure/headpike/bone //for bone spears
+	icon_state = "headpike-bone"
+
+
 /obj/structure/headpike/CheckParts(list/parts_list)
 	..()
 	var/obj/item/bodypart/head/H = locate() in contents
@@ -18,6 +22,16 @@
 	..()
 	var/obj/item/bodypart/head/H = locate() in contents
 	var/obj/item/weapon/twohanded/spear/S = locate() in contents
+	if(H && S)
+		to_chat(user, "<span class='notice'>You take down the head spike.</span>")
+		H.forceMove(get_turf(src))
+		S.forceMove(get_turf(src))
+		qdel(src)
+
+/obj/structure/headpike/bone/attack_hand(mob/user)
+	..()
+	var/obj/item/bodypart/head/H = locate() in contents
+	var/obj/item/weapon/twohanded/bonespear/S = locate() in contents
 	if(H && S)
 		to_chat(user, "<span class='notice'>You take down the head spike.</span>")
 		H.forceMove(get_turf(src))
