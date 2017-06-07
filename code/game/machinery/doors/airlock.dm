@@ -1148,10 +1148,11 @@
 		if(note)
 			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.<spa>")
 			return
+		if(!user.transferItemToLoc(C, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [C]!</span>")
+			return
 		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
-		user.drop_item()
 		note = C
-		C.forceMove(src)
 		update_icon()
 	else
 		return ..()
