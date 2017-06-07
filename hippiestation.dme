@@ -2182,6 +2182,7 @@
 #include "hippiestation\code\modules\admin\secrets.dm"
 #include "hippiestation\code\modules\admin\verbs\aooc.dm"
 #include "hippiestation\code\modules\admin\verbs\fillbreach.dm"
+#include "hippiestation\code\modules\admin\verbs\spawnhuman.dm"
 #include "hippiestation\code\modules\admin\verbs\testdummy.dm"
 #include "hippiestation\code\modules\butts\main.dm"
 #include "hippiestation\code\modules\butts\misc.dm"
