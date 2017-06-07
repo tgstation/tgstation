@@ -72,7 +72,7 @@
 	var/hasShocked = 0 //Prevents multiple shocks from happening
 	autoclose = 1
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
-	var/obj/item/weapon/paper/note //Any papers pinned to the airlock
+	var/obj/item/weapon/note //Any papers pinned to the airlock
 	var/detonated = 0
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/AirlockClose.ogg'
@@ -1144,9 +1144,9 @@
 		update_icon()
 		C.forceMove(src)
 		charge = C
-	else if(istype(C, /obj/item/weapon/paper))
+	else if(istype(C, /obj/item/weapon/paper) || istype(C, /obj/item/weapon/photo))
 		if(note)
-			to_chat(user, "<span class='warning'>There's already a note pinned to this airlock! Use wirecutters to remove it.<spa>")
+			to_chat(user, "<span class='warning'>There's already something pinned to this airlock! Use wirecutters to remove it.<spa>")
 			return
 		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
 		user.drop_item()
