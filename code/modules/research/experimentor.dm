@@ -22,7 +22,7 @@
 	density = 1
 	anchored = 1
 	use_power = 1
-	var/recentlyExperimented = 0
+	var/nextExperiment = 0
 	var/mob/trackedIan
 	var/mob/trackedRuntime
 	var/badThingCoeff = 0
@@ -52,6 +52,12 @@
 		if(loaded_item)
 			item_reactions["[loaded_item.type]"] = oldReaction
 */
+
+/obj/machinery/r_n_d/experimentor/proc/update_icon()
+	if(nextExperiment >= world.time)
+		icon_state = "h_lathe_wloop"
+	else
+		icon_state = "h_lathe"
 
 /obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
@@ -224,8 +230,9 @@
 			counter = 1
 
 /obj/machinery/r_n_d/experimentor/proc/experiment(exp,obj/item/exp_on)
-	recentlyExperimented = 1
-	icon_state = "h_lathe_wloop"
+	nextExperiment = world.time + ResetTime
+	update_icon()
+	addtimer(CALLBACK(src, .proc/update_icon), ResetTime)
 	var/chosenchem
 	var/criticalReaction = (exp_on.type in critical_items) ? TRUE : FALSE
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -503,10 +510,6 @@
 			use_power(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 
-	spawn(resetTime)
-		icon_state = "h_lathe"
-		recentlyExperimented = 0
-
 /obj/machinery/r_n_d/experimentor/Topic(href, href_list)
 	if(..())
 		return
@@ -527,7 +530,7 @@
 	else if(scantype == "refresh")
 		src.updateUsrDialog()
 	else
-		if(recentlyExperimented)
+		if(nextExperiment >= world.time)
 			to_chat(usr, "<span class='warning'>[src] has been used too recently!</span>")
 			return
 		else if(!loaded_item)
