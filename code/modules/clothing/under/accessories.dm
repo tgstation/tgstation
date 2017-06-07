@@ -109,7 +109,7 @@
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
-				 		user.visible_message("[user] pins \the [src] on [M]'s chest.", \
+						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 						if(!commended)
 							var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 50)
