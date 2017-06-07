@@ -220,25 +220,59 @@
 
 //Talisman of Horrors: Breaks the mind of the victim with nightmarish hallucinations
 /obj/item/weapon/paper/talisman/horror
-	cultist_name = "Talisman of Horrors"
-	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
+	cultist_name = "Talisman of Eldritch Nightmares"
+	cultist_desc = "This talisman will seize upon the paranoia of all nearby crew, making them see everyone as a cultist."
 	color = "#ffb366" // light orange
 	invocation = "Lo'Nab Na'Dm!"
-	creation_time = 80
+	creation_time = 60
+	var/duration = 1000
+	
+/obj/item/weapon/paper/talisman/horror/invoke(mob/living/user, successfuluse = 1)
+	var/image/A
+	var/list/targets = list()
+	var/list/cultists = list()
+	var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	for(var/datum/mind/B in SSticker.mode.cult)
+		cultists += B.current.client
+	for(var/mob/living/carbon/human/T in range(12, get_turf(src)))
+		if(!iscultist(T) && T.client)
+			targets += T.client
+			AH.remove_hud_from(T)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, T), duration)
+			if(!A)
+				A = image('icons/effects/effects.dmi',T,"bloodsparkles", ABOVE_MOB_LAYER)
+				A.override = FALSE
+			send_visions(A, cultists, duration)
+	var/UZ = user.z
+	A = null
+	for(var/mob/living/L in GLOB.living_mob_list)
+		if(L.z != UZ)
+			continue
+		if(ishuman(L))
+			A = image('icons/mob/mob.dmi',L,"cultist", ABOVE_MOB_LAYER)
+			A.override = 1
+			send_visions(A, targets, duration)
+		else
+			var/construct = pick("floating","artificer","behemoth")
+			A = image('icons/mob/mob.dmi',L,construct, ABOVE_MOB_LAYER)
+			A.override = 1
+			send_visions(A, targets, duration)
+	qdel(src)
 
-/obj/item/weapon/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
-	if(iscultist(user) && (get_dist(user, target) < 7))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
-		if(iscarbon(target))
-			var/mob/living/carbon/H = target
-			H.reagents.add_reagent("mindbreaker", 12)
-			if(is_servant_of_ratvar(target))
-				to_chat(target, "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>")
-				target.emote("scream")
-				target.confused = max(0, target.confused + 3)
-				target.flash_act()
-		qdel(src)
+/proc/send_visions(image/I, list/show_to, duration)
+	for(var/client/C in show_to)
+		if(C.mob == I.loc)
+			continue
+		C.images += I
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_images_from_clients, I, show_to), duration)
 
+/proc/hudFix(mob/living/carbon/human/target)
+	if(!target || !target.client)
+		return
+	var/obj/O = target.get_item_by_slot(slot_glasses)
+	if(istype(O, /obj/item/clothing/glasses/hud/security))
+		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+		AH.add_hud_to(target)
 
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets, or converts plasteel into runed metal up to 25 times
 /obj/item/weapon/paper/talisman/construction
