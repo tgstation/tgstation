@@ -1,0 +1,6 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - rscadd: "The Ore Redemption Machine has been ported to TGUI. New features include the addition of \"Release All\" and \"Smelt All\" buttons."
+  - rscadd: "The Ore Redemption Machine now be loaded with sheets of material."
+  - rscadd: "The Ore Redemption Machine can now 'smelt' Reinforced Glass."
