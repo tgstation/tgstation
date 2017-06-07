@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(job)
 	var/initial_players_to_assign = 0 	//used for checking against population caps
 
 	var/list/prioritized_jobs = list()
+	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
@@ -246,11 +247,6 @@ SUBSYSTEM_DEF(job)
 	unassigned = shuffle(unassigned)
 
 	HandleFeedbackGathering()
-	
-	for(var/i in unassigned)
-		var/mob/dead/new_player/player = i
-		if(jobban_isbanned(player, CATBAN) || jobban_isbanned(player, CLUWNEBAN))
-			AssignRole(player, "Assistant")
 
 	//People who wants to be assistants, sure, go on.
 	Debug("DO, Running Assistant Check 1")
@@ -387,21 +383,7 @@ SUBSYSTEM_DEF(job)
 			SendToAtom(H, S, buckle = FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			S = get_turf(pick(GLOB.latejoin))
-		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
-			log_world("Couldn't find a round start latejoin spawn point.")
-			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-				if(!T.density)
-					var/clear = 1
-					for(var/obj/O in T)
-						if(O.density)
-							clear = 0
-							break
-					if(clear)
-						S = T
-						continue
-		if(istype(S, /obj/effect/landmark) && isturf(S.loc))
-			H.loc = S.loc
+			SendToLateJoin(H)
 
 
 	if(H.mind)
@@ -524,8 +506,6 @@ SUBSYSTEM_DEF(job)
 	newjob.total_positions = J.total_positions
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
-<<<<<<< HEAD
-=======
 
 /datum/controller/subsystem/job/proc/SendToAtom(mob/M, atom/A, buckle)
 	if(buckle && isliving(M) && istype(A, /obj/structure/chair))
@@ -568,4 +548,3 @@ SUBSYSTEM_DEF(job)
 			var/msg = "Unable to send mob [M] to late join!"
 			message_admins(msg)
 			CRASH(msg)
->>>>>>> 306b19ac1f... Fixes roundstart spawning (#28090)
