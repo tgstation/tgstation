@@ -226,15 +226,17 @@
 	if(on_fire)
 		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!")
 		return
-
+	var/zone = check_zone(M.zone_selected)
 	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
-		else if(check_zone(M.zone_selected) == "head")
+		else if(zone == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+		else if(zone == "r_arm"||zone == "l_arm")
+			M.visible_message("<span class='notice'>[M] shakes [src]'s [(zone == "r_arm")? "right":"left"] hand!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
