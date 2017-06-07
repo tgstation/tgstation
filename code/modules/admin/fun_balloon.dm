@@ -118,6 +118,7 @@
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
 	var/list/warp_points = list()
+	
 
 
 /obj/effect/forcefield/arena_shuttle/Bumped(mob/M as mob|obj)
