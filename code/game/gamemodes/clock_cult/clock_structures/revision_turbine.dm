@@ -4,8 +4,6 @@
 	desc = "A metal plate clamped in place by three crystals. It sporadically emits a sound similar to a whisper."
 	clockwork_desc = "A link to the ancient archives of the City of Cogs that constantly pores over ancient scripture. Increases maximum wisdom and slowly generates it."
 	icon_state = "tinkerers_daemon"
-	active_icon = "tinkerers_daemon"
-	inactive_icon = "tinkerers_daemon"
 	unanchored_icon = "tinkerers_daemon_unwrenched"
 	construction_value = 20
 	break_message = "<span class='warning'>The plate tumbles free as its structure comes apart!</span>"
@@ -28,6 +26,6 @@
 
 /obj/structure/destructible/clockwork/revision_turbine/process()
 	wisdom_cycle++
-	if(wisdom_cycle >= revision_turbine_wisdom_regen)
+	if(wisdom_cycle >= REVISION_TURBINE_WISDOM_REGEN)
 		adjust_clockwork_wisdom(1)
 		wisdom_cycle = 0
