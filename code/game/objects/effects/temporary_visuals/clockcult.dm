@@ -146,6 +146,18 @@
 	pixel_y = rand(-10, 10)
 	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
 
+/obj/effect/temp_visual/ratvar/prolonging_prism
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "prismhex1"
+	layer = RIPPLE_LAYER
+	pixel_y = -16
+	pixel_x = -16
+	duration = 30
+
+/obj/effect/temp_visual/ratvar/prolonging_prism/Initialize()
+	. = ..()
+	animate(src, alpha = 0, time = duration, easing = BOUNCE_EASING)
+
 /obj/effect/temp_visual/ratvar/spearbreak
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "ratvarspearbreak"
