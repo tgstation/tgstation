@@ -151,6 +151,8 @@
 		new /obj/item/clothing/head/beret/sec(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/sec(src)
+	new /obj/item/clothing/under/rank/security/grey(src)
+	new /obj/item/clothing/under/rank/security/grey(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	new /obj/item/clothing/mask/bandana/red(src)
 	return
