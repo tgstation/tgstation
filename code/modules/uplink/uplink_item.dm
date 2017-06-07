@@ -1189,6 +1189,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants
 	category = "Cybernetic Implants"
 	surplus = 0
+	refundable = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -1223,6 +1224,49 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "This implant will attempt to revive you if you lose consciousness. Comes with an autosurgeon."
 	item = /obj/item/device/autosurgeon/reviver
 	cost = 8
+
+/datum/uplink_item/cyber_implants/esword	//This is a bad idea
+	name = "Arm Energy-Blade Projector"
+	desc = "An illegal cybernetic combat implant that allows the user to project a blade of lethal energy from their hand."
+	item = /obj/item/organ/cyberimp/arm/esword
+	cost = 12
+	player_minimum = 30
+
+/datum/uplink_item/cyber_implants/esword/traitor	//This is a worse idea
+	name = "Arm Energy-Blade Projector"
+	desc = "An illegal cybernetic combat implant that allows the user to project a blade of lethal energy from their hand."
+	item = /obj/item/organ/cyberimp/arm/esword
+	cost = 16
+	include_modes = list()
+	exclude_modes = list(/datum/game_mode/nuclear)
+	player_minimum = 30
+
+/datum/uplink_item/cyber_implants/medibeam
+	name = "Medical Beam Arm Implant"
+	desc = "An cybernetic implant that gives the user an extendable medical beamgun in their arm"
+	item = /obj/item/organ/cyberimp/arm/medibeam
+	cost = 20
+	player_minimum = 15
+
+/datum/uplink_item/cyber_implants/flash
+	name = "Arm Photon Projection Implant"
+	desc = "A glorified self-recharging flash that is implanted into a user's arm."
+	item = /obj/item/organ/cyberimp/arm/flash
+	include_modes = list()
+	cost = 6
+
+/datum/uplink_item/cyber_implants/baton			//This is a _really_ bad idea
+	name = "Arm Electrification Implant"
+	desc = "An illegal cybernetic combat implant that allows the user to extend a prod that stun others with their arm."
+	item = /obj/item/organ/cyberimp/arm/baton
+	cost = 16
+	player_minimum = 25
+
+/datum/uplink_item/cyber_implants/combat_melee	//If those were really bad ideas, this one must be the worst.
+	name = "Melee Combat Arm Implant"
+	desc = "A set of cybernetic implants combined in one value package for insertion into a user's arm. Contains energy blade, medical beam, flash, and stun-arm implant modules."
+	item = /obj/item/organ/cyberimp/arm/combat
+	cost = 48 //12 + 20 + 6 + 16 = 54 * 0.9 = 48.6
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
