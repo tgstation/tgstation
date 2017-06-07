@@ -42,6 +42,7 @@
 
 /obj/item/nuke_core_container/Destroy()
 	QDEL_NULL(core)
+	return ..()
 
 /obj/item/nuke_core_container/proc/load(obj/item/nuke_core/ncore, mob/user)
 	if(core || !istype(ncore))
@@ -87,7 +88,8 @@
 	<li>Cut the inner metal plate with a welding tool</li>\
 	<li>Pry off the inner plate with a crowbar to expose the radioactive core</li>\
 	<li>Use the core container to remove the plutonium core; the container will take some time to seal</li>\
-	<li>???</li>"
+	<li>???</li>\
+	</ul>"
 
 // STEALING SUPERMATTER
 
@@ -100,7 +102,8 @@
 	<li>Physical contact of any object with the sliver will dust the object, as well as yourself.</li>\
 	<li>Use the tongs to place the sliver into the provided container, which will take some time to seal</li>\
 	<li>Get the hell out before the crystal delaminates.</li>\
-	<li>???</li>"
+	<li>???</li>\
+	</ul>"
 
 /obj/item/nuke_core/supermatter_sliver
 	name = "supermatter sliver"
@@ -145,12 +148,13 @@
 	ded.dust()
 
 /obj/item/nuke_core_container/supermatter
-	name = "supermatter receptacle"
+	name = "supermatter bin"
 	desc = "A tiny receptacle that releases an inert freon mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
 /obj/item/nuke_core_container/supermatter/Destroy()
 	QDEL_NULL(sliver)
+	return ..()
 
 /obj/item/nuke_core_container/supermatter/load(obj/item/weapon/hemostat/supermatter/T, mob/user)
 	if(!istype(T) || !T.sliver)
@@ -200,6 +204,7 @@
 
 /obj/item/weapon/hemostat/supermatter/Destroy()
 	QDEL_NULL(sliver)
+	return ..()
 
 /obj/item/weapon/hemostat/supermatter/afterattack(atom/O, mob/user, proximity)
 	if(!sliver)
@@ -227,7 +232,7 @@
 			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 	radiation_pulse(get_turf(user), 2, 4, 50, 1)
-	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
+	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 	user.dust()
 	icon_state = "supermatter_tongs"
 	QDEL_NULL(sliver)

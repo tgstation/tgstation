@@ -466,7 +466,7 @@
 	if(istype(W, /obj/item/weapon/scalpel/supermatter))
 		playsound(src, W.usesound, 100, 1)
 		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
-		if(do_after(user, 60*W.toolspeed,target=src))
+		if(do_after(user, 60 * W.toolspeed, TRUE, src))
 			to_chat(user, "<span class='notice'>You extract a sliver from \the [src]. \The [src] begins to react violently!</span>")
 			new /obj/item/nuke_core/supermatter_sliver(user.loc)
 			matter_power += 200
