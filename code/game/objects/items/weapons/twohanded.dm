@@ -121,7 +121,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/weapon/twohanded/offhand/unwield()
@@ -141,6 +141,12 @@
 	if (QDELETED(src))
 		return
 	qdel(src)																//If it's another offhand, or literally anything else, qdel. If I knew how to add logging messages I'd put one here.
+
+/obj/item/weapon/twohanded/offhand/dropped()
+		var/O = user.get_inactive_held_item()
+		if(istype(O, /obj/item/weapon/twohanded/offhand/required))
+			user.dropItemToGround(O, FALSE)									//Not forced to let the NODROPs stay.
+		..()
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
@@ -171,7 +177,7 @@
 	..()
 	var/slotbit = slotdefine2slotbit(slot)
 	if(slot_flags & slotbit)
-		var/datum/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
+		var/O = user.is_holding_item_of_type(/obj/item/weapon/twohanded/offhand)
 		if(!O || QDELETED(O))
 			return
 		qdel(O)
@@ -519,6 +525,7 @@
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	flags = NODROP
 	armour_penetration = 100
 	force_on = 30
 
