@@ -195,7 +195,6 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
-	backpack_contents = list(/obj/item/weapon/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -204,6 +203,9 @@ Cook
 		if(J.cooks>0)//Cooks
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
+			backpack_contents = list(/obj/item/weapon/sharpener = 1)
+		else
+			r_hand = /obj/item/weapon/mounted_chainsaw
 		if(!visualsOnly)
 			J.cooks++
 
