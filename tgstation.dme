@@ -440,6 +440,7 @@
 #include "code\game\gamemodes\clock_cult\clock_structures\mania_motor.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ocular_warden.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ratvar_the_clockwork_justicar.dm"
+#include "code\game\gamemodes\clock_cult\clock_structures\revision_turbine.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\taunting_trail.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\wall_gear.dm"
 #include "code\game\gamemodes\cult\cult.dm"

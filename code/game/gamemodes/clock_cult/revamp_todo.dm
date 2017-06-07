@@ -6,3 +6,4 @@
 #warn Redo Recollection
 #warn Implement timed portal opening
 #warn Balance Potential costs on scripture etc
+#warn Add a scripture for the revision turbine
