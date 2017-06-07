@@ -46,17 +46,7 @@ Captain
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
 
 	implants = list(/obj/item/weapon/implant/mindshield)
-
-
-/datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	var/obj/item/clothing/under/U = H.w_uniform
-	U.attach_accessory(new /obj/item/clothing/accessory/medal/gold/captain())
-
-	if(visualsOnly)
-		return
-
+	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 /*
 Head of Personnel
