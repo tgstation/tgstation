@@ -17,7 +17,7 @@
 	/obj/item/clockwork/component/vanguard_cogwheel/onyx_prism = 1)
 	var/static/list/component_refund = list(VANGUARD_COGWHEEL = 2, GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 1)
 	var/static/delay_cost = 3000
-	var/static/delay_cost_increase = 1500
+	var/static/delay_cost_increase = 1000
 	var/static/delay_remaining = 0
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/examine(mob/user)
