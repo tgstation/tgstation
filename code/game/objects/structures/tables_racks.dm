@@ -34,6 +34,9 @@
 	integrity_failure = 30
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
+	can_buckle = TRUE
+	buckle_requires_restraints = TRUE
+	buckle_lying = TRUE
 
 /obj/structure/table/New()
 	..()
