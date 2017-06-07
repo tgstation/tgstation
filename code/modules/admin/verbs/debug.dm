@@ -116,9 +116,9 @@ GLOBAL_PROTECT(AdminProcCallCount)
 
 //adv proc call this, ya nerds
 /world/proc/WrapAdminProcCall(target, procname, list/arguments)
-	if(target == GLOBAL_PROC)
+	if((target == GLOBAL_PROC) && (hascall(world, procname)))
 		return call(procname)(arglist(arguments))
-	else
+	else if(hascall(target, procname))
 		return call(target, procname)(arglist(arguments))
 
 /proc/IsAdminAdvancedProcCall()
