@@ -13,6 +13,14 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
+	
+/obj/item/ammo_box/c38/weak
+   name = "Ammo box (.38S)"
+   icon_state = "10mmbox"
+   ammo_type = /obj/item/ammo_casing/c38/weak
+   origin_tech = "combat=2"
+   max_ammo = 20
+   
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
