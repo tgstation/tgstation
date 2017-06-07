@@ -9,6 +9,9 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
+	if((!features["tail_human"] || features["tail_human"] != "None") || (!features["ears"] || features["ears"] != "None"))
+		owner.grant_language(/datum/language/cat)
+
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.
 

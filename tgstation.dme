@@ -1403,6 +1403,7 @@
 #include "code\modules\language\beachbum.dm"
 #include "code\modules\language\codespeak.dm"
 #include "code\modules\language\common.dm"
+#include "code\modules\language\cat.dm"
 #include "code\modules\language\draconic.dm"
 #include "code\modules\language\drone.dm"
 #include "code\modules\language\language.dm"
