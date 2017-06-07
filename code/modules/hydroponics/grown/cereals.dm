@@ -70,6 +70,7 @@
 	plantname = "Meatwheat"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat
 	mutatelist = list()
+	genes = list(/datum/plant_gene/trait/smoke)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat
 	name = "meatwheat"
@@ -79,6 +80,7 @@
 	filling_color = rgb(150, 0, 0)
 	bitesize_mod = 2
 	seed = /obj/item/seeds/wheat/meat
+	
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
