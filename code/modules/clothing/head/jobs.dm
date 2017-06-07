@@ -119,6 +119,7 @@
 	icon_state = "hoscap"
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
+	dog_fashion = /datum/dog_fashion/head/hos
 
 /obj/item/clothing/head/HoS/syndicate
 	name = "syndicate cap"
