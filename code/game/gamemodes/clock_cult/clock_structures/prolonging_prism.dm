@@ -30,7 +30,7 @@
 			var/efficiency_time = get_efficiency_mod(TRUE)
 			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[get_delay_cost() * efficiency]W</b> of power to attempt to delay the arrival of an emergency shuttle by \
 			<b>[2 * efficiency_time]</b> minutes.</span>")
-			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>100W</b> for every <b>10 CV</b> and <b>[delay_cost_increase]W</b> for every shuttle delayed.</span>")
+			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>100W</b> for every <b>10 CV</b> and <b>[delay_cost_increase]W</b> for every time activated.</span>")
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/forced_disable(bad_effects)
 	if(active)
@@ -81,8 +81,8 @@
 	var/lowest_x
 	var/list/prism_turfs = list()
 	for(var/t in SSshuttle.emergency.ripple_area(SSshuttle.getDock("emergency_home")))
+		prism_turfs[t] = TRUE
 		var/turf/T = t
-		prism_turfs += T
 		if(!highest_y || T.y > highest_y)
 			highest_y = T.y
 		if(!highest_x || T.x > highest_x)
@@ -103,25 +103,20 @@
 		mean_x = Floor(mean_x)
 	var/turf/semi_random_center_turf = locate(mean_x, mean_y, ZLEVEL_STATION)
 	for(var/t in getline(src, semi_random_center_turf))
-		prism_turfs += t
+		prism_turfs[t] = TRUE
 	var/placement_style = prob(50)
 	for(var/t in prism_turfs)
 		var/turf/T = t
-		var/placed = FALSE
 		if(placement_style)
 			if(IsOdd(T.x + T.y))
-				placed = seven_random_hexes(T, efficiency)
+				seven_random_hexes(T, efficiency)
 			else if(prob(50 * efficiency))
 				new /obj/effect/temp_visual/ratvar/prolonging_prism(T)
-				placed = TRUE
 		else
 			if(IsEven(T.x + T.y))
-				placed = seven_random_hexes(T, efficiency)
+				seven_random_hexes(T, efficiency)
 			else if(prob(50 * efficiency))
 				new /obj/effect/temp_visual/ratvar/prolonging_prism(T)
-				placed = TRUE
-		if(placed)
-			prism_turfs -= T //if we placed something, remove the turf entirely, not letting stuff place twice
 		CHECK_TICK //we may be going over a hell of a lot of turfs
 
 /obj/structure/destructible/clockwork/powered/prolonging_prism/proc/get_delay_cost()
@@ -137,4 +132,3 @@
 		var/obj/effect/temp_visual/ratvar/prolonging_prism/P = new /obj/effect/temp_visual/ratvar/prolonging_prism(T)
 		P.icon_state = null
 		P.add_overlay(hex_combo)
-		return TRUE
