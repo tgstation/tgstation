@@ -113,6 +113,14 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 	else
 		return ..()
 
+/obj/item/weapon/canvas/afterattack(atom/target, mob/user, proximity)
+	var/turf/T = target
+	if(!iswallturf(T))
+		return
+	user.visible_message("<span class='notice'>[user] places [src] to [T].</span>", \
+						 "<span class='notice'>You attach the [src] to [T].</span>")
+	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+	user.transferItemToLoc(src,T)
 
 //Clean the whole canvas
 /obj/item/weapon/canvas/attack_self(mob/user)
@@ -124,6 +132,6 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		icon = blank
 		user.visible_message("<span class='notice'>[user] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>")
 
-
+// Also permabans then from /tg/station
 
 #undef AMT_OF_CANVASES
