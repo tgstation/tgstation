@@ -33,3 +33,23 @@
 
 /datum/objective/sintouched/acedia
 	explanation_text = "Angels, devils, good, evil... who cares?  Just ignore any hellish threats and do your job."
+
+/datum/objective/sintouched/engine
+	explanation_text = "Go have a good conversation with the Singularity/Tesla/Supermatter crystal. Bonus points if it responds."
+	
+/datum/objective/sintouched/teamredisbetterthangreen
+	explanation_text = "Tell the AI (or a borg/pAI/drone if there is no AI) some corny technology jokes until it cries for help."
+	
+/datum/objective/sintouched/time/New()
+	..()
+	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
+		explanation_text = "Go bug a bronze worshipper to give you a clock."
+	else
+		explanation_text = "You must know what time it is, all the time."
+		
+/datum/objective/sintouched/licky
+	explanation_text = "You must lick anything that you find interesting."
+	
+/datum/objective/sintouched/music
+	explanation_text = "Start playing music, you're the best musician ever. If anyone hates it, beat them on the head with your instrument!"
+	
