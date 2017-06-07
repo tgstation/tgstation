@@ -111,10 +111,10 @@
 					else
 						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
-							var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 50)
-							if(input && !commended)
-								GLOB.commendations += "<b>[M.name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
-								commended = TRUE
+						var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 50)
+						if(input && !commended)
+							GLOB.commendations += "<b>[M.name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
+							commended = TRUE
 
 		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
 	else ..()
