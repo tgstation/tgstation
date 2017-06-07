@@ -431,27 +431,33 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			var/datum/gas_reaction/reaction = r
 
 			var/list/min_reqs = reaction.min_requirements.Copy()
-			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
-			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
+			var/min_temp = min_reqs["TEMP"]
+			var/min_ener = min_reqs["ENER"]
+			if((!isnull(min_temp) && temp < min_temp) \
+			|| (!isnull(min_ener) && ener < min_ener))
 				continue
-			min_reqs -= "TEMP"
-			min_reqs -= "ENER"
-
+			var/static/list/temp_and_energy = list("TEMP", "ENER")
+			min_reqs -= temp_and_energy
+			
 			for(var/id in min_reqs)
-				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
+				var/list/cgi = cached_gases[id]
+				if(!cgi || cgi[MOLES] < min_reqs[id])
 					continue reaction_loop
+
 			//at this point, all minimum requirements for the reaction are satisfied.
 
 			/* currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
 			var/list/max_reqs = reaction.max_requirements.Copy()
-			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
-			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
+			var/max_temp = max_reqs["TEMP"]
+			var/max_ener = max_reqs["ENER"]
+			if((!isnull(max_temp) && temp > max_temp) \
+			|| (!isnull(max_ener) && ener > max_ener))
 				continue
-			max_reqs -= "TEMP"
-			max_reqs -= "ENER"
+			max_reqs -= temp_and_energy
 
 			for(var/id in max_reqs)
-				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
+				var/list/cgi = cached_gases[id]
+				if(cgi && cgi[MOLES] > max_reqs[id])
 					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
