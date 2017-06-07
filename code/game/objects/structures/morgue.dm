@@ -230,14 +230,14 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/mob/living/M in GetAllContents())
+	for(var/mob/living/i_scream in GetAllContents())
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/IC = new()
 		IC.set_cone_type("waffle")
-		IC.add_mob_flavor(M)
+		IC.add_mob_flavor(i_scream)
 		icecreams += IC
 	. = ..()
 	for(var/obj/IC in icecreams)
-		IC.loc = src
+		IC.forceMove(src)
 
 /*
  * Generic Tray
