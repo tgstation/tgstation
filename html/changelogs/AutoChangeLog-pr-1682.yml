@@ -1,0 +1,4 @@
+author: "JamieH"
+delete-after: True
+changes: 
+  - bugfix: "fix the changelog text"

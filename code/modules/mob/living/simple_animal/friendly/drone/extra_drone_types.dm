@@ -168,9 +168,7 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!GLOB.ratvar_awakens)
-		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
-	return TRUE
+	return GLOB.ratvar_awakens
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
 	if(GLOB.ratvar_awakens)
