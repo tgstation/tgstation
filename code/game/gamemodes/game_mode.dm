@@ -54,7 +54,7 @@
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready))
+		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -310,7 +310,7 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -318,7 +318,7 @@
 	players = shuffle(players)
 
 	for(var/mob/dead/new_player/player in players)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(role in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
@@ -332,7 +332,7 @@
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/dead/new_player/player in players)
-			if(player.client && player.ready)
+			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
@@ -354,13 +354,7 @@
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
-/*
-	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/dead/new_player/player in players)
-			if (player.client && player.ready)
-				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
-					drafted += player.mind
-*/
+
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
 			for(var/job in restricted_jobs)
@@ -383,17 +377,12 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-/*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/dead/new_player/player)
-	if(player.preferences.be_special & role)
-		return 1
-	return 0
-*/
+
 
 /datum/game_mode/proc/num_players()
 	. = 0
 	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready)
+		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
 ///////////////////////////////////
