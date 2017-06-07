@@ -83,6 +83,7 @@
 
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -396,7 +397,7 @@
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note", overlays_file)
+				note_overlay = get_airlock_overlay("note", note_overlay_file)
 
 		if(AIRLOCK_DENY)
 			if(!hasPower())
@@ -419,7 +420,7 @@
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note", overlays_file)
+				note_overlay = get_airlock_overlay("note", note_overlay_file)
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -440,7 +441,7 @@
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note", overlays_file)
+				note_overlay = get_airlock_overlay("note", note_overlay_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -456,7 +457,7 @@
 				else
 					panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note_closing", overlays_file)
+				note_overlay = get_airlock_overlay("note_closing", note_overlay_file)
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -486,7 +487,7 @@
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note_opening", overlays_file)
+				note_overlay = get_airlock_overlay("note_opening", note_overlay_file)
 
 	cut_overlays()
 	add_overlay(frame_overlay)
