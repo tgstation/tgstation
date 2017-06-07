@@ -67,8 +67,6 @@ SUBSYSTEM_DEF(ticker)
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
-	new /datum/medals
-
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
