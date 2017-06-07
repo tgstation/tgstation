@@ -26,6 +26,7 @@ Clown
 
 	belt = /obj/item/device/pda/clown
 	uniform = /obj/item/clothing/under/rank/clown
+	tie = /obj/item/clothing/tie/medal/bronze_heart
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/weapon/bikehorn
