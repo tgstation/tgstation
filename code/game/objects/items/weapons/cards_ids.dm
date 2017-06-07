@@ -109,6 +109,8 @@
 	..()
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
+	if(dorm)
+		to_chat(user, "This ID has claimed a dormitory.")
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
