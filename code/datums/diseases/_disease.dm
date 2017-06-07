@@ -125,7 +125,7 @@
 						C.ContractDisease(src)
 						break
 					var/turf/Temp = get_step_towards(V, T)
-					if(!V.CanAtmosPass(Temp))
+					if(!CANATMOSPASS(V, Temp))
 						break
 					V = Temp
 
