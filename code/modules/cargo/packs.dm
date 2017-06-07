@@ -374,6 +374,13 @@
 					/obj/item/weapon/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+	
+/datum/supply_pack/security/armory/ionrifle
+	name = "Ion Rifle Crate"
+	cost = 8000
+	contains = list(/obj/item/weapon/gun/energy/ionrifle)
+	crate_name = "ion rifle crate"
+	crate_type = /obj/structure/closet/crate/secure/plasma
 
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
