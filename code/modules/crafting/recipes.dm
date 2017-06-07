@@ -11,6 +11,14 @@
 	var/subcategory = CAT_NONE
 
 
+/datum/crafting_recipe/beaker
+	name = "Beaker"
+	result = /obj/item/weapon/reagent_containers/glass/beaker
+	reqs = list(/obj/item/stack/sheet/glass = 1)
+	tools = list(/obj/item/weapon/weldingtool)
+	time = 50
+	category = CAT_MISC
+
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
 	result = /obj/item/weapon/gun
