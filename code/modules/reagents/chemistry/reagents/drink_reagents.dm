@@ -215,6 +215,9 @@
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1,0, 0)
 		. = 1
+	if (M.dna.species.id == "plasmaman" || M.dna.species.id == "skeleton")
+		M.heal_organ_damage(1,0, 0)
+		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
 	var/datum/dna/Mdna = M.has_dna()
