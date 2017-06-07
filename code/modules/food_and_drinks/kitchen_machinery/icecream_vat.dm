@@ -212,7 +212,7 @@
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
 			reagents.add_reagent("singulo", 2)
 		if ("mob")
-			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry."
+			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
 			reagents.add_reagent("liquidgibs", 2)
 	ice_creamed = 1
 
