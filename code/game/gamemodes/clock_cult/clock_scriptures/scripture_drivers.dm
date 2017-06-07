@@ -162,7 +162,8 @@
 	if(servants > SCRIPT_SERVANT_REQ)
 		servants -= SCRIPT_SERVANT_REQ
 		channel_time = min(channel_time + servants*7, 120)
-		binding.can_resist = TRUE
+		if(!isAI(target))
+			binding.can_resist = TRUE
 	binding.setDir(target.dir)
 	binding.buckle_mob(target, TRUE)
 	return ..()
