@@ -118,6 +118,8 @@
 							SSblackbox.add_details("commendation", json_encode(list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input)))
 							GLOB.commendations += "<b>[M.real_name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
 							commended = TRUE
+							log_game("[M.real_name]([M.key]) was given the following commendation by [user.real_name]([user.key]): [input]")
+							message_admins("[M.real_name]([M.key]) was given the following commendation by [user.real_name]([user.key]): [input]")
 
 		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
 	else ..()
