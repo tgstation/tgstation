@@ -337,11 +337,40 @@
 	icon_state = "duffel-med"
 	item_state = "duffel-med"
 
+/obj/item/weapon/storage/backpack/duffelbag/med/surgery
+	name = "surgical duffel bag"
+	desc = "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+
+/obj/item/weapon/storage/backpack/duffelbag/med/surgery/PopulateContents()
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/surgical_drapes(src)
+	new /obj/item/clothing/mask/surgical(src)
+	new /obj/item/weapon/razor(src)
+
 /obj/item/weapon/storage/backpack/duffelbag/sec
 	name = "security duffel bag"
 	desc = "A large duffel bag for holding extra security supplies and ammunition."
 	icon_state = "duffel-sec"
 	item_state = "duffel-sec"
+
+/obj/item/weapon/storage/backpack/duffelbag/sec/surgery
+	name = "surgical duffel bag"
+	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
+
+/obj/item/weapon/storage/backpack/duffelbag/sec/surgery/PopulateContents()
+	new /obj/item/weapon/scalpel(src)
+	new /obj/item/weapon/hemostat(src)
+	new /obj/item/weapon/retractor(src)
+	new /obj/item/weapon/circular_saw(src)
+	new /obj/item/weapon/surgicaldrill(src)
+	new /obj/item/weapon/cautery(src)
+	new /obj/item/weapon/surgical_drapes(src)
+	new /obj/item/clothing/mask/surgical(src)
 
 /obj/item/weapon/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"
@@ -384,6 +413,20 @@
 	origin_tech = "syndicate=1"
 	silent = 1
 	slowdown = 0
+
+/obj/item/weapon/storage/backpack/duffelbag/syndie/hitman
+	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back."
+	icon_state = "duffel-syndieammo"
+	item_state = "duffel-syndieammo"
+
+/obj/item/weapon/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
+	new /obj/item/clothing/under/lawyer/blacksuit(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/suit/toggle/lawyer/black(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/clothing/head/fedora(src)
 
 /obj/item/weapon/storage/backpack/duffelbag/syndie/med
 	name = "medical duffel bag"
