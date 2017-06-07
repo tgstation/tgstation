@@ -219,7 +219,7 @@
 	descname = "Powered Structure, Delay Emergency Shuttles"
 	name = "Prolonging Prism"
 	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
-	invocations = list("May this prism...", "...mend our dents and scratches!")
+	invocations = list("May this prism...", "...grant us time to enact his will!")
 	channel_time = 80
 	consumed_components = list(VANGUARD_COGWHEEL = 5, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
 	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
@@ -237,7 +237,7 @@
 
 /datum/clockwork_scripture/create_object/prolonging_prism/check_special_requirements()
 	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
-		to_chat(invoker, "<span class='inathneq'>\"It's too late to construct one of these, champion.\"</span>")
+		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
 		return FALSE
 	var/turf/T = get_turf(invoker)
 	if(!T || T.z != ZLEVEL_STATION)
