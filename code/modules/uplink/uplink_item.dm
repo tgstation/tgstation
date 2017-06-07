@@ -455,8 +455,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
-	name = "12g Ammo Dufflebag"
-	desc = "A dufflebag filled with enough 12g ammo to supply an entire team, at a discounted price."
+	name = "12g Ammo Duffle Bag"
+	desc = "A duffle bag filled with enough 12g ammo to supply an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
 	cost = 12
 
@@ -469,8 +469,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/ammo/smg/bag
-	name = ".45 Ammo Dufflebag"
-	desc = "A dufflebag filled with enough .45 ammo to supply an entire team, at a discounted price."
+	name = ".45 Ammo Duffle Bag"
+	desc = "A duffle bag filled with enough .45 ammo to supply an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
@@ -890,8 +890,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 1
 
 /datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery Dufflebag"
-	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
+	name = "Syndicate Surgery Duffle Bag"
+	desc = "The Syndicate surgery duffle bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 3

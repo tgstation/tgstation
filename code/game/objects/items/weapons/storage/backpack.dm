@@ -317,42 +317,42 @@
 		revealed = 1
 
 /obj/item/weapon/storage/backpack/dufflebag
-	name = "dufflebag"
-	desc = "A large dufflebag for holding extra things."
+	name = "duffle bag"
+	desc = "A large duffle bag for holding extra things."
 	icon_state = "duffle"
 	item_state = "duffle"
 	slowdown = 1
 	max_combined_w_class = 30
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
-	name = "captain's dufflebag"
-	desc = "A large dufflebag for holding extra captainly goods."
+	name = "captain's duffle bag"
+	desc = "A large duffle bag for holding extra captainly goods."
 	icon_state = "duffle-captain"
 	item_state = "duffle-captain"
 	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/med
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra medical supplies."
+	name = "medical duffle bag"
+	desc = "A large duffle bag for holding extra medical supplies."
 	icon_state = "duffle-med"
 	item_state = "duffle-med"
 
 /obj/item/weapon/storage/backpack/dufflebag/sec
-	name = "security dufflebag"
-	desc = "A large dufflebag for holding extra security supplies and ammunition."
+	name = "security duffle bag"
+	desc = "A large duffle bag for holding extra security supplies and ammunition."
 	icon_state = "duffle-sec"
 	item_state = "duffle-sec"
 
 /obj/item/weapon/storage/backpack/dufflebag/engineering
-	name = "industrial dufflebag"
-	desc = "A large dufflebag for holding extra tools and supplies."
+	name = "industrial duffle bag"
+	desc = "A large duffle bag for holding extra tools and supplies."
 	icon_state = "duffle-eng"
 	item_state = "duffle-eng"
 	resistance_flags = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/drone
-	name = "drone dufflebag"
-	desc = "A large dufflebag for holding tools and hats."
+	name = "drone duffle bag"
+	desc = "A large duffle bag for holding tools and hats."
 	icon_state = "duffle-drone"
 	item_state = "duffle-drone"
 	resistance_flags = FIRE_PROOF
@@ -367,8 +367,8 @@
 	new /obj/item/device/multitool(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/clown
-	name = "clown's dufflebag"
-	desc = "A large dufflebag for holding lots of funny gags!"
+	name = "clown's duffle bag"
+	desc = "A large duffle bag for holding lots of funny gags!"
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
@@ -377,8 +377,8 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie
-	name = "suspicious looking dufflebag"
-	desc = "A large dufflebag for holding extra tactical supplies."
+	name = "suspicious looking duffle bag"
+	desc = "A large duffle bag for holding extra tactical supplies."
 	icon_state = "duffle-syndie"
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
@@ -386,14 +386,14 @@
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra tactical medical supplies."
+	name = "medical duffle bag"
+	desc = "A large duffle bag for holding extra tactical medical supplies."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	name = "surgery dufflebag"
-	desc = "A suspicious looking dufflebag for holding surgery tools."
+	name = "surgery duffle bag"
+	desc = "A suspicious looking duffle bag for holding surgery tools."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
 
@@ -410,13 +410,13 @@
 	new /obj/item/device/mmi/syndie(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
-	name = "ammunition dufflebag"
-	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
+	name = "ammunition duffle bag"
+	desc = "A large duffle bag for holding extra weapons ammunition and supplies."
 	icon_state = "duffle-syndieammo"
 	item_state = "duffle-syndieammo"
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
-	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
+	desc = "A large duffle bag, packed to the brim with Bulldog shotgun ammo."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun/PopulateContents()
 	for(var/i in 1 to 6)
@@ -426,14 +426,14 @@
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
-	desc = "A large dufflebag, packed to the brim with C20r magazines."
+	desc = "A large duffle bag, packed to the brim with C20r magazines."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg/PopulateContents()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
-	desc = "A large dufflebag containing a C20r, some magazines, and a cheap looking suppressor."
+	desc = "A large duffle bag containing a C20r, some magazines, and a cheap looking suppressor."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/smgm45(src)
@@ -442,7 +442,7 @@
 	new /obj/item/weapon/suppressor/specialoffer(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
-	desc = "A large dufflebag containing a Bulldog, several drums, and a collapsed hardsuit."
+	desc = "A large duffle bag containing a Bulldog, several drums, and a collapsed hardsuit."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/m12g(src)
@@ -451,7 +451,7 @@
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
-	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+	desc = "A large duffle bag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
@@ -460,7 +460,7 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
-	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+	desc = "A large duffle bag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
@@ -469,7 +469,7 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
-	desc = "A large dufflebag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
+	desc = "A large duffle bag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle/PopulateContents()
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
@@ -489,7 +489,7 @@
 		new /obj/item/weapon/grenade/plastic/x4(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
-	desc = "A large dufflebag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
+	desc = "A large duffle bag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)

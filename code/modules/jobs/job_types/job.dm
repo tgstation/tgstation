@@ -152,7 +152,7 @@
 		if(DSATCHEL)
 			back = satchel //Department satchel
 		if(DDUFFLEBAG)
-			back = dufflebag //Department dufflebag
+			back = dufflebag //Department duffle bag
 		else
 			back = backpack //Department backpack
 
