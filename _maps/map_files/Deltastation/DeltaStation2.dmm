@@ -53324,7 +53324,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Fore Starboard";
 	dir = 8;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/floor/plating/airless,
@@ -55055,7 +55054,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Fore Port";
 	dir = 4;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/space,
@@ -63510,7 +63508,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Aft Port";
 	dir = 4;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/space,
@@ -65196,7 +65193,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Aft Starboard";
 	dir = 8;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/floor/plating/airless,
