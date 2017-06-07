@@ -48,6 +48,16 @@ Captain
 	implants = list(/obj/item/weapon/implant/mindshield)
 
 
+/datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	var/obj/item/clothing/under/U = H.w_uniform
+	U.attach_accessory(new /obj/item/clothing/accessory/medal/gold/captain())
+
+	if(visualsOnly)
+		return
+
+
 /*
 Head of Personnel
 */
