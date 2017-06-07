@@ -114,8 +114,8 @@
 						if(!commended)
 							var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 50)
 							if(input)
-							GLOB.commendations += "<b>[M.name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
-							commended = TRUE
+								GLOB.commendations += "<b>[M.name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
+								commended = TRUE
 
 		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
 	else ..()
