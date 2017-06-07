@@ -475,3 +475,9 @@
 				else
 					R.unbuckle_all_mobs()
 	..()
+
+/datum/emote/living/dab
+	key = "dab"
+	key_third_person = "dabs"
+	message = "dabs."
+	restraint_check = TRUE
