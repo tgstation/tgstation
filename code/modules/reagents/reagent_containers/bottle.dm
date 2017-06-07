@@ -5,7 +5,7 @@
 	desc = "A small bottle."
 	icon_state = "bottle"
 	item_state = "atoxinbottle"
-	possible_transfer_amounts = list(5,10,15,25,30)
+	possible_transfer_amounts = list(1,2,5,10,15,25,30)
 	volume = 30
 
 
