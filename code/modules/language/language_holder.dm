@@ -125,6 +125,9 @@
 	// TODO change to a lightbringer specific sign language
 	languages = list(/datum/language/slime)
 
+/datum/language_holder/spanish
+	languages = list(/datum/language/spanish)
+
 /datum/language_holder/synthetic
 	languages = list(/datum/language/common)
 	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic)

@@ -1413,6 +1413,7 @@
 #include "code\modules\language\narsian.dm"
 #include "code\modules\language\ratvarian.dm"
 #include "code\modules\language\slime.dm"
+#include "code\modules\language\spanish.dm"
 #include "code\modules\language\swarmer.dm"
 #include "code\modules\language\xenocommon.dm"
 #include "code\modules\library\lib_codex_gigas.dm"

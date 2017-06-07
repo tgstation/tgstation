@@ -133,7 +133,8 @@
 		/datum/language/common,
 		/datum/language/draconic,
 		/datum/language/ratvar,
-		/datum/language/monkey))
+		/datum/language/monkey,
+		/datum/language/spanish))
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
