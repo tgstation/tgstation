@@ -253,6 +253,7 @@
 		else
 			if(QDELETED(target))
 				target = null
+	P.firer = src
 	P.fire()
 	return P
 
