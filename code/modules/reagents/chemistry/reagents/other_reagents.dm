@@ -403,6 +403,7 @@
 	taste_description = "slime"
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
+	can_synth = 0 //no fun allowed
 
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -432,6 +433,7 @@
 	color = "#13BC5E" // rgb: 19, 188, 94
 	race = /datum/species/jelly/slime
 	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
+	can_synth = 1 //honk honk
 
 /datum/reagent/stableslimetoxin/lizard
 	name = "Lizard Mutation Toxin"
