@@ -134,7 +134,7 @@
 /obj/item/projectile/beam/instakill
 	name = "instagib laser"
 	icon_state = "purple_laser"
-	damage = 200
+	damage = INFINITY
 	damage_type = BURN
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	light_color = LIGHT_COLOR_PURPLE
