@@ -281,12 +281,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/gases = src.gases
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
-		temperature = text2num(gas["TEMP"])
+		temperature = text2num(trim(gas["TEMP"]))
 		gas -= "TEMP"
 	gases.Cut()
 	for(var/id in gas)
+		id = trim(id)
 		add_gas(id)
-		gases[id][MOLES] = text2num(gas[id])
+		gases[id][MOLES] = text2num(trim(gas[id]))
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
