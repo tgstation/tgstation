@@ -504,6 +504,16 @@
 	result = /obj/structure/bonfire
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/headpike
+	name = "Spiked Head"
+	time = 65
+	reqs = list(/obj/item/weapon/twohanded/spear = 1,
+				/obj/item/bodypart/head = 1)
+	parts = list(/obj/item/bodypart/head = 1,
+			/obj/item/weapon/twohanded/spear = 1)
+	result = /obj/structure/headpike
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/smallcarton
 	name = "Small Carton"
 	result = /obj/item/weapon/reagent_containers/food/drinks/sillycup/smallcarton
