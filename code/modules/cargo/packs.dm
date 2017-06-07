@@ -166,18 +166,7 @@
 					/obj/item/drone_shell)
 	crate_name = "drone shell crate"
 
-/datum/supply_pack/emergency/specialops
-	name = "Special Ops Supplies"
-	hidden = TRUE
-	cost = 2000
-	contains = list(/obj/item/weapon/storage/box/emps,
-					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/sleepy,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
@@ -187,6 +176,16 @@
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
+	
+/datum/supply_pack/emergency/syndicate
+	name = "Knockout kit"
+	hidden = TRUE
+	cost = 1500
+	contains = list(/obj/item/weapon/pen/sleepy,
+					/obj/item/weapon/pen/sleepy,
+					/obj/item/weapon/grenade/smokebomb)
+	crate_name = "internals crate"
+	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
 	var/crate_value = 30
@@ -212,6 +211,23 @@
 	access = GLOB.access_security
 	crate_type = /obj/structure/closet/crate/secure/gear
 
+
+/datum/supply_pack/security/specialops
+	name = "Special Ops Supplies"
+	cost = 2000
+	contains = list(/obj/item/weapon/grenade/smokebomb,
+					/obj/item/weapon/grenade/smokebomb,
+					/obj/item/weapon/grenade/smokebomb,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/weapon/tank/internals/oxygen,
+					/obj/item/clothing/mask/gas,
+					/obj/item/clothing/mask/gas,
+					/obj/item/weapon/storage/box/teargas,
+					/obj/item/weapon/storage/toolbox,
+					/obj/item/device/multitool,
+					/obj/item/weapon/storage/box/flashbangs)
+	crate_name = "special ops crate "
+	
 /datum/supply_pack/security/supplies
 	name = "Security Supplies Crate"
 	cost = 1000
