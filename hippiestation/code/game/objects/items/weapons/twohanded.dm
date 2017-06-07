@@ -1,8 +1,12 @@
 /obj/item/weapon/twohanded/fireaxe/fireyaxe
 	desc = "This axe has become touched by the very flames it was built to destroy..."
 	force_wielded = 5
+	damtype = "fire" //do do doooo, I'll take you to buurn.
+	heat = 1000
 	var/charged = TRUE
+	var/burnwall = TRUE
 	var/charge_time = 15
+	var/kindle_time = 100
 
 /obj/item/projectile/bullet/incendiary/shell/firehammer
 	name = "fiery gout"
@@ -37,10 +41,49 @@
 		charged = FALSE
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
+	if(wielded && proximity_flag)
+		if(istype(target,/obj/structure/window))
+			var/obj/structure/window/W = target
+			W.take_damage(200, BRUTE, "melee", 0)
+		else if(istype(target, /obj/structure/grille))
+			var/obj/structure/grille/G = target
+			G.take_damage(40, BRUTE, "melee", 0)
+		else if(istype(target, /obj/machinery/door))
+			var/obj/machinery/door/D = target
+			D.take_damage(50, BRUTE, "melee", 0)
+		else if(istype(target, /obj/structure/door_assembly/door_assembly_com/glass))
+			var/obj/structure/door_assembly/door_assembly_com/A = target
+			A.take_damage(200, BRUTE, "melee", 0)
+		else if(istype(target, /obj/structure/mineral_door))
+			var/obj/structure/mineral_door/M
+			M.take_damage(200, BRUTE, "melee", 0)// HERE'S JOHNNY!!!
+		if(iswallturf(target))
+			var/turf/closed/wall/Wall = target
+			if(istype(Wall, /turf/closed/wall/r_wall))
+				to_chat(user, "<span class='danger'>This wall is to strong to be burned by the flames!</span>")
+			else if(burnwall)
+				Wall.thermite = Wall.thermite + 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
+				Wall.overlays = list()
+				Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+				burnwall = FALSE
+				addtimer(CALLBACK(src, .proc/Rekindle), kindle_time)
+			else
+				to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
+			..()
+
+
+
 
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/Recharge()
 	if(!charged)
 		charged = TRUE
 		playsound(src.loc, 'hippiestation/sound/effects/corpseexplosion.ogg', 100, 1)
+
+
+/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/Rekindle()
+	if(!burnwall)
+		burnwall = TRUE
+		var/mob/M = get(src, /mob)
+		to_chat(M, "<span class='danger'>The axe grows warmer in your hands, it's ready to rend walls asunder once more!</span>")
 
