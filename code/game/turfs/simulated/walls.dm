@@ -25,6 +25,18 @@
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 
+	var/health = 200
+	var/maxhealth = 200
+	var/projectile_deflect_threshold = 20	//Anything under this in damage is ignored.
+	var/projectile_weaken_threshold = 40	//Anything under this in damage is weakened for damage.
+	var/projectile_armor = 0				//Amount of damage that is blocked in percentage.
+	var/projectile_armor_weakened = 60		//Amount of damage that is blocked for projectiles under the weaken threshold in percentage.
+	var/projectile_armor_bullet = 0			//Additional armor for each projectile damage flag.
+	var/projectile_armor_laser = 15
+	var/projectile_armor_bomb = 0
+	var/projectile_armor_energy = 0
+	var/health_threshold_devastate = -20
+
 /turf/closed/wall/attack_tk()
 	return
 
@@ -66,6 +78,52 @@
 	new sheet_type(src, sheet_amount)
 	if(girder_type)
 		new /obj/item/stack/sheet/metal(src)
+
+/turf/closed/wall/proc/adjustHealth(amount)
+	health = Clamp(health + amount, -1000, maxhealth)
+	if(health <= health_threshold_devastate)	//Overkill!
+		dismantle_wall(TRUE, FALSE)
+	else if(health <= 0)
+		dismantle_wall(FALSE, FALSE)
+
+/turf/closed/wall/bullet_act(obj/item/projectile/P)
+	var/weakproj = FALSE
+	var/damage = 0
+	if(P.damage <= 0)
+		adjustHealth(P.damage)	//Whoa! A healing projectile!!
+		return FALSE
+	if(P.nodamage)
+		return FALSE
+	if(P.damage < projectile_deflect_threshold)
+		return FALSE
+	if(P.damage < projectile_weaken_threshold)
+		weakproj = TRUE
+	damage = P.damage
+	switch(weakproj)
+		if(TRUE)
+			if(projectile_armor_weakened)
+				damage = (damage * (1 - (projectile_armor_weakened/100)))
+
+			else if(projectile_armor)
+				damage = (damage * (1 - (projectile_armor/100)))
+		if(FALSE)
+			if(projectile_armor)
+				damage = (damage * (1 - (projectile_armor/100)))
+
+	switch(P.flag)
+		if("bullet")
+			if(projectile_armor_bullet)
+				damage = (damage * (1 - (projectile_armor_bullet/100)))
+		if("bomb")
+			if(projectile_armor_bomb)
+				damage = (damage * (1 - (projectile_armor_bomb/100)))
+		if("laser")
+			if(projectile_armor_laser)
+				damage = (damage * (1 - (projectile_armor_laser/100)))
+		if("energy")
+			if(projectile_armor_energy)
+				damage = (damage * (1 - (projectile_armor_energy/100)))
+	adjustHealth(-damage)
 
 /turf/closed/wall/ex_act(severity, target)
 	if(target == src)

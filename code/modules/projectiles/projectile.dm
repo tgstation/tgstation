@@ -152,6 +152,7 @@
 		if(suppressed)
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
+		A.bullet_act(src)
 
 	var/turf/target_turf = get_turf(A)
 
