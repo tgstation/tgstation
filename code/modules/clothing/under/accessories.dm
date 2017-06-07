@@ -104,6 +104,9 @@
 			else
 				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
+			var/input
+			if(!commended && user != M)
+				input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 140)
 			if(do_after(user, delay, target = M))
 				if(U.attach_accessory(src, user, 0)) //Attach it, do not notify the user of the attachment
 					if(user == M)
@@ -111,8 +114,8 @@
 					else
 						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
-						var/input = stripped_input(user,"Please input a reason for this commendation, it will be recorded by Nanotrasen.", ,"", 140)
-						if(input && !commended)
+						if(input)
+							SSblackbox.add_details("commendation", json_encode(list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input)))
 							GLOB.commendations += "<b>[M.real_name]</b> was awarded the <font color='blue'>[name]</font>! \n- [input]"
 							commended = TRUE
 
