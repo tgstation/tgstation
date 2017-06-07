@@ -116,13 +116,6 @@
 	name = "Authorship"
 	description = "Just somewhere quiet, where I can focus on my work with no interruptions."
 
-/datum/map_template/ruin/space/caravanambush
-	id = "space/caravanambush"
-	suffix = "caravanambush.dmm"
-	name = "Syndicate Ambush"
-	description = "A caravan route used by passing cargo freights has been ambushed by a salvage team manned by the syndicate. \
-	The caravan managed to send off a distress message before being surrounded, their video feed cutting off as the sound of gunfire and a parrot was heard."
-
 /datum/map_template/ruin/space/originalcontent
 	id = "paperwizard"
 	suffix = "originalcontent.dmm"
