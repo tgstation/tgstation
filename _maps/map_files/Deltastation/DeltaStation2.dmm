@@ -41693,7 +41693,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/head/det_hat{
+/obj/item/clothing/head/fedora/det_hat{
 	icon_state = "curator"
 	},
 /obj/item/clothing/suit/det_suit{
