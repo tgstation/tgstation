@@ -67,6 +67,8 @@ SUBSYSTEM_DEF(ticker)
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
+	new /datum/medals
+
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
@@ -611,6 +613,13 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	mode.declare_station_goal_completion()
+
+	CHECK_TICK
+	//medals, placed far down so that people can actually see the commendations.
+	if(GLOB.commendations)
+		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
+		for (var/com in GLOB.commendations)
+			to_chat(world, com)
 
 	CHECK_TICK
 
