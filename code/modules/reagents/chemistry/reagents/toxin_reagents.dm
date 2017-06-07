@@ -899,3 +899,15 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+
+/datum/reagent/toxin/unholy_water
+	name = "Unholy Water"
+	id = "unholy_water"
+	description = "Overwhelms the victim's speech centres with images of dark gods and impending doom."
+	color = "#660000"
+	toxpwr = 0
+	taste_description = "horror"
+
+/datum/reagent/toxin/unholy_water/on_mob_life(mob/living/M)
+	 M.cultslurring = min(M.cultslurring + 3, 3)
