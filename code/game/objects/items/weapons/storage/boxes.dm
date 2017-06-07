@@ -42,7 +42,7 @@
 		var/image/illust = new()
 		illust.icon = 'icons/obj/storage.dmi'
 		illust.icon_state = "[illustration]"
-		illust.pixel_y = 6
+		illust.pixel_y = 5
 		add_overlay(illust)
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
