@@ -19,8 +19,9 @@
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
-
-
+	var/turf/T = null
+	var/area/area = null
+	
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
@@ -47,8 +48,8 @@
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
-	var/turf/T = get_turf(src)
-	var/area/area = get_area(src)
+	T = get_turf(src)
+	area = get_area(src)
 	if(reagents.has_reagent("sacid"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
@@ -58,8 +59,19 @@
 	if(reagents.has_reagent("lube"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
 		log_game("[key_name(user)] fired Space lube from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("clf3"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired CLF3 from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired CLF3 from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("phlogiston"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired phlogiston from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired phlogiston from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("plasma"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired plasma from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired plasma from \a [src] at [area] [COORD(T)].")
+	if(reagents.has_reagent("blackpowder"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired black powder from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired black powder from \a [src] at [area] [COORD(T)].")
 	return
-
 
 /obj/item/weapon/reagent_containers/spray/proc/spray(atom/A)
 	var/range = max(min(current_range, get_dist(src, A)), 1)
@@ -130,6 +142,28 @@
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
+		T = get_turf(src)
+		area = get_area(src)
+		if(reagents.has_reagent("sacid"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
+		if(reagents.has_reagent("facid"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped Fluacid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped Fluacid from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("lube"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped Space lube from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("clf3"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped CLF3 from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped CLF3 from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("phlogiston"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped phlogiston from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped phlogiston from \a [src] at [area] [COORD(T)].")
+		if(reagents.has_reagent("plasma"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] dumped dumped from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+			log_game("[key_name(user)] dumped plasma from \a [src] at [area] [COORD(T)].")
+		return		
+
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
