@@ -25,7 +25,7 @@
 /obj/item/clockwork/component/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user))
-		to_chat(user, "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>")
+		to_chat(user, "<span class='[message_span]'>These relics are archaic, but still have power. You can probably recycle them for potential.</span>")
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"

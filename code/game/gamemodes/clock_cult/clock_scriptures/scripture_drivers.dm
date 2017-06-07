@@ -32,7 +32,7 @@
 	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
 	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
@@ -84,7 +84,7 @@
 	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
-	potential_cost = 1
+	wisdom_cost = 1
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
@@ -182,7 +182,7 @@
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
-	potential_cost = 1
+	wisdom_cost = 1
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
@@ -237,7 +237,7 @@
 	quickbind_desc = "Creates a new Clockwork Slab."
 
 
-//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
+/*//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
 /datum/clockwork_scripture/create_object/tinkerers_cache
 	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
@@ -245,7 +245,7 @@
 	Striking a cache with a slab will transfer that slab's components to the global cache."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
@@ -263,7 +263,7 @@
 	if(cache_cost_increase != prev_cost)
 		prev_cost = cache_cost_increase
 		return TRUE
-	return FALSE
+	return FALSE*/
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
@@ -292,7 +292,7 @@
 	desc = "Wards a tile with a sigil, which will stun the next non-Servant to cross it."
 	invocations = list("Divinity, smite...", "...those who tresspass here!")
 	channel_time = 50
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
 	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be stunned.</span>"

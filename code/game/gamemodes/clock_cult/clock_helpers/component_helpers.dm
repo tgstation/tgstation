@@ -1,21 +1,3 @@
-//generates a component in the global component cache, either random based on lowest or a specific component
-/proc/generate_cache_component(specific_component_id, atom/A)
-	if(!specific_component_id)
-		specific_component_id = get_weighted_component_id()
-	GLOB.clockwork_component_cache[specific_component_id]++
-	if(A)
-		var/component_animation_type = get_component_animation_type(specific_component_id)
-		new component_animation_type(get_turf(A))
-	update_slab_info()
-	return specific_component_id
-
-//returns a chosen component id based on the lowest amount of that component in the global cache, the global cache plus the slab if there are caches, or the slab if there are no caches.
-/proc/get_weighted_component_id()
-	. = list()
-	for(var/i in GLOB.clockwork_component_cache)
-		.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*GLOB.clockwork_component_cache[i], 1)
-	. = pickweight(.)
-
 //returns a component name from a component id
 /proc/get_component_name(id)
 	switch(id)

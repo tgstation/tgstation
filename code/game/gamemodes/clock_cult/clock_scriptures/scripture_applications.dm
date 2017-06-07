@@ -10,7 +10,7 @@
 	It will penetrate mindshield implants once before disappearing."
 	invocations = list("Divinity, enslave...", "...all who trespass here!")
 	channel_time = 70
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission/accession
 	prevent_path = /obj/effect/clockwork/sigil/submission
@@ -33,6 +33,7 @@
 	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
 	potential_cost = 1
+	wisdom_cost = 1
 	usage_tip = "This scripture will replace all weaker armor worn by affected Servants."
 	tier = SCRIPTURE_APPLICATION
 	multiple_invokers_used = TRUE
@@ -99,7 +100,7 @@
 	If it remains close to you, you will gradually regain health up to a low amount, but it will die if it goes too far from you."
 	invocations = list("Fright's will...", "...call forth...")
 	channel_time = 100
-	potential_cost = 1
+	wisdom_cost = 1
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors."
 	tier = SCRIPTURE_APPLICATION
 	primary_component = GEIS_CAPACITOR
@@ -160,7 +161,7 @@
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Call forth...", "...the soldiers of Armorer.")
 	channel_time = 80
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
@@ -179,7 +180,7 @@
 	desc = "Places a sigil that stores energy to power clockwork structures."
 	invocations = list("Divinity...", "...power our creations!")
 	channel_time = 70
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transmission
 	creator_message = "<span class='brass'>A sigil silently appears below you. It will automatically power clockwork structures near it.</span>"
@@ -199,7 +200,7 @@
 	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission or the area's APC."
 	invocations = list("May this totem...", "...shroud the false suns!")
 	channel_time = 80
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/powered/interdiction_lens
 	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
 	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
@@ -221,7 +222,7 @@
 	desc = "Creates a mania motor which causes minor damage and a variety of negative mental effects in nearby non-Servant humans, potentially up to and including conversion."
 	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
 	channel_time = 80
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/powered/mania_motor
 	creator_message = "<span class='brass'>You form a mania motor, which causes minor damage and negative mental effects in non-Servants.</span>"
 	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
@@ -236,7 +237,7 @@
 	quickbind_desc = "Creates a Mania Motor, which causes minor damage and negative mental effects in non-Servants."
 
 
-//Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
+/*//Tinkerer's Daemon: Creates an efficient machine that rapidly produces components at a power cost.
 /datum/clockwork_scripture/create_object/tinkerers_daemon
 	descname = "Powered Structure, Component Generator"
 	name = "Tinkerer's Daemon"
@@ -244,7 +245,7 @@
 	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	creator_message = "<span class='brass'>You form a tinkerer's daemon which can rapidly collect components at a power cost.</span>"
 	invokers_required = 2
@@ -255,7 +256,7 @@
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 9
 	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
+	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."*
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
@@ -268,7 +269,7 @@
 	if(servants * 0.2 < GLOB.clockwork_daemons+1)
 		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
 		return FALSE
-	return ..()
+	return ..()*/
 
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.
@@ -278,7 +279,7 @@
 	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living Servant or clockwork obelisk."
 	invocations = list("May this obelisk...", "...take us to all places!")
 	channel_time = 80
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
 	observer_message = "<span class='warning'>A brass obelisk appears hanging in midair!</span>"

@@ -3,10 +3,10 @@ Tiers and Requirements
 
 Pieces of scripture require certain follower counts, contruction value, and active caches in order to recite.
 Drivers: Unlocked by default
-Scripts: 5 servants and a cache
-Applications: 8 servants, 3 caches, and 100 CV
-Revenant: 10 servants, 4 caches, and 200 CV
-Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or destroyed
+Scripts: 5 servants
+Applications: 8 servants and 100 CV
+Revenant: 10 servants and 200 CV
+Judgement: 12 servants, 300 CV, and any existing AIs are converted or destroyed
 */
 
 /datum/clockwork_scripture
@@ -16,6 +16,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/potential_cost = 0 //The amount of potential this scripture needs to recite
+	var/wisdom_cost = 0 //The amount of wisdom this scripture needs to recite
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
@@ -56,11 +57,13 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
-			GLOB.clockwork_potential -= potential_cost
+			adjust_clockwork_potential(-potential_cost)
+			adjust_clockwork_wisdom(-wisdom_cost)
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund potential used
-			GLOB.clockwork_potential += potential_cost
+			adjust_clockwork_potential(potential_cost)
+			adjust_clockwork_wisdom(wisdom_cost)
 			update_slab_info()
 		else
 			successful = TRUE
@@ -82,9 +85,11 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
 	if(!GLOB.ratvar_awakens && !slab.no_cost)
-		if(potential_cost && GLOB.clockwork_potential - potential_cost < 0)
-			to_chat(invoker, "<span class='warning'>You don't have enough potential to recite this scripture! ([GLOB.clockwork_potential]/[potential_cost])")
+		if(potential_cost && !has_clockwork_potential(potential_cost))
+			to_chat(invoker, "<span class='warning'>There isn't enough potential to recite this scripture! ([GLOB.clockwork_potential]/[potential_cost])")
 			return
+		if(wisdom_cost && !has_clockwork_wisdom(wisdom_cost))
+			to_chat(invoker, "<span class='warning'>There isn't enough wisdom to recite this scripture! Wait for it to regenerate! ([GLOB.clockwork_wisdom]/[wisdom_cost])")
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))

@@ -9,7 +9,7 @@
 	desc = "Forms an automatic short-range turret which will automatically attack nearby unrestrained non-Servants that can see it."
 	invocations = list("Guardians...", "...of the Engine...", "...defend us!")
 	channel_time = 120
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/ocular_warden
 	creator_message = "<span class='brass'>You form an ocular warden, which will automatically attack nearby unrestrained non-Servants that can see it.</span>"
 	observer_message = "<span class='warning'>A brass eye takes shape and slowly rises into the air, its red iris glaring!</span>"
@@ -36,7 +36,7 @@
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Call forth...", "...the workers of Armorer.")
 	channel_time = 60
-	potential_cost = 1
+	wisdom_cost = 1
 	object_path = /obj/structure/destructible/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptacle.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
@@ -56,7 +56,7 @@
 	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-Servants and heal Servants that cross it.</span>"
@@ -77,7 +77,7 @@
 	chant_invocations = list("Mend our dents!", "Heal our scratches!", "Repair our gears!")
 	chant_amount = 10
 	chant_interval = 20
-	potential_cost = 1
+	wisdom_cost = 1
 	usage_tip = "This is a very effective way to rapidly reinforce a base after an attack."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = VANGUARD_COGWHEEL
@@ -188,7 +188,7 @@
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
 	channel_time = 60
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
@@ -208,7 +208,7 @@
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
@@ -228,11 +228,11 @@
 	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
 	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
-	usage_tip = "Clockwork Walls cause nearby tinkerer's caches to generate components passively, making them a vital tool. Clockwork Floors heal toxin damage in Servants standing on them."
+	usage_tip = "Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT
 	space_allowed = TRUE
 	primary_component = REPLICANT_ALLOY
@@ -249,7 +249,7 @@
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
-	potential_cost = 1
+	wisdom_cost = 1
 	whispered = TRUE
 	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
 	tier = SCRIPTURE_SCRIPT
@@ -308,7 +308,7 @@
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Spatial Gateway...", "...activate!")
 	channel_time = 80
-	potential_cost = 1
+	wisdom_cost = 1
 	multiple_invokers_used = TRUE
 	multiple_invokers_optional = TRUE
 	usage_tip = "This gateway is strictly one-way and will only allow things through the invoker's portal."
@@ -357,7 +357,7 @@
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
 	chant_amount = 4
 	chant_interval = 5
-	potential_cost = 1
+	wisdom_cost = 1
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = HIEROPHANT_ANSIBLE

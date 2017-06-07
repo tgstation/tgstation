@@ -14,6 +14,7 @@
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
+	var/wisdom_regen_cycle = 0 //How many ticks It's been between wisdom regenerations
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
@@ -24,6 +25,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
 	. = ..()
+	START_PROCESSING(SSprocessing, src)
 	if(GLOB.ark_of_the_clockwork_justiciar)
 		qdel(src)
 		return
@@ -65,7 +67,6 @@
 	hierophant_message("<span class='large_brass'><b>The Ark has begun the final rite in the City of Cogs!</b></span>", FALSE, src)
 	first_sound_played = TRUE
 	SSshuttle.registerHostileEnvironment(src)
-	START_PROCESSING(SSprocessing, src)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	GLOB.ark_of_the_clockwork_justiciar = null
@@ -141,87 +142,92 @@
 					to_chat(user, "<span class='boldwarning'>A huge shape is slowly coming through the gateway!</span>")
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
-	if(!first_sound_played || prob(7))
-		for(var/M in GLOB.player_list)
-			var/mob/MO = M
-			if(M && !isnewplayer(M) && MO.z == z)
-				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
-	if(!obj_integrity)
-		return 0
-	var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
-	for(var/t in RANGE_TURFS(convert_dist, loc))
-		var/turf/T = t
-		if(!T)
-			continue
-		if(get_dist(T, src) < 2)
-			if(iswallturf(T))
-				var/turf/closed/wall/W = T
-				W.dismantle_wall()
-			else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
-				T.ChangeTurf(/turf/open/floor/clockwork)
-		var/dist = cheap_hypotenuse(T.x, T.y, x, y)
-		if(dist < convert_dist)
-			T.ratvar_act(FALSE, TRUE, 3)
-	for(var/obj/O in orange(1, src))
-		if(!O.pulledby && !istype(O, /obj/effect) && O.density)
-			if(!step_away(O, src, 2) || get_dist(O, src) < 2)
-				O.take_damage(50, BURN, "bomb")
-			O.update_icon()
-	progress_in_seconds += GATEWAY_SUMMON_RATE
-	switch(progress_in_seconds)
-		if(-INFINITY to GATEWAY_REEBE_FOUND)
-			if(!second_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30))
-				second_sound_played = TRUE
-			make_glow()
-			glow.icon_state = "clockwork_gateway_charging"
-		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
-			if(!third_sound_played)
-				var/area/gate_area = get_area(src)
-				priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
-				third_sound_played = TRUE
-			make_glow()
-			glow.icon_state = "clockwork_gateway_active"
-		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
-			if(!fourth_sound_played)
-				send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40))
-				fourth_sound_played = TRUE
-			make_glow()
-			glow.icon_state = "clockwork_gateway_closing"
-		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
-			if(!purpose_fulfilled)
-				countdown.stop()
-				resistance_flags |= INDESTRUCTIBLE
-				purpose_fulfilled = TRUE
+	wisdom_regen_cycle++
+	if(wisdom_regen_cycle >= ARK_WISDOM_REGEN)
+		adjust_clockwork_wisdom(1)
+		wisdom_regen_cycle = 0
+	if(countdown)
+		if(!first_sound_played || prob(7))
+			for(var/M in GLOB.player_list)
+				var/mob/MO = M
+				if(M && !isnewplayer(M) && MO.z == z)
+					to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
+		if(!obj_integrity)
+			return 0
+		var/convert_dist = 1 + (round(Floor(progress_in_seconds, 15) * 0.067))
+		for(var/t in RANGE_TURFS(convert_dist, loc))
+			var/turf/T = t
+			if(!T)
+				continue
+			if(get_dist(T, src) < 2)
+				if(iswallturf(T))
+					var/turf/closed/wall/W = T
+					W.dismantle_wall()
+				else if(t && (isclosedturf(T) || !is_blocked_turf(T)))
+					T.ChangeTurf(/turf/open/floor/clockwork)
+			var/dist = cheap_hypotenuse(T.x, T.y, x, y)
+			if(dist < convert_dist)
+				T.ratvar_act(FALSE, TRUE, 3)
+		for(var/obj/O in orange(1, src))
+			if(!O.pulledby && !istype(O, /obj/effect) && O.density)
+				if(!step_away(O, src, 2) || get_dist(O, src) < 2)
+					O.take_damage(50, BURN, "bomb")
+				O.update_icon()
+		progress_in_seconds += GATEWAY_SUMMON_RATE
+		switch(progress_in_seconds)
+			if(-INFINITY to GATEWAY_REEBE_FOUND)
+				if(!second_sound_played)
+					send_to_playing_players(sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30))
+					second_sound_played = TRUE
 				make_glow()
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
-				send_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = 8)) //End the sounds
-				sleep(125)
+				glow.icon_state = "clockwork_gateway_charging"
+			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
+				if(!third_sound_played)
+					var/area/gate_area = get_area(src)
+					priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
+					send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
+					third_sound_played = TRUE
 				make_glow()
-				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				var/turf/startpoint = get_turf(src)
-				GLOB.clockwork_gateway_activated = TRUE
-				QDEL_IN(src, 3)
-				sleep(3)
-				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
-				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
-				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
-				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
-				send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
-				var/x0 = startpoint.x
-				var/y0 = startpoint.y
-				for(var/I in spiral_range_turfs(255, startpoint))
-					var/turf/T = I
-					if(!T)
-						continue
-					var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-					if(dist < 100)
-						dist = TRUE
-					else
-						dist = FALSE
-					T.ratvar_act(dist, TRUE)
-					CHECK_TICK
+				glow.icon_state = "clockwork_gateway_active"
+			if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
+				if(!fourth_sound_played)
+					send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40))
+					fourth_sound_played = TRUE
+				make_glow()
+				glow.icon_state = "clockwork_gateway_closing"
+			if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
+				if(!purpose_fulfilled)
+					countdown.stop()
+					resistance_flags |= INDESTRUCTIBLE
+					purpose_fulfilled = TRUE
+					make_glow()
+					animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
+					send_to_playing_players(sound('sound/effects/ratvar_rises.ogg', 0, channel = 8)) //End the sounds
+					sleep(125)
+					make_glow()
+					animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
+					var/turf/startpoint = get_turf(src)
+					GLOB.clockwork_gateway_activated = TRUE
+					QDEL_IN(src, 3)
+					sleep(3)
+					new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
+					send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
+					<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
+					<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")].\"</span>")
+					send_to_playing_players('sound/magic/clockwork/invoke_general.ogg')
+					var/x0 = startpoint.x
+					var/y0 = startpoint.y
+					for(var/I in spiral_range_turfs(255, startpoint))
+						var/turf/T = I
+						if(!T)
+							continue
+						var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+						if(dist < 100)
+							dist = TRUE
+						else
+							dist = FALSE
+						T.ratvar_act(dist, TRUE)
+						CHECK_TICK
 
 //the actual appearance of the Ark of the Clockwork Justicar; an object so the edges of the gate can be clicked through.
 /obj/effect/clockwork/overlay/gateway_glow

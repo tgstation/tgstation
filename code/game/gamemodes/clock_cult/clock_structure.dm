@@ -16,18 +16,15 @@
 	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/alloy_shards/small = 3) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
-	var/potential_consumed = 0 //How much potential one of these objects consumes
 	var/immune_to_servant_attacks = FALSE //if we ignore attacks from servants of ratvar instead of taking damage
 
 /obj/structure/destructible/clockwork/Initialize()
 	. = ..()
 	change_construction_value(construction_value)
-	change_clockwork_potential(-potential_consumed)
 	GLOB.all_clockwork_objects += src
 
 /obj/structure/destructible/clockwork/Destroy()
 	change_construction_value(-construction_value)
-	change_clockwork_potential(potential_consumed)
 	GLOB.all_clockwork_objects -= src
 	return ..()
 

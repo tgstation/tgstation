@@ -1,10 +1,8 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect.\n\
-	Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants.\n\
-	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
+	clockwork_desc = "A handheld tablet that serves as a link between you and Ratvar. It contains knowledge about being a servant, lets you recite ancient scripture, and more. \
+	Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
 	icon_state = "dread_ipad"
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,7 +13,7 @@
 	var/recollecting = FALSE //if we're looking at fancy recollection
 	var/obj/effect/proc_holder/slab/slab_ability //the slab's current bound ability, for certain scripture
 	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/replicant, \
-	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
+	/datum/clockwork_scripture/channeled/belligerent) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
 	actions_types = list(/datum/action/item_action/clock/hierophant)
 
@@ -34,10 +32,8 @@
 		add_servant_of_ratvar(user)
 
 /obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and proselytizer
-	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
-	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
-	/datum/clockwork_scripture/create_object/tinkerers_cache)
+	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture."
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
@@ -59,10 +55,10 @@
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a proselytizer
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
-	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/tinkerers_daemon)
+	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor)
 
 /obj/item/clockwork/slab/cyborg/service //five scriptures, plus xray vision
-	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/tinkerers_cache, \
+	quickbound = list(/datum/clockwork_scripture/create_object/replicant, \
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
@@ -107,6 +103,7 @@
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
 		to_chat(user, "<span class='bold brass'>Available Potential:</span> <span class='brass'>[GLOB.clockwork_potential]</span>")
+		to_chat(user, "<span class='bold brass'>Available Wisdom:</span> <span class='brass'>[GLOB.clockwork_wisdom]</span>")
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -192,30 +189,11 @@
 		textlist += "</b></font>"
 	else
 		var/servants = 0
-		var/production_time = SLAB_PRODUCTION_TIME
 		for(var/mob/living/M in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 				servants++
 		if(servants > SCRIPT_SERVANT_REQ)
 			servants -= SCRIPT_SERVANT_REQ
-			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
-		var/production_text_addon = ""
-		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon servant above <b>[SCRIPT_SERVANT_REQ]</b>"
-		production_time = production_time/600
-		var/list/production_text
-		if(round(production_time))
-			production_text = list("<b>[round(production_time)] minute\s")
-		if(production_time != round(production_time))
-			production_time -= round(production_time)
-			production_time *= 60
-			if(!LAZYLEN(production_text))
-				production_text = list("<b>[round(production_time, 1)] second\s")
-			else
-				production_text += " and [round(production_time, 1)] second\s"
-		production_text += "</b>"
-		production_text += production_text_addon
-		production_text = production_text.Join()
 
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
@@ -226,7 +204,6 @@
 		<b><font color=#BE8700>Components</font></b>, fragments of the Justicar, from Reebe, and those Components can be used to draw power and material from Reebe through arcane chants \
 		known as <b><font color=#BE8700>Scripture</font></b>.<br><br>\
 		\
-		One component of a random type is made in this slab every [production_text].<br>\
 		<font color=#BE8700>Components</font> are stored either within slabs, where they can only be accessed by that slab, or in the Global Cache accessed by Tinkerer's Caches, which all slabs \
 		can draw from to recite scripture.<br>\
 		There are five types of component, and in general, <font color=#6E001A>Belligerent Eyes</font> are aggressive and judgemental, <font color=#1E8CE1>Vanguard Cogwheels</font> are defensive and \
@@ -271,6 +248,7 @@
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI
 	var/list/data = list()
 	data["potential"] = "<font color='#B18B25'><b>[GLOB.clockwork_potential] Potential Remaining</b></font>"
+	data["wisdom"] = "<br><font color='#B18B25'><b>[GLOB.clockwork_wisdom]/[GLOB.max_clockwork_wisdom] Available Wisdom</b></font>"
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
@@ -279,17 +257,17 @@
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and <b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
 		if(SCRIPTURE_JUDGEMENT)
 			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
 				data["tier_info"] = "<font color=#B18B25><b>This scripture is permenantly unlocked.</b></font>"
 			else
-				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
+				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
 
 	data["selected"] = selected_scripture
 
@@ -304,6 +282,8 @@
 			"descname" = "<font color=[scripture_color]>([S.descname])</font>",
 			"tip" = "[S.desc]\n[S.usage_tip]",
 			"potential_cost" = S.potential_cost,
+			"wisdom_cost" = S.wisdom_cost,
+			"costs" = "",
 			"type" = "[S.type]",
 			"quickbind" = S.quickbind)
 			var/found = quickbound.Find(S.type)
@@ -313,6 +293,10 @@
 				temp_info["invokers"] = "<font color=#B18B25>Invokers: <b>[S.invokers_required]</b></font>"
 			else //and if we don't, we won't.
 				temp_info["required"] = ""
+			if(S.potential_cost)
+				temp_info["costs"] = " [S.potential_cost]P"
+			if(S.wisdom_cost)
+				temp_info["costs"] = "[S.potential_cost ? " [S.potential_cost]P/" : " "][S.wisdom_cost]W"
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
 	if(recollecting)

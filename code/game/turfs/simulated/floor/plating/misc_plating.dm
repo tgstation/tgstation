@@ -162,3 +162,6 @@
 	desc = "Warm, dense metal plating that makes up the walls of Reebe. It seems indestructible by normal means."
 	icon_state = "reebe_floor"
 	baseturf = /turf/open/floor/plating/reebe_floor //it's reebe floors all the way down
+
+/turf/open/floor/plating/reebe_floor/ratvar_act()
+	return

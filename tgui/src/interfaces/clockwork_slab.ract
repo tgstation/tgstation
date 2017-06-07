@@ -9,6 +9,7 @@
 	<ui-display title='Resources' button>
  	 <ui-section>
 	   {{{data.potential}}}
+	   {{{data.wisdom}}}
  	 </ui-section>
 	</ui-display>
 	<ui-display>
@@ -21,7 +22,7 @@
 		</ui-section><hr>
 		<ui-section>
 		{{#each data.scripture}}
-			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite: {{{potential_cost}}} Potential</ui-button>
+			<div><ui-button tooltip='{{{tip}}}' tooltip-side='right' action='recite' params='{"category": "{{type}}"}'>Recite{{{costs}}}</ui-button>
 		 	 {{#if quickbind}}
 				{{#if bound}}
 					<ui-button action='bind' params='{"category": "{{type}}"}'>Unbind {{{bound}}}</ui-button>

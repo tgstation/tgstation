@@ -12,7 +12,7 @@
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	potential_cost = 1
+	wisdom_cost = 1
 	invokers_required = 6
 	multiple_invokers_used = TRUE
 	object_path = /obj/structure/destructible/clockwork/massive/celestial_gateway

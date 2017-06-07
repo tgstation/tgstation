@@ -88,7 +88,6 @@ Credit where due:
 
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 	var/time_to_prepare = 20 //Time in minutes that the servants have to build their base before the Central Command alert comes in
 
 /datum/game_mode/clockwork_cult

@@ -360,7 +360,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/clockwork/scripture_reqs
 	name = "Next Tier Requirements"
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
-	icon_state = "no-servants-caches"
+	icon_state = "no-servants"
 
 /obj/screen/alert/clockwork/scripture_reqs/Initialize()
 	. = ..()
@@ -397,31 +397,22 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			if(is_servant_of_ratvar(L) && (ishuman(L) || issilicon(L)))
 				validservants++
 		var/req_servants = 0
-		var/req_caches = 0
 		var/req_cv = 0
 		var/req_ai = FALSE
 		var/list/textlist = list("Requirements for <b>[current_state] Scripture:</b>")
 		switch(current_state) //get our requirements based on the tier
 			if(SCRIPTURE_SCRIPT)
 				req_servants = SCRIPT_SERVANT_REQ
-				req_caches = SCRIPT_CACHE_REQ
 			if(SCRIPTURE_APPLICATION)
 				req_servants = APPLICATION_SERVANT_REQ
-				req_caches = APPLICATION_CACHE_REQ
 				req_cv = APPLICATION_CV_REQ
 			if(SCRIPTURE_JUDGEMENT)
 				req_servants = JUDGEMENT_SERVANT_REQ
-				req_caches = JUDGEMENT_CACHE_REQ
 				req_cv = JUDGEMENT_CV_REQ
 				req_ai = TRUE
 		textlist += "<br><b>[validservants]/[req_servants]</b> Servants"
 		if(validservants < req_servants)
 			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
-		else
-			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		textlist += "<br><b>[GLOB.clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
-		if(GLOB.clockwork_caches < req_caches)
-			icon_state += "-caches"
 		else
 			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
 		if(req_cv) //cv only shows up if the tier requires it
@@ -466,12 +457,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		if(GLOB.clockwork_daemons)
-			textlist += "<b>[GLOB.clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < GLOB.clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
-		else
-			textlist += "No Tinkerer's Daemons.<br>"
+		textlist += "<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
