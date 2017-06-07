@@ -237,33 +237,33 @@
 	quickbind_desc = "Creates a new Clockwork Slab."
 
 
-/*//Tinkerer's Cache: Creates a tinkerer's cache, allowing global component storage.
-/datum/clockwork_scripture/create_object/tinkerers_cache
-	descname = "Necessary Structure, Shares Components"
-	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
-	Striking a cache with a slab will transfer that slab's components to the global cache."
-	invocations = list("Constructing...", "...a cache!")
+//Sigil of Secession: Creates a one-way sigil that leads back to the City of Cogs.
+/datum/clockwork_scripture/create_object/sigil_of_secession
+	descname = "Returns to the City of Cogs"
+	name = "Sigil of Secession"
+	desc = "Draws a one-way sigil that can be crossed by anyone, servant or not, to return to the City of Cogs. It will last for one minute before disappearing."
+	invocations = list("Beam me up, Scotty!")
 	channel_time = 50
+	potential_cost = 1
 	wisdom_cost = 1
-	object_path = /obj/structure/destructible/clockwork/cache
-	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
-	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
+	object_path = /obj/effect/clockwork/sigil/secession
+	creator_message = "<span class='brass'>You draw an escape sigil. Walk over it again to return to the City of Cogs.</span>"
+	observer_message = "<span class='warning'>A blazingly-bright sigil appears on the ground!</span>"
+	usage_tip = "Make sure to hide the sigil in as secure a place as you can; if anyone sees it, your cover is blown and your preparation time is over early!"
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 	quickbind = TRUE
-	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
-	var/static/prev_cost = 0
+	quickbind_desc = "Creates an obvious, one-way sigil to return to the City of Cogs."
 
-/datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.4), 10)
-	if(cache_cost_increase != prev_cost)
-		prev_cost = cache_cost_increase
-		return TRUE
-	return FALSE*/
+/datum/clockwork_scripture/create_object/sigil_of_secession/check_special_requirements()
+	if(GLOB.ark_of_the_clockwork_justiciar)
+		var/obj/O = GLOB.ark_of_the_clockwork_justiciar
+		if(invoker.z == O.z)
+			to_chat(invoker, "<span class='warning'>You're already at the City of Cogs!</span>")
+			return
+	return TRUE
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.

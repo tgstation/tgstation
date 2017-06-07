@@ -385,3 +385,31 @@
 		sigil_active = FALSE
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)
+
+
+//Sigil of Secession: A one-way portal to the City of Cogs. Luminous, obvious, and lasts for one minute.
+/obj/effect/clockwork/sigil/secession
+	name = "blinding sigil"
+	desc = "A glowing orange-yellow sigil. Looking at it makes you feel lightheaded."
+	clockwork_desc = "A sigil that can be crossed to escape to the City of Cogs."
+	icon_state = "sigilsecession"
+	layer = SIGIL_LAYER
+	affects_servants = TRUE
+	sigil_name = "Sigil of Secession"
+	alpha = 255
+	light_range = 2
+	light_power = 3
+	light_color = "#FFA800"
+
+/obj/effect/clockwork/sigil/secession/Initialize()
+	..()
+	QDEL_IN(src, 600)
+
+/obj/effect/clockwork/sigil/secession/sigil_effects(mob/living/L)
+	if(!GLOB.city_of_cogs_beckoner)
+		to_chat(L, "<span class='warning'>[src] flickers for a moment, but nothing else happens...</span>")
+		return
+	L.visible_message("<span class='warning'>[src] glows brightly, and [L] dissolves into yellow dust!</span>", "<span class='boldwarning'>You're blinded by the sigil! When you open your eyes, you're somewhere else...</span>")
+	var/obj/effect/clockwork/city_of_cogs_beckoner/B = GLOB.city_of_cogs_beckoner
+	B.visible_message("<span class='warning'>A pile of yellow dust appears in front of [B] and materializes into [L]!</span>")
+	L.forceMove(get_turf(B))
