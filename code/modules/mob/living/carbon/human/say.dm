@@ -7,9 +7,11 @@
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)
+	var/list/temp_message = splittext(message, " ") //List each word in the message
+	var/speechwords = min(round(temp_message.len), 5)
+	playsound(loc, "sound/voice/speech/[gender][speechwords].ogg", vol = 75, vary = 0, extrarange = 3, falloff = 1, surround = 1)
 	if(viruses.len)
 		for(var/datum/disease/pierrot_throat/D in viruses)
-			var/list/temp_message = splittext(message, " ") //List each word in the message
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
 				pick_list += i
