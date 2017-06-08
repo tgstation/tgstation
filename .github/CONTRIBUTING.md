@@ -21,6 +21,16 @@ There is an open list of approachable issues for [your inspiration here](https:/
 
 You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We are just here to have fun and help so do not expect professional support please.
 
+## Having productive debates about pull requests (including making them)
+If you want to provide **constructive** feedback or contributions, please make sure to follow the rules below:
+1. No matter how much you feel it may fix the issue with a pull request, don't make the following suggestions for the following reasons:
+
+1A. "Just add the framework, and follow up with future PRs with the features!". The PR won't be merged if it's a useless framework with no features, even if you swear you'll add features after. We learned our lesson with Urist and Adamantine being in the code and useless for 4 years.
+
+1B. "I really don't like the lore behind this". This is a perfectly understandable sentiment, but it'd be much better suited for the forums. A feature can always be rethemed after being merged if it's that badly implemented. Getting the maintainers and coders distracted about lore can allow code or gameplay issues to slip through un-noticed under the fog of war over theme and lore. Another thing to keep in mind is we [merge](https://github.com/tgstation/tgstation/pull/22235) [theme-breaking](https://github.com/tgstation/tgstation/pull/22314) [references](https://github.com/tgstation/tgstation/pull/21488) all the time, and whatever is being added likely won't be worse than [this](https://github.com/tgstation/tgstation/pull/22115), and some people actually liked that PR for whatever godawful reason.
+
+1C. "FUCKING (((CODERBUS))) TRYING TO RUIN OUR SS13 WITH THEIR SJW HORRIBLE FEATURES WTF GODDAMNT IT FIGHT THE POWER". You posted this on the wrong feedback location. Please post these comments [here](https://www.singulo.io/tg/).
+
 ## Meet the Team
 
 **Project Leads**
