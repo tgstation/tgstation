@@ -160,17 +160,9 @@
 /obj/item/clothing/neck/necklace/dope
 	name = "gold necklace"
 	desc = "Damn, it feels good to be a gangster."
-	icon = 'icons/obj/clothing/ties.dmi'
+	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
 	item_color = "bling"
 
-////////////////
-//OONGA BOONGA//
-////////////////
-
-/obj/item/clothing/neck/talisman
-	name = "bone talisman"
-	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
-	icon_state = "talisman"
-	item_color = "talisman"
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+/obj/item/clothing/neck/necklace/dope/gang_contraband_value()
+	return 2

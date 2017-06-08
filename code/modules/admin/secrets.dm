@@ -341,31 +341,18 @@
 			if(!objective)
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Traitor All ([objective])")
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				if(H.stat == 2 || !H.client || !H.mind) continue
+			for(var/mob/living/H in GLOB.player_list)
+				if(!(istype(H, /mob/living/carbon/human)||istype(H, /mob/living/silicon/))) continue
+				if(H.stat == 2 || !H.client || !H.mind || ispAI(H)) continue
 				if(is_special_character(H)) continue
-				//traitorize(H, objective, 0)
-				SSticker.mode.traitors += H.mind
-				H.mind.special_role = "traitor"
+				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
+				var/datum/antagonist/traitor/traitordatum = H.mind.has_antag_datum(ANTAG_DATUM_TRAITOR) //original datum self deletes
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
-				H.mind.objectives += new_objective
-				SSticker.mode.greet_traitor(H.mind)
-				//SSticker.mode.forge_traitor_objectives(H.mind)
-				SSticker.mode.finalize_traitor(H.mind)
-			for(var/mob/living/silicon/A in GLOB.player_list)
-				if(A.stat == 2 || !A.client || !A.mind) continue
-				if(ispAI(A)) continue
-				else if(is_special_character(A)) continue
-				SSticker.mode.traitors += A.mind
-				A.mind.special_role = "traitor"
-				var/datum/objective/new_objective = new
-				new_objective.owner = A
-				new_objective.explanation_text = objective
-				A.mind.objectives += new_objective
-				SSticker.mode.greet_traitor(A.mind)
-				SSticker.mode.finalize_traitor(A.mind)
+				traitordatum.add_objective(new_objective)
+				traitordatum.equip(FALSE)
+				traitordatum.greet()
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 

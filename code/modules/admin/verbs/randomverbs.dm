@@ -373,10 +373,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
+	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+	if(traitordatum)
+		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
+		traitordatum.equip()
+
+		
 	switch(new_character.mind.special_role)
-		if("traitor")
-			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			SSticker.mode.equip_traitor(new_character)
 		if("Wizard")
 			new_character.loc = pick(GLOB.wizardstart)
 			//SSticker.mode.learn_basic_spells(new_character)
@@ -401,12 +404,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						SSticker.mode.add_law_zero(new_character)
 				if("AI")
 					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						SSticker.mode.add_law_zero(new_character)
 				else
 					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
 

@@ -306,7 +306,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			angle = 0
 			cut_overlays()
 			icon_state = "runed_sense1"
-			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
+			desc = "The sacrifice is complete, summon Nar-Sie! The summoning can only take place in [english_list(GLOB.summon_spots)]!"
 			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
@@ -409,10 +409,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				req_servants = APPLICATION_SERVANT_REQ
 				req_caches = APPLICATION_CACHE_REQ
 				req_cv = APPLICATION_CV_REQ
-			if(SCRIPTURE_REVENANT)
-				req_servants = REVENANT_SERVANT_REQ
-				req_caches = REVENANT_CACHE_REQ
-				req_cv = REVENANT_CV_REQ
 			if(SCRIPTURE_JUDGEMENT)
 				req_servants = JUDGEMENT_SERVANT_REQ
 				req_caches = JUDGEMENT_CACHE_REQ
@@ -472,10 +468,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
 		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
 		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
-		if(GLOB.clockwork_daemons)
-			textlist += "<b>[GLOB.clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < GLOB.clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
-		else
-			textlist += "No Tinkerer's Daemons.<br>"
+		textlist += "<b>[Floor(servants * 0.2)]</b> Tinkerer's Daemons can be active at once. <b>[LAZYLEN(GLOB.active_daemons)]</b> are active.<br>"
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
@@ -493,18 +486,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
 				textlist += "<b>An unconverted AI exists!</b><br>"
-		if(SSticker.scripture_states[SCRIPTURE_REVENANT])
-			var/inathneq_available = GLOB.clockwork_generals_invoked["inath-neq"] <= world.time
-			var/sevtug_available = GLOB.clockwork_generals_invoked["sevtug"] <= world.time
-			var/nezbere_available = GLOB.clockwork_generals_invoked["nezbere"] <= world.time
-			var/nezcrentr_available = GLOB.clockwork_generals_invoked["nzcrentr"] <= world.time
-			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				textlist += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
-				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
-			else
-				textlist += "Generals available: <b>NONE</b><br>"
-		else
-			textlist += "Generals available: <b>NONE</b><br>"
 		for(var/i in SSticker.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
 				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"

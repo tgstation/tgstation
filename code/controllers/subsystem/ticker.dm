@@ -30,7 +30,6 @@ SUBSYSTEM_DEF(ticker)
 	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
 	SCRIPTURE_SCRIPT = FALSE, \
 	SCRIPTURE_APPLICATION = FALSE, \
-	SCRIPTURE_REVENANT = FALSE, \
 	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
@@ -234,6 +233,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = 0
 	mode.post_setup()
+	GLOB.start_state = new /datum/station_state()
+	GLOB.start_state.count(1)
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later

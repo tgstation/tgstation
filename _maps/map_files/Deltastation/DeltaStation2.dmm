@@ -31026,11 +31026,11 @@
 "blx" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/armband/deputy,
 /obj/item/weapon/reagent_containers/food/snacks/donut/jelly/cherryjelly,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -37402,6 +37402,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bxt" = (
@@ -41693,7 +41696,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/head/det_hat{
+/obj/item/clothing/head/fedora/det_hat{
 	icon_state = "curator"
 	},
 /obj/item/clothing/suit/det_suit{
@@ -46248,6 +46251,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bOh" = (
@@ -46258,6 +46264,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -59878,6 +59887,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "coE" = (
@@ -61484,12 +61496,7 @@
 /turf/open/floor/plasteel/black,
 /area/library)
 "crP" = (
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
+/obj/structure/closet/wardrobe/curator,
 /turf/open/floor/plasteel/black,
 /area/library)
 "crQ" = (
@@ -65483,6 +65490,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/library)
 "czM" = (
@@ -67968,6 +67978,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cEI" = (
@@ -70198,6 +70211,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -79073,6 +79089,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/research)
 "dbt" = (
@@ -79707,6 +79726,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
@@ -80454,6 +80476,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
@@ -82304,6 +82329,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "diw" = (
@@ -82311,12 +82339,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "dix" = (
 /obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
@@ -104668,7 +104702,7 @@
 /obj/item/weapon/wirerod,
 /obj/item/weapon/wrench,
 /obj/item/clothing/under/waiter,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -139991,7 +140025,7 @@ akm
 ajl
 bKc
 aip
-aol
+eph
 bQf
 bSn
 bUr
@@ -140429,14 +140463,14 @@ aaf
 aaf
 aaf
 aax
-ach
+epb
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-ach
+epb
 aax
 aaf
 aaf
@@ -140943,14 +140977,14 @@ aax
 aaD
 abT
 aax
-acj
+epc
 aax
 acC
 acT
 ack
 adq
 aax
-ach
+epb
 aax
 abR
 aaD
@@ -143268,9 +143302,9 @@ edp
 edp
 edp
 een
-epf
+epc
 aci
-epg
+epc
 agl
 agN
 ahu
@@ -144291,7 +144325,7 @@ aaf
 aaf
 aaf
 aax
-epd
+epc
 aax
 aaf
 aaf
@@ -144805,7 +144839,7 @@ acV
 adg
 adr
 aax
-epe
+epb
 aax
 abT
 aaD
@@ -167002,10 +167036,10 @@ cqf
 cqf
 cqf
 cqf
-cEE
+epj
 cqf
 cqf
-cIU
+epk
 cqf
 cqf
 cqf
