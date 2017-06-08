@@ -311,6 +311,8 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
 
+* Space Station 13 is often referred to as an RPG, similar to other table-top die rolling games focused on roleplay. Something important to remember is that despite the fact that die rolling table top games have lots of complex lore, they still have to focus on the gameplay ahead of that, lest they run into balancing issues from putting the lore ahead of the gameplay. Please try to justify your changes via the actual gameplay impacts(if it has any), instead of arguing about the lore.
+
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
