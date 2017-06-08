@@ -14,12 +14,21 @@
 	..()
 	var/obj/item/bodypart/head/H = locate() in contents
 	if(H)
-		copy_overlays(H, TRUE) //copy the head's visuals to put on the spear
 		update_icon()
 		name = "[H.real_name]'s head on a spear"
 
 /obj/structure/headpike/Initialize()
+	. = ..()
 	pixel_x = rand(-8, 8)
+
+/obj/structure/headpike/update_icon()
+	..()
+	var/obj/item/bodypart/head/H = locate() in contents
+	var/mutable_appearance/MA = new()
+	if(H)
+		MA.overlays = H.overlays.Copy()
+		MA.pixel_y = 12 //Or some value that lines it up on the spike bit better
+		add_overlay(MA)
 
 /obj/structure/headpike/attack_hand(mob/user)
 	..()
