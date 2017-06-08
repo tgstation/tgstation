@@ -41696,7 +41696,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/head/det_hat{
+/obj/item/clothing/head/fedora/det_hat{
 	icon_state = "curator"
 	},
 /obj/item/clothing/suit/det_suit{
@@ -61496,12 +61496,7 @@
 /turf/open/floor/plasteel/black,
 /area/library)
 "crP" = (
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
+/obj/structure/closet/wardrobe/curator,
 /turf/open/floor/plasteel/black,
 /area/library)
 "crQ" = (
