@@ -9,6 +9,7 @@
 	name = "rock"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
+	burn_state = LAVA_PROOF //you might have trouble getting it OUT of the lava... but hey.
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 
