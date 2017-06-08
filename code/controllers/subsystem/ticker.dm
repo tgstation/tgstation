@@ -83,6 +83,8 @@ SUBSYSTEM_DEF(ticker)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			current_state = GAME_STATE_PREGAME
+			//Everyone who wants to be an observer is now spawned
+			create_observers()
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -92,7 +94,7 @@ SUBSYSTEM_DEF(ticker)
 			totalPlayersReady = 0
 			for(var/mob/dead/new_player/player in GLOB.player_list)
 				++totalPlayers
-				if(player.ready)
+				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 
 			if(start_immediately)
@@ -130,6 +132,7 @@ SUBSYSTEM_DEF(ticker)
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -402,7 +405,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.ready && player.mind)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
 			player.create_character(FALSE)
 		else
@@ -792,6 +795,13 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
+
+//Everyone who wanted to be an observer gets made one now
+/datum/controller/subsystem/ticker/proc/create_observers()
+	for(var/mob/dead/new_player/player in GLOB.player_list)
+		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
+			//Break chain since this has a sleep input in it
+			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
 
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))
