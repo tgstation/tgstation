@@ -33,7 +33,7 @@
 	return "<a href='byond://?src=\ref[src]:ready=[value]>[string]</a>"
 
 /mob/dead/new_player/proc/new_player_panel()
-	var/output = "<center><p>< href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+	var/output = "<center><p><A href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
 		switch(ready)
