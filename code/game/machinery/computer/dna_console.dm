@@ -85,7 +85,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3)))	//occupent is viable for dna modification
+			if(viable_occupant.has_dna() && !(viable_occupant.disabilities & NOCLONE) && (!(viable_occupant.disabilities & HUSK) || (connected.scan_level > 2)))	//occupent is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)

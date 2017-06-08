@@ -18,6 +18,20 @@
 	vital = FALSE
 	decoy_override = TRUE
 
+/obj/item/organ/brain/shell
+	name = "shell brain"
+	desc = "A malformed brain, unable to survive outside of a body."
+
+/obj/item/organ/brain/shell/Remove(mob/living/carbon/C, special = 0)
+	..()
+	damaged_brain = TRUE
+	if(brainmob)
+		to_chat(brainmob, "<span class='warning'>Your brain is damaged beyond repair by being severed from its body!</span>")
+		brainmob.death(TRUE)
+		if(brainmob.mind)
+			brainmob.mind.current = null
+		brainmob.ghostize()
+
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = 0)
 	..()
 

@@ -599,6 +599,10 @@
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
+//called when acquiring a mutation, return TRUE to prevent the mutation
+/datum/species/proc/spec_mutation(mob/living/carbon/human/H)
+	return FALSE
+
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
 	return

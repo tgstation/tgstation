@@ -385,7 +385,7 @@
 	if((!req_defib && grab_ghost) || (req_defib && defib.grab_ghost))
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
-	else if(!H.suiciding && !(H.disabilities & NOCLONE)&& !H.hellbound)
+	else if(!H.suiciding && !(H.disabilities & HUSK) && !H.hellbound)
 		H.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
 
 	do_help(H, user)
@@ -503,7 +503,7 @@
 
 				var/failed = null
 
-				if (H.suiciding || (H.disabilities & NOCLONE))
+				if (H.suiciding || (H.disabilities & HUSK))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
