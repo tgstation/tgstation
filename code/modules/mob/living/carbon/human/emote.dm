@@ -169,4 +169,3 @@
 		var/turf/T = loc
 		T.Entered(src)
 
-//Ayy lmao
