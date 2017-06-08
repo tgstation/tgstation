@@ -7,7 +7,7 @@
 
 GLOBAL_VAR_INIT(clockwork_construction_value, 0) //The total value of all structures built by the clockwork cult
 GLOBAL_VAR_INIT(clockwork_caches, 0) //How many clockwork caches exist in the world (not each individual)
-GLOBAL_VAR_INIT(clockwork_daemons, 0) //How many daemons exist in the world
+GLOBAL_LIST_EMPTY(active_daemons) //A list of all active tinkerer's daemons
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
 GLOBAL_LIST_INIT(clockwork_component_cache, list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)) //The pool of components that caches draw from
@@ -19,10 +19,10 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
-#define SCRIPT_SERVANT_REQ 5
+#define SCRIPT_SERVANT_REQ 6
 #define SCRIPT_CACHE_REQ 1
 #define SCRIPTURE_APPLICATION "Application"
-#define APPLICATION_SERVANT_REQ 8
+#define APPLICATION_SERVANT_REQ 9
 #define APPLICATION_CACHE_REQ 3
 #define APPLICATION_CV_REQ 100
 #define SCRIPTURE_JUDGEMENT "Judgement"
@@ -94,3 +94,5 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
 
 #define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes
+
+#define PRISM_DELAY_DURATION 1200 //how long prolonging prisms delay the shuttle for; defaults to 2 minutes

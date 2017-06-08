@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	name = "tinkerer's daemon"
 	desc = "A strange machine with three small brass obelisks attached to it."
-	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if outnumbered by servants at a rate to 5:1."
+	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if active daemons are outnumbered by servants at a rate to 5:1."
 	icon_state = "tinkerers_daemon"
 	active_icon = "tinkerers_daemon"
 	inactive_icon = "tinkerers_daemon"
@@ -18,14 +18,10 @@
 	var/static/mutable_appearance/component_glow = mutable_appearance('icons/obj/clockwork_objects.dmi', "t_random_component")
 	var/component_id_to_produce
 	var/production_time = 0 //last time we produced a component
-	var/production_cooldown = 60
-
-/obj/structure/destructible/clockwork/powered/tinkerers_daemon/Initialize()
-	. = ..()
-	GLOB.clockwork_daemons++
+	var/production_cooldown = 70
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/Destroy()
-	GLOB.clockwork_daemons--
+	GLOB.active_daemons -= src
 	return ..()
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/examine(mob/user)
@@ -61,13 +57,6 @@
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>")
 			return FALSE
-		var/servants = 0
-		for(var/mob/living/L in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(L))
-				servants++
-		if(servants * 0.2 < GLOB.clockwork_daemons)
-			to_chat(user, "<span class='nezbere'>\"There are too few servants for this daemon to work.\"</span>")
-			return
 		if(!GLOB.clockwork_caches)
 			to_chat(user, "<span class='nezbere'>\"You require a cache for this daemon to operate. Get to it.\"</span>")
 			return
@@ -79,6 +68,13 @@
 				min_power_usable = min(min_power_usable, get_component_cost(i))
 		if(total_accessable_power() < min_power_usable)
 			to_chat(user, "<span class='nezbere'>\"You need more power to activate this daemon, friend.\"</span>")
+			return
+		var/servants = 0
+		for(var/mob/living/L in GLOB.living_mob_list)
+			if(is_servant_of_ratvar(L))
+				servants++
+		if(servants * 0.2 < 1)
+			to_chat(user, "<span class='nezbere'>\"There are too few servants for daemons to work.\"</span>")
 			return
 		var/choice = alert(user,"Activate Daemon...",,"Specific Component","Random Component","Cancel")
 		switch(choice)
@@ -92,7 +88,7 @@
 				for(var/mob/living/L in GLOB.living_mob_list)
 					if(is_servant_of_ratvar(L))
 						servants++
-				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !GLOB.clockwork_caches || servants * 0.2 < GLOB.clockwork_daemons)
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !GLOB.clockwork_caches || servants * 0.2 < 1)
 					return
 				if(!component_id_to_produce)
 					to_chat(user, "<span class='warning'>You decide not to select a component and activate the daemon.</span>")
@@ -103,11 +99,18 @@
 				toggle(0, user)
 			if("Random Component")
 				component_id_to_produce = null
+				servants = 0
+				for(var/mob/living/L in GLOB.living_mob_list)
+					if(is_servant_of_ratvar(L))
+						servants++
+				if(!is_servant_of_ratvar(user) || !user.canUseTopic(src, !issilicon(user), NO_DEXTERY) || active || !GLOB.clockwork_caches || servants * 0.2 < 1)
+					return
 				toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/toggle(fast_process, mob/living/user)
 	. = ..()
 	if(active)
+		GLOB.active_daemons += src
 		var/component_color = get_component_color(component_id_to_produce)
 		daemon_glow.color = component_color
 		add_overlay(daemon_glow)
@@ -117,6 +120,7 @@
 		production_time = world.time + production_cooldown //don't immediately produce when turned on after being off
 		set_light(2, 0.9, get_component_color_bright(component_id_to_produce))
 	else
+		GLOB.active_daemons -= src
 		cut_overlays()
 		set_light(0)
 
@@ -128,6 +132,14 @@
 	for(var/mob/living/L in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
+	while(servants * 0.2 < LAZYLEN(GLOB.active_daemons))
+		var/obj/structure/destructible/clockwork/powered/tinkerers_daemon/D = GLOB.active_daemons[1]
+		if(!istype(D))
+			break
+		if(D.active)
+			D.forced_disable(FALSE)
+			if(D == src)
+				return
 	. = ..()
 	var/min_power_usable = 0
 	if(!component_id_to_produce)
@@ -138,7 +150,7 @@
 				min_power_usable = min(min_power_usable, get_component_cost(i))
 	else
 		min_power_usable = get_component_cost(component_id_to_produce)
-	if(!GLOB.clockwork_caches || servants * 0.2 < GLOB.clockwork_daemons || . < min_power_usable) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
+	if(!GLOB.clockwork_caches || . < min_power_usable) //if we don't have enough to produce the lowest or what we chose to produce, cancel out
 		forced_disable(FALSE)
 		return
 	if(production_time <= world.time)

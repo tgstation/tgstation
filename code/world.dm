@@ -29,11 +29,11 @@
 	SetupLogs()
 
 	if(!RunningService())	//tgs2 support
-		GLOB.revdata.DownloadPRDetails() 
+		GLOB.revdata.DownloadPRDetails()
 
 	load_motd()
 	load_admins()
-	load_menu()
+	LoadVerbs(/datum/verbs/menu)
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -60,7 +60,7 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), COALESCE(INET_ATON('[world.internet_address]'), 0), '[world.port]')")
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()

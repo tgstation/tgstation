@@ -371,7 +371,7 @@
 
 	name = "Mix Virus 10"
 	id = "mixvirus10"
-	required_reagents = list("uraniumvirusfood" = 5)
+	required_reagents = list("uraniumvirusfood" = 1)
 	level_min = 6
 	level_max = 7
 
@@ -379,7 +379,7 @@
 
 	name = "Mix Virus 11"
 	id = "mixvirus11"
-	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 1)
 	level_min = 7
 	level_max = 7
 
@@ -387,7 +387,7 @@
 
 	name = "Mix Virus 12"
 	id = "mixvirus12"
-	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
+	required_reagents = list("uraniumplasmavirusfood_stable" = 1)
 	level_min = 8
 	level_max = 8
 

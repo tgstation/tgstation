@@ -159,22 +159,9 @@
 		successful = TRUE
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user] fires a ray of energy at [target]!</span>", "<span class='nzcrentr'>You fire a volt ray at [target].</span>")
 		playsound(ranged_ability_user, 'sound/effects/light_flicker.ogg', 50, 1)
-		var/turf/targetturf = get_turf(target)
-		var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(ranged_ability_user))
-		var/multiplier = 1
-		var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
-		if(VC.try_use_power(usable_power))
-			multiplier += (usable_power * 0.001) //should be a multiplier of 2 at maximum power usage
-		if(iscyborg(ranged_ability_user))
-			var/mob/living/silicon/robot/C = ranged_ability_user
-			if(C.cell)
-				var/prev_power = usable_power //we don't want to increase the multiplier past 2
-				usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
-				if(usable_power > 0 && C.cell.use(usable_power))
-					multiplier += (usable_power * 0.001)
-		qdel(VC)
-		new/obj/effect/temp_visual/ratvar/volt_hit/true(targetturf, ranged_ability_user, multiplier)
-		add_logs(ranged_ability_user, targetturf, "fired a volt ray")
+		T = get_turf(target)
+		new/obj/effect/temp_visual/ratvar/volt_hit(T, ranged_ability_user)
+		add_logs(ranged_ability_user, T, "fired a volt ray")
 		remove_ranged_ability()
 
 	return TRUE
