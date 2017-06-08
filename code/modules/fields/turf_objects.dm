@@ -75,3 +75,10 @@
 		if(O.parent == F)
 			return FIELD_TURF
 	return NO_FIELD
+
+/proc/return_fields_on_turf(turf/T)	//Only works if a field sets up turf objects on all turfs.
+	var/list/ret = list()
+	for(var/obj/effect/abstract/proximity_checker/advanced/part in T)
+		if(part.parent)
+			ret[part.parent] = TRUE
+	return ret
