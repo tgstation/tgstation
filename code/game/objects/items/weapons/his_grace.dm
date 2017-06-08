@@ -125,7 +125,29 @@
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	playsound(user, 'sound/effects/pope_entry.ogg', 100)
-	icon_state = "his_grace_awakened"
+	DoAnimation()
+
+/obj/item/weapon/his_grace/proc/DoAnimation(start)
+    var/static/list/timings = list(
+    2,
+    1,    
+    2,
+    3)
+    var/static/list/transforms
+    if(!transforms)
+        var/matrix/M = matrix(transform)
+        M.Translate(6, 22)
+        var/matrix/M2 = matrix(transform)
+        M2.Translate(7,23)
+        var/matrix/M3 = matrix(transform)
+        M3.Translate(8,22)
+        var/matrix/M4 = matrix(transform)
+        M4.Translate(7,21)
+        transforms = list(M,M2,M3,M4)
+
+    animate(src, transform = transforms[1], time = timings[1], loop = -1)
+    for(var/i in 2 to 4)
+        animate(transform = transforms[i], time = timings[i])
 
 /obj/item/weapon/his_grace/proc/drowse() //Good night, Mr. Grace.
 	if(!awakened)
@@ -135,7 +157,7 @@
 	playsound(loc, 'sound/weapons/batonextend.ogg', 100, 1)
 	name = initial(name)
 	desc = initial(desc)
-	icon_state = initial(icon_state)
+	animate(src, transform = matrix())
 	gender = initial(gender)
 	force = initial(force)
 	force_bonus = initial(force_bonus)
