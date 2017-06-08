@@ -175,7 +175,6 @@
 		if("Private Security Officer")
 			name = "Private Security Officer"
 			desc = "A cardboard cutout of a private security officer."
-			icon = 'icons/mob/mob.dmi'
 			icon_state = "cutout_ntsec"
 	return 1
 

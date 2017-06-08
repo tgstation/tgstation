@@ -4740,7 +4740,7 @@
 /area/awaymission/snowdin/sekret)
 "mx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg,
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0

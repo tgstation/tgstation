@@ -2,12 +2,14 @@
 	name = "hide"
 	desc = "Something went wrong."
 	origin_tech = "biotech=3"
+	novariants = TRUE
 
 /obj/item/stack/sheet/animalhide/human
 	name = "human skin"
 	desc = "The by-product of human farming."
 	singular_name = "human skin piece"
 	icon_state = "sheet-hide"
+	novariants = FALSE
 
 GLOBAL_LIST_INIT(human_recipes, list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, on_floor = 1), \
@@ -22,6 +24,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	desc = "A piece of skin."
 	singular_name = "skin piece"
 	icon_state = "sheet-hide"
+	novariants = FALSE
 
 /obj/item/stack/sheet/animalhide/corgi
 	name = "corgi hide"
@@ -87,6 +90,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "chitin"
 	origin_tech = null
+	novariants = TRUE
 
 /obj/item/xenos_claw
 	name = "alien claw"
@@ -153,6 +157,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	singular_name = "watcher sinew"
 	icon_state = "sinew"
 	origin_tech = "biotech=4"
+	novariants = TRUE
 
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
@@ -166,16 +171,18 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		/*
  * Plates
  		*/
-
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	singular_name = "hide plate"
+	max_amount = 6
+	novariants = FALSE
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
+
 
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
@@ -183,6 +190,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "dragon_hide"
 	singular_name = "drake plate"
+	max_amount = 10
+	novariants = FALSE
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER

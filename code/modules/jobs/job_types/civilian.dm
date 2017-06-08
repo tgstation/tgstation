@@ -43,7 +43,7 @@ Clown
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/weapon/storage/box/hug/survival
 
@@ -186,7 +186,7 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
-	r_pocket = /obj/item/clothing/tie/lawyers_badge
+	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

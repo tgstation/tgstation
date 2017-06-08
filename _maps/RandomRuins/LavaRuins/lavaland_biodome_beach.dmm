@@ -562,7 +562,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bK" = (
-/obj/item/weapon/storage/backpack/dufflebag,
+/obj/item/weapon/storage/backpack/duffelbag,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered/beach)
 "bL" = (

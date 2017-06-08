@@ -12,6 +12,15 @@
 	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
 	del_on_death = 1
 	var/meat_counter
+	var/obj/effect/light_emitter/tendril/emitted_light
+	
+/mob/living/simple_animal/hostile/spawner/ash_walker/Initialize()
+	. = ..()
+	emitted_light = new(loc)
+
+/mob/living/simple_animal/hostile/spawner/ash_walker/Destroy()
+	QDEL_NULL(emitted_light)
+	. = ..()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/Life()
 	..()

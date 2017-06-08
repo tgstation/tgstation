@@ -276,7 +276,6 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
-	flags = NODROP
 
 	var/revivecost = 1000
 	var/cooldown = 0

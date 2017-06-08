@@ -159,9 +159,10 @@
 
 		else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof())
+				var/obj/item/stack/sheet/mineral/plasma/P = W
 				upgradeEmpProof()
 				to_chat(user, "[msg]")
-				qdel(W)
+				P.use(1)
 			else
 				to_chat(user, "[msg2]")
 			return

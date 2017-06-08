@@ -100,7 +100,7 @@
 				update_label()
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [bicon(src)] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return
@@ -255,14 +255,6 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/ert/Medical/Initialize()
 	access = get_all_accesses()+get_ert_access("med")-GLOB.access_change_ids
 	..()
-
-/obj/item/weapon/card/id/marine
-	name = "\improper Marine ID"
-	desc = "A Marine Rifleman ID card"
-	access = list(GLOB.access_away_generic1)
-	icon_state = "centcom"
-	registered_name = "Iron Hawk Marine"
-	assignment = "Marine Rifleman"
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
