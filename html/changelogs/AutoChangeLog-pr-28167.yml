@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - balance: "Script scripture now requires 6 Servants to unlock, from 5, and Application scripture now requires 9 Servants to unlock, from 8."
