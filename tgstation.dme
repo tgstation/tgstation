@@ -246,6 +246,7 @@
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"
 #include "code\datums\diseases\appendicitis.dm"
+#include "code\datums\diseases\babel.dm"
 #include "code\datums\diseases\beesease.dm"
 #include "code\datums\diseases\brainrot.dm"
 #include "code\datums\diseases\cold.dm"
