@@ -84,7 +84,7 @@
 // Gatfruit
 /obj/item/seeds/gatfruit
 	name = "pack of gatfruit seeds"
-	desc = "These seeds grow into .357 revolvers."
+	desc = "These seeds grow into dangerous sulphuric plants."
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
 	plantname = "Gatfruit Tree"
@@ -95,7 +95,7 @@
 	maturation = 40
 	production = 10
 	yield = 2
-	potency = 60
+	potency = 15
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -104,12 +104,26 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit
 	name = "gatfruit"
-	desc = "It smells like burning."
+	desc = "It smells like burning, there is something hard and metallic within"
 	icon_state = "gatfruit"
 	origin_tech = "combat=6"
-	trash = /obj/item/weapon/gun/ballistic/revolver
+	trash = null
 	bitesize_mod = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit/add_juice()
+	..()
+	switch(seed.potency)
+		if(0 to 20)
+			trash= /obj/item/weapon/suppressor //basic entry level tool, and a reward for the patience and nurture of gatfruit seeds
+		if(20 to 40)
+			trash= /obj/item/ammo_box/magazine/m10mm
+		if(40 to 60)
+			trash= /obj/item/ammo_box/a357 //conteracts plant data disks (ideally) for access to instant gatfruit weaponry at roundstart or ASAP when gatfruit obtained
+		if(60 to 80)
+			trash= /obj/item/weapon/gun/ballistic/automatic/pistol //small risky mutational leap if 40 maturation is too long to wait for gene edits
+		if(80 to 100)
+			trash= /obj/item/weapon/gun/ballistic/revolver
+			
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb
 	name = "pack of cherry bomb pits"
