@@ -110,10 +110,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	var/obj/item/weapon/storage/box/B = A
 	if(istype(B) && B.contents.len > 0)
 		for(var/obj/item/I in B)
-			U.purchase_log += "<big>\icon[I]</big>"
+			U.purchase_log += "<big>[bicon(I)]</big>"
 	else
 		if(purchase_log_vis)
-			U.purchase_log += "<big>\icon[A]</big>"
+			U.purchase_log += "<big>[bicon(A)]</big>"
 
 	if(limited_stock > 0)
 		limited_stock -= 1
@@ -1383,7 +1383,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		new I.item(C)
-		U.purchase_log += "<big>\icon[I.item]</big>"
+		U.purchase_log += "<big>[bicon(I.item)]</big>"
 
 	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
