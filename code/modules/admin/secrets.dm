@@ -68,7 +68,6 @@
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
-			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
 			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
