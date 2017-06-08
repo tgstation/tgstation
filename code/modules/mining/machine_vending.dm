@@ -192,7 +192,7 @@
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
 		if("Mining Conscription Kit")
-			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
+			new /obj/item/weapon/storage/backpack/duffelbag/mining_conscript(loc)
 
 	SSblackbox.add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -282,11 +282,11 @@
 		qdel(src)
 	..()
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript
+/obj/item/weapon/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/weapon/storage/backpack/dufflebag/mining_conscript/New()
+/obj/item/weapon/storage/backpack/duffelbag/mining_conscript/New()
 	..()
 	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
