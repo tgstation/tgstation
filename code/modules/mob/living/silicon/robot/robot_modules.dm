@@ -243,10 +243,11 @@
 		/obj/item/weapon/extinguisher,
 		/obj/item/weapon/pickaxe,
 		/obj/item/device/t_scanner/adv_mining_scanner,
-		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
-	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
+	emag_modules = list(
+		/obj/item/weapon/melee/energy/sword/cyborg,
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
 		/obj/item/clockwork/ratvarian_spear/cyborg,
