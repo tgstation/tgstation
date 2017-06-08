@@ -30,7 +30,6 @@
 /obj/item/weapon/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
 
-	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
