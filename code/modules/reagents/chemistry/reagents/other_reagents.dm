@@ -99,6 +99,9 @@
 		for(var/datum/disease/D in M.viruses)
 			if(D.GetDiseaseID() in data)
 				D.cure()
+		if(prob(1) && istype(M, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = M
+			H.adjustBrainLoss(100)
 		M.resistances |= data
 
 /datum/reagent/vaccine/on_merge(list/data)
