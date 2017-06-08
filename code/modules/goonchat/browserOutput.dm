@@ -256,7 +256,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			return
 
 		message = replacetext(message, "\n", "<br>")
-		message = replacetext(message, "\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
+		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		target << output(url_encode(url_encode(message)), "browseroutput:output")
