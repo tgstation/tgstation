@@ -1396,6 +1396,12 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 #define UNTIL(X) while(!(X)) stoplag()
 
 /proc/to_chat(target, message)
+	if(findtext(message, "armor"))
+		if(prob(50))
+			message = replacetext(message, "armor", "armour")
+	else if(findtext(message, "armour"))
+		if(prob(50))
+			message = replacetext(message, "armour", "armor")
 	target << message
 
 /proc/pass()
