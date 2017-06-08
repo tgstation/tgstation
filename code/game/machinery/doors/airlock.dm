@@ -374,6 +374,7 @@
 	var/mutable_appearance/damag_overlay
 	var/mutable_appearance/sparks_overlay
 	var/mutable_appearance/note_overlay
+	var/notetype = note_type()
 
 	switch(state)
 		if(AIRLOCK_CLOSED)
@@ -399,7 +400,7 @@
 				else if(emergency)
 					lights_overlay = get_airlock_overlay("lights_emergency", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note", note_overlay_file)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_DENY)
 			if(!hasPower())
@@ -422,7 +423,7 @@
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note", note_overlay_file)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_EMAG)
 			frame_overlay = get_airlock_overlay("closed", icon)
@@ -443,7 +444,7 @@
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note", note_overlay_file)
+				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
 		if(AIRLOCK_CLOSING)
 			frame_overlay = get_airlock_overlay("closing", icon)
@@ -459,7 +460,7 @@
 				else
 					panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note_closing", note_overlay_file)
+				note_overlay = get_airlock_overlay("[notetype]_closing", note_overlay_file)
 
 		if(AIRLOCK_OPEN)
 			frame_overlay = get_airlock_overlay("open", icon)
@@ -474,6 +475,8 @@
 					panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 			if(obj_integrity < (0.75 * max_integrity))
 				damag_overlay = get_airlock_overlay("sparks_open", overlays_file)
+			if(note)
+				note_overlay = get_airlock_overlay("[notetype]_open", note_overlay_file)
 
 		if(AIRLOCK_OPENING)
 			frame_overlay = get_airlock_overlay("opening", icon)
@@ -489,7 +492,7 @@
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 			if(note)
-				note_overlay = get_airlock_overlay("note_opening", note_overlay_file)
+				note_overlay = get_airlock_overlay("[notetype]_opening", note_overlay_file)
 
 	cut_overlays()
 	add_overlay(frame_overlay)
@@ -1587,6 +1590,14 @@
 			qdel(src)
 			return TRUE
 	return FALSE
+
+/obj/machinery/door/airlock/proc/note_type() //Returns a string representing the type of note pinned to this airlock
+	if(!note)
+		return
+	else if(istype(note, /obj/item/weapon/paper))
+		return "note"
+	else if(istype(note, /obj/item/weapon/photo))
+		return "photo"
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
