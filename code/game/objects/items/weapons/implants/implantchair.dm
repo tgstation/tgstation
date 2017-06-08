@@ -154,7 +154,6 @@
 	if(!istype(H))
 		return 0
 	H.set_species(/datum/species/human, 1)//lizards go home
-	purrbation_remove(H)//remove cats
 	H.dna.remove_all_mutations()//hulks out
 	return 1
 
