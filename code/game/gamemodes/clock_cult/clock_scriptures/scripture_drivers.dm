@@ -238,8 +238,8 @@
 	quickbind_desc = "Creates an obvious, one-way sigil to return to the City of Cogs."
 
 /datum/clockwork_scripture/create_object/sigil_of_secession/check_special_requirements()
-	if(GLOB.ark_of_the_clockwork_justiciar)
-		var/obj/O = GLOB.ark_of_the_clockwork_justiciar
+	if(GLOB.city_of_cogs_beckoner)
+		var/obj/O = GLOB.city_of_cogs_beckoner
 		if(invoker.z == O.z)
 			to_chat(invoker, "<span class='warning'>You're already at the City of Cogs!</span>")
 			return

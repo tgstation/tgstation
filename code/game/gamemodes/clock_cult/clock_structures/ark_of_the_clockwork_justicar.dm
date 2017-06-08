@@ -13,6 +13,8 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	can_be_repaired = FALSE
 	immune_to_servant_attacks = TRUE
+	density = TRUE
+	invisibility = 0
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/wisdom_regen_cycle = 0 //How many ticks It's been between wisdom regenerations
 	var/purpose_fulfilled = FALSE
@@ -27,12 +29,9 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	if(GLOB.ark_of_the_clockwork_justiciar)
-		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 	else
 		GLOB.ark_of_the_clockwork_justiciar = src
-	density = TRUE
-	invisibility = 0
 	glow = new(get_turf(src))
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
