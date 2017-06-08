@@ -83,3 +83,12 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes
 
 #define REVISION_TURBINE_WISDOM_REGEN 7 //how many ticks a revision turbine needs to regenerate one wisdom
+
+
+//Resource helpers
+
+#define HAS_CLOCKWORK_POTENTIAL(amt) (GLOB.clockwork_potential >= amt) //Returns true if the potential is greater than or equal to a set amount, and false otherwise.
+#define ADJUST_CLOCKWORK_POTENTIAL(amt) GLOB.clockwork_potential = max(0, GLOB.clockwork_potential + amt) //Adjusts the global potential by a set amount.
+
+#define HAS_CLOCKWORK_WISDOM(amt) (GLOB.clockwork_wisdom >= amt) //Returns true if the wisdom is greater than or equal to a set amount, and false otherwise.
+#define ADJUST_CLOCKWORK_WISDOM(amt) GLOB.clockwork_wisdom = max(0, min(GLOB.max_clockwork_wisdom, GLOB.clockwork_wisdom + amt)) //Adjusts the global wisdom by a set amount.

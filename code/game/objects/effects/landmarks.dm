@@ -168,7 +168,7 @@
 /obj/effect/landmark/start/servant/Initialize(mapload)
 	..()
 	GLOB.servant_start += loc
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/start/new_player
 	name = "New Player"

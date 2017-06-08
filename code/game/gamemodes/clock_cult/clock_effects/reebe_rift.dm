@@ -11,9 +11,8 @@
 	light_color = "#6A4D2F"
 
 /obj/effect/clockwork/reebe_rift/Initialize()
-	..()
 	if(!GLOB.city_of_cogs_beckoner)
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 /obj/effect/clockwork/reebe_rift/attack_hand(mob/living/user)
 	user.visible_message("<span class='warning'>[user] touches [src] and is pulled through!</span>", "<span class='boldwarning'>You reach out to touch [src] and are yanked through it!</span>")

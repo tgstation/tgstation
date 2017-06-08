@@ -31,14 +31,6 @@
 		return
 	else
 		GLOB.ark_of_the_clockwork_justiciar = src
-	var/turf/T = get_turf(src)
-	var/list/open_turfs = list()
-	for(var/turf/open/OT in orange(1, T))
-		if(!is_blocked_turf(OT, TRUE))
-			open_turfs |= OT
-	if(open_turfs.len)
-		for(var/mob/living/L in T)
-			L.forceMove(pick(open_turfs))
 	density = TRUE
 	invisibility = 0
 	glow = new(get_turf(src))
@@ -147,7 +139,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	wisdom_regen_cycle++
 	if(wisdom_regen_cycle >= ARK_WISDOM_REGEN)
-		adjust_clockwork_wisdom(1)
+		ADJUST_CLOCKWORK_WISDOM(1)
 		wisdom_regen_cycle = 0
 	if(countdown)
 		if(!first_sound_played || prob(7))

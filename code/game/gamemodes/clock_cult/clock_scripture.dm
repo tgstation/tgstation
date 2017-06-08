@@ -57,13 +57,13 @@ Judgement: 12 servants, 300 CV, and any existing AIs are converted or destroyed
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
-			adjust_clockwork_potential(-potential_cost)
-			adjust_clockwork_wisdom(-wisdom_cost)
+			ADJUST_CLOCKWORK_POTENTIAL(-potential_cost)
+			ADJUST_CLOCKWORK_WISDOM(-wisdom_cost)
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
 		if(!recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund potential used
-			adjust_clockwork_potential(potential_cost)
-			adjust_clockwork_wisdom(wisdom_cost)
+			ADJUST_CLOCKWORK_POTENTIAL(potential_cost)
+			ADJUST_CLOCKWORK_WISDOM(wisdom_cost)
 			update_slab_info()
 		else
 			successful = TRUE
@@ -85,11 +85,12 @@ Judgement: 12 servants, 300 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
 	if(!GLOB.ratvar_awakens && !slab.no_cost)
-		if(potential_cost && !has_clockwork_potential(potential_cost))
+		if(potential_cost && !HAS_CLOCKWORK_POTENTIAL(potential_cost))
 			to_chat(invoker, "<span class='warning'>There isn't enough potential to recite this scripture! ([GLOB.clockwork_potential]/[potential_cost])")
 			return
-		if(wisdom_cost && !has_clockwork_wisdom(wisdom_cost))
+		if(wisdom_cost && !HAS_CLOCKWORK_WISDOM(wisdom_cost))
 			to_chat(invoker, "<span class='warning'>There isn't enough wisdom to recite this scripture! Wait for it to regenerate! ([GLOB.clockwork_wisdom]/[wisdom_cost])")
+			return
 	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))

@@ -27,5 +27,5 @@
 /obj/structure/destructible/clockwork/revision_turbine/process()
 	wisdom_cycle++
 	if(wisdom_cycle >= REVISION_TURBINE_WISDOM_REGEN)
-		adjust_clockwork_wisdom(1)
+		ADJUST_CLOCKWORK_WISDOM(1)
 		wisdom_cycle = 0

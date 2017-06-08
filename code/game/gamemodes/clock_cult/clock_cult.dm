@@ -218,7 +218,7 @@ Credit where due:
 		snd = sound('sound/magic/clockwork/ratvar_attack.ogg', volume = 50)
 		SSticker.mode_result = "loss - ark destroyed"
 	to_chat(world, text)
-	to_chat(world, snd) //Yes, this actually works
+	playsound_global(snd)
 
 /datum/game_mode/proc/auto_declare_completion_clockwork_cult()
 	var/text = ""
