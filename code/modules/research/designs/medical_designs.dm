@@ -321,6 +321,16 @@
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
 	build_path = /obj/item/organ/cyberimp/chest/thrusters
 	category = list("Misc", "Medical Designs")
+	
+/datum/design/autoimplanter
+	name = "Autoimplanter"
+	desc = "A device that automatically injects a cyber-implant into the user without the hassle of extensive surgery. It has a slot to insert implants and a screwdriver slot for removing accidentally added implants."
+	id = "autoimplanter"
+	req_tech = list("materials" = 7, "biotech" = 6, "magnets" = 6, "engineering" = 7)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000, MAT_SILVER = 4500, MAT_GOLD = 2500, MAT_TITANIUM = 3000)
+	build_path = /obj/item/device/autoimplanter
+	category = list("Medical Designs")
 
 
 /////////////////////////////////////////
