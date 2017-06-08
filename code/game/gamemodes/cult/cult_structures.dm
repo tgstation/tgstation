@@ -114,8 +114,14 @@
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
-		if("Nar-Sien Hardsuit")
-			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
+		if("Bastard Sword")
+			if(world.time < 15000)
+				pickedtype = /obj/item/weapon/twohanded/required/cult_bastard
+			else
+				cooldowntime = 15000 - world.time
+				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [getETA()].</span>")
+				cooldowntime = 0
+				return
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))

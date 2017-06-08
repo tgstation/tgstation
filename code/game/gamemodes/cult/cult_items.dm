@@ -63,6 +63,169 @@
 		if(is_servant_of_ratvar(C) && C.reagents)
 			C.reagents.add_reagent("heparin", 1)
 
+/obj/item/weapon/twohanded/required/cult_bastard
+	name = "bloody bastard sword"
+	desc = "An enormous sword used by Nar-Sien cultists to rapidly harvest the souls of non-believers."
+	w_class = WEIGHT_CLASS_HUGE
+	anchored = TRUE
+	block_chance = 50
+	throwforce = 20
+	force = 40
+	armour_penetration = 30
+	throw_speed = 1
+	throw_range = 3
+	sharpness = IS_SHARP
+	light_color = "#ff0000"
+	attack_verb = list("cleaved", "slashed", "torn", "hacked", "ripped", "diced", "carved")
+	icon_state = "cultblade"
+	item_state = "cultblade"
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	actions_types = list()
+	var/datum/action/innate/spin2win/linked_action
+	var/spinning = FALSE
+	var/dash_toggled = FALSE
+	var/charges = 1
+	var/charge_rate = 120
+	var/list/shards = list()
+
+/obj/item/weapon/twohanded/required/cult_bastard/Initialize()
+	. = ..()
+	set_light(4)
+
+/obj/item/weapon/twohanded/required/cult_bastard/can_be_pulled(user)
+	return FALSE
+
+/obj/item/weapon/twohanded/required/cult_bastard/attack_self(mob/user)
+	dash_toggled = !dash_toggled
+	if(dash_toggled)
+		to_chat(loc, "<span class='notice'>You raise the [src] and prepare to jaunt with it.</span>")
+	else
+		to_chat(loc, "<span class='notice'>You lower the [src] and prepare to swing it normally.</span>")
+
+/obj/item/weapon/twohanded/required/cult_bastard/pickup(mob/living/user)
+	. = ..()
+	if(!iscultist(user))
+		if(!is_servant_of_ratvar(user))
+			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
+			user.Dizzy(80)
+			user.dropItemToGround(src)
+			return
+		else
+			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
+			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
+			user.emote("scream")
+			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.dropItemToGround(src)
+			return
+	linked_action = new(user)
+	linked_action.Grant(user, src)
+	user.update_icons()
+
+/obj/item/weapon/twohanded/required/cult_bastard/IsReflect()
+	if(spinning)
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+		return 1
+	else
+		..()
+
+/obj/item/weapon/twohanded/required/cult_bastard/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(prob(final_block_chance))
+		if(attack_type == PROJECTILE_ATTACK)
+			owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+			playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+			return 1
+		else
+			playsound(src, 'sound/weapons/parry.ogg', 75, 1)
+			owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+			return 1
+	return 0
+
+/obj/item/weapon/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
+	. = ..()
+	if(dash_toggled)
+		dash(user, target)
+		return
+	if(!proximity)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat != CONSCIOUS)
+			var/obj/item/device/soulstone/SS = new(src)
+			if(SS.transfer_soul("VICTIM",H,user))
+				shards += SS
+			else
+				qdel(SS)
+	if(istype(target, /obj/structure/constructshell) && shards.len)
+		var/obj/item/device/soulstone/SS = shards[1]
+		if(SS.transfer_soul("CONSTRUCT",target,user))
+			shards -= SS
+
+/obj/item/weapon/twohanded/required/cult_bastard/proc/charge()
+	charges = Clamp(charges + 1, 0, 1)
+	playsound(src, 'sound/magic/exit_blood.ogg', 25, 1)
+	if(istype(loc, /mob/living))
+		to_chat(loc, "<span class='cultitalic'>[src] is ready for another blood jaunt.</span>")
+
+/obj/item/weapon/twohanded/required/cult_bastard/proc/dash(mob/user, atom/target)
+	if(!charges)
+		return
+	if(isliving(target))
+		return
+	if(target.density)
+		return
+	var/turf/T = get_turf(target)
+	if(target in view(user.client.view, get_turf(user)))
+		var/obj/spot1 = new /obj/effect/temp_visual/dir_setting/cult/phase/out(get_turf(user), user.dir)
+		user.forceMove(T)
+		playsound(T, 'sound/magic/enter_blood.ogg', 25, 1)
+		var/obj/spot2 = new /obj/effect/temp_visual/dir_setting/cult/phase(get_turf(user), user.dir)
+		spot1.Beam(spot2,"sendbeam",time=20)
+		charges = Clamp(charges - 1, 0, 1)
+		addtimer(CALLBACK(src, .proc/charge), charge_rate)
+
+
+/datum/action/innate/spin2win
+	name = "Geometer's Fury"
+	desc = "You draw on the power of the sword's ancient runes, spinning it wildly around you as you become immune to most attacks."
+	background_icon_state = "bg_demon"
+	button_icon_state = "sintouch"
+	var/cooldown = 0
+	var/mob/living/carbon/human/holder
+	var/obj/item/weapon/twohanded/required/cult_bastard/sword
+
+/datum/action/innate/spin2win/Grant(mob/user, obj/bastard)
+	. = ..()
+	sword = bastard
+	holder = user
+
+/datum/action/innate/spin2win/IsAvailable()
+	if(iscultist(holder) && cooldown <= world.time)
+		return TRUE
+	else
+		return FALSE
+
+/datum/action/innate/spin2win/Activate()
+	cooldown = world.time + 200
+	holder.changeNext_move(50)
+	holder.apply_status_effect(/datum/status_effect/sword_spin)
+	sword.spinning = TRUE
+	sword.block_chance = 100
+	sword.slowdown += 1
+	addtimer(CALLBACK(src, .proc/stop_spinning), 50)
+	holder.update_action_buttons_icon()
+
+/datum/action/innate/spin2win/proc/stop_spinning()
+	sword.spinning = FALSE
+	sword.block_chance = 50
+	sword.slowdown -= 1
+	sleep(150)
+	holder.update_action_buttons_icon()
+
 
 /obj/item/weapon/restraints/legcuffs/bola/cult
 	name = "nar'sien bola"
@@ -70,6 +233,21 @@
 	icon_state = "bola_cult"
 	breakouttime = 45
 	weaken = 1
+
+/obj/item/weapon/restraints/legcuffs/bola/cult/pickup(mob/living/user)
+	..()
+	if(!iscultist(user))
+		if(!is_servant_of_ratvar(user))
+			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
+			user.Dizzy(80)
+			user.dropItemToGround(src)
+		else
+			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
+			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
+			user.emote("scream")
+			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.dropItemToGround(src)
 
 
 /obj/item/clothing/head/culthood
@@ -161,7 +339,7 @@
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	used = 0
 	increment = 5
-	max = 40
+	max = 50
 	prefix = "darkened"
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
@@ -173,7 +351,8 @@
 	armor = list(melee = 50, bullet = 40, laser = 50,energy = 30, bomb = 50, bio = 30, rad = 30, fire = 50, acid = 60)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
-	var/current_charges = 3
+	var/current_charges = 1
+	var/recharge = 150
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
 
 /obj/item/clothing/head/hooded/cult_hoodie
@@ -207,9 +386,18 @@
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		if(!current_charges)
 			owner.visible_message("<span class='danger'>The runed shield around [owner] suddenly disappears!</span>")
+			playsound(loc, 'sound/effects/singlebeat.ogg', 50, 1)
 			owner.update_inv_wear_suit()
+			addtimer(CALLBACK(src, .proc/restore), recharge, TIMER_UNIQUE)
 		return 1
 	return 0
+
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/restore()
+	playsound(loc, 'sound/magic/enter_blood.ogg', 50, 1)
+	current_charges++
+	if(ishuman(loc))
+		var/mob/living/carbon/human/C = loc
+		C.update_inv_wear_suit()
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
 	. = list()
