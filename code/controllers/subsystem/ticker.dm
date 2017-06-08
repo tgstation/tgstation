@@ -481,7 +481,6 @@ SUBSYSTEM_DEF(ticker)
 			else
 				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
 
-		CHECK_TICK
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
@@ -504,7 +503,6 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<BR>[GLOB.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>")
 	to_chat(world, "<BR>")
 
-	CHECK_TICK
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in GLOB.mob_list)
@@ -524,7 +522,6 @@ SUBSYSTEM_DEF(ticker)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			to_chat(world, "[robolist]")
 
-	CHECK_TICK
 
 	for (var/mob/living/silicon/robot/robo in GLOB.mob_list)
 		if (!robo.connected_ai && robo.mind)
@@ -536,23 +533,19 @@ SUBSYSTEM_DEF(ticker)
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
 
-	CHECK_TICK
 
 	mode.declare_completion()//To declare normal completion.
 
-	CHECK_TICK
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
 
-	CHECK_TICK
 
 	if(config.cross_allowed)
 		send_news_report()
 
-	CHECK_TICK
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -566,14 +559,11 @@ SUBSYSTEM_DEF(ticker)
 				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
 				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
 
-	CHECK_TICK
-
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
-	CHECK_TICK
 
 	//Borers
 	var/borerwin = FALSE
@@ -610,11 +600,7 @@ SUBSYSTEM_DEF(ticker)
 			else
 				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
 
-	CHECK_TICK
-
 	mode.declare_station_goal_completion()
-
-	CHECK_TICK
 
 	//Collects persistence features
 	SSpersistence.CollectData()
