@@ -103,7 +103,6 @@
 		if(!recipient)
 			if(holder)
 				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
-				to_chat(src, msg)
 			else
 				current_ticket.MessageNoRecipient(msg)
 			return
