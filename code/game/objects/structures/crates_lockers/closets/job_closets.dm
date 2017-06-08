@@ -26,7 +26,6 @@
 	new /obj/item/weapon/storage/box/beanbag(src)
 	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)
-	new /obj/item/weapon/storage/belt/bandolier(src)
 
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
@@ -74,7 +73,6 @@
 	new /obj/item/weapon/storage/bag/trash(src)
 	new /obj/item/clothing/shoes/galoshes(src)
 	new /obj/item/weapon/watertank/janitor(src)
-	new /obj/item/weapon/storage/belt/janitor(src)
 
 
 /obj/structure/closet/lawcloset
