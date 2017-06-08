@@ -100,7 +100,7 @@
 	name = "\improper BMP Asteroid Level 4"
 	})
 "ao" = (
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -109,7 +109,7 @@
 	})
 "ap" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -126,7 +126,7 @@
 	})
 "ar" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -135,7 +135,7 @@
 	})
 "as" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -159,7 +159,7 @@
 /obj/item/weapon/veilrender/honkrender,
 /obj/item/clothing/mask/gas/clown_hat,
 /obj/item/organ/heart/demon,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -171,7 +171,7 @@
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
 	name = "shock rune"
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -180,7 +180,7 @@
 	})
 "aw" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -205,7 +205,7 @@
 	amount = 25
 	},
 /obj/item/weapon/coin/antagtoken,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -214,7 +214,7 @@
 	})
 "az" = (
 /obj/structure/constructshell,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -224,7 +224,7 @@
 "aA" = (
 /obj/structure/girder/cult,
 /obj/item/stack/sheet/runed_metal,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -233,7 +233,7 @@
 	})
 "aB" = (
 /mob/living/simple_animal/hostile/spawner/skeleton,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -243,7 +243,7 @@
 "aC" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/cult,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -252,7 +252,7 @@
 	})
 "aD" = (
 /obj/item/stack/sheet/runed_metal,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -268,7 +268,7 @@
 /obj/item/weapon/spellbook/oneuse/summonitem{
 	name = "an extremely flamboyant book"
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -282,7 +282,7 @@
 	icon_state = "m_shield";
 	name = "weak forcefield"
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -291,7 +291,7 @@
 	})
 "aG" = (
 /obj/item/weapon/ectoplasm,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -382,7 +382,7 @@
 	id = "dungeon";
 	name = "rusty ladder"
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -399,7 +399,7 @@
 	})
 "aR" = (
 /obj/effect/forcefield/cult,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -408,7 +408,7 @@
 	})
 "aS" = (
 /obj/structure/girder/cult,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -489,7 +489,7 @@
 	desc = "An old rune inscribed on the floor, giving off an intense amount of heat.";
 	name = "flame rune"
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -499,7 +499,7 @@
 "ba" = (
 /obj/structure/destructible/cult/talisman,
 /obj/item/weapon/plasma_fist_scroll,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -542,7 +542,7 @@
 	})
 "bf" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -569,7 +569,7 @@
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -580,7 +580,7 @@
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -591,7 +591,7 @@
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -602,7 +602,7 @@
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -613,7 +613,7 @@
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -624,7 +624,7 @@
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -644,7 +644,7 @@
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -653,7 +653,7 @@
 	})
 "bq" = (
 /obj/machinery/gateway,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -664,7 +664,7 @@
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -710,7 +710,7 @@
 "bw" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/spawner/skeleton,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -737,7 +737,7 @@
 "bz" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -748,7 +748,7 @@
 /obj/structure/destructible/cult/tome,
 /obj/item/device/necromantic_stone,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -764,7 +764,7 @@
 	name = "\improper BMP Asteroid Level 3"
 	})
 "bC" = (
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -773,7 +773,7 @@
 	})
 "bD" = (
 /mob/living/simple_animal/hostile/skeleton,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -783,7 +783,7 @@
 "bE" = (
 /obj/structure/destructible/cult/pylon,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -797,7 +797,7 @@
 	id = "dungeon";
 	name = "rusty ladder"
 	},
-/turf/open/floor/engine/cult{
+/turf/open/floor/plasteel/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2615,8 +2615,8 @@
 /area/awaymission/BMPship)
 "fU" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
+/turf/open/floor/plasteel/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
@@ -3017,6 +3017,15 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship)
+"gW" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plasteel/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth;
+	initial_gas_mix = "n2=23;o2=14"
+	},
+/area/awaymission/BMPship{
+	name = "\improper BMP Asteroid Level 3"
+	})
 
 (1,1,1) = {"
 aa
@@ -13626,7 +13635,7 @@ ak
 ac
 ac
 aJ
-ag
+gW
 aJ
 aJ
 ac
