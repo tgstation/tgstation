@@ -1311,6 +1311,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	limited_stock = 2 //you can't use more than two!
 	restricted_roles = list("Shaft Miner")
 
+/datum/uplink_item/role_restricted/acid_spray
+	name = "Acid-Spraying Tiles"
+	desc = "A stack of ten ordinary-looking floor tiles that spray acid when their motion sensors are triggered. They have a short cooldown between sprays."
+	item = /obj/item/stack/tile/acid_spray/ten
+	cost = 4
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	restricted_roles = list("Station Engineer", "Chief Engineer")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

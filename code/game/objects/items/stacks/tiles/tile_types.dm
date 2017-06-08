@@ -222,3 +222,20 @@
 	materials = list() // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
+	
+/obj/item/stack/tile/acid_spray
+	name = "floor tile"
+	singular_name = "floor tile"
+	desc = "Those could work as a pretty decent throwing weapon."
+	icon_state = "tile"
+	force = 6
+	materials = list(MAT_METAL=500)
+	throwforce = 11
+	flags = CONDUCT
+	mineralType = "metal"
+	turf_type = /turf/open/floor/plasteel/acid_spray
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/stack/tile/acid_spray/ten
+	amount = 10
