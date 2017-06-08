@@ -266,6 +266,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/close_and_lock_door(obj/machinery/door/DOOR)
 	set waitfor = FALSE
+	if(DOOR.locked)
+		DOOR.unlock()
 	DOOR.close()
 	if(DOOR.density)
 		DOOR.lock()
@@ -282,6 +284,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		//Lockdown airlocks
 		for(var/obj/machinery/door/DOOR in RA)
 			close_and_lock_door(DOOR)
+			if(istype(DOOR,/obj/machinery/door/airlock))
+				var/obj/machinery/door/airlock/airlock = DOOR
+				airlock.aiDisabledIdScanner = TRUE
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
