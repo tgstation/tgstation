@@ -1,5 +1,5 @@
-## Add a # infront of this if you want to use the SQL based mentor system, the legacy system uses mentors.txt You need to set up your database to use the SQL based system.
-MENTOR_LEGACY_SYSTEM
+#Determines what internet address to use.
+INTERNET_ADDRESS_TO_USE 0.0.0.0.0
 
 #Mentors only see ckeys by default. Uncomment to have them only see mob name
 #MENTORS_MOBNAME_ONLY
