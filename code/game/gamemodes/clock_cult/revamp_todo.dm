@@ -7,3 +7,4 @@
 #warn Implement timed portal opening
 #warn Balance Potential costs on scripture etc
 #warn Add a scripture for the revision turbine
+#warn Add new scripture requirements, remove the message for unlockin' Scripts
