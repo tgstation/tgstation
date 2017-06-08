@@ -68,6 +68,23 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 
+/mob/living/simple_animal/hostile/carp/traitor
+	icon = 'icons/mob/alienqueen.dmi'
+	name = "Weaponized Attack Carp"
+	desc = "Designed by the Syndicate for maximum murder."
+	icon_state = "megacarp"
+	icon_living = "megacarp"
+	icon_dead = "megacarp_dead"
+	icon_gib = "megacarp_gib"
+	maxHealth = 75
+	health = 75
+	pixel_x = -16
+	mob_size = MOB_SIZE_LARGE
+
+	melee_damage_lower = 20
+	melee_damage_upper = 30
+	move_to_delay = 0
+
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
