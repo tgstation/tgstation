@@ -1338,6 +1338,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
+	
+/datum/uplink_item/badass/syndiespinner
+	name = "Syndicate Fidget Spinner"
+	desc = "This fidget spinner is designed to be a little more robust than others like it. \
+			Its bearing is much smoother to allow for faster spinning, and its blades are actually sharp."
+	item = /obj/item/weapon/fidgetspinner/syndicatespinner
+	cost = 1
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"

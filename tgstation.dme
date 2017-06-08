@@ -722,6 +722,7 @@
 #include "code\game\objects\items\dehy_carp.dm"
 #include "code\game\objects\items\documents.dm"
 #include "code\game\objects\items\eightball.dm"
+#include "code\game\objects\items\fidgetspinners.dm"
 #include "code\game\objects\items\latexballoon.dm"
 #include "code\game\objects\items\nuke_tools.dm"
 #include "code\game\objects\items\religion.dm"
