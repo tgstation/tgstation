@@ -66,7 +66,8 @@
 		link_atmos()
 
 /obj/effect/portal/proc/link_atmos()
-	unlink_atmos()
+	if(atmos_source || atmos_destination)
+		unlink_atmos()
 	if(!isopenturf(get_turf(src)))
 		return FALSE
 	if(linked)
