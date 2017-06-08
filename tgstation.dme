@@ -2076,6 +2076,7 @@
 #include "code\modules\surgery\core_removal.dm"
 #include "code\modules\surgery\dental_implant.dm"
 #include "code\modules\surgery\eye_surgery.dm"
+#include "code\modules\surgery\gender_reassignment.dm"
 #include "code\modules\surgery\generic_steps.dm"
 #include "code\modules\surgery\helpers.dm"
 #include "code\modules\surgery\implant_removal.dm"
