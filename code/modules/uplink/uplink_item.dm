@@ -584,17 +584,89 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/support/gygax
 	name = "Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. This model lacks a method of space propulsion, and therefore it is \
-			advised to utilize the drop pod if you wish to make use of it."
-	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 80
+			for hit-and-run style attacks."
+	item = /obj/mecha/combat/gygax/dark
+	cost = 50
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring, \
 			and deployable smoke."
-	item = /obj/mecha/combat/marauder/mauler/loaded
-	cost = 140
+	item = /obj/mecha/combat/marauder/mauler
+	cost = 90
+
+//Exosuit weapons and equipment
+/datum/uplink_item/exoequipment
+	name = "Exosuit Equipment"
+	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
+
+/datum/uplink_item/exoequipment/clusterbang
+	name = "Mecha Clusterbang Launcher"
+	desc = "Pretty sure nuking a civilian space station is already a war crime. How could this be any worse?"
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang
+	cost = 40
+
+/datum/uplink_item/exoequipment/energyrelay
+	name = "Mecha Energy Relay"
+	desc = "Charge your mecha on the go using the station's power."
+	item = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	cost = 10
+
+/datum/uplink_item/exoequipment/flashbang
+	name = "Mecha Flashbang Launcher"
+	desc = "Shoots a flashbang out from a magazine that refills off the mecha's battery."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
+	cost = 10
+
+/datum/uplink_item/exoequipment/carbine
+	name = "Mecha Carbine"
+	desc = "A rifle that shoots dragonbreath ammo."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+	cost = 5
+
+/datum/uplink_item/exoequipment/teleporter
+	name = "Mecha Teleporter"
+	desc = "Makes the mech blink randomly to another nearby location when used."
+	item = /obj/item/mecha_parts/mecha_equipment/teleporter
+	cost = 5
+
+/datum/uplink_item/exoequipment/pulsecannon
+	name = "Mecha Pulse Cannon"
+	desc = "The amount of effort the Syndicate took to get this weapon justifies the cost."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
+	cost = 300
+
+/datum/uplink_item/exoequipment/lmg
+	name = "Mecha Light Machine Gun"
+	desc = "A machine gun for your mech, what's not to love?"
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	cost = 10
+
+/datum/uplink_item/exoequipment/shotgun
+	name = "Mecha Shotgun"
+	desc = "Still not as good as the Bulldog, but it's something."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	cost = 10
+
+/datum/uplink_item/exoequipment/missilerack
+	name = "Mecha Missile Launcher"
+	desc = "Missile Launcher for you mech shoots missiles that explode for minor damage."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
+	cost = 20
+
+/datum/uplink_item/exoequipment/antiproj
+	name = "Mecha Projectile Armor Booster"
+	desc = "Boosts a mechs resistance to projectiles."
+	item = /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster
+	cost = 5
+
+/datum/uplink_item/exoequipment/ioncannon
+	name = "Mecha Ion Cannon"
+	desc = "The key to not getting shot is to disable their guns!"
+	item =  /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
+	cost = 20
 
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
