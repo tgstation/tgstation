@@ -222,6 +222,13 @@
 	if(istype(MB))
 		MB.RunOver(src)
 
+	if(ishuman(AM) && lying)
+		var/mob/living/carbon/human/stampede = AM
+		visible_message("<span class='danger'>[src] is trampled by [stampede.name]!</span>", "<span class='userdanger'>You got trampled by [stampede.name]!</span>")
+		adjustBruteLoss(8)
+		if(prob(30) && stampede.m_intent == MOVE_INTENT_RUN)
+			visible_message("<span class='danger'>[AM] trips over [src]!</span>")
+			stampede.Weaken(3)
 	spreadFire(AM)
 
 
