@@ -179,6 +179,34 @@
 
 	return cached_results[id] ? REACTING : NO_REACTION
 
+//endothermic, converts n2o and plasma to bz
+/datum/gas_reaction/bz
+	name = "BZ"
+	id = "bz"
+
+/datum/gas_reaction/bz/init_reqs()
+	min_requirements = list(
+		"TEMP" = T0C - 50,
+		"plasma" = MINIMUM_HEAT_CAPACITY,
+		"n2o" = MINIMUM_HEAT_CAPACITY
+	)
+	
+/datum/gas_reaction/bz/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	
+	var/avail_heat = air.temperature - TCMB
+	
+	//3 degrees required per one tenth of a canister
+	var/max_moles = min(cached_gases["plasma"][MOLES], cached_gases["n2o"][MOLES], MOLES_CELLSTANDARD / 25, avail_heat / 0.03)	
+	
+	air.temperature -= max_moles * 0.03
+	air.assert_gas("bz")
+	cached_gases["bz"][MOLES] += max_moles * 1.5
+	cached_gases["plasma"][MOLES] -= max_moles
+	cached_gases["n2o"][MOLES] -= max_moles
+	
+	return REACTING
+
 //fusion: a terrible idea that was fun to try. turns co2 and plasma into REALLY HOT oxygen and nitrogen. super exothermic lol
 /datum/gas_reaction/fusion
 	exclude = TRUE
