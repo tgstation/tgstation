@@ -234,6 +234,7 @@
 	throw_amount = 1
 	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/pneumatic_cannon/pie/can_load_item(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/pie))
