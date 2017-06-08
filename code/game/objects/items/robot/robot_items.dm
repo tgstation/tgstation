@@ -579,6 +579,7 @@
 	host = loc
 
 /obj/item/borg/projectile_dampen/process()
+	host = loc
 	process_recharge()
 	process_usage()
 	update_location()
