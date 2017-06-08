@@ -1,8 +1,0 @@
-author: "Expletive"
-delete-after: True
-changes: 
-  - tweak: "The detective's flask has Hearty Punch instead of whiskey."
-  - bugfix: "The Detective's fedora no longer clips with hair."
-  - imageadd: "Adds 91 new sprites to fix clipping issues with the Detective's fedora and hair."
-  - imageadd: "Change the standard fedora to match the detective and treasure hunter variants."
-  - tweak: "Detective, Treasure Hunter, and standard fedoras now all benefit from new sprites."

@@ -29,25 +29,21 @@
 /mob/dead/new_player/prepare_huds()
 	return
 
-/mob/dead/new_player/proc/linkify_ready(string, value)
-	return "<a href='byond://?src=\ref[src]:ready=[value]>[string]</a>"
-
 /mob/dead/new_player/proc/new_player_panel()
-	var/output = "<center><p>< href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+
+	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		switch(ready)
-			if(PLAYER_NOT_READY)
-				output += "<p>\[ [linkify_ready("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [linkify_ready("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
-			if(PLAYER_READY_TO_PLAY)
-				output += "<p>\[ <b>Ready</b> | [linkify_ready("Not Ready", PLAYER_NOT_READY)] | [linkify_ready("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
-			if(PLAYER_READY_TO_OBSERVE)
-				output += "<p>\[ [linkify_ready("Ready", PLAYER_READY_TO_PLAY)]] | [linkify_ready("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
+		if(ready)
+			output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+		else
+			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
 
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
-		output += "<p>[linkify_ready("Observe", 2)]</p>"
+
+	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())
@@ -112,22 +108,41 @@
 		return 1
 
 	if(href_list["ready"])
-		if(SSticker)
-			var/tready = text2num(href_list["ready"])
-			//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-			//This is likely not an actual issue but I don't have time to prove that this 
-			//no longer is required
-			if(SSticker.current_state <= GAME_STATE_PREGAME)
-				ready = tready
-			//if it's post initialisation and they're trying to observe we do the needful
-			if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
-				ready = tready
-				make_me_an_observer()
-				return
+		if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
+			ready = text2num(href_list["ready"])
 
 	if(href_list["refresh"])
 		src << browse(null, "window=playersetup") //closes the player setup window
 		new_player_panel()
+
+	if(href_list["observe"])
+
+		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+			if(!client)
+				return 1
+			var/mob/dead/observer/observer = new()
+
+			spawning = 1
+
+			observer.started_as_observer = 1
+			close_spawn_windows()
+			var/obj/O = locate("landmark*Observer-Start")
+			to_chat(src, "<span class='notice'>Now teleporting.</span>")
+			if (O)
+				observer.loc = O.loc
+			else
+				to_chat(src, "<span class='notice'>Teleporting failed. The map is probably still loading...</span>")
+			observer.key = key
+			observer.client = client
+			observer.set_ghost_appearance()
+			if(observer.client && observer.client.prefs)
+				observer.real_name = observer.client.prefs.real_name
+				observer.name = observer.real_name
+			observer.update_icon()
+			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+			QDEL_NULL(mind)
+			qdel(src)
+			return 1
 
 	if(href_list["late_join"])
 		if(!SSticker || !SSticker.IsRoundInProgress())
@@ -257,42 +272,6 @@
 					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 					return
 				to_chat(src, "<span class='notice'>Vote successful.</span>")
-
-//When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
-/mob/dead/new_player/proc/make_me_an_observer()
-	if(QDELETED(src) || !src.client)
-		ready = PLAYER_NOT_READY
-		return FALSE
-
-	var/this_is_like_playing_right = alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No")
-
-	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
-		ready = PLAYER_NOT_READY
-		return FALSE
-
-	var/mob/dead/observer/observer = new()
-	spawning = TRUE
-
-	observer.started_as_observer = TRUE
-	close_spawn_windows()
-	var/obj/O = locate("landmark*Observer-Start")
-	to_chat(src, "<span class='notice'>Now teleporting.</span>")
-	if (O)
-		observer.loc = O.loc
-	else
-		to_chat(src, "<span class='notice'>Teleporting failed. Ahelp an admin please</span>")
-		stack_trace("There's no freaking observer landmark available on this map or you're making observers before the map is initialised")
-	observer.key = key
-	observer.client = client
-	observer.set_ghost_appearance()
-	if(observer.client && observer.client.prefs)
-		observer.real_name = observer.client.prefs.real_name
-		observer.name = observer.real_name
-	observer.update_icon()
-	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-	QDEL_NULL(mind)
-	qdel(src)
-	return TRUE
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)

@@ -1043,7 +1043,7 @@
 		if(!G || (src in G.bosses))
 			return
 		SSticker.mode.remove_gangster(src,0,2,1)
-		G.bosses += src
+		G.bosses[src] = GANGSTER_BOSS_STARTING_INFLUENCE
 		gang_datum = G
 		special_role = "[G.name] Gang Boss"
 		G.add_gang_hud(src)
