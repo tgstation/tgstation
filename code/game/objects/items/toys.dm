@@ -19,6 +19,7 @@
  *		Toy big red button
  *		Beach ball
  *		Toy xeno
+ *		Lemon plushie
  *      Kitty toys!
  *		Snowballs
  */
@@ -1001,6 +1002,32 @@
 	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 	return ..()
 
+/*
+ * Lemon plushie
+ */
+ 
+ /obj/item/toy/lemonplushie
+	name = "lemon plushie"
+	desc = "A lemon plushie that feels heavier than it looks, this will make a scale unbalanced."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "lemon"
+	item_state = "lemon"
+	w_class = 2
+	attack_verb = list("slapped", "whacked", "robusted")
+	burn_state = FLAMMABLE
+	var/plushsound = 'sound/items/bikehorn.ogg'
+
+//Attack mob
+/obj/item/toy/lemonplushie/attack(mob/M, mob/user)
+	playsound(loc, plushsound, 20, 1)	//Play plushie sound in local area
+	return ..()
+
+//Attack self
+/obj/item/toy/lemonplushie/attack_self(mob/user)
+	playsound(src.loc, plushsound, 20, 1)
+	user << "<span class='notice'>You poke [src] and sense evil energies coming from it.</span>"
+	return ..()
+ 
 /*
  * Toy big red button
  */
