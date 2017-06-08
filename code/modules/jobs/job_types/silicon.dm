@@ -43,7 +43,7 @@ Cyborg
 	spawn_positions = 1
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
-	minimal_player_age = 21
+	minimal_player_age = 7
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H)
 	return H.Robotize(FALSE, FALSE)

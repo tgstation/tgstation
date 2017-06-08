@@ -19,7 +19,7 @@ Head of Security
 	supervisors = "the captain"
 	selection_color = "#ffdddd"
 	req_admin_notify = 1
-	minimal_player_age = 14
+	minimal_player_age = 21
 
 	outfit = /datum/outfit/job/hos
 
@@ -70,7 +70,7 @@ Warden
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	minimal_player_age = 7
+	minimal_player_age = 14
 
 	outfit = /datum/outfit/job/warden
 
@@ -120,7 +120,7 @@ Detective
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	minimal_player_age = 7
+	minimal_player_age = 14
 
 	outfit = /datum/outfit/job/detective
 
@@ -168,7 +168,7 @@ Security Officer
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
 	selection_color = "#ffeeee"
-	minimal_player_age = 7
+	minimal_player_age = 14
 
 	outfit = /datum/outfit/job/security
 
