@@ -110,10 +110,11 @@
 /obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(istype(Proj, /obj/item/projectile/energy/florayield))
 		var/rating = 1
+		if(plantname = "Money Tree") //Can't min max as easily as you can now, can't you?
+			return ..()
 		if(istype(loc, /obj/machinery/hydroponics))
 			var/obj/machinery/hydroponics/H = loc
 			rating = H.rating
-
 		if(yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjust_yield(1 * rating)
 		else if(prob(1/(yield * yield) * 100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
@@ -142,6 +143,21 @@
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	var/product_name
+	if(plantname = "Money Tree")
+		var/cashpotency = potency
+		switch(cashpotency)
+			if(0 to 20)
+				product = /obj/item/stack/spacecash
+			if(21 to 40)
+				product = /obj/item/stack/spacecash/c10
+			if(41 to 60)
+				product = /obj/item/stack/spacecash/c20
+			if(61 to 80)
+				product = /obj/item/stack/spacecash/c50
+			if(81 to 99)
+				product = /obj/item/stack/spacecash/c100
+			else
+				product = /obj/item/stack/spacecash/c200
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		result.Add(t_prod) // User gets a consumable

@@ -169,7 +169,7 @@
 		Hydro.adjustPests(-10)
 	if(prob(BEE_POLLINATE_YIELD_CHANCE))
 		Hydro.myseed.adjust_yield(1)
-		Hydro.yieldmod = 2
+		Hydro.yieldmod = 1.3
 	if(prob(BEE_POLLINATE_POTENCY_CHANCE))
 		Hydro.myseed.adjust_potency(1)
 
