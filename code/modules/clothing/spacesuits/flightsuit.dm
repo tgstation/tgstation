@@ -292,6 +292,9 @@
 				if(dragging_through && oldturf)
 					dragging_through.forceMove(oldturf)
 					wearer.pulling = dragging_through
+				if(has_buckled_mobs())
+					for(var/mob/M in buckled_mobs)
+						M.forceMove(get_turf(wearer))
 				sleep(1)
 
 //Make the wearer lose some momentum.
@@ -563,6 +566,9 @@
 		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
 			target = get_step(A, A.dir)
 		wearer.forceMove(target)
+		if(has_buckled_mobs())
+			for(var/mob/M in buckled_mobs)
+				M.forceMove(get_turf(wearer))
 		if(dragging_through)
 			dragging_through.forceMove(target)
 			wearer.pulling = dragging_through
