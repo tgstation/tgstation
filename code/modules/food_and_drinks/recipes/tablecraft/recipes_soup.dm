@@ -103,6 +103,18 @@
 	subcategory = CAT_SOUP
 
 
+/datum/crafting_recipe/food/eyeballsoup
+	name = "Eyeball soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/weapon/reagent_containers/glass/bowl = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 2,
+		/obj/item/organ/eyes = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/tomato/eyeball
+	category = CAT_SOUP
+
+
 /datum/crafting_recipe/food/milosoup
 	name = "Milo soup"
 	reqs = list(
