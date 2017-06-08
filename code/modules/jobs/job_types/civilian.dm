@@ -43,7 +43,7 @@ Clown
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/weapon/storage/box/hug/survival
 

@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	null, \
 	new/datum/stack_recipe("backpack", /obj/item/weapon/storage/backpack, 4), \
-	new/datum/stack_recipe("dufflebag", /obj/item/weapon/storage/backpack/dufflebag, 6), \
+	new/datum/stack_recipe("duffel bag", /obj/item/weapon/storage/backpack/duffelbag, 6), \
 	null, \
 	new/datum/stack_recipe("plant bag", /obj/item/weapon/storage/bag/plants, 4), \
 	new/datum/stack_recipe("book bag", /obj/item/weapon/storage/bag/books, 4), \

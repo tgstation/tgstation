@@ -998,7 +998,7 @@
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
-	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
+	contains = list(/obj/item/weapon/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
 	contraband = TRUE
 	access = GLOB.access_theatre
