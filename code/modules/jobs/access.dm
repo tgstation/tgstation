@@ -279,7 +279,7 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 		if(5) //engineering and maintenance
 			return list(GLOB.access_construction, GLOB.access_maint_tunnels, GLOB.access_engine, GLOB.access_engine_equip, GLOB.access_external_airlocks, GLOB.access_tech_storage, GLOB.access_atmospherics, GLOB.access_tcomsat, GLOB.access_minisat, GLOB.access_ce)
 		if(6) //supply
-			return list(GLOB.access_mailsorting, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom, GLOB.access_cargo, GLOB.access_qm)
+			return list(GLOB.access_mailsorting, GLOB.access_mining, GLOB.access_mining_station, GLOB.access_mineral_storeroom, GLOB.access_cargo, GLOB.access_qm, GLOB.access_heads_vault)
 		if(7) //command
 			return list(GLOB.access_heads, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_change_ids, GLOB.access_ai_upload, GLOB.access_teleporter, GLOB.access_eva, GLOB.access_gateway, GLOB.access_all_personal_lockers, GLOB.access_heads_vault, GLOB.access_hop, GLOB.access_captain)
 
