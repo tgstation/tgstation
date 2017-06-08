@@ -9,6 +9,7 @@
 	item_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
+	unique_rename = 1
 	var/stage = EMPTY
 	var/list/beakers = list()
 	var/list/allowed_containers = list(/obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
@@ -50,6 +51,7 @@
 
 
 /obj/item/weapon/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
+	..()
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(stage == WIRED)
 			if(beakers.len)
