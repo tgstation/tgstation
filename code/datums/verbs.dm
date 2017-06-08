@@ -9,8 +9,10 @@
 /datum/verbs/proc/GetList()
 	CRASH("Abstract verblist for [type]")
 
-//modify outlist for each entry in Generate_list
-/datum/verbs/proc/HandleVerb(list/outlist, atom/verb/verbpath, ...)
+//do things for each entry in Generate_list
+//return value sets Generate_list[verbpath]
+/datum/verbs/proc/HandleVerb(list/entry, atom/verb/verbpath, ...)
+	return entry
 
 /datum/verbs/New()
 	var/mainlist = GetList()
@@ -91,8 +93,7 @@
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
 		
-		HandleVerb(arglist(list(entry, verbpath) + args))
-		.[verbpath] = entry
+		.[verbpath] = HandleVerb(arglist(list(entry, verbpath) + args))
 
 /world/proc/LoadVerbs(verb_type)
 	if(!ispath(verb_type, /datum/verbs) || verb_type == /datum/verbs)

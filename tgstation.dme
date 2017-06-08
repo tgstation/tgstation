@@ -439,6 +439,7 @@
 #include "code\game\gamemodes\clock_cult\clock_structures\interdiction_lens.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\mania_motor.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ocular_warden.dm"
+#include "code\game\gamemodes\clock_cult\clock_structures\prolonging_prism.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\ratvar_the_clockwork_justicar.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\taunting_trail.dm"
 #include "code\game\gamemodes\clock_cult\clock_structures\tinkerers_cache.dm"

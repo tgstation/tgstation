@@ -1,0 +1,4 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - balance: "The blood cult can only attempt to summon Nar-Sie in one of three rooms that are randomly selected at round-start."
