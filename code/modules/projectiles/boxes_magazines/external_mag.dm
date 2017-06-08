@@ -338,7 +338,7 @@
 
 /obj/item/ammo_box/magazine/toy/pistol
 	name = "foam force pistol magazine"
-	icon_state = "9x19p"
+	icon_state = "9x19-[ammo_count() ? "8" : "0"]-toy"
 	max_ammo = 8
 	multiple_sprites = 2
 
