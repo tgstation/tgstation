@@ -430,6 +430,12 @@
 	contains = list(/obj/item/weapon/storage/box/exileimp)
 	crate_name = "exile implant crate"
 
+/datum/supply_pack/security/armory/ionrifles
+	name = "Ion Carbine Crate"
+	cost = 2500
+	contains = list(/obj/item/weapon/gun/energy/ionrifle/carbine)
+	crate_name = "Ion carbine crate"
+
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barriers Crate"
 	contains = list(/obj/item/weapon/grenade/barrier,
