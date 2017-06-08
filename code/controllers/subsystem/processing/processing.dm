@@ -22,9 +22,7 @@ SUBSYSTEM_DEF(processing)
 	while(current_run.len)
 		var/datum/thing = current_run[current_run.len]
 		current_run.len--
-		if(thing)
-			thing.process(wait)
-		else
+		if(QDELETED(thing) || thing.process(wait) == PROCESS_KILL)
 			processing -= thing
 		if (MC_TICK_CHECK)
 			return

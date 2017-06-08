@@ -43,7 +43,7 @@
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
-	targetitem = /obj/item/clothing/tie/medal/gold/captain
+	targetitem = /obj/item/clothing/accessory/medal/gold/captain
 	difficulty = 5
 	excludefromjob = list("Captain")
 

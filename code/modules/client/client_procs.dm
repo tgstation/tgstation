@@ -327,9 +327,9 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	var/list/topmenus = GLOB.menulist[/datum/menu]
+	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)
-		var/datum/menu/topmenu = thing
+		var/datum/verbs/menu/topmenu = thing
 		var/topmenuname = "[topmenu]"
 		if (topmenuname == "[topmenu.type]")
 			var/list/tree = splittext(topmenuname, "/")
@@ -338,13 +338,13 @@ GLOBAL_LIST(external_rsc_urls)
 		var/list/entries = topmenu.Generate_list(src)
 		for (var/child in entries)
 			winset(src, "[url_encode(child)]", "[entries[child]]")
-			if (!ispath(child, /datum/menu))
+			if (!ispath(child, /datum/verbs/menu))
 				var/atom/verb/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
-		var/datum/menu/menuitem = GLOB.menulist[thing]
+		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
 
@@ -452,7 +452,7 @@ GLOBAL_LIST(external_rsc_urls)
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),COALESCE(INET_ATON('[world.internet_address]'), 0),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 
 /client/proc/findJoinDate()

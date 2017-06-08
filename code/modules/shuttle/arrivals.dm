@@ -43,16 +43,16 @@
 			console = locate(/obj/machinery/requests_console) in A
 		areas += A
 
-	if(GLOB.latejoin.len)
+	if(SSjob.latejoin_trackers.len)
 		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	if(!new_latejoin.len)
 		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
-		if(!GLOB.latejoin.len)
+		if(!SSjob.latejoin_trackers.len)
 			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
 		return
 
-	GLOB.latejoin = new_latejoin
+	SSjob.latejoin_trackers = new_latejoin
 
 /obj/docking_port/mobile/arrivals/dockRoundstart()
 	SSshuttle.generate_transit_dock(src)
@@ -109,7 +109,7 @@
 		Launch(FALSE)
 
 /obj/docking_port/mobile/arrivals/proc/CheckTurfsPressure()
-	for(var/I in GLOB.latejoin)
+	for(var/I in SSjob.latejoin_trackers)
 		var/turf/open/T = get_turf(I)
 		var/pressure = T.air.return_pressure()
 		if(pressure < HAZARD_LOW_PRESSURE || pressure > HAZARD_HIGH_PRESSURE)	//simple safety check

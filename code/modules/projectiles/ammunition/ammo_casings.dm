@@ -76,11 +76,6 @@
 	caliber = "4.6x30mm"
 	projectile_type = /obj/item/projectile/bullet/incendiary/firebullet
 
-/obj/item/ammo_casing/c46carbine
-	desc = "A 4.6x30mm bullet casing."
-	caliber = "4.6x30mm"
-	projectile_type = /obj/item/projectile/bullet/carbinebullet
-
 /obj/item/ammo_casing/c45
 	desc = "A .45 bullet casing."
 	caliber = ".45"
