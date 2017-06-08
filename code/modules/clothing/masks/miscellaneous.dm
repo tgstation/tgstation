@@ -172,6 +172,14 @@
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
+/obj/item/clothing/mask/bandana/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(src, be_close=TRUE))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	else
+		adjustmask(user)
+
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
