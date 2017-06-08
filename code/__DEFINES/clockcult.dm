@@ -19,19 +19,16 @@ GLOBAL_VAR_INIT(ark_of_the_clockwork_justiciar, null) //The Ark. The servants ha
 GLOBAL_VAR_INIT(ratvar_awakens, 0) //If Ratvar has been summoned; not a boolean, for proper handling of multiple Ratvars
 GLOBAL_VAR_INIT(clockwork_gateway_activated, FALSE) //if a gateway to the celestial derelict has ever been successfully activated
 
+GLOBAL_VAR_INIT(function_scripture_unlocked, FALSE) //if function scriptures have been unlocked
+GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //if application scriptures have been unlocked
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
-//Scripture tiers and requirements; peripherals should never be used
+//Scripture tiers; peripherals should never be used
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
-#define SCRIPT_SERVANT_REQ 5
+#define SCRIPTURE_FUNCTION "Function"
 #define SCRIPTURE_APPLICATION "Application"
-#define APPLICATION_SERVANT_REQ 8
-#define APPLICATION_CV_REQ 100
-#define SCRIPTURE_JUDGEMENT "Judgement"
-#define JUDGEMENT_SERVANT_REQ 12
-#define JUDGEMENT_CV_REQ 300
 
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully

@@ -1,6 +1,7 @@
 /////////////
 // SCRIPTS //
 /////////////
+//These are tier 2 scriptures, unlocked by default and moderately strong.
 
 //Ocular Warden: Creates an ocular warden, which defends a small area near it.
 /datum/clockwork_scripture/create_object/ocular_warden

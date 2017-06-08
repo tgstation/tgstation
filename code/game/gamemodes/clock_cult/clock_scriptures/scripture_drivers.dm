@@ -1,6 +1,7 @@
 /////////////
 // DRIVERS //
 /////////////
+//These are tier 1 scriptures, unlocked by default and comparatively weak.
 
 //Belligerent: Channeled for up to fifteen times over thirty seconds. Forces non-servants that can hear the chant to walk, doing minor damage. Nar-Sian cultists are burned.
 /datum/clockwork_scripture/channeled/belligerent
@@ -119,18 +120,6 @@
 	Click your slab to cancel.</b></span>"
 	timeout_time = 100
 
-/datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
-				servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		whispered = FALSE
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*3, 50)
-	return ..()
-
 //The scripture that does the converting.
 /datum/clockwork_scripture/geis
 	name = "Geis Conversion"
@@ -151,18 +140,9 @@
 	return ..()
 
 /datum/clockwork_scripture/geis/run_scripture()
-	var/servants = 0
-	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
-				servants++
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*7, 120)
-		binding.can_resist = TRUE
 	binding.setDir(target.dir)
 	binding.buckle_mob(target, TRUE)
 	return ..()

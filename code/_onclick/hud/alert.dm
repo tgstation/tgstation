@@ -356,7 +356,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 // CLOCKCULT
 /obj/screen/alert/clockwork
 	alerttooltipstyle = "clockcult"
-
+/*
 /obj/screen/alert/clockwork/scripture_reqs
 	name = "Next Tier Requirements"
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
@@ -431,7 +431,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			else
 				textlist += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
 		desc = textlist.Join()
-
+*/
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."

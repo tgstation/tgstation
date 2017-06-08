@@ -192,7 +192,7 @@ Credit where due:
 	if(GLOB.clockwork_gateway_activated || GLOB.ark_of_the_clockwork_justiciar)
 		SSticker.news_report = CLOCK_SUMMON
 		return TRUE
-	SSticker.news_report = CULT_FAILURE
+	SSticker.news_report = CLOCK_FAILURE
 	return
 
 /datum/game_mode/clockwork_cult/declare_completion()
@@ -202,7 +202,7 @@ Credit where due:
 		if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 			text += "<span class='large_brass'><b>Ratvar's servants defended the Ark and summoned Ratvar!</b></span>"
 			snd = sound('sound/ambience/antag/ClockCultAlr.ogg', volume = 50)
-			SSticker.mode_result = "win - servants completed their objective (summon ratvar)"
+			SSticker.mode_result = "win - servants defended the ark"
 		else
 			text += "<span class='large_brass'><b>The crew ran away like wimps, allowing Ratvar to rise unopposed!</b></span>"
 			snd = sound('sound/ambience/antag/ClockCultAlr.ogg', volume = 50)
@@ -210,7 +210,7 @@ Credit where due:
 	else
 		text += "<span class='userdanger'>The Ark has been destroyed! Ratvar will rust away in Reebe for all eternity!</span>"
 		snd = sound('sound/magic/clockwork/ratvar_attack.ogg', volume = 50)
-		SSticker.mode_result = "win - crew fled"
+		SSticker.mode_result = "loss - ark destroyed"
 	to_chat(world, text)
 	to_chat(world, snd) //Yes, this actually works
 

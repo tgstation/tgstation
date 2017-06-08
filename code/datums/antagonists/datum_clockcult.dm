@@ -112,8 +112,6 @@
 		hierophant_network.span_for_name = "nezbere"
 		hierophant_network.span_for_message = "brass"
 	current.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
-	if(!GLOB.clockwork_gateway_activated)
-		current.throw_alert("scripturereq", /obj/screen/alert/clockwork/scripture_reqs)
 
 /datum/antagonist/clockcult/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/current = owner.current

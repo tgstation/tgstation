@@ -188,12 +188,6 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
-		var/servants = 0
-		for(var/mob/living/M in GLOB.living_mob_list)
-			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-				servants++
-		if(servants > SCRIPT_SERVANT_REQ)
-			servants -= SCRIPT_SERVANT_REQ
 
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
@@ -211,7 +205,7 @@
 		<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, though in combination their effects become more nuanced.<br><br>\
 		\
 		There are also four tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, \
-		<font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
+		<font color=#BE8700>[SCRIPTURE_FUNCTION]</font>, and <font color=#BE8700>[SCRIPTURE_APPLICATION]</font>.<br>\
 		Each tier has additional requirements, including Servants, Tinkerer's Caches, and <b>Construction Value</b>(<b>CV</b>). Construction Value is gained by creating structures or converting the \
 		station, and everything too large to hold will grant some amount of it.<br><br>\
 		\
@@ -256,18 +250,12 @@
 		if(SCRIPTURE_SCRIPT)
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants.</i></font>"
+		if(SCRIPTURE_FUNCTION)
+			if(SSticker.scripture_states[SCRIPTURE_FUNCTION])
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
-		if(SCRIPTURE_JUDGEMENT)
-			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
-				data["tier_info"] = "<font color=#B18B25><b>This scripture is permenantly unlocked.</b></font>"
-			else
-				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
 
 	data["selected"] = selected_scripture
 

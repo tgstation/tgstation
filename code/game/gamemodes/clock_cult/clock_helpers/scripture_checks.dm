@@ -1,21 +1,6 @@
 //returns a list of scriptures and if they're unlocked or not
 /proc/scripture_unlock_check()
-	var/servants = 0
-	var/unconverted_ai_exists = get_unconverted_ais()
-	for(var/mob/living/M in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
-	//Drivers: always unlocked
-	.[SCRIPTURE_SCRIPT] = (SSticker.scripture_states[SCRIPTURE_SCRIPT] || \
-	(servants >= SCRIPT_SERVANT_REQ))
-	//Script: SCRIPT_SERVANT_REQ or more non-brain servants
-	.[SCRIPTURE_APPLICATION] = (SSticker.scripture_states[SCRIPTURE_APPLICATION] || \
-	(servants >= APPLICATION_SERVANT_REQ && GLOB.clockwork_construction_value >= APPLICATION_CV_REQ))
-	//Application: APPLICATION_SERVANT_REQ or more non-brain servants and at least APPLICATION_CV_REQ CV
-	.[SCRIPTURE_JUDGEMENT] = (SSticker.scripture_states[SCRIPTURE_JUDGEMENT] || \
-	(servants >= JUDGEMENT_SERVANT_REQ && GLOB.clockwork_construction_value >= JUDGEMENT_CV_REQ && !unconverted_ai_exists))
-	//Judgement: JUDGEMENT_SERVANT_REQ or more non-brain servants, at least JUDGEMENT_CV_REQ CV, and there are no living, non-servant ais
+	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = TRUE, SCRIPTURE_FUNCTION = TRUE, SCRIPTURE_APPLICATION = TRUE)
 
 //reports to servants when scripture is locked or unlocked
 /proc/scripture_unlock_alert(list/previous_states)
