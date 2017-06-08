@@ -704,6 +704,14 @@
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
 
+/datum/design/c46mm
+	name = "Ammo Box (4.6x30mm)"
+	id = "c46mm"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c46mm
+	category = list("hacked", "Security")
+
 /datum/design/cleaver
 	name = "Butcher's Cleaver"
 	id = "cleaver"
