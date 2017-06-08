@@ -82,6 +82,7 @@
 	new /obj/item/weapon/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
+	new /obj/item/clothing/under/rank/head_of_security/grey(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -131,28 +132,28 @@
 
 /obj/structure/closet/secure_closet/security/cargo/PopulateContents()
 	..()
-	new /obj/item/clothing/tie/armband/cargo(src)
+	new /obj/item/clothing/accessory/armband/cargo(src)
 	new /obj/item/device/encryptionkey/headset_cargo(src)
 
 /obj/structure/closet/secure_closet/security/engine
 
 /obj/structure/closet/secure_closet/security/engine/PopulateContents()
 	..()
-	new /obj/item/clothing/tie/armband/engine(src)
+	new /obj/item/clothing/accessory/armband/engine(src)
 	new /obj/item/device/encryptionkey/headset_eng(src)
 
 /obj/structure/closet/secure_closet/security/science
 
 /obj/structure/closet/secure_closet/security/science/PopulateContents()
 	..()
-	new /obj/item/clothing/tie/armband/science(src)
+	new /obj/item/clothing/accessory/armband/science(src)
 	new /obj/item/device/encryptionkey/headset_sci(src)
 
 /obj/structure/closet/secure_closet/security/med
 
 /obj/structure/closet/secure_closet/security/med/PopulateContents()
 	..()
-	new /obj/item/clothing/tie/armband/medblue(src)
+	new /obj/item/clothing/accessory/armband/medblue(src)
 	new /obj/item/device/encryptionkey/headset_med(src)
 
 /obj/structure/closet/secure_closet/detective
@@ -170,7 +171,7 @@
 	new /obj/item/clothing/head/det_hat(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/under/rank/det/grey(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/det_suit/grey(src)
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)

@@ -69,7 +69,7 @@
 
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 85
+	cost = 305 // 2000u of plasma + 2000u of metal.
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 

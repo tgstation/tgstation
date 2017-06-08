@@ -1,9 +1,10 @@
 /datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel
 	spawnableTurfs = list(/turf/open/floor/plasteel = 100)
 	var/ignore_wall = FALSE
+	allowAtomsOnSpace = TRUE
 
 /datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel/place(turf/T)
-	if(isclosedturf(T))
+	if(isclosedturf(T) && !ignore_wall)
 		return FALSE
 	return TRUE
 
@@ -13,6 +14,7 @@
 /datum/mapGeneratorModule/border/normalWalls
 	spawnableAtoms = list()
 	spawnableTurfs = list(/turf/closed/wall = 100)
+	allowAtomsOnSpace = TRUE
 
 /datum/mapGenerator/repair
 	modules = list(/datum/mapGeneratorModule/bottomLayer/repairFloorPlasteel,

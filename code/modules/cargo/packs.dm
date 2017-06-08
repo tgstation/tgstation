@@ -1249,13 +1249,13 @@
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
-	cost = 3000
+	cost = 7500
 	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/plasteel50
 	name = "50 Plasteel Sheets"
-	cost = 5000
+	cost = 16500
 	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	crate_name = "plasteel sheets crate"
 
@@ -1637,7 +1637,7 @@
 					/obj/item/clothing/suit/toggle/lawyer/purple,
 					/obj/item/clothing/under/lawyer/blacksuit,
 					/obj/item/clothing/suit/toggle/lawyer/black,
-					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/accessory/waistcoat,
 					/obj/item/clothing/neck/tie/blue,
 					/obj/item/clothing/neck/tie/red,
 					/obj/item/clothing/neck/tie/black,

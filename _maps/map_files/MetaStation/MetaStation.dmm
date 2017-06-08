@@ -14011,7 +14011,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/clothing/neck/tie/black,
@@ -15128,7 +15128,7 @@
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/suppressor,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/weapon/soap/nanotrasen)
 	},
 /obj/item/weapon/storage/backpack/dufflebag{
-	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/tie/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
+	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/accessory/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
 	desc = "A large dufflebag for holding extra things. There is a NanoTrasen logo on the back.";
 	icon_state = "duffle-syndieammo";
 	item_state = "duffle-syndieammo"
@@ -22375,12 +22375,11 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQd" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	dir = 1;
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -57182,7 +57181,7 @@
 "ccz" = (
 /obj/item/weapon/wrench,
 /obj/item/clothing/suit/apron,
-/obj/item/clothing/tie/armband/hydro,
+/obj/item/clothing/accessory/armband/hydro,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -85834,12 +85833,11 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "deI" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85898,13 +85896,12 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "deT" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "plasma";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1;
+	filter_type = "plasma"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85974,13 +85971,12 @@
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "dfd" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "o2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1;
+	filter_type = "o2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -86073,13 +86069,12 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dft" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
-	filter_type = "co2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 1;
+	filter_type = "co2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)

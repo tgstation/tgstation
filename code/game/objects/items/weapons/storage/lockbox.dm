@@ -100,17 +100,20 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 10
+	max_combined_w_class = 20
 	req_access = list(GLOB.access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
+	can_hold = list(/obj/item/clothing/accessory/medal)
 
 /obj/item/weapon/storage/lockbox/medal/PopulateContents()
-	new /obj/item/clothing/tie/medal/silver/valor(src)
-	new /obj/item/clothing/tie/medal/bronze_heart(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/bronze_heart(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/gold/captain(src)
-	new /obj/item/clothing/tie/medal/silver/security(src)
-	new /obj/item/clothing/tie/medal/nobel_science(src)
-	new /obj/item/clothing/tie/medal/gold/heroism(src)
+		new /obj/item/clothing/accessory/medal/conduct(src)
+	new /obj/item/clothing/accessory/medal/gold/captain(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/plasma(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/gold/heroism(src)
