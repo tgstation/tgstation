@@ -3,10 +3,21 @@
 	force_wielded = 5
 	damtype = "fire" //do do doooo, I'll take you to buurn.
 	heat = 1000
+	icon = 'hippiestation/icons/obj/weapons.dmi'
+	icon_state = "fireaxe0"
+	alternate_worn_icon = 'hippiestation/icons/mob/back.dmi'
+	lefthand_file = 'hippiestation/icons/mob/inhands/lefthand.dmi'
+	righthand_file = 'hippiestation/icons/mob/inhands/righthand.dmi'
+	attack_verb = list("incinerated", "conflagrated", "seared", "scorched", "roasted", "immolated")
 	var/charged = TRUE
 	var/burnwall = TRUE
 	var/charge_time = 15
 	var/kindle_time = 100
+
+/obj/item/weapon/twohanded/fireaxe/fireyaxe/update_icon()
+	icon_state = "fireaxe[wielded]"
+	return
+
 
 /obj/item/projectile/bullet/incendiary/shell/firehammer
 	name = "fiery gout"
@@ -51,11 +62,11 @@
 		else if(istype(target, /obj/machinery/door))
 			var/obj/machinery/door/D = target
 			D.take_damage(50, BRUTE, "melee", 0)
-		else if(istype(target, /obj/structure/door_assembly/door_assembly_com/glass))
-			var/obj/structure/door_assembly/door_assembly_com/A = target
+		else if(istype(target, /obj/structure/door_assembly))
+			var/obj/structure/door_assembly/A = target
 			A.take_damage(200, BRUTE, "melee", 0)
 		else if(istype(target, /obj/structure/mineral_door))
-			var/obj/structure/mineral_door/M
+			var/obj/structure/mineral_door/M = target
 			M.take_damage(200, BRUTE, "melee", 0)// HERE'S JOHNNY!!!
 		if(iswallturf(target))
 			var/turf/closed/wall/Wall = target
