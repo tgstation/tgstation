@@ -1,3 +1,5 @@
+#define MAX_CRATE_BUMP_CHAIN 5 //amount of crates that can be pushed at once
+
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
@@ -14,10 +16,34 @@
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
 	var/obj/item/weapon/paper/manifest/manifest
+	var/bump_chain = 1
 
 /obj/structure/closet/crate/New()
 	..()
 	update_icon()
+
+/obj/structure/closet/crate/Bump(atom/A)
+	..()
+	if(!istype(A, /obj/structure/closet/crate))
+		bump_chain = 0 //hit an obstacle, previous crate must not try to move or it'll loop
+	else
+		var/obj/structure/closet/crate/C = A
+		if(C.anchored)
+			bump_chain = 0 //an anchored crate is an obstacle
+
+/obj/structure/closet/crate/Bumped(AM as mob|obj)
+	..()
+	if(istype(AM, /obj/structure/closet/crate) && !anchored)
+		var/obj/structure/closet/crate/previous_crate = AM
+		bump_chain = previous_crate.bump_chain + 1
+		if(bump_chain > MAX_CRATE_BUMP_CHAIN)
+			bump_chain = 1
+			return
+		var/d = get_dir(AM, src)
+		step(src, d) //move next crate
+		if(bump_chain) //did it hit an obstacle?
+			step(AM, d) //move to follow
+	bump_chain = 1 //reset
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!istype(mover, /obj/structure/closet))
