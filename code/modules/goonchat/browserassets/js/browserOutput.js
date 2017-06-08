@@ -492,7 +492,6 @@ $(function() {
 	******************************************/
 	var savedConfig = {
 		'sfontSize': getCookie('fontsize'),
-		'sfontType': getCookie('fonttype'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
@@ -501,10 +500,6 @@ $(function() {
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
-	}
-	if (savedConfig.sfontType) {
-		$messages.css('font-family', savedConfig.sfontType);
-		internalOutput('<span class="internal boldnshit">Loaded font type setting of: '+savedConfig.sfontType+'</span>', 'internal');
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -768,7 +763,7 @@ $(function() {
 		setCookie('fontsize', fontSize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
 	});
-	
+
 	$('#togglePing').click(function(e) {
 		if (opts.pingDisabled) {
 			$('#ping').slideDown('fast');
