@@ -17576,6 +17576,8 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
+/obj/item/toy/figure/clown,
+/obj/item/weapon/clipboard,
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "aKQ" = (
@@ -104910,12 +104912,10 @@
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "efc" = (
-/obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/toy/figure/clown,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "efd" = (

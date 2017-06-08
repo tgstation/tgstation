@@ -955,6 +955,7 @@
 #include "code\game\objects\structures\crates_lockers\crates\critter.dm"
 #include "code\game\objects\structures\crates_lockers\crates\large.dm"
 #include "code\game\objects\structures\crates_lockers\crates\secure.dm"
+#include "code\game\objects\structures\crates_lockers\crates\wooden.dm"
 #include "code\game\objects\structures\transit_tubes\station.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube_construction.dm"
