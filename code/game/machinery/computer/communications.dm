@@ -1,7 +1,7 @@
 // The communications computer
 /obj/machinery/computer/communications
 	name = "communications console"
-	desc = "This can be used for various important functions. Still under developement."
+	desc = "A console used for high-priority announcements and emergencies."
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(GLOB.access_heads)
