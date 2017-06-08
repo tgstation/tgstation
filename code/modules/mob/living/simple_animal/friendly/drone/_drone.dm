@@ -59,7 +59,6 @@
 	"3. Your goals are to build, maintain, repair, improve, and provide power to the best of your abilities, You must never actively work against these goals."
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
-	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
@@ -77,6 +76,7 @@
 	"<span class='notify'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	var/datum/alarm_listener/a_listener
 
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
@@ -104,7 +104,12 @@
 
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
+	//Handles alarm related functionality for this mob
+	a_listener = new datum/alarm_listener(src, (ALARM_POWER, ALARM_FIRE, ALARM_ATMOS), ALARM_CREATED|ALARM_CANCELLED)
 
+/mob/living/simple_animal/drone/Destroy()
+	QDEL_NULL(a_listener)
+	. = ..()
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
