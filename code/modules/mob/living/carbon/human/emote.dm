@@ -49,6 +49,10 @@
 	key = "pale"
 	message = "goes pale for a second."
 
+/datum/emote/living/carbon/human/dab
+	key = "dab"
+	message = "dabs."
+
 /datum/emote/living/carbon/human/raise
 	key = "raise"
 	key_third_person = "raises"
