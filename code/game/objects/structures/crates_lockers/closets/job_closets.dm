@@ -15,8 +15,8 @@
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/rank/bartender(src)
 	new /obj/item/clothing/under/rank/bartender(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -39,8 +39,8 @@
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/apron/chef(src)
 	new /obj/item/clothing/head/soft/mime(src)
@@ -95,8 +95,8 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
-	new /obj/item/clothing/tie/lawyers_badge(src)
-	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/accessory/lawyers_badge(src)
+	new /obj/item/clothing/accessory/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"

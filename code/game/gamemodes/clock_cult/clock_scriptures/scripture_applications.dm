@@ -240,7 +240,7 @@
 /datum/clockwork_scripture/create_object/tinkerers_daemon
 	descname = "Powered Structure, Component Generator"
 	name = "Tinkerer's Daemon"
-	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, is outnumbered by Servants by a ratio of 5:1, \
+	desc = "Creates a tinkerer's daemon which can rapidly collect components. It will only function if it has sufficient power, active daemons are outnumbered by Servants by a ratio of 5:1, \
 	and there is at least one existing cache."
 	invocations = list("May this generator...", "...collect Engine parts that yet hold greatness!")
 	channel_time = 80
@@ -256,19 +256,6 @@
 	sort_priority = 9
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Daemon, which can rapidly collect components for power."
-
-/datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
-	var/servants = 0
-	for(var/mob/living/L in GLOB.living_mob_list)
-		if(is_servant_of_ratvar(L))
-			servants++
-	if(servants * 0.2 < GLOB.clockwork_daemons)
-		to_chat(invoker, "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>")
-		return FALSE
-	if(servants * 0.2 < GLOB.clockwork_daemons+1)
-		to_chat(invoker, "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>")
-		return FALSE
-	return ..()
 
 
 //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk at a power cost.

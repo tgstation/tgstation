@@ -1,0 +1,5 @@
+author: "Nanotrasen Plastic Surgery Advert"
+delete-after: True
+changes: 
+  - rscadd: "Are you a mutant? Were you born hideously deformed? Do you have ears growing out of the top of your head? Or even a tail? Don't worry, with our patented surgical techniques, Nanotrasen's highly trained medical staff can make you normal! Schedule an appointment, and one of our surgeons can see you same day."
+  - balance: "Cat ears now give you double the ear damage."

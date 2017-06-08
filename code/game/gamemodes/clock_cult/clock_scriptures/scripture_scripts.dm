@@ -347,27 +347,27 @@
 	return slab.procure_gateway(invoker, duration, portal_uses)
 
 
-//Volt Void: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
-/datum/clockwork_scripture/channeled/volt_void
+//Volt Blaster: Channeled for up to five times over ten seconds to fire up to five rays of energy at target locations.
+/datum/clockwork_scripture/channeled/volt_blaster
 	descname = "Channeled, Targeted Energy Blasts"
-	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
-	desc = "Allows you to fire energy rays at target locations; more power consumed causes more damage. Channeled every fifth of a second for a maximum of ten seconds."
+	name = "Volt Blaster"
+	desc = "Allows you to fire five energy rays at target locations. Channeled every fourth of a second for a maximum of ten seconds."
 	channel_time = 30
 	invocations = list("Amperage...", "...grant me your power!")
 	chant_invocations = list("Use charge to kill!", "Slay with power!", "Hunt with energy!")
-	chant_amount = 4
-	chant_interval = 5
+	chant_amount = 5
+	chant_interval = 4
 	consumed_components = list(GEIS_CAPACITOR = 1, HIEROPHANT_ANSIBLE = 2)
 	usage_tip = "Though it requires you to stand still, this scripture can do massive damage."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Allows you to fire energy rays at target locations. Failing to fire causes backlash.<br><b>Maximum 4 chants.</b>"
+	quickbind_desc = "Allows you to fire energy rays at target locations.<br><b>Maximum 5 chants.</b>"
 	var/static/list/nzcrentr_insults = list("You're not very good at aiming.", "You hunt badly.", "What a waste of energy.", "Almost funny to watch.",
 	"Boss says </span><span class='heavy_brass'>\"Click something, you idiot!\"</span><span class='nzcrentr'>.", "Stop wasting components if you can't aim.")
 
-/datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
+/datum/clockwork_scripture/channeled/volt_blaster/chant_effects(chant_number)
 	slab.busy = null
 	var/datum/clockwork_scripture/ranged_ability/volt_ray/ray = new
 	ray.slab = slab
@@ -375,24 +375,6 @@
 	var/turf/T = get_turf(invoker)
 	if(!ray.run_scripture() && slab && invoker)
 		if(can_recite() && T == get_turf(invoker))
-			if(!GLOB.ratvar_awakens)
-				var/obj/structure/destructible/clockwork/powered/volt_checker/VC = new/obj/structure/destructible/clockwork/powered/volt_checker(get_turf(invoker))
-				var/multiplier = 0.5
-				var/usable_power = min(Floor(VC.total_accessable_power() * 0.2, MIN_CLOCKCULT_POWER), 1000)
-				if(VC.try_use_power(usable_power))
-					multiplier += (usable_power * 0.0005) //at maximum power, should be 1 multiplier
-				qdel(VC)
-				if(iscyborg(invoker))
-					var/mob/living/silicon/robot/C = invoker
-					if(C.cell)
-						var/prev_power = usable_power //we don't want to increase the multiplier past 1
-						usable_power = min(Floor(C.cell.charge * 0.2, MIN_CLOCKCULT_POWER), 1000) - prev_power
-						if(usable_power > 0 && C.cell.use(usable_power))
-							multiplier += (usable_power * 0.0005)
-				var/obj/effect/temp_visual/ratvar/volt_hit/VH = new /obj/effect/temp_visual/ratvar/volt_hit(get_turf(invoker), null, multiplier)
-				invoker.visible_message("<span class='warning'>[invoker] is struck by [invoker.p_their()] own [VH.name]!</span>", "<span class='userdanger'>You're struck by your own [VH.name]!</span>")
-				invoker.adjustFireLoss(VH.damage) //you have to fail all five blasts to die to this
-				playsound(invoker, 'sound/machines/defib_zap.ogg', VH.damage, 1, -1)
 			to_chat(invoker, "<span class='nzcrentr'>\"[text2ratvar(pick(nzcrentr_insults))]\"</span>")
 		else
 			return FALSE
@@ -410,6 +392,3 @@
 	ranged_message = "<span class='nzcrentr_small'><i>You charge the clockwork slab with shocking might.</i>\n\
 	<b>Left-click a target to fire, quickly!</b></span>"
 	timeout_time = 20
-
-/obj/structure/destructible/clockwork/powered/volt_checker
-	invisibility = INVISIBILITY_ABSTRACT
