@@ -69,6 +69,8 @@
 		var/obj/item/clothing/under/U = H.w_uniform
 		if(U)
 			U.attach_accessory(new accessory(H))
+		else
+			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
