@@ -235,7 +235,7 @@
 
 	to_chat(user, "<span class='notice'>You start planting the bomb...</span>")
 
-	if(do_after(user, 30, target = AM))
+	if(do_after(user, 50, target = AM))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		src.target = AM
