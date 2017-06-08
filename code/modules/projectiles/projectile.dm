@@ -27,6 +27,8 @@
 	var/Angle = 0
 	var/spread = 0			//amount (in degrees) of projectile spread
 	var/legacy = 0			//legacy projectile system
+	var/pixel_x_adj = 0		//One time adjustments to pixel projectiles...
+	var/pixel_y_adj = 0
 	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
@@ -158,8 +160,14 @@
 	if(!prehit(A))
 		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
-	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
+	if(permutation == -1 || forcedodge)// the bullet passes through a dense object
+		var/turf/ct = get_turf(src)
+		var/_x = target_turf.x - ct.x
+		var/_y = target_turf.y - ct.y
 		loc = target_turf
+		
+		pixel_x_adj = _x * world.icon_size
+		pixel_y_adj = _y * world.icon_size
 		if(A)
 			permutated.Add(A)
 		return FALSE
@@ -225,6 +233,13 @@
 			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
 			var/pixel_x_offset = old_pixel_x + Pixel_x
 			var/pixel_y_offset = old_pixel_y + Pixel_y
+			if(pixel_x_adj)
+				pixel_x_offset += pixel_x_adj
+				pixel_x_adj = 0
+			if(pixel_y_adj)
+				pixel_y_offset += pixel_y_adj
+				pixel_y_adj = 0
+	
 			var/new_x = x
 			var/new_y = y
 
@@ -244,7 +259,7 @@
 				pixel_y_offset += 32
 				old_pixel_y += 32
 				new_y--
-
+			
 			pixel_x = old_pixel_x
 			pixel_y = old_pixel_y
 			step_towards(src, locate(new_x, new_y, z))
