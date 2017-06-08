@@ -77,3 +77,6 @@
 	gold_core_spawnable = 0
 	faction = list("syndicate")
 	AIStatus = AI_OFF
+	
+/mob/living/simple_animal/hostile/carp/cayenne/start_pulling(atom/movable/AM) 
+	return FALSE
