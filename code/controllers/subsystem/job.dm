@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(job)
 	var/initial_players_to_assign = 0 	//used for checking against population caps
 
 	var/list/prioritized_jobs = list()
+	var/list/latejoin_trackers = list()	//Don't read this list, use GetLateJoinTurfs() instead
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
@@ -391,23 +392,12 @@ SUBSYSTEM_DEF(job)
 				continue
 			S = sloc
 			break
+		if(S)
+			SendToAtom(H, S, buckle = FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			S = get_turf(pick(GLOB.latejoin))
-		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
-			log_world("Couldn't find a round start latejoin spawn point.")
-			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-				if(!T.density)
-					var/clear = 1
-					for(var/obj/O in T)
-						if(O.density)
-							clear = 0
-							break
-					if(clear)
-						S = T
-						continue
-		if(istype(S, /obj/effect/landmark) && isturf(S.loc))
-			H.loc = S.loc
+			SendToLateJoin(H)
+
 
 	if(H.mind)
 		H.mind.assigned_role = rank
@@ -532,3 +522,45 @@ SUBSYSTEM_DEF(job)
 	newjob.total_positions = J.total_positions
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
+
+/datum/controller/subsystem/job/proc/SendToAtom(mob/M, atom/A, buckle)
+	if(buckle && isliving(M) && istype(A, /obj/structure/chair))
+		var/obj/structure/chair/C = A
+		if(C.buckle_mob(M, FALSE, FALSE))
+			return
+	M.forceMove(get_turf(A))
+
+/datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
+	if(latejoin_trackers.len)
+		SendToAtom(M, pick(latejoin_trackers), buckle)
+	else
+		//bad mojo
+		var/area/shuttle/arrival/A = locate() in GLOB.sortedAreas
+		if(A)
+			//first check if we can find a chair
+			var/obj/structure/chair/C = locate() in A
+			if(C)
+				SendToAtom(M, C, buckle)
+				return
+			else	//last hurrah
+				var/list/avail = list()
+				for(var/turf/T in A)
+					if(!is_blocked_turf(T, TRUE))
+						avail += T
+				if(avail.len)
+					SendToAtom(M, pick(avail), FALSE)
+					return
+
+		//pick an open spot on arrivals and dump em
+		var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
+		if(arrivals_turfs.len)
+			for(var/turf/T in arrivals_turfs)
+				if(!is_blocked_turf(T, TRUE))
+					SendToAtom(M, T, FALSE)
+					return
+			//last chance, pick ANY spot on arrivals and dump em
+			SendToAtom(M, arrivals_turfs[1], FALSE)
+		else
+			var/msg = "Unable to send mob [M] to late join!"
+			message_admins(msg)
+			CRASH(msg)

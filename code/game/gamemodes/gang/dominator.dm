@@ -1,5 +1,6 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 #define DOM_REQUIRED_TURFS 30
+#define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
 	name = "dominator"
@@ -20,6 +21,9 @@
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
 
+/obj/machinery/dominator/hulk_damage()
+	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
+
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
 	for(var/turf/T in view(3, A))
@@ -33,13 +37,14 @@
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/New()
-	..()
+/obj/machinery/dominator/Initialize()
+	. = ..()
 	set_light(2)
 	GLOB.poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
+	update_icon()
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -103,8 +108,23 @@
 				spark_system.start()
 		else if(!(stat & BROKEN))
 			spark_system.start()
-			cut_overlays()
+			update_icon()
+
+/obj/machinery/dominator/update_icon()
+	cut_overlays()
+	if(!(stat & BROKEN))
+		icon_state = "dominator-active"
+		if(operating)
+			var/mutable_appearance/dominator_overlay = mutable_appearance('icons/obj/machines/dominator.dmi', "dominator-overlay")
+			if(gang)
+				dominator_overlay.color = gang.color_hex
+			add_overlay(dominator_overlay)
+		else
+			icon_state = "dominator"
+		if(obj_integrity/max_integrity < 0.66)
 			add_overlay("damage")
+	else
+		icon_state = "dominator-broken"
 
 /obj/machinery/dominator/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
@@ -142,10 +162,9 @@
 		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
 
 	set_light(0)
-	icon_state = "dominator-broken"
-	cut_overlays()
 	operating = 0
 	stat |= BROKEN
+	update_icon()
 	STOP_PROCESSING(SSmachines, src)
 
 /obj/machinery/dominator/Destroy()
@@ -196,9 +215,9 @@
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
 		SSshuttle.registerHostileEnvironment(src)
-		src.name = "[gang.name] Gang [src.name]"
+		name = "[gang.name] Gang [name]"
 		operating = 1
-		icon_state = "dominator-[gang.color]"
+		update_icon()
 
 		countdown.color = gang.color_hex
 		countdown.start()

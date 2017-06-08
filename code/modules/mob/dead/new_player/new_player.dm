@@ -140,8 +140,7 @@
 				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-			qdel(mind)
-
+			QDEL_NULL(mind)
 			qdel(src)
 			return 1
 
@@ -324,27 +323,8 @@
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	var/D
-	if(GLOB.latejoin.len)
-		D = get_turf(pick(GLOB.latejoin))
-	if(!D)
-		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					D = T
-					continue
-
-	character.loc = D
+	SSjob.SendToLateJoin(character)
 	character.update_parallax_teleport()
-
-	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
-	if(chair)
-		chair.buckle_mob(character)
 
 	SSticker.minds += character.mind
 
@@ -373,7 +353,6 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
-	qdel(src)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -472,6 +451,8 @@
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		new_character = null
+		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

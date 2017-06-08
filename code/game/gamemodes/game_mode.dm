@@ -84,9 +84,9 @@
 		var/sql
 		if(SSticker && SSticker.mode)
 			sql += "game_mode = '[SSticker.mode]'"
-		if(sql)
-			sql += ", "
 		if(GLOB.revdata.originmastercommit)
+			if(sql)
+				sql += ", "
 			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
 		if(sql)
 			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
@@ -94,8 +94,6 @@
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
-	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count(1)
 	return 1
 
 

@@ -43,7 +43,7 @@
 
 /area/ruin/powered/greed
 	icon_state = "dk_yellow"
-	
+
 /area/ruin/unpowered/hierophant
 	name = "Hierophant's Arena"
 	icon_state = "dk_yellow"
@@ -222,16 +222,48 @@
 	name = "Deep Storage"
 	icon_state = "storage"
 
+/area/ruin/deepstorage/airlock
+	name = "Deep Storage Airlock"
+	icon_state = "quart"
+
+/area/ruin/deepstorage/power
+	name = "Deep Storage Power and Atmospherics Room"
+	icon_state = "engi_storage"
+
+/area/ruin/deepstorage/hydroponics
+	name = "Deep Storage Hydroponics"
+	icon_state = "garden"
+
+/area/ruin/deepstorage/armory
+	name = "Deep Storage Secure Storage"
+	icon_state = "armory"
+
+/area/ruin/deepstorage/storage
+	name = "Deep Storage Storage"
+	icon_state = "storage_wing"
+
+/area/ruin/deepstorage/dorm
+	name = "Deep Storage Dormory"
+	icon_state = "crew_quarters"
+
+/area/ruin/deepstorage/kitchen
+	name = "Deep Storage Kitchen"
+	icon_state = "kitchen"
+
+/area/ruin/deepstorage/crusher
+	name = "Deep Storage Recycler"
+	icon_state = "storage"
+
 
 //Ruin of Abandoned Zoo
 
 /area/ruin/abandonedzoo
 	name = "Abandoned Zoo"
 	icon_state = "green"
-	
-	
+
+
 //Xeno Nest
-	
+
 /area/ruin/xenonest
 	name = "The Hive"
 	always_unpowered = 1
@@ -239,4 +271,3 @@
 	power_equip = 0
 	power_light = 0
 	poweralm = 0
-	

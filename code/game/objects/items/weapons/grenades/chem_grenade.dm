@@ -103,7 +103,7 @@
 			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
 			return
 
-	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
+	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters) && !active)
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You unlock the [initial(name)] assembly.</span>")
 

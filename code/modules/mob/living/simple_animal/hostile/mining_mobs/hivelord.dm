@@ -46,6 +46,9 @@
 	OpenFire()
 	return TRUE
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/spawn_crusher_loot()
+	loot += crusher_loot //we don't butcher
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
 	mouse_opacity = 1
 	..(gibbed)
@@ -101,6 +104,7 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
+	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	loot = list(/obj/item/organ/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
@@ -115,9 +119,14 @@
 		if(stored_mob)
 			stored_mob.forceMove(get_turf(src))
 			stored_mob = null
+		else if(fromtendril)
+			new /obj/effect/mob_spawn/human/corpse/charredskeleton(T)
 		else
-			new /obj/effect/mob_spawn/human/corpse/damaged(T)
+			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
+	fromtendril = TRUE
 
 //Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
@@ -202,7 +211,7 @@
 	layer = MOB_LAYER
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
-	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged = 5)
+	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged/legioninfested = 5)
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
@@ -214,3 +223,122 @@
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+//Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
+/obj/effect/mob_spawn/human/corpse/charredskeleton
+	name = "charred skeletal remains"
+	burn_damage = 1000
+	mob_name = "ashen skeleton"
+	mob_gender = NEUTER
+	husk = FALSE
+	mob_species = /datum/species/skeleton
+	mob_color = "#454545"
+
+//Legion infested mobs
+
+/obj/effect/mob_spawn/human/corpse/damaged/legioninfested/Initialize()
+	var/type = pickweight(list("Miner" = 66, "Ashwalker" = 10, "Golem" = 10,"Clown" = 10, pick(list("Shadow", "YeOlde","Operative", "Cultist")) = 4))
+	switch(type)
+		if("Miner")
+			mob_species = pickweight(list(/datum/species/human = 70, /datum/species/lizard = 26, /datum/species/fly = 2, /datum/species/plasmaman = 2))
+			if(mob_species == /datum/species/plasmaman)
+				uniform = /obj/item/clothing/under/plasmaman
+				head = /obj/item/clothing/head/helmet/space/plasmaman
+				belt = /obj/item/weapon/tank/internals/plasmaman/belt
+			else
+				uniform = /obj/item/clothing/under/rank/miner/lavaland
+				if (prob(4))
+					belt = pickweight(list(/obj/item/weapon/storage/belt/mining = 2, /obj/item/weapon/storage/belt/mining/alt = 2))
+				else if(prob(10))
+					belt = pickweight(list(/obj/item/weapon/pickaxe = 8, /obj/item/weapon/pickaxe/mini = 4, /obj/item/weapon/pickaxe/silver = 2, /obj/item/weapon/pickaxe/diamond = 1))
+				else
+					belt = /obj/item/weapon/tank/internals/emergency_oxygen/engi
+			if(mob_species != /datum/species/lizard)
+				shoes = /obj/item/clothing/shoes/workboots/mining
+			gloves = /obj/item/clothing/gloves/color/black
+			mask = /obj/item/clothing/mask/gas/explorer
+			if(prob(20))
+				suit = pickweight(list(/obj/item/clothing/suit/hooded/explorer = 18, /obj/item/clothing/suit/hooded/cloak/goliath = 2))
+			if(prob(30))
+				r_pocket = pickweight(list(/obj/item/stack/marker_beacon = 20, /obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/damage = 1 ))
+			if(prob(10))
+				l_pocket = pickweight(list(/obj/item/stack/spacecash/c1000 = 7,/obj/item/weapon/reagent_containers/hypospray/medipen/survival = 2, /obj/item/borg/upgrade/modkit/cooldown = 1 ))
+		if("Ashwalker")
+			mob_species = /datum/species/lizard/ashwalker
+			uniform = /obj/item/clothing/under/gladiator/ash_walker
+			if(prob(95))
+				head = /obj/item/clothing/head/helmet/gladiator
+			else
+				head = /obj/item/clothing/head/helmet/skull
+				suit = /obj/item/clothing/suit/armor/bone
+				gloves = /obj/item/clothing/gloves/bracer
+			if(prob(5))
+				back = pickweight(list(/obj/item/weapon/twohanded/bonespear = 3,/obj/item/weapon/twohanded/fireaxe/boneaxe = 2))
+			if(prob(10))
+				belt = /obj/item/weapon/storage/belt/mining/primitive
+			if(prob(30))
+				r_pocket = /obj/item/weapon/kitchen/knife/combat/bone
+			if(prob(30))
+				l_pocket = /obj/item/weapon/kitchen/knife/combat/bone
+		if("Clown")
+			name = pick(GLOB.clown_names)
+			outfit = /datum/outfit/job/clown
+			belt = null
+			backpack_contents = list()
+			if(prob(70))
+				backpack_contents += pick(list(/obj/item/weapon/stamp/clown = 1, /obj/item/weapon/reagent_containers/spray/waterflower = 1,/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1, /obj/item/device/megaphone/clown = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,/obj/item/weapon/pneumatic_cannon/pie = 1))
+			if(prob(30))
+				backpack_contents += list(/obj/item/stack/sheet/mineral/bananium = pickweight(list( 1 = 3, 2 = 2, 3 = 1)))
+			if(prob(10))
+				l_pocket = pickweight(list(/obj/item/weapon/bikehorn/golden = 3, /obj/item/weapon/bikehorn/airhorn= 1 ))
+			if(prob(10))
+				r_pocket = /obj/item/weapon/implanter/sad_trombone
+		if("Golem")
+			mob_species = pick(list(/datum/species/golem/adamantine, /datum/species/golem/plasma, /datum/species/golem/diamond, /datum/species/golem/gold, /datum/species/golem/silver, /datum/species/golem/plasteel, /datum/species/golem/titanium, /datum/species/golem/plastitanium))
+			if(prob(30))
+				glasses = pickweight(list(/obj/item/clothing/glasses/meson = 2, /obj/item/clothing/glasses/hud/health = 2,/obj/item/clothing/glasses/hud/diagnostic =2, /obj/item/clothing/glasses/science = 2, /obj/item/clothing/glasses/welding = 2, /obj/item/clothing/glasses/night = 1))
+			if(prob(10))
+				belt = pick(list(/obj/item/weapon/storage/belt/mining/vendor,/obj/item/weapon/storage/belt/utility/full))
+			if(prob(50))
+				neck = /obj/item/weapon/bedsheet/rd/royal_cape
+			if(prob(10))
+				l_pocket = pick(list(/obj/item/weapon/crowbar/power, /obj/item/weapon/wrench/power, /obj/item/weapon/weldingtool/experimental))
+		if("YeOlde")
+			mob_gender = FEMALE
+			uniform = /obj/item/clothing/under/maid
+			gloves = /obj/item/clothing/gloves/color/white
+			shoes = /obj/item/clothing/shoes/laceup
+			head = /obj/item/clothing/head/helmet/knight
+			suit = /obj/item/clothing/suit/armor/riot/knight
+			back = /obj/item/weapon/shield/riot/buckler
+			belt = /obj/item/weapon/nullrod/claymore
+			r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+			mask = /obj/item/clothing/mask/breath
+		if("Operative")
+			id_job = "Operative"
+			id_access_list = list(GLOB.access_syndicate)
+			outfit = /datum/outfit/syndicatecommandocorpse
+		if("Shadow")
+			mob_species = /datum/species/shadow
+			r_pocket = /obj/item/weapon/reagent_containers/pill/shadowtoxin
+			neck = /obj/item/clothing/accessory/medal/plasma/nobel_science
+			uniform = /obj/item/clothing/under/color/black
+			shoes = /obj/item/clothing/shoes/sneakers/black
+			suit = /obj/item/clothing/suit/toggle/labcoat
+			glasses = /obj/item/clothing/glasses/sunglasses/blindfold
+			back = /obj/item/weapon/tank/internals/oxygen
+			mask = /obj/item/clothing/mask/breath
+		if("Cultist")
+			uniform = /obj/item/clothing/under/roman
+			suit = /obj/item/clothing/suit/cultrobes
+			head = /obj/item/clothing/head/culthood
+			suit_store = /obj/item/weapon/tome
+			r_pocket = /obj/item/weapon/restraints/legcuffs/bola/cult
+			l_pocket = /obj/item/weapon/melee/cultblade/dagger
+			glasses =  /obj/item/clothing/glasses/night/cultblind
+			backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater = 1, /obj/item/device/cult_shift = 1, /obj/item/device/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
+	. = ..()
+
+
+
+
