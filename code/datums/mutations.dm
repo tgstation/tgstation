@@ -91,6 +91,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/proc/on_life(mob/living/carbon/human/owner)
 	return
 
+/datum/mutation/human/proc/on_death(mob/living/carbon/human/owner) //Called when the mob dies
+	return
+
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
 		if(text_lose_indication && owner.stat != DEAD)
@@ -403,7 +406,14 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
 /datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
-	owner.alpha = max(0, owner.alpha - 25)
+	if(!owner.stat)
+		animate(owner, alpha = max(0, owner.alpha - 25), time = 10)
+	else
+		if(owner.alpha != CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY)
+			animate(owner, alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY, time = 30)
+
+/datum/mutation/human/chameleon/on_death(mob/living/carbon/human/owner)
+	animate(owner, alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY, time = 30)
 
 /datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY

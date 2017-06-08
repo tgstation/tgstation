@@ -37,6 +37,9 @@
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
 
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_death(src)
+
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED
 	set_species(/datum/species/skeleton)
