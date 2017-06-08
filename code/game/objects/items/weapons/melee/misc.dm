@@ -49,11 +49,9 @@
 	item_state = "sabre"
 	flags = CONDUCT
 	unique_rename = 1
-	force = 15
+	force = 20
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
-	armour_penetration = 75
 	sharpness = IS_SHARP
 	origin_tech = "combat=5"
 	attack_verb = list("slashed", "cut")
