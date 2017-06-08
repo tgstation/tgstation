@@ -203,8 +203,8 @@
 	eye_color = RGB2EYECOLORSTRING(current_color_string)
 	sync_light_effects()
 	cycle_mob_overlay()
-	if(!QDELETED(owner))
-		owner.regenerate_icons()
+	if(!QDELETED(owner) && ishuman(owner))		//Other carbon mobs don't have eye color.
+		owner.dna.species.handle_body(owner)
 
 /obj/item/organ/eyes/robotic/glow/proc/cycle_mob_overlay()
 	remove_mob_overlay()
