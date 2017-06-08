@@ -208,58 +208,51 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/to_chat(target, message)
 	if(!target)
 		return
-	
-	if(target == world)
-		to_chat(GLOB.clients, message)
-		return
-	
-	if(islist(target))
-		for(var/I in target)
-			to_chat(I, message)
-		return
 
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || istype(target, /client) || istype(target, /datum/log)))
+	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
 		target << message
-		stack_trace("to_chat called with invalid target! [target]")
-		if (!istype(target, /atom)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
-			CRASH("to_chat called with invalid message")
+		CRASH("Invalid message! [message]")
+	
+	if(!istext(message))
 		return
 
-	//Otherwise, we're good to throw it at the user
-	else if (istext(message))
-		if (istext(target))
+	if(target == world)
+		target = GLOB.clients
+	
+	var/list/targets
+	if(!islist(target))
+		targets = list(target)
+	else
+		targets = target 
+		if(!targets.len)
 			return
 
-		//Some macros remain in the string even after parsing and fuck up the eventual output
-		if (findtext(message, "\improper"))
-			message = replacetext(message, "\improper", "")
-		if (findtext(message, "\proper"))
-			message = replacetext(message, "\proper", "")
+	//Some macros remain in the string even after parsing and fuck up the eventual output
+	message = replacetext(message, "\improper", "")
+	message = replacetext(message, "\proper", "")
+	message = replacetext(message, "\n", "<br>")
+	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
+	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(target)
+		var/client/C = grab_client(I)
 
-		if (C && C.chatOutput)
-			if(C.chatOutput.broken) // A player who hasn't updated his skin file.
-				C << message
-				return TRUE
-			if(!C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
-				//Client sucks at loading things, put their messages in a queue
-				C.chatOutput.messageQueue.Add(message)
-				return
-
-		if(istype(target, /datum/log))
-			var/datum/log/L = target
-			L.log += (message + "\n")
+		if (!C)
+			continue
+		
+		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+			C << message
+			return TRUE
+			
+		if(!C.chatOutput.loaded)
+			//Client sucks at loading things, put their messages in a queue
+			C.chatOutput.messageQueue += message
 			return
-
-		message = replacetext(message, "\n", "<br>")
-		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		target << output(url_encode(url_encode(message)), "browseroutput:output")
+		C << output(url_encode(url_encode(message)), "browseroutput:output")
 
 /proc/grab_client(target)
 	if(istype(target, /client))
@@ -272,6 +265,3 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		var/datum/mind/M = target
 		if(M.current && M.current.client)
 			return M.current.client
-
-/datum/log	//exists purely to capture to_chat() output
-	var/log = ""
