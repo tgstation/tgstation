@@ -363,6 +363,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/dangerous/wrasslin
+	name = "Championship Wrestling Belt"
+	desc = "Teaches the wearer how to wrestle like a professional. \
+			Very obvious, but lets you show the crowd who the \
+			REAL inter-galactic heavyweight champion is."
+	item = /obj/item/weapon/storage/belt/champion/wrestling
+	cost = 8
+
 /datum/uplink_item/stealthy_weapons/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
 	desc = "A primed bio-grenade packed into a compact box. Comes with five Bio Virus Antidote Kit (BVAK) \
