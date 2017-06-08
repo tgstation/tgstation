@@ -152,6 +152,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "A human incinerator. Works well on barbeque nights."
 	icon_state = "crema1"
 	opendir = SOUTH
+	obj_integrity = 400
+	max_integrity = 400
+	armor = list(melee = 100, bullet = 0, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 80)
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
