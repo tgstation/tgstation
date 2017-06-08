@@ -114,9 +114,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	return list()
 
 /datum/mutation/human/hulk
-
 	name = "Hulk"
 	quality = POSITIVE
+	dna_block = NON_SCANNABLE
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
