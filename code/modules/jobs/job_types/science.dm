@@ -33,13 +33,14 @@ Research Director
 	jobtype = /datum/job/rd
 
 	id = /obj/item/weapon/card/id/silver
-	belt = /obj/item/device/pda/heads/rd
+	belt = /obj/item/weapon/storage/belt/utility/full
 	ears = /obj/item/device/radio/headset/heads/rd
 	uniform = /obj/item/clothing/under/rank/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/weapon/clipboard
 	l_pocket = /obj/item/device/laser_pointer
+	r_pocket = /obj/item/device/pda/heads/rd
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/device/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/weapon/storage/backpack/science
