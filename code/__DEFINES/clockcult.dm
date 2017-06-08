@@ -19,10 +19,10 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
 #define SCRIPTURE_SCRIPT "Script"
-#define SCRIPT_SERVANT_REQ 5
+#define SCRIPT_SERVANT_REQ 6
 #define SCRIPT_CACHE_REQ 1
 #define SCRIPTURE_APPLICATION "Application"
-#define APPLICATION_SERVANT_REQ 8
+#define APPLICATION_SERVANT_REQ 9
 #define APPLICATION_CACHE_REQ 3
 #define APPLICATION_CV_REQ 100
 #define SCRIPTURE_JUDGEMENT "Judgement"
