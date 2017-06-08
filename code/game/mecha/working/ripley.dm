@@ -65,7 +65,7 @@
 	max_temperature = 65000
 	obj_integrity = 250
 	max_integrity = 250
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 30, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	max_equip = 5 // More armor, less tools
