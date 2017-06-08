@@ -768,29 +768,7 @@ $(function() {
 		setCookie('fontsize', fontSize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
 	});
-
-	$('#chooseFont').click(function(e) {
-		if ($('.popup .changeFont').is(':visible')) {return;}
-		var popupContent = '<div class="head">Change Font</div>' +
-			'<div id="changeFont" class="changeFont">'+
-				'<a href="#" data-font="Verdana" style="font-family: Verdana;">Verdana (Default)</a>'+
-				'<a href="#" data-font="\'Helvetica Neue\', Helvetica, Arial" style="font-family: \'Helvetica Neue\', Helvetica, Arial;">Arial / Helvetica</a>'+
-				'<a href="#" data-font="Times New Roman" style="font-family: Times New Roman;">Times New Roman</a>'+
-				'<a href="#" data-font="Georgia" style="font-family: Georgia;">Georgia</a>'+
-				'<a href="#" data-font="Courier New" style="font-family: Courier New;">Courier New</a>'+
-				'<a href="#" data-font="Lucida Console" style="font-family: Lucida Console;">Lucida Console</a>'+
-				'<a href="#" data-font="Wingdings" style="font-family: Wingdings;">Wingdings</a>'+
-				'<a href="#" data-font="Comic Sans MS" style="font-family: Comic Sans MS;">Comic Sans MS</a>'+
-			'</div>';
-		createPopup(popupContent, 200);
-	});
-
-	$('body').on('click', '#changeFont a', function(e) {
-		var font = $(this).attr('data-font');
-		$messages.css('font-family', font);
-		setCookie('fonttype', font, 365);
-	});
-
+	
 	$('#togglePing').click(function(e) {
 		if (opts.pingDisabled) {
 			$('#ping').slideDown('fast');
