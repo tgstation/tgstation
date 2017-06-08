@@ -128,8 +128,8 @@ Credit where due:
 		servant.assigned_role = "Servant of Ratvar"
 		servant.special_role = "Servant of Ratvar"
 		starter_servants--
-	addtimer(CALLBACK(src, .proc/open_portals_to_reebe), 100)
-	//addtimer(CALLBACK(src, .proc/open_portals_to_reebe), time_to_prepare * 600) //600 deciseconds in a minute, so multiply the number of minutes to prepare times 600
+	addtimer(CALLBACK(src, .proc/cry_havoc), 100)
+	//addtimer(CALLBACK(src, .proc/cry_havoc), time_to_prepare * 600) //600 deciseconds in a minute, so multiply the number of minutes to prepare times 600
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
@@ -163,10 +163,9 @@ Credit where due:
 	L.equipOutfit(/datum/outfit/servant_of_ratvar)
 	return TRUE
 
-/datum/game_mode/proc/open_portals_to_reebe()
-	priority_announce("Massive spacetime anomalies appearing across the station. All personnel are hereby directed to enter the anomalies and neutralize the source. This is not a drill.", "Spacetime Anomaly Alert", 'sound/magic/clockwork/gateways_open.ogg')
-	if(get_security_level() != "delta")
-		set_security_level("red")
+/datum/game_mode/proc/cry_havoc()
+	priority_announce("Massive energy anomaly detected on all scanners. Minor spacetime anomalies appearing across the station. Stay in your workplaces. Do not make voluntary contact with the \
+	anomalies without available medical supplies. Please hold while the threat is assessed...", "Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/gateways_open.ogg')
 	var/obj/effect/landmark/L
 	var/turf/T
 	for(var/V in GLOB.generic_event_spawns)
@@ -175,6 +174,13 @@ Credit where due:
 		addtimer(CALLBACK(src, .proc/open_portal, T), rand(50, 1200))
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/C = GLOB.ark_of_the_clockwork_justiciar
 	C.spawn_animation() //get this party started!
+	addtimer(CALLBACK(src, .proc/let_slip_the_dogs_of_war), 100)
+
+/datum/game_mode/proc/let_slip_the_dogs_of_war()
+	priority_announce("The threat has been assessed. The smaller spacetime anomalies are being created by the energy anomaly, which has been deemed a threat to Nanotrasen. All crew are \
+	hereby directed to enter the spacetime anomalies and neutralize their source. Be prepared for unforeseen resistance. This is not a drill.", "Central Command Higher Dimensional Affairs")
+	if(get_security_level() != "delta")
+		set_security_level("red")
 
 /datum/game_mode/proc/open_portal(turf/portal_loc)
 	var/obj/effect/clockwork/reebe_rift/R = new(portal_loc)

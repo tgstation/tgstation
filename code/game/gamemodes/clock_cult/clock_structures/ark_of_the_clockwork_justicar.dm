@@ -68,13 +68,16 @@
 	first_sound_played = TRUE
 	SSshuttle.registerHostileEnvironment(src)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy(force)
+	if(!countdown && !force)
+		return
 	GLOB.ark_of_the_clockwork_justiciar = null
 	STOP_PROCESSING(SSprocessing, src)
 	if(!purpose_fulfilled)
 		hierophant_message("<span class='large_brass'><b>The Ark has fallen!</b></span>")
 		send_to_playing_players(sound(null, 0, channel = 8))
-		priority_announce("The source of the anomalies has been neutralized.","Anomaly Alert")
+		priority_announce("The anomaly has been neutralized. Bluespace and energy levels are returning to acceptable thresholds. Get back to work.", "Central Command Higher Dimensional Affairs")
+	set_security_level("blue")
 	/*var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
 	SSshuttle.clearHostileEnvironment(src)*/
 	if(glow)
@@ -183,15 +186,19 @@
 				glow.icon_state = "clockwork_gateway_charging"
 			if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 				if(!third_sound_played)
-					var/area/gate_area = get_area(src)
-					priority_announce("Location of massive energy anomaly has been triangulated. Location: [gate_area.map_name].", "Anomaly Alert")
+					priority_announce("Attention: The energy anomaly has been reclassified as a spacetime anomaly. You are reminded that, as part of your contract, we are under no obligation to \
+					continue employing you, nor continue to keep your genetic data backed up, if you do not respond to spacetime threats as directed.", "Central Command Higher Dimensional Affairs")
 					send_to_playing_players(sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35))
 					third_sound_played = TRUE
 				make_glow()
 				glow.icon_state = "clockwork_gateway_active"
 			if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 				if(!fourth_sound_played)
+					priority_announce("CRITICAL ALERT: As of three seconds ago, the anomaly has been reclassified as a catastrophic extradimensional anomaly. You have approximately one minute \
+					to reach and neutralize the anomaly before it reaches full power. All crew unable - not unwilling - to fight are directed to board and launch an escape pod filled to capacity.", \
+					"Central Command Higher Dimensional Affairs", 'sound/misc/airraid.ogg')
 					send_to_playing_players(sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40))
+					set_security_level("delta")
 					fourth_sound_played = TRUE
 				make_glow()
 				glow.icon_state = "clockwork_gateway_closing"
