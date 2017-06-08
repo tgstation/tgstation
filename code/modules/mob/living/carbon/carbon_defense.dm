@@ -182,12 +182,6 @@
 		show_message("<span class='userdanger'>The blob attacks!</span>")
 		adjustBruteLoss(10)
 
-/mob/living/carbon/emp_act(severity)
-	for(var/X in internal_organs)
-		var/obj/item/organ/O = X
-		O.emp_act(severity)
-	..()
-
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 		return FALSE

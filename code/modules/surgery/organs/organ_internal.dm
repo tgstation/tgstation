@@ -27,7 +27,7 @@
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
-	loc = null
+	forceMove(M)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
@@ -41,6 +41,8 @@
 			M.internal_organs_slot.Remove(slot)
 		if(vital && !special && !(M.status_flags & GODMODE))
 			M.death()
+		if(loc == M)
+			forceMove(get_turf(src))
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(M)
@@ -51,6 +53,12 @@
 
 /obj/item/organ/proc/on_life()
 	return
+
+/obj/item/organ/Moved(atom/oldloc, dir)
+	..()
+
+	if(oldloc == owner)
+		Remove(owner)
 
 /obj/item/organ/examine(mob/user)
 	..()
