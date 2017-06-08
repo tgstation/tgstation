@@ -148,6 +148,9 @@ Remember, this tradeoff makes sense in many cases but not all, you should think 
 Our game controller is pretty good at handling long operations and lag. But, it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/master/code/game/atoms.dm#L49
 While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependant on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
+### Use the `static` keyword instead of the `global` keyword on types and procs
+The `global` keyword is a poorly named keyword that causes byond to only keep one copy of the defined variable, this has a myriad of uses, typically related to sharing things between multiple instances. When people think of `global` however, they typically assume global SCOPE but DM does not require the `global` keyword to define variables in the global scope, leading to "But what does global DO?" thankfully there is a synonym for `global`: `static`, `static` variables are a familiar concept in many languages outside of DM and this concept (single variable instances shared between many objects) is exactly what `global` does in DM, with it being a wider reaching, more correct term for this functionality it is much less likely to raise "BUT WAT DO?" queries, it's perfect! so screw the `global` keyword, viva la `static`!
+
 ### No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
 
