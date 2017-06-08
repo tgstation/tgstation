@@ -135,7 +135,6 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	EX_PREPROCESS_CHECK_TICK
 
-	var/list/exploded_this_tick = list()	//open turfs that need to be blocked off while we sleep
 	var/list/affected_turfs = GatherSpiralTurfs(max_range, epicenter)
 
 	var/reactionary = config.reactionary_explosions
@@ -149,11 +148,11 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/iteration = 0
 	var/affTurfLen = affected_turfs.len
 	var/expBlockLen = cached_exp_block.len
+	var/turf/last_exploded
 	for(var/TI in affected_turfs)
 		var/turf/T = TI
 		++iteration
-		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
-		var/dist = init_dist
+		var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 
 		if(reactionary)
 			var/turf/Trajectory = T
@@ -179,10 +178,36 @@ GLOBAL_LIST_EMPTY(explosions)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
 
 		if(dist > 0)
-			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
-			T.explosion_id = id
-			T.ex_act(dist)
-			exploded_this_tick += T
+			var/their_el = T.explosion_level	//let the bigger one have it
+			if(dist > their_el)
+
+				//don't do this if we're too close to the epicenter
+				if(iteration > 7)
+					//search for the next turf in the ring and unexplode it
+					for(var/I in GLOB.cardinal)
+						var/turf/Search = get_step(T, I)
+						if(Search && Search.explosion_id == id && !Search.previous_exploded_turf)
+							var/turf/NextTurf = Search.next_exploded_turf
+							if(NextTurf)
+								Search.next_exploded_turf = null
+								NextTurf.previous_exploded_turf = null
+							Search.explosion_level = 0
+							#ifdef TESTING
+							Search.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#FF0000")
+							#endif
+							break
+				
+				//add it to the linked list
+				if(last_exploded)
+					T.previous_exploded_turf = last_exploded
+					last_exploded.next_exploded_turf = T
+				last_exploded = T
+				#ifdef TESTING
+				T.add_atom_colour("#FF0000", TEMPORARY_COLOUR_PRIORITY)
+				#endif
+				//and explode
+				T.explosion_level = dist
+				T.ex_act(dist)
 
 		//--- THROW ITEMS AROUND ---
 
@@ -230,18 +255,15 @@ GLOBAL_LIST_EMPTY(explosions)
 				affTurfLen = affected_turfs.len
 				expBlockLen = cached_exp_block.len
 
-			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
-			if(exploded_this_tick.len > circumference)	//only do this every revolution
-				for(var/Unexplode in exploded_this_tick)
-					var/turf/UnexplodeT = Unexplode
-					UnexplodeT.explosion_level = 0
-				exploded_this_tick.Cut()
-
 	//unfuck the shit
-	for(var/Unexplode in exploded_this_tick)
-		var/turf/UnexplodeT = Unexplode
-		UnexplodeT.explosion_level = 0
-	exploded_this_tick.Cut()
+	while(last_exploded)
+		last_exploded.next_exploded_turf = null
+		#ifdef TESTING
+		last_exploded.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#FF0000")
+		#endif
+		var/temp = last_exploded.previous_exploded_turf
+		last_exploded.previous_exploded_turf = null
+		last_exploded = temp
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
 

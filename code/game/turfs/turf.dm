@@ -17,7 +17,9 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
-	var/explosion_level = 0	//for preventing explosion dodging
+	var/turf/previous_exploded_turf	//explosion dodging stuff
+	var/turf/next_exploded_turf
+	var/explosion_level = 0
 	var/explosion_id = 0
 
 	var/list/decals
