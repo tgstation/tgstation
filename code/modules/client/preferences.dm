@@ -326,7 +326,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 					dat += "</td>"
-			if(config.mutant_humans)
+			if(config.mutant_humans && unlock_content) // rshoe is pretty cool and I'm in love with Earthy
 
 				if("tail_human" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
