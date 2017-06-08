@@ -582,6 +582,10 @@
 	process_recharge()
 	process_usage()
 	update_location()
+	if(isliving(host))
+		var/mob/living/L = host
+		if((L.stat != CONSCIOUS) && active)
+			deactivate_field()
 
 /obj/item/borg/projectile_dampen/proc/update_location()
 	if(dampening_field)
