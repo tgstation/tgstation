@@ -67,6 +67,21 @@
 	var/base_multiplier = 1
 	spans = list("colossus","yell")
 
+/obj/item/organ/vocal_cords/colossus/attack(mob/living/carbon/human/H, mob/living/carbon/human/user, obj/target)
+	if(H == user && istype(H))
+		user.drop_item()
+		Insert(user)
+	else
+		return ..()
+
+/obj/item/organ/vocal_cords/colossus/Insert(mob/living/carbon/M, special = 0)
+	..()
+	if(owner)
+		owner << "<span class ='notice'>Your vocal chords have been replaced with [src], you feel a strange sensation of power overcome you!</span>"
+
+/obj/item/organ/vocal_cords/colossus/prepare_eat()
+	return
+
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
 	var/obj/item/organ/vocal_cords/colossus/cords = null
