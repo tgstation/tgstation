@@ -214,6 +214,38 @@
 	quickbind_desc = "Creates an Interdiction Lens, which drains power into nearby Sigils of Transmission."
 
 
+//Prolonging Prism: Creates a prism that will delay the shuttle at a power cost
+/datum/clockwork_scripture/create_object/prolonging_prism
+	descname = "Powered Structure, Delay Emergency Shuttles"
+	name = "Prolonging Prism"
+	desc = "Creates a mechanized prism which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
+	invocations = list("May this prism...", "...grant us time to enact his will!")
+	channel_time = 80
+	consumed_components = list(VANGUARD_COGWHEEL = 5, GEIS_CAPACITOR = 2, REPLICANT_ALLOY = 2)
+	object_path = /obj/structure/destructible/clockwork/powered/prolonging_prism
+	creator_message = "<span class='brass'>You form a prolonging prism, which will delay the arrival of an emergency shuttle at a massive power cost.</span>"
+	observer_message = "<span class='warning'>An onyx prism forms in midair and sprouts tendrils to support itself!</span>"
+	invokers_required = 2
+	multiple_invokers_used = TRUE
+	usage_tip = "The power cost to delay a shuttle increases based on CV and the number of times activated."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
+	primary_component = VANGUARD_COGWHEEL
+	sort_priority = 7
+	quickbind = TRUE
+	quickbind_desc = "Creates a Prolonging Prism, which will delay the arrival of an emergency shuttle by 2 minutes at a massive power cost."
+
+/datum/clockwork_scripture/create_object/prolonging_prism/check_special_requirements()
+	if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
+		to_chat(invoker, "<span class='inathneq'>\"It is too late to construct one of these, champion.\"</span>")
+		return FALSE
+	var/turf/T = get_turf(invoker)
+	if(!T || T.z != ZLEVEL_STATION)
+		to_chat(invoker, "<span class='inathneq'>\"You must be on the station to construct one of these, champion.\"</span>")
+		return FALSE
+	return ..()
+
+
 //Mania Motor: Creates a malevolent transmitter that will broadcast the whispers of Sevtug into the minds of nearby nonservants, causing a variety of mental effects at a power cost.
 /datum/clockwork_scripture/create_object/mania_motor
 	descname = "Powered Structure, Area Denial"
