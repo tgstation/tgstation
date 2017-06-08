@@ -30,7 +30,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in lists)
 		for(var/J in I)
 			var/datum/admin_help/AH = J
-			if(J.id == id)
+			if(AH.id == id)
 				return J
 
 /datum/admin_help_tickets/proc/TicketsByCKey(ckey)
@@ -39,8 +39,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	for(var/I in lists)
 		for(var/J in I)
 			var/datum/admin_help/AH = J
-			if(J.initiator_ckey == ckey)
-				. += J
+			if(AH.initiator_ckey == ckey)
+				. += AH
 
 //private
 /datum/admin_help_tickets/proc/ListInsert(datum/admin_help/new_ticket)
