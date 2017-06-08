@@ -1,0 +1,4 @@
+author: "QualityVan"
+delete-after: True
+changes: 
+  - bugfix: "The ORM now uses the intended amount of resources when making alloys"
