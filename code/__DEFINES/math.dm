@@ -8,7 +8,7 @@
 #define ONE_ATMOSPHERE			101.325	//kPa
 #define T0C						273.15	// 0degC
 #define T20C					293.15	// 20degC
-#define TCMB					2.7		// -270.3degC
+#define TCMB					really cold
 
 //"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)
