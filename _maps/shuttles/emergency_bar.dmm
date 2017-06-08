@@ -297,7 +297,6 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aU" = (
-/mob/living/simple_animal/hostile/alien/maid/barmaid,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aV" = (
