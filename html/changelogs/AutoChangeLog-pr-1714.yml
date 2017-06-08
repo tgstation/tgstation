@@ -1,0 +1,8 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Added a bunch of stuff back to the botany vending machine from pre-rebase (e.g. saltpetre, diethylamine)"
+  - rscadd: "Added recipes from pre-rebase back to the biogenerator (e.g. unstable mutagen and the other botany chemicals, jackets, bats, belts)
+balance: Plant DNA manipulator production speed limitation starts at 7 instead of 9 now"
+  - bugfix: "Gold gaia overlay on botany trays is no longer overwritten by the plant overlay"
+  - bugfix: "Pills and produce now transfer all their reagents to hydroponics trays before deleting. Trays now truly only require 20u of earthsblood to become self-sustaining (before it was over two times that by accident)"
