@@ -295,6 +295,12 @@ Isn't that confusing?
 
 There is also an undocumented keyword static, that has the same behaviour as global but more correctly describes byond's behaviour. Therefore we always use static instead of global where we need it as it reduces suprise when reading byond code.
 
+# all code that isn't listed in the following will be denied:
+1. Anime UGUU
+2. OwO wats dis? *Yiffs u wrappin my  digitigrades around u ;)*
+3. Arguing over conversion gamemodes
+4. Balance changes to existing features
+5. OHOHO YOU KNOW DAT HOT NEW MEME LETS AUTODROBE IT
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests, pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice. Here are some helpful ways to make it easier for you and for the maintainer when making a pull request.
