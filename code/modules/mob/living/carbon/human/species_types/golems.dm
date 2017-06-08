@@ -5,7 +5,7 @@
 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
-	armor = 55
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 45, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
@@ -126,9 +126,9 @@
 	name = "Diamond Golem"
 	id = "diamond golem"
 	fixed_mut_color = "0ff"
-	armor = 70 //up from 55
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 60, "energy" = 0, "bomb" = 80, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	meat = /obj/item/weapon/ore/diamond
-	info_text = "As a <span class='danger'>Diamond Golem</span>, you are more resistant than the average golem."
+	info_text = "As a <span class='danger'>Diamond Golem</span>, you are far more resistant than the average golem."
 	prefix = "Diamond"
 	special_names = list("Back")
 
@@ -138,7 +138,7 @@
 	id = "gold golem"
 	fixed_mut_color = "cc0"
 	speedmod = 1
-	armor = 25 //down from 55
+	armor = list("melee" = 45, "bullet" = 45, "laser" = 45, "energy" = 0, "bomb" = 40, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 0)
 	meat = /obj/item/weapon/ore/gold
 	info_text = "As a <span class='danger'>Gold Golem</span>, you are faster but less resistant than the average golem."
 	prefix = "Golden"
@@ -235,8 +235,8 @@
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
-	armor = 30
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 20, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = -20, "acid" = 0)
 	burnmod = 1.25
 	heatmod = 1.5
 	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
@@ -306,7 +306,7 @@
 	id = "sand golem"
 	fixed_mut_color = "ffdc8f"
 	meat = /obj/item/weapon/ore/glass //this is sand
-	armor = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	burnmod = 3 //melts easily
 	brutemod = 0.25
 	info_text = "As a <span class='danger'>Sand Golem</span>, you are immune to physical bullets and take very little brute damage, but are extremely vulnerable to burn damage. You will also turn to sand when dying, preventing any form of recovery."
@@ -336,7 +336,7 @@
 	id = "glass golem"
 	fixed_mut_color = "5a96b4aa" //transparent body
 	meat = /obj/item/weapon/shard
-	armor = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	brutemod = 3 //very fragile
 	burnmod = 0.25
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
@@ -592,7 +592,7 @@
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable."
 	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
-	armor = 15 //feels no pain, but not too resistant
+	armor = list("melee" = 10, "bullet" = 40, "laser" = 10, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = -50, "acid" = 0)
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
 	punchdamagelow = 4
@@ -628,7 +628,7 @@
 	desc = "It emits a strange aura, as if there was still life within it..."
 	obj_integrity = 50
 	max_integrity = 50
-	armor = list(melee = 90, bullet = 90, laser = 25, energy = 80, bomb = 50, bio = 100, fire = -50, acid = -50)
+	armor = list("melee" = 90, "bullet" = 90, "laser" = 25, "energy" = 80, "bomb" = 50, "bio" = 100, "fire" = -50, "acid" = -50)
 	icon = 'icons/obj/items.dmi'
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE

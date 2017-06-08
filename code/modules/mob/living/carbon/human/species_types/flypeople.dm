@@ -4,15 +4,13 @@
 	say_mod = "buzzes"
 	mutanttongue = /obj/item/organ/tongue/fly
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	armor = list("melee" = -10, "bullet" = -10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 20, "rad" = 20, "fire" = 0, "acid" = 0)
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
 		H.adjustToxLoss(3)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
-
-
-/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable))
 		var/datum/reagent/consumable/nutri_check = chem
 		if(nutri_check.nutriment_factor > 0)
