@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 //Resource helpers
 
 #define HAS_CLOCKWORK_POTENTIAL(amt) (GLOB.clockwork_potential >= amt)
-#define ADJUST_CLOCKWORK_POTENTIAL(amt) GLOB.clockwork_potential = max(0, GLOB.clockwork_potential + amt)
+#define ADJUST_CLOCKWORK_POTENTIAL(amt) (GLOB.clockwork_potential = max(0, GLOB.clockwork_potential + amt))
 
 #define HAS_CLOCKWORK_WISDOM(amt) (GLOB.clockwork_wisdom >= amt)
-#define ADJUST_CLOCKWORK_WISDOM(amt) GLOB.clockwork_wisdom = max(0, min(GLOB.max_clockwork_wisdom, GLOB.clockwork_wisdom + amt))
+#define ADJUST_CLOCKWORK_WISDOM(amt) (GLOB.clockwork_wisdom = max(0, min(GLOB.max_clockwork_wisdom, GLOB.clockwork_wisdom + amt)))
