@@ -143,6 +143,18 @@
 				SetScore(score_type,C,1)
 	return TRUE
 
+//NO MORE MEGAFAUNA ON THE STATION YOU SHITTERS
+/mob/living/simple_animal/hostile/megafauna/process()
+	var/turf/mobturf = get_turf(src)
+	if(mobturf && (mobturf.z == ZLEVEL_LAVALAND))
+		return
+	else
+		if(!src.admin_spawned)
+			src.visible_message("<span class='danger'>[src] collapses in on itself as it is severed from the hell energy that protected it's abominable body from falling apart. Whew!</span>")
+			spawn_gibs()
+			qdel(src)
+
+
 /proc/UnlockMedal(medal,client/player)
 
 	if(!player || !medal)
