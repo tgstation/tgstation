@@ -258,7 +258,7 @@
 	var/added_roundstart = TRUE
 	var/is_locked = TRUE
 
-	alert = TRUE
+	alert = FALSE
 	integrity_failure = 0
 	openable = FALSE
 
