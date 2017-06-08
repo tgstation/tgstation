@@ -265,6 +265,12 @@
 		update_icon()
 		return
 
+/obj/item/weapon/defibrillator/compact/combat/emag_act()	//They are safety = 0 for a reason, don't just reenable them.
+	return
+
+/obj/item/weapon/defibrillator/compact/combat/emp_act()
+	return
+
 //paddles
 
 /obj/item/weapon/twohanded/shockpaddles
