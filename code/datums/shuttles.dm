@@ -128,6 +128,7 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
+	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
