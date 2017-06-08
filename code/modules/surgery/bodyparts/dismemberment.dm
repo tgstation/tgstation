@@ -19,7 +19,15 @@
 
 	var/obj/item/bodypart/affecting = C.get_bodypart("chest")
 	affecting.receive_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
-	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
+	if(dam_type == BURN)
+		C.visible_message("<span class='danger'><B>[C]'s [src.name] has been burned to ash!</B></span>")
+		for(var/X in C.internal_organs)
+			var/obj/item/organ/O = X
+			var/org_zone = check_zone(O.zone)
+			if(org_zone == body_zone)
+				O.burn()
+	else
+		C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
 	C.emote("scream")
 	drop_limb()
 
@@ -44,7 +52,7 @@
 	return 1
 
 
-/obj/item/bodypart/chest/dismember()
+/obj/item/bodypart/chest/dismember(dam_type = BRUTE)
 	if(!owner)
 		return 0
 	var/mob/living/carbon/C = owner
@@ -64,16 +72,25 @@
 		var/org_zone = check_zone(O.zone)
 		if(org_zone != "chest")
 			continue
-		O.Remove(C)
-		O.forceMove(T)
+		if(dam_type == BURN)
+			O.burn()
+		else
+			O.Remove(C)
+			O.forceMove(T)
 		organ_spilled = 1
 	if(cavity_item)
-		cavity_item.forceMove(T)
+		if(dam_type == BURN)
+			cavity_item.burn()
+		else
+			cavity_item.forceMove(T)
 		cavity_item = null
 		organ_spilled = 1
 
 	if(organ_spilled)
-		C.visible_message("<span class='danger'><B>[C]'s internal organs spill out onto the floor!</B></span>")
+		if(dam_type == BURN)
+			C.visible_message("<span class='danger'><B>[C]'s internal organs are seared to a fine ash!</B></span>")
+		else
+			C.visible_message("<span class='danger'><B>[C]'s internal organs spill out onto the floor!</B></span>")
 	return 1
 
 
