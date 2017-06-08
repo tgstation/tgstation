@@ -140,3 +140,31 @@
 
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
+
+/obj/item/organ/eyes/robotic/flashlight
+	name = "flashlight eyes"
+	desc = "It's two flashlights rigged together with some wire. Why would you put these in someones head?"
+	eye_color ="fee5a3"
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "flashlight_eyes"
+	flash_protect = 2
+	tint = INFINITY
+	var/obj/item/device/flashlight/eyelight/eye
+
+/obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
+	return
+
+/obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
+	..()
+	if(!eye)
+		eye = new /obj/item/device/flashlight/eyelight()
+	eye.on = TRUE
+	eye.forceMove(M)
+	eye.update_brightness(M)
+
+
+/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
+	eye.on = FALSE
+	eye.update_brightness(M)
+	eye.forceMove(src)
+	..()
