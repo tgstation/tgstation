@@ -481,6 +481,9 @@
 				to_chat(user, "<span class='notice'>Nothing happens...</span>")
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
+	else if(S.has_reagent("mutagen", 3) || S.has_reagent("radium", 8) || S.has_Reagent("uranium", 5))
+		for(rate of myseed.reagents_add)
+			rate = rate - 0.05
 	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
 		hardmutate()
 	else if(S.has_reagent("mutagen", 1) || S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
