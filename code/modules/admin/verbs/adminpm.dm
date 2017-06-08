@@ -268,6 +268,8 @@
 					var/datum/admin_help/AH = I
 					if(.)
 						. += ", "
+					if(AH == ticket)
+						. += "Active: "
 					. += "#[AH.id]"
 				return
 			else
