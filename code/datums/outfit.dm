@@ -67,7 +67,8 @@
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
-		U.attach_accessory(new accessory(H))
+		if(U)
+			U.attach_accessory(new accessory(H))
 
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
