@@ -392,7 +392,7 @@ JOIN_WITH_MUTANT_RACE
 ## Uncommenting races will allow them to be choosen at roundstart while join_with_muntant_race is on. You'll need at least one.
 
 ## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
-ROUNDSTART_RACES human
+#ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
