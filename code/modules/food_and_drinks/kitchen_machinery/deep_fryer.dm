@@ -3,9 +3,6 @@ April 3rd, 2014 marks the day this machine changed the face of the kitchen on NT
 God bless America.
 insert ascii eagle on american flag background here
 */
-
-// April 3rd, 2014 marks the day this machine changed the face of the kitchen on NTStation13
-// God bless America.
 /obj/machinery/deepfryer
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
@@ -112,11 +109,7 @@ insert ascii eagle on american flag background here
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
-			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
-				qdel(frying)
-			else
-				frying.forceMove(S)
-
+			qdel(frying)
 			icon_state = "fryer_off"
 			user.put_in_hands(S)
 			frying = null
