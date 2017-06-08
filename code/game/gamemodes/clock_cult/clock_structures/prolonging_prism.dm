@@ -58,8 +58,7 @@
 		if(SSshuttle.emergency.mode != SHUTTLE_CALL)
 			to_chat(user, "<span class='warning'>No emergency shuttles are attempting to arrive at the station!</span>")
 			return 0
-		var/efficiency = get_efficiency_mod()
-		if(!try_use_power(get_delay_cost() * efficiency))
+		if(!try_use_power(get_delay_cost()))
 			to_chat(user, "<span class='warning'>[src] needs more power to function!</span>")
 			return 0
 		delay_cost += delay_cost_increase
