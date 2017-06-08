@@ -1,5 +1,0 @@
-author: "McBawbaggings"
-delete-after: True
-changes: 
-  - rscdel: "Removed the Supermatter shard from Engineering."
-  - rscadd: "Added Singulo and Tesla back to Engineering."

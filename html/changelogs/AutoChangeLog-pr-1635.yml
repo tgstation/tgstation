@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Bulldog Shotguns should update their sprite properly when you remove the magazine."

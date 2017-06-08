@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - spellcheck: "Renamed Volt Void to Volt Blaster."
-  - tweak: "Volt Blaster does not consume power when firing and does not cause backlash if you don't fire.
-balance: Volt Blaster does 25 damage, from 20-40 depending on power, and has 5 shots, from 4, over its duration."

@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Adds seperate languages to the game. Now Ratvarian, Drone, Machine, Swarmer, Human (now called Galactic Common), Slime and Monkey are separate languages. Each languages has its own comma prefix, for example, Galcom has the ,0 prefix, while Ratvarian has the ,r prefix. If you don't understand a language when it is spoken to you, you will hear a scrambled version that will vary depending on the language that you're not understanding."
-  - experiment: "This does not change who can understand what."
-  - rscdel: "Removed the talk wheel feature."
-  - rscadd: "Clicking the speech bubble icon now opens the Language Menu, allowing you to review which languages you speak, their keys, and letting you set which language you speak by default. Admins have additional abilities to add and remove languages from mobs using this menu."

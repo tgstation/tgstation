@@ -1,5 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - experiment: "New server backend!"
-  - tweak: "Test merged PRs now show the commit of the PR at which they were merged"

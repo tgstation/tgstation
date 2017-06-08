@@ -1,7 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "Refactors whisper, now all living mobs can use it"
-  - rscadd: "Prefix any message with # to whisper, for example, \"# Man, that guy is weird.\", you can still use the whisper verb if you whish."
-  - rscadd: "This is compatible with languages, for example \"#,r That HoS is a problem, we should kill him\""
-  - rscdel: "Removes #a #b #c etc radio codes, as well as :w and .w, which used to be whisper."

@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Hermit ruin now includes a portable seed extractor."

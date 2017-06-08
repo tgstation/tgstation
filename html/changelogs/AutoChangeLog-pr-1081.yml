@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to bypass language restrictions by selecting
-languages you can't speak as your default language."

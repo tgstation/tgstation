@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Some golems now spawn with more thematic names."
-  - tweak: "Adamantine Golems are no longer numbered, but receive a random golem name."

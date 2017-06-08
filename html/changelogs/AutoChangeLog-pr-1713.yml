@@ -1,6 +1,0 @@
-author: "Tortellini Tony"
-delete-after: True
-changes: 
-  - bugfix: "Fixed buckshot boxes and his grace having incorrect or missing icons."
-  - bugfix: "Fixed toolbox latches."
-  - tweak: "Moved the overlay for a box so that it does not go off of the label."
