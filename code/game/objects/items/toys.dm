@@ -5,6 +5,7 @@
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
+ *		Toy minibomb
  *		Crayons
  *		Snap pops
  *		Mech prizes
@@ -264,6 +265,42 @@
 			to_chat(user, "<span class='warning'>It's already fabulous!</span>")
 	else
 		return ..()
+
+/*
+ * Toy Syndie Minibomb
+ */
+/obj/item/toy/minibomb
+	name = "syndicate minibomb"
+	desc = "A syndicate minibomb made out of some foam, don't question on why it looks exactly like it's counterpart."
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "syndicate"
+	item_state = "flashbang"
+	var/active = FALSE
+	var/pranksound = 'sound/items/bikehorn.ogg'
+
+/obj/item/toy/minibomb/attack_self(mob/user)
+	if(!active)
+		playsound(src, 'sound/weapons/armbomb.ogg', 60, 1) //Commence the panic
+		active = TRUE
+		user << "<span class='warning'>You prime the [name]! 5 seconds!</span>"
+		icon_state = initial(icon_state) + "_active"
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.throw_mode_on()
+		spawn(50)
+			if(prob(25)) //Cool 25% chance for a neat effect
+				var/obj/item/weapon/grenade/chem_grenade/glitter/O = new /obj/item/weapon/grenade/chem_grenade/glitter/blue(get_turf(src))
+				var/explosionsound = pick('sound/effects/Explosion1.ogg','sound/effects/Explosion2.ogg','sound/effects/Explosion3.ogg')
+				playsound(src, explosionsound, 50, 1) //EVERYONE PANIC AS THERE'S SUDDENLY SMOKE AND NOISES
+				O.det_time = 0 //Instant detonation
+				O.prime()
+				active = FALSE
+				icon_state = initial(icon_state)
+			else
+				playsound(src.loc, pranksound, 50, 1) //what a prank so funny hahaha
+				active = FALSE
+				icon_state = initial(icon_state)
+
 
 /*
  * Foam armblade
