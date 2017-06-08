@@ -223,7 +223,7 @@
 	var/compliant_msg = trim(lowertext(msg))
 	var/irc_tagged = "[sender](IRC)"
 	var/list/splits = splittext(compliant_msg, " ")
-	var/usage_string = "Usage: ticket <close|resolve|icissue|reject|reopen [ticket #]|list-closed>"
+	var/usage_string = "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 	if(splits.len && splits[1] == "ticket")
 		if(splits.len < 2)
 			return usage_string
@@ -259,7 +259,7 @@
 					return "Error: Ticket #[fail] belongs to [AH.initiator_ckey]"
 				AH.Reopen()
 				return "Ticket #[ticket.id] successfully reopened"
-			if("list-closed")
+			if("list")
 				var/list/tickets = GLOB.ahelp_tickets.TicketsByCKey(target)
 				if(!tickets.len)
 					return "None"
