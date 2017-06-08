@@ -1,5 +1,5 @@
 /datum/language/machine
-	name = "Encoded Audio Language"
+	name = "DECTalk"
 	desc = "An efficient language of encoded tones developed by synthetics and cyborgs."
 	speech_verb = "whistles"
 	ask_verb = "chirps"
