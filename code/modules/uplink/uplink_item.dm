@@ -222,6 +222,16 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
+/datum/uplink_item/dangerous/minigun
+	name = "M134 Minigun"
+	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at ten rounds per second."
+	item = /obj/item/weapon/minigunpack/ballistic
+	surplus = 0
+	cant_discount = TRUE	//No.
+	player_minimum = 40		//No lowpop minigunning.
+	include_modes = list(/datum/game_mode/nuclear)
+	cost = 55
+
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \

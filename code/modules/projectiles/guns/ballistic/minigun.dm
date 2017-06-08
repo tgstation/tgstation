@@ -1,11 +1,11 @@
 
-
 //The ammo/gun is stored in a back slot item
 /obj/item/weapon/minigunpack
 	name = "backpack power source"
 	desc = "The massive external power source for the laser gatling gun"
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "holstered"
+	var/icon_state_unholstered = "notholstered"
 	item_state = "backpack"
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
@@ -14,10 +14,20 @@
 	var/overheat = 0
 	var/overheat_max = 40
 	var/heat_diffusion = 1
+	var/gun_type = /obj/item/weapon/gun/ballistic/minigun/laser
+
+/obj/item/weapon/minigunpack/ballistic
+	name = "backpack ammo pack"
+	desc = "A huge back-mounted ammo storage and power supply for a M134 minigun"
+	icon_state = "minipack_gun"
+	icon_state_unholstered = "minipack"
+	gun_type = /obj/item/weapon/gun/ballistic/minigun/m134
+	overheat_max = 100
+	heat_diffusion = 7
 
 /obj/item/weapon/minigunpack/Initialize()
 	. = ..()
-	gun = new(src)
+	gun = new gun_type(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/minigunpack/Destroy()
@@ -72,9 +82,9 @@
 
 /obj/item/weapon/minigunpack/update_icon()
 	if(armed)
-		icon_state = "notholstered"
+		icon_state = icon_state_unholstered
 	else
-		icon_state = "holstered"
+		icon_state = initial(icon_state)
 
 /obj/item/weapon/minigunpack/proc/attach_gun(var/mob/user)
 	if(!gun)
@@ -90,8 +100,6 @@
 
 
 /obj/item/weapon/gun/ballistic/minigun
-	name = "laser gatling gun"
-	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	item_state = "minigun"
@@ -105,10 +113,10 @@
 	automatic = 0
 	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
-	fire_sound = 'sound/weapons/Laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = 0
 	var/obj/item/weapon/minigunpack/ammo_pack
+	var/use_heat = TRUE
 
 /obj/item/weapon/gun/ballistic/minigun/Initialize()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
@@ -117,8 +125,23 @@
 		ammo_pack = loc
 	else
 		return INITIALIZE_HINT_QDEL //No pack, no gun
-	
+
 	return ..()
+
+/obj/item/weapon/gun/ballistic/minigun/laser
+	name = "laser gatling gun"
+	desc = "An advanced laser cannon with an incredible rate of fire. Requires a bulky backpack power source to use."
+	fire_sound = 'sound/weapons/Laser.ogg'
+
+/obj/item/weapon/gun/ballistic/minigun/m134
+	name = "M134 Minigun"
+	desc = "She weighs one hundred fifty kilograms and fires two hundred dollar, custom-tooled cartridges at ten rounds per second."
+	burst_size = 5
+	spread = 30
+	mag_type = /obj/item/ammo_box/magazine/internal/minigun/m134
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	icon_state = "minigun_spin_ballistic"
+	item_state = "minigun_b"
 
 /obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)
 	return
@@ -131,7 +154,9 @@
 
 /obj/item/weapon/gun/ballistic/minigun/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	if(ammo_pack)
-		if(ammo_pack.overheat < ammo_pack.overheat_max)
+		if(!use_heat)
+			..()
+		else if(ammo_pack.overheat < ammo_pack.overheat_max)
 			ammo_pack.overheat += burst_size
 			..()
 		else
