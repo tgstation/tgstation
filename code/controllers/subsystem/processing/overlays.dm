@@ -161,7 +161,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
+/atom/proc/copy_overlays(atom/other, cut_old)	//copys our_overlays from another atom
 	if(!other)
 		if(cut_old)
 			cut_overlays()
@@ -183,7 +183,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 //TODO: Better solution for these?
 /image/proc/add_overlay(x)
-	overlays += x
+	overlays |= x
 
 /image/proc/cut_overlay(x)
 	overlays -= x
