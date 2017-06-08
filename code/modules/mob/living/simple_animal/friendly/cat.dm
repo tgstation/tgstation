@@ -271,3 +271,78 @@
 	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
+
+/mob/living/simple_animal/pet/cat/ascendant
+	name = "Ascendant Cat"
+	desc = "It appears this cat has ascended to a godlike form. It'd be best to stay on it's good side."
+	health = 2000
+	maxHealth = 2000
+	unsuitable_atmos_damage = 0
+
+
+/mob/living/simple_animal/pet/cat/ascendant/Life()
+	..()
+	if(stat)
+		return
+	if(health < maxHealth)
+		adjustBruteLoss(-2) //Some life regen. Not too much, but it should not be too easy to defeat, either.
+
+/mob/living/simple_animal/pet/cat/ascendant/New()
+	. = ..()
+
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/fireball/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/lightning/cat(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock/cat(null))
+	add_overlay(image ('icons/effects/effects.dmi', "shield2"))
+
+// Ascendant Spells. Slightly modified wizard spells, removing cooldowns and changing invocations. GODLIKE CREATURS DONT NEED COOLDOWNS!
+/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/cat
+	cooldown_min = 0
+	charge_max = 5
+	name = "Ascendant Warp"
+	desc = "Allows you to warp across the station, into any room you wish."
+	invocation = "MROWWW- *poof*"
+	clothes_req = 0
+
+/obj/effect/proc_holder/spell/fireball/cat
+	cooldown_min = 0
+	charge_max = 5
+	name = "Ascendant Fireball"
+	desc = "This spell sends a fireball towards whatever unlucky thing called upon your wrath"
+	invocation = "HSSSSSSS"
+	clothes_req = 0
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cat
+	cooldown_min = 5
+	charge_max = 5
+	name = "Ascendant Shockwave"
+	desc = "This spell sends anything near you tumbling away in a shockwave of pure energy"
+	invocation = "MROWWW... HSSSSSSSSSSS!"
+	clothes_req = 0
+
+/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/cat
+	cooldown_min = 0
+	charge_max = 5
+	name = "Ascendant Overload"
+	desc = "Overloads nearby technology"
+	invocation = "MROWWW... mrowwww. MEOW!"
+	clothes_req = 0
+
+/obj/effect/proc_holder/spell/targeted/lightning/cat
+	cooldown_min = 0
+	charge_max = 0
+	name = "Ascendant Smite"
+	desc = "Smite your foes with lightning!"
+	invocation = "HSSSSS.... HSSSS!"
+	clothes_req = 0
+
+/obj/effect/proc_holder/spell/aoe_turf/knock/cat
+	cooldown_min = 0
+	charge_max = 5
+	name = "Ascendant Doorbell"
+	desc = "Does the AI's main job for them."
+	invocation = "Mrrow?"
+	clothes_req = 0
