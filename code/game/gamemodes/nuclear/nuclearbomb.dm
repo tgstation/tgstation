@@ -64,6 +64,9 @@
 	countdown = null
 	. = ..()
 
+/obj/machinery/nuclearbomb/ex_act()
+	return
+
 /obj/machinery/nuclearbomb/examine(mob/user)
 	. = ..()
 	if(exploding)
