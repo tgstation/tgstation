@@ -344,6 +344,23 @@
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
 	return 0
 
+/mob/living/silicon/ai/verb/global_deshock()
+	set category = "AI Commands"
+	set name = "Remove All Airlock Electrification"
+	set desc = "Removes electrification on all airlocks visible to cameras with AI control enabled"
+	if(stat == DEAD)
+		return //won't work if dead
+	if(control_disabled)
+		src << "Wireless communication is disabled."
+		return
+	for(var/D in airlocks)
+		if(istype(D,/obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/door = D
+			var/turf/T = get_turf_pixel(door)
+			if(cameranet.checkTurfVis(T) &&	door.canAIControl(src) && !(door.wires.is_cut(WIRE_SHOCK)))	//Only unshock airlocks that can technically be seen.
+				door.secondsElectrified = 0
+	src << "<b>All accessible airlocks unelectrified.</b>"
+
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
 	if(stat == DEAD)
