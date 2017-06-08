@@ -172,13 +172,17 @@
 		var/hulk_verb = pick("smash","pummel")
 		if(check_shields(15, "the [hulk_verb]ing"))
 			return
-		..(user, 1)
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+		if(!affecting)
+			affecting = get_bodypart("chest")
+		var/armor_block = run_armor_check(affecting, "melee")
+		if(user.limb_destroyer)
+			dismembering_strike(user, affecting.body_zone)
+		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", "<span class='userdanger'>[user] has [hulk_verb]ed you!</span>")
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		var/message = "[user] has [hulk_verb]ed [src]!"
-		visible_message("<span class='danger'>[message]</span>", \
-								"<span class='userdanger'>[message]</span>")
-		adjustBruteLoss(15)
 		damage_clothes(15, BRUTE, "melee")
+		apply_damage(15, BRUTE, affecting, armor_block)
+		..(user, 1)
 		return 1
 
 /mob/living/carbon/human/attack_hand(mob/user)
