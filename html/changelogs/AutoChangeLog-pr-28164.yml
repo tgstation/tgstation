@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Added Prolonging Prism as an application scripture."
+  - balance: "Prolonging Prism will delay the arrival of an emergency shuttle by 2 minutes at the cost of 2500W of power plus 75W for every 10 CV and 750W for every previous activation. In addition to the high cost, it very obviously affects the shuttle dock and leaves an obvious trail to the prism."
