@@ -1333,6 +1333,7 @@
 #include "code\modules\games\cards.dm"
 #include "code\modules\games\cas.dm"
 #include "code\modules\holiday\easter.dm"
+#include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
