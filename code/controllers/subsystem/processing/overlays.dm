@@ -183,7 +183,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 //TODO: Better solution for these?
 /image/proc/add_overlay(x)
-	overlays |= x
+	overlays += x
 
 /image/proc/cut_overlay(x)
 	overlays -= x
@@ -199,7 +199,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 	var/list/cached_other = other.our_overlays
 	if(cached_other)
-		if(cut_old || overlays.len)
+		if(cut_old || !overlays.len)
 			overlays = cached_other.Copy()
 		else
 			overlays |= cached_other
