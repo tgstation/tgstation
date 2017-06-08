@@ -207,6 +207,7 @@
 #include "code\controllers\subsystem\processing\flightpacks.dm"
 #include "code\controllers\subsystem\processing\obj.dm"
 #include "code\controllers\subsystem\processing\overlays.dm"
+#include "code\controllers\subsystem\processing\pathing.dm"
 #include "code\controllers\subsystem\processing\processing.dm"
 #include "code\datums\action.dm"
 #include "code\datums\ai_laws.dm"
