@@ -107,3 +107,9 @@
 	id = "anacea"
 	results = list("anacea" = 3)
 	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, "radium" = 1)
+
+/datum/chemical_reaction/nuroxanide
+	name = "nuroxanide"
+	id = "nuroxanide"
+	results = list("nuroxanide" = 2)
+	required_reagents = list("cyanide" = 1, "plasma" = 1, "sulfur" = 1)

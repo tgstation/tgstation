@@ -899,3 +899,21 @@
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
+
+/datum/reagent/toxin/nuroxanide
+	name = "Nuroxanide"
+	id = "nuroxanide"
+	description = "A powerful anti-parasitic capable of passing the blood-brain barrier"
+	color = "#E8DE35" // rgb: 232, 222, 53
+	toxpwr = 2.5
+	taste_description = "bitter eggs"
+
+/datum/reagent/toxin/nuroxanide/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
+	if(!istype(C))
+		return
+	if(method == INJECT|method == INGEST)
+		if(M.has_brain_worms())
+			var/mob/living/simple_animal/borer/B = M.has_brain_worms()
+			to_chat(B, "<span class='warning'>Sudenly everything burns! You try to craw out!</span>")
+			B.leave_victim()
+			B.adjustBruteLoss(5)
