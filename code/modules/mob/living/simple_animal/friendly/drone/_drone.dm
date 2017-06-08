@@ -170,29 +170,29 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <b>[src]</b>!\n"
 
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.flags & ABSTRACT))
 			if(I.blood_DNA)
-				msg += "<span class='warning'>It has \icon[I] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
+				msg += "<span class='warning'>It has [bicon(I)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in its [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
-				msg += "It has \icon[I] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
+				msg += "It has [bicon(I)] \a [I] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.flags&ABSTRACT))
 		if(internal_storage.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[internal_storage] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
+			msg += "<span class='warning'>It is holding [bicon(internal_storage)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 		else
-			msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
+			msg += "It is holding [bicon(internal_storage)] \a [internal_storage] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.flags&ABSTRACT))
 		if(head.blood_DNA)
-			msg += "<span class='warning'>It is wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
+			msg += "<span class='warning'>It is wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
 		else
-			msg += "It is wearing \icon[head] \a [head] on its head.\n"
+			msg += "It is wearing [bicon(head)] \a [head] on its head.\n"
 
 	//Braindead
 	if(!client && stat != DEAD)
