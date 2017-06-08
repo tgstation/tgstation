@@ -272,7 +272,7 @@
 		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
-		A.throw_at(throwtarget,power+1,1)
+		A.throw_at(throwtarget,power+1,1, src)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
 		new /obj/effect/temp_visual/gravpush(F)
@@ -302,7 +302,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(T, power+1, 1)
+		A.throw_at(T, power+1, 1, src)
 		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
 		new /obj/effect/temp_visual/gravpush(F)
@@ -332,7 +332,7 @@
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1, src)
 		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/temp_visual/gravpush(Z)
