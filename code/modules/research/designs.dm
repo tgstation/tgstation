@@ -643,3 +643,23 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+/datum/design/swathelm
+	name = "SWAT Helmet"
+	desc = "A tactical SWAT helm."
+	id = "swathelm"
+	req_tech = list("materials" = 7, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_TITANIUM = 200)
+	build_path = /obj/item/clothing/head/helmet/swat/nanotrasen
+	category = list("Equipment")
+
+/datum/design/swatsuit
+	name = "SWAT Suit"
+	desc = "A tactical SWAT suit."
+	id = "swatsuit"
+	req_tech = list("materials" = 7, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_TITANIUM = 200)
+	build_path = /obj/item/clothing/suit/space/swat
+	category = list("Equipment")
