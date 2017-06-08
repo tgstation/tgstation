@@ -62,6 +62,16 @@
 	build_path = /obj/item/weapon/gun/energy/beam_rifle
 	category = list("Weapons")
 
+/datum/design/pulserifle
+	name = "Pulse Rifle"
+	desc = "A powerful weapon used by Nanotransen \[REDACTED\], the Pulse Rifle can blast through anything in its user's path."
+	id = "pulserifle"
+	req_tech = list("combat" = 10, "magnets" = 7, "powerstorage" = 7, "materials" = 7, "bluespace" = 7)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000, MAT_DIAMOND = 10000, MAT_URANIUM = 10000, MAT_SILVER = 800, MAT_GOLD = 10000)
+	build_path = /obj/item/weapon/gun/energy/pulse
+	category = list("Weapons")
+
 /datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
