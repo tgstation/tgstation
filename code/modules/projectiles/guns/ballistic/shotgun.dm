@@ -209,7 +209,7 @@
 	icon_state = "cycler"
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_BULKY
 	var/toggled = 0
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 
@@ -239,6 +239,7 @@
 	if(user.incapacitated() || !Adjacent(user) || !istype(user))
 		return
 	pump()
+
 
 
 // DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
