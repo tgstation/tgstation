@@ -9,4 +9,4 @@
 	var/turf/T = get_turf(usr)
 	new /mob/living/carbon/human(T)
 	log_admin("[key_name(usr)] spawned a human.")
-	feedback_add_details("admin_verb","SH")
+	SSblackbox.add_details("admin_verb","SH")
