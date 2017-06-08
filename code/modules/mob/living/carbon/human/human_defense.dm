@@ -467,10 +467,10 @@
 				informed = 1
 			switch(severity)
 				if(1)
-					L.receive_damage(0,10)
-					src.Stun(10)
-				if(2)
 					L.receive_damage(0,5)
+					src.Stun(7)
+				if(2)
+					L.receive_damage(0,2)
 					src.Stun(5)
 	..()
 
