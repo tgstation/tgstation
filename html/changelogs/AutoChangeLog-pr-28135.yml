@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - balance: "Tinkerer's Daemons are no longer totally disabled if you drop below the servant requirement."
-  - balance: "Instead, Tinkerer's Daemons will disable until the number of active daemons is equal to or less than one-fifth of the living Servants."
-  - tweak: "Tinkerer's Daemons produce components very slightly slower."

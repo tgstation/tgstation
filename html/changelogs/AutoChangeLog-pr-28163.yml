@@ -1,4 +1,0 @@
-author: "QualityVan"
-delete-after: True
-changes: 
-  - rscdel: "Cyborgs can no longer alt-click their material stacks to split them"
