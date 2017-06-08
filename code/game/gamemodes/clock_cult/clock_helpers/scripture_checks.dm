@@ -5,7 +5,7 @@
 	for(var/mob/living/M in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
+	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	//Drivers: always unlocked
 	.[SCRIPTURE_SCRIPT] = (SSticker.scripture_states[SCRIPTURE_SCRIPT] || \
 	(servants >= SCRIPT_SERVANT_REQ && GLOB.clockwork_caches >= SCRIPT_CACHE_REQ))
@@ -13,9 +13,6 @@
 	.[SCRIPTURE_APPLICATION] = (SSticker.scripture_states[SCRIPTURE_APPLICATION] || \
 	(servants >= APPLICATION_SERVANT_REQ && GLOB.clockwork_caches >= APPLICATION_CACHE_REQ && GLOB.clockwork_construction_value >= APPLICATION_CV_REQ))
 	//Application: APPLICATION_SERVANT_REQ or more non-brain servants, APPLICATION_CACHE_REQ or more clockwork caches, and at least APPLICATION_CV_REQ CV
-	.[SCRIPTURE_REVENANT] = (SSticker.scripture_states[SCRIPTURE_REVENANT] || \
-	(servants >= REVENANT_SERVANT_REQ && GLOB.clockwork_caches >= REVENANT_CACHE_REQ && GLOB.clockwork_construction_value >= REVENANT_CV_REQ))
-	//Revenant: REVENANT_SERVANT_REQ or more non-brain servants, REVENANT_CACHE_REQ or more clockwork caches, and at least REVENANT_CV_REQ CV
 	.[SCRIPTURE_JUDGEMENT] = (SSticker.scripture_states[SCRIPTURE_JUDGEMENT] || \
 	(servants >= JUDGEMENT_SERVANT_REQ && GLOB.clockwork_caches >= JUDGEMENT_CACHE_REQ && GLOB.clockwork_construction_value >= JUDGEMENT_CV_REQ && !unconverted_ai_exists))
 	//Judgement: JUDGEMENT_SERVANT_REQ or more non-brain servants, JUDGEMENT_CACHE_REQ or more clockwork caches, at least JUDGEMENT_CV_REQ CV, and there are no living, non-servant ais

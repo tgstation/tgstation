@@ -24,16 +24,17 @@
 
 	config = new
 
+	hippie_initialize()
 	SetRoundID()
 
 	SetupLogs()
 
 	if(!RunningService())	//tgs2 support
-		GLOB.revdata.DownloadPRDetails() 
+		GLOB.revdata.DownloadPRDetails()
 
 	load_motd()
 	load_admins()
-	load_menu()
+	LoadVerbs(/datum/verbs/menu)
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -60,7 +61,7 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), COALESCE(INET_ATON('[GLOB.ip_address]'), 0), '[world.port]')")
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
@@ -90,7 +91,6 @@
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
-	hippie_initialize()
 
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)

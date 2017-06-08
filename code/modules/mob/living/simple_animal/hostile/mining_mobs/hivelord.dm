@@ -321,7 +321,7 @@
 		if("Shadow")
 			mob_species = /datum/species/shadow
 			r_pocket = /obj/item/weapon/reagent_containers/pill/shadowtoxin
-			neck = /obj/item/clothing/tie/medal/nobel_science
+			neck = /obj/item/clothing/accessory/medal/plasma/nobel_science
 			uniform = /obj/item/clothing/under/color/black
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			suit = /obj/item/clothing/suit/toggle/labcoat
