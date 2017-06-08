@@ -251,10 +251,7 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
 							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost"))
 /client/proc/pick_form()
-	if(!is_content_unlocked())
-		alert("This setting is for accounts with BYOND premium only.")
-		return
-	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
+	var/new_form = input(src, "Choose your ghostly form:","Ghostly form",null) as null|anything in GLOB.ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
@@ -265,10 +262,7 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
 
 /client/proc/pick_ghost_orbit()
-	if(!is_content_unlocked())
-		alert("This setting is for accounts with BYOND premium only.")
-		return
-	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_orbits
+	var/new_orbit = input(src, "Choose your ghostly orbit:","Ghostly orbit",null) as null|anything in GLOB.ghost_orbits
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
 		prefs.save_preferences()
@@ -295,16 +289,13 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Ghost Customization"
 	set category = "Preferences"
 	set desc = "Customize your ghastly appearance."
-	if(is_content_unlocked())
-		switch(alert("Which setting do you want to change?",,"Ghost Form","Ghost Orbit","Ghost Accessories"))
-			if("Ghost Form")
-				pick_form()
-			if("Ghost Orbit")
-				pick_ghost_orbit()
-			if("Ghost Accessories")
-				pick_ghost_accs()
-	else
-		pick_ghost_accs()
+	switch(alert("Which setting do you want to change?",,"Ghost Form","Ghost Orbit","Ghost Accessories"))
+		if("Ghost Form")
+			pick_form()
+		if("Ghost Orbit")
+			pick_ghost_orbit()
+		if("Ghost Accessories")
+			pick_ghost_accs()
 
 /client/verb/pick_ghost_others()
 	set name = "Ghosts of Others"

@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 3
+	var/max_save_slots = 8
 
 	//non-preference stuff
 	var/muted = 0
@@ -92,8 +92,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// OOC Metadata:
 	var/metadata = ""
 
-	var/unlock_content = 0
-
 	var/list/ignoring = list()
 
 	var/clientfps = 0
@@ -113,9 +111,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content = C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
+
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -383,13 +379,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
-				if(unlock_content || check_rights_for(user.client, R_ADMIN))
+				if(check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-
-				if(unlock_content)
-					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
-					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 
 			var/button_name = "If you see this something went wrong."
 			switch(ghost_accs)
@@ -825,15 +816,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if("input")
 			switch(href_list["preference"])
 				if("ghostform")
-					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
-						if(new_form)
-							ghost_form = new_form
+					var/new_form = input(user, "Choose your ghostly form:","Ghostly orbit",null) as null|anything in GLOB.ghost_forms
+					if(new_form)
+						ghost_form = new_form
+
 				if("ghostorbit")
-					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in GLOB.ghost_orbits
-						if(new_orbit)
-							ghost_orbit = new_orbit
+					var/new_orbit = input(user, "Choose your ghostly orbit:","Ghostly orbit", null) as null|anything in GLOB.ghost_orbits
+					if(new_orbit)
+						ghost_orbit = new_orbit
 
 				if("ghostaccs")
 					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
@@ -1138,9 +1128,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		else
 			switch(href_list["preference"])
-				if("publicity")
-					if(unlock_content)
-						toggles ^= MEMBER_PUBLIC
 				if("gender")
 					if(gender == MALE)
 						gender = FEMALE

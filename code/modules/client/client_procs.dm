@@ -94,12 +94,6 @@
 
 	..()	//redirect to hsrc.Topic()
 
-/client/proc/is_content_unlocked()
-	if(!prefs.unlock_content)
-		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
-		return 0
-	return 1
-
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
 		src.last_message_count++
@@ -250,7 +244,7 @@ GLOBAL_LIST(external_rsc_urls)
 			qdel(src)
 			return 0
 		if (config.webclientmembersonly && !IsByondMember())
-			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
+			to_chat(src, "Sorry, but the web client is restricted to byond members only. This is to prevent ban evasion, not to support BYOND.")
 			qdel(src)
 			return 0
 
