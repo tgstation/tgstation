@@ -223,9 +223,10 @@
 	var/compliant_msg = trim(lowertext(msg))
 	var/irc_tagged = "[sender](IRC)"
 	var/list/splits = splittext(compliant_msg, " ")
+	var/usage_string = "Usage: ticket <close|resolve|icissue|reject|reopen [ticket #]|list-closed>"
 	if(splits.len && splits[1] == "ticket")
 		if(splits.len < 2)
-			return "Usage: ticket <close|resolve|icissue|reject>"
+			return usage_string
 		switch(splits[2])
 			if("close")
 				if(ticket)
@@ -243,8 +244,34 @@
 				if(ticket)
 					ticket.Reject(irc_tagged)
 					return "Ticket #[ticket.id] successfully rejected"
+			if("reopen")
+				if(ticket)
+					return "Error: [target] already has ticket #[ticket.id] open"
+				var/fail = splits.len < 3 ? null : -1
+				if(!isnull(fail))
+					fail = text2num(splits[3])
+				if(isnull(fail))
+					return "Error: No/Invalid ticket id specified. [usage_string]"
+				var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(fail)
+				if(!AH)
+					return "Error: Ticket #[fail] not found"
+				if(AH.initiator_ckey != target)
+					return "Error: Ticket #[fail] belongs to [AH.initiator_ckey]"
+				AH.Reopen()
+				return "Ticket #[ticket.id] successfully reopened"
+			if("list-closed")
+				var/list/tickets = GLOB.ahelp_tickets.TicketsByCKey(target)
+				if(!tickets.len)
+					return "None"
+				. = ""
+				for(var/I in tickets)
+					var/datum/admin_help/AH = I
+					if(.)
+						. += ", "
+					. += "#[AH.id]"
+				return
 			else
-				return "Usage: ticket <close|resolve|icissue|reject>"
+				return usage_string
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
