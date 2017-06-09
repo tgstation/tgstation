@@ -1,5 +1,0 @@
-author: "TrustyGun"
-delete-after: True
-changes: 
-  - rscadd: "Some of the clown's toys have been moved into a crate in the theater. If you think you are missing something, check in there."
-  - rscadd: "Wooden crates have been added. You can construct them with 6 wooden planks, and deconstruct them the same way as regular crates"
