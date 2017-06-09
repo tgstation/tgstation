@@ -632,13 +632,12 @@
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M in GLOB.machines) //change status
+	for (var/M in GLOB.ai_status_displays) //change status of displays
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
 			AISD.emotion = emote
 		//if Friend Computer, change ALL displays
 		else if(istype(M, /obj/machinery/status_display))
-
 			var/obj/machinery/status_display/SD = M
 			if(emote=="Friend Computer")
 				SD.friendc = 1
