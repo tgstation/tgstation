@@ -101,14 +101,12 @@
 				GLOB.sac_image = reshape
 		else
 			message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
-	if(GLOB.summon_spots.len)
-		cult_objectives += "eldergod"
-	else
+	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
-			var/area/summon = pick(GLOB.sortedAreas)
-			if(summon && (summon.z == ZLEVEL_STATION) && summon.valid_territory)
-				GLOB.summon_spots |= summon
-		cult_objectives += "eldergod"
+			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
+			if((summon.z == ZLEVEL_STATION) && summon.valid_territory)
+				GLOB.summon_spots += summon
+	cult_objectives += "eldergod"
 
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		equip_cultist(cult_mind.current)
