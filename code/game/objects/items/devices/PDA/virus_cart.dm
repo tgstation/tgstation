@@ -8,7 +8,7 @@
 /obj/item/weapon/cartridge/virus/message_header()
 	return "<b>[charges] viral files left.</b><HR>"
 	
-/obj/item/weapon/cartridge/virus/message_special(var/obj/item/device/pda/target)
+/obj/item/weapon/cartridge/virus/message_special(obj/item/device/pda/target)
 	if (!istype(loc, /obj/item/device/pda))
 		return ""  //Sanity check, this shouldn't be possible.
 	return " (<a href='byond://?src=\ref[loc];choice=cart;special=virus;target=\ref[target]'>*Send Virus*</a>)"
