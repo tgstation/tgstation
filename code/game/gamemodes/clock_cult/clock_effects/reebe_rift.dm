@@ -11,6 +11,7 @@
 	light_color = "#6A4D2F"
 
 /obj/effect/clockwork/reebe_rift/Initialize()
+	. = ..()
 	if(!GLOB.city_of_cogs_beckoner)
 		return INITIALIZE_HINT_QDEL
 
@@ -42,7 +43,7 @@
 	pixel_y = -64
 
 /obj/effect/clockwork/city_of_cogs_beckoner/Initialize()
-	..()
+	. = ..()
 	GLOB.city_of_cogs_beckoner = src
 
 /obj/effect/clockwork/city_of_cogs_beckoner/attack_hand(mob/living/user)

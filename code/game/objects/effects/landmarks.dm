@@ -166,7 +166,7 @@
 	name = "servant spawn location"
 
 /obj/effect/landmark/start/servant/Initialize(mapload)
-	..()
+	. = ..()
 	GLOB.servant_start += loc
 	return INITIALIZE_HINT_QDEL
 

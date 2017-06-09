@@ -137,9 +137,10 @@ Credit where due:
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
-		var/turf/T = pick(GLOB.servant_start)
-		servant.current.loc = T
-		LAZYREMOVE(GLOB.servant_start, T)
+		if(GLOB.servant_start.len)
+			var/turf/T = pick(GLOB.servant_start)
+			servant.current.loc = T
+			LAZYREMOVE(GLOB.servant_start, T)
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
@@ -153,7 +154,7 @@ Credit where due:
 	<i>You have [round(time_to_prepare)] minutes to prepare before the crew is alerted of your presence and portals open across [station_name()].</i>\n\
 	<i>Need help? Look inside the box on your belt for an item called a clockwork slab, and click the Recollection button in the top left."
 	to_chat(M, greeting_text)
-	to_chat(M, sound('sound/ambience/antag/ClockCultAlr.ogg'))
+	M.playsound_local(get_turf(M), 'sound/ambience/antag/ClockCultAlr.ogg', 100, 0)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/carbon/human/L) //Grants a clockwork slab to the mob, with one of each component
@@ -166,12 +167,8 @@ Credit where due:
 /datum/game_mode/proc/cry_havoc()
 	priority_announce("Massive energy anomaly detected on all scanners. Minor spacetime anomalies appearing across the station. Stay in your workplaces. Do not make voluntary contact with the \
 	anomalies without available medical supplies. Please hold while the threat is assessed...", "Central Command Higher Dimensional Affairs", 'sound/magic/clockwork/gateways_open.ogg')
-	var/obj/effect/landmark/L
-	var/turf/T
 	for(var/V in GLOB.generic_event_spawns)
-		L = V
-		T = get_turf(L)
-		addtimer(CALLBACK(src, .proc/open_portal, T), rand(50, 1200))
+		addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(50, 1200))
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/C = GLOB.ark_of_the_clockwork_justiciar
 	C.spawn_animation() //get this party started!
 	addtimer(CALLBACK(src, .proc/let_slip_the_dogs_of_war), 100)
@@ -185,7 +182,7 @@ Credit where due:
 /datum/game_mode/proc/open_portal(turf/portal_loc)
 	var/obj/effect/clockwork/reebe_rift/R = new(portal_loc)
 	R.visible_message("<span class='warning'>The air above [portal_loc] screeches and shimmers as a portal appears!</span>")
-	playsound(portal_loc, 'sound/effects/supermatter.ogg', 50, 0)
+	playsound(R, 'sound/effects/supermatter.ogg', 50, 0)
 
 /datum/game_mode/clockwork_cult/check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME))

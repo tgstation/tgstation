@@ -58,8 +58,8 @@
 	icon_state = "reebe_void"
 
 /turf/open/indestructible/reebe_void/Initialize()
+	. = ..()
 	add_overlay(/obj/effect/fullbright)
-	return ..()
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0

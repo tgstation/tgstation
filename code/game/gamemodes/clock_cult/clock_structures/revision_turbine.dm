@@ -15,7 +15,7 @@
 	var/wisdom_cycle = 0
 
 /obj/structure/destructible/clockwork/revision_turbine/Initialize()
-	..()
+	. = ..()
 	GLOB.max_clockwork_wisdom += 20
 	START_PROCESSING(SSprocessing, src)
 

@@ -402,7 +402,7 @@
 	light_color = "#FFA800"
 
 /obj/effect/clockwork/sigil/secession/Initialize()
-	..()
+	. = ..()
 	QDEL_IN(src, 600)
 
 /obj/effect/clockwork/sigil/secession/sigil_effects(mob/living/L)

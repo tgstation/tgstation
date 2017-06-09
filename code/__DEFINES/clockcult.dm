@@ -1,10 +1,4 @@
-//component id defines
-#define BELLIGERENT_EYE "belligerent_eye"
-#define VANGUARD_COGWHEEL "vanguard_cogwheel"
-#define GEIS_CAPACITOR "geis_capacitor"
-#define REPLICANT_ALLOY "replicant_alloy"
-#define HIEROPHANT_ANSIBLE "hierophant_ansible"
-
+//Global vars
 GLOBAL_LIST_EMPTY(all_clockwork_objects) //All clockwork items, structures, and effects in existence
 GLOBAL_LIST_EMPTY(all_clockwork_mobs) //All clockwork SERVANTS (not creatures) in existence
 
@@ -23,6 +17,23 @@ GLOBAL_VAR_INIT(function_scripture_unlocked, FALSE) //if function scriptures hav
 GLOBAL_VAR_INIT(application_scripture_unlocked, FALSE) //if application scriptures have been unlocked
 GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not used to track existing scripture
 
+
+//Resource helpers
+#define HAS_CLOCKWORK_POTENTIAL(amt) (GLOB.clockwork_potential >= amt)
+#define ADJUST_CLOCKWORK_POTENTIAL(amt) GLOB.clockwork_potential = max(0, GLOB.clockwork_potential + amt)
+
+#define HAS_CLOCKWORK_WISDOM(amt) (GLOB.clockwork_wisdom >= amt)
+#define ADJUST_CLOCKWORK_WISDOM(amt) GLOB.clockwork_wisdom = max(0, min(GLOB.max_clockwork_wisdom, GLOB.clockwork_wisdom + amt))
+
+
+//Component ID defines; these are mainly just used for spans now
+#define BELLIGERENT_EYE "belligerent_eye"
+#define VANGUARD_COGWHEEL "vanguard_cogwheel"
+#define GEIS_CAPACITOR "geis_capacitor"
+#define REPLICANT_ALLOY "replicant_alloy"
+#define HIEROPHANT_ANSIBLE "hierophant_ansible"
+
+
 //Scripture tiers; peripherals should never be used
 #define SCRIPTURE_PERIPHERAL "Peripheral"
 #define SCRIPTURE_DRIVER "Driver"
@@ -30,7 +41,16 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define SCRIPTURE_FUNCTION "Function"
 #define SCRIPTURE_APPLICATION "Application"
 
-//clockcult power defines
+
+//Potential and wisdom defines
+#define POTENTIAL_COST_SHEET 0.2 //How much potential is required for one brass sheet
+#define WISDOM_COST_SHEET 1 //How much wisdom is required for one brass sheet
+
+#define ARK_WISDOM_REGEN 5 //How many ticks the Ark needs to generate one wisdom
+#define REVISION_TURBINE_WISDOM_REGEN 7 //How many ticks a revision turbine needs to generate one wisdom
+
+
+//Power use defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
 
 #define CLOCKCULT_POWER_UNIT (MIN_CLOCKCULT_POWER*100) //standard power amount for clockwork proselytizer costs
@@ -53,25 +73,19 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define RATVAR_POWER_CHECK "ratvar?" //when passed into can_use_power(), converts it into a check for if ratvar has woken/the proselytizer is debug
 
+
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
-
 #define GATEWAY_REEBE_FOUND 119 //when progress is at or above this, the gateway finds reebe and begins drawing power
-
 #define GATEWAY_RATVAR_COMING 239 //when progress is at or above this, ratvar has entered and is coming through the gateway
-
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
-#define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
-
-#define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
-
-#define ARK_WISDOM_REGEN 5 //how many ticks the ark needs to regenerate one wisdom
 
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Defend the Ark of the Clockwork Justicar and free Ratvar."
 
-//misc clockcult stuff
+
+//Misc. defines
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health
 
 #define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
@@ -82,13 +96,5 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define RATVARIAN_SPEAR_DURATION 1800 //how long ratvarian spears last; defaults to 3 minutes
 
-#define REVISION_TURBINE_WISDOM_REGEN 7 //how many ticks a revision turbine needs to regenerate one wisdom
-
-
-//Resource helpers
-
-#define HAS_CLOCKWORK_POTENTIAL(amt) (GLOB.clockwork_potential >= amt)
-#define ADJUST_CLOCKWORK_POTENTIAL(amt) (GLOB.clockwork_potential = max(0, GLOB.clockwork_potential + amt))
-
-#define HAS_CLOCKWORK_WISDOM(amt) (GLOB.clockwork_wisdom >= amt)
-#define ADJUST_CLOCKWORK_WISDOM(amt) (GLOB.clockwork_wisdom = max(0, min(GLOB.max_clockwork_wisdom, GLOB.clockwork_wisdom + amt)))
+#define PROSELYTIZER_MODE_CONVERSION "conversion" //Converting existing objects into clockwork variants, as well as repairs etc
+#define PROSELYTIZER_MODE_CONSTRUCTION "construction" //Consuming potential and power to create new objects

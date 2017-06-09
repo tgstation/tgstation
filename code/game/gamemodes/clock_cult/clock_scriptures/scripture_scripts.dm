@@ -231,7 +231,7 @@
 	channel_time = 20
 	wisdom_cost = 1
 	whispered = TRUE
-	object_path = /obj/item/clockwork/clockwork_proselytizer/preloaded
+	object_path = /obj/item/clockwork/clockwork_proselytizer
 	creator_message = "<span class='brass'>You form a clockwork proselytizer.</span>"
 	usage_tip = "Clockwork Floors heal toxin damage in Servants standing on them."
 	tier = SCRIPTURE_SCRIPT

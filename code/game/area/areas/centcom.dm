@@ -115,11 +115,7 @@
 	noteleport = 1
 	has_gravity = 1
 	flags = NONE
-
-/area/reebe/Initialize()
-	..()
-	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult) || 1) //ghosts can teleport over to Reebe if it's a clockcult round (or admin override)
-		noteleport = FALSE
+	noteleport = FALSE
 
 /area/reebe/constructed
 	name = "City of Cogs"

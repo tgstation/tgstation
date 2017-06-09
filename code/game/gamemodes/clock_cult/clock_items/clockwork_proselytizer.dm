@@ -2,7 +2,7 @@
 /obj/item/clockwork/clockwork_proselytizer
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires power to function."
+	clockwork_desc = "A dual-use construction tool that creates clockwork objects. It has a limited battery that only recharges when at the City of Cogs."
 	icon_state = "clockwork_proselytizer"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
@@ -16,6 +16,7 @@
 	var/speed_multiplier = 1 //how fast this proselytizer works
 	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
 	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
+	var/mode = PROSELYTIZER_MODE_CONVERSION //The operating mode of the proselytizer
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
 	stored_power = POWER_WALL_MINUS_FLOOR+POWER_WALL_TOTAL
@@ -98,6 +99,11 @@
 	return ..()
 
 /obj/item/clockwork/clockwork_proselytizer/process()
+	if(GLOB.ark_of_the_clockwork_justiciar)
+		var/obj/O = GLOB.ark_of_the_clockwork_justiciar
+		var/turf/T = get_turf(src)
+		if(O.z == T.z)
+			stored_power = max_power //Constantly recharges when at the City of Cogs
 	if(!charge_rate)
 		return
 	var/mob/living/L = get_atom_on_turf(src, /mob/living)
@@ -124,27 +130,21 @@
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, and a variety of other objects to clockwork variants.</span>")
-		to_chat(user, "<span class='brass'>Can also form some objects into Brass sheets, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>")
-		if(uses_power)
-			if(metal_to_power)
-				to_chat(user, "<span class='alloy'>It can convert rods, metal, plasteel, and brass to power at rates of <b>1:[POWER_ROD]W</b>, <b>1:[POWER_METAL]W</b>, \
-				<b>1:[POWER_PLASTEEL]W</b>, and <b>1:[POWER_FLOOR]W</b>, respectively.</span>")
-			else
-				to_chat(user, "<span class='alloy'>It can convert brass to power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>")
-			to_chat(user, "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining <b>[charge_rate*0.5]W</b> of power per second.</span>")
-			to_chat(user, "<span class='alloy'>Use it in-hand to produce <b>5</b> brass sheets at a cost of <b>[POWER_WALL_TOTAL]W</b> power.</span>")
-
-/obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
-	if(is_servant_of_ratvar(user))
-		if(uses_power)
-			if(!can_use_power(POWER_WALL_TOTAL))
-				to_chat(user, "<span class='warning'>[src] requires <b>[POWER_WALL_TOTAL]W</b> of power to produce brass sheets!</span>")
-				return
-			modify_stored_power(-POWER_WALL_TOTAL)
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		new/obj/item/stack/tile/brass(user.loc, 5)
-		to_chat(user, "<span class='brass'>You user [stored_power ? "some":"all"] of [src]'s power to produce some brass sheets. It now stores <b>[get_power()]W/[get_max_power()]W</b> of power.</span>")
+		to_chat(user, "<span class='brass'>It's set to <b>[mode]</b> mode.</span>")
+		switch(mode)
+			if(PROSELYTIZER_MODE_CONVERSION)
+				to_chat(user, "<span class='brass'>In this mode, it can be used to convert walls, floors, windows, airlocks, and a variety of other objects to clockwork variants.</span>")
+				to_chat(user, "<span class='brass'>It can also convert some objects into brass sheets, and transform clockwork walls into floors (and vice-versa.)</span>")
+				if(uses_power)
+					if(metal_to_power)
+						to_chat(user, "<span class='alloy'>It can convert rods, metal, plasteel, and brass to power at rates of <b>1:[POWER_ROD]W</b>, <b>1:[POWER_METAL]W</b>, \
+						<b>1:[POWER_PLASTEEL]W</b>, and <b>1:[POWER_FLOOR]W</b>, respectively.</span>")
+					else
+						to_chat(user, "<span class='alloy'>It can convert brass to power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>")
+					to_chat(user, "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining <b>[charge_rate*0.5]W</b> of power per second.</span>")
+			if(PROSELYTIZER_MODE_CONSTRUCTION)
+				to_chat("<span class='brass'>In this mode, it can be used to build clockwork structures, walls, and floors from scratch using potential, wisdom, and power.</span>")
+				to_chat("<span class='brass'></span>")
 
 /obj/item/clockwork/clockwork_proselytizer/pre_attackby(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/weapon/storage))
