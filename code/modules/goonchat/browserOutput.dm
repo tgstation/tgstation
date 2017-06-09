@@ -97,8 +97,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	messageQueue = null
 	sendClientData()
 
-	pingLoop()
-
 /datum/chatOutput/proc/Pang()
 	ehjax_send(data = "softPang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
 
