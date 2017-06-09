@@ -256,6 +256,7 @@
 	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
+	var/scanned_for_replication = FALSE
 
 	alert = TRUE
 	integrity_failure = 0
@@ -319,7 +320,13 @@
 			else
 				to_chat(user, "You are too far to set the plaque's text.")
 
-		SSpersistence.SaveTrophy(src)
+		if(scanned_for_replication == FALSE)
+			var/scan = alert(user, "Scan this item for replication in future shifts? You can only do this once.", "Scan for replication?", "No", "Yes")
+			if(scan == "Yes")
+				visible_message("[src]'s sensor array whirs as it scans the [W] for future replication.")
+				scanned_for_replication = TRUE
+				SSpersistence.SaveTrophy(src)
+
 		return TRUE
 
 	else
@@ -332,13 +339,21 @@
 	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
-	name = "cheap plastic replica"
+	name = "replica"
+	desc = "A cheap plastic approximation."
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
 	var/obj/item/I = path
+
 	icon = initial(I.icon)
 	icon_state = initial(I.icon_state)
 	item_state = initial(I.item_state)
 	lefthand_file = initial(I.lefthand_file)
 	righthand_file = initial(I.righthand_file)
+
+	if(name == initial(name))
+		name = "replica [initial(I.name)]"
+
+	if(desc == initial(desc))
+		desc = "A cheap plastic approximation of [initial(I.name)]."

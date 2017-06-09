@@ -147,10 +147,12 @@ SUBSYSTEM_DEF(persistence)
 		T.showpiece = new /obj/item/showpiece_dummy(T, path)
 		T.trophy_message = chosen_trophy["message"]
 		T.placer_key = chosen_trophy["placer_key"]
-		T.update_icon()
-		T.showpiece.name = "replica [chosen_trophy["name"]]"
-		T.showpiece.desc = "A cheap plastic approximation of \a [chosen_trophy["name"]]."
 
+		if(chosen_trophy["name"])
+			T.showpiece.name = "replica [chosen_trophy["name"]]"
+			T.showpiece.desc = "A cheap plastic approximation of \a [chosen_trophy["name"]]."
+
+		T.update_icon()
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
@@ -198,7 +200,8 @@ SUBSYSTEM_DEF(persistence)
 		data["path"] = T.showpiece.type
 		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
-		saved_trophies += list(data)
 
 		data["name"] = T.showpiece.name
+
+		saved_trophies += list(data)
 
