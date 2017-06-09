@@ -25,7 +25,7 @@
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags &= STOPSPRESSUREDMAGE
+		flags &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -81,7 +81,7 @@
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags &= STOPSPRESSUREDMAGE
+		flags &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -142,7 +142,7 @@
 		min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	else
 		armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
-		flags &= STOPSPRESSUREDMAGE
+		flags &= ~STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = initial(max_heat_protection_temperature)
 		min_cold_protection_temperature = initial(min_cold_protection_temperature)
 
@@ -194,7 +194,7 @@
 	if(GLOB.ratvar_awakens)
 		flags |= NOSLIP
 	else
-		flags &= NOSLIP
+		flags &= ~NOSLIP
 
 /obj/item/clothing/shoes/clockwork/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(equipper && !is_servant_of_ratvar(equipper))
