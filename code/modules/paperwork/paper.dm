@@ -52,14 +52,6 @@
 	updateinfolinks()
 
 
-/obj/item/weapon/paper/Destroy()
-	if(istype(loc, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = loc
-		if(A.note == src)
-			A.note = null
-	return ..()
-
-
 /obj/item/weapon/paper/update_icon()
 
 	if(resistance_flags & ON_FIRE)
