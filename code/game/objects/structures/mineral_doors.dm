@@ -219,3 +219,13 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 200
 	max_integrity = 200
+
+/obj/structure/mineral_door/paperframe
+	name = "paper frame door"
+	icon_state = "paperframe"
+	openSound = 'sound/effects/doorcreaky.ogg'
+	closeSound = 'sound/effects/doorcreaky.ogg'
+	sheetType = /obj/item/stack/sheet/paperframes
+	resistance_flags = FLAMMABLE
+	obj_integrity = 20
+	max_integrity = 20

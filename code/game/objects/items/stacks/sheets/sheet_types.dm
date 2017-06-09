@@ -399,8 +399,8 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	. = ..()
 
 GLOBAL_LIST_INIT(paperframe_recipes, list(
-	new /datum/stack_recipe("paper window", /obj/structure/window/paperframe, 2, one_per_turf = 1, on_floor = 1, time = 10)))
-	//new /datum/stack_recipe("paper door", typepath , 2, one_per_turf = 1, on_floor = 1, time = 10 )))
+	new /datum/stack_recipe("paper frame separator", /obj/structure/window/paperframe, 2, one_per_turf = 1, on_floor = 1, time = 10), \
+	new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperframe, 3, one_per_turf = 1, on_floor = 1, time = 10 )))
 
 /obj/item/stack/sheet/paperframes
 	name = "paper frames"

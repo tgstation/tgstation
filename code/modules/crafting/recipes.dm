@@ -366,11 +366,11 @@
 	name = "Paper Frames"
 	result = /obj/item/stack/sheet/paperframes/five
 	time = 10
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,/obj/item/weapon/paper = 20)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,/obj/item/weapon/paper = 20)
 	category = CAT_MISC
 
 /datum/crafting_recipe/naturalpaper
-	name = "Wood-pulp Paper"
+	name = "Hand-Pressed Paper"
 	time = 30
 	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
 	tools = list(/obj/item/weapon/hatchet)

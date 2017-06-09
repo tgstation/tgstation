@@ -26,6 +26,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
+	var/hitsound = 'sound/effects/Glasshit.ogg'
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -266,7 +267,7 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+				playsound(src.loc, hitsound, 75, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
@@ -605,7 +606,7 @@
 	name = "paper frame"
 	desc = "A fragile separator made of thin wood and paper."
 	icon = 'icons/obj/smooth_structures/paperframes.dmi'
-	icon_state = "window"
+	icon_state = "frame"
 	dir = FULLTILE_WINDOW_DIR
 	opacity = 1
 	max_integrity = 15
@@ -615,24 +616,27 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/paperframe)
 	glass_amount = 2
-	var/glass_type = /obj/item/stack/sheet/paperframes
+	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
 	decon_speed = 10
 	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	breaksound = 'sound/items/poster_ripped.ogg'
+	hitsound = 'sound/weapons/slashmiss.ogg'
 
 /obj/structure/window/paperframe/Initialize()
 	..()
+
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
 
-	var/papers = rand(1,3)
+	var/papers = rand(1,4)
 	debris += new /obj/item/stack/sheet/mineral/wood()
 	for(var/i in 1 to papers)
 		debris += new /obj/item/weapon/paper/natural()
+	update_icon()
 
 /obj/structure/window/paperframe/attack_hand(mob/user)
 	if(!can_be_reached(user))
@@ -643,17 +647,20 @@
 		user.visible_message("[user] knocks on [src].")
 		playsound(loc, "pageturn", 50, 1)
 	else
-		take_damage(8,BRUTE,"melee", 0)
+		take_damage(4,BRUTE,"melee", 0)
+		playsound(loc, hitsound, 50, 1)
 		if(!QDELETED(src))
 			user.visible_message("[user] tears a hole in [src].")
 			update_icon()
 
 /obj/structure/window/paperframe/update_icon()
+	cut_overlays()
 	if(obj_integrity < max_integrity)
-		icon = 'icons/obj/smooth_structures/paperframestorn.dmi'
+		add_overlay(mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER-1))
 		opacity = 0
 	else
-		icon = initial(icon)
+		add_overlay(mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER-1))
+		opacity = 1
 	queue_smooth(src)
 
 /obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
@@ -663,9 +670,11 @@
 		if(istype(W, /obj/item/weapon/paper) && obj_integrity < max_integrity)
 			user.visible_message("[user] starts to patch the holes in \the [src].")
 			if(do_after(user, 20, target = src))
-				obj_integrity += 4
+				obj_integrity = min(obj_integrity+4,max_integrity)
 				qdel(W)
 				user.visible_message("[user] patches some of the holes in \the [src].")
+				if(obj_integrity == max_integrity)
+					update_icon()
 		if(istype(W, /obj/item/weapon/weldingtool))
 			to_chat(user, "You'd just light \the [src] on fire.")
 			return
