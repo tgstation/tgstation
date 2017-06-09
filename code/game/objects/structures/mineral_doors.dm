@@ -90,7 +90,7 @@
 	flick("[initial_state]opening",src)
 	sleep(10)
 	density = 0
-	opacity = 0
+	set_opacity(0)
 	state = 1
 	air_update_turf(1)
 	update_icon()
@@ -110,7 +110,7 @@
 	flick("[initial_state]closing",src)
 	sleep(10)
 	density = 1
-	opacity = 1
+	set_opacity(1, initial(light_opacity))
 	state = 0
 	air_update_turf(1)
 	update_icon()
@@ -179,7 +179,7 @@
 
 /obj/structure/mineral_door/transparent/Close()
 	..()
-	opacity = 0
+	set_opacity(0)
 
 /obj/structure/mineral_door/transparent/plasma
 	name = "plasma door"
@@ -225,6 +225,7 @@
 	icon_state = "paperframe"
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
+	light_opacity = 0
 	sheetType = /obj/item/stack/sheet/paperframes
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE

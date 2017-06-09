@@ -72,8 +72,9 @@
 
 	if (light_power && light_range)
 		update_light()
-
-	if (opacity && isturf(loc))
+	if(isnull(light_opacity))
+		light_opacity = opacity
+	if (light_opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 	return INITIALIZE_HINT_NORMAL

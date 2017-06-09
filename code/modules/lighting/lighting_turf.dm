@@ -82,10 +82,10 @@
 
 // Can't think of a good name, this proc will recalculate the has_opaque_atom variable.
 /turf/proc/recalc_atom_opacity()
-	has_opaque_atom = opacity
+	has_opaque_atom = light_opacity
 	if (!has_opaque_atom)
 		for (var/atom/A in src.contents) // Loop through every movable atom on our tile PLUS ourselves (we matter too...)
-			if (A.opacity)
+			if (A.light_opacity)
 				has_opaque_atom = TRUE
 				break
 
@@ -93,14 +93,14 @@
 /turf/Entered(var/atom/movable/Obj, var/atom/OldLoc)
 	. = ..()
 
-	if (Obj && Obj.opacity)
+	if (Obj && Obj.light_opacity)
 		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
 		reconsider_lights()
 
 /turf/Exited(var/atom/movable/Obj, var/atom/newloc)
 	. = ..()
 
-	if (Obj && Obj.opacity)
+	if (Obj && Obj.light_opacity)
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
 
@@ -140,7 +140,7 @@
 	if (!path || (!GLOB.use_preloader && path == type) || !SSlighting.initialized)
 		return ..()
 
-	var/old_opacity = opacity
+	var/old_light_opacity = light_opacity
 	var/old_dynamic_lighting = dynamic_lighting
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
@@ -152,7 +152,7 @@
 	lighting_object = old_lighting_object
 	affecting_lights = old_affecting_lights
 	corners = old_corners
-	if (old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
+	if (old_light_opacity != light_opacity || dynamic_lighting != old_dynamic_lighting)
 		reconsider_lights()
 
 	if (dynamic_lighting != old_dynamic_lighting)

@@ -9,6 +9,7 @@
 	flags = ON_BORDER
 	max_integrity = 25
 	obj_integrity = 25
+	light_opacity = 0
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = 0
@@ -431,7 +432,6 @@
 	name = "tinted window"
 	icon_state = "twindow"
 	opacity = 1
-
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
@@ -614,7 +614,7 @@
 	fulltile = 1
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/window/paperframe)
+	canSmoothWith = list(/obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)
 	glass_amount = 2
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
@@ -629,8 +629,8 @@
 
 /obj/structure/window/paperframe/Initialize()
 	..()
-	torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER-1)
-	paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER-1)
+	torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
+	paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
@@ -653,20 +653,20 @@
 		take_damage(4,BRUTE,"melee", 0)
 		playsound(loc, hitsound, 50, 1)
 		if(!QDELETED(src))
-			user.visible_message("[user] tears a hole in [src].")
+			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()
 
 /obj/structure/window/paperframe/update_icon()
-	icon_state = initial(icon_state)
 	if(obj_integrity < max_integrity)
-		cut_overlays(paper)
+		cut_overlay(paper)
 		add_overlay(torn)
-		opacity = 0
+		set_opacity(0,0)
 	else
-		cut_overlays(torn)
+		cut_overlay(torn)
 		add_overlay(paper)
-		opacity = 1
+		set_opacity(1,0)
 	queue_smooth(src)
+
 
 /obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
 	if(user.a_intent == INTENT_HARM)
@@ -680,6 +680,7 @@
 				user.visible_message("[user] patches some of the holes in \the [src].")
 				if(obj_integrity == max_integrity)
 					update_icon()
+				return
 		if(istype(W, /obj/item/weapon/weldingtool))
 			to_chat(user, "You'd just light \the [src] on fire.")
 			return
