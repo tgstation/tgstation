@@ -119,7 +119,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	GLOB.dead_mob_list += src
 
-	..()
+	. = ..()
 
 	grant_all_languages()
 

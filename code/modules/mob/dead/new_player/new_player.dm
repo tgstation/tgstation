@@ -140,8 +140,7 @@
 				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-			qdel(mind)
-
+			QDEL_NULL(mind)
 			qdel(src)
 			return 1
 
@@ -353,7 +352,6 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
-	qdel(src)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -452,6 +450,8 @@
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		new_character = null
+		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

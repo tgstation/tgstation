@@ -19,7 +19,7 @@
 	icon_door = "mixed"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
-	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack/duffelbag(src)
 	new /obj/item/weapon/storage/backpack/explorer(src)
 	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
