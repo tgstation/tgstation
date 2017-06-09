@@ -46,7 +46,7 @@ Captain
 	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/captain
 
 	implants = list(/obj/item/weapon/implant/mindshield)
-
+	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 /*
 Head of Personnel

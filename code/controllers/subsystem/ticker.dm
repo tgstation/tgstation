@@ -578,6 +578,13 @@ SUBSYSTEM_DEF(ticker)
 	mode.declare_station_goal_completion()
 
 	CHECK_TICK
+	//medals, placed far down so that people can actually see the commendations.
+	if(GLOB.commendations)
+		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
+		for (var/com in GLOB.commendations)
+			to_chat(world, com)
+
+	CHECK_TICK
 
 	//Collects persistence features
 	SSpersistence.CollectData()
