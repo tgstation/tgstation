@@ -1,11 +1,27 @@
 GLOBAL_VAR_INIT(reboot_mode, REBOOT_MODE_NORMAL)	//if the world should request the service to kill it at reboot
 GLOBAL_PROTECT(reboot_mode)
+GLOBAL_LIST_EMPTY(active_service_transactions)
+GLOBAL_PROTECT(active_service_transactions)
 
 /world/proc/RunningService()
 	return params[SERVICE_WORLD_PARAM]
 
 /world/proc/ExportService(command)
 	return shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
+
+/world/proc/ServiceTransaction(command, list/json)
+	var/static/transaction_counter = 0
+	var/transaction_id = ++transaction_counter
+	ExportService("[command] [json_encode(json)]")
+	var/sent_at = REALTIMEOFDAY
+	UNTIL(GLOB.active_service_transactions["[transaction_id]"] || (sent_at < (REALTIMEOFDAY - SERVICE_TRANSACTION_TIMEOUT)))
+	return GLOB.active_service_transactions["[transaction_id]"]
+
+/world/proc/ServiceTransactionEnd(list/params)
+	var/transaction_id = params[SERVICE_CMD_PARAM_TRANSACTION_ID]
+	if(!transaction_id)
+		CRASH("Transaction ended with no transaction ID!")
+	GLOB.active_service_transactions[transaction_id] = params - SERVICE_CMD_PARAM_COMMAND - SERVICE_CMD_PARAM_KEY
 
 /world/proc/IRCBroadcast(msg)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
@@ -81,6 +97,8 @@ GLOBAL_PROTECT(reboot_mode)
 			return keywords_lookup(params[SERVICE_CMD_PARAM_TARGET], 1)
 		if(SERVICE_CMD_ADMIN_WHO)
 			return ircadminwho()
+		if(SERVICE_CMD_TRANSACTION_CALLBACK)
+			ServiceTransactionEnd(params)
 		else
 			return "Unknown command: [command]"
 
