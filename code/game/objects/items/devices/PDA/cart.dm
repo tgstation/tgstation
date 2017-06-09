@@ -772,7 +772,7 @@ Code:
 	return ""
 
 //If the cartridge adds something to each potetial messaging target
-/obj/item/weapon/cartridge/proc/message_special()
+/obj/item/weapon/cartridge/proc/message_special(obj/item/device/pda/target)
 	return ""
 
 //This is called for special abilities of cartridges

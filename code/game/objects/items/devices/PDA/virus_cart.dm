@@ -6,10 +6,12 @@
 	return
 
 /obj/item/weapon/cartridge/virus/message_header()
-	return "<b>[viral_cart.charges] viral files left.</b><HR>"
+	return "<b>[charges] viral files left.</b><HR>"
 	
-/obj/item/weapon/cartridge/virus/message_header()
-	return " (<a href='byond://?src=\ref[src];choice=cart;special=virus;target=\ref[P]'>*Send Virus*</a>)"
+/obj/item/weapon/cartridge/virus/message_special(var/obj/item/device/pda/target)
+	if (!istype(loc, /obj/item/device/pda))
+		return ""  //Sanity check, this shouldn't be possible.
+	return " (<a href='byond://?src=\ref[loc];choice=cart;special=virus;target=\ref[target]'>*Send Virus*</a>)"
 
 /obj/item/weapon/cartridge/virus/special(mob/living/user, list/params)
 	var/obj/item/device/pda/P = locate(params["target"])//Leaving it alone in case it may do something useful, I guess.

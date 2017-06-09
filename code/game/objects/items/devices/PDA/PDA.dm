@@ -241,7 +241,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 							continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
 						if(cartridge)
-							dat += cartridge.message_special()
+							dat += cartridge.message_special(P)
 						dat += "</li>"
 						count++
 				dat += "</ul>"
