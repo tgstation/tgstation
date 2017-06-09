@@ -384,6 +384,17 @@
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /*
+ * Natural paper
+ */
+
+/obj/item/weapon/paper/natural
+
+/obj/item/weapon/paper/natural/New()
+	..()
+	color = "#FFF5ED"
+
+
+/*
  * Premade paper
  */
 

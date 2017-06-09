@@ -25,6 +25,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/real_explosion_block	//ignore this, just use explosion_block
+	var/breaksound = "shatter"
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -73,7 +74,7 @@
 		debris += new /obj/item/weapon/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
-		
+
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
@@ -276,7 +277,7 @@
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, "shatter", 70, 1)
+		playsound(src, breaksound, 70, 1)
 		var/turf/T = loc
 		if(!(flags & NODECONSTRUCT))
 			for(var/i in debris)
@@ -599,3 +600,74 @@
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
+
+/obj/structure/window/paperframe
+	name = "paper frame"
+	desc = "A fragile separator made of thin wood and paper."
+	icon = 'icons/obj/smooth_structures/paperframes.dmi'
+	icon_state = "window"
+	dir = FULLTILE_WINDOW_DIR
+	opacity = 1
+	max_integrity = 15
+	obj_integrity = 15
+	fulltile = 1
+	flags = PREVENT_CLICK_UNDER
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/window/paperframe)
+	glass_amount = 2
+	var/glass_type = /obj/item/stack/sheet/paperframes
+	heat_resistance = 233
+	decon_speed = 10
+	CanAtmosPass = ATMOS_PASS_YES
+	resistance_flags = FLAMMABLE
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	breaksound = 'sound/items/poster_ripped.ogg'
+
+/obj/structure/window/paperframe/Initialize()
+	..()
+	for(var/obj/item/I in debris)
+		debris -= I
+		qdel(I)
+
+	var/papers = rand(1,3)
+	debris += new /obj/item/stack/sheet/mineral/wood()
+	for(var/i in 1 to papers)
+		debris += new /obj/item/weapon/paper/natural()
+
+/obj/structure/window/paperframe/attack_hand(mob/user)
+	if(!can_be_reached(user))
+		return
+	add_fingerprint(user)
+	if(user.a_intent != INTENT_HARM)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.visible_message("[user] knocks on [src].")
+		playsound(loc, "pageturn", 50, 1)
+	else
+		take_damage(8,BRUTE,"melee", 0)
+		if(!QDELETED(src))
+			user.visible_message("[user] tears a hole in [src].")
+			update_icon()
+
+/obj/structure/window/paperframe/update_icon()
+	if(obj_integrity < max_integrity)
+		icon = 'icons/obj/smooth_structures/paperframestorn.dmi'
+		opacity = 0
+	else
+		icon = initial(icon)
+	queue_smooth(src)
+
+/obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+	else
+		if(istype(W, /obj/item/weapon/paper) && obj_integrity < max_integrity)
+			user.visible_message("[user] starts to patch the holes in \the [src].")
+			if(do_after(user, 20, target = src))
+				obj_integrity += 4
+				qdel(W)
+				user.visible_message("[user] patches some of the holes in \the [src].")
+		if(istype(W, /obj/item/weapon/weldingtool))
+			to_chat(user, "You'd just light \the [src] on fire.")
+			return
+	..()
+	update_icon()

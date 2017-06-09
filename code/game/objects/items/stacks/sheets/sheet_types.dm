@@ -6,6 +6,7 @@
  * Cloth
  * Plastic
  * Cardboard
+ * Paper Frames
  * Runed Metal (cult)
  * Brass (clockwork cult)
  */
@@ -396,3 +397,29 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 /obj/item/stack/sheet/plastic/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plastic_recipes
 	. = ..()
+
+GLOBAL_LIST_INIT(paperframe_recipes, list(
+	new /datum/stack_recipe("paper window", /obj/structure/window/paperframe, 2, one_per_turf = 1, on_floor = 1, time = 10)))
+	//new /datum/stack_recipe("paper door", typepath , 2, one_per_turf = 1, on_floor = 1, time = 10 )))
+
+/obj/item/stack/sheet/paperframes
+	name = "paper frames"
+	desc = "A thin wooden frame with paper attached."
+	singular_name = "paper frame"
+	icon_state = "sheet-paper"
+	origin_tech = "materials=1"
+	merge_type = /obj/item/stack/sheet/paperframes
+	resistance_flags = FLAMMABLE
+
+/obj/item/stack/sheet/paperframes/Initialize()
+	recipes = GLOB.paperframe_recipes
+	. = ..()
+
+/obj/item/stack/sheet/paperframes/five
+	amount = 5
+
+/obj/item/stack/sheet/paperframes/twenty
+	amount = 20
+
+/obj/item/stack/sheet/paperframes/fifty
+	amount = 50

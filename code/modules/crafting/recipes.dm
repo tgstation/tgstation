@@ -362,6 +362,21 @@
 	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC
 
+/datum/crafting_recipe/paperframes
+	name = "Paper Frames"
+	result = /obj/item/stack/sheet/paperframes/five
+	time = 10
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1,/obj/item/weapon/paper = 20)
+	category = CAT_MISC
+
+/datum/crafting_recipe/naturalpaper
+	name = "Wood-pulp Paper"
+	time = 30
+	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
+	tools = list(/obj/item/weapon/hatchet)
+	result = /obj/item/weapon/paper_bin/bundlenatural
+	category = CAT_MISC
+
 
 /datum/crafting_recipe/flashlight_eyes
 	name = "Flashlight Eyes"
