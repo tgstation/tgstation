@@ -684,3 +684,14 @@
 //Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
+
+/atom/movable/proc/can_be_pulled(user)
+	if(src == user || !isturf(loc))
+		return FALSE
+	if(anchored || throwing)
+		return FALSE
+	if(isliving(src))
+		var/mob/living/L = src
+		if(L.buckled && L.buckled.buckle_prevents_pull)
+			return FALSE
+	return TRUE

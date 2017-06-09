@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	return 1
 
 /obj/item/weapon/storage/book/bible/attack(mob/living/M, mob/living/carbon/human/user, heal_mode = TRUE)
-	
+
 	if (!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
@@ -105,10 +105,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='danger'>The book sizzles in your hands.</span>")
 		user.take_bodypart_damage(0,10)
 		return
-	
+
 	if (!heal_mode)
 		return ..()
-	
+
 	var/smack = 1
 
 	if (M.stat != DEAD)
@@ -153,6 +153,23 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
+		if(istype(A, /obj/item/weapon/twohanded/required/cult_bastard))
+			var/obj/item/weapon/twohanded/required/cult_bastard/sword
+			to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+			if(do_after(user, 40, target = sword))
+				for(var/obj/item/device/soulstone/SS in sword.shards)
+					for(var/mob/living/simple_animal/shade/EX in SS)
+						SSticker.mode.remove_cultist(EX.mind, 1, 0)
+						EX.color = "black"
+						EX.status_flags &= ~GODMODE
+						EX.canmove = 1
+						EX.forceMove(get_turf(user))
+						EX.cancel_camera()
+						to_chat(EX, "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help them succeed in stopping the cult at all costs.</b>")
+					qdel(SS)
+				new /obj/item/weapon/nullrod/claymore(get_turf(sword))
+				user.visible_message("<span class='notice'>[user] has purified the [sword]!!</span>")
+				qdel(sword)
 
 /obj/item/weapon/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
@@ -174,7 +191,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	var/uses = 1
 
 
-	
+
 /obj/item/weapon/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
 		H.mind.isholy = TRUE
