@@ -41,13 +41,10 @@ var opts = {
 	'highlightTerms': [],
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
-	'pingDisabled': false, //Has the user disabled the ping counter
 
-	//Ping display
+	//Connectivity
 	'lastPang': 0, //Timestamp of the last response from the server.
 	'pangLimit': 35000,
-	'pingTime': 0, //Timestamp of when ping sent
-	'pongTime': 0, //Timestamp of when ping received
 	'noResponse': false, //Tracks the state of the previous ping request
 	'noResponseCount': 0, //How many failed pings?
 
@@ -369,23 +366,6 @@ function ehjaxCallback(data) {
 	opts.lastPang = Date.now();
 	if (data == 'softPang') {
 		return;
-	} else if (data == 'pang') {
-		opts.pingCounter = 0; //reset
-		opts.pingTime = Date.now();
-		runByond('?_src_=chat&proc=ping');
-
-	} else if (data == 'pong') {
-		if (opts.pingDisabled) {return;}
-		opts.pongTime = Date.now();
-		var pingDuration = Math.ceil((opts.pongTime - opts.pingTime) / 2);
-		$('#pingMs').text(pingDuration+'ms');
-		pingDuration = Math.min(pingDuration, 255);
-		var red = pingDuration;
-		var green = 255 - pingDuration;
-		var blue = 0;
-		var hex = rgbToHex(red, green, blue);
-		$('#pingDot').css('color', '#'+hex);
-
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
 		internalOutput('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
@@ -492,7 +472,6 @@ $(function() {
 	******************************************/
 	var savedConfig = {
 		'sfontSize': getCookie('fontsize'),
-		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
 	};
@@ -500,13 +479,6 @@ $(function() {
 	if (savedConfig.sfontSize) {
 		$messages.css('font-size', savedConfig.sfontSize);
 		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
-	}
-	if (savedConfig.spingDisabled) {
-		if (savedConfig.spingDisabled == 'true') {
-			opts.pingDisabled = true;
-			$('#ping').hide();
-		}
-		internalOutput('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>', 'internal');
 	}
 	if (savedConfig.shighlightTerms) {
 		var savedTerms = $.parseJSON(savedConfig.shighlightTerms);
@@ -762,17 +734,6 @@ $(function() {
 		$messages.css({'font-size': fontSize});
 		setCookie('fontsize', fontSize, 365);
 		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
-	});
-
-	$('#togglePing').click(function(e) {
-		if (opts.pingDisabled) {
-			$('#ping').slideDown('fast');
-			opts.pingDisabled = false;
-		} else {
-			$('#ping').slideUp('fast');
-			opts.pingDisabled = true;
-		}
-		setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
 	});
 
 	$('#saveLog').click(function(e) {
