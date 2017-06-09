@@ -19030,7 +19030,6 @@
 "aET" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
-/obj/item/weapon/storage/crayons,
 /obj/item/device/flashlight/lamp/bananalamp{
 	pixel_y = 5
 	},
@@ -19051,6 +19050,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
