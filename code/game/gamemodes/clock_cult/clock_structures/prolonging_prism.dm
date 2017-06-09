@@ -26,10 +26,9 @@
 		if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_IGNITING || SSshuttle.emergency.mode == SHUTTLE_STRANDED || SSshuttle.emergency.mode == SHUTTLE_ESCAPE)
 			to_chat(user, "<span class='inathneq'>An emergency shuttle has arrived and this prism is no longer useful; attempt to activate it to gain a partial refund of components used.</span>")
 		else
-			var/efficiency = get_efficiency_mod()
-			var/efficiency_time = get_efficiency_mod(TRUE)
-			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[get_delay_cost() * efficiency]W</b> of power to attempt to delay the arrival of an emergency shuttle by \
-			<b>[2 * efficiency_time]</b> minutes.</span>")
+			var/efficiency = get_efficiency_mod(TRUE)
+			to_chat(user, "<span class='inathneq_small'>It requires at least <b>[get_delay_cost()]W</b> of power to attempt to delay the arrival of an emergency shuttle by \
+			<b>[2 * efficiency]</b> minutes.</span>")
 			to_chat(user, "<span class='inathneq_small'>This cost increases by <b>[delay_cost_increase * 0.1]W</b> for every <b>10 CV</b> and <b>[delay_cost_increase]W</b> for every previous \
 			activation.</span>")
 
