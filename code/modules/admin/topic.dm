@@ -2263,7 +2263,7 @@
 
 	else if(href_list["showrelatedacc"])
 		var/client/C = locate(href_list["client"]) in GLOB.clients
-		var/list/thing_to_check
+		var/thing_to_check
 		if(href_list["showrelatedacc"] == "cid")
 			thing_to_check = C.related_accounts_cid
 		else
@@ -2271,9 +2271,8 @@
 		thing_to_check = splittext(thing_to_check, ", ")
 
 
-		var/dat = "Related accounts by [uppertext(href_list["showrelatedacc"])]:<br>"
-		for(var/thing in thing_to_check)
-			dat += "[thing]<br>"
+		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
+		dat += thing_to_check
 
-		usr << browse(dat, "size=420x300")
+		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 
