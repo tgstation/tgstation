@@ -37,14 +37,12 @@
 		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 		GLOB.sac_complete = TRUE
 	SSticker.mode.cult_objectives += "sacrifice"
-	if(GLOB.summon_spots.len)
-		SSticker.mode.cult_objectives += "eldergod"
-	else
+	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
-			var/area/summon = pick(GLOB.sortedAreas)
+			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
 			if(summon && (summon.z == ZLEVEL_STATION) && summon.valid_territory)
-				GLOB.summon_spots |= summon
-		SSticker.mode.cult_objectives += "eldergod"
+				GLOB.summon_spots += summon
+	SSticker.mode.cult_objectives += "eldergod"
 
 /datum/antagonist/cult/proc/cult_memorization(datum/mind/cult_mind)
 	var/mob/living/current = cult_mind.current
