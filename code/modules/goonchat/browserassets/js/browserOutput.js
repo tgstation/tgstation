@@ -44,7 +44,7 @@ var opts = {
 
 	//Connectivity
 	'lastPang': 0, //Timestamp of the last response from the server.
-	'pangLimit': 35000,
+	'pangLimit': 40000,
 	'noResponse': false, //Tracks the state of the previous ping request
 	'noResponseCount': 0, //How many failed pings?
 
@@ -456,7 +456,7 @@ $(function() {
 				if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
 					opts.noResponse = true;
 					opts.noResponseCount++;
-					internalOutput('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either AFK, experiencing lag or the connection has closed.</div>', 'internal');
+					internalOutput('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>', 'internal');
 				}
 		} else if (opts.noResponse) { //Previous ping attempt failed ohno
 				$('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
