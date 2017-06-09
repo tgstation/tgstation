@@ -435,7 +435,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("MessageAll")
 				src.send_to_all(U)
 
-			if("special")
+			if("cart")
 				if(cartridge)
 					cartridge.special(U, href_list)
 				else
