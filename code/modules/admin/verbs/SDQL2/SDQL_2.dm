@@ -28,6 +28,8 @@
 	var/query_log = "executed SDQL query: \"[query_text]\"."
 	message_admins("[key_name_admin(usr)] [query_log]")
 	query_log = "[usr.ckey]([usr]) [query_log]"
+	SSblackbox.add_details("sdql_query","[query_text]") // insert copypasted line about admin verb shit no one ever removes here
+
 	log_game(query_log)
 	NOTICE(query_log)
 	var/list/runtime_tracker = list()
