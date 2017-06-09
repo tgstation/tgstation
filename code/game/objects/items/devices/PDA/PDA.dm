@@ -227,9 +227,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"
 
-				if (istype(cartridge, /obj/item/weapon/cartridge/virus))
-					var/obj/item/weapon/cartridge/virus/viral_cart = cartridge
-					dat += "<b>[viral_cart.charges] viral files left.</b><HR>"
+				if(cartridge)
+					dat += cartridge.message_header()
 
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
@@ -241,8 +240,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						if (P == src)
 							continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-						if (istype(cartridge, /obj/item/weapon/cartridge/virus))
-							dat += " (<a href='byond://?src=\ref[src];choice=virus;target=\ref[P]'>*Send Virus*</a>)"
+						if(cartridge)
+							dat += cartridge.message_special()
 						dat += "</li>"
 						count++
 				dat += "</ul>"
@@ -436,11 +435,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("MessageAll")
 				src.send_to_all(U)
 
-			if("virus")
-				if(istype(cartridge, /obj/item/weapon/cartridge/virus))//Cartridge checks are kind of unnecessary since everything is done through switch.
-					var/obj/item/weapon/cartridge/virus/V = cartridge
-					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
-					V.send_virus(P,U)
+			if("special")
+				if(cartridge)
+					cartridge.special(U, href_list)
 				else
 					U << browse(null, "window=pda")
 					return
@@ -943,4 +940,3 @@ GLOBAL_LIST_EMPTY(PDAs)
 	for(var/obj/item/device/pda/P in GLOB.PDAs)
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
-	return .

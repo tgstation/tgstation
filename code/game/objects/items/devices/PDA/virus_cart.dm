@@ -2,39 +2,18 @@
 	name = "Generic Virus PDA cart"
 	var/charges = 5
 
-obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/living/U)
+/obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/living/U)
 	return
 
-/obj/item/weapon/cartridge/virus/syndicate
-	name = "\improper Detomatix cartridge"
-	icon_state = "cart"
-	access_remote_door = 1
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
-	charges = 4
+/obj/item/weapon/cartridge/virus/message_header()
+	return "<b>[viral_cart.charges] viral files left.</b><HR>"
+	
+/obj/item/weapon/cartridge/virus/message_header()
+	return " (<a href='byond://?src=\ref[src];choice=cart;special=virus;target=\ref[P]'>*Send Virus*</a>)"
 
-/obj/item/weapon/cartridge/virus/syndicate/send_virus(obj/item/device/pda/target, mob/living/U)
-	if(charges <= 0)
-		to_chat(U, "<span class='notice'>Out of charges.</span>")
-		return
-	if(!isnull(target) && !target.toff)
-		charges--
-		var/difficulty = 0
-		if(target.cartridge)
-			difficulty += target.cartridge.access_medical
-			difficulty += target.cartridge.access_security
-			difficulty += target.cartridge.access_engine
-			difficulty += target.cartridge.access_clown
-			difficulty += target.cartridge.access_janitor
-			difficulty += target.cartridge.access_manifest * 2
-		else
-			difficulty += 2
-		if(prob(difficulty * 15) || (target.hidden_uplink))
-			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
-		else
-			U.show_message("<span class='notice'>Success!</span>", 1)
-			target.explode()
-	else
-		to_chat(U, "PDA not found.")
+/obj/item/weapon/cartridge/virus/special(mob/living/user, list/params)
+	var/obj/item/device/pda/P = locate(params["target"])//Leaving it alone in case it may do something useful, I guess.
+	send_virus(P,user)
 
 /obj/item/weapon/cartridge/virus/clown
 	name = "\improper Honkworks 5.0 cartridge"
@@ -67,6 +46,37 @@ obj/item/weapon/cartridge/virus/proc/send_virus(obj/item/device/pda/target, mob/
 		to_chat(U, "<span class='notice'>Virus Sent!</span>")
 		target.silent = 1
 		target.ttone = "silence"
+	else
+		to_chat(U, "PDA not found.")
+
+/obj/item/weapon/cartridge/virus/syndicate
+	name = "\improper Detomatix cartridge"
+	icon_state = "cart"
+	access_remote_door = 1
+	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
+	charges = 4
+
+/obj/item/weapon/cartridge/virus/syndicate/send_virus(obj/item/device/pda/target, mob/living/U)
+	if(charges <= 0)
+		to_chat(U, "<span class='notice'>Out of charges.</span>")
+		return
+	if(!isnull(target) && !target.toff)
+		charges--
+		var/difficulty = 0
+		if(target.cartridge)
+			difficulty += target.cartridge.access_medical
+			difficulty += target.cartridge.access_security
+			difficulty += target.cartridge.access_engine
+			difficulty += target.cartridge.access_clown
+			difficulty += target.cartridge.access_janitor
+			difficulty += target.cartridge.access_manifest * 2
+		else
+			difficulty += 2
+		if(prob(difficulty * 15) || (target.hidden_uplink))
+			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
+		else
+			U.show_message("<span class='notice'>Success!</span>", 1)
+			target.explode()
 	else
 		to_chat(U, "PDA not found.")
 

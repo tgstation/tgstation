@@ -766,3 +766,14 @@ Code:
 			return
 
 	return menu
+
+//If the cartridge adds a special line to the top of the messaging app
+/obj/item/weapon/cartridge/proc/message_header()
+	return ""
+
+//If the cartridge adds something to each potetial messaging target
+/obj/item/weapon/cartridge/proc/message_special()
+	return ""
+
+//This is called for special abilities of cartridges
+/obj/item/weapon/cartridge/proc/special(mov/living/user, list/params)
