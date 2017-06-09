@@ -21759,19 +21759,11 @@
 /obj/item/weapon/soap,
 /obj/structure/table/wood,
 /obj/item/weapon/bikehorn,
+/obj/item/toy/cattoy,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/theatre)
 "aSY" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/crayons{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/toy/cattoy,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/theatre)
 "aSZ" = (
