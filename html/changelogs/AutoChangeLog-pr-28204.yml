@@ -1,0 +1,4 @@
+author: "oranges"
+delete-after: True
+changes: 
+  - tweak: "Security minor and major crime descriptors are now a single line input, making it easier to add them"
