@@ -100,7 +100,7 @@
 			target.hidden_uplink = uplink
 			target.lock_code = lock_code
 		else
-			target.hidden_uplink.hidden_crystals = target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
+			target.hidden_uplink.hidden_crystals += target.hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		target.hidden_uplink.telecrystals = telecrystals
 		telecrystals = 0
 		target.hidden_uplink.active = TRUE
