@@ -115,10 +115,10 @@
 		if("Flagellant's Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Bastard Sword")
-			if(world.time < 15000)
+			if(world.time < 18000)
 				pickedtype = /obj/item/weapon/twohanded/required/cult_bastard
 			else
-				cooldowntime = 15000 - world.time
+				cooldowntime = 18000 - world.time
 				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [getETA()].</span>")
 				cooldowntime = 0
 				return

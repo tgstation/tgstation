@@ -67,7 +67,6 @@
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar-Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
-	anchored = TRUE
 	block_chance = 50
 	throwforce = 20
 	force = 40
@@ -77,8 +76,8 @@
 	sharpness = IS_SHARP
 	light_color = "#ff0000"
 	attack_verb = list("cleaved", "slashed", "torn", "hacked", "ripped", "diced", "carved")
-	icon_state = "cultblade"
-	item_state = "cultblade"
+	icon_state = "cultbastard"
+	item_state = "cultbastard"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -89,12 +88,13 @@
 	var/spinning = FALSE
 	var/dash_toggled = FALSE
 	var/charges = 1
-	var/charge_rate = 120
+	var/charge_rate = 250
 	var/list/shards = list()
 
 /obj/item/weapon/twohanded/required/cult_bastard/Initialize()
 	. = ..()
 	set_light(4)
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 
 /obj/item/weapon/twohanded/required/cult_bastard/can_be_pulled(user)
 	return FALSE
@@ -126,6 +126,11 @@
 	linked_action.Grant(user, src)
 	user.update_icons()
 
+/obj/item/weapon/twohanded/required/cult_bastard/dropped(mob/user)
+	. = ..()
+	linked_action.Remove(user)
+	user.update_icons()
+
 /obj/item/weapon/twohanded/required/cult_bastard/IsReflect()
 	if(spinning)
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
@@ -147,7 +152,7 @@
 
 /obj/item/weapon/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled)
+	if(dash_toggled && charges)
 		dash(user, target)
 		return
 	if(!proximity)
@@ -210,7 +215,7 @@
 		return FALSE
 
 /datum/action/innate/spin2win/Activate()
-	cooldown = world.time + 200
+	cooldown = world.time + 250
 	holder.changeNext_move(50)
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
@@ -223,7 +228,7 @@
 	sword.spinning = FALSE
 	sword.block_chance = 50
 	sword.slowdown -= 1
-	sleep(150)
+	sleep(200)
 	holder.update_action_buttons_icon()
 
 
