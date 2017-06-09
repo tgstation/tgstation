@@ -73,9 +73,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if("debug")
 			data = debug(arglist(params))
 
-		if("ping")
-			data = ping(arglist(params))
-
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
