@@ -624,10 +624,13 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'
+	var/mutable_appearance/torn
+	var/mutable_appearance/paper
 
 /obj/structure/window/paperframe/Initialize()
 	..()
-
+	torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER-1)
+	paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER-1)
 	for(var/obj/item/I in debris)
 		debris -= I
 		qdel(I)
@@ -654,12 +657,14 @@
 			update_icon()
 
 /obj/structure/window/paperframe/update_icon()
-	cut_overlays()
+	icon_state = initial(icon_state)
 	if(obj_integrity < max_integrity)
-		add_overlay(mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER-1))
+		cut_overlays(paper)
+		add_overlay(torn)
 		opacity = 0
 	else
-		add_overlay(mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER-1))
+		cut_overlays(torn)
+		add_overlay(paper)
 		opacity = 1
 	queue_smooth(src)
 

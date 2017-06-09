@@ -226,6 +226,7 @@
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
 	sheetType = /obj/item/stack/sheet/paperframes
+	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	obj_integrity = 20
 	max_integrity = 20
