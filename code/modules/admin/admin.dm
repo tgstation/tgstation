@@ -39,7 +39,7 @@
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
-		body += "<br><b>Show related accounts by:</b> "
+		body += "<br><br><b>Show related accounts by:</b> "
 		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
 		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
 
@@ -434,7 +434,7 @@
 			if("Hard Restart (No Delay, No Feeback Reason)")
 				world.Reboot()
 			if("Hardest Restart (No actions, just reboot)")
-				world.Reboot(fast_track = TRUE)		
+				world.Reboot(fast_track = TRUE)
 			if("Service Restart (Force restart DD)")
 				GLOB.reboot_mode = REBOOT_MODE_HARD
 				world.ServiceReboot()
