@@ -186,7 +186,7 @@
 		var/full = contents.len ? 1 : 0
 		icon_state = "wm_[state_open]_[full]"
 	if(panel_open)
-		add_overlay(image(icon, icon_state = "wm_panel"))
+		add_overlay("wm_panel")
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))

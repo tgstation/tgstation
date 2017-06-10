@@ -1,20 +1,3 @@
-//This is so damaged or burnt tiles or platings don't get remembered as the default tile
-var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
-				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
-				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
-				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
-				"light_on_broken","light_off","wall_thermite","grass", "sand",
-				"asteroid","asteroid_dug",
-				"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
-				"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
-				"basalt","basalt_dug",
-				"basalt0","basalt1","basalt2","basalt3","basalt4",
-				"basalt5","basalt6","basalt7","basalt8","basalt9","basalt10","basalt11","basalt12",
-				"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken",
-				"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
-				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
-				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
-
 /turf/open/floor
 	//NOTE: Floor code has been refactored, many procs were removed and refactored
 	//- you should use istype() if you want to find out whether a floor has a certain type
@@ -39,6 +22,22 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if (!burnt_states)
 		burnt_states = list()
 	..()
+	//This is so damaged or burnt tiles or platings don't get remembered as the default tile
+	var/static/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
+					"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
+					"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
+					"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
+					"light_on_broken","light_off","wall_thermite","grass", "sand",
+					"asteroid","asteroid_dug",
+					"asteroid0","asteroid1","asteroid2","asteroid3","asteroid4",
+					"asteroid5","asteroid6","asteroid7","asteroid8","asteroid9","asteroid10","asteroid11","asteroid12",
+					"basalt","basalt_dug",
+					"basalt0","basalt1","basalt2","basalt3","basalt4",
+					"basalt5","basalt6","basalt7","basalt8","basalt9","basalt10","basalt11","basalt12",
+					"oldburning","light-on-r","light-on-y","light-on-g","light-on-b", "wood", "wood-broken",
+					"carpetcorner", "carpetside", "carpet", "ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5",
+					"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
+					"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else
@@ -165,8 +164,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(..())
 		return 1
 	if(intact && istype(C, /obj/item/weapon/crowbar))
-		pry_tile(C, user)
-		return 1
+		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
@@ -218,8 +216,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		else if(prob(50))
 			ReplaceWithLattice()
 
-/turf/open/floor/narsie_act()
-	if(prob(20))
+/turf/open/floor/narsie_act(force, ignore_mobs, probability = 20)
+	. = ..()
+	if(.)
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/ratvar_act(force, ignore_mobs)
@@ -230,7 +229,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)
 
-/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/turf/open/floor/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
@@ -242,7 +241,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 4)
 	return FALSE
 
-/turf/open/floor/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/turf/open/floor/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")

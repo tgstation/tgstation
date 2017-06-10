@@ -357,7 +357,7 @@
 	if(!get_ntnet_status())
 		return FALSE
 	var/obj/item/weapon/computer_hardware/network_card/network_card = all_components[MC_NET]
-	return ntnet_global.add_log(text, network_card)
+	return GLOB.ntnet_global.add_log(text, network_card)
 
 /obj/item/device/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)

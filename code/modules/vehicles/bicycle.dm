@@ -4,15 +4,15 @@
 	icon_state = "bicycle"
 	var/easter_egg_chance = 1
 
-var/static/list/bike_music = list('sound/misc/bike1.mid',
-							'sound/misc/bike2.mid',
-							'sound/misc/bike3.mid')
-/obj/vehicle/bicycle/New()
-	..()
+	var/static/list/bike_music = list('sound/misc/bike1.mid',
+								'sound/misc/bike2.mid',
+								'sound/misc/bike3.mid')
+/obj/vehicle/bicycle/Initialize()
+	. = ..()
 	riding_datum = new/datum/riding/bicycle
 
 /obj/vehicle/bicycle/buckle_mob(mob/living/M, force = 0, check_loc = 1)
-	if(prob(easter_egg_chance) || (SSevent.holidays && SSevent.holidays[APRIL_FOOLS]))
+	if(prob(easter_egg_chance) || (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		M << sound(pick(bike_music), repeat = 1, wait = 0, volume = 80, channel = 42)
 	. = ..()
 

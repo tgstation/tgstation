@@ -46,7 +46,7 @@
 	var/dat = "<title>[name]</title>"
 
 	for(var/obj/item/I in src)
-		dat += sanitize_russian("<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>", 1)
+		dat += sanitize_russian("<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>")
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
@@ -78,8 +78,8 @@
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of Nanotrasen Corporation. Unauthorized distribution is punishable by death.\""
 
-/obj/item/weapon/folder/documents/New()
-	..()
+/obj/item/weapon/folder/documents/Initialize()
+	. = ..()
 	new /obj/item/documents/nanotrasen(src)
 	update_icon()
 
@@ -91,20 +91,20 @@
 /obj/item/weapon/folder/syndicate/red
 	icon_state = "folder_sred"
 
-/obj/item/weapon/folder/syndicate/red/New()
-	..()
+/obj/item/weapon/folder/syndicate/red/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/red(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/blue
 	icon_state = "folder_sblue"
 
-/obj/item/weapon/folder/syndicate/blue/New()
-	..()
+/obj/item/weapon/folder/syndicate/blue/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/blue(src)
 	update_icon()
 
-/obj/item/weapon/folder/syndicate/mining/New()
-	..()
+/obj/item/weapon/folder/syndicate/mining/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/mining(src)
 	update_icon()

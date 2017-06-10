@@ -16,7 +16,7 @@
 			if(stat == CONSCIOUS)
 				if(!handle_combat())
 					if(prob(33) && canmove && isturf(loc) && !pulledby)
-						step(src, pick(cardinal))
+						step(src, pick(GLOB.cardinal))
 					if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))
 			else

@@ -1,5 +1,3 @@
-var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
-
 /obj/effect/bump_teleporter
 	name = "bump-teleporter"
 	icon = 'icons/mob/screen_gen.dmi'
@@ -11,12 +9,14 @@ var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
 	density = 1
 	opacity = 0
 
+	var/static/list/AllTeleporters
+
 /obj/effect/bump_teleporter/New()
 	..()
-	BUMP_TELEPORTERS += src
+	LAZYADD(AllTeleporters, src)
 
 /obj/effect/bump_teleporter/Destroy()
-	BUMP_TELEPORTERS -= src
+	LAZYREMOVE(AllTeleporters, src)
 	return ..()
 
 /obj/effect/bump_teleporter/Bumped(atom/user)
@@ -28,7 +28,7 @@ var/list/obj/effect/bump_teleporter/BUMP_TELEPORTERS = list()
 		//user.loc = src.loc	//Stop at teleporter location, there is nowhere to teleport to.
 		return
 
-	for(var/obj/effect/bump_teleporter/BT in BUMP_TELEPORTERS)
+	for(var/obj/effect/bump_teleporter/BT in AllTeleporters)
 		if(BT.id == src.id_target)
 			usr.loc = BT.loc	//Teleport to location with correct id.
 			return

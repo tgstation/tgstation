@@ -36,7 +36,7 @@ AI MODULES
 	if(laws.len)
 		to_chat(user, "<B>Programmed Law[(laws.len > 1) ? "s" : ""]:</B>")
 		for(var/law in laws)
-			to_chat(user, "\"[russian_html2text(law)]\"")
+			to_chat(user, "\"[law]\"")
 
 //The proc other things should be calling
 /obj/item/weapon/aiModule/proc/install(datum/ai_laws/law_datum, mob/user)
@@ -67,9 +67,9 @@ AI MODULES
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [russian_html2text(law2log)]" : ""]")
+	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
 	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
-	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [russian_html2text(law2log)]" : ""]")
+	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
 
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
@@ -152,7 +152,7 @@ AI MODULES
 	lawpos = 4
 
 /obj/item/weapon/aiModule/supplied/safeguard/attack_self(mob/user)
-	var/targName = sanitize_russian(stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN),1)
+	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
@@ -179,7 +179,7 @@ AI MODULES
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
-	var/targName = sanitize_russian(stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN),1)
+	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
@@ -409,7 +409,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/custom/New()
 	..()
-	for(var/line in file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -472,7 +472,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
-	var/targName = sanitize_russian(stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN),1)
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1],MAX_MESSAGE_LEN)
 	if(!targName)
 		return
 	laws[1] = targName

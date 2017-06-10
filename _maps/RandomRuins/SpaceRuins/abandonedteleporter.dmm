@@ -1,44 +1,332 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/closed/wall/r_wall,/area/AIsattele)
-"c" = (/obj/structure/lattice,/turf/open/space,/area/space)
-"d" = (/obj/structure/frame/computer,/turf/open/floor/plating/airless,/area/AIsattele)
-"e" = (/obj/machinery/teleport/station,/turf/open/floor/plating/airless,/area/AIsattele)
-"f" = (/obj/machinery/teleport/hub,/turf/open/floor/plating/airless,/area/AIsattele)
-"g" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/plating/airless,/area/AIsattele)
-"h" = (/turf/open/floor/plating/airless,/area/AIsattele)
-"i" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/plating/airless,/area/AIsattele)
-"j" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating/airless,/area/AIsattele)
-"k" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/turf/open/floor/plating/airless,/area/AIsattele)
-"l" = (/obj/item/weapon/stock_parts/cell,/turf/open/floor/plating/airless,/area/AIsattele)
-"m" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless,/area/AIsattele)
-"n" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/open/floor/plating/airless,/area/AIsattele)
-"o" = (/obj/effect/spawner/lootdrop/crate_spawner,/turf/open/floor/plating/airless,/area/AIsattele)
-"p" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating/airless,/area/AIsattele)
-"q" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/flashlight,/turf/open/floor/plating/airless,/area/AIsattele)
-"r" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/radio/beacon,/turf/open/floor/plating/airless,/area/AIsattele)
-"s" = (/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plating/airless,/area/AIsattele)
-"t" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating/airless,/area/AIsattele)
-"u" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/airless,/area/AIsattele)
-"v" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/airless,/area/AIsattele)
-"w" = (/obj/item/weapon/shard,/obj/item/weapon/electronics/apc,/turf/open/floor/plating/airless,/area/AIsattele)
-"x" = (/obj/structure/closet,/turf/open/floor/plating/airless,/area/AIsattele)
-"y" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1;pixel_y = -1},/turf/open/floor/plating/airless,/area/AIsattele)
-"z" = (/obj/structure/closet/crate,/obj/item/device/aicard,/obj/item/device/multitool,/obj/item/weapon/weldingtool,/obj/item/weapon/wrench,/obj/item/weapon/circuitboard/computer/teleporter,/turf/open/floor/plating/airless,/area/AIsattele)
-"A" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating/airless,/area/AIsattele)
-"B" = (/obj/structure/girder,/turf/open/floor/plating/airless,/area/AIsattele)
-"C" = (/obj/structure/lattice,/turf/open/space,/area/AIsattele)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall/r_wall,
+/area/AIsattele)
+"c" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"e" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"f" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"g" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"h" = (
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"i" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/color/yellow,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"j" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"k" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"l" = (
+/obj/item/weapon/stock_parts/cell,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"m" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"n" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"o" = (
+/obj/effect/spawner/lootdrop/crate_spawner,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"p" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/flashlight,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/radio/beacon,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"s" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"t" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"u" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"v" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"w" = (
+/obj/item/weapon/shard,
+/obj/item/weapon/electronics/apc,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"x" = (
+/obj/structure/closet,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"y" = (
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"z" = (
+/obj/structure/closet/crate,
+/obj/item/device/aicard,
+/obj/item/device/multitool,
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/wrench,
+/obj/item/weapon/circuitboard/computer/teleporter,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"A" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"B" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless,
+/area/AIsattele)
+"C" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/AIsattele)
 
 (1,1,1) = {"
-aaaaaabbbbbca
-aaaccbbdefbba
-acccbbghhhibb
-aajkbhlmhnmob
-ccphphqnrhhsb
-aajtbsuhvhwxb
-acccbbhhmhybb
-aaaccbbzhAbba
-aaaaaabbChBca
-aaaaaacccacaa
-aaaaaaacaaaaa
-aaaaaaaaccaaa
+a
+a
+a
+a
+c
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+c
+a
+c
+a
+c
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+c
+j
+p
+j
+c
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+c
+c
+k
+h
+t
+c
+c
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+c
+b
+b
+p
+b
+b
+c
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+h
+h
+s
+b
+b
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+b
+b
+g
+l
+q
+u
+h
+b
+b
+c
+a
+a
+"}
+(8,1,1) = {"
+b
+d
+h
+m
+n
+h
+h
+z
+b
+c
+c
+a
+"}
+(9,1,1) = {"
+b
+e
+h
+h
+r
+v
+m
+h
+C
+c
+a
+c
+"}
+(10,1,1) = {"
+b
+f
+h
+n
+h
+h
+h
+A
+h
+a
+a
+c
+"}
+(11,1,1) = {"
+b
+b
+i
+m
+h
+w
+y
+b
+B
+c
+a
+a
+"}
+(12,1,1) = {"
+c
+b
+b
+o
+s
+x
+b
+b
+c
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
 "}

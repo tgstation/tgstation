@@ -17,7 +17,7 @@
 		if(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/hud))
 			occupant_message("<span class='warning'>Your [H.glasses] prevent you from using the built-in medical hud.</span>")
 		else
-			var/datum/atom_hud/data/human/medical/advanced/A = huds[DATA_HUD_MEDICAL_ADVANCED]
+			var/datum/atom_hud/data/human/medical/advanced/A = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 			A.add_hud_to(H)
 			builtin_hud_user = 1
 		return 1
@@ -27,7 +27,7 @@
 /obj/mecha/medical/odysseus/go_out()
 	if(ishuman(occupant) && builtin_hud_user)
 		var/mob/living/carbon/human/H = occupant
-		var/datum/atom_hud/data/human/medical/advanced/A = huds[DATA_HUD_MEDICAL_ADVANCED]
+		var/datum/atom_hud/data/human/medical/advanced/A = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 		A.remove_hud_from(H)
 	..()
 	return

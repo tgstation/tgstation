@@ -160,3 +160,13 @@
 	)
 	result =  /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
 	category = CAT_MEAT
+
+/datum/crafting_recipe/food/pigblanket
+	name = "Pig in a Blanket"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/butter = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pigblanket
+	category = CAT_MEAT

@@ -10,7 +10,7 @@
 //item you want to equip to the hand, and set its slots_flags = null. Only items equiped to hands need do this.
 
 /datum/round_event/wizard/cursed_items/start()
-	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators", "catgirls2015")
+	var/item_set = pick("wizardmimic", "swords", "bigfatdoobie", "boxing", "voicemodulators"/*, "catgirls2015"*/)
 	var/list/wearslots	= list(slot_wear_suit, slot_shoes, slot_head, slot_wear_mask, slot_gloves, slot_ears)
 	var/list/loadout = list()
 	var/ruins_spaceworthiness
@@ -37,10 +37,10 @@
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(ruins_spaceworthiness && (H.z != 1 || isspaceturf(H.loc) || isplasmaman(H)))
 			continue	//#savetheminers
-		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))
+		if(ruins_wizard_loadout && H.mind && ((H.mind in SSticker.mode.wizards) || (H.mind in SSticker.mode.apprentices)))
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE
@@ -54,7 +54,7 @@
 				I.flags |= NODROP
 				I.name = "cursed " + I.name
 
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		var/datum/effect_system/smoke_spread/smoke = new
 		smoke.set_up(0, H.loc)
 		smoke.start()

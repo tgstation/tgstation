@@ -8,7 +8,7 @@
 	icon_living = "flan"
 	icon_dead = "flan_dead"
 	turns_per_move = 5
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	speed = -2
 	maxHealth = 50
 	health = 50

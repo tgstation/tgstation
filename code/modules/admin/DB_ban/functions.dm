@@ -71,16 +71,13 @@
 		computerid = bancid
 		ip = banip
 
-	var/DBQuery/query_add_ban_get_id = dbcon.NewQuery("SELECT id FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
-	if(!query_add_ban_get_id.warn_execute())
+	var/DBQuery/query_add_ban_get_ckey = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
+	if(!query_add_ban_get_ckey.warn_execute())
 		return
-	var/validckey = 0
-	if(query_add_ban_get_id.NextRow())
-		validckey = 1
-	if(!validckey)
+	if(!query_add_ban_get_ckey.NextRow())
 		if(!banned_mob || (banned_mob && !IsGuestKey(banned_mob.key)))
-			message_admins("<font color='red'>[key_name_admin(usr)] attempted to ban [ckey], but [ckey] has not been seen yet. Please only ban actual players.</font>",1)
-			return
+			if(alert(usr, "[ckey] has not been seen before, are you sure you want to create a ban for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
+				return
 
 	var/a_ckey
 	var/a_computerid
@@ -97,14 +94,14 @@
 			return
 
 	var/who
-	for(var/client/C in clients)
+	for(var/client/C in GLOB.clients)
 		if(!who)
 			who = "[C]"
 		else
 			who += ", [C]"
 
 	var/adminwho
-	for(var/client/C in admins)
+	for(var/client/C in GLOB.admins)
 		if(!adminwho)
 			adminwho = "[C]"
 		else
@@ -130,12 +127,16 @@
 	if(!query_add_ban.warn_execute())
 		return
 	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
-	message_admins("[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[sanitize_russian(reason)]\" to the ban database.",1)
+	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [ckey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database."
+	message_admins(msg,1)
+	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
 
 	if(announceinirc)
 		send2irc("BAN ALERT","[a_ckey] applied a [bantype_str] on [ckey]")
 
 	if(kickbannedckey)
+		if(AH)
+			AH.Resolve()	//with prejudice
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
 			qdel(banned_mob.client)
 	return 1
@@ -257,7 +258,7 @@
 			var/DBQuery/query_edit_ban_reason = dbcon.NewQuery("UPDATE [format_table_name("ban")] SET reason = '[value]', edits = CONCAT(edits,'- [eckey] changed ban reason from <cite><b>\\\"[reason]\\\"</b></cite> to <cite><b>\\\"[value]\\\"</b></cite><BR>') WHERE id = [banid]")
 			if(!query_edit_ban_reason.warn_execute())
 				return
-			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [sanitize_russian(reason)] to [sanitize_russian(value)]",1)
+			message_admins("[key_name_admin(usr)] has edited a ban for [pckey]'s reason from [reason] to [value]",1)
 		if("duration")
 			if(!value)
 				value = input("Insert the new duration (in minutes) for [pckey]'s ban", "New Duration", "[duration]", null) as null|num
@@ -371,7 +372,7 @@
 	output += "<option value=''>--</option>"
 	for(var/j in get_all_jobs())
 		output += "<option value='[j]'>[j]</option>"
-	for(var/j in nonhuman_positions)
+	for(var/j in GLOB.nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in list("traitor","changeling","operative","revolutionary", "gangster","cultist","wizard"))
 		output += "<option value='[j]'>[j]</option>"
@@ -500,4 +501,4 @@
 
 		output += "</table></div>"
 
-	usr << browse(russian_text2html(sanitize_russian(output,1)),"window=lookupbans;size=900x500")
+	usr << browse(russian_text2html(sanitize_russian(output)),"window=lookupbans;size=900x500")

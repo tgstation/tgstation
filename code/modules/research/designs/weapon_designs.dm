@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 
 /datum/design/pin_testing
-	name = "test-range firing pin"
+	name = "Test-Range Firing Pin"
 	desc = "This safety firing pin allows firearms to be operated within proximity to a firing range."
 	id = "pin_testing"
 	req_tech = list("combat" = 2, "materials" = 2)
@@ -13,7 +13,7 @@
 	category = list("Firing Pins")
 
 /datum/design/pin_mindshield
-	name = "mindshield firing pin"
+	name = "Mindshield Firing Pin"
 	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 6)

@@ -8,7 +8,7 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
-	
+
 	light_color = "#E2853D"//orange
 
 /obj/machinery/computer/cargo/request
@@ -38,7 +38,7 @@
 		board.emagged = TRUE
 
 /obj/machinery/computer/cargo/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "cargo", name, 1000, 800, master_ui, state)
@@ -85,7 +85,7 @@
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
-			"reason" = "error", // Ugly fix for requests console breaking on russian letters.
+			"reason" = SO.reason,
 			"id" = SO.id
 		))
 
@@ -106,9 +106,9 @@
 				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
-				investigate_log("[key_name(usr)] sent the supply shuttle away.", "cargo")
+				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				investigate_log("[key_name(usr)] called the supply shuttle.", "cargo")
+				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
 			. = TRUE

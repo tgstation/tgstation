@@ -1,7 +1,7 @@
-/var/list/sacrificed = list() //a mixed list of minds and mobs
-var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
-var/global/list/rune_types //Every rune that can be drawn by tomes
-
+GLOBAL_LIST_EMPTY(sacrificed) //a mixed list of minds and mobs
+GLOBAL_LIST(rune_types) //Every rune that can be drawn by tomes
+GLOBAL_LIST_EMPTY(teleport_runes)
+GLOBAL_LIST_EMPTY(wall_runes)
 /*
 
 This file contains runes.
@@ -24,24 +24,24 @@ To draw a rune, use an arcane tome.
 	icon_state = "1"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = LOW_OBJ_LAYER
-	color = "#FF0000"
+	color = RUNE_COLOR_RED
 
 	var/invocation = "Aiy ele-mayo!" //This is said by cultists when the rune is invoked.
 	var/req_cultists = 1 //The amount of cultists required around the rune to invoke it. If only 1, any cultist can invoke it.
 	var/req_cultists_text //if we have a description override for required cultists to invoke
-	var/rune_in_use = 0 // Used for some runes, this is for when you want a rune to not be usable when in use.
+	var/rune_in_use = FALSE // Used for some runes, this is for when you want a rune to not be usable when in use.
 
 	var/scribe_delay = 50 //how long the rune takes to create
 	var/scribe_damage = 0.1 //how much damage you take doing it
 
-	var/allow_excess_invokers = 0 //if we allow excess invokers when being invoked
-	var/construct_invoke = 1 //if constructs can invoke it
+	var/allow_excess_invokers = FALSE //if we allow excess invokers when being invoked
+	var/construct_invoke = TRUE //if constructs can invoke it
 
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
 
-/obj/effect/rune/New(loc, set_keyword)
-	..()
+/obj/effect/rune/Initialize(mapload, set_keyword)
+	. = ..()
 	if(set_keyword)
 		keyword = set_keyword
 
@@ -124,7 +124,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(allow_excess_invokers)
 				chanters += invokers
 			else
-				shuffle(invokers)
+				shuffle_inplace(invokers)
 				for(var/i in 1 to req_cultists)
 					var/L = pick_n_take(invokers)
 					if(L)
@@ -136,7 +136,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(invocation)
 		for(var/M in invokers)
 			var/mob/living/L = M
-			L.say(invocation)
+			L.say(invocation, language = /datum/language/common)
 	do_invoke_glow()
 
 /obj/effect/rune/proc/do_invoke_glow()
@@ -144,12 +144,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
 	sleep(5)
-	animate(transform = oldtransform, alpha = 255, time = 0)
+	animate(src, transform = oldtransform, alpha = 255, time = 0)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message("<span class='warning'>The markings pulse with a \
-		small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -161,8 +160,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "a senseless rune written in gibberish. No good can come from invoking this."
 	invocation = "Ra'sha yoka!"
 
-/obj/effect/rune/malformed/New()
-	..()
+/obj/effect/rune/malformed/Initialize(mapload, set_keyword)
+	. = ..()
 	icon_state = "[rand(1,7)]"
 	color = rgb(rand(0,255), rand(0,255), rand(0,255))
 
@@ -176,7 +175,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
 	var/obj/item/weapon/nullrod/N = locate() in src
-	if(N && !ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
+	if(N && !GLOB.ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
 		return N
 	return 0
 
@@ -192,7 +191,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "transforms paper into powerful magic talismans."
 	invocation = "H'drak v'loso, mir'kanas verbot!"
 	icon_state = "3"
-	color = "#0000FF"
+	color = RUNE_COLOR_TALISMAN
 
 /obj/effect/rune/imbue/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
@@ -211,7 +210,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Talisman Creation rune failed - already in use")
 		return
 
-	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak)
+	for(var/I in subtypesof(/obj/item/weapon/paper/talisman) - /obj/item/weapon/paper/talisman/malformed - /obj/item/weapon/paper/talisman/supply - /obj/item/weapon/paper/talisman/supply/weak - /obj/item/weapon/paper/talisman/summon_tome)
 		var/obj/item/weapon/paper/talisman/J = I
 		var/talisman_cult_name = initial(J.cultist_name)
 		if(talisman_cult_name)
@@ -229,14 +228,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/obj/item/weapon/paper/paper_to_imbue = papers_on_rune[1]
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
-	rune_in_use = 1
-	if(!do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
-		rune_in_use = 0
-		return
-	new talisman_type(get_turf(src))
-	visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
-	qdel(paper_to_imbue)
-	rune_in_use = 0
+	rune_in_use = TRUE
+	if(do_after(user, initial(talisman_type.creation_time), target = paper_to_imbue))
+		new talisman_type(get_turf(src))
+		visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
+		qdel(paper_to_imbue)
+	rune_in_use = FALSE
 
 /obj/effect/rune/imbue/proc/checkpapers()
 	. = list()
@@ -244,32 +241,31 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(!P.info && !istype(P, /obj/item/weapon/paper/talisman))
 			. |= P
 
-var/list/teleport_runes = list()
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
-	color = "#551A8B"
-	req_keyword = 1
+	color = RUNE_COLOR_TELEPORT
+	req_keyword = TRUE
 	var/listkey
 
-/obj/effect/rune/teleport/New(loc, set_keyword)
-	..()
+/obj/effect/rune/teleport/Initialize(mapload, set_keyword)
+	. = ..()
 	var/area/A = get_area(src)
 	var/locname = initial(A.name)
 	listkey = set_keyword ? "[set_keyword] [locname]":"[locname]"
-	teleport_runes += src
+	GLOB.teleport_runes += src
 
 /obj/effect/rune/teleport/Destroy()
-	teleport_runes -= src
+	GLOB.teleport_runes -= src
 	return ..()
 
 /obj/effect/rune/teleport/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
 	var/list/potential_runes = list()
 	var/list/teleportnames = list()
-	for(var/R in teleport_runes)
+	for(var/R in GLOB.teleport_runes)
 		var/obj/effect/rune/teleport/T = R
 		if(T != src && (T.z <= ZLEVEL_SPACEMAX))
 			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
@@ -298,22 +294,23 @@ var/list/teleport_runes = list()
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		fail_invoke()
 		return
-	var/movedsomething = 0
-	var/moveuserlater = 0
+	var/movedsomething = FALSE
+	var/moveuserlater = FALSE
 	for(var/atom/movable/A in T)
 		if(A == user)
-			moveuserlater = 1
-			movedsomething = 1
+			moveuserlater = TRUE
+			movedsomething = TRUE
 			continue
 		if(!A.anchored)
-			movedsomething = 1
+			movedsomething = TRUE
 			A.forceMove(target)
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
+		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
 		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
 			user.forceMove(target)
+		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -325,9 +322,9 @@ var/list/teleport_runes = list()
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
-	color = "#FFFFFF"
+	color = RUNE_COLOR_OFFER
 	req_cultists = 1
-	allow_excess_invokers = 1
+	allow_excess_invokers = TRUE
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/do_invoke_glow()
@@ -348,7 +345,7 @@ var/list/teleport_runes = list()
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
 	var/oldcolor = color
-	color = "#7D1717"
+	color = RUNE_COLOR_DARKRED
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 	var/is_convertable = is_convertable_to_cult(L)
@@ -389,7 +386,7 @@ var/list/teleport_runes = list()
 	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
 	[brutedamage || burndamage ? "even as [convertee.p_their()] wounds heal and close" : "as the markings below [convertee.p_them()] glow a bloody red"]!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
-	ticker.mode.add_cultist(convertee.mind, 1)
+	SSticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))
 	convertee.mind.special_role = "Cultist"
 	to_chat(convertee, "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
@@ -399,23 +396,23 @@ var/list/teleport_runes = list()
 	return 1
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
+	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
 			to_chat(M, "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>")
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
-	var/sacrifice_fulfilled = FALSE
-
 	if(sacrificial.mind)
-		sacrificed += sacrificial.mind
+		GLOB.sacrificed += sacrificial.mind
 		if(is_sacrifice_target(sacrificial.mind))
-			sacrifice_fulfilled = TRUE
+			GLOB.sac_complete = TRUE
+			big_sac = TRUE
 	else
-		sacrificed += sacrificial
+		GLOB.sacrificed += sacrificial
 
-	new /obj/effect/overlay/temp/cult/sac(get_turf(src))
+	new /obj/effect/temp_visual/cult/sac(get_turf(src))
 	for(var/M in invokers)
-		if(sacrifice_fulfilled)
+		if(big_sac)
 			to_chat(M, "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>")
 		else
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
@@ -445,21 +442,20 @@ var/list/teleport_runes = list()
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
 	icon = 'icons/effects/96x96.dmi'
-	color = "#7D1717"
+	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
 	scribe_delay = 450 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
-	var/used
-	var/ignore_gamemode = FALSE
+	var/used = FALSE
 
-/obj/effect/rune/narsie/New()
+/obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/effect/rune/narsie/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/effect/rune/narsie/talismanhide() //can't hide this, and you wouldn't want to
@@ -471,34 +467,21 @@ var/list/teleport_runes = list()
 	if(z != ZLEVEL_STATION)
 		return
 
-	var/datum/game_mode/cult/cult_mode
-
-	if(ticker.mode.name == "cult")
-		cult_mode = ticker.mode
-
-	if(!cult_mode && !ignore_gamemode)
-		for(var/M in invokers)
-			to_chat(M, "<span class='warning'>Nar-Sie does not respond!</span>")
-		fail_invoke()
-		log_game("Summon Nar-Sie rune failed - gametype is not cult")
-		return
-
-	if(locate(/obj/singularity/narsie) in poi_list)
+	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Nar-Sie is already on this plane!</span>")
 		log_game("Summon Nar-Sie rune failed - already summoned")
 		return
 	//BEGIN THE SUMMONING
-	used = 1
+	used = TRUE
 	..()
-	send_to_playing_players('sound/effects/dimensional_rend.ogg') //There used to be a message for this but every time it was changed it got edgier so I removed it
+	send_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
-		color = "#FF0000"
-	if(cult_mode)
-		cult_mode.eldergod = 0
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+		color = RUNE_COLOR_RED
+	SSticker.mode.eldergod = FALSE
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -513,21 +496,21 @@ var/list/teleport_runes = list()
 			message_admins("[key_name_admin(user)] erased a Narsie rune with a null rod")
 			..()
 
-//Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people sacrificed
+//Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people GLOB.sacrificed
 /obj/effect/rune/raise_dead
-	cultist_name = "Raise Dead"
+	cultist_name = "Resurrect Cultist"
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
-	invocation = null //Depends on the name of the user - see below
+	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	var/static/revives_used = 0
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	..()
 	if(iscultist(user) || user.stat == DEAD)
 		var/revive_number = 0
-		if(sacrificed.len)
-			revive_number = sacrificed.len - revives_used
+		if(GLOB.sacrificed.len)
+			revive_number = GLOB.sacrificed.len - revives_used
 		to_chat(user, "<b>Revives Remaining:</b> [revive_number]")
 
 /obj/effect/rune/raise_dead/invoke(var/list/invokers)
@@ -545,7 +528,7 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - no corpses to revive")
 		fail_invoke()
 		return
-	if(!sacrificed.len || sacrificed.len <= revives_used)
+	if(!GLOB.sacrificed.len || GLOB.sacrificed.len <= revives_used)
 		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
 		fail_invoke()
 		return
@@ -557,9 +540,9 @@ var/list/teleport_runes = list()
 		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
-		user.say("To life, to life, I bring them!")
+		invocation = "To life, to life, I bring them!"
 	else
-		user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
+		invocation = initial(invocation)
 	..()
 	revives_used++
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
@@ -589,7 +572,7 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
 		return 0
-	if(!sacrificed.len || sacrificed.len <= revives_used)
+	if(!GLOB.sacrificed.len || GLOB.sacrificed.len <= revives_used)
 		to_chat(user, "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>")
 		fail_invoke()
 		log_game("Raise Dead rune failed - too few sacrificed")
@@ -610,7 +593,7 @@ var/list/teleport_runes = list()
 	invocation = "Ta'gh fara'qha fel d'amar det!"
 	icon_state = "5"
 	allow_excess_invokers = 1
-	color = "#4D94FF"
+	color = RUNE_COLOR_EMP
 
 /obj/effect/rune/emp/invoke(var/list/invokers)
 	var/turf/E = get_turf(src)
@@ -634,41 +617,41 @@ var/list/teleport_runes = list()
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
 
-//Rite of Astral Communion: Separates one's spirit from their body. They will take damage while it is active.
-/obj/effect/rune/astral
-	cultist_name = "Astral Communion"
+//Rite of Spirit Sight: Separates one's spirit from their body. They will take damage while it is active.
+/obj/effect/rune/spirit
+	cultist_name = "Spirit Sight"
 	cultist_desc = "severs the link between one's spirit and body. This effect is taxing and one's physical body will take damage while this is active."
 	invocation = "Fwe'sh mah erl nyag r'ya!"
 	icon_state = "7"
-	color = "#7D1717"
+	color = RUNE_COLOR_DARKRED
 	rune_in_use = 0 //One at a time, please!
 	construct_invoke = 0
 	var/mob/living/affecting = null
 
-/obj/effect/rune/astral/examine(mob/user)
+/obj/effect/rune/spirit/examine(mob/user)
 	..()
 	if(affecting)
 		to_chat(user, "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>")
 
-/obj/effect/rune/astral/can_invoke(mob/living/user)
+/obj/effect/rune/spirit/can_invoke(mob/living/user)
 	if(rune_in_use)
 		to_chat(user, "<span class='cultitalic'>[src] cannot support more than one body!</span>")
-		log_game("Astral Communion rune failed - more than one user")
+		log_game("Spirit Sight rune failed - more than one user")
 		return list()
 	var/turf/T = get_turf(src)
 	if(!(user in T))
 		to_chat(user, "<span class='cultitalic'>You must be standing on top of [src]!</span>")
-		log_game("Astral Communion rune failed - user not standing on rune")
+		log_game("Spirit Sight rune failed - user not standing on rune")
 		return list()
 	return ..()
 
-/obj/effect/rune/astral/invoke(var/list/invokers)
+/obj/effect/rune/spirit/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	..()
 	var/turf/T = get_turf(src)
-	rune_in_use = 1
+	rune_in_use = TRUE
 	affecting = user
-	user.color = "#7D1717"
+	user.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='warning'>[user] freezes statue-still, glowing an unearthly red.</span>", \
 						 "<span class='cult'>You see what lies beyond. All is revealed. While this is a wondrous experience, your physical form will waste away in this state. Hurry...</span>")
 	user.ghostize(1)
@@ -676,7 +659,7 @@ var/list/teleport_runes = list()
 		if(!affecting)
 			visible_message("<span class='warning'>[src] pulses gently before falling dark.</span>")
 			affecting = null //In case it's assigned to a number or something
-			rune_in_use = 0
+			rune_in_use = FALSE
 			return
 		affecting.apply_damage(0.1, BRUTE)
 		if(!(user in T))
@@ -686,9 +669,9 @@ var/list/teleport_runes = list()
 		if(user.key)
 			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around [user.p_them()] dimming.</span>", \
 								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
-			user.color = initial(user.color)
+			user.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
 			user.Weaken(3)
-			rune_in_use = 0
+			rune_in_use = FALSE
 			affecting = null
 			return
 		if(user.stat == UNCONSCIOUS)
@@ -696,31 +679,29 @@ var/list/teleport_runes = list()
 				var/mob/dead/observer/G = user.get_ghost()
 				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>")
 		if(user.stat == DEAD)
-			user.color = initial(user.color)
-			rune_in_use = 0
+			user.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
+			rune_in_use = FALSE
 			affecting = null
 			var/mob/dead/observer/G = user.get_ghost()
 			to_chat(G, "<span class='cultitalic'><b>You suddenly feel your physical form pass on. [src]'s exertion has killed you!</b></span>")
 			return
 		sleep(1)
-	rune_in_use = 0
+	rune_in_use = FALSE
 
-
-var/list/wall_runes = list()
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall
 	cultist_name = "Form Barrier"
 	cultist_desc = "when invoked, makes a temporary invisible wall to block passage. Can be invoked again to reverse this."
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "1"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/density_timer
 	var/recharging = FALSE
 
-/obj/effect/rune/wall/New()
-	..()
-	wall_runes += src
+/obj/effect/rune/wall/Initialize(mapload, set_keyword)
+	. = ..()
+	GLOB.wall_runes += src
 
 /obj/effect/rune/wall/examine(mob/user)
 	..()
@@ -729,7 +710,7 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/Destroy()
 	density = 0
-	wall_runes -= src
+	GLOB.wall_runes -= src
 	air_update_turf(1)
 	return ..()
 
@@ -752,7 +733,7 @@ var/list/wall_runes = list()
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
 
 /obj/effect/rune/wall/proc/spread_density()
-	for(var/R in wall_runes)
+	for(var/R in GLOB.wall_runes)
 		var/obj/effect/rune/wall/W = R
 		if(W.z == z && get_dist(src, W) <= 2 && !W.density && !W.recharging)
 			W.density = TRUE
@@ -772,21 +753,21 @@ var/list/wall_runes = list()
 
 /obj/effect/rune/wall/proc/recharge()
 	recharging = FALSE
-	add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
+	add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
 
 /obj/effect/rune/wall/proc/update_state()
 	deltimer(density_timer)
 	air_update_turf(1)
 	if(density)
-		var/image/I = image(layer = ABOVE_MOB_LAYER, icon = 'icons/effects/effects.dmi', icon_state = "barriershimmer")
-		I.appearance_flags = RESET_COLOR
-		I.alpha = 60
-		I.color = "#701414"
-		add_overlay(I)
-		add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+		var/mutable_appearance/shimmer = mutable_appearance('icons/effects/effects.dmi', "barriershimmer", ABOVE_MOB_LAYER)
+		shimmer.appearance_flags |= RESET_COLOR
+		shimmer.alpha = 60
+		shimmer.color = "#701414"
+		add_overlay(shimmer)
+		add_atom_colour(RUNE_COLOR_RED, FIXED_COLOUR_PRIORITY)
 	else
 		cut_overlays()
-		add_atom_colour("#C80000", FIXED_COLOUR_PRIORITY)
+		add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
@@ -796,12 +777,12 @@ var/list/wall_runes = list()
 	req_cultists = 2
 	allow_excess_invokers = 1
 	icon_state = "5"
-	color = "#00FF00"
+	color = RUNE_COLOR_SUMMON
 
 /obj/effect/rune/summon/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
-	for(var/datum/mind/M in ticker.mode.cult)
+	for(var/datum/mind/M in SSticker.mode.cult)
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
@@ -841,7 +822,7 @@ var/list/wall_runes = list()
 	cultist_desc = "boils the blood of non-believers who can see the rune, rapidly dealing extreme amounts of damage. Requires 3 invokers."
 	invocation = "Dedo ol'btoh!"
 	icon_state = "4"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	light_color = LIGHT_COLOR_LAVA
 	req_cultists = 3
 	construct_invoke = 0
@@ -901,45 +882,6 @@ var/list/wall_runes = list()
 			if(is_servant_of_ratvar(L))
 				L.adjustStaminaLoss(tick_damage*0.5)
 
-
-//Deals brute damage to all targets on the rune and heals the invoker for each target drained.
-/obj/effect/rune/leeching
-	cultist_name = "Drain Life"
-	cultist_desc = "drains the life of all targets on the rune, restoring life to the user."
-	invocation = "Yu'gular faras desdae. Umathar uf'kal thenar!"
-	icon_state = "3"
-	color = "#9F1C34"
-
-/obj/effect/rune/leeching/can_invoke(mob/living/user)
-	if(world.time <= user.next_move)
-		return list()
-	var/turf/T = get_turf(src)
-	var/list/potential_targets = list()
-	for(var/mob/living/carbon/M in T.contents - user)
-		if(M.stat != DEAD)
-			potential_targets += M
-	if(!potential_targets.len)
-		to_chat(user, "<span class='cultitalic'>There must be at least one valid target on the rune!</span>")
-		log_game("Leeching rune failed - no valid targets")
-		return list()
-	return ..()
-
-/obj/effect/rune/leeching/invoke(var/list/invokers)
-	var/mob/living/user = invokers[1]
-	user.changeNext_move(CLICK_CD_CLICK_ABILITY)
-	..()
-	var/turf/T = get_turf(src)
-	for(var/mob/living/carbon/M in T.contents - user)
-		if(M.stat != DEAD)
-			var/drained_amount = rand(10,20)
-			M.apply_damage(drained_amount, BRUTE, "chest")
-			user.adjustBruteLoss(-drained_amount)
-			to_chat(M, "<span class='cultitalic'>You feel extremely weak.</span>")
-	user.Beam(T,icon_state="drainbeam",time=5)
-	user.visible_message("<span class='warning'>Blood flows from the rune into [user]!</span>", \
-	"<span class='cult'>Blood flows into you, healing your wounds and revitalizing your spirit.</span>")
-
-
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Manifest Spirit"
@@ -947,10 +889,12 @@ var/list/wall_runes = list()
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	construct_invoke = 0
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
+	var/ghost_limit = 5
+	var/ghosts = 0
 
-/obj/effect/rune/manifest/New(loc)
-	..()
+/obj/effect/rune/manifest/Initialize()
+	. = ..()
 	notify_ghosts("Manifest rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
@@ -958,6 +902,16 @@ var/list/wall_runes = list()
 		to_chat(user, "<span class='cultitalic'>You must be standing on [src]!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
+		return list()
+	if(user.has_status_effect(STATUS_EFFECT_SUMMONEDGHOST))
+		to_chat(user, "<span class='cultitalic'>Ghosts can't summon more ghosts!</span>")
+		fail_invoke()
+		log_game("Manifest rune failed - user is a ghost")
+		return list()
+	if(ghosts >= ghost_limit)
+		to_chat(user, "<span class='cultitalic'>You are sustaining too many ghosts to summon more!</span>")
+		fail_invoke()
+		log_game("Manifest rune failed - too many summoned ghosts")
 		return list()
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
@@ -980,26 +934,32 @@ var/list/wall_runes = list()
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent
+	new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
+	new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 	..()
-	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a man.</span>")
+	ghosts++
+	playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+	user.apply_damage(10, BRUTE)
+	visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 	to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 	var/turf/T = get_turf(src)
 	var/obj/structure/emergency_shield/invoker/N = new(T)
 
 	new_human.key = ghost_to_spawn.key
-	ticker.mode.add_cultist(new_human.mind, 0)
+	SSticker.mode.add_cultist(new_human.mind, 0)
 	to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar-Sie, and you are to serve them at all costs.</b></span>")
 
-	while(user in T)
-		if(user.stat)
+	while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
+		if(user.stat || new_human.InCritical())
 			break
 		user.apply_damage(0.1, BRUTE)
-		sleep(3)
+		sleep(1)
 
 	qdel(N)
+	ghosts--
 	if(new_human)
 		new_human.visible_message("<span class='warning'>[new_human] suddenly dissolves into bones and ashes.</span>", \
 								  "<span class='cultlarge'>Your link to the world fades. Your form breaks apart.</span>")
 		for(var/obj/I in new_human)
-			new_human.dropItemToGround(I)
+			new_human.dropItemToGround(I, TRUE)
 		new_human.dust()

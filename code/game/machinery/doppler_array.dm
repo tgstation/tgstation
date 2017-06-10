@@ -1,4 +1,4 @@
-var/list/doppler_arrays = list()
+GLOBAL_LIST_EMPTY(doppler_arrays)
 
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
@@ -13,10 +13,10 @@ var/list/doppler_arrays = list()
 
 /obj/machinery/doppler_array/New()
 	..()
-	doppler_arrays += src
+	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/Destroy()
-	doppler_arrays -= src
+	GLOB.doppler_arrays -= src
 	return ..()
 
 /obj/machinery/doppler_array/process()

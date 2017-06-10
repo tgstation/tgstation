@@ -16,8 +16,8 @@
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 
-/obj/machinery/r_n_d/New()
-	..()
+/obj/machinery/r_n_d/Initialize()
+	. = ..()
 	wires = new /datum/wires/r_n_d(src)
 
 /obj/machinery/r_n_d/Destroy()
@@ -30,9 +30,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	do_sparks(5, TRUE, src)
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
 		return 1
 	else

@@ -12,7 +12,7 @@
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
 	channel_time = 150
-	consumed_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
+	consumed_components = list(BELLIGERENT_EYE = ARK_SUMMON_COST, VANGUARD_COGWHEEL = ARK_SUMMON_COST, GEIS_CAPACITOR = ARK_SUMMON_COST, REPLICANT_ALLOY = ARK_SUMMON_COST, HIEROPHANT_ANSIBLE = ARK_SUMMON_COST)
 	invokers_required = 6
 	multiple_invokers_used = TRUE
 	object_path = /obj/structure/destructible/clockwork/massive/celestial_gateway
@@ -24,10 +24,10 @@
 
 /datum/clockwork_scripture/create_object/ark_of_the_clockwork_justiciar/check_special_requirements()
 	if(!slab.no_cost)
-		if(ratvar_awakens)
+		if(GLOB.ratvar_awakens)
 			to_chat(invoker, "<span class='big_brass'>\"I am already here, idiot.\"</span>")
 			return FALSE
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			to_chat(invoker, "<span class='userdanger'>There is already an Ark at [gate_area.map_name]!</span>")
 			return FALSE
@@ -36,7 +36,7 @@
 		if(!T || T.z != ZLEVEL_STATION || istype(A, /area/shuttle) || !A.blob_allowed)
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
-		if(clockwork_gateway_activated)
+		if(GLOB.clockwork_gateway_activated)
 			to_chat(invoker, "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe!</span>")
 			return FALSE
 	return ..()

@@ -26,7 +26,7 @@
 	ranged_mousepointer = 'icons/effects/geis_target.dmi'
 
 /obj/effect/proc_holder/slab/geis/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(target == slab || ..())
+	if(..())
 		return TRUE
 
 	var/turf/T = ranged_ability_user.loc
@@ -124,7 +124,7 @@
 			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)
-				new /obj/effect/overlay/temp/heal(targetturf, "#1E8CE1")
+				new /obj/effect/temp_visual/heal(targetturf, "#1E8CE1")
 			clockwork_say(ranged_ability_user, text2ratvar("Mend wounded flesh!"))
 			add_logs(ranged_ability_user, L, "healed with Sentinel's Compromise")
 		else
@@ -148,7 +148,7 @@
 	ranged_mousepointer = 'icons/effects/volt_target.dmi'
 
 /obj/effect/proc_holder/slab/volt/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
+	if(target == slab || ..()) //we can't cancel
 		return TRUE
 
 	var/turf/T = ranged_ability_user.loc
@@ -173,7 +173,7 @@
 				if(usable_power > 0 && C.cell.use(usable_power))
 					multiplier += (usable_power * 0.001)
 		qdel(VC)
-		new/obj/effect/overlay/temp/ratvar/volt_hit/true(targetturf, ranged_ability_user, multiplier)
+		new/obj/effect/temp_visual/ratvar/volt_hit/true(targetturf, ranged_ability_user, multiplier)
 		add_logs(ranged_ability_user, targetturf, "fired a volt ray")
 		remove_ranged_ability()
 

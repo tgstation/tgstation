@@ -31,14 +31,60 @@
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	var/static/list/meson_mining_failure_excuses = list("seismic activity", "excessive lava", "ambient radiation", "electromagnetic storms", "bluespace disruption", \
+	"gravity", "dust", "dense rock", "ash", "badly understood science", "radiant heat")
+	var/picked_excuse
+	var/mode = FALSE //if FALSE, is in normal meson mode.
+
+/obj/item/clothing/glasses/meson/Initialize()
+	. = ..()
+	picked_excuse = pick(meson_mining_failure_excuses)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/meson/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/glasses/meson/examine(mob/user)
+	..()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING && mode && picked_excuse)
+		to_chat(user, "<span class='warning'>Due to [picked_excuse], these Meson Scanners will not be able to display terrain layouts in this area.</span>")
+
+/obj/item/clothing/glasses/meson/proc/toggle_mode(mob/user)
+	if(vision_flags & SEE_TURFS)
+		mode = TRUE
+		vision_flags &= ~SEE_TURFS
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(picked_excuse)
+				to_chat(H, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+			if(H.glasses == src)
+				H.update_sight()
+	else if(!(vision_flags & SEE_TURFS))
+		mode = FALSE
+		vision_flags |= SEE_TURFS
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			to_chat(H, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
+			if(H.glasses == src)
+				H.update_sight()
+
+/obj/item/clothing/glasses/meson/process()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING)
+		if(!mode)
+			toggle_mode(loc)
+	else if(mode)
+		toggle_mode(loc)
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"
@@ -47,6 +93,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -84,7 +131,7 @@
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -322,7 +369,7 @@
 	darkness_view = 8
 	scan_reagents = 1
 	flags = NODROP
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)

@@ -28,6 +28,8 @@
 				objects++
 				I.loc = get_turf(H)
 				L.embedded_objects -= I
+			if(!H.has_embedded_objects())
+				H.clear_alert("embeddedobject")
 
 			if(objects > 0)
 				user.visible_message("[user] sucessfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")

@@ -13,17 +13,17 @@ would spawn and follow the beaker, even if it is carried or thrown.
 
 /obj/effect/particle_effect/New()
 	..()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	if(SSticker)
+		GLOB.cameranet.updateVisibility(src)
 
 /obj/effect/particle_effect/Destroy()
-	if(ticker)
-		cameranet.updateVisibility(src)
+	if(SSticker)
+		GLOB.cameranet.updateVisibility(src)
 	. = ..()
 
 /datum/effect_system
 	var/number = 3
-	var/cardinals = 0
+	var/cardinals = FALSE
 	var/turf/location
 	var/atom/holder
 	var/effect_type
@@ -34,7 +34,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	location = null
 	return ..()
 
-/datum/effect_system/proc/set_up(n = 3, c = 0, loca)
+/datum/effect_system/proc/set_up(n = 3, c = FALSE, loca)
 	if(n > 10)
 		n = 10
 	number = n
@@ -60,9 +60,9 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	total_effects++
 	var/direction
 	if(cardinals)
-		direction = pick(cardinal)
+		direction = pick(GLOB.cardinal)
 	else
-		direction = pick(alldirs)
+		direction = pick(GLOB.alldirs)
 	var/steps_amt = pick(1,2,3)
 	for(var/j in 1 to steps_amt)
 		sleep(5)

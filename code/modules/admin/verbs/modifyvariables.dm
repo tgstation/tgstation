@@ -1,7 +1,11 @@
-var/list/VVlocked = list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending")
-var/list/VVicon_edit_lock = list("icon", "icon_state", "overlays", "underlays", "resize")
-var/list/VVckey_edit = list("key", "ckey")
-var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y")
+GLOBAL_LIST_INIT(VVlocked, list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "force_ending"))
+GLOBAL_PROTECT(VVlocked)
+GLOBAL_LIST_INIT(VVicon_edit_lock, list("icon", "icon_state", "overlays", "underlays", "resize"))
+GLOBAL_PROTECT(VVicon_edit_lock)
+GLOBAL_LIST_INIT(VVckey_edit, list("key", "ckey"))
+GLOBAL_PROTECT(VVckey_edit)
+GLOBAL_LIST_INIT(VVpixelmovement, list("step_x", "step_y", "bound_height", "bound_width", "bound_x", "bound_y"))
+GLOBAL_PROTECT(VVpixelmovement)
 
 
 /client/proc/vv_get_class(var/var_value)
@@ -176,7 +180,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 
 
 		if (VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in clients
+			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients
 			if (.["value"] == null)
 				.["class"] = null
 				return
@@ -524,19 +528,22 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		variable = input("Which var?","Var") as null|anything in names
 		if(!variable)
 			return
+	
+	if(!O.can_vv_get(variable))
+		return
 
 	var_value = O.vars[variable]
 
-	if(variable in VVlocked)
+	if(variable in GLOB.VVlocked)
 		if(!check_rights(R_DEBUG))
 			return
-	if(variable in VVckey_edit)
+	if(variable in GLOB.VVckey_edit)
 		if(!check_rights(R_SPAWN|R_DEBUG))
 			return
-	if(variable in VVicon_edit_lock)
+	if(variable in GLOB.VVicon_edit_lock)
 		if(!check_rights(R_FUN|R_DEBUG))
 			return
-	if(variable in VVpixelmovement)
+	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
 		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
@@ -607,4 +614,6 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		return
 	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]")
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]"
+	message_admins(msg)
+	admin_ticket_log(O, msg)

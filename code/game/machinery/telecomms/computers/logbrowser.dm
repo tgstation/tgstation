@@ -13,7 +13,7 @@
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
-	req_access = list(access_tcomsat)
+	req_access = list(GLOB.access_tcomsat)
 	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
@@ -29,7 +29,7 @@
 
 		if(0)
 			dat += "<br>[temp]<br>"
-			dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[russian_html2text(network)]</a><br>"
+			dat += "<br>Current Network: <a href='?src=\ref[src];network=1'>[network]</a><br>"
 			if(servers.len)
 				dat += "<br>Detected Telecommunication Servers:<ul>"
 				for(var/obj/machinery/telecomms/T in servers)
@@ -46,7 +46,7 @@
 		if(1)
 			dat += "<br>[temp]<br>"
 			dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
-			dat += "<br>Current Network: [russian_html2text(network)]"
+			dat += "<br>Current Network: [network]"
 			dat += "<br>Selected Server: [SelectedServer.id]"
 
 			if(SelectedServer.totaltraffic >= 1024)
@@ -136,7 +136,7 @@
 
 
 
-	user << browse(sanitize_russian(dat, 1), "window=comm_monitor;size=575x400")
+	user << browse(sanitize_russian(dat), "window=comm_monitor;size=575x400")
 	onclose(user, "server_control")
 
 	temp = ""
@@ -178,7 +178,7 @@
 							servers.Add(T)
 
 					if(!servers.len)
-						temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE SERVERS IN \[[russian_html2text(network)]\] -</font color>"
+						temp = "<font color = #D70B00>- FAILED: UNABLE TO LOCATE SERVERS IN \[[network]\] -</font color>"
 					else
 						temp = "<font color = #336699>- [servers.len] SERVERS PROBED & BUFFERED -</font color>"
 
@@ -215,7 +215,7 @@
 				network = newnet
 				screen = 0
 				servers = list()
-				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[russian_html2text(network)]\] -</font color>"
+				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 	updateUsrDialog()
 	return

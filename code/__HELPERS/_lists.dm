@@ -65,7 +65,10 @@
 	if(!L || !L.len || !A)
 
 		return 0
-	return L[A.type]
+	if(ispath(A))
+		. = L[A]
+	else
+		. = L[A.type]
 
 //Checks for a string in a list
 /proc/is_string_in_list(string, list/L)
@@ -225,18 +228,6 @@
 		i--
 	return L[i]
 
-/*
- * Sorting
- */
-/*
-//Reverses the order of items in the list
-/proc/reverselist(list/input)
-	var/list/output = list()
-	for(var/i = input.len; i >= 1; i--)
-		output += input[i]
-	return output
-*/
-
 //Randomize: Return the list in a random order
 /proc/shuffle(list/L)
 	if(!L)
@@ -278,7 +269,7 @@
 
 //Specifically for record datums in a list.
 /proc/sortRecord(list/L, field = "name", order = 1)
-	cmp_field = field
+	GLOB.cmp_field = field
 	return sortTim(L, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
 
 //any value in a list
@@ -466,6 +457,7 @@
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+#define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
 /* Definining a counter as a series of key -> numeric value entries
 

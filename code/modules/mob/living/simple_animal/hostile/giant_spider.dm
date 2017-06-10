@@ -1,4 +1,4 @@
-
+#define SPIDER_IDLE 0
 #define SPINNING_WEB 1
 #define LAYING_EGGS 2
 #define MOVING_TO_TARGET 3
@@ -39,7 +39,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	faction = list("spiders")
-	var/busy = 0
+	var/busy = SPIDER_IDLE
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -47,8 +47,8 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = 1
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
@@ -88,6 +88,7 @@
 	poison_per_bite = 3
 	var/atom/movable/cocoon_target
 	var/fed = 0
+	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
 
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter
@@ -165,8 +166,8 @@
 				Wrap()
 
 	else
-		busy = 0
-		stop_automated_movement = 0
+		busy = SPIDER_IDLE
+		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/verb/Web()
 	set name = "Lay Web"
@@ -184,8 +185,8 @@
 		if(do_after(src, 40, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/structure/spider/stickyweb(T)
-		busy = 0
-		stop_automated_movement = 0
+		busy = SPIDER_IDLE
+		stop_automated_movement = FALSE
 
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/Wrap()
@@ -200,6 +201,8 @@
 		for(var/mob/living/L in view(1,src))
 			if(L == src || L.anchored)
 				continue
+			if(istype(L, /mob/living/simple_animal/hostile/poison/giant_spider))
+				continue
 			if(Adjacent(L))
 				choices += L
 		for(var/obj/O in src.loc)
@@ -207,49 +210,36 @@
 				continue
 			if(Adjacent(O))
 				choices += O
-		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
+		var/temp_input = input(src,"What do you wish to cocoon?") in null|choices
+		if(temp_input && !cocoon_target)
+			cocoon_target = temp_input
 
-	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
-		if(cocoon_target.anchored)
-			cocoon_target = null
-			return
+	if(stat != DEAD && cocoon_target && Adjacent(cocoon_target) && !cocoon_target.anchored)
+		if(busy == SPINNING_COCOON)
+			return //we're already doing this, don't cancel out or anything
 		busy = SPINNING_COCOON
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
-		stop_automated_movement = 1
+		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
+		stop_automated_movement = TRUE
 		walk(src,0)
-		if(do_after(src, 50, target = src))
+		if(do_after(src, 50, target = cocoon_target))
 			if(busy == SPINNING_COCOON)
-				if(cocoon_target && isturf(cocoon_target.loc) && get_dist(src,cocoon_target) <= 1)
-					var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
-					var/large_cocoon = 0
-					C.pixel_x = cocoon_target.pixel_x
-					C.pixel_y = cocoon_target.pixel_y
-					for(var/obj/item/I in C.loc)
-						I.forceMove(C)
-					for(var/obj/structure/S in C.loc)
-						if(!S.anchored)
-							S.forceMove(C)
-							large_cocoon = 1
-					for(var/obj/machinery/M in C.loc)
-						if(!M.anchored)
-							M.forceMove(C)
-							large_cocoon = 1
-					for(var/mob/living/L in C.loc)
-						if(istype(L, /mob/living/simple_animal/hostile/poison/giant_spider))
-							continue
-						large_cocoon = 1
-						L.forceMove(C)
-						C.pixel_x = L.pixel_x
-						C.pixel_y = L.pixel_y
+				var/obj/structure/spider/cocoon/C = new(cocoon_target.loc)
+				if(isliving(cocoon_target))
+					var/mob/living/L = cocoon_target
+					if(L.blood_volume && (L.stat != DEAD || !consumed_mobs[L.tag])) //if they're not dead, you can consume them anyway
+						consumed_mobs[L.tag] = TRUE
 						fed++
 						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
-						break
+						L.death() //you just ate them, they're dead.
+					else
+						to_chat(src, "<span class='warning'>[L] cannot sate your hunger!</span>")
+				cocoon_target.forceMove(C)
 
-					if(large_cocoon)
-						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
-		cocoon_target = null
-		busy = 0
-		stop_automated_movement = 0
+				if(cocoon_target.density || ismob(cocoon_target))
+					C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+	cocoon_target = null
+	busy = SPIDER_IDLE
+	stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/verb/LayEggs()
 	set name = "Lay Eggs"
@@ -278,8 +268,8 @@
 					C.poison_per_bite = poison_per_bite
 					C.faction = faction.Copy()
 					fed--
-		busy = 0
-		stop_automated_movement = 0
+		busy = SPIDER_IDLE
+		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
@@ -287,6 +277,7 @@
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
 
+#undef SPIDER_IDLE
 #undef SPINNING_WEB
 #undef LAYING_EGGS
 #undef MOVING_TO_TARGET

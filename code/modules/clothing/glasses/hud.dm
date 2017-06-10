@@ -8,13 +8,13 @@
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_type && slot == slot_glasses)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
 	if(hud_type && istype(user) && user.glasses == src)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
@@ -43,7 +43,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=4;biotech=4;plasmatech=4;engineering=5"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/health/sunglasses
@@ -71,7 +71,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=4;powerstorage=4;plasmatech=4;engineering=5"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/security
@@ -125,7 +125,7 @@
 	icon_state = "securityhudnight"
 	origin_tech = "magnets=4;combat=4;plasmatech=4;engineering=5"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
@@ -161,7 +161,7 @@
 		return
 
 	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
 
 	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
@@ -172,7 +172,7 @@
 		hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/toggle/thermal

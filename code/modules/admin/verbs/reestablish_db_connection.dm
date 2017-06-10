@@ -17,11 +17,11 @@
 		dbcon.Disconnect()
 		log_admin("[key_name(usr)] has forced the database to disconnect")
 		message_admins("[key_name_admin(usr)] has <b>forced</b> the database to disconnect!")
-		feedback_add_details("admin_verb","FRDB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Force Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	log_admin("[key_name(usr)] is attempting to re-established the DB Connection")
 	message_admins("[key_name_admin(usr)] is attempting to re-established the DB Connection")
-	feedback_add_details("admin_verb","RDB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Reestablished Database Connection") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	dbcon.failed_connections = 0
 	if(!dbcon.Connect())

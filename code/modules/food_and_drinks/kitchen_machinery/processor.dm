@@ -142,7 +142,7 @@
 		return
 	for(var/i in 1 to (C+processor.rating_amount-1))
 		new S.coretype(loc)
-		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
+		SSblackbox.add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
 
 /datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime
@@ -299,7 +299,7 @@
 
 /obj/machinery/processor/slime
 	name = "Slime processor"
-	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder with a sSSticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
 /obj/machinery/processor/slime/New()
 	..()

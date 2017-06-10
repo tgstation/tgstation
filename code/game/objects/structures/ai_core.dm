@@ -174,13 +174,13 @@
 					playsound(loc, P.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
-						ticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
 						if(!istype(brain.laws, /datum/ai_laws/ratvar))
 							remove_servant_of_ratvar(brain.brainmob, TRUE)
 						var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
-						feedback_inc("cyborg_ais_created",1)
+						SSblackbox.inc("cyborg_ais_created",1)
 						qdel(src)
 					else
 						state = AI_READY_CORE

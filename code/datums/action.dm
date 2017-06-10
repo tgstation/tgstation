@@ -40,6 +40,7 @@
 		if(owner)
 			if(owner == M)
 				return
+			Remove(owner)
 		owner = M
 		M.actions += src
 		if(M.client)
@@ -109,12 +110,8 @@
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	if(icon_icon && button_icon_state && current_button.button_icon_state != button_icon_state)
-		var/image/img
-		img = image(icon_icon, current_button, button_icon_state)
-		img.pixel_x = 0
-		img.pixel_y = 0
 		current_button.cut_overlays(TRUE)
-		current_button.add_overlay(img)
+		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
 
@@ -197,6 +194,9 @@
 			var/mob/living/carbon/C = owner
 			if(target == C.internal)
 				button.icon_state = "template_active"
+
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
@@ -358,6 +358,59 @@
 		active = FALSE
 	..()
 
+/datum/action/item_action/initialize_ninja_suit
+	name = "Toggle ninja suit"
+
+/datum/action/item_action/ninjajaunt
+	name = "Phase Jaunt (10E)"
+	desc = "Utilizes the internal VOID-shift device to rapidly transit in direction facing."
+	button_icon_state = "ninja_phase"
+
+/datum/action/item_action/ninjasmoke
+	name = "Smoke Bomb"
+	desc = "Blind your enemies momentarily with a well-placed smoke bomb."
+	button_icon_state = "smoke"
+
+/datum/action/item_action/ninjaboost
+	name = "Adrenaline Boost"
+	desc = "Inject a secret chemical that will counteract all movement-impairing effect."
+	button_icon_state = "repulse"
+
+/datum/action/item_action/ninjapulse
+	name = "EM Burst (25E)"
+	desc = "Disable any nearby technology with a electro-magnetic pulse."
+	button_icon_state = "emp"
+
+/datum/action/item_action/ninjastar
+	name = "Create Throwing Stars (1E)"
+	desc = "Creates some throwing stars"
+	button_icon_state = "throwingstar"
+	icon_icon = 'icons/obj/weapons.dmi'
+
+/datum/action/item_action/ninjanet
+	name = "Energy Net (20E)"
+	desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
+	button_icon_state = "energynet"
+	icon_icon = 'icons/effects/effects.dmi'
+
+/datum/action/item_action/ninja_sword_recall
+	name = "Recall Energy Katana (Variable Cost)"
+	desc = "Teleports the Energy Katana linked to this suit to its wearer, cost based on distance."
+	button_icon_state = "energy_katana"
+	icon_icon = 'icons/obj/weapons.dmi'
+
+/datum/action/item_action/ninja_stealth
+	name = "Toggle Stealth"
+	desc = "Toggles stealth mode on and off."
+	button_icon_state = "ninja_cloak"
+
+/datum/action/item_action/toggle_glove
+	name = "Toggle interaction"
+	desc = "Switch between normal interaction and drain mode."
+	button_icon_state = "s-ninjan"
+	icon_icon = 'icons/obj/clothing/gloves.dmi'
+
+
 /datum/action/item_action/organ_action
 	check_flags = AB_CHECK_CONSCIOUS
 
@@ -472,3 +525,17 @@
 	name = "Activate Jump Boots"
 	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
 	button_icon_state = "jetboot"
+
+/datum/action/language_menu
+	name = "Language Menu"
+	desc = "Open the language menu to review your languages, their keys, and select your default language."
+	button_icon_state = "language_menu"
+	check_flags = 0
+
+/datum/action/language_menu/Trigger()
+	if(!..())
+		return FALSE
+	if(ismob(owner))
+		var/mob/M = owner
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)

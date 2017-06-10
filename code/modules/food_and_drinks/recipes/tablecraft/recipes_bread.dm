@@ -74,3 +74,22 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/mimana
 	category = CAT_BREAD
+
+/datum/crafting_recipe/food/butteredtoast
+	name = "Buttered Toast"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/breadslice/plain = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/butteredtoast
+	category = CAT_BREAD
+
+/datum/crafting_recipe/food/butterbiscuit
+	name = "Butter Biscuit"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/bun = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/butterbiscuit
+	category = CAT_BREAD
+

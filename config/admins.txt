@@ -126,3 +126,5 @@ Sweaterkittens = Game Master
 NJose = Host
 JStheguy = Game Master
 excessiveuseofcobby = Game Master
+Plizzard = Game Master
+octareenroon91 = Game Master

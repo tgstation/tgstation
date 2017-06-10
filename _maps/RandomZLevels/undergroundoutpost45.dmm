@@ -250,9 +250,7 @@
 	name = "UO45 Central Hall"
 	})
 "ax" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -265,9 +263,7 @@
 	icon_state = "comfychair";
 	dir = 4
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
@@ -282,9 +278,7 @@
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -309,9 +303,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4;
 	heat_capacity = 1e+006
@@ -498,9 +490,7 @@
 	name = "UO45 Central Hall"
 	})
 "aT" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/grimy{
 	heat_capacity = 1e+006
 	},
@@ -18126,9 +18116,7 @@
 	})
 "yJ" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18142,9 +18130,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18158,9 +18144,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18171,9 +18155,7 @@
 	poweralm = 0
 	})
 "yM" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18189,9 +18171,7 @@
 	broken = 1;
 	icon_state = "brokengrille"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18203,9 +18183,7 @@
 	})
 "yO" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18217,9 +18195,7 @@
 	})
 "yP" = (
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18233,9 +18209,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18251,9 +18225,7 @@
 	icon_state = "coil_red2";
 	item_state = "coil_red2"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -18269,9 +18241,7 @@
 	icon_state = "coil_red1";
 	item_state = "coil_red1"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "floor3"
-	},
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a7{
 	always_unpowered = 1;
 	has_gravity = 1;
@@ -37734,8 +37704,8 @@ ab
 ab
 ab
 ab
-zc
-zc
+yM
+yM
 ab
 aa
 aa

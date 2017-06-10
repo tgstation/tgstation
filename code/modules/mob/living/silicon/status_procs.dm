@@ -36,11 +36,3 @@
 	. = ..()
 	if(. && updating)
 		update_stat()
-
-/////////////////////////////////// EAR DAMAGE ////////////////////////////////////
-
-/mob/living/silicon/adjustEarDamage()
-	return
-
-/mob/living/silicon/setEarDamage()
-	return

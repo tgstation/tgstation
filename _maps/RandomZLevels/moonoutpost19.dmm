@@ -9085,9 +9085,7 @@
 	name = "MO19 Arrivals"
 	})
 "ms" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9097,9 +9095,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9269,9 +9265,7 @@
 	name = "MO19 Arrivals"
 	})
 "mI" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9284,9 +9278,7 @@
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;

@@ -144,6 +144,5 @@
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "extinguisher_frame"
+	icon_state = "extinguisher"
 	result_path = /obj/structure/extinguisher_cabinet

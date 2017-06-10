@@ -90,9 +90,9 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
 			if(isalien(L))
-				new /obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
 			else
-				new /obj/effect/overlay/temp/dir_setting/bloodsplatter(target_loca, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)
@@ -179,6 +179,8 @@
 		return
 	if(setAngle)
 		Angle = setAngle
+	var/old_pixel_x = pixel_x
+	var/old_pixel_y = pixel_y
 	if(!legacy) //new projectiles
 		set waitfor = 0
 		var/next_run = world.time
@@ -199,31 +201,32 @@
 			M.Turn(Angle)
 			transform = M
 
-			var/Pixel_x=round(sin(Angle)+16*sin(Angle)*2)
-			var/Pixel_y=round(cos(Angle)+16*cos(Angle)*2)
-			var/pixel_x_offset = pixel_x + Pixel_x
-			var/pixel_y_offset = pixel_y + Pixel_y
+			var/Pixel_x=round((sin(Angle)+16*sin(Angle)*2), 1)	//round() is a floor operation when only one argument is supplied, we don't want that here
+			var/Pixel_y=round((cos(Angle)+16*cos(Angle)*2), 1)
+			var/pixel_x_offset = old_pixel_x + Pixel_x
+			var/pixel_y_offset = old_pixel_y + Pixel_y
 			var/new_x = x
 			var/new_y = y
 
 			while(pixel_x_offset > 16)
 				pixel_x_offset -= 32
-				pixel_x -= 32
+				old_pixel_x -= 32
 				new_x++// x++
 			while(pixel_x_offset < -16)
 				pixel_x_offset += 32
-				pixel_x += 32
+				old_pixel_x += 32
 				new_x--
-
 			while(pixel_y_offset > 16)
 				pixel_y_offset -= 32
-				pixel_y -= 32
+				old_pixel_y -= 32
 				new_y++
 			while(pixel_y_offset < -16)
 				pixel_y_offset += 32
-				pixel_y += 32
+				old_pixel_y += 32
 				new_y--
 
+			pixel_x = old_pixel_x
+			pixel_y = old_pixel_y
 			step_towards(src, locate(new_x, new_y, z))
 			next_run += max(world.tick_lag, speed)
 			var/delay = next_run - world.time
@@ -232,6 +235,8 @@
 				pixel_y = pixel_y_offset
 			else
 				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
+			old_pixel_x = pixel_x_offset
+			old_pixel_y = pixel_y_offset
 
 			if(original && (original.layer>=2.75) || ismob(original))
 				if(loc == get_turf(original))

@@ -157,7 +157,7 @@
 /area/shuttle/escape)
 "aC" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/table/reinforced,
@@ -400,7 +400,7 @@ aa
 aa
 aw
 aA
-aC
+ac
 aF
 aw
 aa
@@ -640,7 +640,7 @@ aa
 aa
 aw
 aA
-aC
+ac
 aA
 aw
 aa

@@ -190,7 +190,7 @@
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -390,20 +390,20 @@
 	for (var/index = 1, index <= ion.len, index++)
 		var/law = ion[index]
 		var/num = ionnum()
-		to_chat(who, "[num]. [russian_html2text(law)]")
+		to_chat(who, "[num]. [law]")
 
 	var/number = 1
 	for (var/index = 1, index <= inherent.len, index++)
 		var/law = inherent[index]
 
 		if (length(law) > 0)
-			to_chat(who, "[number]. [russian_html2text(law)]")
+			to_chat(who, "[number]. [law]")
 			number++
 
 	for (var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
 		if (length(law) > 0)
-			to_chat(who, "[number]. [russian_html2text(law)]")
+			to_chat(who, "[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
@@ -420,7 +420,7 @@
 			return
 
 /datum/ai_laws/proc/clear_law_sixsixsix(force)
-	if(force || !(owner && owner.mind.devilinfo))
+	if(force || !is_devil(owner))
 		devillaws = null
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)

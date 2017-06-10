@@ -18,10 +18,10 @@
 	//	flags = CONDUCT
 
 /obj/structure/lattice/Initialize(mapload)
-	..()
+	. = ..()
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
-			qdel(LAT)
+			QDEL_IN(LAT, 0)
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
@@ -77,12 +77,9 @@
 	desc = "A catwalk for easier EVA maneuvering and cable placement."
 	icon = 'icons/obj/smooth_structures/catwalk.dmi'
 	icon_state = "catwalk"
+	number_of_rods = 2
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
-
-/obj/structure/lattice/catwalk/Initialize(mapload)
-	..()
-	number_of_rods++
 
 /obj/structure/lattice/catwalk/ratvar_act()
 	new /obj/structure/lattice/catwalk/clockwork(loc)
@@ -105,8 +102,8 @@
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
-	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	return

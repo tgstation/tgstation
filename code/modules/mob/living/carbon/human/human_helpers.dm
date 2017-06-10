@@ -144,9 +144,9 @@
 		if(NOGUNS in src.dna.species.species_traits)
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return 0
-
-	if(martial_art && martial_art.no_guns) //great dishonor to famiry
-		to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-		return 0
+	if(mind)
+		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
+			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
+			return 0
 
 	return .

@@ -21,10 +21,10 @@
 	var/fourth_sound_played = FALSE
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
-	var/list/required_components = list(BELLIGERENT_EYE = 7, VANGUARD_COGWHEEL = 7, GEIS_CAPACITOR = 7, REPLICANT_ALLOY = 7, HIEROPHANT_ANSIBLE = 7)
+	var/list/required_components = list(BELLIGERENT_EYE = ARK_CONSUME_COST, VANGUARD_COGWHEEL = ARK_CONSUME_COST, GEIS_CAPACITOR = ARK_CONSUME_COST, REPLICANT_ALLOY = ARK_CONSUME_COST, HIEROPHANT_ANSIBLE = ARK_CONSUME_COST)
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/New()
-	..()
+/obj/structure/destructible/clockwork/massive/celestial_gateway/Initialize()
+	. = ..()
 	INVOKE_ASYNC(src, .proc/spawn_animation)
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/proc/spawn_animation()
@@ -182,7 +182,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/process()
 	if(!first_sound_played || prob(7))
-		for(var/M in player_list)
+		for(var/M in GLOB.player_list)
 			if(M && !isnewplayer(M))
 				to_chat(M, "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>")
 	if(!obj_integrity)
@@ -211,9 +211,9 @@
 		var/used_components = FALSE
 		for(var/i in required_components)
 			if(required_components[i])
-				var/to_use = min(clockwork_component_cache[i], required_components[i])
+				var/to_use = min(GLOB.clockwork_component_cache[i], required_components[i])
 				required_components[i] -= to_use
-				clockwork_component_cache[i] -= to_use
+				GLOB.clockwork_component_cache[i] -= to_use
 				if(to_use)
 					used_components = TRUE
 		if(used_components)
@@ -261,7 +261,7 @@
 				var/turf/startpoint = get_turf(src)
 				QDEL_IN(src, 3)
 				sleep(3)
-				clockwork_gateway_activated = TRUE
+				GLOB.clockwork_gateway_activated = TRUE
 				new/obj/structure/destructible/clockwork/massive/ratvar(startpoint)
 				send_to_playing_players("<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
@@ -291,7 +291,3 @@
 	light_range = 2
 	light_power = 4
 	light_color = "#6A4D2F"
-
-/obj/effect/clockwork/overlay/gateway_glow/New()
-	..()
-	update_light()

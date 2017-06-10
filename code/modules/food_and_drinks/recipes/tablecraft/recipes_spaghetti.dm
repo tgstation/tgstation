@@ -59,3 +59,12 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chowmein
 	category = CAT_SPAGHETTI
+
+/datum/crafting_recipe/food/butternoodles
+	name = "Butter Noodles"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/butter = 1
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/butternoodles
+	category = CAT_SPAGHETTI

@@ -4,7 +4,7 @@
   * Checks that the user is an observer/ghost.
  **/
 
-/var/global/datum/ui_state/observer_state/observer_state = new()
+GLOBAL_DATUM_INIT(observer_state, /datum/ui_state/observer_state, new)
 
 /datum/ui_state/observer_state/can_use_topic(src_object, mob/user)
 	if(isobserver(user))

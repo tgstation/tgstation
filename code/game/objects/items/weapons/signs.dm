@@ -12,7 +12,7 @@
 
 /obj/item/weapon/picket_sign/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
-		var/txt = sanitize_russian(stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30),1)
+		var/txt = stripped_input(user, "What would you like to write on the sign?", "Sign Label", null , 30)
 		if(txt)
 			label = txt
 			src.name = "[label] sign"

@@ -166,12 +166,10 @@
 				M.Friends = Friends.Copy()
 				babies += M
 				M.mutation_chance = Clamp(mutation_chance+(rand(5,-5)),0,100)
-				feedback_add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
+				SSblackbox.add_details("slime_babies_born","slimebirth_[replacetext(M.colour," ","_")]")
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.a_intent = INTENT_HARM
-			new_slime.languages_spoken = languages_spoken
-			new_slime.languages_understood = languages_understood
 			if(src.mind)
 				src.mind.transfer_to(new_slime)
 			else

@@ -46,8 +46,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
+/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium/interior{
 	icon_state = "swall_f5"
 	},
 /area/shuttle/escape)

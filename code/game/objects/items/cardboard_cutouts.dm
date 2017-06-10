@@ -97,15 +97,15 @@
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
 		if("Assistant")
-			name = "[pick(first_names_male)] [pick(last_names)]"
+			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"
 		if("Clown")
-			name = pick(clown_names)
+			name = pick(GLOB.clown_names)
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
 			icon_state = "cutout_clown"
 		if("Mime")
-			name = pick(mime_names)
+			name = pick(GLOB.mime_names)
 			desc = "...(A cardboard cutout of a mime.)"
 			icon_state = "cutout_mime"
 		if("Traitor")
@@ -121,7 +121,7 @@
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
 		if("Clockwork Cultist")
-			name = "[pick(first_names_male)] [pick(last_names)]"
+			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
 			icon_state = "cutout_servant"
 		if("Revolutionary")
@@ -129,7 +129,7 @@
 			desc = "A cardboard cutout of a revolutionary."
 			icon_state = "cutout_viva"
 		if("Wizard")
-			name = "[pick(wizard_first)], [pick(wizard_second)]"
+			name = "[pick(GLOB.wizard_first)], [pick(GLOB.wizard_second)]"
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
 		if("Shadowling")
@@ -151,7 +151,7 @@
 			desc = "A cardboard cutout of an ash walker."
 			icon_state = "cutout_free_antag"
 		if("Deathsquad Officer")
-			name = pick(commando_names)
+			name = pick(GLOB.commando_names)
 			desc = "A cardboard cutout of a death commando."
 			icon_state = "cutout_deathsquad"
 		if("Ian")

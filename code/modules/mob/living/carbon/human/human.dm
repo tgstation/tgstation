@@ -5,8 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-
-
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -16,6 +14,9 @@
 	if(!initialized)
 		args[1] = FALSE
 		Initialize(arglist(args))
+
+/mob/living/carbon/human/dummy/Life()
+	return
 
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
@@ -35,7 +36,8 @@
 	//initialise organs
 	create_internal_organs()
 
-	martial_art = default_martial_art
+	if(mind)
+		mind.martial_art = mind.default_martial_art
 
 	handcrafting = new()
 
@@ -52,7 +54,9 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
-	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutanteyes
+	internal_organs += new dna.species.mutantears
+	internal_organs += new dna.species.mutanttongue
 	internal_organs += new /obj/item/organ/brain
 	..()
 
@@ -226,11 +230,12 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-
 		if(href_list["embedded_object"])
-			var/obj/item/I = locate(href_list["embedded_object"])
-			var/obj/item/bodypart/L = locate(href_list["embedded_limb"])
-			if(!I || !L || I.loc != src || !(I in L.embedded_objects)) //no item, no limb, or item is not in limb or in the person anymore
+			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+			if(!L)
+				return
+			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
 			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
@@ -297,7 +302,7 @@
 			var/mob/living/carbon/human/H = usr
 			var/perpname = get_face_name(get_id_name(""))
 			if(istype(H.glasses, /obj/item/clothing/glasses/hud) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud))
-				var/datum/data/record/R = find_record("name", perpname, data_core.general)
+				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 				if(href_list["photo_front"] || href_list["photo_side"])
 					if(R)
 						if(!H.canUseHUD())
@@ -387,7 +392,7 @@
 						if (!G.emagged)
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
-								if(access_sec_doors in access)
+								if(GLOB.access_sec_doors in access)
 									allowed_access = H.get_authentification_name()
 						else
 							allowed_access = "@%&ERROR_%$*"
@@ -398,7 +403,7 @@
 							return
 
 						if(perpname)
-							R = find_record("name", perpname, data_core.security)
+							R = find_record("name", perpname, GLOB.data_core.security)
 							if(R)
 								if(href_list["status"])
 									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
@@ -406,7 +411,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return
@@ -417,28 +422,28 @@
 											return
 										else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 											return
-										to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["russian_html2text(criminal)"]]")
+										to_chat(usr, "<b>Name:</b> [R.fields["name"]]	<b>Criminal Status:</b> [R.fields["criminal"]]")
 										to_chat(usr, "<b>Minor Crimes:</b>")
-										for(var/datum/data/crime/c in R.fields["russian_html2text(mi_crim)"])
-											to_chat(usr, "<b>Crime:</b> [russian_html2text(c.crimeName)]")
-											to_chat(usr, "<b>Details:</b> [russian_html2text(c.crimeDetails)]")
-											to_chat(usr, "Added by [c.author] at [russian_html2text(c.time)]")
-											to_chat(usr, "----------")
-										to_chat(usr, "<b>Major Crimes:</b>")
-										for(var/datum/data/crime/c in R.fields["russian_html2text(ma_crim)"])
-											to_chat(usr, "<b>Crime:</b> [russian_html2text(c.crimeName)]")
-											to_chat(usr, "<b>Details:</b> [russian_html2text(c.crimeDetails)]")
+										for(var/datum/data/crime/c in R.fields["mi_crim"])
+											to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+											to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
 											to_chat(usr, "Added by [c.author] at [c.time]")
 											to_chat(usr, "----------")
-										to_chat(usr, "<b>Notes:</b> [R.fields["russian_html2text(notes)"]]")
+										to_chat(usr, "<b>Major Crimes:</b>")
+										for(var/datum/data/crime/c in R.fields["ma_crim"])
+											to_chat(usr, "<b>Crime:</b> [c.crimeName]")
+											to_chat(usr, "<b>Details:</b> [c.crimeDetails]")
+											to_chat(usr, "Added by [c.author] at [c.time]")
+											to_chat(usr, "----------")
+										to_chat(usr, "<b>Notes:</b> [R.fields["notes"]]")
 									return
 
 								if(href_list["add_crime"])
 									switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
 											if(R)
-												var/t1 = sanitize_russian(stripped_input("Please input minor crime names:", "Security HUD", "", null))
-												var/t2 = sanitize_russian(stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null))
+												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
+												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
 													if (!t1 || !t2 || !allowed_access)
 														return
@@ -446,14 +451,14 @@
 														return
 													else if(!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
-													data_core.addMinorCrime(R.fields["id"], crime)
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													GLOB.data_core.addMinorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a minor crime.</span>")
 													return
 										if("Major Crime")
 											if(R)
-												var/t1 = sanitize_russian(stripped_input("Please input major crime names:", "Security HUD", "", null))
-												var/t2 = sanitize_russian(stripped_multiline_input("Please input major crime details:", "Security HUD", "", null))
+												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
+												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
 													if (!t1 || !t2 || !allowed_access)
 														return
@@ -461,8 +466,8 @@
 														return
 													else if (!istype(H.glasses, /obj/item/clothing/glasses/hud/security) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
 														return
-													var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
-													data_core.addMajorCrime(R.fields["id"], crime)
+													var/crime = GLOB.data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+													GLOB.data_core.addMajorCrime(R.fields["id"], crime)
 													to_chat(usr, "<span class='notice'>Successfully added a major crime.</span>")
 									return
 
@@ -482,7 +487,7 @@
 
 								if(href_list["add_comment"])
 									if(R)
-										var/t1 = sanitize_russian(stripped_multiline_input("Add Comment:", "Secure. records", null, null))
+										var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 										if(R)
 											if (!t1 || !allowed_access)
 												return
@@ -493,7 +498,7 @@
 											var/counter = 1
 											while(R.fields[text("com_[]", counter)])
 												counter++
-											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
+											R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
@@ -580,7 +585,7 @@
 
 	//Check for weapons
 	if(judgebot.weaponscheck)
-		if(!idcard || !(access_weapons in idcard.access))
+		if(!idcard || !(GLOB.access_weapons in idcard.access))
 			for(var/obj/item/I in held_items)
 				if(judgebot.check_for_weapons(I))
 					threatcount += 4
@@ -590,7 +595,7 @@
 	//Check for arrest warrant
 	if(judgebot.check_records)
 		var/perpname = get_face_name(get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")
@@ -722,8 +727,8 @@
 
 /mob/living/carbon/human/wash_cream()
 	//clean both to prevent a rare bug
-	cut_overlay(image('icons/effects/creampie.dmi', "creampie_lizard"))
-	cut_overlay(image('icons/effects/creampie.dmi', "creampie_human"))
+	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
+	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 
 
 //Turns a mob black, flashes a skeleton overlay
@@ -732,17 +737,19 @@
 	//Handle mutant parts if possible
 	if(dna && dna.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
-		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
-		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+		var/static/mutable_appearance/electrocution_skeleton_anim
+		if(!electrocution_skeleton_anim)
+			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
+			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR
 		add_overlay(electrocution_skeleton_anim)
 		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
 		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
 
-/mob/living/carbon/human/proc/end_electrocution_animation(image/I)
+/mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
-	cut_overlay(I)
+	cut_overlay(MA)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
@@ -763,7 +770,7 @@
 		..()
 
 /mob/living/carbon/human/replace_records_name(oldname,newname) // Only humans have records right now, move this up if changed.
-	for(var/list/L in list(data_core.general,data_core.medical,data_core.security,data_core.locked))
+	for(var/list/L in list(GLOB.data_core.general,GLOB.data_core.medical,GLOB.data_core.security,GLOB.data_core.locked))
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
@@ -811,9 +818,9 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -853,7 +860,7 @@
 		if(7) // Pride
 			log_game("[src] was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
-	ticker.mode.sintouched += src.mind
+	SSticker.mode.sintouched += src.mind
 	src.mind.objectives += O
 	src.mind.announce_objectives()
 
@@ -914,21 +921,21 @@
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human(src)
-	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
+	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
-	if(buckled)	//NO INFINITE STACKING!!
-		return
-	if(M.stat != CONSCIOUS)
-		return
-	if(iscarbon(M))
-		if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-			M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
-			return
-		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
-			return
-	. = ..(M, force, check_loc)
-	stop_pulling()
+	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
+	if(do_after(M, 15, target = src))
+		if(iscarbon(M))
+			if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
+				return
+			if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+				M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
+				return
+		. = ..(M, force, check_loc)
+		stop_pulling()
+	else
+		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
 /mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
 	if(iscarbon(M))

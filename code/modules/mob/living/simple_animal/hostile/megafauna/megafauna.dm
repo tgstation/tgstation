@@ -8,7 +8,7 @@
 	maxHealth = 1000
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = 3
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -45,7 +45,7 @@
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
-	qdel(internal)
+	QDEL_NULL(internal)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
@@ -53,7 +53,7 @@
 		return
 	else
 		if(!admin_spawned)
-			feedback_set_details("megafauna_kills","[initial(name)]")
+			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
@@ -86,10 +86,7 @@
 	if(!.)
 		return
 	var/turf/newloc = loc
-	message_admins("Megafauna [src] \
-		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
-		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
-		([newloc.x],[newloc.y],[newloc.z])")
+	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)

@@ -3,7 +3,7 @@
 	desc = "Used to remotely control the flow of power to different parts of the station."
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
-	req_access = list(access_engine)
+	req_access = list(GLOB.access_engine)
 	circuit = /obj/item/weapon/circuitboard/computer/apc_control
 	light_color = LIGHT_COLOR_YELLOW
 	var/list/apcs //APCs the computer has access to
@@ -22,7 +22,7 @@
 
 /obj/machinery/computer/apc_control/process()
 	apcs = list() //Clear the list every tick
-	for(var/V in apcs_list)
+	for(var/V in GLOB.apcs_list)
 		var/obj/machinery/power/apc/APC = V
 		if(check_apc(APC))
 			apcs[APC.name] = APC
@@ -37,11 +37,11 @@
 			active_apc.update_icon()
 			active_apc = null
 
-/obj/machinery/computer/apc_control/attack_ai(mob/living/AI)
-	if(!IsAdminGhost(src))
-		to_chat(AI,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
+/obj/machinery/computer/apc_control/attack_ai(mob/user)
+	if(!IsAdminGhost(user))
+		to_chat(user,"<span class='warning'>[src] does not support AI control.</span>") //You already have APC access, cheater!
 		return
-	..(AI)
+	..(user)
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
 	return APC.z == z && !APC.malfhack && !APC.aidisabled && !APC.emagged && !APC.stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
@@ -96,7 +96,6 @@
 		return
 	if(!usr || !usr.canUseTopic(src) || usr.incapacitated() || stat || QDELETED(src))
 		return
-	var/image/I = image(src) //For feedback message flavor
 	if(href_list["authenticate"])
 		var/obj/item/weapon/card/id/ID = usr.get_active_held_item()
 		if(!istype(ID))
@@ -109,7 +108,7 @@
 		if(!authenticated) //Check for emags
 			var/obj/item/weapon/card/emag/E = usr.get_active_held_item()
 			if(E && istype(E) && usr.Adjacent(src))
-				usr << "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>"
+				to_chat(usr, "<span class='warning'>You bypass [src]'s access requirements using your emag.</span>")
 				authenticated = TRUE
 				log_activity("logged in") //Auth ID doesn't change, hinting that it was illicit
 	if(href_list["log_out"])
@@ -117,26 +116,26 @@
 		authenticated = FALSE
 		auth_id = "\[NULL\]"
 	if(href_list["restore_logging"])
-		to_chat(usr, "<span class='robot notice'>\icon[I] Logging functionality restored from backup data.</span>")
+		to_chat(usr, "<span class='robot notice'>\icon[src] Logging functionality restored from backup data.</span>")
 		emagged = FALSE
 		LAZYADD(logs, "<b>-=- Logging restored to full functionality at this point -=-</b>")
 	if(href_list["access_apc"])
 		playsound(src, "terminal_type", 50, 0)
-		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in apcs_list
+		var/obj/machinery/power/apc/APC = locate(href_list["access_apc"]) in GLOB.apcs_list
 		if(!APC || APC.aidisabled || APC.panel_open || QDELETED(APC))
-			to_chat(usr, "<span class='robot danger'>\icon[I] APC does not return interface request. Remote access may be disabled.</span>")
+			to_chat(usr, "<span class='robot danger'>\icon[src] APC does not return interface request. Remote access may be disabled.</span>")
 			return
 		if(active_apc)
-			to_chat(usr, "<span class='robot danger'>\icon[I] Disconnected from [active_apc].</span>")
+			to_chat(usr, "<span class='robot danger'>\icon[src] Disconnected from [active_apc].</span>")
 			active_apc.say("Remote access canceled. Interface locked.")
 			playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
 			active_apc = null
-		to_chat(usr, "<span class='robot notice'>\icon[I] Connected to APC in [get_area(APC)]. Interface request sent.</span>")
+		to_chat(usr, "<span class='robot notice'>\icon[src] Connected to APC in [get_area(APC)]. Interface request sent.</span>")
 		log_activity("remotely accessed APC in [get_area(APC)]")
-		APC.interact(usr, not_incapacitated_state)
+		APC.interact(usr, GLOB.not_incapacitated_state)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")
 		log_game("[key_name_admin(usr)] remotely accessed [APC] from [src] at [get_area(src)].")

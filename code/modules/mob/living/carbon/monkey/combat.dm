@@ -132,6 +132,10 @@
 	return 0
 
 /mob/living/carbon/monkey/proc/handle_combat()
+	// Don't do any AI if inside another mob (devoured)
+	if (ismob(loc))
+		// Really no idea what needs to be returned but everything else is TRUE
+		return TRUE
 
 	if(on_fire || buckled || restrained())
 		if(!resisting && prob(MONKEY_RESIST_PROB))

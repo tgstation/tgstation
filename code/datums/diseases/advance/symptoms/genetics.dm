@@ -42,7 +42,7 @@ Bonus
 
 // Archive their DNA before they were infected.
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
-	possible_mutations = (bad_mutations | not_good_mutations) - mutations_list[RACEMUT]
+	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT]
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
 		if(!M.has_dna())

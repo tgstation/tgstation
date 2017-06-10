@@ -62,7 +62,7 @@
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>[id]</a>"
 		else
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>NULL</a>"
-		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[russian_html2text(network)]</a>"
+		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
 		if(hide) dat += "<br>Shadow Link: ACTIVE</a>"
 
@@ -248,7 +248,7 @@
 
 						network = newnet
 						links = list()
-						temp = "<font color = #666633>-% New network tag assigned: \"[russian_html2text(network)]\" %-</font color>"
+						temp = "<font color = #666633>-% New network tag assigned: \"[network]\" %-</font color>"
 
 
 			if("freq")
@@ -256,7 +256,7 @@
 				if(newfreq && canAccess(usr))
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place
-					if(newfreq == SYND_FREQ)
+					if(newfreq == GLOB.SYND_FREQ)
 						temp = "<font color = #FF0000>-% Error: Interference preventing filtering frequency: \"[newfreq] GHz\" %-</font color>"
 					else
 						if(!(newfreq in freq_listening) && newfreq < 10000)

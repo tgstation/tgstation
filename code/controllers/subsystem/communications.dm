@@ -1,17 +1,12 @@
 #define COMMUNICATION_COOLDOWN 600
 #define COMMUNICATION_COOLDOWN_AI 600
 
-var/datum/controller/subsystem/communications/SScommunications
-
-/datum/controller/subsystem/communications
+SUBSYSTEM_DEF(communications)
 	name = "Communications"
 	flags = SS_NO_INIT | SS_NO_FIRE
 
 	var/silicon_message_cooldown
 	var/nonsilicon_message_cooldown
-
-/datum/controller/subsystem/communications/New()
-	NEW_SS_GLOBAL(SScommunications)
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && silicon_message_cooldown > world.time)
@@ -25,10 +20,10 @@ var/datum/controller/subsystem/communications/SScommunications
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(rhtml_decode(input,1),"[user.name] Announces:")
+		minor_announce(input,"[user.name] Announces:")
 		silicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
 	else
-		priority_announce(rhtml_decode(input,1), null, 'sound/misc/announce.ogg', "Captain")
+		priority_announce(input, null, 'sound/misc/announce.ogg', "Captain")
 		nonsilicon_message_cooldown = world.time + COMMUNICATION_COOLDOWN
 	log_say("[key_name(user)] has made a priority announcement: [input]")
 	message_admins("[key_name_admin(user)] has made a priority announcement.")

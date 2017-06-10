@@ -1,29 +1,26 @@
-var/datum/controller/subsystem/npcpool/SSnpc
+#define PROCESSING_SIMPLES 0
+#define PROCESSING_NPCS 1
+#define PROCESSING_DELEGATES 2
+#define PROCESSING_ASSISTANTS 3
 
-#define PROCESSING_NPCS 0
-#define PROCESSING_DELEGATES 1
-#define PROCESSING_ASSISTANTS 2
-
-/datum/controller/subsystem/npcpool
+SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = 20
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/canBeUsed = list()
 	var/list/needsDelegate = list()
 	var/list/needsAssistant = list()
-	
+
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/stage
 
-/datum/controller/subsystem/npcpool/New()
-	NEW_SS_GLOBAL(SSnpc)
-
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("NPCS:[processing.len]|D:[needsDelegate.len]|A:[needsAssistant.len]|U:[canBeUsed.len]")
 
-/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/carbon/human/interactive/I)
+/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/I)
 	processing -= I
 	currentrun -= I
 	needsDelegate -= I
@@ -40,10 +37,29 @@ var/datum/controller/subsystem/npcpool/SSnpc
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 
 	if (!resumed)
-		src.currentrun = processing.Copy()
-		stage = PROCESSING_NPCS
+		src.currentrun = GLOB.simple_animals.Copy()
+		stage = PROCESSING_SIMPLES
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
+
+	if(stage == PROCESSING_SIMPLES)
+		while(currentrun.len)
+			var/mob/living/simple_animal/SA = currentrun[currentrun.len]
+			--currentrun.len
+
+			if(!SA.ckey)
+				if(SA.stat != DEAD)
+					SA.handle_automated_movement()
+				if(SA.stat != DEAD)
+					SA.handle_automated_action()
+				if(SA.stat != DEAD)
+					SA.handle_automated_speech()
+			if (MC_TICK_CHECK)
+				return
+
+		stage = PROCESSING_NPCS
+		currentrun = processing.Copy()
+		src.currentrun = currentrun
 	var/list/canBeUsed = src.canBeUsed
 
 	if(stage == PROCESSING_NPCS)
@@ -128,4 +144,4 @@ var/datum/controller/subsystem/npcpool/SSnpc
 			return
 
 /datum/controller/subsystem/npcpool/Recover()
-	processing = SSnpc.processing
+	processing = SSnpcpool.processing

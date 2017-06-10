@@ -179,7 +179,7 @@
 		else if(visualAppearence == REPAIRDRONE_HACKED)
 			visualAppearence = REPAIRDRONE
 		else if(visualAppearence == MAINTDRONE_HACKED)
-			visualAppearence = MAINTDRONE
+			visualAppearence = MAINTDRONE + "_[colour]"
 	else if(hacked)
 		if(visualAppearence == SCOUTDRONE)
 			visualAppearence = SCOUTDRONE_HACKED

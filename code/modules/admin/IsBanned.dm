@@ -16,7 +16,7 @@
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 	var/admin = 0
 	var/ckey = ckey(key)
-	if((ckey in admin_datums) || (ckey in deadmins))
+	if((ckey in GLOB.admin_datums) || (ckey in GLOB.deadmins))
 		admin = 1
 
 	//Whitelist
@@ -32,7 +32,7 @@
 
 	//Guest Checking
 	if(IsGuestKey(key))
-		if (!guests_allowed)
+		if (!GLOB.guests_allowed)
 			log_access("Failed Login: [key] - Guests not allowed")
 			return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 		if (config.panic_bunker && dbcon && dbcon.IsConnected())
@@ -62,8 +62,9 @@
 		var/ckeytext = ckey(key)
 
 		if(!dbcon.Connect())
-			log_world("Ban database connection failure. Key [ckeytext] not checked")
-			diary << "Ban database connection failure. Key [ckeytext] not checked"
+			var/msg = "Ban database connection failure. Key [ckeytext] not checked"
+			log_world(msg)
+			message_admins(msg)
 			return
 
 		var/ipquery = ""
@@ -120,7 +121,7 @@
 			bannedckey = ban["ckey"]
 
 		var/newmatch = FALSE
-		var/client/C = directory[ckey]
+		var/client/C = GLOB.directory[ckey]
 		var/cachedban = SSstickyban.cache[bannedckey]
 
 		//rogue ban in the process of being reverted.

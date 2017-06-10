@@ -75,7 +75,7 @@
 		return
 
 	if("rename" in href_list)
-		var/newname = strip_html_properly(stripped_input(usr,"New airlock name:","Name the airlock",doorname))
+		var/newname = stripped_input(usr,"New airlock name:","Name the airlock",doorname)
 		if(newname)
 			doorname = russian_html2text(newname)
 	if("access" in href_list)

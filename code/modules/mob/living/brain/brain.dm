@@ -1,8 +1,4 @@
-
-
 /mob/living/brain
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	var/obj/item/device/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
@@ -30,6 +26,8 @@
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
 		if(stat!=DEAD)	//If not dead.
 			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
+		if(mind)	//You aren't allowed to return to brains that don't exist
+			mind.current = null
 		ghostize()		//Ghostize checks for key so nothing else is necessary.
 	container = null
 	return ..()

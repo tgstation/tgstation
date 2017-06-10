@@ -9,6 +9,7 @@
 	icon_state = "sleeper"
 	state_open = TRUE
 	anchored = TRUE
+	occupant_typecache = list(/mob/living/carbon/human) // turned into typecache in Initialize
 	var/you_die_in_the_game_you_die_for_real = FALSE
 	var/datum/effect_system/spark_spread/sparks
 	var/mob/living/carbon/human/virtual_reality/vr_human
@@ -17,8 +18,8 @@
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/outfit = /datum/outfit/vr_basic
 
-/obj/machinery/vr_sleeper/New()
-	..()
+/obj/machinery/vr_sleeper/Initialize()
+	. = ..()
 	sparks = new /datum/effect_system/spark_spread()
 	sparks.set_up(2,0)
 	sparks.attach(src)
@@ -27,7 +28,7 @@
 
 	if(!available_vr_spawnpoints || !available_vr_spawnpoints.len) //(re)build spawnpoint lists
 		available_vr_spawnpoints = list()
-		for(var/obj/effect/landmark/vr_spawn/V in landmarks_list)
+		for(var/obj/effect/landmark/vr_spawn/V in GLOB.landmarks_list)
 			available_vr_spawnpoints[V.vr_category] = list()
 			var/turf/T = get_turf(V)
 			if(T)
@@ -80,7 +81,7 @@
 		ui_interact(occupant)
 
 
-/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "vr_sleeper", "VR Sleeper", 475, 340, master_ui, state)
@@ -92,11 +93,12 @@
 		return
 	switch(action)
 		if("vr_connect")
-			if(ishuman(occupant) && occupant.mind)
+			var/mob/living/carbon/human/human_occupant = occupant
+			if(human_occupant && human_occupant.mind)
 				to_chat(occupant, "<span class='warning'>Transfering to virtual reality...</span>")
 				if(vr_human)
 					vr_human.revert_to_reality(FALSE, FALSE)
-					occupant.mind.transfer_to(vr_human)
+					human_occupant.mind.transfer_to(vr_human)
 					vr_human.real_me = occupant
 					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
 					SStgui.close_user_uis(vr_human, src)

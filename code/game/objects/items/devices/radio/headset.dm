@@ -11,8 +11,8 @@
 	var/obj/item/device/encryptionkey/keyslot2 = null
 	dog_fashion = null
 
-/obj/item/device/radio/headset/New()
-	..()
+/obj/item/device/radio/headset/Initialize()
+	. = ..()
 	recalculateChannels()
 
 /obj/item/device/radio/headset/Destroy()
@@ -22,7 +22,7 @@
 	keyslot2 = null
 	return ..()
 
-/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
+/obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans,datum/language/language)
 	if (!listening)
 		return ITALICS | REDUCE_RANGE
 	return ..()
@@ -47,21 +47,21 @@
 	item_state = "syndie_headset"
 
 /obj/item/device/radio/headset/syndicate/alt/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
 	command = TRUE
 
-/obj/item/device/radio/headset/syndicate/New()
-	..()
+/obj/item/device/radio/headset/syndicate/Initialize()
+	. = ..()
 	make_syndie()
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
-/obj/item/device/radio/headset/binary/New()
-	..()
+/obj/item/device/radio/headset/binary/Initialize()
+	. = ..()
 	qdel(keyslot)
 	keyslot = new /obj/item/device/encryptionkey/binary
 	recalculateChannels()
@@ -79,7 +79,7 @@
 	item_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_sec/alt/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/headset_eng
@@ -134,7 +134,7 @@
 	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/captain/alt/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/heads/rd
@@ -156,7 +156,7 @@
 	item_state = "com_headset_alt"
 
 /obj/item/device/radio/headset/heads/hos/alt/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/heads/ce
@@ -213,7 +213,7 @@
 	keyslot = null
 
 /obj/item/device/radio/headset/headset_cent/alt/Initialize(mapload)
-	..()
+	. = ..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
 
 /obj/item/device/radio/headset/ai
@@ -231,7 +231,7 @@
 
 
 			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 
@@ -296,7 +296,7 @@
 
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 	return
 

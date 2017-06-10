@@ -21,7 +21,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(access_engine, access_robotics)
+	req_access = list(GLOB.access_engine, GLOB.access_robotics)
 
 /obj/machinery/navbeacon/New()
 	..()
@@ -31,16 +31,16 @@
 	var/turf/T = loc
 	hide(T.intact)
 	if(codes["patrol"])
-		if(!navbeacons["[z]"])
-			navbeacons["[z]"] = list()
-		navbeacons["[z]"] += src //Register with the patrol list!
+		if(!GLOB.navbeacons["[z]"])
+			GLOB.navbeacons["[z]"] = list()
+		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
 	if(codes["delivery"])
-		deliverybeacons += src
-		deliverybeacontags += location
+		GLOB.deliverybeacons += src
+		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	navbeacons["[z]"] -= src //Remove from beacon list, if in one.
-	deliverybeacons -= src
+	GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	GLOB.deliverybeacons -= src
 	return ..()
 
 // set the transponder codes assoc list from codes_txt

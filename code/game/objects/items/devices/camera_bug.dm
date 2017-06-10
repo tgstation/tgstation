@@ -73,7 +73,7 @@
 /obj/item/device/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
-		for(var/obj/machinery/camera/camera in cameranet.cameras)
+		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
 			if(camera.stat || !camera.can_use())
 				continue
 			if(length(list("SS13","MINE")&camera.network))

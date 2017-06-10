@@ -13,14 +13,14 @@
 	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
 	actions_types = list(/datum/action/item_action/clock/toggle_visor)
 
-/obj/item/clothing/glasses/judicial_visor/New()
-	..()
-	all_clockwork_objects += src
+/obj/item/clothing/glasses/judicial_visor/Initialize()
+	. = ..()
+	GLOB.all_clockwork_objects += src
 	blaster = new(src)
 	blaster.visor = src
 
 /obj/item/clothing/glasses/judicial_visor/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	if(blaster.ranged_ability_user)
 		blaster.remove_ranged_ability()
 	blaster.visor = null
@@ -131,7 +131,7 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
+			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
@@ -139,7 +139,7 @@
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
-		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()
 
 		return TRUE
@@ -156,8 +156,8 @@
 	layer = BELOW_MOB_LAYER
 	var/mob/user
 
-/obj/effect/clockwork/judicial_marker/New(loc, caster)
-	..()
+/obj/effect/clockwork/judicial_marker/Initialize(mapload, caster)
+	. = ..()
 	set_light(1.4, 2, "#FE9C11")
 	user = caster
 	INVOKE_ASYNC(src, .proc/judicialblast)

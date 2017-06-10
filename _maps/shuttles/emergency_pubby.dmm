@@ -177,6 +177,9 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
@@ -421,11 +424,11 @@ ab
 ab
 ab
 ab
-aI
+ao
 aL
 aL
 aL
-aT
+ao
 ab
 ab
 ab
@@ -445,7 +448,7 @@ ao
 ao
 ao
 ao
-ao
+aT
 ab
 aV
 aY
@@ -525,7 +528,7 @@ ao
 ao
 ao
 ao
-ao
+aT
 ab
 aW
 aZ
@@ -541,11 +544,11 @@ ab
 ab
 ab
 ab
-aI
+ao
 aK
 aK
 aK
-aT
+ao
 ab
 ab
 ab

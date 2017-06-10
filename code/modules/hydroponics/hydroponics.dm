@@ -27,6 +27,8 @@
 	var/unwrenchable = 1
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
+	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with earthsblood.
+	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 
 
@@ -93,7 +95,7 @@
 
 	while(processing_atoms.len)
 		var/atom/a = processing_atoms[1]
-		for(var/step_dir in cardinal)
+		for(var/step_dir in GLOB.cardinal)
 			var/obj/machinery/hydroponics/h = locate() in get_step(a, step_dir)
 			// Soil plots aren't dense
 			if(h && h.using_irrigation && h.density && !(h in connected) && !(h in processing_atoms))
@@ -259,7 +261,7 @@
 		if(istype(src, /obj/machinery/hydroponics/soil))
 			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
 		else
-			add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing"))
+			overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing")
 		set_light(3)
 
 	update_icon_hoses()
@@ -279,7 +281,7 @@
 
 /obj/machinery/hydroponics/proc/update_icon_hoses()
 	var/n = 0
-	for(var/Dir in cardinal)
+	for(var/Dir in GLOB.cardinal)
 		var/obj/machinery/hydroponics/t = locate() in get_step(src,Dir)
 		if(t && t.using_irrigation && using_irrigation)
 			n += Dir
@@ -287,31 +289,30 @@
 	icon_state = "hoses-[n]"
 
 /obj/machinery/hydroponics/proc/update_icon_plant()
-	var/image/I
+	var/mutable_appearance/plant_overlay = mutable_appearance(myseed.growing_icon, layer = OBJ_LAYER + 0.01)
 	if(dead)
-		I = image(icon = myseed.growing_icon, icon_state = myseed.icon_dead)
+		plant_overlay.icon_state = myseed.icon_dead
 	else if(harvest)
 		if(!myseed.icon_harvest)
-			I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][myseed.growthstages]")
+			plant_overlay.icon_state = "[myseed.icon_grow][myseed.growthstages]"
 		else
-			I = image(icon = myseed.growing_icon, icon_state = myseed.icon_harvest)
+			plant_overlay.icon_state = myseed.icon_harvest
 	else
 		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
-		I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][t_growthstate]")
-	I.layer = OBJ_LAYER + 0.01
-	add_overlay(I)
+		plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
+	add_overlay(plant_overlay)
 
 /obj/machinery/hydroponics/proc/update_icon_lights()
 	if(waterlevel <= 10)
-		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3"))
+		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowwater3"))
 	if(nutrilevel <= 2)
-		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3"))
+		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lownutri3"))
 	if(plant_health <= (myseed.endurance / 2))
-		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3"))
+		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_lowhealth3"))
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3"))
+		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_alert3"))
 	if(harvest)
-		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3"))
+		add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "over_harvest3"))
 
 
 /obj/machinery/hydroponics/examine(user)
@@ -330,6 +331,9 @@
 	if(!self_sustaining)
 		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater]</span>")
 		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>")
+		if(self_sufficiency_progress > 0)
+			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
+			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
 	else
 		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
 
@@ -365,7 +369,7 @@
 		if(4 to 5)
 			myseed = new /obj/item/seeds/plump(src)
 		else
-			myseed = new /obj/item/seeds/weeds(src)
+			myseed = new /obj/item/seeds/starthistle(src)
 	age = 0
 	plant_health = myseed.endurance
 	lastcycle = world.time
@@ -505,6 +509,14 @@
 		yieldmod = 1.3
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
+	
+	// Ambrosia Gaia produces earthsblood.
+	if(S.has_reagent("earthsblood"))
+		self_sufficiency_progress += S.get_reagent_amount("earthsblood")
+		if(self_sufficiency_progress >= self_sufficiency_req)
+			become_self_sufficient()
+		else if(!self_sustaining)
+			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
 	if(S.has_reagent("charcoal", 1))
@@ -676,33 +688,7 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia)) //Checked early on so it doesn't have to deal with composting checks
-		if(self_sustaining)
-			to_chat(user, "<span class='warning'>This [name] is already self-sustaining!</span>")
-			return
-		if(myseed || weedlevel)
-			to_chat(user, "<span class='warning'>[src] needs to be clear of plants and weeds!</span>")
-			return
-		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
-			return
-		if(!O || QDELETED(O))
-			return
-		if(!Adjacent(user))
-			return
-		if(self_sustaining)
-			to_chat(user, "<span class='warning'>This [name] is already self-sustaining!</span>")
-			return
-		if(myseed || weedlevel)
-			to_chat(user, "<span class='warning'>[src] needs to be clear of plants and weeds!</span>")
-			return
-		user.visible_message("<span class='notice'>[user] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>")
-		user.drop_item()
-		qdel(O)
-		visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
-		self_sustaining = TRUE
-		update_icon()
-
-	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
@@ -931,6 +917,10 @@
 	var/mob/living/simple_animal/hostile/C = new chosen
 	C.faction = list("plants")
 
+/obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
+	visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
+	self_sustaining = TRUE
+	update_icon()
 
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!

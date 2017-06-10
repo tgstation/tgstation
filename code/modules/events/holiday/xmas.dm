@@ -30,9 +30,9 @@
 		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
-	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in machines)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state = "entertainment_xmas"
 
 /datum/round_event/presents/announce()
@@ -60,7 +60,7 @@
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
 			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
-			"Why doesn’t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+			"Why doesnï¿½t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
 		cracked = 1
@@ -84,6 +84,12 @@
 	name = "christmas tree spawner"
 	var/tree = /obj/structure/flora/tree/pine/xmas
 
+/obj/effect/landmark/xmastree/Initialize(mapload)
+	..()
+	if(FESTIVE_SEASON in SSevents.holidays)
+		new tree(get_turf(src))
+	qdel(src)
+
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"
 	tree = /obj/structure/festivus
@@ -103,11 +109,11 @@
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
 /datum/round_event/santa/start()
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in GLOB.dead_mob_list)
 		spawn(0)
 			var/response = alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
 			if(response == "Yes" && M && M.client && M.stat == DEAD && !santa)
-				santa = new /mob/living/carbon/human(pick(blobstart))
+				santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 				santa.key = M.key
 				qdel(M)
 

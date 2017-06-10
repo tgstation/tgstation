@@ -20,9 +20,6 @@
 	user.visible_message("[user] severs [L]'s [parse_zone(target_zone)]!", "<span class='notice'>You sever [L]'s [parse_zone(target_zone)].</span>")
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
-		var/obj/item/held_item = L.get_item_for_held_index(target_limb.held_index)
 		target_limb.drop_limb()
-		if(held_item && held_item.flags & NODROP)
-			qdel(target_limb) // arm is ruined
 
 	return 1

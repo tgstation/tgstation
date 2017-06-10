@@ -49,7 +49,10 @@
 		return
 	if(logged)
 		log_admin_private("[key_name(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]: [text]")
-		message_admins("[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]:<br>[text]")
+		var/header = "[key_name_admin(usr)] has created a [type][(type == "note" || type == "message" || type == "watchlist entry") ? " for [target_ckey]" : ""]"
+		message_admins("[header]:<br>[text]")
+		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font>")
+		admin_ticket_log(target_ckey, text)
 		if(browse)
 			browse_messages("[type]")
 		else
@@ -145,7 +148,7 @@
 	var/output
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
 	var/navbar = "<a href='?_src_=holder;nonalpha=1'>\[All\]</a>|<a href='?_src_=holder;nonalpha=2'>\[#\]</a>"
-	for(var/letter in alphabet)
+	for(var/letter in GLOB.alphabet)
 		navbar += "|<a href='?_src_=holder;showmessages=[letter]'>\[[letter]\]</a>"
 	navbar += "|<a href='?_src_=holder;showmemo=1'>\[Memos\]</a>|<a href='?_src_=holder;showwatch=1'>\[Watchlist\]</a>"
 	navbar += "<br><form method='GET' name='search' action='?'>\
@@ -172,7 +175,7 @@
 		while(query_get_type_messages.NextRow())
 			var/id = query_get_type_messages.item[1]
 			var/t_ckey = query_get_type_messages.item[2]
-			if(type == "watchlist entry" && filter && !(t_ckey in directory))
+			if(type == "watchlist entry" && filter && !(t_ckey in GLOB.directory))
 				continue
 			var/admin_ckey = query_get_type_messages.item[3]
 			var/text = query_get_type_messages.item[4]
@@ -274,7 +277,7 @@
 	else if(!type && !target_ckey && !index)
 		output += "<center></a> <a href='?_src_=holder;addmessageempty=1'>\[Add message\]</a><a href='?_src_=holder;addwatchempty=1'>\[Add watchlist entry\]</a><a href='?_src_=holder;addnoteempty=1'>\[Add note\]</a></center>"
 		output += ruler
-	usr << browse(sanitize_russian(output, 1), "window=browse_messages;size=900x500")
+	usr << browse(sanitize_russian(output), "window=browse_messages;size=900x500")
 
 proc/get_message_output(type, target_ckey)
 	if(!dbcon.Connect())

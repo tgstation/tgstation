@@ -1,8 +1,8 @@
 /mob/living/carbon/human/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
+	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-h")
 
 /mob/living/carbon/human/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
+	new /obj/effect/temp_visual/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
@@ -32,10 +32,10 @@
 
 	dna.species.spec_death(gibbed, src)
 
-	if(ticker && ticker.mode)
-		sql_report_death(src)
-	if(mind && mind.devilinfo)
-		INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo.proc/beginResurrectionCheck, src)
+	if(SSticker.HasRoundStarted())
+		SSblackbox.ReportDeath(src)
+	if(is_devil(src))
+		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED

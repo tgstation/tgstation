@@ -144,14 +144,14 @@
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/M, mob/user)
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+		if(user.mind && (user.mind in SSticker.mode.head_revolutionaries))
 			if(M.client)
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
 					var/resisted
 					if(!M.isloyal())
-						if(user.mind in ticker.mode.head_revolutionaries)
-							if(ticker.mode.add_revolutionary(M.mind))
+						if(user.mind in SSticker.mode.head_revolutionaries)
+							if(SSticker.mode.add_revolutionary(M.mind))
 								M.Stun(3)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
@@ -172,11 +172,11 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

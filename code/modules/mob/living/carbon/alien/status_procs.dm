@@ -17,4 +17,4 @@
 /mob/living/carbon/alien/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(!.)
-		move_delay_add = min(move_delay_add + round(amount / 2), 10)
+		move_delay_add = Clamp(move_delay_add + round(amount/2), 0, 10)

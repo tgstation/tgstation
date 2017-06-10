@@ -1,17 +1,17 @@
-## Server name: This appears at the top of the screen in-game. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
-SERVERNAME Main Russian Servers - White Dream
+## Server name: This appears at the top of the screen in-game and in the BYOND hub. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice.
+# SERVERNAME tgstation
 
-## Server group: for those, who are the part of something bigger that one server.
-SERVERGROUP SS13.RU
-
-## Server group url: and wanna share it for all the world.
-SERVERGROUPURL http://ss13.ru/
+## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
+# SERVERSQLNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-#STATIONNAME Space Station 13
+STATIONNAME Space Station 13
+
+## Put on byond hub: uncomment this to put your server on the byond hub.
+#HUB
 
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
-LOBBY_COUNTDOWN 180
+LOBBY_COUNTDOWN 120
 
 # Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
@@ -27,23 +27,22 @@ ROUND_END_COUNTDOWN 90
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
-USE_AGE_RESTRICTION_FOR_JOBS
+#USE_AGE_RESTRICTION_FOR_JOBS
 
 # Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
-USE_ACCOUNT_AGE_FOR_JOBS
-
+#USE_ACCOUNT_AGE_FOR_JOBS
 
 ## log OOC channel
 LOG_OOC
 
-## log client Say 
+## log client Say
 LOG_SAY
 
 ## log admin actions
 LOG_ADMIN
 
 ## log admin chat
-#LOG_ADMINCHAT
+LOG_ADMINCHAT
 
 ## log client access (logon/logoff)
 LOG_ACCESS
@@ -72,17 +71,20 @@ LOG_PRAYER
 ## log lawchanges
 LOG_LAW
 
-## log all Topic() calls (for use by coders in tracking down Topic issues)
-LOG_HREFS
-
 ## log all world.Topic() calls
-LOG_WORLD_TOPIC
+# LOG_WORLD_TOPIC
 
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
 
-## disconnect players who did nothing during 10 minutes
+## period of time in seconds for players to be considered inactive
+# INACTIVITY_PERIOD 300
+
+## period of time in seconds for players to be considered afk and kickable
+# AFK_PERIOD 600
+
+## disconnect players who are considered afk
 # KICK_INACTIVE
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
@@ -116,7 +118,7 @@ NORESPAWN
 # DONT_DEL_NEWMOB
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Zlofenix
+HOSTEDBY Yournamehere
 
 ## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
@@ -131,13 +133,13 @@ CHECK_RANDOMIZER
 ### IPINTEL:
 ### This allows you to detect likely proxies by checking ips against getipintel.net
 ## Rating to warn at: (0.90 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-IPINTEL_RATING_BAD 0.90
+#IPINTEL_RATING_BAD 0.90
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
-#IPINTEL_EMAIL ihatewhite@mail.ru
+#IPINTEL_EMAIL ch@nge.me
 ## How long to save good matches (ipintel rate limits to 15 per minute and 500 per day. so this shouldn't be too low, getipintel.net suggests 6 hours, time is in hours) (Your ip will get banned if you go over 500 a day too many times)
-IPINTEL_SAVE_GOOD 12
+#IPINTEL_SAVE_GOOD 12
 ## How long to save bad matches (these numbers can change as ips change hands, best not to save these for too long in case somebody gets a new ip used by a spammer/proxy before.)
-IPINTEL_SAVE_BAD 3
+#IPINTEL_SAVE_BAD 3
 ## Domain name to query (leave commented out for the default, only needed if you pay getipintel.net for more querys)
 #IPINTEL_DOMAIN check.getipintel.net
 
@@ -149,28 +151,32 @@ IPINTEL_SAVE_BAD 3
 ## byond membership starts at $10 for 3 months, so to use the webclient to evade, they would have sink 10 bucks in each evade.
 #WEBCLIENT_ONLY_BYOND_MEMBERS
 
-## Set to jobban everyone who's key is not listed in data/whitelist.txt from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
-## Uncomment to 1 to jobban, leave commented out to allow these positions for everyone (but see GUEST_JOBBAN above and regular jobbans)
-# USEWHITELIST
+## Set to prevent anyone but those ckeys listed in config/whitelist.txt and config/admins.txt from joining your server
+#USEWHITELIST
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 # Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
-#SERVER ss13.ru:2506
+# SERVER ss13.example.com:2506
 
 ## forum address
-FORUMURL http://forum.ss13.ru
+# FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
-WIKIURL http://www.tgstation13.org/wiki
+# WIKIURL http://www.tgstation13.org/wiki
 
 ##Rules address
-RULESURL http://wiki.ss13.ru/index.php?title=Rules
+# RULESURL http://www.tgstation13.org/wiki/Rules
 
 ##Github address
-GITHUBURL https://github.com/animusdev/white
+# GITHUBURL https://www.github.com/tgstation/-tg-station
+
+##Github repo id
+##This can be found by going to https://api.github.com/users/<user name here>/repos
+##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization 
+# GITHUBREPOID 3234987
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-BANAPPEALS http://forum.ss13.ru/index.php?showforum=37
+# BANAPPEALS http://justanotherday.example.com
 
 ## In-game features
 ##Toggle for having jobs load up from the .txt
@@ -179,7 +185,7 @@ BANAPPEALS http://forum.ss13.ru/index.php?showforum=37
 ##Remove the # mark infront of this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 
+## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -194,18 +200,29 @@ ALLOW_HOLIDAYS
 
 ##Defines the ticklimit for subsystem initialization (In percents of a byond tick). Lower makes world start smoother. Higher makes it faster.
 ##This is currently a testing optimized setting. A good value for production would be 98.
-TICK_LIMIT_MC_INIT 98
+TICK_LIMIT_MC_INIT 500
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.3
-
-##FPS 25
+TICKLAG 0.5
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
-#COMMS_KEY D3arG0dN0tAga1n
+#COMMS_KEY default_pwd
+
+## World address and port for server recieving cross server messages
+#CROSS_SERVER_ADDRESS byond:\\address:port
+
+## Name that the server calls itself in communications
+#CROSS_COMMS_NAME
+
+## Hub address for tracking stats
+## example: Hubmakerckey.Hubname
+#MEDAL_HUB_ADDRESS 
+
+## Password for the hub page
+#MEDAL_HUB_PASSWORD
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES
@@ -232,7 +249,11 @@ EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, f
 
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database
-NOTIFY_NEW_PLAYER_AGE 0 
+NOTIFY_NEW_PLAYER_AGE 0
+
+## Notify admins when a player connects if their byond account was created in the last X days
+## Requires database
+NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 
 ## Notify the irc channel when a new player makes their first connection
 ##	Requres database
@@ -244,39 +265,40 @@ NOTIFY_NEW_PLAYER_AGE 0
 
 ## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
 ##	You probably want this to be the same as CROSS_SERVER_ADDRESS
-##PANIC_SERVER_ADDRESS byond://address:port
+PANIC_SERVER_ADDRESS byond://address:port
 
 ##Name of the place to send people rejected by the bunker
-##PANIC_SERVER_NAME [Put the name here]
+PANIC_SERVER_NAME [Put the name here]
 
 ## Uncomment to have the changelog file automatically open when a user connects and hasn't seen the latest changelog
 #AGGRESSIVE_CHANGELOG
 
-## Uncomment to have the game log runtimes to the log folder. (Note: this disables normal output in dd/ds, so it should be left off for testing.
-#LOG_RUNTIMES
+## Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
+AUTOCONVERT_NOTES
 
-##Comment this out if you've used the mass conversion sql proc for notes or want to stop converting notes
-#AUTOCONVERT_NOTES
-
-##Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
+## Comment this out to stop admin messages sent anytime an admin disconnects from a round in play, you can edit the messages in admin.dm
 ANNOUNCE_ADMIN_LOGOUT
 
-##Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
-ANNOUNCE_ADMIN_LOGIN
+## Uncomment to have an admin message sent anytime an admin connects to a round in play, you can edit the messages in admin.dm
+#ANNOUNCE_ADMIN_LOGIN
 
-##Map rotation
-##This feature requires you are running a Windows OS (or can other wise run .bat files) and that you are using the tgstation-server toolset in tools/
-##You should edit maps.txt to match your configuration when you enable this.
-MAPROTATION
+## Map rotation
+## You should edit maps.txt to match your configuration when you enable this.
+#MAPROTATION
 
-##Map rotate chance delta
-##This is the chance of map rotation factored to the round length.
-##A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
-##A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
-MAPROTATIONCHANCEDELTA 0.75
+## Map voting
+## Allows players to vote for their preffered map
+## When it's set to zero, the map will be randomly picked each round
+ALLOW_MAP_VOTING 1
 
-##AUTOADMIN
-##Uncomment to automatically give that admin rank to all players
+## Map rotate chance delta
+## This is the chance of map rotation factored to the round length.
+## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
+## A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
+#MAPROTATIONCHANCEDELTA 0.75
+
+## AUTOADMIN
+## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN Game Admin
 
 ## GENERATE_MINIMAPS
@@ -288,8 +310,8 @@ MAPROTATIONCHANCEDELTA 0.75
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 #CLIENT_WARN_VERSION 511
-#CLIENT_WARN_MESSAGE Byond is really close to releasing 511 beta as the stable release, please take this time to try it out. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
-CLIENT_ERROR_VERSION 510
+#CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
+CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 
 ## TOPIC RATE LIMITING
@@ -303,12 +325,10 @@ MINUTE_TOPIC_LIMIT 100
 
 ##Error handling related options
 ## The "cooldown" time for each occurence of an unique error
-ERROR_COOLDOWN 600
+#ERROR_COOLDOWN 600
 ## How many occurences before the next will silence them
-ERROR_LIMIT 90
+#ERROR_LIMIT 90
 ## How long an unique error will be silenced for
-ERROR_SILENCE_TIME 6000
+#ERROR_SILENCE_TIME 6000
 ##How long to wait between messaging admins about occurences of an unique error
-ERROR_MSG_DELAY 50
-
-HUB
+#ERROR_MSG_DELAY 50

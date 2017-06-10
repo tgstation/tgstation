@@ -23,6 +23,7 @@
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
 /obj/item/device/aicard/update_icon()
+	cut_overlays()
 	if(AI)
 		name = "[initial(name)]- [AI.name]"
 		if(AI.stat == DEAD)
@@ -30,15 +31,14 @@
 		else
 			icon_state = "aicard-full"
 		if(!AI.control_disabled)
-			add_overlay(image('icons/obj/aicards.dmi', "aicard-on"))
+			add_overlay("aicard-on")
 		AI.cancel_camera()
 	else
 		name = initial(name)
 		icon_state = initial(icon_state)
-		cut_overlays()
 
 /obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)

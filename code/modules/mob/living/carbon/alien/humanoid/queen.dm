@@ -37,7 +37,7 @@
 		I.override = 1
 		I.pixel_x -= owner.pixel_x
 		I.pixel_y -= owner.pixel_y
-		owner.add_alt_appearance("smallqueen", I, list(owner))
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallqueen", I)
 
 		small = 1
 	else
@@ -46,7 +46,7 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
 	//there should only be one queen
-	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
+	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in GLOB.living_mob_list)
 		if(Q == src)
 			continue
 		if(Q.stat == DEAD)

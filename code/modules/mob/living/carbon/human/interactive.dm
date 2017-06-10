@@ -145,8 +145,7 @@
 		retal_target = potentialAssault
 	..()
 
-
-/client/proc/resetSNPC(var/mob/A in SSnpc.processing)
+/client/proc/resetSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Reset SNPC"
 	set desc = "Reset the SNPC"
 	set category = "Debug"
@@ -163,7 +162,7 @@
 			T.retal = 0
 			T.doing = 0
 
-/client/proc/customiseSNPC(var/mob/A in SSnpc.processing)
+/client/proc/customiseSNPC(var/mob/A in SSnpcpool.processing)
 	set name = "Customize SNPC"
 	set desc = "Customise the SNPC"
 	set category = "Debug"
@@ -199,7 +198,7 @@
 				T.doSetup()
 				if(prob(25))
 					var/list/validchoices = list()
-					for(var/mob/living/carbon/human/M in mob_list)
+					for(var/mob/living/carbon/human/M in GLOB.mob_list)
 						validchoices += M
 					var/mob/living/carbon/human/chosen = pick(validchoices)
 					var/datum/dna/toDoppel = chosen.dna
@@ -224,7 +223,7 @@
 				if(shouldDoppel)
 					if(shouldDoppel == "Yes")
 						var/list/validchoices = list()
-						for(var/mob/living/carbon/human/M in mob_list)
+						for(var/mob/living/carbon/human/M in GLOB.mob_list)
 							validchoices += M
 
 						var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
@@ -278,7 +277,7 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-			BP.change_bodypart_status(BODYPART_ROBOTIC)
+			BP.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 	update_icons()
 	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
@@ -349,14 +348,14 @@
 
 	switch(traitorType)
 		if(SNPC_BRUTE) // SMASH KILL RAAARGH
-			traitorTarget = pick(mob_list)
+			traitorTarget = pick(GLOB.mob_list)
 		if(SNPC_STEALTH) // Shhh we is sneekies
 			var/A = pick(typesof(/datum/objective_item/steal) - /datum/objective_item/steal)
 			var/datum/objective_item/steal/S = new A
 			traitorTarget = locate(S.targetitem) in world
 		if(SNPC_MARTYR) // MY LIFE FOR SPESZUL
 			var/targetType = pick(/obj/machinery/gravity_generator/main/station,/obj/machinery/power/smes/engineering,/obj/machinery/telecomms/hub)
-			traitorTarget = locate(targetType) in machines
+			traitorTarget = locate(targetType) in GLOB.machines
 		if(SNPC_PSYCHO) // YOU'RE LIKE A FLESH BICYLE AND I WANT TO DISMANTLE YOU
 			traitorTarget = null
 
@@ -373,7 +372,7 @@
 
 	doSetup()
 
-	START_PROCESSING(SSnpc, src)
+	START_PROCESSING(SSnpcpool, src)
 
 	loadVoice()
 
@@ -384,7 +383,7 @@
 	slyness += rand(-10,10)
 
 /mob/living/carbon/human/interactive/Destroy()
-	SSnpc.stop_processing(src)
+	SSnpcpool.stop_processing(src)
 	return ..()
 
 /mob/living/carbon/human/interactive/proc/retalTarget(var/target)
@@ -518,7 +517,7 @@
 	return get_dist(get_turf(towhere), get_turf(src))
 
 /mob/living/carbon/human/interactive/proc/InteractiveProcess()
-	if(ticker.current_state == GAME_STATE_FINISHED)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
 	doProcess()
 
@@ -526,7 +525,7 @@
 	saveVoice()
 	..()
 
-/mob/living/carbon/human/interactive/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/living/carbon/human/interactive/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker != src)
 		knownStrings |= html_decode(raw_message)
 	..()
@@ -546,7 +545,7 @@
 	//VIEW FUNCTIONS
 
 	//doorscan is now integrated into life and runs before all other procs
-	for(var/dir in alldirs)
+	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
 		if(T)
 			for(var/obj/machinery/door/D in T.contents)
@@ -810,13 +809,13 @@
 	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
 		return /area/medical
 	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
-		return /area/toxins
+		return /area/science
 	if(T.title == "Head of Security" || T.title == "Warden" || T.title == "Security Officer" || T.title == "Detective")
 		return /area/security
 	if(T.title == "Botanist")
 		return /area/hydroponics
 	else
-		return pick(/area/hallway,/area/crew_quarters)
+		return pick(/area/hallway,/area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
@@ -1108,7 +1107,7 @@
 
 	for(var/mob/living/carbon/human/C in nearby)
 		var/perpname = C.get_face_name(C.get_id_name())
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R && R.fields["criminal"])
 			switch(R.fields["criminal"])
 				if("*Arrest*")

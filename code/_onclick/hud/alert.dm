@@ -42,6 +42,7 @@
 		thealert.override_alerts = override
 		if(override)
 			thealert.timeout = null
+	thealert.mob_viewer = src
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -96,6 +97,7 @@
 	var/severity = 0
 	var/alerttooltipstyle = ""
 	var/override_alerts = FALSE //If it is overriding other alerts of the same type
+	var/mob/mob_viewer //the mob viewing this alert
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
@@ -256,6 +258,101 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
 
+// BLOODCULT
+
+/obj/screen/alert/bloodsense
+	name = "Blood Sense"
+	desc = "Allows you to sense blood that is manipulated by dark magicks."
+	icon_state = "cult_sense"
+	alerttooltipstyle = "cult"
+	var/static/image/narnar
+	var/angle = 0
+	var/mob/living/simple_animal/hostile/construct/Cviewer = null
+
+/obj/screen/alert/bloodsense/Initialize()
+	. = ..()
+	narnar = new('icons/mob/screen_alert.dmi', "mini_nar")
+	START_PROCESSING(SSprocessing, src)
+
+/obj/screen/alert/bloodsense/Destroy()
+	Cviewer = null
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/screen/alert/bloodsense/process()
+	var/atom/blood_target
+	if(GLOB.blood_target)
+		if(!get_turf(GLOB.blood_target))
+			GLOB.blood_target = null
+		else
+			blood_target = GLOB.blood_target
+	if(Cviewer && Cviewer.seeking && Cviewer.master)
+		blood_target = Cviewer.master
+		desc = "Your blood sense is leading you to [Cviewer.master]"
+	if(!blood_target)
+		if(!GLOB.sac_complete)
+			if(icon_state == "runed_sense0")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense0"
+			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
+			add_overlay(GLOB.sac_image)
+		else
+			if(icon_state == "runed_sense1")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense1"
+			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
+			add_overlay(narnar)
+		return
+	var/turf/P = get_turf(blood_target)
+	var/turf/Q = get_turf(mob_viewer)
+	var/area/A = get_area(P)
+	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
+		icon_state = "runed_sense2"
+		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
+		return
+	desc = "You are currently tracking [blood_target] in [A.name]."
+	var/target_angle = Get_Angle(Q, P)
+	var/target_dist = get_dist(P, Q)
+	cut_overlays()
+	switch(target_dist)
+		if(0 to 1)
+			icon_state = "runed_sense2"
+		if(2 to 8)
+			icon_state = "arrow8"
+		if(9 to 15)
+			icon_state = "arrow7"
+		if(16 to 22)
+			icon_state = "arrow6"
+		if(23 to 29)
+			icon_state = "arrow5"
+		if(30 to 36)
+			icon_state = "arrow4"
+		if(37 to 43)
+			icon_state = "arrow3"
+		if(44 to 50)
+			icon_state = "arrow2"
+		if(51 to 57)
+			icon_state = "arrow1"
+		if(58 to 64)
+			icon_state = "arrow0"
+		if(65 to 400)
+			icon_state = "arrow"
+	var/difference = target_angle - angle
+	angle = target_angle
+	if(!difference)
+		return
+	var/matrix/final = matrix(transform)
+	final.Turn(difference)
+	animate(src, transform = final, time = 5, loop = 0)
+
+
+
 // CLOCKCULT
 /obj/screen/alert/clockwork
 	alerttooltipstyle = "clockcult"
@@ -266,8 +363,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "no-servants-caches"
 	var/static/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 
-/obj/screen/alert/clockwork/scripture_reqs/New()
-	..()
+/obj/screen/alert/clockwork/scripture_reqs/Initialize()
+	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	process()
 
@@ -276,7 +373,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	return ..()
 
 /obj/screen/alert/clockwork/scripture_reqs/process()
-	if(clockwork_gateway_activated)
+	if(GLOB.clockwork_gateway_activated)
 		qdel(src)
 		return
 	var/current_state
@@ -288,7 +385,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "no"
 	if(!current_state)
 		name = "Current Objective"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			desc = "<b>Protect the Ark at [gate_area.map_name]!</b>"
 			return
@@ -298,7 +395,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		name = "Next Tier Requirements"
 		var/validservants = 0
 		var/unconverted_ais_exist = get_unconverted_ais()
-		for(var/mob/living/L in living_mob_list)
+		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L) && (ishuman(L) || issilicon(L)))
 				validservants++
 		var/req_servants = 0
@@ -328,14 +425,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			icon_state += "-servants" //in this manner, generate an icon key based on what we're missing
 		else
 			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
-		textlist += "<br><b>[clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
-		if(clockwork_caches < req_caches)
+		textlist += "<br><b>[GLOB.clockwork_caches]/[req_caches]</b> Tinkerer's Caches"
+		if(GLOB.clockwork_caches < req_caches)
 			icon_state += "-caches"
 		else
 			textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
 		if(req_cv) //cv only shows up if the tier requires it
-			textlist += "<br><b>[clockwork_construction_value]/[req_cv]</b> Construction Value"
-			if(clockwork_construction_value < req_cv)
+			textlist += "<br><b>[GLOB.clockwork_construction_value]/[req_cv]</b> Construction Value"
+			if(GLOB.clockwork_construction_value < req_cv)
 				icon_state += "-cv"
 			else
 				textlist += ": <b><font color=#5A6068>\[CHECK\]</font></b>"
@@ -356,7 +453,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "clockinfo"
 
 /obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
 	else
 		var/servants = 0
@@ -364,7 +461,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/unconverted_ais_exist = get_unconverted_ais()
 		var/list/scripture_states = scripture_unlock_check()
 		var/list/textlist
-		for(var/mob/living/L in living_mob_list)
+		for(var/mob/living/L in GLOB.living_mob_list)
 			if(is_servant_of_ratvar(L))
 				servants++
 				if(ishuman(L) || issilicon(L))
@@ -376,13 +473,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist = list("<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>")
 		else
 			textlist = list("<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>")
-		textlist += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[clockwork_construction_value]</b> Construction Value.<br>"
-		if(clockwork_daemons)
-			textlist += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
+		textlist += "<b>[GLOB.clockwork_caches ? "[GLOB.clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
+		<b>[GLOB.clockwork_construction_value]</b> Construction Value.<br>"
+		if(GLOB.clockwork_daemons)
+			textlist += "<b>[GLOB.clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < GLOB.clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			textlist += "No Tinkerer's Daemons.<br>"
-		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
 			var/area/gate_area = get_area(G)
 			textlist += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.still_needs_components())
@@ -393,16 +490,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				textlist += "<br>"
 			else
 				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+			break
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)
 				textlist += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
 				textlist += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states[SCRIPTURE_REVENANT])
-			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
-			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
-			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
-			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
+			var/inathneq_available = GLOB.clockwork_generals_invoked["inath-neq"] <= world.time
+			var/sevtug_available = GLOB.clockwork_generals_invoked["sevtug"] <= world.time
+			var/nezbere_available = GLOB.clockwork_generals_invoked["nezbere"] <= world.time
+			var/nezcrentr_available = GLOB.clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
 				textlist += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
 				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"

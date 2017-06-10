@@ -9,15 +9,7 @@
 
 #define SYMPTOM_LIMIT 8
 
-var/list/archive_diseases = list()
 
-// The order goes from easy to cure to hard to cure.
-var/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
-									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
-									"silver", "gold"
-								)
 
 /*
 
@@ -41,6 +33,14 @@ var/list/advance_cures = 	list(
 	var/id = ""
 	var/processing = 0
 
+	// The order goes from easy to cure to hard to cure.
+	var/static/list/advance_cures = 	list(
+									"sodiumchloride", "sugar", "orangejuice",
+									"spaceacillin", "salglu_solution", "ethanol",
+									"leporazine", "synaptizine", "lipolicide",
+									"silver", "gold"
+								)
+
 /*
 
 	OLD PROCS
@@ -48,13 +48,6 @@ var/list/advance_cures = 	list(
  */
 
 /datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
-
-	// Setup our dictionary if it hasn't already.
-	if(!dictionary_symptoms.len)
-		for(var/symp in list_symptoms)
-			var/datum/symptom/S = new symp
-			dictionary_symptoms[S.id] = symp
-
 	if(!istype(D))
 		D = null
 	// Generate symptoms if we weren't given any.
@@ -141,7 +134,7 @@ var/list/advance_cures = 	list(
 
 	// Generate symptoms. By default, we only choose non-deadly symptoms.
 	var/list/possible_symptoms = list()
-	for(var/symp in list_symptoms)
+	for(var/symp in SSdisease.list_symptoms)
 		var/datum/symptom/S = new symp
 		if(S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
@@ -168,13 +161,13 @@ var/list/advance_cures = 	list(
 	AssignProperties()
 	id = null
 
-	if(!archive_diseases[GetDiseaseID()])
+	if(!SSdisease.archive_diseases[GetDiseaseID()])
 		if(new_name)
 			AssignName()
-		archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
-		archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
+		SSdisease.archive_diseases[GetDiseaseID()] = src // So we don't infinite loop
+		SSdisease.archive_diseases[GetDiseaseID()] = new /datum/disease/advance(0, src, 1)
 
-	var/datum/disease/advance/A = archive_diseases[GetDiseaseID()]
+	var/datum/disease/advance/A = SSdisease.archive_diseases[GetDiseaseID()]
 	AssignName(A.name)
 
 //Generate disease properties based on the effects. Returns an associated list.
@@ -259,7 +252,7 @@ var/list/advance_cures = 	list(
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
-		var/datum/reagent/D = chemical_reagents_list[cures[1]]
+		var/datum/reagent/D = GLOB.chemical_reagents_list[cures[1]]
 		cure_text = D.name
 
 
@@ -379,7 +372,7 @@ var/list/advance_cures = 	list(
 
 	var/list/symptoms = list()
 	symptoms += "Done"
-	symptoms += list_symptoms.Copy()
+	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
 			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
@@ -399,13 +392,13 @@ var/list/advance_cures = 	list(
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
-		D.AssignName(russian_html2text(new_name))
+		D.AssignName(new_name)
 		D.Refresh()
 
 		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
+		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
 			if(H.z != 1)
 				continue
 			if(!H.HasDisease(D))

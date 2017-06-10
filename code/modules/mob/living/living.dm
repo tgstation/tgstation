@@ -2,7 +2,7 @@
 	. = ..()
 	generateStaticOverlay()
 	if(staticOverlays.len)
-		for(var/mob/living/simple_animal/drone/D in player_list)
+		for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 			if(D && D.seeStatic)
 				if(D.staticChoice in staticOverlays)
 					D.staticOverlays |= staticOverlays[D.staticChoice]
@@ -13,7 +13,7 @@
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
+	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
@@ -27,13 +27,20 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	if(LAZYLEN(status_effects))
+		for(var/s in status_effects)
+			var/datum/status_effect/S = s
+			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
+				qdel(S)
+			else
+				S.be_replaced()
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	QDEL_NULL(riding_datum)
 
-	for(var/mob/living/simple_animal/drone/D in player_list)
+	for(var/mob/living/simple_animal/drone/D in GLOB.player_list)
 		for(var/image/I in staticOverlays)
 			D.staticOverlays.Remove(I)
 			D.client.images.Remove(I)
@@ -234,7 +241,7 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
+	return (health < 0 && health > -100 && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -342,8 +349,8 @@
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
-		dead_mob_list -= src
-		living_mob_list += src
+		GLOB.dead_mob_list -= src
+		GLOB.living_mob_list += src
 		suiciding = 0
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
@@ -375,8 +382,6 @@
 	cure_blind()
 	cure_husk()
 	disabilities = 0
-	ear_deaf = 0
-	ear_damage = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -441,7 +446,7 @@
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
+	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
 /mob/living/movement_delay(ignorewalk = 0)
@@ -480,14 +485,14 @@
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
-				if((newdir in cardinal) && (prob(50)))
+				if((newdir in GLOB.cardinal) && (prob(50)))
 					newdir = turn(get_dir(T, src.loc), 180)
 				if(!blood_exists)
 					new /obj/effect/decal/cleanable/trail_holder(src.loc)
 				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
-						TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
@@ -595,7 +600,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
-	if(!ticker || !ticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
 		clear_alert("weightless")
@@ -665,7 +670,8 @@
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
-						who.put_in_hand(what, where_list[2])
+						if(!who.put_in_hand(what, where_list[2]))
+							what.forceMove(get_turf(who))
 					else
 						who.equip_to_slot(what, where, TRUE)
 
@@ -722,14 +728,14 @@
 	..()
 
 	if(statpanel("Status"))
-		if(ticker && ticker.mode)
-			for(var/datum/gang/G in ticker.mode.gangs)
+		if(SSticker && SSticker.mode)
+			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
-			if(istype(ticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = ticker.mode
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
+					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
 
 /mob/living/cancel_camera()
 	..()
@@ -788,9 +794,6 @@
 	return 1
 
 /mob/living/carbon/proc/update_stamina()
-	return
-
-/mob/living/carbon/human/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
@@ -799,29 +802,28 @@
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
-/mob/proc/update_sight()
+/mob/living/carbon/alien/update_stamina()
 	return
 
 /mob/living/proc/owns_soul()
 	if(mind)
 		return mind.soulOwner == mind
-	return 1
+	return TRUE
 
 /mob/living/proc/return_soul()
 	hellbound = 0
 	if(mind)
-		if(mind.soulOwner.devilinfo)//Not sure how this could happen, but whatever.
-			mind.soulOwner.devilinfo.remove_soul(mind)
+		var/datum/antagonist/devil/devilInfo = mind.soulOwner.has_antag_datum(ANTAG_DATUM_DEVIL)
+		if(devilInfo)//Not sure how this could be null, but let's just try anyway.
+			devilInfo.remove_soul(mind)
 		mind.soulOwner = mind
 
 /mob/living/proc/has_bane(banetype)
-	if(mind)
-		if(mind.devilinfo)
-			return mind.devilinfo.bane == banetype
-	return 0
+	var/datum/antagonist/devil/devilInfo = is_devil(src)
+	return devilInfo && banetype == devilInfo.bane
 
 /mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
-	if(mind && mind.devilinfo)
+	if(mind && mind.has_antag_datum(ANTAG_DATUM_DEVIL))
 		return check_devil_bane_multiplier(weapon, attacker)
 	return 1
 
@@ -921,3 +923,8 @@
 	if(riding_datum)
 		riding_datum.handle_vehicle_offsets()
 		riding_datum.handle_vehicle_layer()
+
+/mob/living/ConveyorMove()
+	if((movement_type & FLYING) && !stat)
+		return
+	..()

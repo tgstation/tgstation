@@ -70,7 +70,7 @@
 			else
 				do_animate("deny")
 		return
-	if (!( ticker ))
+	if (!( SSticker ))
 		return
 	var/mob/M = AM
 	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
@@ -128,8 +128,6 @@
 
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
-		return 0
-	if(!ticker || !ticker.mode)
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -330,7 +328,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
@@ -344,7 +342,7 @@
 		open()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()

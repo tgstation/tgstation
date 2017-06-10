@@ -164,3 +164,24 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = ""
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/butteredtoast
+	name = "buttered toast"
+	desc = "Butter lightly spread over a piece of toast."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butteredtoast"
+	bitesize = 3
+	filling_color = "#FFA500"
+	list_reagents = list("nutriment" = 4)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	tastes = list("butter" = 1, "toast" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/butterbiscuit
+	name = "butter biscuit"
+	desc = "Well butter my biscuit!"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butterbiscuit"
+	filling_color = "#F0E68C"
+	list_reagents = list("nutriment" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	tastes = list("butter" = 1, "biscuit" = 1)

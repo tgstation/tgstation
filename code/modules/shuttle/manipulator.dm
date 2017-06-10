@@ -20,22 +20,22 @@
 	var/obj/docking_port/mobile/preview_shuttle
 	var/datum/map_template/shuttle/preview_template
 
-/obj/machinery/shuttle_manipulator/New()
+/obj/machinery/shuttle_manipulator/Initialize()
 	. = ..()
 	update_icon()
 
 /obj/machinery/shuttle_manipulator/update_icon()
 	cut_overlays()
-	var/image/hologram_projection = image(icon, "hologram_on")
+	var/mutable_appearance/hologram_projection = mutable_appearance(icon, "hologram_on")
 	hologram_projection.pixel_y = 22
-	var/image/hologram_ship = image(icon, "hologram_whiteship")
+	var/mutable_appearance/hologram_ship = mutable_appearance(icon, "hologram_whiteship")
 	hologram_ship.pixel_y = 27
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)
 
 /obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", \
 	datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, \
-	datum/ui_state/state = admin_state)
+	datum/ui_state/state = GLOB.admin_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -155,7 +155,7 @@
 					message_admins("[key_name_admin(usr)] fast travelled \
 						[M]")
 					log_admin("[key_name(usr)] fast travelled [M]")
-					feedback_add_details("shuttle_fasttravel", M.name)
+					SSblackbox.add_details("shuttle_fasttravel", M.name)
 					break
 
 		if("preview")
@@ -182,7 +182,7 @@
 						with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the \
 						shuttle manipulator.</span>")
-					feedback_add_details("shuttle_manipulator", mdp.name)
+					SSblackbox.add_details("shuttle_manipulator", mdp.name)
 
 	update_icon()
 

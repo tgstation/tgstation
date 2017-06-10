@@ -19,12 +19,6 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
-
-var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/SLIDE = 2
-var/const/GALOSHES_DONT_HELP = 4
-var/const/SLIDE_ICE = 8
-
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0

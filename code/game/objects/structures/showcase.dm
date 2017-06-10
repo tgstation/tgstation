@@ -17,7 +17,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakeid/New()
+/obj/structure/showcase/fakeid/Initialize()
+	..()
 	add_overlay("id")
 	add_overlay("id_key")
 
@@ -27,7 +28,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakesec/New()
+/obj/structure/showcase/fakesec/Initialize()
+	..()
 	add_overlay("security")
 	add_overlay("security_key")
 

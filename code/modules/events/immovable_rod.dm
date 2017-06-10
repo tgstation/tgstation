@@ -20,7 +20,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/startside = pick(cardinal)
+	var/startside = pick(GLOB.cardinal)
 	var/turf/startT = spaceDebrisStartLoc(startside, 1)
 	var/turf/endT = spaceDebrisFinishLoc(startside, 1)
 	new /obj/effect/immovablerod(startT, endT)
@@ -47,7 +47,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		notify_ghosts("\A [src] is inbound!",
 			enter_link="<a href=?src=\ref[src];orbit=1>(Click to orbit)</a>",
 			source=src, action=NOTIFY_ORBIT)
-	poi_list += src
+	GLOB.poi_list += src
 	if(end && end.z==z_original)
 		walk_towards(src, destination, 1)
 
@@ -58,7 +58,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			ghost.ManualFollow(src)
 
 /obj/effect/immovablerod/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/effect/immovablerod/Move()

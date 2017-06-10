@@ -29,8 +29,6 @@
 		reconcile_air()
 	update = air.react()
 
-var/pipenetwarnings = 10
-
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
 	if(istype(base, /obj/machinery/atmospherics/pipe))
@@ -44,7 +42,6 @@ var/pipenetwarnings = 10
 		addMachineryMember(base)
 	if(!air)
 		air = new
-		air.holder = src
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len>0)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
@@ -58,6 +55,7 @@ var/pipenetwarnings = 10
 						if(!members.Find(item))
 
 							if(item.parent)
+								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
 									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
 									pipenetwarnings -= 1
@@ -246,4 +244,3 @@ var/pipenetwarnings = 10
 			var/list/G_gases = G.gases
 			for(var/id in G_gases)
 				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
-

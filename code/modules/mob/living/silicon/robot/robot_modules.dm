@@ -198,9 +198,9 @@
 /obj/item/weapon/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
 	R.notransform = TRUE
-	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = new /obj/effect/overlay/temp/decoy/fading/fivesecond(R.loc, R)
+	var/obj/effect/temp_visual/decoy/fading/fivesecond/ANM = new /obj/effect/temp_visual/decoy/fading/fivesecond(R.loc, R)
 	ANM.layer = R.layer - 0.01
-	new /obj/effect/overlay/temp/small_smoke(R.loc)
+	new /obj/effect/temp_visual/small_smoke(R.loc)
 	if(R.hat)
 		R.hat.forceMove(get_turf(R))
 		R.hat = null
@@ -222,7 +222,7 @@
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	if(feedback_key && !did_feedback)
-		feedback_inc(feedback_key, 1)
+		SSblackbox.inc(feedback_key, 1)
 
 /obj/item/weapon/robot_module/standard
 	name = "Standard"
@@ -271,6 +271,7 @@
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/weapon/organ_storage,
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
@@ -287,7 +288,7 @@
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
-		/obj/item/weapon/rcd/borg,
+		/obj/item/weapon/construction/rcd/borg,
 		/obj/item/weapon/pipe_dispenser,
 		/obj/item/weapon/extinguisher,
 		/obj/item/weapon/weldingtool/largetank/cyborg,
@@ -358,7 +359,8 @@
 		/obj/item/weapon/reagent_containers/borghypo/peace,
 		/obj/item/weapon/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/weapon/extinguisher)
+		/obj/item/weapon/extinguisher,
+		/obj/item/borg/projectile_dampen)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/peacekeeper,
@@ -476,7 +478,6 @@
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
 		/obj/item/weapon/storage/bag/ore/cyborg,
 		/obj/item/weapon/pickaxe/drill/cyborg,
 		/obj/item/weapon/shovel,

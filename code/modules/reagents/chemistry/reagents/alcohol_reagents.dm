@@ -966,7 +966,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Only for the experienced. You think you see sand floating in the glass."
 
 /datum/reagent/consumable/ethanol/bananahonk
-	name = "Banana Mama"
+	name = "Banana Honk"
 	id = "bananahonk"
 	description = "A drink from Clown Heaven."
 	nutriment_factor = 1 * REAGENTS_METABOLISM

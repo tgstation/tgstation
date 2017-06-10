@@ -16,16 +16,12 @@
 	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 	var/timerid
 
-/obj/item/clockwork/ratvarian_spear/New()
-	..()
-	impale_cooldown = 0
-
 /obj/item/clockwork/ratvarian_spear/Destroy()
 	deltimer(timerid)
 	return ..()
 
 /obj/item/clockwork/ratvarian_spear/ratvar_act()
-	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
+	if(GLOB.ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
@@ -40,7 +36,7 @@
 		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
 
 /obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		force = 25
 		throwforce = 50
 		armour_penetration = 10
@@ -100,13 +96,13 @@
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown) //can't attack until we're done impaling
 		if(target)
-			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
+			new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
 			target.Stun(2) //brief stun
 			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
-				var/obj/effect/overlay/temp/dir_setting/bloodsplatter/B = new /obj/effect/overlay/temp/dir_setting/bloodsplatter(T, get_dir(target, user))
+				var/obj/effect/temp_visual/dir_setting/bloodsplatter/B = new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, get_dir(target, user))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
@@ -155,5 +151,5 @@
 			T = get_turf(src)
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
-			new /obj/effect/overlay/temp/ratvar/spearbreak(T)
+			new /obj/effect/temp_visual/ratvar/spearbreak(T)
 		qdel(src)

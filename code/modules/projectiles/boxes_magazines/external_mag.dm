@@ -13,6 +13,22 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m10mm/rifle
+	name = "rifle magazine (10mm)"
+	desc = "A well-worn magazine fitted for the surplus rifle."
+	icon_state = "75-8"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/c10mm
+	caliber = "10mm"
+	max_ammo = 10
+
+/obj/item/ammo_box/magazine/m10mm/rifle/update_icon()
+	if(ammo_count())
+		icon_state = "75-8"
+	else
+		icon_state = "75-0"
+
+
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
 	desc = "A gun magazine. Loaded with rounds which ignite the target."
@@ -52,15 +68,30 @@
 
 /obj/item/ammo_box/magazine/wt550m9/wtap
 	name = "wt550 magazine (Armour Piercing 4.6x30mm)"
+	icon_state = "46x30mmtA-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mmap
+
+/obj/item/ammo_box/magazine/wt550m9/wtap/update_icon()
+	..()
+	icon_state = "46x30mmtA-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wttx
 	name = "wt550 magazine (Toxin Tipped 4.6x30mm)"
+	icon_state = "46x30mmtT-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mmtox
+
+/obj/item/ammo_box/magazine/wt550m9/wttx/update_icon()
+	..()
+	icon_state = "46x30mmtT-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/wt550m9/wtic
 	name = "wt550 magazine (Incindiary 4.6x30mm)"
+	icon_state = "46x30mmtI-20"
 	ammo_type = /obj/item/ammo_casing/c46x30mminc
+
+/obj/item/ammo_box/magazine/wt550m9/wtic/update_icon()
+	..()
+	icon_state = "46x30mmtI-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
@@ -234,35 +265,35 @@
 
 //// SAW MAGAZINES
 
-/obj/item/ammo_box/magazine/mm556x45
-	name = "box magazine (5.56x45mm)"
+/obj/item/ammo_box/magazine/mm195x129
+	name = "box magazine (1.95x129mm)"
 	icon_state = "a762-50"
 	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/mm556x45
-	caliber = "mm55645"
+	ammo_type = /obj/item/ammo_casing/mm195x129
+	caliber = "mm195129"
 	max_ammo = 50
 
-/obj/item/ammo_box/magazine/mm556x45/bleeding
-	name = "box magazine (Bleeding 5.56x45mm)"
+/obj/item/ammo_box/magazine/mm195x129/bleeding
+	name = "box magazine (Bleeding 1.95x129mm)"
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/mm556x45/bleeding
+	ammo_type = /obj/item/ammo_casing/mm195x129/bleeding
 
-/obj/item/ammo_box/magazine/mm556x45/hollow
-	name = "box magazine (Hollow-Point 5.56x45mm)"
+/obj/item/ammo_box/magazine/mm195x129/hollow
+	name = "box magazine (Hollow-Point 1.95x129mm)"
 	origin_tech = "combat=3"
-	ammo_type = /obj/item/ammo_casing/mm556x45/hollow
+	ammo_type = /obj/item/ammo_casing/mm195x129/hollow
 
-/obj/item/ammo_box/magazine/mm556x45/ap
-	name = "box magazine (Armor Penetrating 5.56x45mm)"
+/obj/item/ammo_box/magazine/mm195x129/ap
+	name = "box magazine (Armor Penetrating 1.95x129mm)"
 	origin_tech = "combat=4"
-	ammo_type = /obj/item/ammo_casing/mm556x45/ap
+	ammo_type = /obj/item/ammo_casing/mm195x129/ap
 
-/obj/item/ammo_box/magazine/mm556x45/incen
-	name = "box magazine (Incendiary 5.56x45mm)"
+/obj/item/ammo_box/magazine/mm195x129/incen
+	name = "box magazine (Incendiary 1.95x129mm)"
 	origin_tech = "combat=4"
-	ammo_type = /obj/item/ammo_casing/mm556x45/incen
+	ammo_type = /obj/item/ammo_casing/mm195x129/incen
 
-/obj/item/ammo_box/magazine/mm556x45/update_icon()
+/obj/item/ammo_box/magazine/mm195x129/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
 

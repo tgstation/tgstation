@@ -1,44 +1,69 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
-var/datum/controller/subsystem/timer/SStimer
 
-/datum/controller/subsystem/timer
+SUBSYSTEM_DEF(timer)
 	name = "Timer"
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
-	init_order = 1
+	init_order = INIT_ORDER_TIMER
 
-	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER|SS_NO_INIT
 
-	var/list/datum/timedevent/processing
-	var/list/hashes
+	var/list/datum/timedevent/processing = list()
+	var/list/hashes = list()
 
 	var/head_offset = 0 //world.time of the first entry in the the bucket.
 	var/practical_offset = 0 //index of the first non-empty item in the bucket.
 	var/bucket_resolution = 0 //world.tick_lag the bucket was designed for
 	var/bucket_count = 0 //how many timers are in the buckets
 
-	var/list/bucket_list //list of buckets, each bucket holds every timer that has to run that byond tick.
+	var/list/bucket_list = list() //list of buckets, each bucket holds every timer that has to run that byond tick.
 
-	var/list/timer_id_dict //list of all active timers assoicated to their timer id (for easy lookup)
+	var/list/timer_id_dict = list() //list of all active timers assoicated to their timer id (for easy lookup)
 
-	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
+	var/list/clienttime_timers = list() //special snowflake timers that run on fancy pansy "client time"
 
-
-/datum/controller/subsystem/timer/New()
-	processing = list()
-	hashes = list()
-	bucket_list = list()
-	timer_id_dict = list()
-
-	clienttime_timers = list()
-
-	NEW_SS_GLOBAL(SStimer)
-
+	var/last_invoke_tick = 0
+	var/static/last_invoke_warning = 0
+	var/static/bucket_auto_reset = TRUE
 
 /datum/controller/subsystem/timer/stat_entry(msg)
 	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
+	var/lit = last_invoke_tick
+	var/last_check = world.time - TIMER_NO_INVOKE_WARNING
+
+	if(!bucket_count)
+		last_invoke_tick = world.time
+
+	if(lit && lit < last_check && last_invoke_warning < last_check)
+		last_invoke_warning = world.time
+		var/msg = "No regular timers processed in the last [TIMER_NO_INVOKE_WARNING] ticks[bucket_auto_reset ? ", resetting buckets" : ""]!"
+		message_admins(msg)
+		WARNING(msg)
+		if(bucket_auto_reset)
+			bucket_resolution = 0
+		
+		log_world("Active timers at tick [world.time]:")
+		for(var/I in processing)
+			var/datum/timedevent/TE = I
+			msg = "Timer: [TE.id]: TTR: [TE.timeToRun], Flags: [TE.flags], "
+			if(TE.spent)
+				msg += "SPENT"
+			else
+				var/datum/callback/CB = TE.callBack
+				msg += "callBack: "
+				if(CB.object == GLOBAL_PROC)
+					msg += "GP: [CB.delegate]"
+				else
+					msg += "[!QDELETED(CB.object) ? CB.object : "SRC DELETED"]: [CB.delegate]("
+					var/first = TRUE
+					for(var/J in CB.arguments)
+						msg += "[first ? "" : ", "][J]"
+						first = FALSE
+					msg += ")"
+			log_world(msg)
+
 	while(length(clienttime_timers))
 		var/datum/timedevent/ctime_timer = clienttime_timers[clienttime_timers.len]
 		if (ctime_timer.timeToRun <= REALTIMEOFDAY)
@@ -87,6 +112,7 @@ var/datum/controller/subsystem/timer/SStimer
 				spent += timer
 				timer.spent = TRUE
 				callBack.InvokeAsync()
+				last_invoke_tick = world.time
 
 			timer = timer.next
 

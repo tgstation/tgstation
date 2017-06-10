@@ -148,10 +148,8 @@
 /area/ruin/powered/golem_ship)
 "u" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bedsheet/rd{
-	desc = "Majestic.";
+/obj/item/weapon/bedsheet/rd/royal_cape{
 	layer = 3;
-	name = "Royal Cape of the Liberator";
 	pixel_x = 5;
 	pixel_y = 9
 	},

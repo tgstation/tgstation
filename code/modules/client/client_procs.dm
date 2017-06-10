@@ -1,7 +1,7 @@
 	////////////
 	//SECURITY//
 	////////////
-#define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
+#define UPLOAD_LIMIT		5242880	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
 
 #define LIMITER_SIZE	5
 #define CURRENT_SECOND	1
@@ -70,14 +70,10 @@
 			return
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && href_logfile)
-		href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
-		if (href_list["ahelp_reply"])
-			cmd_ahelp_reply(href_list["priv_msg"])
-			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
@@ -98,11 +94,11 @@
 
 	..()	//redirect to hsrc.Topic()
 
-//client/proc/is_content_unlocked()
-//	if(!prefs.unlock_content)
-//		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
-//		return 0
-//	return 1
+/* /client/proc/is_content_unlocked()
+	if(!prefs.unlock_content)
+		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
+		return 0
+	return 1	*/
 
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(config.automute_on && !holder && src.last_message == message)
@@ -138,8 +134,7 @@
 	//CONNECT//
 	///////////
 #if (PRELOAD_RSC == 0)
-var/list/external_rsc_urls
-var/next_external_rsc = 0
+GLOBAL_LIST(external_rsc_urls)
 #endif
 
 
@@ -151,25 +146,26 @@ var/next_external_rsc = 0
 		return null
 
 #if (PRELOAD_RSC == 0)
+	var/static/next_external_rsc = 0
 	if(external_rsc_urls && external_rsc_urls.len)
 		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
 		preload_rsc = external_rsc_urls[next_external_rsc]
 #endif
 
-	clients += src
-	directory[ckey] = src
+	GLOB.clients += src
+	GLOB.directory[ckey] = src
+
+	GLOB.ahelp_tickets.ClientLogin(src)
 
 	//Admin Authorisation
-/*	var/localhost_addresses = list("127.0.0.1", "::1")
+	var/localhost_addresses = list()
 	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
-		if(localhost_rank)
-			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
-			localhost_holder.associate(src)*/
-/*	if(protected_config.autoadmin)
-		if(!admin_datums[ckey])
+		var/datum/admins/localhost_holder = new("!localhost!", 65535, ckey)
+		localhost_holder.associate(src)
+/*	if(config.autoadmin)
+		if(!GLOB.admin_datums[ckey])
 			var/datum/admin_rank/autorank
-			for(var/datum/admin_rank/R in admin_ranks)
+			for(var/datum/admin_rank/R in GLOB.admin_ranks)
 				if(R.name == config.autoadmin_rank)
 					autorank = R
 					break
@@ -177,17 +173,17 @@ var/next_external_rsc = 0
 				to_chat(world, "Autoadmin rank not found")
 			else
 				var/datum/admins/D = new(autorank, ckey)
-				admin_datums[ckey] = D*/
-	holder = admin_datums[ckey]
+				GLOB.admin_datums[ckey] = D*/
+	holder = GLOB.admin_datums[ckey]
 	if(holder)
-		admins |= src
+		GLOB.admins |= src
 		holder.owner = src
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
+	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
-		preferences_datums[ckey] = prefs
+		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
@@ -197,8 +193,8 @@ var/next_external_rsc = 0
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
 	if(config.log_access)
-		for(var/I in clients)
-			if(I == src)
+		for(var/I in GLOB.clients)
+			if(!I || I == src)
 				continue
 			var/client/C = I
 			if(C.key && (C.key != key) )
@@ -256,8 +252,8 @@ var/next_external_rsc = 0
 			qdel(src)
 			return 0
 
-	if( (world.address == address || !address) && !host )
-		host = key
+	if( (world.address == address || !address) && !GLOB.host )
+		GLOB.host = key
 		world.update_status()
 
 	if(holder)
@@ -271,7 +267,9 @@ var/next_external_rsc = 0
 	set_client_age_from_db()
 
 	if (isnum(player_age) && player_age == -1) //first connection
-		if (config.panic_bunker && !holder && !(ckey in deadmins))
+		player_age = 0
+	if (isnum(player_age) && player_age == -1) //first connection
+		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
@@ -306,17 +304,17 @@ var/next_external_rsc = 0
 
 	screen += void
 
-	if(prefs.lastchangelog != changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		if(config.aggressive_changelog)
 			changelog()
 		else
 			winset(src, "infowindow.changelog", "font-style=bold")
 
-	if(ckey in clientmessages)
-		for(var/message in clientmessages[ckey])
+	if(ckey in GLOB.clientmessages)
+		for(var/message in GLOB.clientmessages[ckey])
 			to_chat(src, message)
-		clientmessages.Remove(ckey)
+		GLOB.clientmessages.Remove(ckey)
 
 	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
@@ -329,6 +327,26 @@ var/next_external_rsc = 0
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	var/list/topmenus = GLOB.menulist[/datum/menu]
+	for (var/thing in topmenus)
+		var/datum/menu/topmenu = thing
+		var/topmenuname = "[topmenu]"
+		if (topmenuname == "[topmenu.type]")
+			var/list/tree = splittext(topmenuname, "/")
+			topmenuname = tree[tree.len]
+		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
+		var/list/entries = topmenu.Generate_list(src)
+		for (var/child in entries)
+			winset(src, "[url_encode(child)]", "[entries[child]]")
+			if (!ispath(child, /datum/menu))
+				var/atom/verb/verbpath = child
+				if (copytext(verbpath.name,1,2) != "@")
+					new child(src)
+
+	for (var/thing in prefs.menuoptions)
+		var/datum/menu/menuitem = GLOB.menulist[thing]
+		if (menuitem)
+			menuitem.Load_checked(src)
 
 //////////////
 //DISCONNECT//
@@ -339,9 +357,29 @@ var/next_external_rsc = 0
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
-		admins -= src
-	directory -= ckey
-	clients -= src
+		GLOB.admins -= src
+		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
+			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
+				var/cheesy_message = pick(
+					"I have no admins online!",\
+					"I'm all alone :(",\
+					"I'm feeling lonely :(",\
+					"I'm so lonely :(",\
+					"Why does nobody love me? :(",\
+					"I want a man :(",\
+					"Where has everyone gone?",\
+					"I need a hug :(",\
+					"Someone come hold me :(",\
+					"I need someone on me :(",\
+					"What happened? Where has everyone gone?",\
+					"Forever alone :("\
+				)
+
+				send2irc("Server", "[cheesy_message] (No admins online)")
+
+	GLOB.ahelp_tickets.ClientLogout(src)
+	GLOB.directory -= ckey
+	GLOB.clients -= src
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -413,6 +451,19 @@ var/next_external_rsc = 0
 
 	var/DBQuery/query_log_connection = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
+
+/client/proc/findJoinDate()
+	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
+	if(!http)
+		log_world("Failed to connect to byond age check for [ckey]")
+		return
+	var/F = file2text(http["CONTENT"])
+	if(F)
+		var/regex/R = regex("joined = \"(\\d{4}-\\d{2}-\\d{2})\"")
+		if(R.Find(F))
+			. = R.group[1]
+		else
+			CRASH("Age check regex failed for [src.ckey]")
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
@@ -530,10 +581,10 @@ var/next_external_rsc = 0
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=3000)
+/client/proc/is_afk(duration = config.inactivity_period)
 	if(inactivity > duration)
 		return inactivity
-	return 0
+	return FALSE
 
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.
@@ -559,7 +610,7 @@ var/next_external_rsc = 0
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
 
 
 //Hook, override it to run code when dir changes
@@ -582,3 +633,7 @@ var/next_external_rsc = 0
 		CRASH("change_view called without argument.")
 
 	view = new_size
+
+/client/proc/AnnouncePR(announcement)
+	if(prefs && prefs.chat_toggles & CHAT_PULLR)
+		to_chat(src, announcement)

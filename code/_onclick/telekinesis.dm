@@ -3,7 +3,6 @@
 
 	This needs more thinking out, but I might as well.
 */
-var/const/tk_maxrange = 15
 
 /*
 	Telekinetic attack:
@@ -14,7 +13,7 @@ var/const/tk_maxrange = 15
 /atom/proc/attack_tk(mob/user)
 	if(user.stat)
 		return
-	new /obj/effect/overlay/temp/telekinesis(loc)
+	new /obj/effect/temp_visual/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
 	return
 
@@ -136,7 +135,7 @@ var/const/tk_maxrange = 15
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
-	if(d > tk_maxrange)
+	if(d > TK_MAXRANGE)
 		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
 		return
 	return TRUE
@@ -164,7 +163,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
+	new /obj/effect/temp_visual/telekinesis(get_turf(focus))
 
 /obj/item/tk_grab/update_icon()
 	cut_overlays()

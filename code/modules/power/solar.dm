@@ -103,9 +103,9 @@
 	..()
 	cut_overlays()
 	if(stat & BROKEN)
-		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "solar_panel-b", FLY_LAYER))
 	else
-		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "solar_panel", FLY_LAYER))
 		src.setDir(angle2dir(adir))
 
 //calculates the fraction of the sunlight that the panel recieves
@@ -282,7 +282,7 @@
 	var/list/connected_panels = list()
 
 /obj/machinery/power/solar_control/Initialize()
-	..()
+	. = ..()
 	if(powernet)
 		set_panels(currentdir)
 	connect_to_network()
@@ -345,10 +345,11 @@
 	else
 		add_overlay(icon_screen)
 	if(currentdir > -1)
-		add_overlay(image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir)))
+		setDir(angle2dir(currentdir))
+		add_overlay(mutable_appearance(icon, "solcon-o", FLY_LAYER))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)

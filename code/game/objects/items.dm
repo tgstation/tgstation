@@ -1,4 +1,8 @@
-var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
+
+GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
+// if true, everyone item when created will have its name changed to be
+// more... RPG-like.
 
 /obj/item
 	name = "item"
@@ -99,13 +103,18 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
+	var/datum/rpg_loot/rpg_loot = null
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
-	..()
+	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
+
+	if(GLOB.rpg_loot_items)
+		rpg_loot = new(src)
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -114,6 +123,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
+	QDEL_NULL(rpg_loot)
 	return ..()
 
 /obj/item/device
@@ -349,7 +359,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return 1
 	return 0
 
-/obj/item/proc/talk_into(mob/M, input, channel, spans)
+/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
@@ -502,7 +512,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(.)
 		if(initial(icon) && initial(icon_state))
 			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = blood_splatter_icons[index]
+			var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
 			if(blood_splatter_icon)
 				cut_overlay(blood_splatter_icon)
 
@@ -518,6 +528,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))
+		if(is_hot() && isliving(A))
+			var/mob/living/L = A
+			L.IgniteMob()
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything

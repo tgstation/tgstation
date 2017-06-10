@@ -123,7 +123,7 @@
 /obj/item/weapon/claymore/highlander/attack_self(mob/living/user)
 	var/closest_victim
 	var/closest_distance = 255
-	for(var/mob/living/carbon/human/H in player_list - user)
+	for(var/mob/living/carbon/human/H in GLOB.player_list - user)
 		if(H.client && H.mind.special_role == "highlander" && (!closest_victim || get_dist(user, closest_victim) < closest_distance))
 			closest_victim = H
 	if(!closest_victim)
@@ -390,7 +390,7 @@
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	flags = NODROP | ABSTRACT
+	flags = NODROP | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 21
 	throwforce = 0
@@ -400,10 +400,17 @@
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 
-/obj/item/weapon/mounted_chainsaw/dropped()
-	..()
+/obj/item/weapon/mounted_chainsaw/Destroy()
+	var/obj/item/bodypart/part
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
-	qdel(src)
+	if(iscarbon(loc))
+		var/mob/living/carbon/holder = loc
+		var/index = holder.get_held_index_of_item(src)
+		if(index)
+			part = holder.hand_bodyparts[index]
+	. = ..()
+	if(part)
+		part.drop_limb()
 
 /obj/item/weapon/statuebust
 	name = "bust"

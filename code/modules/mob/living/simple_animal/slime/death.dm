@@ -26,8 +26,8 @@
 
 	update_canmove()
 
-	if(ticker && ticker.mode)
-		ticker.mode.check_win()
+	if(SSticker && SSticker.mode)
+		SSticker.mode.check_win()
 
 	return ..(gibbed)
 
@@ -37,7 +37,7 @@
 
 
 /mob/living/simple_animal/slime/Destroy()
-	for(var/obj/machinery/computer/camera_advanced/xenobio/X in machines)
+	for(var/obj/machinery/computer/camera_advanced/xenobio/X in GLOB.machines)
 		if(src in X.stored_slimes)
 			X.stored_slimes -= src
 	return ..()

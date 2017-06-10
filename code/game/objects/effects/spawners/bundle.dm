@@ -42,11 +42,11 @@
 		/obj/item/clothing/mask/cigarette/cigar/havana,
 		/obj/item/clothing/shoes/jackboots)
 
-/obj/effect/spawner/bundle/costume/nyangirl
+obj/effect/spawner/bundle/costume/nyangirl
 	name = "nyangirl costume spawner"
 	items = list(
 		/obj/item/clothing/under/schoolgirl,
-		/obj/item/clothing/head/kitty,
+		/*obj/item/clothing/head/kitty,*/
 		/obj/item/clothing/glasses/sunglasses/blindfold)
 
 /obj/effect/spawner/bundle/costume/maid

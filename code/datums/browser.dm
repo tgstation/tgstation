@@ -99,7 +99,7 @@
 		send_asset_list(user, stylesheets, verify=FALSE)
 	if (scripts.len)
 		send_asset_list(user, scripts, verify=FALSE)
-	user << browse(sanitize_russian(get_content(), 1), "window=[window_id];[window_size][window_options]")
+	user << browse(sanitize_russian(get_content()), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		setup_onclose()
 
@@ -169,7 +169,7 @@
 	opentime = 0
 
 /datum/browser/alert/proc/wait()
-	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout >= world.time))
+	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
 		stoplag()
 
 /datum/browser/alert/Topic(href,href_list)

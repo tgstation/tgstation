@@ -18,7 +18,7 @@
 	var/fulltile = 0
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/image/crack_overlay
+	var/mutable_appearance/crack_overlay
 	var/list/debris = list()
 	can_be_unanchored = 1
 	resistance_flags = ACID_PROOF
@@ -27,7 +27,23 @@
 
 /obj/structure/window/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+	if(reinf)
+		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
+			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the frame.</span>")
+		else if(anchored && state == WINDOW_IN_FRAME)
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>")
+		else if(anchored && state == WINDOW_OUT_OF_FRAME)
+			to_chat(user, "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>")
+		else if(!anchored)
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+	else
+		if(anchored)
+			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
+		else
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+
+	if(!anchored)
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	..()
@@ -57,13 +73,13 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
-/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 	return FALSE
 
-/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
@@ -364,7 +380,7 @@
 		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
-		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
+		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -389,6 +405,7 @@
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
+	desc = "A window that is reinforced with metal rods."
 	icon_state = "rwindow"
 	reinf = 1
 	heat_resistance = 1600
@@ -423,7 +440,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	glass_amount = 2
@@ -437,7 +454,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 100
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
@@ -450,7 +467,7 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 1000
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile)
 	level = 3
@@ -464,7 +481,7 @@
 	icon_state = "tinted_window"
 	dir = FULLTILE_WINDOW_DIR
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile,/obj/structure/window/reinforced/highpressure/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
 	level = 3
@@ -487,7 +504,7 @@
 	max_integrity = 100
 	wtype = "shuttle"
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	reinf = 1
 	heat_resistance = 1600
 	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 25, bio = 100, rad = 100, fire = 80, acid = 100)
@@ -528,7 +545,7 @@
 		qdel(I)
 	var/amount_of_gears = 2
 	if(fulltile)
-		new /obj/effect/overlay/temp/ratvar/window(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
 		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit()
@@ -536,7 +553,7 @@
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/window/single(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/window/single(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
@@ -546,7 +563,7 @@
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 		update_icon()
 
@@ -566,7 +583,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	flags = NONE
+	flags = PREVENT_CLICK_UNDER
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 120
 	level = 3

@@ -58,7 +58,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
-		if(ratvar_awakens)
+		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
 			for(var/i in consumed_components)
@@ -68,7 +68,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 							slab.stored_components[i]--
 							used_slab_components[i]++
 						else
-							clockwork_component_cache[i]--
+							GLOB.clockwork_component_cache[i]--
 							used_cache_components[i]++
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
@@ -78,15 +78,15 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 					if(slab)
 						slab.stored_components[i] += consumed_components[i]
 					else //if we can't find a slab add to the global cache
-						clockwork_component_cache[i] += consumed_components[i]
+						GLOB.clockwork_component_cache[i] += consumed_components[i]
 			for(var/i in used_cache_components)
 				if(used_cache_components[i])
-					clockwork_component_cache[i] += consumed_components[i]
+					GLOB.clockwork_component_cache[i] += consumed_components[i]
 			update_slab_info()
 		else
 			successful = TRUE
-			if(slab && !slab.no_cost && !ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				feedback_add_details("clockcult_scripture_recited", name)
+			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
+				SSblackbox.add_details("clockcult_scripture_recited", name)
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -102,12 +102,12 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
-	if(!ratvar_awakens && !slab.no_cost)
+	if(!GLOB.ratvar_awakens && !slab.no_cost)
 		checked_penalty = check_offstation_penalty()
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
 		for(var/i in consumed_components)
-			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
+			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
 			var/total_components = slab.stored_components[i] + cache_components
 			if(consumed_components[i] && total_components < consumed_components[i])
 				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
@@ -117,7 +117,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 			component_printout += "</span>"
 			to_chat(invoker, component_printout)
 			return FALSE
-	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
+	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
 			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())

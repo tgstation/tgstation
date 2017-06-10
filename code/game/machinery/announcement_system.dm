@@ -1,4 +1,4 @@
-var/list/announcement_systems = list()
+GLOBAL_LIST_EMPTY(announcement_systems)
 
 /obj/machinery/announcement_system
 	density = 1
@@ -27,7 +27,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/New()
 	..()
-	announcement_systems += src
+	GLOB.announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
@@ -62,7 +62,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/Destroy()
 	QDEL_NULL(radio)
-	announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
+	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
 /obj/machinery/announcement_system/power_change()
@@ -96,17 +96,17 @@ var/list/announcement_systems = list()
 	var/message
 
 	if(message_type == "ARRIVAL" && arrivalToggle)
-		message = russian_html2text(CompileText(arrival, user, rank))
+		message = CompileText(arrival, user, rank)
 	else if(message_type == "NEWHEAD" && newheadToggle)
-		message = russian_html2text(CompileText(newhead, user, rank))
+		message = CompileText(newhead, user, rank)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT))
+		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT))
+			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
 
 //config stuff
 
@@ -121,7 +121,7 @@ var/list/announcement_systems = list()
 	contents += "Departmental Head Announcement:  <A href='?src=\ref[src];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br><br>\n"
 
 	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
-	popup.set_content(sanitize_russian(contents))
+	popup.set_content(contents)
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
@@ -131,14 +131,14 @@ var/list/announcement_systems = list()
 		return
 
 	if(href_list["ArrivalTopic"])
-		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival))
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			arrival = NewMessage
 	else if(href_list["NewheadTopic"])
-		var/NewMessage = strip_html_properly(stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead))
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
 			return
 		if(NewMessage)
 			newhead = NewMessage
@@ -156,8 +156,8 @@ var/list/announcement_systems = list()
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
 	. = attack_ai(user)
 
-/obj/machinery/announcement_system/attack_ai(mob/living/silicon/user)
-	if(!issilicon(user))
+/obj/machinery/announcement_system/attack_ai(mob/user)
+	if(!issilicon(user) && !IsAdminGhost(user))
 		return
 	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")

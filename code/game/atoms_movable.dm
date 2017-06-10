@@ -1,3 +1,11 @@
+
+#ifndef PIXEL_SCALE
+#define PIXEL_SCALE 0
+#if DM_VERSION >= 512
+#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
+#endif
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
@@ -6,11 +14,12 @@
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages_spoken = 0 //For say() and Hear()
-	var/languages_understood = 0
+	var/initial_language_holder = /datum/language_holder
+	var/datum/language_holder/language_holder
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
+	var/verb_whisper = "whispers"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -22,7 +31,7 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
 
@@ -33,6 +42,30 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
+	switch(var_name)
+		if("x")
+			var/turf/T = locate(var_value, y, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("y")
+			var/turf/T = locate(x, var_value, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("z")
+			var/turf/T = locate(x, y, var_value)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("loc")
+			if(var_value == null || istype(var_value, /atom))
+				forceMove(var_value)
+				return TRUE
+			return FALSE
 	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -106,6 +139,11 @@
 
 	if(flags & CLEAN_ON_MOVE)
 		clean_on_move()
+
+	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
+	if(proximity_monitor)
+		proximity_monitor.HandleMove()
+
 	return 1
 
 /atom/movable/proc/clean_on_move()
@@ -156,6 +194,9 @@
 
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
+
+	QDEL_NULL(proximity_monitor)
+	QDEL_NULL(language_holder)
 
 	. = ..()
 	if(loc)
@@ -266,6 +307,7 @@
 	return pass_flags&passflag
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
+	set waitfor = 0
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
@@ -445,7 +487,7 @@
 	if(!I)
 		return
 
-	flick_overlay(I, clients, 5) // 5 ticks/half a second
+	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
@@ -518,8 +560,8 @@
 /atom/movable/proc/relocate()
 	var/targetturf = find_safe_turf(ZLEVEL_STATION)
 	if(!targetturf)
-		if(blobstart.len > 0)
-			targetturf = get_turf(pick(blobstart))
+		if(GLOB.blobstart.len > 0)
+			targetturf = get_turf(pick(GLOB.blobstart))
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark")
 
@@ -539,7 +581,7 @@
 		return
 	else
 		var/turf/currentturf = get_turf(src)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
 		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
 		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
@@ -550,3 +592,91 @@
 	var/turf/currentturf = get_turf(src)
 	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
 		. = TRUE
+
+
+/* Language procs */
+/atom/movable/proc/get_language_holder(shadow=TRUE)
+	if(language_holder)
+		return language_holder
+	else
+		language_holder = new initial_language_holder(src)
+		return language_holder
+
+/atom/movable/proc/grant_language(datum/language/dt)
+	var/datum/language_holder/H = get_language_holder()
+	H.grant_language(dt)
+
+/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	H.grant_all_languages(omnitongue)
+
+/atom/movable/proc/get_random_understood_language()
+	var/datum/language_holder/H = get_language_holder()
+	. = H.get_random_understood_language()
+
+/atom/movable/proc/remove_language(datum/language/dt)
+	var/datum/language_holder/H = get_language_holder()
+	H.remove_language(dt)
+
+/atom/movable/proc/remove_all_languages()
+	var/datum/language_holder/H = get_language_holder()
+	H.remove_all_languages()
+
+/atom/movable/proc/has_language(datum/language/dt)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.has_language(dt)
+
+/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.copy_known_languages_from(thing, replace)
+
+// Whether an AM can speak in a language or not, independent of whether
+// it KNOWS the language
+/atom/movable/proc/could_speak_in_language(datum/language/dt)
+	. = TRUE
+
+/atom/movable/proc/can_speak_in_language(datum/language/dt)
+	var/datum/language_holder/H = get_language_holder()
+
+	if(!H.has_language(dt))
+		return FALSE
+	else if(H.omnitongue)
+		return TRUE
+	else if(could_speak_in_language(dt) && (!H.only_speaks_language || H.only_speaks_language == dt))
+		return TRUE
+	else
+		return FALSE
+
+/atom/movable/proc/get_default_language()
+	// if no language is specified, and we want to say() something, which
+	// language do we use?
+	var/datum/language_holder/H = get_language_holder()
+
+	if(H.selected_default_language)
+		if(can_speak_in_language(H.selected_default_language))
+			return H.selected_default_language
+		else
+			H.selected_default_language = null
+
+
+	var/datum/language/chosen_langtype
+	var/highest_priority
+
+	for(var/lt in H.languages)
+		var/datum/language/langtype = lt
+		if(!can_speak_in_language(langtype))
+			continue
+
+		var/pri = initial(langtype.default_priority)
+		if(!highest_priority || (pri > highest_priority))
+			chosen_langtype = langtype
+			highest_priority = pri
+
+	H.selected_default_language = .
+	. = chosen_langtype
+
+/* End language procs */
+/atom/movable/proc/ConveyorMove(movedir)
+	set waitfor = FALSE
+	if(!anchored && has_gravity())
+		step(src, movedir)

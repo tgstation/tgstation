@@ -240,7 +240,7 @@
 		return FALSE
 	var/count = 0
 	var/maxcount = 1
-	for(var/tempdir in cardinal)
+	for(var/tempdir in GLOB.cardinal)
 		var/turf/closed/wall = get_step(user.loc, tempdir)
 		if(istype(wall))
 			maxcount++
@@ -307,5 +307,5 @@
 	. = ..()
 	if(.)
 		message_admins("Shadowshroom planted by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(user)]",0,1)
-		investigate_log("was planted by [key_name(user)] at [COORD(user)]", "botany")
+		investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
 

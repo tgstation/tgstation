@@ -16,26 +16,24 @@
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/dead/new_player/Initialize()
-	if(initialized)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
-	tag = "mob_[next_mob_id++]"
-	mob_list += src
-
-	if(client && ticker.state == GAME_STATE_STARTUP)
+	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
 
-	if(length(newplayer_start))
-		loc = pick(newplayer_start)
+	if(length(GLOB.newplayer_start))
+		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+	. = ..()
+
+/mob/dead/new_player/prepare_huds()
+	return
 
 /mob/dead/new_player/proc/new_player_panel()
 
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
-	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
+	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
 		if(ready)
 			output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
 		else
@@ -46,7 +44,7 @@
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
-/*
+
 	if(!IsGuestKey(src.key))
 		if (dbcon.Connect())
 			var/isadmin = 0
@@ -63,7 +61,7 @@
 				output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
 			else
 				output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
-*/
+
 	output += "</center>"
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
@@ -77,19 +75,18 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
 		stat("Map:", SSmapping.config.map_name)
 
-		if(ticker.current_state == GAME_STATE_PREGAME)
-			var/time_remaining = ticker.GetTimeLeft()
+		if(SSticker.current_state == GAME_STATE_PREGAME)
+			var/time_remaining = SSticker.GetTimeLeft()
 			if(time_remaining >= 0)
 				time_remaining /= 10
 			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
 
-			stat("Players: [ticker.totalPlayers]", "Players Ready: [ticker.totalPlayersReady]")
-			for(var/mob/dead/new_player/player in player_list)
-				stat("[player.key]", "[player.ready ? "(Playing)" : ""]")
-
+			stat("Players:", "[SSticker.totalPlayers]")
+			if(client.holder)
+				stat("Players Ready:", "[SSticker.totalPlayersReady]")
 
 
 /mob/dead/new_player/Topic(href, href_list[])
@@ -111,7 +108,7 @@
 		return 1
 
 	if(href_list["ready"])
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
+		if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
 			ready = text2num(href_list["ready"])
 
 	if(href_list["refresh"])
@@ -149,7 +146,7 @@
 			return 1
 
 	if(href_list["late_join"])
-		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
+		if(!SSticker || !SSticker.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
@@ -157,17 +154,17 @@
 			LateChoices()
 			return
 
-		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
+		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in GLOB.admin_datums)))
 			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
 
-			var/queue_position = ticker.queued_players.Find(usr)
+			var/queue_position = SSticker.queued_players.Find(usr)
 			if(queue_position == 1)
 				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
 			else if(queue_position)
 				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
 			else
-				ticker.queued_players += usr
-				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
+				SSticker.queued_players += usr
+				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len].</span>")
 			return
 		LateChoices()
 
@@ -176,12 +173,12 @@
 
 	if(href_list["SelectedJob"])
 
-		if(!enter_allowed)
+		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
-		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
-			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
+		if(SSticker.queued_players.len && !(ckey(key) in GLOB.admin_datums))
+			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
 				to_chat(usr, "<span class='warning'>Server is full.</span>")
 				return
 
@@ -194,7 +191,7 @@
 	else if(!href_list["late_join"])
 		new_player_panel()
 
-/*	if(href_list["showpoll"])
+	if(href_list["showpoll"])
 		handle_player_polling()
 		return
 
@@ -276,7 +273,6 @@
 					to_chat(src, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 					return
 				to_chat(src, "<span class='notice'>Vote successful.</span>")
-*/
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -304,8 +300,8 @@
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
 		return 0
-	
-	if(ticker.late_join_disabled)
+
+	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
@@ -316,8 +312,8 @@
 			return FALSE
 
 	//Remove the player from the join queue if he was in one and reset the timer
-	ticker.queued_players -= src
-	ticker.queue_delay = 4
+	SSticker.queued_players -= src
+	SSticker.queue_delay = 4
 
 	SSjob.AssignRole(src, rank, 1)
 
@@ -327,8 +323,8 @@
 		character = equip
 
 	var/D
-	if(latejoin.len)
-		D = get_turf(pick(latejoin))
+	if(GLOB.latejoin.len)
+		D = get_turf(pick(GLOB.latejoin))
 	if(!D)
 		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
 			if(!T.density)
@@ -348,46 +344,46 @@
 	if(chair)
 		chair.buckle_mob(character)
 
-	ticker.minds += character.mind
+	SSticker.minds += character.mind
 
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,
 
 	if(humanc)	//These procs all expect humans
-		data_core.manifest_inject(humanc)
+		GLOB.data_core.manifest_inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
 			AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
-		if(highlander)
+		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
 
-	joined_player_list += character.ckey
+	GLOB.joined_player_list += character.ckey
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-					ticker.mode.make_antag_chance(humanc)
+					SSticker.mode.make_antag_chance(humanc)
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
-						ticker.mode.make_antag_chance(humanc)
+						SSticker.mode.make_antag_chance(humanc)
 	qdel(src)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	sleep(30)
-	for(var/C in employmentCabinets)
+	for(var/C in GLOB.employmentCabinets)
 		var/obj/structure/filingcabinet/employment/employmentCabinet = C
 		if(!employmentCabinet.virgin)
 			employmentCabinet.addFile(employee)
 
 
 /mob/dead/new_player/proc/LateChoices()
-	var/mills = world.time - round_start_time // 1/10 of a second, not real milliseconds but whatever
+	var/mills = world.time - SSticker.round_start_time // 1/10 of a second, not real milliseconds but whatever
 	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
@@ -427,7 +423,7 @@
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
 			var/position_class = "otherPosition"
-			if (job.title in command_positions)
+			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 	if(!job_count) //if there's nowhere to go, assistant opens up.
@@ -478,7 +474,7 @@
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
 	dat += "<h4>Crew Manifest</h4>"
-	dat += data_core.get_manifest(OOC = 1)
+	dat += GLOB.data_core.get_manifest(OOC = 1)
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 

@@ -39,19 +39,19 @@
 				atmos_machines += A
 
 	SSatoms.InitializeAtoms(atoms)
-	SSmachine.setup_template_powernets(cables)
+	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load_new_z()
 	var/x = round(world.maxx/2)
 	var/y = round(world.maxy/2)
 
-	var/list/bounds = maploader.load_map(get_file(), x, y)
+	var/list/bounds = maploader.load_map(file(mappath), x, y)
 	if(!bounds)
 		return FALSE
 
 	smooth_zlevel(world.maxz)
-	SortAreas()
+	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
@@ -67,22 +67,18 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE)
 	if(!bounds)
 		return
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 
+	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
+		repopulate_sorted_areas()
+
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return TRUE
-
-/datum/map_template/proc/get_file()
-	if(mappath)
-		. = file(mappath)
-
-	if(!.)
-		world.log << "The file of [src] ([mappath]) appears to be empty/non-existent."
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
 	var/turf/placement = T

@@ -624,3 +624,14 @@
 	id = "laughter"
 	results = list("laughter" = 10) // Fuck it. I'm not touching this one.
 	required_reagents = list("sugar" = 1, "banana" = 1)
+
+/datum/chemical_reaction/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
+
+/datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to 10)
+		new /obj/item/stack/sheet/plastic(location)

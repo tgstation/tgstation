@@ -5,7 +5,6 @@
 	dna_cost = 0
 	req_dna = 1
 	req_human = 1
-	max_genetic_damage = 3
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
@@ -107,9 +106,7 @@
 		return
 
 	changeling_transform(user, chosen_prof)
-
-	feedback_add_details("changeling_powers","TR")
-	return 1
+	return TRUE
 
 /datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
 	var/list/names = list("Drop Flesh Disguise")
@@ -121,8 +118,8 @@
 		return
 
 	if(chosen_name == "Drop Flesh Disguise")
-		for(var/slot in slots)
-			if(istype(user.vars[slot], slot2type[slot]))
+		for(var/slot in GLOB.slots)
+			if(istype(user.vars[slot], GLOB.slot2type[slot]))
 				qdel(user.vars[slot])
 
 	var/datum/changelingprofile/prof = get_dna(chosen_name)

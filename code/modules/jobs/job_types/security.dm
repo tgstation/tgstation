@@ -1,7 +1,7 @@
 //Warden and regular officers add this result to their get_access()
 /datum/job/proc/check_config_for_sec_maint()
 	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS)
-		return list(access_maint_tunnels)
+		return list(GLOB.access_maint_tunnels)
 	return list()
 
 /*
@@ -23,14 +23,14 @@ Head of Security
 
 	outfit = /datum/outfit/job/hos
 
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
-			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
-			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons,
+			            GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_all_personal_lockers,
+			            GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction, GLOB.access_mailsorting,
+			            GLOB.access_heads, GLOB.access_hos, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_maint_tunnels)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons,
+			            GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_all_personal_lockers,
+			            GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction, GLOB.access_mailsorting,
+			            GLOB.access_heads, GLOB.access_hos, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_maint_tunnels)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -74,8 +74,8 @@ Warden
 
 	outfit = /datum/outfit/job/warden
 
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons) //See /datum/job/warden/get_access()
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons) //See /datum/job/warden/get_access()
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -124,8 +124,8 @@ Detective
 
 	outfit = /datum/outfit/job/detective
 
-	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_brig, access_weapons)
-	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_brig, access_weapons)
+	access = list(GLOB.access_sec_doors, GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_court, GLOB.access_brig, GLOB.access_weapons)
+	minimal_access = list(GLOB.access_sec_doors, GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_court, GLOB.access_brig, GLOB.access_weapons)
 
 /datum/outfit/job/detective
 	name = "Detective"
@@ -172,8 +172,8 @@ Security Officer
 
 	outfit = /datum/outfit/job/security
 
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_weapons) //But see /datum/job/warden/get_access()
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_court, GLOB.access_weapons) //But see /datum/job/warden/get_access()
 
 
 /datum/job/officer/get_access()
@@ -181,19 +181,19 @@ Security Officer
 	L |= ..() | check_config_for_sec_maint()
 	return L
 
-var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)
+GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
 /datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
 	// Assign department security
 	var/department
 	if(M && M.client && M.client.prefs)
 		department = M.client.prefs.prefered_security_department
-		if(!LAZYLEN(available_depts) || department == "None")
+		if(!LAZYLEN(GLOB.available_depts) || department == "None")
 			return
-		else if(department in available_depts)
-			LAZYREMOVE(available_depts, department)
+		else if(department in GLOB.available_depts)
+			LAZYREMOVE(GLOB.available_depts, department)
 		else
-			department = pick_n_take(available_depts)
+			department = pick_n_take(GLOB.available_depts)
 	var/ears = null
 	var/tie = null
 	var/list/dep_access = null
@@ -202,27 +202,27 @@ var/list/available_depts = list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT
 	switch(department)
 		if(SEC_DEPT_SUPPLY)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-			dep_access = list(access_mailsorting, access_mining, access_mining_station)
+			dep_access = list(GLOB.access_mailsorting, GLOB.access_mining, GLOB.access_mining_station)
 			destination = /area/security/checkpoint/supply
-			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
 			tie = /obj/item/clothing/tie/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
-			dep_access = list(access_construction, access_engine)
+			dep_access = list(GLOB.access_construction, GLOB.access_engine)
 			destination = /area/security/checkpoint/engineering
-			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
 			tie = /obj/item/clothing/tie/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
-			dep_access = list(access_medical)
+			dep_access = list(GLOB.access_medical)
 			destination = /area/security/checkpoint/medical
-			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
 			tie =  /obj/item/clothing/tie/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
-			dep_access = list(access_research)
+			dep_access = list(GLOB.access_research)
 			destination = /area/security/checkpoint/science
-			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
+			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
 			tie = /obj/item/clothing/tie/armband/science
 
 	if(tie)

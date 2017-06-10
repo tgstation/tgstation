@@ -15,11 +15,20 @@
 	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
+	var/list/initial_contents
 
 /obj/machinery/smartfridge/New()
 	..()
 	create_reagents()
 	reagents.set_reacting(FALSE)
+
+	if(islist(initial_contents))
+		for(var/typekey in initial_contents)
+			var/amount = initial_contents[typekey]
+			if(isnull(amount))
+				amount = 1
+			for(var/i in 1 to amount)
+				load(new typekey(src))
 
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
 	B.apply_default_parts(src)
@@ -51,7 +60,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/circuitboard/machine/smartfridge/examine/(mob/user)
+/obj/item/weapon/circuitboard/machine/smartfridge/examine(mob/user)
 	..()
 	to_chat(user, "<span class='info'>[src] is set to [fridges[build_path]]. You can use a screwdriver to reconfigure it.</span>")
 
@@ -384,12 +393,8 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/smartfridge/extract/New()
-	..()
-	var/obj/item/device/slime_scanner/I = new /obj/item/device/slime_scanner(src)
-	load(I)
-	var/obj/item/device/slime_scanner/T = new /obj/item/device/slime_scanner(src)
-	load(T)
+/obj/machinery/smartfridge/extract/preloaded
+	initial_contents = list(/obj/item/device/slime_scanner = 2)
 
 // -----------------------------
 // Chemistry Medical Smartfridge
@@ -397,21 +402,6 @@
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
-	var/list/spawn_meds = list(
-		/obj/item/weapon/reagent_containers/pill/epinephrine = 12,
-		/obj/item/weapon/reagent_containers/pill/charcoal = 5,
-		/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1,
-		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
-
-/obj/machinery/smartfridge/chemistry/New()
-	..()
-	for(var/typekey in spawn_meds)
-		var/amount = spawn_meds[typekey]
-		if(isnull(amount)) amount = 1
-		while(amount)
-			var/obj/item/I = new typekey(src)
-			load(I)
-			amount--
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
@@ -431,13 +421,22 @@
 		return TRUE
 	return FALSE
 
+/obj/machinery/smartfridge/chemistry/preloaded
+	initial_contents = list(
+		/obj/item/weapon/reagent_containers/pill/epinephrine = 12,
+		/obj/item/weapon/reagent_containers/pill/charcoal = 5,
+		/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
+
 // ----------------------------
 // Virology Medical Smartfridge
 // ----------------------------
 /obj/machinery/smartfridge/chemistry/virology
 	name = "smart virus storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
-	spawn_meds = list(
+
+/obj/machinery/smartfridge/chemistry/virology/preloaded
+	initial_contents = list(
 		/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 		/obj/item/weapon/reagent_containers/glass/bottle/cold = 1,
 		/obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1,

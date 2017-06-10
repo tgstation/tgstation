@@ -1,6 +1,6 @@
 
 
-var/hsboxspawn = 1
+GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
 /mob
 	var/datum/hSB/sandbox = null
@@ -113,13 +113,13 @@ var/hsboxspawn = 1
 			//
 			if("hsbtobj")
 				if(!admin) return
-				if(hsboxspawn)
+				if(GLOB.hsboxspawn)
 					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
-					hsboxspawn = 0
+					GLOB.hsboxspawn = FALSE
 					return
 				else
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>")
-					hsboxspawn = 1
+					GLOB.hsboxspawn = TRUE
 					return
 			//
 			// Admin: Toggle auto-close
@@ -216,9 +216,9 @@ var/hsboxspawn = 1
 			// Spawn check due to grief potential (destroying floors, walls, etc)
 			//
 			if("hsbrcd")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
-				new/obj/item/weapon/rcd/combat(usr.loc)
+				new/obj/item/weapon/construction/rcd/combat(usr.loc)
 
 			//
 			// New sandbox airlock maker
@@ -232,7 +232,7 @@ var/hsboxspawn = 1
 
 			// Clothing
 			if("hsbcloth")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!clothinfo)
 					clothinfo = "<b>Clothing</b> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -246,7 +246,7 @@ var/hsboxspawn = 1
 
 			// Reagent containers
 			if("hsbreag")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!reaginfo)
 					reaginfo = "<b>Reagent Containers</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbobj'>(Other Items)</a><hr><br>"
@@ -260,7 +260,7 @@ var/hsboxspawn = 1
 
 			// Other items
 			if("hsbobj")
-				if(!hsboxspawn) return
+				if(!GLOB.hsboxspawn) return
 
 				if(!objinfo)
 					objinfo = "<b>Other Items</b> <a href='?\ref[src];hsb=hsbcloth'>(Clothing)</a> <a href='?\ref[src];hsb=hsbreag'>(Reagent Containers)</a><hr><br>"
@@ -277,7 +277,7 @@ var/hsboxspawn = 1
 			// Safespawn checks to see if spawning is disabled.
 			//
 			if("hsb_safespawn")
-				if(!hsboxspawn)
+				if(!GLOB.hsboxspawn)
 					usr << browse(null,"window=sandbox")
 					return
 

@@ -84,9 +84,8 @@
 	qdel(src)
 
 /obj/structure/table_frame/narsie_act()
-	if(prob(20))
-		new /obj/structure/table_frame/wood(src.loc)
-		qdel(src)
+	new /obj/structure/table_frame/wood(src.loc)
+	qdel(src)
 
 /obj/structure/table_frame/ratvar_act()
 	new /obj/structure/table_frame/brass(src.loc)

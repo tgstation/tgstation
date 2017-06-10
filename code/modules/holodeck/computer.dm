@@ -45,44 +45,52 @@
 	var/list/effects = list()
 	var/last_change = 0
 
-/obj/machinery/computer/holodeck/New()
-
-	if(ispath(holodeck_type,/area))
-		linked = locate(holodeck_type)
-	if(ispath(offline_program,/area))
-		offline_program = locate(offline_program)
-	// the following is necessary for power reasons
-	var/area/AS = get_area(src)
-	if(istype(AS,/area/holodeck))
-		log_world("### MAPPING ERROR")
-		log_world("Holodeck computer cannot be in a holodeck.")
-		log_world("This would cause circular power dependency.")
-		qdel(src)  // todo handle constructed computers
-		return	//l-lewd...
-	else
-		linked.linked = src // todo detect multiple/constructed computers
-	..()
+	
 
 /obj/machinery/computer/holodeck/Initialize(mapload)
-	. = mapload	//late-initialize, area_copy need turfs to have air
-	if(!mapload)
-		..()
-		program_cache = list()
-		emag_programs = list()
-		for(var/typekey in subtypesof(program_type))
-			var/area/holodeck/A = locate(typekey)
-			if(!A || A == offline_program) continue
-			if(A.contents.len == 0) continue // not loaded
-			if(A.restricted)
-				emag_programs += A
-			else
-				program_cache += A
-			if(typekey == init_program)
-				load_program(A,force=1)
-		if(random_program && program_cache.len && init_program == null)
-			load_program(pick(program_cache),force=1)
-		else if(!program)
-			load_program(offline_program)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/holodeck/LateInitialize()
+  if(ispath(holodeck_type,/area))
+    var/list/possible = get_areas(holodeck_type,subtypes = FALSE)
+    linked = pop(possible)
+  if(ispath(offline_program,/area))
+    var/list/possible = get_areas(offline_program,subtypes = FALSE)
+    offline_program = pop(possible)
+  // the following is necessary for power reasons
+  if(!linked || !offline_program)
+    log_world("No matching holodeck area found")
+    qdel(src)
+    return
+  var/area/AS = get_area(src)
+  if(istype(AS,/area/holodeck))
+    log_world("### MAPPING ERROR")
+    log_world("Holodeck computer cannot be in a holodeck.")
+    log_world("This would cause circular power dependency.")
+    qdel(src)  // todo handle constructed computers
+    return	//l-lewd...
+  else
+    linked.linked = src // todo detect multiple/constructed computers
+
+  program_cache = list()
+  emag_programs = list()
+  for(var/typekey in subtypesof(program_type))
+    var/area/holodeck/A = locate(typekey)
+    if(!A || A == offline_program) 
+      continue
+    if(A.contents.len == 0) 
+      continue // not loaded
+    if(A.restricted)
+      emag_programs += A
+    else
+      program_cache += A
+    if(typekey == init_program)
+      load_program(A,force=1)
+  if(random_program && program_cache.len && init_program == null)
+    load_program(pick(program_cache),force=1)
+  else if(!program)
+    load_program(offline_program)
 
 /obj/machinery/computer/holodeck/power_change()
 	..()
@@ -191,8 +199,9 @@
 		nerf(!emagged)
 
 /obj/machinery/computer/holodeck/Destroy()
-	emergency_shutdown()
-	linked.linked = null
+	if(linked)
+		emergency_shutdown()
+		linked.linked = null
 	return ..()
 
 /obj/machinery/computer/holodeck/emp_act(severity)

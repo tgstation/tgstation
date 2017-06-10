@@ -25,7 +25,7 @@
 	var/lightswitch = 1
 
 	var/requires_power = 1
-	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/Initialize().
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
@@ -42,6 +42,7 @@
 
 	var/has_gravity = 0
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
@@ -64,20 +65,20 @@
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-var/list/teleportlocs = list()
+GLOBAL_LIST_EMPTY(teleportlocs)
 
 /proc/process_teleport_locs()
-	for(var/V in sortedAreas)
+	for(var/V in GLOB.sortedAreas)
 		var/area/AR = V
 		if(istype(AR, /area/shuttle) || AR.noteleport)
 			continue
-		if(teleportlocs[AR.name])
+		if(GLOB.teleportlocs[AR.name])
 			continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
 		if (picked && (picked.z == ZLEVEL_STATION))
-			teleportlocs[AR.name] = AR
+			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(teleportlocs, /proc/cmp_text_dsc)
+	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
 
 // ===
 
@@ -116,6 +117,8 @@ var/list/teleportlocs = list()
 			luminosity = 0
 		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
 	..()
 
@@ -135,24 +138,24 @@ var/list/teleportlocs = list()
 			var/list/cameras = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
-			for (var/mob/living/silicon/aiPlayer in player_list)
+			for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 				if (state == 1)
 					aiPlayer.cancelAlarm("Power", src, source)
 				else
 					aiPlayer.triggerAlarm("Power", src, cameras, source)
 
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in GLOB.machines)
 				if(state == 1)
 					a.cancelAlarm("Power", src, source)
 				else
 					a.triggerAlarm("Power", src, cameras, source)
 
-			for(var/mob/living/simple_animal/drone/D in mob_list)
+			for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 				if(state == 1)
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+			for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 				if(state == 1)
 					p.cancelAlarm("Power", src, source)
 				else
@@ -166,23 +169,23 @@ var/list/teleportlocs = list()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 
-			for(var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in GLOB.player_list)
 				aiPlayer.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in GLOB.machines)
 				a.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/mob/living/simple_animal/drone/D in mob_list)
+			for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+			for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 				p.triggerAlarm("Atmosphere", src, cameras, source)
 
 		else if (src.atmosalm == 2)
-			for(var/mob/living/silicon/aiPlayer in player_list)
+			for(var/mob/living/silicon/aiPlayer in GLOB.player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
-			for(var/obj/machinery/computer/station_alert/a in machines)
+			for(var/obj/machinery/computer/station_alert/a in GLOB.machines)
 				a.cancelAlarm("Atmosphere", src, source)
-			for(var/mob/living/simple_animal/drone/D in mob_list)
+			for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 				D.cancelAlarm("Atmosphere", src, source)
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+			for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 				p.cancelAlarm("Atmosphere", src, source)
 
 		src.atmosalm = danger_level
@@ -201,9 +204,9 @@ var/list/teleportlocs = list()
 					if(A.fire)
 						cont = FALSE
 						break
-			if(cont)
+			if(cont && D.is_operational())
 				if(D.operating)
-					D.nextstate = opening ? OPEN : CLOSED
+					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
 				else if(!(D.density ^ opening))
 					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
 
@@ -222,13 +225,13 @@ var/list/teleportlocs = list()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
-	for (var/obj/machinery/computer/station_alert/a in machines)
+	for (var/obj/machinery/computer/station_alert/a in GLOB.machines)
 		a.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/silicon/aiPlayer in player_list)
+	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/simple_animal/drone/D in mob_list)
+	for (var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
-	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+	for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
 	START_PROCESSING(SSobj, src)
@@ -243,13 +246,13 @@ var/list/teleportlocs = list()
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
-	for (var/mob/living/silicon/aiPlayer in player_list)
+	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
-	for (var/obj/machinery/computer/station_alert/a in machines)
+	for (var/obj/machinery/computer/station_alert/a in GLOB.machines)
 		a.cancelAlarm("Fire", src, source)
-	for (var/mob/living/simple_animal/drone/D in mob_list)
+	for (var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 		D.cancelAlarm("Fire", src, source)
-	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
+	for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
 
 	STOP_PROCESSING(SSobj, src)
@@ -280,7 +283,7 @@ var/list/teleportlocs = list()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
-	for (var/mob/living/silicon/SILICON in player_list)
+	for (var/mob/living/silicon/SILICON in GLOB.player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
@@ -452,7 +455,7 @@ var/list/teleportlocs = list()
 		return 1
 	else
 		// There's a gravity generator on our z level
-		if(T && gravity_generators["[T.z]"] && length(gravity_generators["[T.z]"]))
+		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
 			return 1
 	return 0
 

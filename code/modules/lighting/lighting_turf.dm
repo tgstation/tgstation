@@ -33,7 +33,7 @@
 		return
 
 	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A))
+	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
 		return
 
 	if (!lighting_corners_initialised)
@@ -113,12 +113,18 @@
 			lighting_clear_overlay()
 
 /turf/proc/get_corners()
+	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
+		return null
+	if (!lighting_corners_initialised)
+		generate_missing_corners()
 	if (has_opaque_atom)
 		return null // Since this proc gets used in a for loop, null won't be looped though.
 
 	return corners
 
 /turf/proc/generate_missing_corners()
+	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
+		return
 	lighting_corners_initialised = TRUE
 	if (!corners)
 		corners = list(null, null, null, null)
@@ -127,11 +133,11 @@
 		if (corners[i]) // Already have a corner on this direction.
 			continue
 
-		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+		corners[i] = new/datum/lighting_corner(src, GLOB.LIGHTING_CORNER_DIAGONAL[i])
 
 
 /turf/ChangeTurf(path)
-	if (!path || (!use_preloader && path == type) || !SSlighting.initialized)
+	if (!path || (!GLOB.use_preloader && path == type) || !SSlighting.initialized)
 		return ..()
 
 	var/old_opacity = opacity

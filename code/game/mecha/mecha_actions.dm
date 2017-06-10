@@ -25,7 +25,8 @@
 	var/obj/mecha/chassis
 
 /datum/action/innate/mecha/Grant(mob/living/L, obj/mecha/M)
-	chassis = M
+	if(M)
+		chassis = M
 	..()
 
 /datum/action/innate/mecha/Destroy()

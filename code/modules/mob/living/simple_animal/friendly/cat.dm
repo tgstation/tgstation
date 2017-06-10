@@ -94,9 +94,9 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
-	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
+	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
 	..()
 
@@ -215,7 +215,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)

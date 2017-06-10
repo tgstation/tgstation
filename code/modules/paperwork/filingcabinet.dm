@@ -32,7 +32,7 @@
 
 
 /obj/structure/filingcabinet/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		for(var/obj/item/I in loc)
 			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
@@ -120,8 +120,8 @@
 
 /obj/structure/filingcabinet/security/proc/populate()
 	if(virgin)
-		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
+		for(var/datum/data/record/G in GLOB.data_core.general)
+			var/datum/data/record/S = find_record("name", G.fields["name"], GLOB.data_core.security)
 			if(!S)
 				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
@@ -152,8 +152,8 @@
 
 /obj/structure/filingcabinet/medical/proc/populate()
 	if(virgin)
-		for(var/datum/data/record/G in data_core.general)
-			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
+		for(var/datum/data/record/G in GLOB.data_core.general)
+			var/datum/data/record/M = find_record("name", G.fields["name"], GLOB.data_core.medical)
 			if(!M)
 				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
@@ -179,7 +179,7 @@
  * Employment contract Cabinets
  */
 
-var/list/employmentCabinets = list()
+GLOBAL_LIST_EMPTY(employmentCabinets)
 
 /obj/structure/filingcabinet/employment
 	var/cooldown = 0
@@ -187,16 +187,16 @@ var/list/employmentCabinets = list()
 	var/virgin = 1
 
 /obj/structure/filingcabinet/employment/New()
-	employmentCabinets += src
+	GLOB.employmentCabinets += src
 	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
-	employmentCabinets -= src
+	GLOB.employmentCabinets -= src
 	return ..()
 
 /obj/structure/filingcabinet/employment/proc/fillCurrent()
 	//This proc fills the cabinet with the current crew.
-	for(var/record in data_core.locked)
+	for(var/record in GLOB.data_core.locked)
 		var/datum/data/record/G = record
 		if(!G)
 			continue

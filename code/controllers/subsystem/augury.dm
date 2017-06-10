@@ -1,16 +1,12 @@
-var/datum/controller/subsystem/augury/SSaugury
-
-/datum/controller/subsystem/augury
+SUBSYSTEM_DEF(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/watchers = list()
 	var/list/doombringers = list()
 
 	var/list/observers_given_action = list()
-
-/datum/controller/subsystem/augury/New()
-	NEW_SS_GLOBAL(SSaugury)
 
 /datum/controller/subsystem/augury/stat_entry(msg)
 	..("W:[watchers.len]|D:[doombringers.len]")
@@ -33,7 +29,7 @@ var/datum/controller/subsystem/augury/SSaugury
 			biggest_threat = threat
 
 	if(doombringers.len)
-		for(var/i in player_list)
+		for(var/i in GLOB.player_list)
 			if(isobserver(i) && (!(observers_given_action[i])))
 				var/datum/action/innate/augury/A = new
 				A.Grant(i)

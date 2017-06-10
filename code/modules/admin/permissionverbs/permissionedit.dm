@@ -23,12 +23,12 @@
 <th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th>
 <th style='width:375px;'>PERMISSIONS</th>
-<th style='width:100%;'>VERB-OVERRIDES</th>
+
 </tr>
 "}
 
-	for(var/adm_ckey in admin_datums)
-		var/datum/admins/D = admin_datums[adm_ckey]
+	for(var/adm_ckey in GLOB.admin_datums)
+		var/datum/admins/D = GLOB.admin_datums[adm_ckey]
 		if(!D)
 			continue
 
@@ -48,10 +48,11 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=900x500")
+	usr << browse(output,"window=editrights;size=700x500")
 
-/datum/admins/proc/log_admin_rank_modification(var/adm_ckey, var/new_rank)
-	if(config.admin_legacy_system)	return
+/datum/admins/proc/log_admin_rank_modification(adm_ckey, new_rank)
+	if(config.admin_legacy_system)
+		return
 
 	if(!usr.client)
 		return
@@ -96,10 +97,13 @@
 			to_chat(usr ,"[key_name(usr)] changed [key_name(adm_ckey)] admin rank to [new_rank]")
 
 
-/datum/admins/proc/log_admin_permission_modification(var/adm_ckey, var/new_permission, var/nominal)
-	if(config.admin_legacy_system)	return
-	if(!usr.client)					return
-	if(!check_rights(R_PERMISSIONS))	return
+/datum/admins/proc/log_admin_permission_modification(adm_ckey, new_permission, nominal)
+	if(config.admin_legacy_system)
+		return
+	if(!usr.client)
+		return
+	if(!check_rights(R_PERMISSIONS))
+		return
 
 	if(!dbcon.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")

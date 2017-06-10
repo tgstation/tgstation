@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
 										/mob/living/simple_animal,
@@ -18,7 +18,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla))
+										/obj/machinery/the_singularitygen/tesla)))
 /obj/singularity/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
@@ -40,6 +40,11 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
+/obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
+	. = ..()
+	if(!is_miniball)
+		set_light(10, 7, "#EEEEFF")
+
 /obj/singularity/energy_ball/ex_act(severity, target)
 	return
 
@@ -53,6 +58,11 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		qdel(EB)
 
 	. = ..()
+
+/obj/singularity/energy_ball/admin_investigate_setup()
+	if(istype(loc, /obj/singularity/energy_ball))
+		return
+	..()
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -85,7 +95,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+		var/move_dir = pick(GLOB.alldirs + first_move) //give the first move direction a bit of favoring.
 		if(target && prob(60))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -117,7 +127,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/proc/new_mini_ball()
 	if(!loc)
 		return
-	var/obj/singularity/energy_ball/EB = new(loc)
+	var/obj/singularity/energy_ball/EB = new(loc, 0, TRUE)
 
 	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
 	var/icon/I = icon(icon,icon_state,dir)
@@ -137,7 +147,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
 		target.orbiting_balls += src
-		poi_list -= src
+		GLOB.poi_list -= src
 		target.dissipate_strength = target.orbiting_balls.len
 
 	. = ..()
@@ -197,13 +207,13 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_grounding_rod || is_type_in_typecache(A, blacklisted_tesla_types))
+		else if(closest_grounding_rod || is_type_in_typecache(A, GLOB.blacklisted_tesla_types))
 			continue
 
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !L.tesla_ignore)
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !HAS_SECONDARY_FLAG(L, TESLA_IGNORE))
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist

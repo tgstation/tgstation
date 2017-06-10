@@ -11,6 +11,7 @@
 #define MODE_INTERCOM "intercom"
 #define MODE_BINARY "binary"
 #define MODE_WHISPER "whisper"
+#define MODE_WHISPER_CRIT "whispercrit"
 #define MODE_DEPARTMENT "department"
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
@@ -31,6 +32,9 @@
 #define ITALICS 1
 #define REDUCE_RANGE 2
 #define NOPASS 4
+
+//Eavesdropping
+#define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 // A link given to ghost alice to follow bob
 #define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"

@@ -47,8 +47,7 @@
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	if(prob(20))
-		new /obj/structure/table/wood(src.loc)
+	new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
 	new /obj/structure/table/reinforced/brass(src.loc)
@@ -366,7 +365,7 @@
 
 /obj/structure/table/optable/New()
 	..()
-	for(var/dir in cardinal)
+	for(var/dir in GLOB.cardinal)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if(computer)
 			computer.table = src

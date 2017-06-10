@@ -13,6 +13,8 @@
 	var/scanning = 0
 	var/list/log = list()
 	origin_tech = "engineering=4;biotech=2;programming=5"
+	var/range = 8
+	var/view_check = TRUE
 
 /obj/item/device/detective_scanner/attack_self(mob/user)
 	if(log.len && !scanning)
@@ -43,7 +45,7 @@
 	log = list()
 	scanning = 0
 
-/obj/item/device/detective_scanner/pre_attackby(atom/A, mob/user, params)
+/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, params)
 	scan(A, user)
 	return FALSE
 
@@ -51,9 +53,7 @@
 	set waitfor = 0
 	if(!scanning)
 		// Can remotely scan objects and mobs.
-		if(!in_range(A, user) && !(A in view(world.view, user)))
-			return
-		if(loc != user)
+		if((get_dist(A, user) > range) || (!(A in view(range, user)) && view_check) || (loc != user))
 			return
 
 		scanning = 1

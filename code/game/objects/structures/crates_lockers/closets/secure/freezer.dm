@@ -3,9 +3,9 @@
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"
-	req_access = list(access_kitchen)
+	req_access = list(GLOB.access_kitchen)
 
-/obj/structure/closet/secure_closet/freezer/kitchen/New()
+/obj/structure/closet/secure_closet/freezer/kitchen/PopulateContents()
 	..()
 	for(var/i = 0, i < 3, i++)
 		new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
@@ -17,7 +17,7 @@
 	desc = "This refrigerator looks quite dusty, is there anything edible still inside?"
 	req_access = list()
 
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance/New()
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance/PopulateContents()
 	..()
 	for(var/i = 0, i < 5, i++)
 		new /obj/item/weapon/reagent_containers/food/condiment/milk(src)
@@ -32,14 +32,14 @@
 /obj/structure/closet/secure_closet/freezer/meat
 	name = "meat fridge"
 
-/obj/structure/closet/secure_closet/freezer/meat/New()
+/obj/structure/closet/secure_closet/freezer/meat/PopulateContents()
 	..()
 	for(var/i = 0, i < 4, i++)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 /obj/structure/closet/secure_closet/freezer/fridge
 	name = "refrigerator"
 
-/obj/structure/closet/secure_closet/freezer/fridge/New()
+/obj/structure/closet/secure_closet/freezer/fridge/PopulateContents()
 	..()
 	for(var/i = 0, i < 5, i++)
 		new /obj/item/weapon/reagent_containers/food/condiment/milk(src)
@@ -51,9 +51,9 @@
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"
 	desc = "This contains cold hard cash."
-	req_access = list(access_heads_vault)
+	req_access = list(GLOB.access_heads_vault)
 
-/obj/structure/closet/secure_closet/freezer/money/New()
+/obj/structure/closet/secure_closet/freezer/money/PopulateContents()
 	..()
 	for(var/i = 0, i < 3, i++)
 		new /obj/item/stack/spacecash/c1000(src)
@@ -65,8 +65,8 @@
 /obj/structure/closet/secure_closet/freezer/cream_pie
 	name = "cream pie closet"
 	desc = "Contains pies filled with cream and/or custard, you sickos."
-	req_access = list(access_theatre)
+	req_access = list(GLOB.access_theatre)
 
-/obj/structure/closet/secure_closet/freezer/pie/New()
+/obj/structure/closet/secure_closet/freezer/pie/PopulateContents()
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)

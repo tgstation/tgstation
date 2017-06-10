@@ -1,17 +1,12 @@
-var/datum/controller/subsystem/spacedrift/SSspacedrift
-
-/datum/controller/subsystem/spacedrift
+SUBSYSTEM_DEF(spacedrift)
 	name = "Space Drift"
 	priority = 30
 	wait = 5
 	flags = SS_NO_INIT|SS_KEEP_TIMING
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
-
-/datum/controller/subsystem/spacedrift/New()
-	NEW_SS_GLOBAL(SSspacedrift)
-
 
 /datum/controller/subsystem/spacedrift/stat_entry()
 	..("P:[processing.len]")

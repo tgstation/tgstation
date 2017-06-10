@@ -200,17 +200,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			switch(role)
 				if("clown")
-					newname = pick(clown_names)
+					newname = pick(GLOB.clown_names)
 				if("mime")
-					newname = pick(mime_names)
+					newname = pick(GLOB.mime_names)
 				if("ai")
-					newname = pick(ai_names)
+					newname = pick(GLOB.ai_names)
 				if("deity")
-					newname = pick(clown_names|ai_names|mime_names) //pick any old name
+					newname = pick(GLOB.clown_names|GLOB.ai_names|GLOB.mime_names) //pick any old name
 				else
 					return
 
-		for(var/mob/living/M in player_list)
+		for(var/mob/living/M in GLOB.player_list)
 			if(M == src)
 				continue
 			if(!newname || M.real_name == newname)
@@ -231,7 +231,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of unslaved cyborgs
 /proc/active_free_borgs()
 	. = list()
-	for(var/mob/living/silicon/robot/R in living_mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
 		if(R.connected_ai || R.shell)
 			continue
 		if(R.stat == DEAD)
@@ -243,7 +243,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Returns a list of AI's
 /proc/active_ais(check_mind=0)
 	. = list()
-	for(var/mob/living/silicon/ai/A in living_mob_list)
+	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
 		if(A.stat == DEAD)
 			continue
 		if(A.control_disabled == 1)
@@ -305,7 +305,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		pois[name] = M
 
 	if(!mobs_only)
-		for(var/atom/A in poi_list)
+		for(var/atom/A in GLOB.poi_list)
 			if(!A || !A.loc)
 				continue
 			pois[avoid_assoc_duplicate_keys(A.name, namecounts)] = A
@@ -314,7 +314,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Orders mobs by type then by name
 /proc/sortmobs()
 	var/list/moblist = list()
-	var/list/sortmob = sortNames(mob_list)
+	var/list/sortmob = sortNames(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/camera/M in sortmob)
@@ -378,7 +378,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else if(istext(whom))
 		key = whom
 		ckey = ckey(whom)
-		C = directory[ckey]
+		C = GLOB.directory[ckey]
 		if(C)
 			M = C.mob
 	else
@@ -582,17 +582,17 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return 0
 
 //Repopulates sortedAreas list
-/proc/SortAreas()
-	sortedAreas = list()
+/proc/repopulate_sorted_areas()
+	GLOB.sortedAreas = list()
 
 	for(var/area/A in world)
-		sortedAreas.Add(A)
+		GLOB.sortedAreas.Add(A)
 
-	sortTim(sortedAreas, /proc/cmp_name_asc)
+	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
 /area/proc/addSorted()
-	sortedAreas.Add(src)
-	sortTim(sortedAreas, /proc/cmp_name_asc)
+	GLOB.sortedAreas.Add(src)
+	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
@@ -608,12 +608,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/areas = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(cache[A.type])
 				areas += V
 	else
-		for(var/V in sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(A.type == areatype)
 				areas += V
@@ -633,7 +633,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/turfs = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(!cache[A.type])
 				continue
@@ -641,7 +641,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	else
-		for(var/V in sortedAreas)
+		for(var/V in GLOB.sortedAreas)
 			var/area/A = V
 			if(A.type != areatype)
 				continue
@@ -723,7 +723,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
 	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/icon/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
@@ -763,9 +763,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
-var/list/can_embed_types = typecacheof(list(
+GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/stack/rods,
-	/obj/item/pipe))
+	/obj/item/pipe)))
 
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
@@ -773,37 +773,38 @@ var/list/can_embed_types = typecacheof(list(
 	if(is_pointed(W))
 		return 1
 
-	if(is_type_in_typecache(W, can_embed_types))
+	if(is_type_in_typecache(W, GLOB.can_embed_types))
 		return 1
 
 
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = typecacheof(list(
+GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
-	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
-	))
+	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
+	/obj/structure/sign/picture_frame
+	)))
 
-var/list/WALLITEMS_EXTERNAL = typecacheof(list(
+GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
 	/obj/machinery/camera, /obj/structure/camera_assembly,
-	/obj/structure/light_construct, /obj/machinery/light))
+	/obj/structure/light_construct, /obj/machinery/light)))
 
-var/list/WALLITEMS_INVERSE = typecacheof(list(
-	/obj/structure/light_construct, /obj/machinery/light))
+GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
+	/obj/structure/light_construct, /obj/machinery/light)))
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
+			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -814,8 +815,8 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
-		if(is_type_in_typecache(O, WALLITEMS_EXTERNAL) && check_external)
-			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
+		if(is_type_in_typecache(O, GLOB.WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_typecache(O, GLOB.WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -823,7 +824,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -845,7 +846,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+			if((id in GLOB.hardcoded_gases) || gas_concentration > 0.001) //ensures the four primary gases are always shown.
 				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 
 		to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>")
@@ -871,14 +872,14 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 	var/initial_chance = chance
 	while(steps > 0)
 		if(prob(chance))
-			step(AM, pick(alldirs))
+			step(AM, pick(GLOB.alldirs))
 		chance = max(chance - (initial_chance / steps), 0)
 		steps--
 
 /proc/living_player_count()
 	var/living_player_count = 0
-	for(var/mob in player_list)
-		if(mob in living_mob_list)
+	for(var/mob in GLOB.player_list)
+		if(mob in GLOB.living_mob_list)
 			living_player_count += 1
 	return living_player_count
 
@@ -1137,58 +1138,18 @@ B --><-- A
 		if(location == src)
 			return 1
 
-/proc/add_to_proximity_list(atom/A, range)
-	var/turf/T = get_turf(A)
-	if(!T || !A.loc)
-		throw EXCEPTION("Someone adding a prox sensor in nullspace")
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	for(var/B in L)
-		var/turf/C = B
-		LAZYINITLIST(C.proximity_checkers)
-		C.proximity_checkers[A] = TRUE
-	return L
-
-/proc/remove_from_proximity_list(atom/A, range, oldloc = null)
-	var/turf/T = get_turf(oldloc ? oldloc : A)
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	for(var/B in L)
-		var/turf/C = B
-		if (!C.proximity_checkers)
-			continue
-		C.proximity_checkers.Remove(A)
-
-/proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
-	var/turf/T = get_turf(A)
-	var/turf/Q = get_turf(B)
-	if(T == Q && range == newrange)
-		return 0
-	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
-	var/list/M = block(locate(Q.x - newrange, Q.y - newrange, Q.z), locate(Q.x + newrange, Q.y + newrange, Q.z))
-	var/list/N = L - M
-	var/list/O = M - L
-	for(var/C in N)
-		var/turf/D = C
-		if (!D.proximity_checkers)
-			continue
-		D.proximity_checkers.Remove(checker)
-	for(var/E in O)
-		var/turf/F = E
-		LAZYINITLIST(F.proximity_checkers)
-		F.proximity_checkers[checker] = TRUE
-	return 1
-
-/proc/flick_overlay_static(image/I, atom/A, duration)
+/proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
-	if(!A || !I)
+	if(!A || !O)
 		return
-	A.add_overlay(I)
+	A.add_overlay(O)
 	sleep(duration)
-	A.cut_overlay(I)
+	A.cut_overlay(O)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
 	var/validarea = FALSE
-	for(var/V in sortedAreas)
+	for(var/V in GLOB.sortedAreas)
 		var/area/A = V
 		validarea = TRUE
 		for(var/turf/T in A)
@@ -1254,7 +1215,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
@@ -1279,6 +1240,9 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 #define QDEL_NULL(item) qdel(item); item = null
+#define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
+#define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qel(L[I]); L.Cut(); }
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1313,21 +1277,21 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		else
 			. = ""
 
-var/mob/dead/dview/dview_mob = new
+GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
 /proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
 	if(!center)
 		return
 
-	dview_mob.loc = center
+	GLOB.dview_mob.loc = center
 
-	dview_mob.see_invisible = invis_flags
+	GLOB.dview_mob.see_invisible = invis_flags
 
-	. = view(range, dview_mob)
-	dview_mob.loc = null
+	. = view(range, GLOB.dview_mob)
+	GLOB.dview_mob.loc = null
 
-/mob/dead/dview
+/mob/dview
 	name = "INTERNAL DVIEW MOB"
 	invisibility = 101
 	density = FALSE
@@ -1335,7 +1299,7 @@ var/mob/dead/dview/dview_mob = new
 	anchored = TRUE
 	var/ready_to_die = FALSE
 
-/mob/dead/dview/Destroy(force = FALSE)
+/mob/dview/Destroy(force = FALSE)
 	if(!ready_to_die)
 		stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
 
@@ -1343,14 +1307,16 @@ var/mob/dead/dview/dview_mob = new
 			return QDEL_HINT_LETMELIVE
 
 		log_world("EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS")
-		dview_mob = new
+		GLOB.dview_mob = new
 	return ..()
 
 
 #define FOR_DVIEW(type, range, center, invis_flags) \
-	dview_mob.loc = center;           \
-	dview_mob.see_invisible = invis_flags; \
-	for(type in view(range, dview_mob))
+	GLOB.dview_mob.loc = center;           \
+	GLOB.dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, GLOB.dview_mob))
+
+#define FOR_DVIEW_END GLOB.dview_mob.loc = null
 
 //can a window be here, or is there a window blocking it?
 /proc/valid_window_location(turf/T, dir_to_check)
@@ -1375,17 +1341,18 @@ var/mob/dead/dview/dview_mob = new
 //Set this to TRUE before calling
 //This prevents RCEs from badmins
 //kevinz000 if you touch this I will hunt you down
-var/valid_HTTPSGet = FALSE
+GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
+GLOBAL_PROTECT(valid_HTTPSGet)
 /proc/HTTPSGet(url)
 	if(findtext(url, "\""))
-		valid_HTTPSGet = FALSE
+		GLOB.valid_HTTPSGet = FALSE
 
-	if(!valid_HTTPSGet)
+	if(!GLOB.valid_HTTPSGet)
 		if(usr)
 			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
 		else
 			CRASH("Invalid HTTPSGet call on: [url]")
-	valid_HTTPSGet = FALSE
+	GLOB.valid_HTTPSGet = FALSE
 
 	//"This has got to be the ugliest hack I have ever done"
 	//warning, here be dragons
@@ -1401,7 +1368,7 @@ var/valid_HTTPSGet = FALSE
 			| \____(      )___) )___
 			\______(_______;;; __;;;
 		*/
-	var/temp_file = "HTTPSGetOutput.txt"
+	var/temp_file = "data/HTTPSGetOutput.txt"
 	var/command
 	if(world.system_type == MS_WINDOWS)
 		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
@@ -1428,4 +1395,24 @@ var/valid_HTTPSGet = FALSE
 #define UNTIL(X) while(!(X)) stoplag()
 
 /proc/to_chat(target, message)
-	target << message
+	target << russian_html2text(sanitize_russian(message))
+
+/proc/pass()
+	return
+
+/proc/get_mob_or_brainmob(occupant)
+	var/mob/living/mob_occupant
+
+	if(isliving(occupant))
+		mob_occupant = occupant
+
+	else if(isbodypart(occupant))
+		var/obj/item/bodypart/head/head = occupant
+
+		mob_occupant = head.brainmob
+
+	else if(isorgan(occupant))
+		var/obj/item/organ/brain/brain = occupant
+		mob_occupant = brain.brainmob
+
+	return mob_occupant

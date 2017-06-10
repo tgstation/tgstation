@@ -1,38 +1,38 @@
-var/list/uplink_items = list() // Global list so we only initialize this once.
+GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /proc/initialize_global_uplink_items()
-	uplink_items = list()
+	GLOB.uplink_items = list()
 	for(var/item in subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/I = new item()
 		if(!I.item)
 			continue
-		if(!uplink_items[I.category])
-			uplink_items[I.category] = list()
-		uplink_items[I.category][I.name] = I
+		if(!GLOB.uplink_items[I.category])
+			GLOB.uplink_items[I.category] = list()
+		GLOB.uplink_items[I.category][I.name] = I
 
 /proc/get_uplink_items(var/datum/game_mode/gamemode = null)
-	if(!uplink_items.len)
+	if(!GLOB.uplink_items.len)
 		initialize_global_uplink_items()
 
 	var/list/filtered_uplink_items = list()
 	var/list/sale_items = list()
 
-	for(var/category in uplink_items)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
+	for(var/category in GLOB.uplink_items)
+		for(var/item in GLOB.uplink_items[category])
+			var/datum/uplink_item/I = GLOB.uplink_items[category][item]
 			if(!istype(I))
 				continue
 			if(I.include_modes.len)
-				if(!gamemode && ticker && !(ticker.mode.type in I.include_modes))
+				if(!gamemode && SSticker && !(SSticker.mode.type in I.include_modes))
 					continue
 				if(gamemode && !(gamemode in I.include_modes))
 					continue
 			if(I.exclude_modes.len)
-				if(!gamemode && ticker && (ticker.mode.type in I.exclude_modes))
+				if(!gamemode && SSticker && (SSticker.mode.type in I.exclude_modes))
 					continue
 				if(gamemode && (gamemode in I.exclude_modes))
 					continue
-			if(I.player_minimum && I.player_minimum > joined_player_list.len)
+			if(I.player_minimum && I.player_minimum > GLOB.joined_player_list.len)
 				continue
 
 			if(!filtered_uplink_items[category])
@@ -44,7 +44,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	for(var/i in 1 to 3)
 		var/datum/uplink_item/I = pick_n_take(sale_items)
 		var/datum/uplink_item/A = new I.type
-		var/discount = pick(4;0.75,2;0.5,1;0.25)
+		var/discount = A.get_discount()
 		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
 		A.limited_stock = 1
 		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
@@ -86,9 +86,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 
+/datum/uplink_item/proc/get_discount()
+	return pick(4;0.75,2;0.5,1;0.25)
+
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		feedback_add_details("traitor_uplink_items_bought", "[item]")
+		SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
@@ -124,10 +127,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	return 1
 
 /datum/uplink_item/Destroy()
-	if(src in uplink_items)
-		uplink_items -= src	//Take us out instead of leaving a null!
+	if(src in GLOB.uplink_items)
+		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
 	return ..()
-	
+
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
@@ -222,7 +225,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
 	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
@@ -276,11 +279,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
-			pocketed when inactive. Activating it produces a loud, distinctive noise. One can combine two \
-			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
-			and deflects all energy projectiles."
+			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/weapon/melee/energy/sword/saber
 	cost = 8
+
+/datum/uplink_item/dangerous/doublesword
+	name = "Double-Bladed Energy Sword"
+	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
+			all energy projectiles, but requires two hands to wield."
+	item = /obj/item/weapon/twohanded/dualsaber
+	player_minimum = 25
+	cost = 16
+
+/datum/uplink_item/dangerous/doublesword/get_discount()
+	return pick(4;0.8,2;0.65,1;0.5)
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -469,34 +481,34 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "5.56x45mm Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use with the L6 SAW. \
+	name = "1.95x129mm Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/mm556x45
+	item = /obj/item/ammo_box/magazine/mm195x129
 
 /datum/uplink_item/ammo/machinegun/bleeding
-	name = "5.56x45mm (Bleeding) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "1.95x129mm (Bleeding) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
 			to induce internal bleeding on targets."
-	item = /obj/item/ammo_box/magazine/mm556x45/bleeding
+	item = /obj/item/ammo_box/magazine/mm195x129/bleeding
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "5.56x45mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "1.95x129mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/mm556x45/hollow
+	item = /obj/item/ammo_box/magazine/mm195x129/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "5.56x45mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "1.95x129mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/mm556x45/ap
+	item = /obj/item/ammo_box/magazine/mm195x129/ap
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "5.56x45mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 5.56x45mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "1.95x129mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/mm556x45/incen
+	item = /obj/item/ammo_box/magazine/mm195x129/incen
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -902,8 +914,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 3
 
 /datum/uplink_item/device_tools/military_belt
-	name = "Military Belt"
-	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
+	name = "Chest Rig"
+	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
@@ -916,6 +928,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/firstaid/tactical
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
+/datum/uplink_item/device_tools/syndietome
+	name = "Syndicate Tome"
+	desc = "Using rare artifacts acquired at great cost, the syndicate has reverse engineered \
+			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
+			of the originals, these inferior copies are still quite useful, being able to provide \
+			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
+	item = /obj/item/weapon/storage/book/bible/syndicate
+	cost = 9
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -956,6 +977,24 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 14
+
+/datum/uplink_item/device_tools/briefcase_launchpad
+	name = "Briefcase Launchpad"
+	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to three tiles away from the briefcase. \
+			Also includes a remote control. Touch the briefcase with the remote to link it."
+	surplus = 0
+	item = /obj/item/briefcase_launchpad
+	cost = 6
+
+/datum/uplink_item/device_tools/briefcase_launchpad/buy(mob/user, obj/item/device/uplink/U)
+	var/obj/item/device/launchpad_remote/L = new(get_turf(user)) //free remote
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.put_in_hands(L))
+			to_chat(H, "[L] materializes into your hands!")
+		else
+			to_chat(H, "\The [L] materializes onto the floor.")
+	return ..()
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -1097,9 +1136,23 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/device/jammer
 	cost = 5
 
+/datum/uplink_item/device_tools/codespeak_manual
+	name = "Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
+	item = /obj/item/weapon/codespeak_manual
+	cost = 2
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/codespeak_manual_deluxe
+	name = "Deluxe Codespeak Manual"
+	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
+	cost = 8
+	include_modes = list(/datum/game_mode/nuclear)
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
+	surplus = 50
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -1158,6 +1211,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
 		if(istype(item, /obj/item/organ))
+			SSblackbox.add_details("traitor_uplink_items_bought", "[item]|[cost]")
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1235,6 +1289,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/pie_cannon
+	name = "Banana Cream Pie Cannon"
+	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
+	cost = 10
+	item = /obj/item/weapon/pneumatic_cannon/pie/selfcharge
+	restricted_roles = list("Clown")
+	surplus = 0 //No fun unless you're the clown!
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
@@ -1248,8 +1310,23 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. Be warned, that spirits are often capricious or just little assholes. To use, simply speak your question aloud, then begin shaking."
 	item = /obj/item/toy/eightball/haunted
 	cost = 2
-	restricted_roles = list("Librarian")
-	limited_stock = 1 // please don't spam deadchat
+	restricted_roles = list("Curator")
+	limited_stock = 1 //please don't spam deadchat
+
+/datum/uplink_item/role_restricted/modified_syringe_gun
+	name = "Modified Syringe Gun"
+	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	item = /obj/item/weapon/gun/syringe/dna
+	cost = 14
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
+
+/datum/uplink_item/role_restricted/pressure_mod
+	name = "Kinetic Accelerator Pressure Mod"
+	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. Occupies 35% mod capacity."
+	item = /obj/item/borg/upgrade/modkit/indoors
+	cost = 5 //you need two for full damage, so total of 10 for maximum damage
+	limited_stock = 2 //you can't use more than two!
+	restricted_roles = list("Shaft Miner")
 
 // Pointless
 /datum/uplink_item/badass
@@ -1308,7 +1385,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items(ticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
 
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
@@ -1325,18 +1402,18 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		new I.item(C)
 		U.purchase_log += "<big>\icon[I.item]</big>"
 
+	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
 
 /datum/uplink_item/badass/random
 	name = "Random Item"
-	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't \
-			decided on a strategy yet."
+	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
 	item = /obj/item/weapon/paper
 	cost = 0
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items(ticker.mode)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
@@ -1351,5 +1428,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
 		U.spent_telecrystals += I.cost
-		feedback_add_details("traitor_uplink_items_bought","RN")
+		SSblackbox.add_details("traitor_uplink_items_bought","[name]|[I.cost]")
+		SSblackbox.add_details("traitor_random_uplink_items_gotten","[I.name]")
 		return new I.item(loc)

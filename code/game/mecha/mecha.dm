@@ -37,7 +37,6 @@
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
-	var/cell_power_remaining = 1 // 0 - no power, 1 - 100% power in cell. Starts as 1 so putting any cell into empty mech doesn't deplete charge from it
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
@@ -65,7 +64,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
+	var/list/internals_req_access = list(GLOB.access_engine,GLOB.access_robotics)//required access level to open cell compartment
 
 	var/wreckage
 
@@ -119,8 +118,8 @@
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
 
-/obj/mecha/New()
-	..()
+/obj/mecha/Initialize()
+	. = ..()
 	events = new
 	icon_state += "-open"
 	add_radio()
@@ -132,11 +131,11 @@
 	smoke_system.attach(src)
 	add_cell()
 	START_PROCESSING(SSobj, src)
-	poi_list |= src
+	GLOB.poi_list |= src
 	log_message("[src.name] created.")
-	mechas_list += src //global mech list
+	GLOB.mechas_list += src //global mech list
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_mechhealth()
 	diag_hud_set_mechcell()
@@ -185,7 +184,7 @@
 		if(AI)
 			AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
 	internal_tank = null
@@ -200,7 +199,7 @@
 	qdel(smoke_system)
 	smoke_system = null
 
-	mechas_list -= src //global mech list
+	GLOB.mechas_list -= src //global mech list
 	return ..()
 
 ////////////////////////
@@ -382,17 +381,16 @@
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
-/obj/mecha/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker == occupant)
 		if(radio.broadcasting)
-			radio.talk_into(speaker, text, , spans)
+			radio.talk_into(speaker, text, , spans, message_language)
 		//flick speech bubble
 		var/list/speech_bubble_recipients = list()
 		for(var/mob/M in get_hearers_in_view(7,src))
 			if(M.client)
 				speech_bubble_recipients.Add(M.client)
-		spawn(0)
-			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
+		INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 ////////////////////////////
 ///// Action processing ////
@@ -663,9 +661,11 @@
 			AI.ai_restore_power()//So the AI initially has power.
 			AI.control_disabled = 1
 			AI.radio_enabled = 0
+			AI.disconnect_shell()
+			RemoveActions(AI, TRUE)
+			occupant = null
 			AI.forceMove(card)
 			card.AI = AI
-			occupant = null
 			AI.controlled_mech = null
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
@@ -686,10 +686,12 @@
 			if(!AI)
 				to_chat(user, "<span class='warning'>There is no AI currently installed on this device.</span>")
 				return
-			else if(AI.stat || !AI.client)
+			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
+				AI.disconnect_shell()
+			if(AI.stat || !AI.client)
 				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
-			else if(occupant || dna_lock) //Normal AIs cannot steal mechs!
+			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
 				return
 			AI.control_disabled = 0
@@ -715,7 +717,10 @@
 	to_chat(AI, "[AI.can_dominate_mechs ? "<span class='announce'>Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!</span>" \
 	: "<span class='notice'>You have been uploaded to a mech's onboard computer."]")
 	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse to activate mech functions and equipment. Click normally for AI interactions.</span>")
-	GrantActions(AI, !AI.can_dominate_mechs)
+	if(interaction == AI_TRANS_FROM_CARD)
+		GrantActions(AI, FALSE) //No eject/return to core action for AI uploaded by card
+	else
+		GrantActions(AI, !AI.can_dominate_mechs)
 
 
 //An actual AI (simple_animal mecha pilot) entering the mech
@@ -1005,7 +1010,7 @@
 
 /obj/mecha/proc/log_message(message as text,red=null)
 	log.len++
-	log[log.len] = list("time"="[worldtime2text()]","date","year"="[year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"="[worldtime2text()]","date","year"="[GLOB.year_integer+540]","message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
@@ -1013,8 +1018,8 @@
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 
-var/year = time2text(world.realtime,"YYYY")
-var/year_integer = text2num(year) // = 2013???
+GLOBAL_VAR_INIT(year, "[time2text(world.realtime,"YYYY")]")
+GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 ///////////////////////
 ///// Power stuff /////

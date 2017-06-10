@@ -1,8 +1,7 @@
-var/datum/controller/subsystem/events/SSevent
-
-/datum/controller/subsystem/events
+SUBSYSTEM_DEF(events)
 	name = "Events"
-	init_order = 6
+	init_order = INIT_ORDER_EVENTS
+	runlevels = RUNLEVEL_GAME
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -14,11 +13,6 @@ var/datum/controller/subsystem/events/SSevent
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
 	var/wizardmode = 0
-
-
-/datum/controller/subsystem/events/New()
-	NEW_SS_GLOBAL(SSevent)
-
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))
@@ -67,7 +61,7 @@ var/datum/controller/subsystem/events/SSevent
 //		if(E)	E.runEvent()
 		return
 
-	var/gamemode = ticker.mode.config_tag
+	var/gamemode = SSticker.mode.config_tag
 	var/players_amt = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	// Only alive, non-AFK human players count towards this.
 
@@ -111,10 +105,10 @@ var/datum/controller/subsystem/events/SSevent
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
 	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/crew_quarters/heads/chief)
 
 	//Need to locate() as it's just a list of paths.
-	return locate(pick((the_station_areas - safe_areas) + danger_areas))
+	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas))
 
 
 //allows a client to trigger an event
@@ -133,7 +127,7 @@ var/datum/controller/subsystem/events/SSevent
 	var/normal 	= ""
 	var/magic 	= ""
 	var/holiday = ""
-	for(var/datum/round_event_control/E in SSevent.control)
+	for(var/datum/round_event_control/E in SSevents.control)
 		dat = "<BR><A href='?src=\ref[src];forceevent=\ref[E]'>[E]</A>"
 		if(E.holidayID)
 			holiday	+= dat
@@ -156,7 +150,7 @@ var/datum/controller/subsystem/events/SSevent
 //Uncommenting ALLOW_HOLIDAYS in config.txt will enable holidays
 
 //It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
-//You can then check if it's a special day in any code in the game by doing if(SSevent.holidays["Groundhog Day"])
+//You can then check if it's a special day in any code in the game by doing if(SSevents.holidays["Groundhog Day"])
 
 //You can also make holiday random events easily thanks to Pete/Gia's system.
 //simply make a random event normally, then assign it a holidayID string which matches the holiday's name.
@@ -186,14 +180,18 @@ var/datum/controller/subsystem/events/SSevent
 			if(!holidays)
 				holidays = list()
 			holidays[holiday.name] = holiday
+		else
+			qdel(holiday)
 
 	if(holidays)
 		holidays = shuffle(holidays)
+		// regenerate station name because holiday prefixes.
+		set_station_name(new_station_name())
 		world.update_status()
 
 /datum/controller/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode
-	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes" : "disabled"]!")
+	message_admins("Summon Events has been [wizardmode ? "enabled, events will occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes" : "disabled"]!")
 	log_game("Summon Events was [wizardmode ? "enabled" : "disabled"]!")
 
 

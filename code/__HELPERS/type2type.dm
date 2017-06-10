@@ -72,9 +72,8 @@
 	return .
 
 //Splits the text of a file at seperator and returns them in a list.
-/proc/file2list(filename, seperator="\n")
-	return splittext(return_file_text(filename),seperator)
-
+/world/proc/file2list(filename, seperator="\n")
+	return splittext(file2text(filename),seperator)
 
 //Turns a direction into text
 /proc/dir2text(direction)
@@ -336,15 +335,6 @@
 	day = tmpDays - mDays //Setup the date
 
 	return "[year][seperator][((month < 10) ? "0[month]" : month)][seperator][((day < 10) ? "0[day]" : day)]"
-
-/*
-var/list/test_times = list("December" = 1323522004, "August" = 1123522004, "January" = 1011522004,
-						   "Jan Leap" = 946684800, "Jan Normal" = 978307200, "New Years Eve" = 1009670400,
-						   "New Years" = 1009836000, "New Years 2" = 1041372000, "New Years 3" = 1104530400,
-						   "July Month End" = 744161003, "July Month End 12" = 1343777003, "End July" = 1091311200)
-for(var/t in test_times)
-	world.log << "TEST: [t] is [unix2date(test_times[t])]"
-*/
 
 /proc/isLeap(y)
 	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))

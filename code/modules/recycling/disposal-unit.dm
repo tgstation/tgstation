@@ -26,9 +26,8 @@
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
-/obj/machinery/disposal/New(loc, var/obj/structure/disposalconstruct/make_from)
-	..()
-
+/obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = 0
@@ -64,17 +63,17 @@
 		deconstruct()
 
 /obj/machinery/disposal/Initialize(mapload)
-	. = mapload	//late-initialize, we need turfs to have air
-	if(initialized)	//will only be run on late mapload initialization
-		//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
-		var/atom/L = loc
-		var/datum/gas_mixture/env = new
-		env.copy_from(L.return_air())
-		var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
-		air_contents.merge(removed)
-		trunk_check()
-	else
-		..()
+	..()
+	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
+
+/obj/machinery/disposal/LateInitialize()
+	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
+	var/atom/L = loc
+	var/datum/gas_mixture/env = new
+	env.copy_from(L.return_air())
+	var/datum/gas_mixture/removed = env.remove(SEND_PRESSURE + 1)
+	air_contents.merge(removed)
+	trunk_check()
 
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -285,7 +284,7 @@
 // handle machine interaction
 
 /obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	if(stat & BROKEN)
 		return
 	if(user.loc == src)
@@ -340,11 +339,11 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(75))
-			I.loc = src
-			visible_message("<span class='notice'>\the [I] lands in \the [src].</span>")
+			I.forceMove(src)
+			visible_message("<span class='notice'>[I] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>\the [I] bounces off of \the [src]'s rim!</span>")
+			visible_message("<span class='notice'>[I] bounces off of [src]'s rim!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
@@ -364,7 +363,7 @@
 
 	//flush handle
 	if(flush)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-handle"))
+		add_overlay("dispover-handle")
 
 	//only handle is shown if no power
 	if(stat & NOPOWER || panel_open)
@@ -372,13 +371,13 @@
 
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-full"))
+		add_overlay("dispover-full")
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-charge"))
+		add_overlay("dispover-charge")
 	else if(full_pressure)
-		add_overlay(image('icons/obj/atmospherics/pipes/disposal.dmi', "dispover-ready"))
+		add_overlay("dispover-ready")
 
 //timed process
 //charge the gas reservoir and perform flush if ready
@@ -391,7 +390,7 @@
 		if(contents.len)
 			if(full_pressure)
 				spawn(0)
-					feedback_inc("disposal_auto_flush",1)
+					SSblackbox.inc("disposal_auto_flush",1)
 					flush()
 		flush_count = 0
 
@@ -445,8 +444,8 @@
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
-/obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
-	..()
+/obj/machinery/disposal/deliveryChute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	stored.ptype = DISP_END_CHUTE
 	spawn(5)
 		trunk = locate() in loc

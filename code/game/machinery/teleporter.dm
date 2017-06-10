@@ -165,7 +165,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		for(var/obj/item/device/radio/beacon/R in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
 			var/turf/T = get_turf(R)
 			if(!T)
 				continue
@@ -173,7 +173,7 @@
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
-		for(var/obj/item/weapon/implant/tracking/I in tracked_implants)
+		for(var/obj/item/weapon/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
 				continue
 			else

@@ -3,7 +3,7 @@
 	This file has the basic atom/movable level speech procs.
 	And the base of the send_speech() proc, which is the core of saycode.
 */
-var/list/freqtospan = list(
+GLOBAL_LIST_INIT(freqtospan, list(
 	"1351" = "sciradio",
 	"1355" = "medradio",
 	"1357" = "engradio",
@@ -16,32 +16,35 @@ var/list/freqtospan = list(
 	"1337" = "centcomradio",
 	"1215" = "redteamradio",
 	"1217" = "blueteamradio"
-	)
+	))
 
-/atom/movable/proc/say(message)
+/atom/movable/proc/say(message, datum/language/language = null)
 	if(!can_speak())
 		return
 	if(message == "" || !message)
 		return
 	var/list/spans = get_spans()
-	send_speech(message, 7, src, , spans)
+	if(!language)
+		language = get_default_language()
+	send_speech(message, 7, src, , spans, message_language=language)
 
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	return
 
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
-	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
+	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
+	for(var/_AM in get_hearers_in_view(range, source))
+		var/atom/movable/AM = _AM
+		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
 	return list()
 
-/atom/movable/proc/compose_message(atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
 	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
@@ -50,13 +53,19 @@ var/list/freqtospan = list(
 	//Radio freq/name display
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
-	var/namepart =  "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//End name span.
 	var/endspanpart = "</span>"
-	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_langs, raw_message, spans)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_langs, raw_message, radio_freq)][endspanpart][messagepart]"
+	//Message
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
+
+	var/languageicon = ""
+	var/datum/language/D = GLOB.language_datum_instances[message_language]
+	if(istype(D) && D.display_icon(src))
+		languageicon = "[D.get_icon()] "
+
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -64,61 +73,53 @@ var/list/freqtospan = list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans=list())
-	if(!input)
-		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+/atom/movable/proc/say_mod(input, message_mode)
 	var/ending = copytext(input, length(input))
 	if(copytext(input, length(input) - 1) == "!!")
+		return verb_yell
+	else if(ending == "?")
+		return verb_ask
+	else if(ending == "!")
+		return verb_exclaim
+	else
+		return verb_say
+
+/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
+	if(!input)
+		input = "..."
+
+	if(copytext(input, length(input) - 1) == "!!")
 		spans |= SPAN_YELL
-		return "[verb_yell], \"[attach_spans(input, spans)]\""
-	input = attach_spans(input, spans)
-	if(ending == "?")
-		return "[verb_ask], \"[input]\""
-	if(ending == "!")
-		return "[verb_exclaim], \"[input]\""
 
-	return "[verb_say], \"[input]\""
+	var/spanned = attach_spans(input, spans)
+	return "[say_mod(input, message_mode)], \"[spanned]\""
 
-/atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
-	if(languages_understood & message_langs)
+/atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
+	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
-			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans)
-			return AM.say_quote(raw_message, spans)
+			return AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans)
-	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
+			return speaker.say_quote(raw_message, spans, message_mode)
+	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
-		if(message_langs & HUMAN)
-			raw_message = stars(raw_message)
-		if(message_langs & RATVAR)
-			raw_message = text2ratvar(raw_message)
+		var/datum/language/D = GLOB.language_datum_instances[language]
+		raw_message = D.scramble(raw_message)
 		if(AM)
-			return AM.say_quote(raw_message, spans)
+			return AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans)
-	else if(message_langs & MONKEY)
-		return "chimpers."
-	else if(message_langs & ALIEN)
-		return "hisses."
-	else if(message_langs & ROBOT)
-		return "beeps rapidly."
-	else if(message_langs & DRONE)
-		return "chitters."
-	else if(message_langs & SWARMER)
-		return "hums."
+			return speaker.say_quote(raw_message, spans, message_mode)
 	else
 		return "makes a strange sound."
 
 /proc/get_radio_span(freq)
-	var/returntext = freqtospan["[freq]"]
+	var/returntext = GLOB.freqtospan["[freq]"]
 	if(returntext)
 		return returntext
 	return "radio"
 
 /proc/get_radio_name(freq)
-	var/returntext = radiochannelsreverse["[freq]"]
+	var/returntext = GLOB.reverseradiochannels["[freq]"]
 	if(returntext)
 		return returntext
 	return "[copytext("[freq]", 1, 4)].[copytext("[freq]", 4, 5)]"
@@ -142,7 +143,7 @@ var/list/freqtospan = list(
 	return "0"
 
 /atom/movable/proc/GetVoice()
-	return name
+	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
 
 /atom/movable/proc/IsVocal()
 	return 1

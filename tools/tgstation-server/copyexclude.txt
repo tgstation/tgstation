@@ -4,6 +4,6 @@
 gitrepo\config\
 gitrepo\data\
 gitrepo\bot\
-gitrepo\cfg\
 gitrepo\.git\
+gitrepo\libmysql.dll
 

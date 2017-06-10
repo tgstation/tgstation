@@ -151,11 +151,6 @@
 
 	allow_quick_empty = 1 // this function is superceded
 
-/obj/item/weapon/storage/bag/sheetsnatcher/New()
-	..()
-	//verbs -= /obj/item/weapon/storage/verb/quick_empty
-	//verbs += /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty
-
 /obj/item/weapon/storage/bag/sheetsnatcher/can_be_inserted(obj/item/W, stop_messages = 0)
 	if(!istype(W,/obj/item/stack/sheet) || istype(W,/obj/item/stack/sheet/mineral/sandstone) || istype(W,/obj/item/stack/sheet/mineral/wood))
 		if(!stop_messages)
@@ -339,14 +334,14 @@
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
 	cut_overlays()
 	for(var/obj/item/I in contents)
-		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+		add_overlay(mutable_appearance(I.icon, I.icon_state))
 
 /obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+	add_overlay(mutable_appearance(I.icon, I.icon_state))
 	. = ..()
 
 

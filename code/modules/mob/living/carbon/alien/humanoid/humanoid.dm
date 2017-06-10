@@ -108,7 +108,7 @@
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
 /proc/get_alien_type(var/alienpath)
-	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
+	for(var/mob/living/carbon/alien/humanoid/A in GLOB.living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.

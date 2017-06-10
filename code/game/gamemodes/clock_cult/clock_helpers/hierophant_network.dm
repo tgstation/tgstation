@@ -2,7 +2,7 @@
 /proc/hierophant_message(message, servantsonly, atom/target)
 	if(!message)
 		return FALSE
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(!servantsonly && isobserver(M))
 			if(target)
 				var/link = FOLLOW_LINK(M, target)
@@ -40,7 +40,7 @@
 	return ..()
 
 /datum/action/innate/hierophant/Activate()
-	var/input = strip_html_properly(sanitize_russian(input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "") as text|null))
+	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
 	if(!input || !IsAvailable())
 		return
 

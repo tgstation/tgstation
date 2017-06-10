@@ -21,11 +21,6 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/weapon/storage/box/bodybags/New()
-	..()
-	for(var/i in 1 to 7)
-		new /obj/item/bodybag(src)
-
 
 // Bluespace bodybag
 

@@ -27,15 +27,15 @@
 			"catastrophic" = 10))
 	switch(wave_name)
 		if("normal")
-			wave_type = meteors_normal
+			wave_type = GLOB.meteors_normal
 		if("threatening")
-			wave_type = meteors_threatening
+			wave_type = GLOB.meteors_threatening
 		if("catastrophic")
-			wave_type = meteors_catastrophic
+			wave_type = GLOB.meteors_catastrophic
 		if("meaty")
-			wave_type = meteorsB
+			wave_type = GLOB.meteorsB
 		if("space dust")
-			wave_type = meteorsC
+			wave_type = GLOB.meteorsC
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()

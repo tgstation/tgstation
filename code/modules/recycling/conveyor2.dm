@@ -24,8 +24,8 @@
 
 // Auto conveyour is always on unless unpowered
 
-/obj/machinery/conveyor/auto/New(loc, newdir)
-	..(loc, newdir)
+/obj/machinery/conveyor/auto/Initialize(mapload, newdir)
+	. = ..()
 	operating = 1
 	update_move_direction()
 
@@ -43,8 +43,8 @@
 	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
-/obj/machinery/conveyor/New(loc, newdir)
-	..(loc)
+/obj/machinery/conveyor/Initialize(mapload, newdir)
+	. = ..()
 	if(newdir)
 		setDir(newdir)
 	update_move_direction()
@@ -104,14 +104,13 @@
 	if(!operating)
 		return
 	use_power(100)
-
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)
+	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+
+/obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
-		if(!A.anchored)
-			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
-				step(A,movedir)
-		CHECK_TICK
+		if((A.loc == loc) && A.has_gravity())
+			A.ConveyorMove(movedir)
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -214,15 +213,16 @@
 
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
-	if(mapload)
-		return TRUE	//need machines list
 	..()
 	if(!id)
 		id = newid
 	update()
 
+	return INITIALIZE_HINT_LATELOAD //for machines list
+
+/obj/machinery/conveyor_switch/LateInitialize()
 	conveyors = list()
-	for(var/obj/machinery/conveyor/C in machines)
+	for(var/obj/machinery/conveyor/C in GLOB.machines)
 		if(C.id == id)
 			conveyors += C
 
@@ -271,7 +271,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in machines)
+	for(var/obj/machinery/conveyor_switch/S in GLOB.machines)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -328,8 +328,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the switch
 
-/obj/item/conveyor_switch_construct/New()
-	..()
+/obj/item/conveyor_switch_construct/Initialize()
+	. = ..()
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)

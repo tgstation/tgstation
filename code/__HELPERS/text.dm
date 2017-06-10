@@ -19,7 +19,7 @@
 	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
 
 /proc/format_table_name(table as text)
-	return sqlfdbktableprefix + table
+	return global.sqlfdbktableprefix + table
 
 /*
  * Text sanitization
@@ -45,29 +45,10 @@
 			index = findtext(t, char, index+1)
 	return t
 
-proc/sanitize_russian(var/msg, var/html = 0)
-    var/rep
-    if(html)
-        rep = "&#x44F;"
-    else
-        rep = "&#255;"
-    var/index = findtext(msg, "ÿ")
-    while(index)
-        msg = copytext(msg, 1, index) + rep + copytext(msg, index + 1)
-        index = findtext(msg, "ÿ")
-    return msg
-
-proc/russian_html2text(msg)
-    return replacetext(msg, "&#x44F;", "&#255;")
-
-proc/russian_text2html(msg)
-	return replacetext(msg, "&#255;", "&#x44F;")
-
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(t,list/repl_chars = null)
-	t = replacetext(t, "\proper", "")
-	t = replacetext(t, "\improper", "")
+	t = strip_macros(t)
 	return rhtml_encode(sanitize_simple(t,repl_chars))
 
 //Runs sanitize and strip_html_simple
@@ -101,17 +82,17 @@ proc/russian_text2html(msg)
 /proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as text|null
 	if(no_trim)
-		return copytext(rhtml_encode(name, 1), 1, max_length)
+		return rhtml_encode(copytext(name, 1, max_length))
 	else
-		return trim(rhtml_encode(name, 1), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
+		return rhtml_encode(trim(name, max_length)) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
 // Used to get a properly sanitized multiline input, of max_length
 /proc/stripped_multiline_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN, no_trim=FALSE)
 	var/name = input(user, message, title, default) as message|null
 	if(no_trim)
-		return copytext(rhtml_encode(name, 1), 1, max_length)
+		return rhtml_encode(copytext(name, 1, max_length))
 	else
-		return trim(rhtml_encode(name, 1), max_length)
+		return rhtml_encode(trim(name, max_length))
 
 //Filters out undesirable characters from names
 /proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
@@ -425,10 +406,10 @@ proc/russian_text2html(msg)
 	return
 
 
-var/list/zero_character_only = list("0")
-var/list/hex_characters = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-var/list/alphabet = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-var/list/binary = list("0","1")
+GLOBAL_LIST_INIT(zero_character_only, list("0"))
+GLOBAL_LIST_INIT(hex_characters, list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"))
+GLOBAL_LIST_INIT(alphabet, list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
 	for(var/i=1, i<=length, i++)
@@ -440,10 +421,10 @@ var/list/binary = list("0","1")
 		. += string
 
 /proc/random_short_color()
-	return random_string(3, hex_characters)
+	return random_string(3, GLOB.hex_characters)
 
 /proc/random_color()
-	return random_string(6, hex_characters)
+	return random_string(6, GLOB.hex_characters)
 
 /proc/add_zero2(t, u)
 	var/temp1
@@ -534,49 +515,6 @@ var/list/binary = list("0","1")
 	return t
 
 
-/proc/char_split(t)
-	. = list()
-	for(var/x in 1 to length(t))
-		. += copytext(t,x,x+1)
-
-//
-
-/proc/rhtml_encode(var/msg, var/html = 0)
-	var/rep
-	if(html)
-		rep = "&#x44F;"
-	else
-		rep = "&#255;"
-	var/list/c = splittext(msg, "ÿ")
-	if(c.len == 1)
-		return msg
-	var/out = ""
-	var/first = 1
-	for(var/text in c)
-		if(!first)
-			out += rep
-		first = 0
-		out += rhtml_encode(text)
-	return out
-
-/proc/rhtml_decode(var/msg, var/html = 0)
-	var/rep
-	if(html)
-		rep = "&#x44F;"
-	else
-		rep = "&#255;"
-	var/list/c = splittext(msg, "ÿ")
-	if(c.len == 1)
-		return msg
-	var/out = ""
-	var/first = 1
-	for(var/text in c)
-		if(!first)
-			out += rep
-			first = 0
-		out += rhtml_decode(text)
-	return out
-
 
 #define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
 
@@ -596,96 +534,7 @@ var/list/binary = list("0","1")
 		result += ascii2text(ca)
 	return jointext(result, "")
 
-/proc/capitalize_uni(var/t as text)
-	var/s = 2
-	if (copytext(t,1,2) == ";")
-		s += 1
-	else if (copytext(t,1,2) == ":")
-		if(copytext(t,3,4) == " ")
-			s+=3
-		else
-			s+=2
-	return pointization(uppertext_uni(copytext(t, 1, s)) + copytext(t, s))
 
-/proc/pointization(text as text)
-	if (!text)
-		return
-	if (copytext(text,1,2) == "*") //Emotes allowed.
-		return text
-	if (copytext(text,-1) in list("!", "?", "."))
-		return text
-	text += "."
-	return text
-
-/proc/uppertext_uni(text as text)
-	var/rep = "ß"
-	var/index = findtext(text, "ÿ")
-	while(index)
-		text = copytext(text, 1, index) + rep + copytext(text, index + 1)
-		index = findtext(text, "ÿ")
-	var/t = ""
-	for(var/i = 1, i <= length(text), i++)
-		var/a = text2ascii(text, i)
-		if (a > 223)
-			t += ascii2text(a - 32)
-		else if (a == 184)
-			t += ascii2text(168)
-		else t += ascii2text(a)
-	return t
-
-/proc/lowertext_uni(text as text)
-	var/t = ""
-	for(var/i = 1, i <= length(text), i++)
-		var/a = text2ascii(text, i)
-		if (a > 191 && a < 224)
-			t += ascii2text(a + 32)
-		else if (a == 168)
-			t += ascii2text(184)
-		else t += ascii2text(a)
-	return t
-
-/proc/ruscapitalize(t as text)
-	var/s = 2
-	if (copytext(t,1,2) == ";")
-		s += 1
-	else if (copytext(t,1,2) == ":")
-		if(copytext(t,3,4) == " ")
-			s+=3
-		else
-			s+=2
-	return upperrustext(copytext(t, 1, s)) + copytext(t, s)
-
-/proc/intonation(text)
-	if (copytext(text,-1) == "!")
-		text = "<b>[text]</b>"
-	return text
-
-/proc/upperrustext(text as text)
-    var/rep = "&#223;"
-    var/index = findtext(text, "ÿ")
-    while(index)
-        text = copytext(text, 1, index) + rep + copytext(text, index + 1)
-        index = findtext(text, "ÿ")
-    var/t = ""
-    for(var/i = 1, i <= length(text), i++)
-        var/a = text2ascii(text, i)
-        if (a > 223)
-            t += ascii2text(a - 32)
-        else if (a == 184)
-            t += ascii2text(168)
-        else t += ascii2text(a)
-    return t
-
-/proc/lowerrustext(text as text)
-    var/t = ""
-    for(var/i = 1, i <= length(text), i++)
-        var/a = text2ascii(text, i)
-        if (a > 191 && a < 224)
-            t += ascii2text(a + 32)
-        else if (a == 168)
-            t += ascii2text(184)
-        else t += ascii2text(a)
-    return t
 
 //Takes a list of values, sanitizes it down for readability and character count,
 //then exports it as a json file at data/npc_saves/[filename].json.
@@ -787,7 +636,7 @@ var/list/binary = list("0","1")
 	var/next_backslash = findtext(string, "\\")
 	if(!next_backslash)
 		return string
-	
+
 	var/leng = length(string)
 
 	var/next_space = findtext(string, " ", next_backslash + 1)

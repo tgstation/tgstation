@@ -8,17 +8,17 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
-/obj/item/clothing/head/helmet/clockwork/New()
-	..()
+/obj/item/clothing/head/helmet/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/item/clothing/head/helmet/clockwork/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/clothing/head/helmet/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 		flags |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -64,17 +64,17 @@
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
-/obj/item/clothing/suit/armor/clockwork/New()
-	..()
+/obj/item/clothing/suit/armor/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/item/clothing/suit/armor/clockwork/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/clothing/suit/armor/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 		flags |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -125,17 +125,17 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	armor = list(melee = 80, bullet = 70, laser = -25, energy = 0, bomb = 60, bio = 0, rad = 0, fire = 100, acid = 100)
 
-/obj/item/clothing/gloves/clockwork/New()
-	..()
+/obj/item/clothing/gloves/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/item/clothing/gloves/clockwork/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/clothing/gloves/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
 		flags |= STOPSPRESSUREDMAGE
 		max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
@@ -178,20 +178,20 @@
 	put_on_delay = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-/obj/item/clothing/shoes/clockwork/New()
-	..()
+/obj/item/clothing/shoes/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/item/clothing/shoes/clockwork/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/clothing/shoes/clockwork/negates_gravity()
 	return TRUE
 
 /obj/item/clothing/shoes/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		flags |= NOSLIP
 	else
 		flags &= NOSLIP

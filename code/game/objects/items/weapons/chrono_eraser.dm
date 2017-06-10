@@ -155,7 +155,7 @@
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 15
-	var/image/mob_underlay = null
+	var/mutable_appearance/mob_underlay
 	var/preloaded = 0
 	var/RPpos = null
 
@@ -172,7 +172,7 @@
 			mob_icon.Blend(removing_frame, ICON_MULTIPLY)
 			cached_icon.Insert(mob_icon, "frame[i]")
 
-		mob_underlay = new(cached_icon, "frame1")
+		mob_underlay = mutable_appearance(cached_icon, "frame1")
 		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"

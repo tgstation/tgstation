@@ -15,7 +15,7 @@
 	var/max_occurrences = 20	//The maximum number of times this event can occur (naturally), it can still be forced.
 								//By setting this to 0 you can effectively disable an event.
 
-	var/holidayID = ""			//string which should be in the SSevents.holidays list if you wish this event to be holiday-specific
+	var/holidayID = ""			//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 								//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = 0
 
@@ -43,7 +43,7 @@
 		return FALSE
 	if(earliest_start >= world.time)
 		return FALSE
-	if(wizardevent != SSevent.wizardmode)
+	if(wizardevent != SSevents.wizardmode)
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
@@ -51,7 +51,7 @@
 		return FALSE
 	if(gamemode_whitelist.len && !(gamemode in gamemode_whitelist))
 		return FALSE
-	if(holidayID && (!SSevent.holidays || !SSevent.holidays[holidayID]))
+	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
 		return FALSE
 	return TRUE
 
@@ -78,13 +78,13 @@
 		triggering = FALSE
 		message_admins("[key_name_admin(usr)] cancelled event [name].")
 		log_admin_private("[key_name(usr)] cancelled event [name].")
-		feedback_add_details("admin_verb","CancelEvent: [typepath]")
+		SSblackbox.add_details("event_admin_cancelled","[typepath]")
 
 /datum/round_event_control/proc/runEvent(random)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
-	feedback_add_details("event_ran","[E]")
+	SSblackbox.add_details("event_ran","[E]")
 	occurrences++
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
@@ -175,12 +175,12 @@
 //which should be the only place it's referenced.
 //Called when start(), announce() and end() has all been called.
 /datum/round_event/proc/kill()
-	SSevent.running -= src
+	SSevents.running -= src
 
 
 //Sets up the event then adds the event to the the list of running events
 /datum/round_event/New(my_processing = TRUE)
 	setup()
 	processing = my_processing
-	SSevent.running += src
+	SSevents.running += src
 	return ..()

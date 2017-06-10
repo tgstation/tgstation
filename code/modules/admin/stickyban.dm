@@ -189,7 +189,7 @@
 		[banhtml]
 	</body>
 	"}
-	usr << browse(sanitize_russian(html,1),"window=stickybans;size=700x400")
+	usr << browse(sanitize_russian(html),"window=stickybans;size=700x400")
 
 /proc/get_stickyban_from_ckey(var/ckey)
 	if (!ckey)

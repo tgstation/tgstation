@@ -1,10 +1,10 @@
 /******************** Requests Console ********************/
 /** Originally written by errorage, updated by: Carn, needs more work though. I just added some security fixes */
 
-var/req_console_assistance = list()
-var/req_console_supplies = list()
-var/req_console_information = list()
-var/list/obj/machinery/requests_console/allConsoles = list()
+GLOBAL_LIST_EMPTY(req_console_assistance)
+GLOBAL_LIST_EMPTY(req_console_supplies)
+GLOBAL_LIST_EMPTY(req_console_information)
+GLOBAL_LIST_EMPTY(allConsoles)
 
 /obj/machinery/requests_console
 	name = "requests console"
@@ -91,46 +91,46 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 /obj/machinery/requests_console/Initialize()
 	..()
 	name = "\improper [department] requests console"
-	allConsoles += src
+	GLOB.allConsoles += src
 	switch(departmentType)
 		if(1)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
 		if(2)
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
 		if(3)
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 		if(4)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
 		if(5)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 		if(6)
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 		if(7)
-			if(!("[department]" in req_console_assistance))
-				req_console_assistance += department
-			if(!("[department]" in req_console_supplies))
-				req_console_supplies += department
-			if(!("[department]" in req_console_information))
-				req_console_information += department
+			if(!("[department]" in GLOB.req_console_assistance))
+				GLOB.req_console_assistance += department
+			if(!("[department]" in GLOB.req_console_supplies))
+				GLOB.req_console_supplies += department
+			if(!("[department]" in GLOB.req_console_information))
+				GLOB.req_console_information += department
 
 	Radio = new /obj/item/device/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)
-	allConsoles -= src
+	GLOB.allConsoles -= src
 	return ..()
 
 /obj/machinery/requests_console/attack_hand(mob/user)
@@ -142,7 +142,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if(1)	//req. assistance
 				dat += "Which department do you need assistance from?<BR><BR>"
 				dat += "<table width='100%'>"
-				for(var/dpt in req_console_assistance)
+				for(var/dpt in GLOB.req_console_assistance)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
@@ -157,7 +157,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if(2)	//req. supplies
 				dat += "Which department do you need supplies from?<BR><BR>"
 				dat += "<table width='100%'>"
-				for(var/dpt in req_console_supplies)
+				for(var/dpt in GLOB.req_console_supplies)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
@@ -172,7 +172,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			if(3)	//relay information
 				dat += "Which department would you like to send information to?<BR><BR>"
 				dat += "<table width='100%'>"
-				for(var/dpt in req_console_information)
+				for(var/dpt in GLOB.req_console_information)
 					if (dpt != department)
 						dat += "<tr>"
 						dat += "<td width='55%'>[dpt]</td>"
@@ -193,7 +193,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				dat += "<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>"
 
 			if(8)	//view messages
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
 					if (Console.department == department)
 						Console.newmessagepriority = 0
 						Console.update_icon()
@@ -272,7 +272,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
 
-		var/new_message = copytext(reject_bad_text(sanitize_russian(input(usr, "Write your message:", "Awaiting Input", ""),1)),1,MAX_MESSAGE_LEN)
+		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -288,7 +288,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = copytext(reject_bad_text(sanitize_russian(input(usr, "Write your message:", "Awaiting Input", ""),1)),1,MAX_MESSAGE_LEN)
+		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
 		if(new_message)
 			message = new_message
 			if (text2num(href_list["priority"]) < 2)
@@ -303,8 +303,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(href_list["sendAnnouncement"])
 		if(!announcementConsole)
 			return
-		minor_announce(russian_html2text(message), "[department] Announcement:")
-		news_network.SubmitArticle(message, department, "Station Announcements", null)
+		minor_announce(message, "[department] Announcement:")
+		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		log_say("[key_name(usr)] has made a station announcement: [message]")
 		message_admins("[key_name_admin(usr)] has made a station announcement.")
 		announceAuth = 0
@@ -316,21 +316,19 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			var/radio_freq
 			switch(text2num(href_list["emergency"]))
 				if(1) //Security
-					radio_freq = SEC_FREQ
+					radio_freq = GLOB.SEC_FREQ
 					emergency = "Security"
 				if(2) //Engineering
-					radio_freq = ENG_FREQ
+					radio_freq = GLOB.ENG_FREQ
 					emergency = "Engineering"
 				if(3) //Medical
-					radio_freq = MED_FREQ
+					radio_freq = GLOB.MED_FREQ
 					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
-				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
+				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())
 				update_icon()
-				spawn(3000)
-					emergency = null
-					update_icon()
+				addtimer(CALLBACK(src, .proc/clear_emergency), 3000)
 
 	if( href_list["department"] && message )
 		var/log_msg = message
@@ -345,7 +343,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		if (sending)
 			var/pass = 0
-			for (var/obj/machinery/message_server/MS in machines)
+			for (var/obj/machinery/message_server/MS in GLOB.machines)
 				if(!MS.active) continue
 				MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 				pass = 1
@@ -354,24 +352,24 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				var/radio_freq = 0
 				switch(href_list["department"])
 					if("bridge")
-						radio_freq = COMM_FREQ
+						radio_freq = GLOB.COMM_FREQ
 					if("medbay")
-						radio_freq = MED_FREQ
+						radio_freq = GLOB.MED_FREQ
 					if("science")
-						radio_freq = SCI_FREQ
+						radio_freq = GLOB.SCI_FREQ
 					if("engineering")
-						radio_freq = ENG_FREQ
+						radio_freq = GLOB.ENG_FREQ
 					if("security")
-						radio_freq = SEC_FREQ
+						radio_freq = GLOB.SEC_FREQ
 					if("cargobay" || "mining")
-						radio_freq = SUPP_FREQ
+						radio_freq = GLOB.SUPP_FREQ
 				Radio.set_frequency(radio_freq)
 				var/authentic
 				if(msgVerified || msgStamped)
 					authentic = " (Authenticated)"
 
 				var/alert = ""
-				for (var/obj/machinery/requests_console/Console in allConsoles)
+				for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
 					if (ckey(Console.department) == ckey(href_list["department"]))
 						switch(priority)
 							if(2)		//High priority
@@ -386,7 +384,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 						screen = 6
 
 				if(radio_freq)
-					Radio.talk_into(src,"[alert]: <i>[russian_html2text(message)]</i>",radio_freq)
+					Radio.talk_into(src,"[alert]: <i>[message]</i>",radio_freq,get_spans(),get_default_language())
 
 				switch(priority)
 					if(2)
@@ -441,12 +439,16 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	updateUsrDialog()
 	return
 
-/obj/machinery/say_quote(input, list/spans)
+/obj/machinery/requests_console/say_mod(input, message_mode)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
-		return "blares, \"[attach_spans(input, spans)]\""
+		. = "blares"
+	else
+		. = ..()
 
-	return ..()
+/obj/machinery/requests_console/proc/clear_emergency()
+	emergency = null
+	update_icon()
 
 /obj/machinery/requests_console/proc/createmessage(source, title, message, priority)
 	var/linkedsender
@@ -513,7 +515,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			msgVerified = "<font color='green'><b>Verified by [ID.registered_name] ([ID.assignment])</b></font>"
 			updateUsrDialog()
 		if(screen == 10)
-			if (access_RC_announce in ID.access)
+			if (GLOB.access_RC_announce in ID.access)
 				announceAuth = 1
 			else
 				announceAuth = 0

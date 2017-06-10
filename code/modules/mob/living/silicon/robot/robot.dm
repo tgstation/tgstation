@@ -38,7 +38,7 @@
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
-	var/image/eye_lights
+	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
@@ -51,7 +51,7 @@
 
 	var/ident = 0
 	var/locked = 1
-	var/list/req_access = list(access_robotics)
+	var/list/req_access = list(GLOB.access_robotics)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
@@ -167,8 +167,8 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.stat = CONSCIOUS
-				dead_mob_list -= mmi.brainmob
-				living_mob_list += mmi.brainmob
+				GLOB.dead_mob_list -= mmi.brainmob
+				GLOB.living_mob_list += mmi.brainmob
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
@@ -179,7 +179,7 @@
 	if(connected_ai)
 		connected_ai.connected_robots -= src
 	if(shell)
-		available_ai_shells -= src
+		GLOB.available_ai_shells -= src
 	qdel(wires)
 	qdel(module)
 	qdel(eye_lights)
@@ -602,7 +602,7 @@
 		else
 			add_overlay("ov-opencover -c")
 	if(hat)
-		var/image/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
+		var/mutable_appearance/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
@@ -611,7 +611,7 @@
 
 /mob/living/silicon/robot/proc/do_camera_update(oldLoc)
 	if(oldLoc != src.loc)
-		cameranet.updatePortableCamera(src.camera)
+		GLOB.cameranet.updatePortableCamera(src.camera)
 	updating = 0
 
 /mob/living/silicon/robot/Move(a, b, flag)
@@ -793,7 +793,7 @@
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
@@ -815,6 +815,9 @@
 /mob/living/silicon/robot/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
+
+/mob/living/silicon/robot/syndicate/ResetModule()
+	return
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
@@ -878,12 +881,12 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
 		sight |= SEE_OBJS
-		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGXRAY)
@@ -898,6 +901,7 @@
 
 	if(see_override)
 		see_invisible = see_override
+	sync_lighting_plane_alpha()
 
 /mob/living/silicon/robot/update_stat()
 	if(status_flags & GODMODE)
@@ -1001,7 +1005,7 @@
 	braintype = "AI Shell"
 	name = "[designation] AI Shell [rand(100,999)]"
 	real_name = name
-	available_ai_shells |= src
+	GLOB.available_ai_shells |= src
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
@@ -1015,7 +1019,7 @@
 	//A player forced reset of a borg would drop the module before this is called, so this is for catching edge cases
 		qdel(boris)
 	shell = FALSE
-	available_ai_shells -= src
+	GLOB.available_ai_shells -= src
 	name = "Unformatted Cyborg [rand(100,999)]"
 	real_name = name
 	if(camera)
@@ -1039,7 +1043,7 @@
 		radio.subspace_transmission = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
-			radio.secure_radio_connections[chan] = add_radio(radio, radiochannels[chan])
+			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.radiochannels[chan])
 
 	diag_hud_set_aishell()
 	undeployment_action.Grant(src)
@@ -1060,7 +1064,7 @@
 
 /mob/living/silicon/robot/proc/undeploy()
 
-	if(!deployed || !mainframe)
+	if(!deployed || !mind || !mainframe)
 		return
 	mainframe.redeploy_action.Grant(mainframe)
 	mainframe.redeploy_action.last_used_shell = src
@@ -1112,7 +1116,7 @@
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
 	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 

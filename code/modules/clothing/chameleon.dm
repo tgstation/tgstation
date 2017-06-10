@@ -103,18 +103,18 @@
 	update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)
-	var/picked_item = pick(chameleon_list)
+	var/picked_name = pick(chameleon_list)
 	// If a user is provided, then this item is in use, and we
 	// need to update our icons and stuff
 
 	if(user)
-		update_look(user, picked_item)
+		update_look(user, chameleon_list[picked_name])
 
 	// Otherwise, it's likely a random initialisation, so we
 	// don't have to worry
 
 	else
-		update_item(picked_item)
+		update_item(chameleon_list[picked_name])
 
 /datum/action/item_action/chameleon/change/proc/update_look(mob/user, obj/item/picked_item)
 	if(istype(target, /obj/item/weapon/gun/energy/laser/chameleon))
@@ -202,7 +202,7 @@
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	origin_tech = "syndicate=2"
-	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -455,8 +455,7 @@
 		if(v in blacklisted_vars)
 			continue
 		vars[v] = initial(vars[v])
-	if(chambered.BB)
-		qdel(chambered.BB)
+	QDEL_NULL(chambered.BB)
 	chambered.newshot()
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
@@ -476,7 +475,7 @@
 	if(!istype(P))
 		CRASH("[P] is not /obj/item/projectile!")
 		return FALSE
-	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser")
+	chameleon_projectile_vars = list("name" = "practice laser", "icon" = 'icons/obj/projectiles.dmi', "icon_state" = "laser", "nodamage" = TRUE)
 	for(var/V in projectile_copy_vars)
 		if(P.vars[V])
 			chameleon_projectile_vars[V] = P.vars[V]
@@ -559,8 +558,8 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/New()
-	..()
+/obj/item/device/radio/headset/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/radio/headset
 	chameleon_action.chameleon_name = "Headset"

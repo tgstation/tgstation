@@ -6,7 +6,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	light_color = LIGHT_COLOR_RED
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 	shuttleId = "syndicate"
 	possible_destinations = "syndicate_away;syndicate_z5;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -31,12 +31,12 @@
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/New()
-	syndicate_shuttle_boards += src
-	..()
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Initialize()
+	. = ..()
+	GLOB.syndicate_shuttle_boards += src
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
-	syndicate_shuttle_boards -= src
+	GLOB.syndicate_shuttle_boards -= src
 	return ..()
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod
@@ -44,7 +44,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
-	req_access = list(access_syndicate)
+	req_access = list(GLOB.access_syndicate)
 	shuttleId = "steel_rain"
 	possible_destinations = null
 	clockwork = TRUE //it'd look weird

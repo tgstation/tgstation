@@ -4,6 +4,7 @@
 
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "eightball"
+	w_class = WEIGHT_CLASS_TINY
 
 	verb_say = "rattles"
 
@@ -54,7 +55,7 @@
 	shaking = TRUE
 
 	start_shaking(user)
-	if(do_after(user, shake_time, needhand=TRUE, target=src, progress=TRUE))
+	if(do_after(user, shake_time, needhand=TRUE, target=user, progress=TRUE))
 		var/answer = get_answer()
 		say(answer)
 
@@ -98,10 +99,10 @@
 /obj/item/toy/eightball/haunted/Initialize(mapload)
 	..()
 	votes = list()
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/item/toy/eightball/haunted/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	. = ..()
 
 /obj/item/toy/eightball/haunted/attack_ghost(mob/user)
@@ -110,7 +111,7 @@
 		return
 	interact(user)
 
-/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/item/toy/eightball/haunted/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	last_message = raw_message
 
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
@@ -155,7 +156,7 @@
 
 	return most_popular_answer
 
-/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=observer_state)
+/obj/item/toy/eightball/haunted/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state = GLOB.observer_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)

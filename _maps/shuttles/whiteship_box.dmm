@@ -37,7 +37,7 @@
 /area/shuttle/abandoned)
 "af" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ag" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -203,7 +203,7 @@
 	anchored = 1
 	},
 /obj/structure/light_construct,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aI" = (
 /turf/closed/wall/shuttle{
@@ -230,7 +230,7 @@
 "aM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aN" = (
 /obj/machinery/door/window,
@@ -256,7 +256,7 @@
 /area/shuttle/abandoned)
 "aR" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aS" = (
 /obj/structure/chair{
@@ -545,7 +545,7 @@ aa
 aC
 aj
 aj
-bp
+bk
 aC
 aa
 aa
@@ -786,7 +786,7 @@ bl
 aj
 aj
 aj
-br
+bk
 aC
 aC
 aC
@@ -955,7 +955,7 @@ aN
 aj
 bq
 aj
-af
+aW
 aj
 aj
 aW
@@ -980,7 +980,7 @@ aj
 aV
 aY
 aC
-bs
+bl
 aj
 aC
 aj
@@ -998,7 +998,7 @@ aj
 aG
 aC
 aj
-af
+aW
 aj
 bn
 aj
@@ -1096,7 +1096,7 @@ aC
 aC
 aC
 aL
-aR
+be
 aL
 aC
 aC

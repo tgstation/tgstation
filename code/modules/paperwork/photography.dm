@@ -47,7 +47,7 @@
 		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
 		txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == 0)
-			scribble = sanitize_russian(txt, 1)
+			scribble = sanitize_russian(txt)
 	..()
 
 
@@ -284,7 +284,7 @@
 	var/list/turfs = list()
 	for(var/turf/T in range(1, target))
 		if(T in seen)
-			if(isAi && !cameranet.checkTurfVis(T))
+			if(isAi && !GLOB.cameranet.checkTurfVis(T))
 				continue
 			else
 				turfs += T
@@ -309,7 +309,7 @@
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	P.icon = ic
 	P.img = temp
 	P.desc = mobs
@@ -326,7 +326,7 @@
 	var/icon/small_img = icon(temp)
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	var/icon = ic
 	var/img = temp
 	var/desc = mobs
@@ -488,27 +488,28 @@
 
 // Picture frames
 
-/obj/item/weapon/picture_frame
+/obj/item/wallframe/picture
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
+	materials = list()
+	flags = 0
 	icon_state = "frame-empty"
+	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/weapon/photo/displayed
 
-/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
+/obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/photo))
 		if(!displayed)
-			var/obj/item/weapon/photo/P = I
-			if(!user.transferItemToLoc(P, src))
+			if(!user.transferItemToLoc(I, src))
 				return
-			displayed = P
+			displayed = I
 			update_icon()
 		else
 			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
-
 	..()
 
-/obj/item/weapon/picture_frame/attack_hand(mob/user)
+/obj/item/wallframe/picture/attack_hand(mob/user)
 	if(user.get_inactive_held_item() != src)
 		..()
 		return
@@ -519,37 +520,31 @@
 		displayed = null
 		update_icon()
 
-/obj/item/weapon/picture_frame/attack_self(mob/user)
+/obj/item/wallframe/picture/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/weapon/picture_frame/examine(mob/user)
+/obj/item/wallframe/picture/examine(mob/user)
 	if(user.is_holding(src) && displayed)
 		displayed.show(user)
 	else
 		..()
 
-/obj/item/weapon/picture_frame/update_icon()
+/obj/item/wallframe/picture/update_icon()
 	cut_overlays()
 	if(displayed)
 		add_overlay(getFlatIcon(displayed))
-	else
-		icon_state = initial(icon_state)
+		add_overlay("frame-overlay")
 
-/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
-	var/turf/T = target
-	if(!iswallturf(T))
-		return
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach the sign to [T].</span>")
-	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
-	var/obj/structure/sign/picture_frame/PF = new /obj/structure/sign/picture_frame(T)
+/obj/item/wallframe/picture/after_attach(obj/O)
+	..()
+	var/obj/structure/sign/picture_frame/PF = O
 	PF.copy_overlays(src)
 	if(displayed)
 		PF.framed = displayed
 	if(contents.len)
 		var/obj/item/I = pick(contents)
 		I.forceMove(PF)
-	qdel(src)
+
 
 /obj/structure/sign/picture_frame
 	name = "picture frame"
@@ -558,35 +553,33 @@
 	icon_state = "frame-empty"
 	var/obj/item/weapon/photo/framed
 
+/obj/structure/sign/picture_frame/New(loc, dir, building)
+	..()
+	if(dir)
+		setDir(dir)
+	if(building)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
+		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
+
 /obj/structure/sign/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
 		framed.show(user)
 	else
 		..()
 
-/obj/structure/sign/picture_frame/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/screwdriver))
-		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(src, O.usesound, 50, 1)
-		if(!do_after(user, 30*O.toolspeed, target = src))
-			return
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-							 "<span class='notice'>You unfasten [src].</span>")
-		var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame(get_turf(user))
-		if(framed)
-			F.displayed = framed
-			framed = null
-		if(contents.len)
-			var/obj/item/I = pick(contents)
-			I.forceMove(F)
-		F.update_icon()
-		qdel(src)
+/obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver) || istype(I, /obj/item/weapon/wrench))
+		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
+		playsound(loc, I.usesound, 50, 1)
+		if(do_after(user, 30*I.toolspeed, target = src))
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
+		deconstruct()
+		return
 
-	else if(istype(O, /obj/item/weapon/photo))
+	else if(istype(I, /obj/item/weapon/photo))
 		if(!framed)
-			var/obj/item/weapon/photo/P = O
+			var/obj/item/weapon/photo/P = I
 			if(!user.transferItemToLoc(P, src))
 				return
 			framed = P
@@ -604,5 +597,16 @@
 	cut_overlays()
 	if(framed)
 		add_overlay(getFlatIcon(framed))
-	else
-		icon_state = initial(icon_state)
+		add_overlay("frame-overlay")
+
+/obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
+		if(framed)
+			F.displayed = framed
+			framed = null
+		if(contents.len)
+			var/obj/item/I = pick(contents)
+			I.forceMove(F)
+		F.update_icon()
+	qdel(src)

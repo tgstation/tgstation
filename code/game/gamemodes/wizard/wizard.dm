@@ -25,11 +25,11 @@
 	modePlayer += wizard
 	wizard.assigned_role = "Wizard"
 	wizard.special_role = "Wizard"
-	if(wizardstart.len == 0)
+	if(GLOB.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(wizardstart)
+		wiz.current.loc = pick(GLOB.wizardstart)
 
 	return 1
 
@@ -97,8 +97,8 @@
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
-	var/wizard_name_first = pick(wizard_first)
-	var/wizard_name_second = pick(wizard_second)
+	var/wizard_name_first = pick(GLOB.wizard_first)
+	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
 		var/newname = copytext(sanitize(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
@@ -110,6 +110,10 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+
+		/* Wizards by nature cannot be too young. */
+		if(wizard_mob.age < WIZARD_AGE_MIN)
+			wizard_mob.age = WIZARD_AGE_MIN
 	return
 
 
@@ -168,18 +172,18 @@
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return ..()
 
-	if(SSevent.wizardmode) //If summon events was active, turn it off
-		SSevent.toggleWizardmode()
-		SSevent.resetFrequency()
+	if(SSevents.wizardmode) //If summon events was active, turn it off
+		SSevents.toggleWizardmode()
+		SSevents.resetFrequency()
 
 	return ..()
 
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
-		feedback_set_details("round_end_result","loss - wizard killed")
+		SSblackbox.set_details("round_end_result","loss - wizard killed")
 		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
 
-		ticker.news_report = WIZARD_KILLED
+		SSticker.news_report = WIZARD_KILLED
 
 	..()
 	return 1
@@ -208,19 +212,19 @@
 			for(var/datum/objective/objective in wizard.objectives)
 				if(objective.check_completion())
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-					feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
+					SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
 				else
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-					feedback_add_details("wizard_objective","[objective.type]|FAIL")
+					SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
 					wizardwin = 0
 				count++
 
 			if(wizard.current && wizard.current.stat!=2 && wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
-				feedback_add_details("wizard_success","SUCCESS")
+				SSblackbox.add_details("wizard_success","SUCCESS")
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
-				feedback_add_details("wizard_success","FAIL")
+				SSblackbox.add_details("wizard_success","FAIL")
 			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1
@@ -247,15 +251,15 @@
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.wizards) || (M.mind in ticker.mode.apprentices))
+	return istype(M) && M.mind && SSticker && SSticker.mode && ((M.mind in SSticker.mode.wizards) || (M.mind in SSticker.mode.apprentices))
 
 
 /datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)
-	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
+	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
 
 /datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
-	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
+	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.leave_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, null)

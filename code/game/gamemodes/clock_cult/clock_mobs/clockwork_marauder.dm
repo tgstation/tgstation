@@ -21,6 +21,8 @@
 	var/blockchance = 17 //chance to block attacks entirely
 	var/counterchance = 30 //chance to counterattack after blocking
 	var/static/list/damage_heal_order = list(OXY, BURN, BRUTE, TOX) //we heal our host's damage in this order
+	light_range = 2
+	light_power = 1.1
 	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block attacks, \
 	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
 	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
@@ -30,9 +32,8 @@
 	fighting safely. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Initialize()
-	..()
+	. = ..()
 	true_name = pick(possible_true_names)
-	set_light(2, 1.1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -41,10 +42,10 @@
 			emerge_from_host(FALSE, TRUE)
 			unbind_from_host()
 			return
-		if(!ratvar_awakens && host.stat == DEAD)
+		if(!GLOB.ratvar_awakens && host.stat == DEAD)
 			death()
 			return
-		if(ratvar_awakens)
+		if(GLOB.ratvar_awakens)
 			adjustHealth(-50)
 		else
 			adjustHealth(-10)
@@ -55,7 +56,7 @@
 			to_chat(host, "<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>")
 			recovering = FALSE
 	else
-		if(ratvar_awakens) //If Ratvar is alive, marauders don't need a host and are downright impossible to kill
+		if(GLOB.ratvar_awakens) //If Ratvar is alive, marauders don't need a host and are downright impossible to kill
 			adjustHealth(-5)
 			heal_host()
 		else if(host)
@@ -107,7 +108,7 @@
 			if(iscarbon(host))
 				resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
-			if(ratvar_awakens)
+			if(GLOB.ratvar_awakens)
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
 				if(resulthealth > MARAUDER_EMERGE_THRESHOLD)
@@ -148,8 +149,8 @@
 	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host))
 		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
-	if(ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
-		new /obj/effect/overlay/temp/heal(host.loc, "#AF0AAF")
+	if(GLOB.ratvar_awakens || resulthealth <= MARAUDER_EMERGE_THRESHOLD)
+		new /obj/effect/temp_visual/heal(host.loc, "#AF0AAF")
 		host.heal_ordered_damage(4, damage_heal_order)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -180,7 +181,7 @@
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>[round((health / maxHealth) * 100, 0.5)]%</font>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/update_stats()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		speed = 0
 		melee_damage_lower = 20
 		melee_damage_upper = 20
@@ -261,7 +262,7 @@
 		return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/blockOrCounter(mob/target, atom/textobject)
-	if(ratvar_awakens) //if ratvar has woken, we block nearly everything at a very high chance
+	if(GLOB.ratvar_awakens) //if ratvar has woken, we block nearly everything at a very high chance
 		blockchance = 90
 		counterchance = 90
 	if(prob(blockchance))
@@ -284,7 +285,7 @@
 				counterchance = min(counterchance + initial(counterchance), 100)
 	else
 		blockchance = min(blockchance + initial(blockchance), 100)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		blockchance = 90
 		counterchance = 90
 
@@ -301,7 +302,7 @@
 	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
 	to_chat(src, "[name_part]<span class='sevtug_small'>:</span> [message]")
 	to_chat(host, "[name_part]<span class='sevtug_small'>:</span> [message]")
-	for(var/M in mob_list)
+	for(var/M in GLOB.mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[findtextEx(host.name, host.real_name) ? "[host.name]" : "[host.real_name] (as [host.name])"]</span><span class='sevtug_small'>):</span> [message] ")
@@ -329,7 +330,7 @@
 	if(!host)
 		to_chat(src, "<span class='warning'>You don't have a host!</span>")
 		return FALSE
-	if(!ratvar_awakens)
+	if(!GLOB.ratvar_awakens)
 		var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 		if(iscarbon(host))
 			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
@@ -411,18 +412,18 @@
 	return ..()
 
 /datum/action/innate/linked_minds/Activate()
-	var/message = strip_html_properly(stripped_input(owner, "Enter a message to tell your marauder.", "Telepathy"))
+	var/message = stripped_input(owner, "Enter a message to tell your marauder.", "Telepathy")
 	if(!owner || !message)
 		return FALSE
 	if(!linked_marauder)
 		to_chat(owner, "<span class='warning'>Your marauder seems to have been destroyed!</span>")
 		return FALSE
 	var/name_part = "<span class='sevtug'>Servant [findtextEx(owner.name, owner.real_name) ? "[owner.name]" : "[owner.real_name] (as [owner.name])"]</span>"
-	message = "<span class='sevtug_small'>\"[russian_html2text(message)]\"</span>" //Processed output
-	to_chat(owner, "[name_part]<span class='sevtug_small'>:</span> [russian_html2text(message)]")
-	to_chat(linked_marauder, "[name_part]<span class='sevtug_small'>:</span> [russian_html2text(message)]")
-	for(var/M in mob_list)
+	message = "<span class='sevtug_small'>\"[message]\"</span>" //Processed output
+	to_chat(owner, "[name_part]<span class='sevtug_small'>:</span> [message]")
+	to_chat(linked_marauder, "[name_part]<span class='sevtug_small'>:</span> [message]")
+	for(var/M in GLOB.mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [russian_html2text(message)]")
+			to_chat(M, "[link] [name_part] <span class='sevtug_small'>(to</span> <span class='sevtug'>[linked_marauder] ([linked_marauder.true_name])</span><span class='sevtug_small'>):</span> [message]")
 	return TRUE

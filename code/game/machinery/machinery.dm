@@ -1,8 +1,8 @@
 /*
 Overview:
-   Used to create objects that need a per step proc call.  Default definition of 'New()'
+   Used to create objects that need a per step proc call.  Default definition of 'Initialize()'
    stores a reference to src machine in global 'machines list'.  Default definition
-   of 'Del' removes reference to src machine in global 'machines list'.
+   of 'Destroy' removes reference to src machine in global 'machines list'.
 
 Class Variables:
    use_power (num)
@@ -44,7 +44,7 @@ Class Variables:
          EMPED:16 -- temporary broken by EMP pulse
 
 Class Procs:
-   New()                     'game/machinery/machine.dm'
+   Initialize()                     'game/machinery/machine.dm'
 
    Destroy()                   'game/machinery/machine.dm'
 
@@ -118,27 +118,30 @@ Class Procs:
 	var/panel_open = 0
 	var/state_open = 0
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
-	var/mob/living/occupant = null
+	var/list/occupant_typecache = list(/mob/living) // turned into typecache in Initialize
+	var/atom/movable/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
 
 /obj/machinery/Initialize()
-	if (!armor)
+	if(!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
-	..()
-	machines += src
+	. = ..()
+	GLOB.machines += src
 	if(!speed_process)
-		START_PROCESSING(SSmachine, src)
+		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
+	occupant_typecache = typecacheof(occupant_typecache)
+
 /obj/machinery/Destroy()
-	machines.Remove(src)
+	GLOB.machines.Remove(src)
 	if(!speed_process)
-		STOP_PROCESSING(SSmachine, src)
+		STOP_PROCESSING(SSmachines, src)
 	else
 		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
@@ -156,7 +159,7 @@ Class Procs:
 /obj/machinery/emp_act(severity)
 	if(use_power && !stat)
 		use_power(7500/severity)
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 	..()
 
 /obj/machinery/proc/open_machine(drop = 1)
@@ -176,16 +179,24 @@ Class Procs:
 			L.update_canmove()
 	occupant = null
 
-/obj/machinery/proc/close_machine(mob/living/target = null)
+/obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = 0
 	density = 1
 	if(!target)
-		for(var/mob/living/carbon/C in loc)
-			if(C.buckled || C.has_buckled_mobs())
+		for(var/am in loc)
+			if(!is_type_in_typecache(am, occupant_typecache))
 				continue
-			else
-				target = C
-	if(target && !target.buckled && !target.has_buckled_mobs())
+			var/atom/movable/AM = am
+			if(AM.has_buckled_mobs())
+				continue
+			if(isliving(AM))
+				var/mob/living/L = am
+				if(L.buckled)
+					continue
+			target = am
+
+	var/mob/living/mobtarget = target
+	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
 		occupant = target
 		target.forceMove(src)
 	updateUsrDialog()

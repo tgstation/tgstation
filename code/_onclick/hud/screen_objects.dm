@@ -84,6 +84,17 @@
 		return 1
 	create_area(usr)
 
+/obj/screen/language_menu
+	name = "language menu"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "talk_wheel"
+	screen_loc = ui_language_menu
+
+/obj/screen/language_menu/Click()
+	var/mob/M = usr
+	var/datum/language_holder/H = M.get_language_holder()
+	H.open_language_menu(usr)
+
 /obj/screen/inventory
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
@@ -122,21 +133,16 @@
 			icon_state = icon_empty
 
 /obj/screen/inventory/hand
-	var/image/active_overlay
-	var/image/handcuff_overlay
-	var/image/blocked_overlay
+	var/mutable_appearance/handcuff_overlay
+	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/mob/screen_gen.dmi', "blocked")
 	var/held_index = 0
 
 /obj/screen/inventory/hand/update_icon()
 	..()
 
-	if(!active_overlay)
-		active_overlay = image("icon"=icon, "icon_state"="hand_active")
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
-		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
-	if(!blocked_overlay)
-		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
+		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
 
 	cut_overlays()
 
@@ -151,7 +157,7 @@
 					add_overlay(blocked_overlay)
 
 		if(held_index == hud.mymob.active_hand_index)
-			add_overlay(active_overlay)
+			add_overlay("hand_active")
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
@@ -433,7 +439,7 @@
 
 /obj/screen/zone_sel/update_icon(mob/user)
 	cut_overlays()
-	add_overlay(image('icons/mob/screen_gen.dmi', "[selecting]"))
+	add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/alien
@@ -441,7 +447,7 @@
 
 /obj/screen/zone_sel/alien/update_icon(mob/user)
 	cut_overlays()
-	add_overlay(image('icons/mob/screen_alien.dmi', "[selecting]"))
+	add_overlay(mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/robot
@@ -525,146 +531,15 @@
 	screen_loc = ui_health
 	mouse_opacity = 0
 
+/obj/screen/healths/construct
+	icon = 'icons/mob/screen_construct.dmi'
+	icon_state = "artificer_health0"
+	screen_loc = ui_construct_health
+	mouse_opacity = 0
+
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
-
-
-
-/obj/screen/wheel
-	name = "wheel"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-	icon_state = ""
-	screen_loc = null //if you make a new wheel, remember to give it a screen_loc
-	var/list/buttons_names = list() //list of the names for each button, its length is the amount of buttons.
-	var/toggled = 0 //wheel is hidden/shown
-	var/wheel_buttons_type //the type of buttons used with this wheel.
-	var/list/buttons_list = list()
-
-/obj/screen/wheel/New()
-	..()
-	build_options()
-
-
-//we create the buttons for the wheel and place them in a square spiral fashion.
-/obj/screen/wheel/proc/build_options()
-	var/obj/screen/wheel_button/close_wheel/CW = new ()
-	buttons_list += CW //the close option
-	CW.wheel = src
-
-	var/list/offset_x_list = list()
-	var/list/offset_y_list = list()
-	var/num = 1
-	var/N = 1
-	var/M = 0
-	var/sign = -1
-	my_loop:
-		while(offset_y_list.len < buttons_names.len)
-			for(var/i=1, i<=num, i++)
-				offset_y_list += N
-				offset_x_list += M
-				if(offset_y_list.len == buttons_names.len)
-					break my_loop
-			if(N != 0)
-				N = 0
-				M = -sign
-			else
-				N = sign
-				M = 0
-				sign = -sign
-				num++
-
-	var/screenx = 8
-	var/screeny = 8
-	for(var/i = 1, i <= buttons_names.len, i++)
-		var/obj/screen/wheel_button/WB = new wheel_buttons_type()
-		WB.wheel = src
-		buttons_list += WB
-		screenx += offset_x_list[i]
-		screeny += offset_y_list[i]
-		WB.screen_loc = "[screenx], [screeny]"
-		set_button(WB, i)
-
-/obj/screen/wheel/proc/set_button(obj/screen/wheel_button/WB, button_number)
-	WB.name = buttons_names[button_number]
-	return
-
-/obj/screen/wheel/Destroy()
-	for(var/obj/screen/S in buttons_list)
-		qdel(S)
-	return ..()
-
-/obj/screen/wheel/Click()
-	if(world.time <= usr.next_move)
-		return
-	if(usr.stat)
-		return
-	if(isliving(usr))
-		var/mob/living/L = usr
-		if(toggled)
-			L.client.screen -= buttons_list
-		else
-			L.client.screen |= buttons_list
-		toggled = !toggled
-
-
-/obj/screen/wheel/talk
-	name = "talk wheel"
-	icon_state = "talk_wheel"
-	screen_loc = "11:6,2:-11"
-	wheel_buttons_type = /obj/screen/wheel_button/talk
-	buttons_names = list("help","hello","bye","stop","thanks","come","out", "yes", "no")
-	var/list/word_messages = list(list("Help!","Help me!"), list("Hello.", "Hi."), list("Bye.", "Goodbye."),\
-									list("Stop!", "Halt!"), list("Thanks.", "Thanks!", "Thank you."), \
-									list("Come.", "Follow me."), list("Out!", "Go away!", "Get out!"), \
-									list("Yes.", "Affirmative."), list("No.", "Negative"))
-
-/obj/screen/wheel/talk/set_button(obj/screen/wheel_button/WB, button_number)
-	..()
-	var/obj/screen/wheel_button/talk/T = WB //we already know what type the button is exactly.
-	T.icon_state = "talk_[T.name]"
-	T.word_messages = word_messages[button_number]
-
-
-/obj/screen/wheel_button
-	name = "default wheel button"
-	screen_loc = "8,8"
-	layer = HUD_LAYER
-	plane = HUD_PLANE
-	mouse_opacity = 2
-	var/obj/screen/wheel/wheel
-
-/obj/screen/wheel_button/Destroy()
-	wheel = null
-	return ..()
-
-/obj/screen/wheel_button/close_wheel
-	name = "close wheel"
-	icon_state = "x3"
-
-/obj/screen/wheel_button/close_wheel/Click()
-	if(isliving(usr))
-		var/mob/living/L = usr
-		L.client.screen -= wheel.buttons_list
-		wheel.toggled = !wheel.toggled
-
-
-/obj/screen/wheel_button/talk
-	name = "talk option"
-	icon_state = "talk_help"
-	var/talk_cooldown = 0
-	var/list/word_messages = list()
-
-/obj/screen/wheel_button/talk/Click(location, control,params)
-	if(isliving(usr))
-		var/mob/living/L = usr
-		if(L.stat)
-			return
-
-		if(word_messages.len && talk_cooldown < world.time)
-			talk_cooldown = world.time + 10
-			L.say(pick(word_messages))
 
 /obj/screen/splash
 	icon = 'config/title_screens/images/blank.png'
@@ -674,7 +549,7 @@
 	plane = SPLASHSCREEN_PLANE
 	var/client/holder
 
-/obj/screen/splash/New(client/C, visible, use_previous_title)
+/obj/screen/splash/New(client/C, visible, use_previous_title) //TODO: Make this use INITIALIZE_IMMEDIATE
 	holder = C
 
 	if(!visible)
@@ -684,14 +559,18 @@
 		if(SStitle.icon)
 			icon = SStitle.icon
 	else
-		if(SStitle.previous_icon)
-			icon = SStitle.previous_icon
+		if(!SStitle.previous_icon)
+			qdel(src)
+			return
+		icon = SStitle.previous_icon
 
 	holder.screen += src
 
 	..()
 
 /obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
+	if(QDELETED(src))
+		return
 	if(out)
 		animate(src, alpha = 0, time = 30)
 	else

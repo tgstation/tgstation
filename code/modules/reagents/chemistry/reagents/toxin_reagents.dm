@@ -648,6 +648,34 @@
 	M.losebreath += 5
 	return ..()
 
+/datum/reagent/toxin/spewium
+	name = "Spewium"
+	id = "spewium"
+	description = "A powerful emetic, causes uncontrollable vomiting.  May result in vomiting organs at high doses."
+	reagent_state = LIQUID
+	color = "#2f6617" //A sickly green color
+	metabolization_rate = REAGENTS_METABOLISM
+	overdose_threshold = 29
+	toxpwr = 0
+	taste_description = "vomit"
+
+/datum/reagent/toxin/spewium/on_mob_life(mob/living/M)
+	.=..()
+	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.vomit(lost_nutrition = 10, blood = prob(10), stun = prob(50), distance = rand(0,4), message = TRUE, toxic = prob(30))
+		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+			if(R != src)
+				H.reagents.remove_reagent(R.id,1)
+
+/datum/reagent/toxin/spewium/overdose_process(mob/living/M)
+	. = ..()
+	if(current_cycle >=33 && prob(15) && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.spew_organ()
+		H.vomit(lost_nutrition = 0, blood = 1, stun = 1, distance = 4)
+		to_chat(H, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
+
 /datum/reagent/toxin/curare
 	name = "Curare"
 	id = "curare"

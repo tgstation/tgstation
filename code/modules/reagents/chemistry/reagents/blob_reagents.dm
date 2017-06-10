@@ -261,7 +261,6 @@
 	color = "#EFD65A"
 	complementary_color = "#00E5B1"
 	message_living = ", and you feel a horrible tingling sensation"
-	var/datum/effect_system/spark_spread/spark_system = new/datum/effect_system/spark_spread()
 
 /datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
@@ -272,8 +271,7 @@
 
 /datum/reagent/blob/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
 	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
-		spark_system.set_up(rand(2, 4), 0, B)
-		spark_system.start()
+		do_sparks(rand(2, 4), FALSE, B)
 	return ..()
 
 /datum/reagent/blob/energized_jelly/tesla_reaction(obj/structure/blob/B, power)
@@ -300,7 +298,7 @@
 	var/initial_volume = reac_volume
 	reac_volume = ..()
 	if(reac_volume >= 10) //if it's not a spore cloud, bad time incoming
-		var/obj/effect/overlay/temp/explosion/fast/E = new /obj/effect/overlay/temp/explosion/fast(get_turf(M))
+		var/obj/effect/temp_visual/explosion/fast/E = new /obj/effect/temp_visual/explosion/fast(get_turf(M))
 		E.alpha = 150
 		for(var/mob/living/L in orange(get_turf(M), 1))
 			if("blob" in L.faction) //no friendly fire

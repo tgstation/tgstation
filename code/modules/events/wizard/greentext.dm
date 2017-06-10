@@ -7,7 +7,7 @@
 
 /datum/round_event/wizard/greentext/start()
 
-	var/list/holder_canadates = player_list.Copy()
+	var/list/holder_canadates = GLOB.player_list.Copy()
 	for(var/mob/M in holder_canadates)
 		if(!ishuman(M))
 			holder_canadates -= M
@@ -33,7 +33,7 @@
 
 /obj/item/weapon/greentext/New()
 	..()
-	poi_list |= src
+	GLOB.poi_list |= src
 
 /obj/item/weapon/greentext/equipped(mob/living/user as mob)
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
@@ -60,8 +60,8 @@
 /obj/item/weapon/greentext/process()
 	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
-		if(!(new_holder in ticker.mode.traitors))
-			ticker.mode.traitors += new_holder.mind
+		if(!(new_holder in SSticker.mode.traitors))
+			SSticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
 		var/datum/objective/O = new /datum/objective("Succeed")
 		O.completed = 1 //YES!
@@ -82,8 +82,8 @@
 		return QDEL_HINT_LETMELIVE
 
 	. = ..()
-	poi_list.Remove(src)
-	for(var/mob/M in mob_list)
+	GLOB.poi_list.Remove(src)
+	for(var/mob/M in GLOB.mob_list)
 		var/message = "<span class='warning'>A dark temptation has passed from this world"
 		if(M in color_altered_mobs)
 			message += " and you're finally able to forgive yourself"

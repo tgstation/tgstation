@@ -273,7 +273,7 @@
 
 //Medbot Assembly
 /obj/item/weapon/firstaid_arm_assembly
-	name = "incomplete medibot assembly."
+	name = "incomplete medibot assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "firstaid_arm"
@@ -286,7 +286,7 @@
 		..()
 		spawn(5)
 			if(skin)
-				add_overlay(image('icons/mob/aibots.dmi', "kit_skin_[skin]"))
+				add_overlay("kit_skin_[skin]")
 
 /obj/item/weapon/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
 
@@ -333,7 +333,7 @@
 					build_step++
 					to_chat(user, "<span class='notice'>You add the health sensor to [src].</span>")
 					name = "First aid/robot arm/health analyzer assembly"
-					add_overlay(image('icons/mob/aibots.dmi', "na_scanner"))
+					add_overlay("na_scanner")
 
 			if(1)
 				if(isprox(W))
@@ -419,8 +419,7 @@
 			return
 		build_step++
 		to_chat(user, "<span class='notice'>You complete the Securitron! Beep boop.</span>")
-		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot
-		S.loc = get_turf(src)
+		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot(get_turf(src))
 		S.name = created_name
 		S.baton_type = I.type
 		qdel(I)

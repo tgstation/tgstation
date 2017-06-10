@@ -16,8 +16,34 @@
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
+	SetupExternalRSC()
+
+	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	config = new
+
+	SetRoundID()
+
+	SetupLogs()
+
+	GLOB.revdata.DownloadPRDetails()
+
+	load_motd()
+	load_admins()
+	load_menu()
+	if(config.usewhitelist)
+		load_whitelist()
+	LoadBans()
+
+	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
+	Master.Initialize(10, FALSE)
+
+/world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
+	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
 	while(i<=external_rsc_urls.len)
 		if(external_rsc_urls[i])
@@ -25,43 +51,49 @@
 		else
 			external_rsc_urls.Cut(i,i+1)
 #endif
-	//logs
-	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
-	diary = file("data/logs/[date_string].log")
-//	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time_stamp()]\n---------------------"
-//	diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
-	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	load_configuration()
-	revdata.DownloadPRDetails()
-	load_mode()
-	load_motd()
-	load_admins()
-	if(config.usewhitelist)
-		load_whitelist()
-	LoadBans()
-	investigate_reset()
-
-	timezoneOffset = text2num(time2text(0,"hh")) * 36000
-
+/world/proc/SetRoundID()
 	if(config.sql_enabled)
-		if(!dbcon.Connect())
-			log_world("Your server failed to establish a connection with the database.")
-		else
+		if(dbcon.Connect())
 			log_world("Database connection established.")
+			var/DBQuery/query_feedback_create_round = dbcon.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
+			query_feedback_create_round.Execute()
+			var/DBQuery/query_feedback_max_id = dbcon.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
+			query_feedback_max_id.Execute()
+			if(query_feedback_max_id.NextRow())
+				GLOB.round_id = query_feedback_max_id.item[1]
+		else
+			log_world("Your server failed to establish a connection with the database.")
+		if(dbcon2.doConnect("dbi:mysql:forum2:[global.sqladdress]:[global.sqlport]","[global.sqlfdbklogin]","[global.sqlfdbkpass]"))
+			log_world("Donations database connection established.")
+		else
+			log_world("ACHTUNG! DONATES HAVE BEEN STOLEN!")
 
+/world/proc/SetupLogs()
+	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+	if(GLOB.round_id)
+		GLOB.log_directory += "[GLOB.round_id]"
+	else
+		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
+	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
+	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
+	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
+	GLOB.world_href_log = file("[GLOB.log_directory]/hrefs.html")
+	GLOB.world_game_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
+	GLOB.world_attack_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
+	GLOB.world_runtime_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
+	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+	if(fexists(GLOB.config_error_log))
+		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
+		fdel(GLOB.config_error_log)
 
-	data_core = new /datum/datacore()
-
-	Master.Initialize(10, FALSE)
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
-		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
@@ -69,13 +101,13 @@
 
 	if("ping" in input)
 		var/x = 1
-		for (var/client/C in clients)
+		for (var/client/C in GLOB.clients)
 			x++
 		return x
 
 	else if("players" in input)
 		var/n = 0
-		for(var/mob/M in player_list)
+		for(var/mob/M in GLOB.player_list)
 			if(M.client)
 				n++
 		return n
@@ -86,40 +118,40 @@
 		var/list/adm = get_admin_counts()
 		var/list/allmins = adm["total"]
 		var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
+		status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
 
 	else if("status" in input)
 		var/list/s = list()
-		s["version"] = game_version
-		s["mode"] = master_mode
-		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["version"] = GLOB.game_version
+		s["mode"] = GLOB.master_mode
+		s["respawn"] = config ? GLOB.abandon_allowed : 0
+		s["enter"] = GLOB.enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["active_players"] = get_active_player_count(Import())
-		s["players"] = clients.len
-//		s["revision"] = revdata.commit
-//		s["revision_date"] = revdata.date
+		s["players"] = GLOB.clients.len
+		s["revision"] = GLOB.revdata.commit
+		s["revision_date"] = GLOB.revdata.date
 
 		var/list/adm = get_admin_counts()
 		var/list/presentmins = adm["present"]
 		var/list/afkmins = adm["afk"]
 		s["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
-		if(ticker)
-			s["gamestate"] = ticker.current_state
+		if(SSticker)
+			s["gamestate"] = SSticker.current_state
 
 		s["map_name"] = SSmapping.config.map_name
 
-		if(key_valid && ticker && ticker.mode)
-			s["real_mode"] = ticker.mode.name
+		if(key_valid && SSticker.HasRoundStarted())
+			s["real_mode"] = SSticker.mode.name
 			// Key-authed callers may know the truth behind the "secret"
 
 		s["security_level"] = get_security_level()
-		s["round_duration"] = round((world.time-round_start_time)/10)
+		s["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0
 		// Amount of world's ticks in seconds, useful for calculating round duration
 
 		if(SSshuttle && SSshuttle.emergency)
@@ -134,11 +166,7 @@
 		if(!key_valid)
 			return "Bad Key"
 		else
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-			for(var/client/C in clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					to_chat(C, "<span class='announce'>PR: [input["sanitize_russian(announce)"]]</span>")
-#undef CHAT_PULLR
+			AnnouncePR(input["announce"], json_decode(input["payload"]))
 
 	else if("crossmessage" in input)
 		if(!key_valid)
@@ -148,7 +176,7 @@
 				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
 			if(input["crossmessage"] == "Comms_Console")
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
-				for(var/obj/machinery/computer/communications/CM in machines)
+				for(var/obj/machinery/computer/communications/CM in GLOB.machines)
 					CM.overrideCooldown()
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
@@ -174,115 +202,37 @@
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
 
-#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
-/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
-	if (reason == 1) //special reboot, do none of the normal stuff
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+/world/proc/AnnouncePR(announcement, list/payload)
+	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
+	var/id = "[payload["pull_request"]["id"]]"
+	if(!PRcounts[id])
+		PRcounts[id] = 1
+	else
+		++PRcounts[id]
+		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
+			return
+
+	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
+	for(var/client/C in GLOB.clients)
+		C.AnnouncePR(final_composed)
+
+/world/Reboot(reason = 0, fast_track = FALSE)
+	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
-		WORLD_REBOOT(1)
-	var/delay
-	if(time)
-		delay = time
 	else
-		delay = config.round_end_countdown * 10
-	if(ticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
-		return
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
-	var/round_end_sound_sent = FALSE
-	if(ticker.round_end_sound)
-		round_end_sound_sent = TRUE
-		for(var/thing in clients)
-			var/client/C = thing
-			if (!C)
-				continue
-			C.Export("##action=load_rsc", ticker.round_end_sound)
-	sleep(delay)
-	if(ticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
-		return
-	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	WORLD_REBOOT(0)
-#undef WORLD_REBOOT
-
-/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	feedback_set_details("[feedback_c]","[feedback_r]")
-	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-#ifdef dellogging
-	var/log = file("data/logs/del.log")
-	log << time2text(world.realtime)
-	for(var/index in del_counter)
-		var/count = del_counter[index]
-		if(count > 10)
-			log << "#[count]\t[index]"
-#endif
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
-	Master.Shutdown()	//run SS shutdowns
-	RoundEndAnimation(round_end_sound_sent)
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	for(var/thing in clients)
-		var/client/C = thing
-		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
-
-/world/proc/RoundEndAnimation(round_end_sound_sent)
-	set waitfor = FALSE
-	var/round_end_sound
-	if(!ticker && ticker.round_end_sound)
-		round_end_sound = ticker.round_end_sound
-		if (!round_end_sound_sent)
-			for(var/thing in clients)
-				var/client/C = thing
-				if (!C)
-					continue
-				C.Export("##action=load_rsc", round_end_sound)
-	else
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
-		)
-
-	for(var/thing in clients)
-		var/obj/screen/splash/S = new(thing, FALSE)
-		S.Fade(FALSE,FALSE)
-
-	world << sound(round_end_sound)
-
-/world/proc/load_mode()
-	var/list/Lines = file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			master_mode = Lines[1]
-			diary << "Saved mode is '[master_mode]'"
-
-/world/proc/save_mode(the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	F << the_mode
+		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
+		Master.Shutdown()	//run SS shutdowns
+	log_world("World rebooted at [time_stamp()]");
+	..()
 
 /world/proc/load_motd()
-	join_motd = sanitize_russian(file2text("config/motd.txt")) + "<br>" + revdata.GetTestMergeInfo()
-
-/world/proc/load_configuration()
-	config = new /datum/configuration()
-	config.load("config/config.txt")
-	config.load("config/game_options.txt","game_options")
-	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation)
-		config.loadmaplist("config/maps.txt")
-
-	// apply some settings from config..
-	abandon_allowed = config.respawn
-
+	GLOB.join_motd = sanitize_russian(file2text("config/motd.txt")) + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
 	var/s = ""
@@ -300,16 +250,16 @@
 
 	var/list/features = list()
 
-	if(ticker)
-		if(master_mode)
-			features += master_mode
+	if(SSticker)
+		if(GLOB.master_mode)
+			features += GLOB.master_mode
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (!GLOB.enter_allowed)
 		features += "closed"
 
-	features += abandon_allowed ? "respawn" : "no respawn"
+	features += GLOB.abandon_allowed ? "respawn" : "no respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"
@@ -318,7 +268,7 @@
 		features += "AI allowed"
 
 	var/n = 0
-	for (var/mob/M in player_list)
+	for (var/mob/M in GLOB.player_list)
 		if (M.client)
 			n++
 

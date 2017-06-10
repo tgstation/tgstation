@@ -11,6 +11,7 @@
 	integrity_failure = 0
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
+	anchorable = FALSE
 	var/foldedbag_path = /obj/item/bodybag
 	var/tagged = 0 // so closet code knows to put the tag overlay back
 

@@ -18,21 +18,20 @@
 	The purpose of your existence is to further the goals of the servants and Ratvar himself. Above all else, serve Ratvar.</b>"
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
-	fluff_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
+	possible_names = list("Judge", "Guard", "Servant", "Smith", "Auger")
 	autoping = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_replace_ai_name = TRUE
 
-/obj/item/device/mmi/posibrain/soul_vessel/New()
-	..()
-	radio.on = 0
+/obj/item/device/mmi/posibrain/soul_vessel/Initialize()
+	. = ..()
+	radio.on = FALSE
 	laws = new /datum/ai_laws/ratvar()
-	braintype = picked_fluff_name
-	all_clockwork_objects += src
-	brainmob.languages_spoken = RATVAR
+	braintype = picked_name
+	GLOB.all_clockwork_objects += src
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/examine(mob/user)
@@ -49,14 +48,16 @@
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>You fiddle around with [src], to no avail.</span>")
-		return 0
+		return FALSE
 	..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!is_servant_of_ratvar(user) || !ishuman(target))
 		..()
 		return
-	if(used || (brainmob && brainmob.key))
+	if(QDELETED(brainmob))
+		return
+	if(brainmob.key)
 		to_chat(user, "<span class='nezbere'>\"This vessel is filled, friend. Provide it with a body.\"</span>")
 		return
 	if(is_servant_of_ratvar(target))
@@ -95,8 +96,8 @@
 	if(!prev_fakedeath)
 		H.status_flags &= ~FAKEDEATH
 	H.apply_status_effect(STATUS_EFFECT_SIGILMARK) //let them be affected by vitality matrices
-	picked_fluff_name = "Slave"
-	braintype = picked_fluff_name
+	picked_name = "Slave"
+	braintype = picked_name
 	brainmob.timeofhostdeath = H.timeofdeath
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
 	"<span class='brass'>You extract [H]'s consciousness from [H.p_their()] body, trapping it in the soul vessel.</span>")

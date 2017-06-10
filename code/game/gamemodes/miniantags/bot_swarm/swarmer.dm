@@ -62,6 +62,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
+	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
@@ -81,10 +82,8 @@
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
-	languages_spoken = SWARMER
-	languages_understood = SWARMER
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'
 	friendly = "pinches"
@@ -121,7 +120,7 @@
 /mob/living/simple_animal/hostile/swarmer/Initialize()
 	..()
 	verbs -= /mob/living/verb/pulled
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
 
@@ -436,7 +435,7 @@
 		resources += resource_gain
 		do_attack_animation(target)
 		changeNext_move(CLICK_CD_MELEE)
-		var/obj/effect/overlay/temp/swarmer/integrate/I = new /obj/effect/overlay/temp/swarmer/integrate(get_turf(target))
+		var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
 		I.pixel_z = target.pixel_z
@@ -453,7 +452,7 @@
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
-	new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
+	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
 	target.ex_act(3)
@@ -498,7 +497,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(obj/machinery/target)
 	do_attack_animation(target)
 	to_chat(src, "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>")
-	var/obj/effect/overlay/temp/swarmer/dismantle/D = new /obj/effect/overlay/temp/swarmer/dismantle(get_turf(target))
+	var/obj/effect/temp_visual/swarmer/dismantle/D = new /obj/effect/temp_visual/swarmer/dismantle(get_turf(target))
 	D.pixel_x = target.pixel_x
 	D.pixel_y = target.pixel_y
 	D.pixel_z = target.pixel_z
@@ -508,7 +507,7 @@
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
 			I.loc = M.loc
-		var/obj/effect/overlay/temp/swarmer/disintegration/N = new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
+		var/obj/effect/temp_visual/swarmer/disintegration/N = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
 		N.pixel_z = target.pixel_z
@@ -520,23 +519,23 @@
 		qdel(target)
 
 
-/obj/effect/overlay/temp/swarmer //temporary swarmer visual feedback objects
+/obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects
 	icon = 'icons/mob/swarmer.dmi'
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/swarmer/disintegration
+/obj/effect/temp_visual/swarmer/disintegration
 	icon_state = "disintegrate"
 	duration = 10
 
-/obj/effect/overlay/temp/swarmer/disintegration/New()
-	playsound(src.loc, "sparks", 100, 1)
-	..()
+/obj/effect/temp_visual/swarmer/disintegration/Initialize()
+	. = ..()
+	playsound(loc, "sparks", 100, 1)
 
-/obj/effect/overlay/temp/swarmer/dismantle
+/obj/effect/temp_visual/swarmer/dismantle
 	icon_state = "dismantle"
 	duration = 25
 
-/obj/effect/overlay/temp/swarmer/integrate
+/obj/effect/temp_visual/swarmer/integrate
 	icon_state = "integrate"
 	duration = 5
 
@@ -664,8 +663,8 @@
 		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/swarmer_chat(msg)
-	var/rendered = "<B>Swarm communication - [src]</b> [sanitize_russian(say_quote(msg, get_spans()))]"
-	for(var/mob/M in mob_list)
+	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(msg, get_spans())]"
+	for(var/mob/M in GLOB.mob_list)
 		if(isswarmer(M))
 			to_chat(M, rendered)
 		if(isobserver(M))

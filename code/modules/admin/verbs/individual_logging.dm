@@ -23,8 +23,9 @@
 	else
 		dat += "<center>[type] of [key_name(M)]</center><br>"
 		var/list/reversed = M.logging[type]
-		reversed = reverseRange(reversed.Copy())
-		for(var/entry in reversed)
-			dat += "<font size=2px>[entry]: [reversed[entry]]</font><hr>"
+		if(reversed)
+			reversed = reverseRange(reversed.Copy())
+			for(var/entry in reversed)
+				dat += "<font size=2px>[entry]: [reversed[entry]]</font><hr>"
 
 	usr << browse(dat, "window=invidual_logging;size=600x480")

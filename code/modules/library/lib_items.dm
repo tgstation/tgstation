@@ -81,7 +81,7 @@
 				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
 				update_icon()
 			else if(istype(I, /obj/item/weapon/pen))
-				var/newname = sanitize_russian(stripped_input(usr, "What would you like to title this bookshelf?"))
+				var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
 				if(!newname)
 					return
 				else
@@ -101,7 +101,7 @@
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
-		var/obj/item/weapon/book/choice = sanitize_russian(input("Which book would you like to remove from the shelf?") as null|obj in contents)
+		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
@@ -204,7 +204,7 @@
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(sanitize_russian(stripped_input(usr, "Write a new title:")))
+				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
 				if (length(newtitle) > 20)
 					to_chat(usr, "That title won't fit on the cover!")
 					return
@@ -215,7 +215,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = sanitize_russian(stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192))
+				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return

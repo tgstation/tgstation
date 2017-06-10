@@ -15,15 +15,15 @@
 	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 	var/static/linked_caches = 0 //how many caches are linked to walls; affects how fast components are produced
 
-/obj/structure/destructible/clockwork/cache/New()
-	..()
+/obj/structure/destructible/clockwork/cache/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	clockwork_caches++
+	GLOB.clockwork_caches++
 	update_slab_info()
 	set_light(2, 0.7)
 
 /obj/structure/destructible/clockwork/cache/Destroy()
-	clockwork_caches--
+	GLOB.clockwork_caches--
 	update_slab_info()
 	STOP_PROCESSING(SSobj, src)
 	if(linkedwall)
@@ -61,7 +61,7 @@
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to place [C] into it!</span>")
 		else
-			clockwork_component_cache[C.component_id]++
+			GLOB.clockwork_component_cache[C.component_id]++
 			update_slab_info()
 			to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
 			user.drop_item()
@@ -73,7 +73,7 @@
 			to_chat(user, "<span class='warning'>[src] needs to be secured to offload your slab's components into it!</span>")
 		else
 			for(var/i in S.stored_components)
-				clockwork_component_cache[i] += S.stored_components[i]
+				GLOB.clockwork_component_cache[i] += S.stored_components[i]
 				S.stored_components[i] = 0
 			update_slab_info()
 			user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
@@ -110,8 +110,8 @@
 		else
 			to_chat(user, "<span class='alloy'>It is unlinked! Construct a Clockwork Wall nearby to generate components!</span>")
 		to_chat(user, "<b>Stored components:</b>")
-		for(var/i in clockwork_component_cache)
-			to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[clockwork_component_cache[i]]</b></span>")
+		for(var/i in GLOB.clockwork_component_cache)
+			to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</i> <b>[GLOB.clockwork_component_cache[i]]</b></span>")
 
 /obj/structure/destructible/clockwork/cache/proc/get_production_time()
 	return (CACHE_PRODUCTION_TIME + (ACTIVE_CACHE_SLOWDOWN * linked_caches)) * get_efficiency_mod(TRUE)

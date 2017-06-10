@@ -4,7 +4,7 @@
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
-	speak = list("ribbits","croaks")
+	speak = list("ribbit","croak")
 	emote_see = list("hops in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
@@ -26,7 +26,7 @@
 	gold_core_spawnable = 1
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize()
-	..()
+	. = ..()
 	if(prob(1))
 		name = "rare frog"
 		desc = "It seems a little smug."

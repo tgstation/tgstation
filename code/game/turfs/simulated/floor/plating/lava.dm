@@ -108,6 +108,12 @@
 /turf/open/floor/plating/lava/break_tile()
 	return
 
+/turf/open/floor/plating/lava/pry_tile()
+	return
+
+/turf/open/floor/plating/lava/try_replace_tile()
+	return
+
 /turf/open/floor/plating/lava/burn_tile()
 	return
 

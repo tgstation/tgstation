@@ -35,12 +35,10 @@
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/weapon/gun/ballistic/shotgun/attack_self(mob/living/user)
-	if(recentpump)
+	if(recentpump > world.time)
 		return
 	pump(user)
-	recentpump = 1
-	spawn(10)
-		recentpump = 0
+	recentpump = world.time + 10
 	return
 
 /obj/item/weapon/gun/ballistic/shotgun/blow_up(mob/user)
@@ -193,6 +191,14 @@
 	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/weapon/gun/ballistic/shotgun/automatic/combat/compact
+	name = "compact combat shotgun"
+	desc = "A compact version of the semi automatic combat shotgun. For close encounters."
+	icon_state = "cshotgunc"
+	origin_tech = "combat=4;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	w_class = WEIGHT_CLASS_BULKY
 
 //Dual Feed Shotgun
 

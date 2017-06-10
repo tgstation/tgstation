@@ -158,7 +158,7 @@
 		if(lit)
 			START_PROCESSING(SSobj, src)
 			if(!warned_admins)
-				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has lit a flamethrower.")
 				warned_admins = 1
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])

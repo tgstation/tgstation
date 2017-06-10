@@ -120,7 +120,7 @@ var/list/datum/donator/donators = list()
 	var/ownerkey
 	var/money = 0
 	var/maxmoney = 0
-	var/allowed_num_items = 1000 //rel lox //sam lox
+	var/allowed_num_items = 10 //rel lox //sam lox
 
 /datum/donator/New(ckey, money)
 	..()
@@ -154,11 +154,11 @@ var/list/datum/donator/donators = list()
 	var/datum/donator_prize/prize = locate(href_list["item"])
 	var/mob/living/carbon/human/user = usr
 
-	if(!ticker || ticker.current_state < 3)
+	if(!SSticker || SSticker.current_state < 3)
 		usr << "<span class='warning'>Please wait until game setting up!</span>"
 		return 0
 
-	if((world.time-round_start_time)>DONATIONS_SPAWN_WINDOW && !istype(get_area(user), /area/shuttle/arrival))
+	if((world.time-SSticker.round_start_time)>DONATIONS_SPAWN_WINDOW && !istype(get_area(user), /area/shuttle/arrival))
 		usr << "<span class='warning'>You must be on arrival shuttle to spawn items.</span>"
 		return 0
 
@@ -208,12 +208,12 @@ var/list/datum/donator/donators = list()
 	var/category = "Debug"
 
 proc/load_donator(ckey)
-	var/DBConnection/dbcon2 = new()
-	dbcon2.doConnect("dbi:mysql:forum2:[sqladdress]:[sqlport]","[sqlfdbklogin]","[sqlfdbkpass]") //pidorasy
+//	var/DBConnection/dbcon2 = new()
+//	dbcon2.doConnect("dbi:mysql:forum2:[global.sqladdress]:[global.sqlport]","[global.sqlfdbklogin]","[global.sqlfdbkpass]") //pidorasy
 
 	if(!dbcon2.IsConnected())
 //		world.log << "Failed to connect to database [dbcon2.ErrorMsg()] in load_donator([ckey])."
-		diary << "Failed to connect to database in load_donator([ckey])."
+//		world.log << "Failed to connect to database in load_donator([ckey])."
 		return 0
 
 	var/DBQuery/query = dbcon2.NewQuery("SELECT round(sum) FROM Z_donators WHERE byond='[ckey]'")
@@ -221,7 +221,7 @@ proc/load_donator(ckey)
 	while(query.NextRow())
 		var/money = round(text2num(query.item[1]))
 		new /datum/donator(ckey, money)
-	dbcon2.Disconnect()
+//	dbcon2.Disconnect()
 	return 1
 
 proc/build_prizes_list()
@@ -246,7 +246,7 @@ proc/build_prizes_list()
 	set category = "OOC"
 
 
-	if(!ticker || ticker.current_state < GAME_STATE_PLAYING)
+	if(!SSticker || SSticker.current_state < GAME_STATE_PLAYING)
 		usr << "<span class='warning'>Please wait until game is set up!</span>"
 		return
 

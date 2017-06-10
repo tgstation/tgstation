@@ -9,6 +9,7 @@
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
+	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
@@ -110,6 +111,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	light_range = 1.9 //slightly less range than lava
+	light_power = 0.65 //less bright, too
+	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
@@ -122,6 +126,9 @@
 		L.notransform = TRUE
 		L.Stun(10)
 		L.resting = TRUE
+	var/oldtransform = AM.transform
+	var/oldcolor = AM.color
+	var/oldalpha = AM.alpha
 	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
 	for(var/i in 1 to 5)
 		//Make sure the item is still there after our sleep
@@ -140,5 +147,31 @@
 
 	qdel(AM)
 
+	if(AM && !QDELETED(AM))	//It's indestructible
+		visible_message("<span class='boldwarning'>[src] spits out the [AM]!</span>")
+		AM.alpha = oldalpha
+		AM.color = oldcolor
+		AM.transform = oldtransform
+		AM.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1, 10),rand(1, 10))
+
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
+
+
+/turf/open/chasm/CanPass(atom/movable/mover, turf/target, height=0)
+	return 1
+
+
+
+//Jungle
+
+/turf/open/chasm/jungle
+	icon = 'icons/turf/floors/junglechasm.dmi'
+	planetary_atmos = TRUE
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+
+/turf/open/chasm/straight_down/jungle
+	icon = 'icons/turf/floors/junglechasm.dmi'
+	planetary_atmos = TRUE
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"

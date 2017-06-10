@@ -17,23 +17,10 @@
 	sort_priority = 1
 	quickbind = TRUE
 	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
-	var/noncultist_damage = 2 //damage per chant to noncultists
-	var/cultist_damage = 8 //damage per chant to non-walking cultists
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
-		var/number_legs = C.get_num_legs()
-		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
-			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
-			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != MOVE_INTENT_WALK)
-				if(!iscultist(C))
-					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
-				else //Cultists take extra burn damage
-					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
-					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
-					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.toggle_move_intent()
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	return TRUE
 
 
@@ -74,13 +61,13 @@
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(!ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
 		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		for(var/mob/living/L in view(7, get_turf(invoker)))
 			if(L.stat != DEAD && is_servant_of_ratvar(L))
 				L.apply_status_effect(STATUS_EFFECT_VANGUARD)
@@ -134,8 +121,8 @@
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
-	if(!ratvar_awakens)
-		for(var/mob/living/M in all_clockwork_mobs)
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.all_clockwork_mobs)
 			if(ishuman(M) || issilicon(M))
 				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
@@ -165,8 +152,8 @@
 
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
-	if(!ratvar_awakens)
-		for(var/mob/living/M in all_clockwork_mobs)
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.all_clockwork_mobs)
 			if(ishuman(M) || issilicon(M))
 				servants++
 	if(target.buckled)
@@ -272,7 +259,7 @@
 	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
+	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.4), 10)
 	if(cache_cost_increase != prev_cost)
 		prev_cost = cache_cost_increase
 		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)

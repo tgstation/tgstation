@@ -17,19 +17,19 @@ Difficulty: Special
 
 */
 
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmers = list()
-var/global/list/mob/living/simple_animal/hostile/swarmer/ai/AISwarmersByType = list()//AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
-var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swarmer/ai/resource = 30, /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat = 20, /mob/living/simple_animal/hostile/swarmer/ai/melee_combat = 10)
+GLOBAL_LIST_EMPTY(AISwarmers)
+GLOBAL_LIST_EMPTY(AISwarmersByType)//AISwarmersByType[.../resource] = list(1st, 2nd, nth), AISwarmersByType[../ranged] = list(1st, 2nd, nth) etc.
+GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swarmer/ai/resource = 30, /mob/living/simple_animal/hostile/swarmer/ai/ranged_combat = 20, /mob/living/simple_animal/hostile/swarmer/ai/melee_combat = 10))
 
 
 //returns a type of AI swarmer that is NOT at max cap
 //type order is shuffled, to prevent bias
 /proc/GetUncappedAISwarmerType()
 	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
-	LAZYINITLIST(AISwarmersByType)
+	LAZYINITLIST(GLOB.AISwarmersByType)
 	for(var/t in shuffle(swarmerTypes))
-		var/list/amount = AISwarmersByType[t]
-		if(!amount || amount.len <  AISwarmerCapsByType[t])
+		var/list/amount = GLOB.AISwarmersByType[t]
+		if(!amount || amount.len <  GLOB.AISwarmerCapsByType[t])
 			return t
 
 
@@ -37,9 +37,9 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 /proc/GetTotalAISwarmerCap()
 	var/static/list/swarmerTypes = subtypesof(/mob/living/simple_animal/hostile/swarmer/ai)
 	. = 0
-	LAZYINITLIST(AISwarmersByType)
+	LAZYINITLIST(GLOB.AISwarmersByType)
 	for(var/t in swarmerTypes)
-		. += AISwarmerCapsByType[t]
+		. += GLOB.AISwarmerCapsByType[t]
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon
@@ -66,10 +66,10 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()
-	..()
-	swarmer_caps = AISwarmerCapsByType //for admin-edits
+	. = ..()
+	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
-	for(var/ddir in cardinal)
+	for(var/ddir in GLOB.cardinal)
 		new /obj/structure/swarmer/blockade (get_step(src, ddir))
 		var/mob/living/simple_animal/hostile/swarmer/ai/resource/R = new(loc)
 		step(R, ddir) //Step the swarmers, instead of spawning them there, incase the turf is solid
@@ -79,7 +79,7 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	if(.)
 		var/createtype = GetUncappedAISwarmerType()
-		if(createtype && world.time > swarmer_spawn_cooldown && AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
+		if(createtype && world.time > swarmer_spawn_cooldown && GLOB.AISwarmers.len < (GetTotalAISwarmerCap()*0.5))
 			swarmer_spawn_cooldown = world.time + swarmer_spawn_cooldown_amt
 			new createtype(loc)
 
@@ -109,16 +109,16 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Initialize()
-	..()
+	. = ..()
 	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
-	LAZYINITLIST(AISwarmersByType[type])
-	AISwarmers += src
-	AISwarmersByType[type] += src
+	LAZYINITLIST(GLOB.AISwarmersByType[type])
+	GLOB.AISwarmers += src
+	GLOB.AISwarmersByType[type] += src
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Destroy()
-	AISwarmers -= src
-	AISwarmersByType[type] -= src
+	GLOB.AISwarmers -= src
+	GLOB.AISwarmersByType[type] -= src
 	return ..()
 
 
@@ -179,7 +179,7 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/Initialize()
-	..()
+	. = ..()
 	sharedWanted = typecacheof(sharedWanted)
 	sharedIgnore = typecacheof(sharedIgnore)
 
@@ -224,7 +224,7 @@ var/global/list/AISwarmerCapsByType = list(/mob/living/simple_animal/hostile/swa
 	. = ..()
 	if(.)
 		if(!stop_automated_movement)
-			if(AISwarmers.len < GetTotalAISwarmerCap() && resources >= 50)
+			if(GLOB.AISwarmers.len < GetTotalAISwarmerCap() && resources >= 50)
 				StartAction(100) //so they'll actually sit still and use the verbs
 				CreateSwarmer()
 				return

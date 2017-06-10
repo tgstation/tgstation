@@ -187,5 +187,5 @@
 	name = "surplus prosthetic right leg"
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon = 'icons/mob/surplus_augments.dmi'
-	icon_state = "surplus_r_leg"
+	icon_state = "r_leg"
 	max_damage = 20

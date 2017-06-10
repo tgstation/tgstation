@@ -10,7 +10,7 @@
 		active_power_usage = 100
 		pass_flags = PASSTABLE
 		resistance_flags = ACID_PROOF
-		var/operating = 0
+		var/operating = FALSE
 		var/obj/item/weapon/reagent_containers/beaker = null
 		var/limit = 10
 		var/list/blend_items = list (
@@ -38,7 +38,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/rice = list("rice" = -5),
-				/obj/item/weapon/reagent_containers/food/snacks/donut/New = list("sprinkles" = -2, "sugar" = 1),
+				/obj/item/weapon/reagent_containers/food/snacks/donut = list("sprinkles" = -2, "sugar" = 1),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
@@ -54,7 +54,9 @@
 				/obj/item/slime_extract = list(),
 				/obj/item/weapon/reagent_containers/pill = list(),
 				/obj/item/weapon/reagent_containers/food = list(),
-				/obj/item/weapon/reagent_containers/honeycomb = list()
+				/obj/item/weapon/reagent_containers/honeycomb = list(),
+				/obj/item/toy/crayon = list()
+
 		)
 
 		var/list/juice_items = list (
@@ -89,10 +91,9 @@
 
 		var/list/holdingitems = list()
 
-/obj/machinery/reagentgrinder/New()
-	..()
+/obj/machinery/reagentgrinder/Initialize()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
@@ -219,9 +220,12 @@
 		[processing_chamber]<br>
 		[beaker_contents]<hr>
 		"}
-				if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
-						dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
-						dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
+				if (is_beaker_ready)
+						if(!is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
+								dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
+								dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
+						else if (beaker.reagents.total_volume)
+								dat += "<A href='?src=\ref[src];action=mix'>Mix the reagents</a><BR><BR>"
 				if(holdingitems && holdingitems.len > 0)
 						dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
 				if (beaker)
@@ -247,6 +251,8 @@
 			grind()
 		if("juice")
 			juice()
+		if("mix")
+			mix()
 		if("eject")
 			eject()
 		if ("detach")
@@ -326,11 +332,11 @@
 		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
 		var/offset = prob(50) ? -2 : 2
 		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
-		operating = 1
+		operating = TRUE
 		updateUsrDialog()
 		spawn(50)
 				pixel_x = initial(pixel_x) //return to its spot after shaking
-				operating = 0
+				operating = FALSE
 				updateUsrDialog()
 
 		//Snacks
@@ -364,11 +370,11 @@
 		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
 		var/offset = prob(50) ? -2 : 2
 		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
-		operating = 1
+		operating = TRUE
 		updateUsrDialog()
 		spawn(60)
 				pixel_x = initial(pixel_x) //return to its spot after shaking
-				operating = 0
+				operating = FALSE
 				updateUsrDialog()
 
 		//Snacks and Plants
@@ -456,3 +462,43 @@
 				O.reagents.trans_to(beaker, amount)
 				if(!O.reagents.total_volume)
 						remove_object(O)
+
+		for (var/obj/item/toy/crayon/O in holdingitems)
+				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						break
+				for (var/r_id in O.reagent_contents)
+						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+						if (space == 0)
+								break
+						beaker.reagents.add_reagent(r_id, min(O.reagent_contents[r_id], space))
+						remove_object(O)
+
+/obj/machinery/reagentgrinder/proc/mix()
+
+		//For butter and other things that would change upon shaking or mixing
+		power_change()
+		if(stat & (NOPOWER|BROKEN))
+				return
+		if (!beaker)
+				return
+		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
+		var/offset = prob(50) ? -2 : 2
+		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
+		operating = TRUE
+		updateUsrDialog()
+		addtimer(CALLBACK(src, /obj/machinery/reagentgrinder/proc/mix_complete), 50)
+
+/obj/machinery/reagentgrinder/proc/mix_complete()
+		pixel_x = initial(pixel_x) //return to its spot after shaking
+		operating = FALSE
+		updateUsrDialog()
+		if (beaker.reagents.total_volume)
+				//Recipe to make Butter
+				while(beaker.reagents.get_reagent_amount("milk") >= 15)
+						beaker.reagents.remove_reagent("milk", 15)
+						new /obj/item/weapon/reagent_containers/food/snacks/butter(src.loc)
+				//Recipe to make Mayonnaise
+				if (beaker.reagents.has_reagent("eggyolk"))
+						var/amount = beaker.reagents.get_reagent_amount("eggyolk")
+						beaker.reagents.remove_reagent("eggyolk", amount)
+						beaker.reagents.add_reagent("mayonnaise", amount)

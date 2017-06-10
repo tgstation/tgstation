@@ -1,13 +1,12 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages_spoken = ROBOT | HUMAN
-	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	initial_language_holder = /datum/language_holder/synthetic
 	see_in_dark = 8
 	bubble_icon = "machine"
 	weather_immunities = list("ash")
@@ -40,8 +39,8 @@
 
 /mob/living/silicon/Initialize()
 	..()
-	silicon_mobs += src
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	GLOB.silicon_mobs += src
+	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
@@ -55,7 +54,7 @@
 /mob/living/silicon/Destroy()
 	radio = null
 	aicamera = null
-	silicon_mobs -= src
+	GLOB.silicon_mobs -= src
 	return ..()
 
 /mob/living/silicon/contents_explosion(severity, target)
@@ -219,7 +218,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (force || src.ioncheck[index] == "Yes")
-				src.say("[radiomod] [num]. [russian_html2text(law)]")
+				src.say("[radiomod] [num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
@@ -227,7 +226,7 @@
 
 		if (length(law) > 0)
 			if (force || src.lawcheck[index+1] == "Yes")
-				src.say("[radiomod] [number]. [russian_html2text(law)]")
+				src.say("[radiomod] [number]. [law]")
 				number++
 				sleep(10)
 
@@ -237,7 +236,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (force || src.lawcheck[number+1] == "Yes")
-					src.say("[radiomod] [number]. [russian_html2text(law)]")
+					src.say("[radiomod] [number]. [law]")
 					number++
 					sleep(10)
 
@@ -306,8 +305,8 @@
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else	//For department channels, if any, given by the internal radio.
-		for(var/key in department_radio_keys)
-			if(department_radio_keys[key] == Autochan)
+		for(var/key in GLOB.department_radio_keys)
+			if(GLOB.department_radio_keys[key] == Autochan)
 				radiomod = key
 				break
 
@@ -326,23 +325,23 @@
 	return -10
 
 /mob/living/silicon/proc/remove_med_sec_hud()
-	var/datum/atom_hud/secsensor = huds[sec_hud]
-	var/datum/atom_hud/medsensor = huds[med_hud]
-	var/datum/atom_hud/diagsensor = huds[d_hud]
+	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
+	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
+	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
 	secsensor.remove_hud_from(src)
 	medsensor.remove_hud_from(src)
 	diagsensor.remove_hud_from(src)
 
 /mob/living/silicon/proc/add_sec_hud()
-	var/datum/atom_hud/secsensor = huds[sec_hud]
+	var/datum/atom_hud/secsensor = GLOB.huds[sec_hud]
 	secsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/add_med_hud()
-	var/datum/atom_hud/medsensor = huds[med_hud]
+	var/datum/atom_hud/medsensor = GLOB.huds[med_hud]
 	medsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/add_diag_hud()
-	var/datum/atom_hud/diagsensor = huds[d_hud]
+	var/datum/atom_hud/diagsensor = GLOB.huds[d_hud]
 	diagsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/sensor_mode()

@@ -24,11 +24,11 @@
 /obj/item/weapon/implant/chem/New()
 	..()
 	create_reagents(50)
-	tracked_chem_implants += src
+	GLOB.tracked_chem_implants += src
 
 /obj/item/weapon/implant/chem/Destroy()
 	. = ..()
-	tracked_chem_implants -= src
+	GLOB.tracked_chem_implants -= src
 
 /obj/item/weapon/implant/chem/trigger(emote, mob/source)
 	if(emote == "deathgasp")
@@ -57,7 +57,7 @@
 
 /obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/reagent_containers/syringe) && imp)
-		W.afterattack(imp, user, params)
+		W.afterattack(imp, user, TRUE, params)
 		return TRUE
 	else
 		return ..()

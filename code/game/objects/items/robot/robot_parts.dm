@@ -58,7 +58,7 @@
 	if(src.l_arm && src.r_arm)
 		if(src.l_leg && src.r_leg)
 			if(src.chest && src.head)
-				feedback_inc("cyborg_frames_built",1)
+				SSblackbox.inc("cyborg_frames_built",1)
 				return 1
 	return 0
 
@@ -214,7 +214,7 @@
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
 
-			ticker.mode.remove_antag_for_borging(BM.mind)
+			SSticker.mode.remove_antag_for_borging(BM.mind)
 			if(!istype(M.laws, /datum/ai_laws/ratvar))
 				remove_servant_of_ratvar(BM, TRUE)
 			BM.mind.transfer_to(O)
@@ -235,7 +235,7 @@
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename()
 
-			feedback_inc("cyborg_birth",1)
+			SSblackbox.inc("cyborg_birth",1)
 
 			forceMove(O)
 			O.robot_suit = src

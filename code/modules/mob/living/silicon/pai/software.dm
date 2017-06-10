@@ -33,7 +33,7 @@
 	if(temp)
 		left_part = temp
 	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
+		left_part = "<b><font color=red>ï¿½Rrï¿½R ï¿½aï¿½ï¿½ ï¿½ï¿½Rrï¿½ï¿½ï¿½ï¿½oï¿½</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -220,18 +220,18 @@
 		// Accessing medical records
 		if("medicalrecord")
 			if(subscreen == 1)
-				medicalActive1 = find_record("id", href_list["med_rec"], data_core.general)
+				medicalActive1 = find_record("id", href_list["med_rec"], GLOB.data_core.general)
 				if(medicalActive1)
-					medicalActive2 = find_record("id", href_list["med_rec"], data_core.medical)
+					medicalActive2 = find_record("id", href_list["med_rec"], GLOB.data_core.medical)
 				if(!medicalActive2)
 					medicalActive1 = null
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 
 		if("securityrecord")
 			if(subscreen == 1)
-				securityActive1 = find_record("id", href_list["sec_rec"], data_core.general)
+				securityActive1 = find_record("id", href_list["sec_rec"], GLOB.data_core.general)
 				if(securityActive1)
-					securityActive2 = find_record("id", href_list["sec_rec"], data_core.security)
+					securityActive2 = find_record("id", href_list["sec_rec"], GLOB.data_core.security)
 				if(!securityActive2)
 					securityActive1 = null
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
@@ -241,7 +241,7 @@
 				if(secHUD)
 					add_sec_hud()
 				else
-					var/datum/atom_hud/sec = huds[sec_hud]
+					var/datum/atom_hud/sec = GLOB.huds[sec_hud]
 					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
@@ -249,13 +249,13 @@
 				if(medHUD)
 					add_med_hud()
 				else
-					var/datum/atom_hud/med = huds[med_hud]
+					var/datum/atom_hud/med = GLOB.huds[med_hud]
 					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				var/on_already = ((languages_understood == ALL) && (languages_spoken == ALL))
-				languages_spoken = on_already ? (HUMAN | ROBOT) : ALL
-				languages_understood = on_already ? (HUMAN | ROBOT) : ALL
+				if(!HAS_SECONDARY_FLAG(src, OMNITONGUE))
+					grant_all_languages(TRUE)
+					// this is PERMAMENT.
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -313,7 +313,8 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			var/translator_on = HAS_SECONDARY_FLAG(src, OMNITONGUE)
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[translator_on ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -413,8 +414,8 @@
 // Crew Manifest
 /mob/living/silicon/pai/proc/softwareManifest()
 	. += "<h2>Crew Manifest</h2><br><br>"
-	if(data_core.general)
-		for(var/datum/data/record/t in sortRecord(data_core.general))
+	if(GLOB.data_core.general)
+		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			. += "[t.fields["name"]] - [t.fields["rank"]]<BR>"
 	. += "</body></html>"
 	return .
@@ -424,16 +425,16 @@
 	switch(subscreen)
 		if(0)
 			. += "<h3>Medical Records</h3><HR>"
-			if(data_core.general)
-				for(var/datum/data/record/R in sortRecord(data_core.general))
+			if(GLOB.data_core.general)
+				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
 					. += "<A href='?src=\ref[src];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
-			if(medicalActive1 in data_core.general)
+			if(medicalActive1 in GLOB.data_core.general)
 				. += "Name: [medicalActive1.fields["name"]] ID: [medicalActive1.fields["id"]]<BR>\nSex: [medicalActive1.fields["sex"]]<BR>\nAge: [medicalActive1.fields["age"]]<BR>\nFingerprint: [medicalActive1.fields["fingerprint"]]<BR>\nPhysical Status: [medicalActive1.fields["p_stat"]]<BR>\nMental Status: [medicalActive1.fields["m_stat"]]<BR>"
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
-			if(medicalActive2 in data_core.medical)
+			if(medicalActive2 in GLOB.data_core.medical)
 				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
@@ -446,16 +447,16 @@
 	switch(subscreen)
 		if(0)
 			. += "<h3>Security Records</h3><HR>"
-			if(data_core.general)
-				for(var/datum/data/record/R in sortRecord(data_core.general))
+			if(GLOB.data_core.general)
+				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
 					. += "<A href='?src=\ref[src];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<h3>Security Record</h3>"
-			if(securityActive1 in data_core.general)
+			if(securityActive1 in GLOB.data_core.general)
 				. += "Name: <A href='?src=\ref[src];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=\ref[src];field=id'>[securityActive1.fields["id"]]</A><BR>\nSex: <A href='?src=\ref[src];field=sex'>[securityActive1.fields["sex"]]</A><BR>\nAge: <A href='?src=\ref[src];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=\ref[src];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=\ref[src];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
-			if(securityActive2 in data_core.security)
+			if(securityActive2 in GLOB.data_core.security)
 				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: <A href='?src=\ref[src];field=mi_crim'>[securityActive2.fields["mi_crim"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_crim_d'>[securityActive2.fields["mi_crim_d"]]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=\ref[src];field=ma_crim'>[securityActive2.fields["ma_crim"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_crim_d'>[securityActive2.fields["ma_crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
@@ -464,11 +465,10 @@
 
 // Universal Translator
 /mob/living/silicon/pai/proc/softwareTranslator()
+	var/translator_on = HAS_SECONDARY_FLAG(src, OMNITONGUE)
 	. = {"<h3>Universal Translator</h3><br>
-				When enabled, this device will automatically convert all spoken and written language into a format that any known recipient can understand.<br><br>
-				The device is currently [ ((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-				<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Toggle Device</a><br>
-				"}
+				When enabled, this device will permamently be able to speak and understand all known forms of communication.<br><br>
+				The device is currently [translator_on ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>[translator_on ? "" : "<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Activate Translation Module</a><br>"]"}
 	return .
 
 // Security HUD
@@ -599,7 +599,7 @@
 // Door Jack - supporting proc
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf(src.loc)
-	for(var/mob/living/silicon/ai/AI in player_list)
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		if(T.loc)
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else

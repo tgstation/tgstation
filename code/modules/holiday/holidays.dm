@@ -7,6 +7,8 @@
 	var/end_day = 0 // Default of 0 means the holiday lasts a single day
 	var/end_month = 0
 
+	var/always_celebrate = FALSE // for christmas neverending, or testing.
+
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
 
@@ -22,6 +24,9 @@
 
 // Return 1 if this holidy should be celebrated today
 /datum/holiday/proc/shouldCelebrate(dd, mm, yy)
+	if(always_celebrate)
+		return TRUE
+
 	if(!end_day)
 		end_day = begin_day
 	if(!end_month)
@@ -30,26 +35,26 @@
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
 			if(dd <= end_day)
-				return 1
+				return TRUE
 
 		else if(mm == begin_month)//in first month
 			if(dd >= begin_day)
-				return 1
+				return TRUE
 
 		else if(mm in begin_month to end_month) //holiday spans 3+ months and we're in the middle, day doesn't matter at all
-			return 1
+			return TRUE
 
 	else if(end_month == begin_month) // starts and stops in same month, simplest case
 		if(mm == begin_month && (dd in begin_day to end_day))
-			return 1
+			return TRUE
 
 	else // starts in one year, ends in the next
 		if(mm >= begin_month && dd >= begin_day) // Holiday ends next year
-			return 1
+			return TRUE
 		if(mm <= end_month && dd <= end_day) // Holiday started last year
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 // The actual holidays
 
@@ -142,9 +147,9 @@
 	begin_month = APRIL
 
 /datum/holiday/april_fools/celebrate()
-	if(ticker)
-		ticker.login_music = 'sound/ambience/clown.ogg'
-		for(var/mob/dead/new_player/P in mob_list)
+	if(SSticker)
+		SSticker.login_music = 'sound/ambience/clown.ogg'
+		for(var/mob/dead/new_player/P in GLOB.mob_list)
 			if(P.client)
 				P.client.playtitlemusic()
 
@@ -329,11 +334,6 @@
 	begin_month = DECEMBER
 	end_day = 31
 
-/datum/holiday/festive_season/celebrate()
-	for(var/obj/effect/landmark/xmastree/XT in landmarks_list)
-		new XT.tree(get_turf(XT))
-		qdel(XT)
-
 /datum/holiday/festive_season/greet()
 	return "Have a nice festive season!"
 
@@ -348,8 +348,8 @@
 /datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yy)
 	if(dd == 13)
 		if(time2text(world.timeofday, "DDD") == "Fri")
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/holiday/friday_thirteenth/getStationPrefix()
 	return pick("Mike","Friday","Evil","Myers","Murder","Deathly","Stabby")
@@ -422,3 +422,9 @@
 
 //	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()
+
+/datum/holiday/easter/celebrate()
+	..()
+	GLOB.maintenance_loot += list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15,
+		/obj/item/weapon/storage/bag/easterbasket = 15)

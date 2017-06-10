@@ -154,6 +154,10 @@
 			new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
 
+/obj/machinery/flasher/portable/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 0)
+
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if (last_flash && world.time < last_flash + 150)
 		return
@@ -172,24 +176,16 @@
 			add_overlay("[base_state]-s")
 			anchored = 1
 			power_change()
-			add_to_proximity_list(src, range)
+			proximity_monitor.SetRange(range)
 		else
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
 			anchored = 0
 			power_change()
-			remove_from_proximity_list(src, range)
+			proximity_monitor.SetRange(0)
 
 	else
 		return ..()
-
-/obj/machinery/flasher/portable/Destroy()
-	remove_from_proximity_list(src, range)
-	return ..()
-
-/obj/machinery/flasher/portable/Moved(oldloc)
-	remove_from_proximity_list(oldloc, range)
-	return ..()
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

@@ -5,8 +5,11 @@
 	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
+
+	var/static/next_mob_id = 0
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
@@ -39,8 +42,6 @@
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
-	var/ear_deaf = 0		//Carbon
-	var/ear_damage = 0		//Carbon
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
@@ -130,8 +131,6 @@
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
-
-	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is

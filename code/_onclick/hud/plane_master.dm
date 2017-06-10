@@ -5,10 +5,10 @@
 	blend_mode = BLEND_OVERLAY
 	var/show_alpha = 255
 	var/hide_alpha = 0
-	
+
 /obj/screen/plane_master/proc/Show(override)
 	alpha = override || show_alpha
-	
+
 /obj/screen/plane_master/proc/Hide(override)
 	alpha = override || hide_alpha
 
@@ -26,11 +26,6 @@
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = 0
-
-/obj/screen/plane_master/lighting/proc/params2color(params)
-	color = params2list(params)
-/obj/screen/plane_master/lighting/proc/basecolor()
-	color = LIGHTING_BASE_MATRIX
 
 /obj/screen/plane_master/parallax
 	name = "parallax plane master"

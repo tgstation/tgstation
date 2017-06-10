@@ -1,8 +1,8 @@
-var/global/list/datum/stack_recipe/rod_recipes = list ( \
+GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
-	)
+	))
 
 /obj/item/stack/rods
 	name = "metal rod"
@@ -24,7 +24,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	..()
 
-	recipes = rod_recipes
+	recipes = GLOB.rod_recipes
 	update_icon()
 
 /obj/item/stack/rods/update_icon()
@@ -73,3 +73,12 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 /obj/item/stack/rods/cyborg/update_icon()
 	return
+
+/obj/item/stack/rods/ten
+	amount = 10
+
+/obj/item/stack/rods/twentyfive
+	amount = 25
+
+/obj/item/stack/rods/fifty
+	amount = 50

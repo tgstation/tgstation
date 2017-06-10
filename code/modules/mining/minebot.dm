@@ -24,7 +24,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	check_friendly_fire = 1
 	stop_automated_movement_when_pulled = 1
 	attacktext = "drills"
@@ -44,7 +44,6 @@
 	var/light_on = 0
 
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
-	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action
 	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
 
@@ -52,8 +51,6 @@
 	..()
 	toggle_light_action = new()
 	toggle_light_action.Grant(src)
-	toggle_meson_vision_action = new()
-	toggle_meson_vision_action.Grant(src)
 	toggle_mode_action = new()
 	toggle_mode_action.Grant(src)
 	dump_ore_action = new()
@@ -136,7 +133,7 @@
 	var/obj/item/weapon/ore/O
 	for(O in src.loc)
 		O.loc = src
-	for(var/dir in alldirs)
+	for(var/dir in GLOB.alldirs)
 		var/turf/T = get_step(src,dir)
 		for(O in T)
 			O.loc = src
@@ -188,22 +185,6 @@
 		user.set_light(6)
 	user.light_on = !user.light_on
 	to_chat(user, "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>")
-
-/datum/action/innate/minedrone/toggle_meson_vision
-	name = "Toggle Meson Vision"
-	button_icon_state = "meson"
-
-/datum/action/innate/minedrone/toggle_meson_vision/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
-	if(user.sight & SEE_TURFS)
-		user.sight &= ~SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_LIVING
-	else
-		user.sight |= SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
-
-	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
 
 /datum/action/innate/minedrone/toggle_mode
 	name = "Toggle Mode"

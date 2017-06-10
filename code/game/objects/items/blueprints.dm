@@ -168,18 +168,18 @@
 
 /obj/item/areaeditor/blueprints/proc/view_wire_devices(mob/user)
 	var/message = "<br>You examine the wire legend.<br>"
-	for(var/wireset in wire_color_directory)
-		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[wire_name_directory[wireset]]</a>"
+	for(var/wireset in GLOB.wire_color_directory)
+		message += "<br><a href='?src=\ref[src];view_wireset=[wireset]'>[GLOB.wire_name_directory[wireset]]</a>"
 	message += "</p>"
 	return message
 
 /obj/item/areaeditor/blueprints/proc/view_wire_set(mob/user, wireset)
 	//for some reason you can't use wireset directly as a derefencer so this is the next best :/
-	for(var/device in wire_color_directory)
+	for(var/device in GLOB.wire_color_directory)
 		if("[device]" == wireset)	//I know... don't change it...
-			var/message = "<p><b>[wire_name_directory[device]]:</b>"
-			for(var/Col in wire_color_directory[device])
-				var/wire_name = wire_color_directory[device][Col]
+			var/message = "<p><b>[GLOB.wire_name_directory[device]]:</b>"
+			for(var/Col in GLOB.wire_color_directory[device])
+				var/wire_name = GLOB.wire_color_directory[device][Col]
 				if(!findtext(wire_name, WIRE_DUD_PREFIX))	//don't show duds
 					message += "<p><span style='color: [Col]'>[Col]</span>: [wire_name]</p>"
 			message += "</p>"
@@ -201,7 +201,7 @@
 				return
 
 	var/list/turfs = res
-	var/str = trim(sanitize_russian(stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN),1))
+	var/str = stripped_input(creator,"New area name:", "Blueprint Editing", "", MAX_NAME_LEN)
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
@@ -246,7 +246,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area()
 	var/prevname = "[A.name]"
-	var/str = trim(sanitize_russian(stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN),1))
+	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
@@ -309,7 +309,7 @@
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
-		for (var/dir in cardinal)
+		for (var/dir in GLOB.cardinal)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
 				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
@@ -343,7 +343,7 @@
 
 	for(var/V in border) //lazy but works
 		var/turf/F = V
-		for(var/direction in cardinal)
+		for(var/direction in GLOB.cardinal)
 			if(direction == border[F])
 				continue //don't want to grab turfs from outside the border
 			var/turf/U = get_step(F, direction)

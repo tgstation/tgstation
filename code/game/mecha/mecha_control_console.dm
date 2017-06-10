@@ -3,7 +3,7 @@
 	desc = "Used to remotely locate or lockdown exosuits."
 	icon_screen = "mecha"
 	icon_keyboard = "tech_key"
-	req_access = list(access_robotics)
+	req_access = list(GLOB.access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/mecha_control
 	var/list/located = list()
 	var/screen = 0
@@ -17,7 +17,7 @@
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		var/list/trackerlist = list()
-		for(var/obj/mecha/MC in mechas_list)
+		for(var/obj/mecha/MC in GLOB.mechas_list)
 			trackerlist += MC.trackers
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
 			var/answer = TR.get_mecha_info()
@@ -44,7 +44,7 @@
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
-		var/message = sanitize_russian(stripped_input(usr,"Input message","Transmit message"),1)
+		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
@@ -75,13 +75,13 @@
 		return 0
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
-	var/answer = {"<b>Name:</b> [M.name]<br>
-						<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%<br>
-						<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]<br>
-						<b>Airtank:</b> [M.return_pressure()]kPa<br>
-						<b>Pilot:</b> [M.occupant||"None"]<br>
-						<b>Location:</b> [get_area(M)||"Unknown"]<br>
-						<b>Active equipment:</b> [M.selected||"None"]<br>"}
+	var/answer = {"<b>Name:</b> [M.name]
+<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%
+<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]
+<b>Airtank:</b> [M.return_pressure()]kPa
+<b>Pilot:</b> [M.occupant||"None"]
+<b>Location:</b> [get_area(M)||"Unknown"]
+<b>Active equipment:</b> [M.selected||"None"] "}
 	if(istype(M, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = M
 		answer += "<b>Used cargo space:</b> [RM.cargo.len/RM.cargo_capacity*100]%<br>"

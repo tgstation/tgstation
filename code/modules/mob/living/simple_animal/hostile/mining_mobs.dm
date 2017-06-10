@@ -4,7 +4,7 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	obj_damage = 30
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	response_help = "pokes"
@@ -15,7 +15,7 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
@@ -48,7 +48,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	feedback_add_details("mobs_killed_mining","[src.type]")
+	SSblackbox.add_details("mobs_killed_mining","[src.type]")
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
@@ -215,7 +215,7 @@
 	ranged_cooldown = 0
 	ranged_cooldown_time = 20
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
@@ -266,15 +266,15 @@
 	update_icon()
 
 	if(implanted)
-		feedback_add_details("hivelord_core", "[type]|implanted")
+		SSblackbox.add_details("hivelord_core", "[type]|implanted")
 	else
-		feedback_add_details("hivelord_core", "[type]|stabilizer")
+		SSblackbox.add_details("hivelord_core", "[type]|stabilizer")
 
 
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-	feedback_add_details("hivelord_core", "[src.type]|inert")
+	SSblackbox.add_details("hivelord_core", "[src.type]|inert")
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
@@ -298,10 +298,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
-				feedback_add_details("hivelord_core","[src.type]|used|other")
+				SSblackbox.add_details("hivelord_core","[src.type]|used|other")
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				feedback_add_details("hivelord_core","[src.type]|used|self")
+				SSblackbox.add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
@@ -334,7 +334,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "falls right through the strange body of the"
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE
 	del_on_death = 1
 
@@ -502,7 +502,7 @@
 	for(var/obj/effect/goliath_tentacle/original/O in loc)//No more GG NO RE from 2+ goliaths simultaneously tentacling you
 		if(O != src)
 			qdel(src)
-	var/list/directions = cardinal.Copy()
+	var/list/directions = GLOB.cardinal.Copy()
 	var/counter
 	for(counter = 1, counter <= 3, counter++)
 		var/spawndir = pick(directions)
@@ -595,7 +595,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
@@ -640,7 +640,7 @@
 	minimum_distance = 1
 	move_to_delay = 6
 	transform *= 2
-	environment_smash = 2
+	environment_smash = ENVIRONMENT_SMASH_WALLS
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
 	addtimer(CALLBACK(src, .proc/Deflate), 100)
@@ -660,7 +660,7 @@
 		move_to_delay = 2
 		transform /= 2
 		inflate_cooldown = 4
-		environment_smash = 0
+		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL
 		speed = 0
 
@@ -800,11 +800,12 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	var/can_infest_dead = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
 	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
-			if(H.stat == UNCONSCIOUS)
+			if(H.stat == UNCONSCIOUS || (can_infest_dead && H.stat == DEAD))
 				infest(H)
 	..()
 
@@ -817,6 +818,58 @@
 	L.stored_mob = H
 	H.forceMove(L)
 	qdel(src)
+
+//Advanced Legion is slightly tougher to kill and can raise corpses (revive other legions)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/advanced
+	stat_attack = 2
+	maxHealth = 120
+	health = 120
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+	icon_state = "dwarf_legion"
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/advanced
+	stat_attack = 2
+	can_infest_dead = TRUE
+
+//Legion that spawns Legions
+
+/mob/living/simple_animal/hostile/spawner/legion
+	name = "legion"
+	desc = "One of many."
+	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon_state = "legion"
+	icon_living = "legion"
+	icon_dead = "legion"
+	health = 450
+	maxHealth = 450
+	max_mobs = 3
+	spawn_time = 200
+	spawn_text = "peels itself off from"
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	anchored = FALSE
+	AIStatus = AI_ON
+	stop_automated_movement = FALSE
+	wander = TRUE
+	maxbodytemp = INFINITY
+	layer = MOB_LAYER
+	del_on_death = TRUE
+	sentience_type = SENTIENCE_BOSS
+	loot = list(/obj/item/organ/hivelord_core/legion = 3, /obj/effect/mob_spawn/human/corpse/damaged = 5)
+	move_to_delay = 14
+	vision_range = 5
+	aggro_vision_range = 9
+	idle_vision_range = 5
+	speed = 3
+	faction = list("mining")
+	weather_immunities = list("lava","ash")
+	obj_damage = 30
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	see_in_dark = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+//Organ
 
 /obj/item/organ/hivelord_core/legion
 	name = "legion's soul"
@@ -871,7 +924,7 @@
 	speak_chance = 1
 	turns_per_move = 8
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	move_to_delay = 15
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
@@ -1009,7 +1062,7 @@
 #define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
