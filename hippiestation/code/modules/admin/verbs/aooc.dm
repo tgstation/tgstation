@@ -17,9 +17,14 @@
 	if(holder && holder.fakekey)
 		display_name = holder.fakekey
 
-	for(var/X in GLOB.mob_list)
-		var/mob/M = X
-		if((M.mind && M.mind.special_role && M.client) || (M.client && check_rights_for(M, R_ADMIN)))
+	for(var/X in GLOB.clients)
+		var/client/C = X
+		if(check_rights_for(C, R_ADMIN))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			continue
+		if(C.mob.mind && C.mob.mind.special_role)
+			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+		continue
+
 
 	log_ooc("(ANTAG) [key] : [msg]")
