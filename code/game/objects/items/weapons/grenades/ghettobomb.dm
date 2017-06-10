@@ -15,7 +15,7 @@
 	det_time = 50
 	display_timer = 0
 	var/range = 3
-	var/times
+	var/list/times
 
 /obj/item/weapon/grenade/iedcasing/Initialize()
 	. = ..()
