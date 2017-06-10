@@ -673,7 +673,7 @@
 		if(WT.isOn())
 			fire_act(W.is_hot())
 		return
-	else if(W.ishot())
+	else if(W.is_hot())
 		fire_act(W.is_hot())
 		return
 	if(user.a_intent == INTENT_HARM)
