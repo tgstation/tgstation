@@ -96,7 +96,7 @@
 			if(!gang.recalls)
 				to_chat(usr, "<span class='warning'>Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
 
-			gang.message_gangtools("[usr] is attempting to recall the emergency shuttle.")
+			gang.gang_broadcast("[usr] is attempting to recall the emergency shuttle.")
 			recalling = TRUE
 			to_chat(loc, "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>")
 			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
@@ -187,7 +187,7 @@
 				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
 					spam_prevention++
 				else
-					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
+					gang.gang_broadcast("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
 					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
 					spam_prevention = 0
 				return
@@ -196,10 +196,10 @@
 			if(!warned && (time_remaining < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
-				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
+				gang.gang_broadcast("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!", null, "System Alert", "userdanger")
 				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G != gang)
-						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
+						G.gang_broadcast("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!", null, "System Alert", "userdanger")
 
 	if(!.)
 		STOP_PROCESSING(SSmachines, src)
@@ -274,7 +274,7 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
+		gang.gang_broadcast("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]", null, "Broadcast", "userdanger")
 
 	set_light(0)
 	operating = 0

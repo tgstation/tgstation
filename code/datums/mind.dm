@@ -452,7 +452,6 @@
 			if(src in (G.bosses))
 				text += "<B>GANG LEADER</B>"
 				text += "|Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-				var/list/L = current.get_contents()
 				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
 
 			else
