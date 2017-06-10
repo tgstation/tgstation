@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			E = new
 		E.set_up(epicenter)
 		E.start()
-	
+
 	EX_PREPROCESS_CHECK_TICK
 
 	//flash mobs
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				var/throw_range = rand(throw_dist, max_range)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = EXPLOSION_THROW_SPEED //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
-				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)		
+				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
 
 		//wait for the lists to repop
 		var/break_condition
@@ -208,7 +208,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 			if(!running)
 				break
-			
+
 			//update the trackers
 			affTurfLen = affected_turfs.len
 			expBlockLen = cached_exp_block.len
@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	. = list()
 	var/processed = 0
 	while(!stopped && running)
-		var/I 
+		var/I
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
 			var/current_exp_block = T.density ? T.explosion_block : 0
@@ -282,12 +282,12 @@ GLOBAL_LIST_EMPTY(explosions)
 			for(var/obj/O in T)
 				var/the_block = O.explosion_block
 				current_exp_block += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
-			
+
 			.[T] = current_exp_block
 
 			if(TICK_CHECK)
 				break
-		
+
 		processed = I
 		stoplag()
 
@@ -346,7 +346,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				TT = get_step_towards(TT,epicenter)
 				if(TT.density)
 					dist += TT.explosion_block
-				
+
 				for(var/obj/O in T)
 					var/the_block = O.explosion_block
 					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
