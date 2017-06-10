@@ -131,8 +131,8 @@
 			recalling = FALSE
 			log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 			message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
-			var/userturf = get_turf(user)
-			if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
+			var/turf/userturf = get_turf(user)
+			if(userturf.Z == ZLEVEL_STATION) //Check one more time that they are on station.
 				if(SSshuttle.cancelEvac(user))
 					gang.recalls -= 1
 					return TRUE
@@ -359,7 +359,6 @@
 	. = list()
 	if(user)
 		var/isboss = (user.mind == gang.bosses[1])
-		var/issoldier = !(user in gang.bosses)
 		if(isboss)
 			. += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 			. += "Influence available to you: <B>[gang.bosses[user]]</B><br>"

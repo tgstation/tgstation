@@ -14,7 +14,6 @@
 	var/list/territory = list()
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
-	var/list/cached_territory_by_mind = list()
 	var/recalls = 1
 	var/dom_attempts = 2
 	var/inner_outfit
@@ -199,8 +198,10 @@
 
 //////////////////////////////////////////// INCOME
 
-/datum/gang/proc/recalculate_territories()
-	cached_territory_by_mind = list()
+
+/datum/gang/proc/income()
+	if(!bosses.len)
+		return
 	var/added_names = ""
 	var/lost_names = ""
 
@@ -211,41 +212,33 @@
 	territory |= reclaimed_territories
 	territory_new -= reclaimed_territories
 	territory_lost -= reclaimed_territories
+
 	//Process lost territories
 	for(var/area in territory_lost)
 		if(lost_names != "")
 			lost_names += ", "
-		lost_names += "[area]"
+		lost_names += "[territory_lost[area]]"
 		territory -= area
-		CHECK_TICK
+
+	//Calculate and report influence growth
+
 	//Process new territories
 	for(var/area in territory_new)
 		if(added_names != "")
 			added_names += ", "
-		added_names += "[area]"
-		territory[area] += territory_new[area]
-		CHECK_TICK
-	. = "<b>[name] Gang Status Report:</b>.<BR>*---------*<BR>"
-	. += "<b>[territory_new.len] new territories:</b><br><i>[added_names]</i><br>"
-	. += "<b>[territory_lost.len] territories lost:</b><br><i>[lost_names]</i><br>"
-	. += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
-	for(var/area in territory)
-		CHECK_TICK
-		cached_territory_by_mind[area] += territory[area]
+		added_names += "[territory_new[area]]"
+		territory += area
+
+	//Report territory changes
+	var/message = "<b>[src] Gang Status Report:</b>.<BR>*---------*<BR>"
+	message += "<b>[territory_new.len] new territories:</b><br><i>[added_names]</i><br>"
+	message += "<b>[territory_lost.len] territories lost:</b><br><i>[lost_names]</i><br>"
 	//Clear the lists
 	territory_new = list()
 	territory_lost = list()
-
-/datum/gang/proc/income()
-	if(!bosses.len)
-		return
-
-	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
-
-	var/message = recalculate_territories()
-	//Calculate and report influence growth
-
+	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
 	var/sbonus = sqrt(LAZYLEN(territory))  // Bonus given to soldier's for the gang's total territory
+	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
 	if(is_dominating)
 		var/seconds_remaining = domination_time_remaining()
 		var/new_time = max(180, seconds_remaining - (territory.len * 2))
@@ -254,7 +247,6 @@
 			set_domination_time(new_time)
 		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
 	else
-
 		pay_territory_income_to_bosses()
 		pay_territory_income_to_soldiers(sbonus)
 		pay_all_clothing_bonuses()
