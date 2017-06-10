@@ -48,6 +48,7 @@
 	var/mutable_appearance/northeast_corner
 	var/mutable_appearance/southeast_corner
 	var/mutable_appearance/generic_edge
+	var/field_edge_mouse_opacity = 0
 
 /datum/proximity_monitor/advanced/New()
 	initialize_effects()
@@ -89,6 +90,7 @@
 	I.layer = 5
 	F.self_appearance = I
 	F.update_icon()
+	F.mouse_opacity = field_edge_mouse_opacity
 
 /datum/proximity_monitor/advanced/proc/get_edgeturf_appearance(direction)
 	switch(direction)

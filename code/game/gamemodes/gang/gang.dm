@@ -173,11 +173,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
-<<<<<<< HEAD
-	G.gangsters[gangster_mind] = 0
-=======
 	G.gangsters[gangster_mind] = GANGSTER_SOLDIER_STARTING_INFLUENCE
->>>>>>> tgstation/master
 	gangster_mind.gang_datum = G
 	if(check)
 		if(iscarbon(gangster_mind.current))

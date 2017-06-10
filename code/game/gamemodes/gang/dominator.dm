@@ -393,7 +393,7 @@
 	var/dat = list()
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 	dat += data
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangUplink v3.5", 340, 625)
 	popup.set_content(dat)
 	popup.open()
 
@@ -420,7 +420,7 @@
 	var/datum/gang/tempgang
 
 	if(user.mind in SSticker.mode.get_all_gangsters())
-		tempgang = user.mind.gang_datum
+		tempgang = user.mind.gang_datum					//If someone somehow teleported into your dominator and is now dominating with your dominator using one of THEIR charges in a crowd of angry gangsters, good/bad for them..
 	else
 		examine(user)
 		return
