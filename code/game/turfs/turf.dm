@@ -53,10 +53,8 @@
 
 	if (light_power && light_range)
 		update_light()
-	if(isnull(light_opacity))
-		light_opacity = opacity
 
-	if (light_opacity)
+	if (opacity)
 		has_opaque_atom = TRUE
 	return INITIALIZE_HINT_NORMAL
 

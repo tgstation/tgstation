@@ -3,8 +3,7 @@
 /atom
 	var/light_power = 1 // Intensity of the light.
 	var/light_range = 0 // Range in tiles of the light.
-	var/light_color     // Hexadecimal RGB string representing the colour of the light
-	var/light_opacity   // Whether light can pass through an atom.
+	var/light_color     // Hexadecimal RGB string representing the colour of the light.
 
 	var/tmp/datum/light_source/light // Our light source. Don't fuck with this directly unless you have a good reason!
 	var/tmp/list/light_sources       // Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
@@ -60,21 +59,16 @@
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
-/atom/proc/set_opacity(var/new_opacity, var/new_light_opacity = null)
-
-	if(isnull(new_light_opacity))
-		new_light_opacity = new_opacity
-
-	if (new_opacity == opacity && new_light_opacity == light_opacity)
+/atom/proc/set_opacity(var/new_opacity)
+	if (new_opacity == opacity)
 		return
 
 	opacity = new_opacity
-	light_opacity = new_light_opacity
 	var/turf/T = loc
 	if (!isturf(T))
 		return
 
-	if (new_light_opacity == TRUE)
+	if (new_opacity == TRUE)
 		T.has_opaque_atom = TRUE
 		T.reconsider_lights()
 	else
