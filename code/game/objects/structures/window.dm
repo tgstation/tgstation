@@ -228,7 +228,7 @@
 			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
@@ -267,11 +267,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, hitsound, 75, 1)
+				playsound(src, hitsound, 75, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
@@ -607,10 +607,10 @@
 	icon = 'icons/obj/smooth_structures/paperframes.dmi'
 	icon_state = "frame"
 	dir = FULLTILE_WINDOW_DIR
-	opacity = 1
+	opacity = TRUE
 	max_integrity = 15
 	obj_integrity = 15
-	fulltile = 1
+	fulltile = TRUE
 	flags = PREVENT_CLICK_UNDER
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)
@@ -623,11 +623,11 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'
-	var/mutable_appearance/torn
-	var/mutable_appearance/paper
+	var/static/mutable_appearance/torn
+	var/static/mutable_appearance/paper
 
 /obj/structure/window/paperframe/Initialize()
-	..()
+	. = ..()
 	torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 	for(var/obj/item/I in debris)
@@ -659,15 +659,23 @@
 	if(obj_integrity < max_integrity)
 		cut_overlay(paper)
 		add_overlay(torn)
-		set_opacity(0,0)
+		set_opacity(0)
 	else
 		cut_overlay(torn)
 		add_overlay(paper)
-		set_opacity(1,0)
+		set_opacity(1)
 	queue_smooth(src)
 
 
 /obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.ison())
+			fire_act(W.is_hot())
+		return
+	else if(W.ishot())
+		fire_act(W.is_hot())
+		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	else
@@ -680,8 +688,5 @@
 				if(obj_integrity == max_integrity)
 					update_icon()
 				return
-		if(istype(W, /obj/item/weapon/weldingtool))
-			fire_act(W.is_hot())
-			return
 	..()
 	update_icon()
