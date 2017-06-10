@@ -19,7 +19,6 @@
 	var/finished = 0
 
 	var/antag_datum = ANTAG_DATUM_WIZARD
-	var/list/objectives_given = list()
 	var/list/datum/mind/pre_wizards = list()
 
 /datum/game_mode/wizard/pre_setup()
@@ -136,19 +135,3 @@
 	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
 	wizhud.leave_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, null)
-
-/datum/antagonist/wizard/proc/add_objective(var/datum/objective/O)
-	owner.objectives += O
-	objectives_given += O
-
-/datum/antagonist/wizard/proc/remove_objective(var/datum/objective/O)
-	owner.objectives -= O
-	objectives_given -= O
-
-/datum/antagonist/wizard/on_removal() 
-	SSticker.mode.wizards -= owner
-	for(var/O in objectives_given)
-		owner.objectives -= O
-	objectives_given = list()
-	owner.special_role = null
-	..()

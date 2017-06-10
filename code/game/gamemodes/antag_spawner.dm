@@ -74,13 +74,11 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/wizard_name = "the wizard"
 	var/datum/antagonist/wizard/apprentice/antag_datum = new()
 	if(usr)
-		wizard_name = usr.real_name
 		antag_datum.summoner = usr
 	antag_datum.school = type
-	M.add_antag_datum(antag_datum)
+	M.mind.add_antag_datum(antag_datum)
 	SSticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
 
