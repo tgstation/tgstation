@@ -9,6 +9,7 @@
 	var/volume = 10000 //in liters, 1 meters by 1 meters by 2 meters
 	density = 1
 	var/gas_type = 0
+	can_be_overridden = 0
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()
