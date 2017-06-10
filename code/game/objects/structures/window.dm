@@ -681,7 +681,7 @@
 					update_icon()
 				return
 		if(istype(W, /obj/item/weapon/weldingtool))
-			to_chat(user, "You'd just light \the [src] on fire.")
+			fire_act(W.is_hot())
 			return
 	..()
 	update_icon()
