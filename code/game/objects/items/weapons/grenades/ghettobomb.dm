@@ -33,6 +33,8 @@
 	..()
 	var/obj/item/weapon/reagent_containers/food/drinks/soda_cans/can = locate() in contents
 	if(can)
+		can.pixel_x = 0 //Reset the sprite's position to make it consistent with the rest of the IED
+		can.pixel_y = 0
 		var/mutable_appearance/can_underlay = new(can)
 		can_underlay.layer = FLOAT_LAYER
 		can_underlay.plane = FLOAT_PLANE
