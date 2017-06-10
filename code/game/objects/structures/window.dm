@@ -497,6 +497,10 @@
 	level = 3
 	glass_amount = 2
 
+/obj/structure/window/reinforced/tinted/fulltile/oneway
+	light_opacity = TRUE
+	opacity = FALSE
+
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
 	icon_state = "ice_window"

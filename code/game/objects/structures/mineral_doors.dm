@@ -87,10 +87,10 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
 	playsound(loc, openSound, 100, 1)
+	set_opacity(0)
 	flick("[initial_state]opening",src)
 	sleep(10)
 	density = 0
-	set_opacity(0)
 	state = 1
 	air_update_turf(1)
 	update_icon()
@@ -109,8 +109,8 @@
 	playsound(loc, closeSound, 100, 1)
 	flick("[initial_state]closing",src)
 	sleep(10)
-	density = 1
 	set_opacity(1, initial(light_opacity))
+	density = 1
 	state = 0
 	air_update_turf(1)
 	update_icon()

@@ -62,7 +62,7 @@
 // It notifies (potentially) affected light sources so they can update (if needed).
 /atom/proc/set_opacity(var/new_opacity, var/new_light_opacity = null)
 
-	if(!new_light_opacity || (new_light_opacity && !new_opacity))
+	if(isnull(new_light_opacity))
 		new_light_opacity = new_opacity
 
 	if (new_opacity == opacity && new_light_opacity == light_opacity)
@@ -74,7 +74,7 @@
 	if (!isturf(T))
 		return
 
-	if (new_opacity == TRUE)
+	if (new_light_opacity == TRUE)
 		T.has_opaque_atom = TRUE
 		T.reconsider_lights()
 	else
