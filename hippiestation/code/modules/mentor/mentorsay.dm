@@ -12,9 +12,9 @@
 	log_mentor("MSAY: [key_name(src)] : [msg]")
 
 	if(check_rights_for(src, R_ADMIN,0))
-		msg = "<b><font color ="#8A2BE2"><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></font></b>"
+		msg = "<b><font color ='#8A2BE2'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></font></b>"
 		to_chat(GLOB.admins, msg)
 
 	else
-		msg = "<b><font color ="#E236D8"><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></font></b>"
+		msg = "<b><font color ='#E236D8'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></font></b>"
 		to_chat(GLOB.admins, msg)
