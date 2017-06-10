@@ -203,7 +203,6 @@
 	if(src in SSticker.mode.wizards)
 		current.spellremove(current)
 		src.remove_antag_datum(ANTAG_DATUM_WIZARD)
-	SSticker.mode.update_wiz_icons_removed(src)
 
 /datum/mind/proc/remove_cultist()
 	if(src in SSticker.mode.cult)
@@ -1487,12 +1486,12 @@
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in SSticker.mode.wizards))
-		add_antag_datum(ANTAG_DATUM_WIZARD)
 		if(!GLOB.wizardstart.len)
 			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)
+		add_antag_datum(ANTAG_DATUM_WIZARD)
 
 /datum/mind/proc/make_Cultist()
 	if(!(src in SSticker.mode.cult))
