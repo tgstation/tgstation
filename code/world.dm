@@ -93,8 +93,8 @@
 /world/Topic(T, addr, master, key)
 	var/list/input = params2list(T)
 	
-	var/pinging = "ping" in input
-	var/playing = "players" in input
+	var/pinging = ("ping" in input)
+	var/playing = ("players" in input)
 	
 	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
