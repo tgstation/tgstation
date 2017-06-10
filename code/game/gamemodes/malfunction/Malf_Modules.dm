@@ -293,6 +293,10 @@
 		to_chat(src, "Can't overload this device.")
 		return
 	
+	if(stat & BROKEN)
+		to_chat(src, "Target unresponsive: Critical Damage.")
+		return	
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
@@ -326,6 +330,10 @@
 	if (istype(M, /obj/machinery))
 		if(!M.can_be_overridden())
 			to_chat(src, "Can't override this device.")
+			return
+		if(stat & BROKEN)
+			to_chat(src, "Target unresponsive: Critical Damage.")
+			return
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
