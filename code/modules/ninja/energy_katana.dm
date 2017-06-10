@@ -30,7 +30,7 @@
 	if(!current_charges)
 		return
 
-	if(isAdjacent(target))
+	if(Adjacent(target))
 		return
 
 	if(target.density)
@@ -43,7 +43,7 @@
 		playsound(T, 'sound/magic/blink.ogg', 25, 1)
 		playsound(T, "sparks", 50, 1)
 		var/obj/spot2 = new end_effect_type(get_turf(user), user.dir)
-		var/chain = spot1.Beam(spot2, beam_icon,time=2)
+		spot1.Beam(spot2, beam_icon,time=2)
 		current_charges--
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
