@@ -20,11 +20,13 @@
 	for(var/X in GLOB.clients)
 		var/client/C = X
 		if(check_rights_for(C, R_ADMIN))
-			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 			continue
 		if(C.mob.mind && C.mob.mind.special_role)
-			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			continue
+		if(istype(C.mob, /mob/dead/observer))
+			to_chat(C, "<font color='#960018'><span class='ooc'><span class='prefix'>ANTAG OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 		continue
-
 
 	log_ooc("(ANTAG) [key] : [msg]")
