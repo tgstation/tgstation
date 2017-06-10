@@ -1,5 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "Lighting now defaults to fully bright until the first update tick for that tile. This makes shuttle movements less immersion breaking."
-  - experiment: "Rather than remove the light source from the system and then re-adding it on light movements, the system now calculates and applies the difference to each tile. This should speed up lighting updates."

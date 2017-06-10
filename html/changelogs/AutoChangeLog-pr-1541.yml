@@ -1,8 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Luxury versions of the bluespace shelter capsule are now available! Purchase them at the mining equipment vendor."
-  - rscadd: "Cardboard cutouts have a new option: Xenomorph Maid"
-  - rscadd: "Black Carpet can now be crafted using a stack of carpet and a black crayon."
-  - rscadd: "Black fancy tables can now be crafted using Black Carpet."
-  - rscadd: "Shower curtains can now be recoloured with crayons, unscrewed from the floor, disassembled with wire cutters, and reassembled using cloth, plastic, and a metal rod."

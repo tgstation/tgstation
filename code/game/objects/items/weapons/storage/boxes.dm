@@ -42,7 +42,7 @@
 		var/image/illust = new()
 		illust.icon = 'icons/obj/storage.dmi'
 		illust.icon_state = "[illustration]"
-		illust.pixel_y = 6
+		illust.pixel_y = 5
 		add_overlay(illust)
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
@@ -573,7 +573,7 @@
 
 /obj/item/weapon/storage/box/deputy/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/clothing/tie/armband/deputy(src)
+		new /obj/item/clothing/accessory/armband/deputy(src)
 
 /obj/item/weapon/storage/box/metalfoam
 	name = "box of metal foam grenades"

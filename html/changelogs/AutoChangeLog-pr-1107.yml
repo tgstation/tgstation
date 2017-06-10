@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Fixes t-ray mode on engineering goggles not resetting the lighting override properly."

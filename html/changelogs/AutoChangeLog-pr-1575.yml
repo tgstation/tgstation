@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Attempts to add items to a storage container beyond its slots limit will now obtain a failure message again."

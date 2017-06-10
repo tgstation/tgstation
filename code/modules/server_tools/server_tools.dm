@@ -10,18 +10,20 @@ GLOBAL_PROTECT(reboot_mode)
 /world/proc/IRCBroadcast(msg)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
 
+/world/proc/ServiceEndProcess()
+	log_world("Sending shutdown request!");
+	sleep(1)	//flush the buffers
+	ExportService(SERVICE_REQUEST_KILL_PROCESS)
+
 //called at the exact moment the world is supposed to reboot
 /world/proc/ServiceReboot()
 	switch(GLOB.reboot_mode)
 		if(REBOOT_MODE_HARD)
 			to_chat(src, "<span class='boldannounce'>Hard reboot triggered, you will automatically reconnect...</span>")
-			log_world("Sending shutdown request!");
-			sleep(1)	//flush the buffers
-			ExportService(SERVICE_REQUEST_KILL_PROCESS)
+			ServiceEndProcess()
 		if(REBOOT_MODE_SHUTDOWN)
 			to_chat(src, "<span class='boldannounce'>The server is shutting down...</span>")
-			log_world("Deleting world")
-			qdel(src)
+			ServiceEndProcess()
 
 /world/proc/ServiceCommand(list/params)
 	var/sCK = RunningService()
@@ -64,7 +66,12 @@ GLOBAL_PROTECT(reboot_mode)
 			var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
 			status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode ? SSticker.mode.name : "Not started"]."
 			return status
-
+		if(SERVICE_CMD_IRC_CHECK)
+			var/rtod = REALTIMEOFDAY
+			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
+				return
+			last_irc_status = rtod
+			return "[GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : "byond://[address]:[port]"]" 
 		if(SERVICE_CMD_ADMIN_MSG)
 			return IrcPm(params[SERVICE_CMD_PARAM_TARGET], params[SERVICE_CMD_PARAM_MESSAGE], params[SERVICE_CMD_PARAM_SENDER])
 

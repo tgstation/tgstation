@@ -42,7 +42,7 @@
 		if(M.rating > 3)
 			max_potency = 95
 		else
-			max_potency = initial(max_potency) + (M.rating**3) // 53,59,77,95 	 Clamps at 100
+			max_potency = initial(max_potency) + (M.rating**3) // 51,58,77,114 	 Clamps at 100
 
 		max_yield = initial(max_yield) + (M.rating*2) // 4,6,8,10 	Clamps at 10
 
@@ -50,14 +50,14 @@
 		if(SM.rating > 3) //If you create t5 parts I'm a step ahead mwahahaha!
 			min_production = 1
 		else
-			min_production = 12 - (SM.rating * 3) //9,6,3,1. Requires if to avoid going below clamp [1]
+			min_production = 10 - (SM.rating * 3) //7,4,1. Requires if to avoid going below clamp [1]
 
-		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,100	Clamps at 10min 100max
+		max_endurance = initial(max_endurance) + (SM.rating * 25) // 35,60,85,110	Clamps at 10min 100max
 
 	for(var/obj/item/weapon/stock_parts/micro_laser/ML in component_parts)
 		var/wratemod = ML.rating * 2.5
 		min_wrate = Floor(10-wratemod,1) // 7,5,2,0	Clamps at 0 and 10	You want this low
-		min_wchance = 67-(ML.rating*16) // 48,35,19,3 	Clamps at 0 and 67	You want this low
+		min_wchance = 67-(ML.rating*16) // 51,35,19,3 	Clamps at 0 and 67	You want this low
 	for(var/obj/item/weapon/circuitboard/machine/plantgenes/vaultcheck in component_parts)
 		if(istype(vaultcheck, /obj/item/weapon/circuitboard/machine/plantgenes/vault)) // DUMB BOTANY TUTS
 			max_potency = 100

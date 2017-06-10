@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixed adamantine vocal cord (F) links not working for observers."

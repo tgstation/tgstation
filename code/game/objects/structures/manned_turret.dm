@@ -38,7 +38,7 @@
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
 		if(buckled_mob.client)
-			buckled_mob.reset_perspective()
+			buckled_mob.client.change_view(world.view)
 	anchored = FALSE
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -84,6 +84,8 @@
 			calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(controller, C.mouseParams)
 
 /obj/machinery/manned_turret/proc/direction_track(mob/user, atom/targeted)
+	if(user.stat != CONSCIOUS)
+		return
 	setDir(get_dir(src,targeted))
 	user.setDir(dir)
 	switch(dir)

@@ -1,5 +1,0 @@
-author: "p440"
-delete-after: True
-changes: 
-  - bugfix: "Fixed duping cable coils with magic APC terminals"
-  - bugfix: "Fixed invalid icon state for empty APCs"

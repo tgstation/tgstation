@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Galactic Common has been added to silicon's internal language
-database, meaning even if a cyborg is created from someone who
-previously did not know Galactic Common, they will be able to speak it
-as a silicon."

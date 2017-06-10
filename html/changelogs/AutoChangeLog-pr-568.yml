@@ -1,4 +1,0 @@
-author: "optional name here"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where honey frames couldn't be picked up"

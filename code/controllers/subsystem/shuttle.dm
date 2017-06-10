@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
 		return
-	emergency.cancel(/area/centcom)
+	emergency.cancel()
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)

@@ -1,7 +1,0 @@
-author: "MMMiracles (Cerestation)"
-delete-after: True
-changes: 
-  - rscadd: "Departments have been given head offices for a more secure place to chill in their departments."
-  - rscadd: "There is now a theatre on the service asteroid."
-  - tweak: "Maintenance visuals and loot have been overhauled to be more visually interesting and have more scattered bits of loot."
-  - bugfix: "Various fixes with missing APCs, camera coverage, and misc things."

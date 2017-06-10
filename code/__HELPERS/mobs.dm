@@ -415,7 +415,7 @@ Proc for attack log creation, because really why not
 			prefs = new
 
 		var/adminoverride = 0
-		if(M.client && check_rights_for(M, R_ADMIN) && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client && check_rights_for(M.client, R_ADMIN) && (prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
 		if(isnewplayer(M) && !adminoverride)
 			continue

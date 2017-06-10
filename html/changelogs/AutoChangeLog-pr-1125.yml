@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "opening a dangerous canister will only alert admins if it contains meaningful amounts of a dangerous gas. No more being bwoinked because you opened an empty canister that used to have plasma in it."

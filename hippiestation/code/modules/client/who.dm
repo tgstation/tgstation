@@ -4,7 +4,7 @@
 	var/msg = "<b>Current Mentors:</b>\n"
 	for(var/X in GLOB.admins)
 		var/client/C = X
-		if(!check_rights_for(C, R_ADMIN))
+		if(check_rights_for(C, R_ADMIN))
 			continue
 		if(check_rights_for(C, R_MENTOR))
 			var/suffix = ""
@@ -102,7 +102,7 @@
 	if(check_rights_for(src, R_ADMIN))
 		for(var/X in GLOB.admins)
 			var/client/C = X
-			if(check_rights_for(C, R_ADMIN))
+			if(!check_rights_for(C, R_ADMIN))
 				continue
 			msg += "\t[C] is a [C.holder.rank]"
 
@@ -122,11 +122,11 @@
 	else
 		for(var/X in GLOB.admins)
 			var/client/C = X
-			if(check_rights_for(C, R_ADMIN))
+			if(!check_rights_for(C, R_ADMIN))
 				continue
 			if(C.is_afk())
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
+		msg += "<span class='info'>Adminhelps are also sent to Discord. If no admins are available in game adminhelp anyways and an admin on Discord will see it and respond.</span>"
 	to_chat(src, msg)

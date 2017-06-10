@@ -8,6 +8,7 @@
 	var/list/datum/mind/gangsters = list() //gang B Members
 	var/list/datum/mind/bosses = list() //gang A Bosses
 	var/list/obj/item/device/gangtool/gangtools = list()
+	var/list/tags_by_mind = list()				//Assoc list in format of tags_by_mind[mind_of_gangster] = list(tag1, tag2, tag3) where tags are the actual object decals.
 	var/style
 	var/fighting_style = "normal"
 	var/list/territory = list()
@@ -190,7 +191,7 @@
 		var/mob/living/mob = get(tool.loc,/mob/living)
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
-				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>")
+				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[bicon(tool)] [message]</span>")
 			return
 
 
@@ -202,9 +203,9 @@
 		return
 	var/added_names = ""
 	var/lost_names = ""
-	
+
 	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
-	
+
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
 	territory |= reclaimed_territories
@@ -245,47 +246,90 @@
 			set_domination_time(new_time)
 		message += "<b>[seconds_remaining] seconds remain</b> in hostile takeover.<BR>"
 	else
-		for(var/obj/item/device/gangtool/G in gangtools)
-			var/pmessage = message
-			var/points_new = 0
-			if(istype(G, /obj/item/device/gangtool/soldier))
-				points_new = max(0,round(3 - G.points/10)) + (sbonus) + (LAZYLEN(G.tags)/2) // Soldier points
-				pmessage += "Your influence has increased by [round(sbonus)] from your gang holding [LAZYLEN(territory)] territories, and a bonus of [round(LAZYLEN(G.tags)/2)] for territories you have personally marked and kept intact.<BR>"
-			else
-				points_new = max(0,round(5 - G.points/10)) + LAZYLEN(territory) // Boss points, more focused on big picture
-				pmessage += "Your influence has increased by [round(points_new)] from your gang holding [territory.len] territories<BR>"
-			G.points += points_new
-			var/mob/living/carbon/human/ganger = get(G.loc, /mob/living)
-			var/points_newer = 0
-			var/static/inner = inner_outfit
-			var/static/outer = outer_outfit
-			if(ishuman(ganger) && ganger.mind in (gangsters|bosses))
-				for(var/obj/C in ganger.contents)
-					if(C.type == inner_outfit)
-						points_newer += 2
-						continue
-					if(C.type == outer_outfit)
-						points_newer += 2
-						continue
-					switch(C.type)
-						if(/obj/item/clothing/neck/necklace/dope)
-							points_newer += 2
-						if(/obj/item/clothing/head/collectable/petehat/gang)
-							points_newer += 4
-						if(/obj/item/clothing/shoes/gang)
-							points_newer += 6
-						if(/obj/item/clothing/mask/gskull)
-							points_newer += 5
-						if(/obj/item/clothing/gloves/gang)
-							points_newer += 3
-						if(/obj/item/weapon/storage/belt/military/gang)
-							points_newer += 4
-			if(points_newer)
-				G.points += points_newer
-				pmessage += "Your influential choice of clothing has further increased your influence by [points_newer] points.<BR>"
-			pmessage += "You now have <b>[G.points] influence</b>.<BR>"
-			to_chat(ganger, "<span class='notice'>\icon[G] [pmessage]</span>")
+		pay_territory_income_to_bosses()
+		pay_territory_income_to_soldiers(sbonus)
+		pay_all_clothing_bonuses()
+		announce_all_influence()
 
+/datum/gang/proc/pay_all_clothing_bonuses()
+	for(var/datum/mind/mind in gangsters|bosses)
+		pay_clothing_bonus(mind)
+
+/datum/gang/proc/pay_clothing_bonus(var/datum/mind/gangsta)
+	var/mob/living/carbon/human/gangbanger = gangsta.current
+	. = 0
+	if(!istype(gangbanger) || gangbanger.stat == DEAD)	//Dead gangsters aren't influential at all!
+		return 0
+	var/static/inner = inner_outfit
+	var/static/outer = outer_outfit
+	for(var/obj/item/C in gangbanger.contents)
+		if(C.type == inner_outfit)
+			. += 2
+			continue
+		else if(C.type == outer_outfit)
+			. += 2
+			continue
+		. += C.gang_contraband_value()
+	adjust_influence(gangsta, .)
+	if(.)
+		announce_to_mind(gangsta, "<span class='notice'>Your influential choice of clothing has increased your influence by [.] points!</span>")
+	else
+		announce_to_mind(gangsta, "<span class='warning'>Unfortunately, you have not gained any additional influence from your drab, old, boring clothing. Learn to dress like a gangsta, bro!</span>")	//Kek
+
+/datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier, sbonus = 0)
+	. = 0
+	. = max(0,round(3 - gangsters[soldier]/10)) + (sbonus) + (get_soldier_territories(soldier)/2)
+	adjust_influence(soldier, .)
+
+/datum/gang/proc/get_soldier_territories(datum/mind/soldier)
+	if(!islist(tags_by_mind[soldier]))	//They have no tagged territories!
+		return 0
+	var/list/tags = tags_by_mind[soldier]
+	return tags.len
+
+/datum/gang/proc/pay_territory_income_to_soldiers(sbonus = 0)
+	for(var/datum/mind/soldier in gangsters)
+		var/returned = pay_soldier_territory_income(soldier)
+		if(!returned)
+			announce_to_mind(soldier, "<span class='warning'>You have not gained any influence from territories you personally tagged. Get to work, soldier!</span>")
+		else
+			announce_to_mind(soldier, "<span class='notice'>You have gained [returned] influence from [get_soldier_territories(soldier)] territories you have personally tagged.</span>")
+
+/datum/gang/proc/announce_all_influence()
+	for(var/datum/mind/MG in bosses|gangsters)
+		announce_total_influence(MG)
+
+/datum/gang/proc/pay_territory_income_to_bosses()
+	. = 0
+	for(var/datum/mind/boss_mind in bosses)
+		var/inc = max(0,round(5 - bosses[boss_mind]/10)) + LAZYLEN(territory)
+		. += inc
+		adjust_influence(boss_mind, inc)
+		announce_to_mind(boss_mind, "<span class='boldnotice'>Your influence has increased by [inc] from your gang holding [LAZYLEN(territory)] territories!</span>")
+
+/datum/gang/proc/get_influence(datum/mind/gangster_mind)
+	if(gangster_mind in gangsters)
+		return gangsters[gangster_mind]
+	if(gangster_mind in bosses)
+		return bosses[gangster_mind]
+
+/datum/gang/proc/adjust_influence(datum/mind/gangster_mind, amount)
+	if(gangster_mind in gangsters)
+		gangsters[gangster_mind] += amount
+	if(gangster_mind in bosses)
+		bosses[gangster_mind] += amount
+
+/datum/gang/proc/announce_to_mind(datum/mind/gangster_mind, message)
+	if(gangster_mind.current && gangster_mind.current.stat != DEAD)
+		to_chat(gangster_mind.current, message)
+
+/datum/gang/proc/announce_total_influence(datum/mind/gangster_mind)
+	announce_to_mind(gangster_mind, "<span class='boldnotice'>[name] Gang: You now have a total of [get_influence(gangster_mind)] influence!</span>")
+
+/datum/gang/proc/reclaim_points(amount)
+	for(var/datum/mind/bawss in bosses)
+		adjust_influence(bawss, amount/bosses.len)
+		announce_to_mind(bawss, "<span class='notice'>[name] Gang: [amount/bosses.len] influence given from internal automatic restructuring.</span>")
 
 //Multiverse
 

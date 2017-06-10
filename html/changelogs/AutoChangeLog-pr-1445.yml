@@ -1,5 +1,0 @@
-author: "Tortellini Tony"
-delete-after: True
-changes: 
-  - rscdel: "Removed Draconic language from crewmember lizards and removed Galactic Common from Ashwalker lizards."
-  - rscdel: "Removed damage modifiers from roundstart species (except catbeasts.)"

@@ -1,4 +1,0 @@
-author: "Qbopper"
-delete-after: True
-changes: 
-  - tweak: "The supermatter crystal now sends its warning messages to the engineering channel. (if it's in critical condition the message will be sent to the common radio channel as before)"

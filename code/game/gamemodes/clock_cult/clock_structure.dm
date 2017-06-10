@@ -9,7 +9,7 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/can_be_repaired = TRUE //if a proselytizer can repair it
+	var/can_be_repaired = TRUE //if a fabricator can repair it
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
@@ -174,13 +174,6 @@
 	SSfastprocess.processing -= src
 	SSobj.processing -= src
 	return ..()
-
-/obj/structure/destructible/clockwork/powered/ratvar_act()
-	..()
-	if(GLOB.nezbere_invoked)
-		needs_power = FALSE
-	else
-		needs_power = initial(needs_power)
 
 /obj/structure/destructible/clockwork/powered/process()
 	var/powered = total_accessable_power()
