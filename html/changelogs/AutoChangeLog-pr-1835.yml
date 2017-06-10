@@ -1,0 +1,5 @@
+author: "Tortellinitony"
+delete-after: True
+changes: 
+  - rscadd: "You can now play as IPCs."
+  - bugfix: "Cat screams are normal agin."
