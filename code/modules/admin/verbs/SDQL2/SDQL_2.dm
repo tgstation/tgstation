@@ -27,6 +27,7 @@
 
 	var/query_log = "executed SDQL query: \"[query_text]\"."
 	message_admins("[key_name_admin(usr)] [query_log]")
+	SSblackbox.add_details("admin_verb","SDQL2 Query") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	query_log = "[usr.ckey]([usr]) [query_log]"
 	log_game(query_log)
 	NOTICE(query_log)
