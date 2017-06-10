@@ -109,7 +109,7 @@
 	playsound(loc, closeSound, 100, 1)
 	flick("[initial_state]closing",src)
 	sleep(10)
-	set_opacity(1, initial(light_opacity))
+	set_opacity(1)
 	density = 1
 	state = 0
 	air_update_turf(1)
@@ -225,7 +225,6 @@
 	icon_state = "paperframe"
 	openSound = 'sound/effects/doorcreaky.ogg'
 	closeSound = 'sound/effects/doorcreaky.ogg'
-	light_opacity = 0
 	sheetType = /obj/item/stack/sheet/paperframes
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE

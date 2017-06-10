@@ -9,7 +9,6 @@
 	flags = ON_BORDER
 	max_integrity = 25
 	obj_integrity = 25
-	light_opacity = 0
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = 0
@@ -498,7 +497,6 @@
 	glass_amount = 2
 
 /obj/structure/window/reinforced/tinted/fulltile/oneway
-	light_opacity = TRUE
 	opacity = FALSE
 
 /obj/structure/window/reinforced/fulltile/ice
