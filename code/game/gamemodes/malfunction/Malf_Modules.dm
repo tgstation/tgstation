@@ -288,7 +288,11 @@
 
 	if(!canUseTopic())
 		return
-
+	
+	if(!M.can_be_overridden())
+		to_chat(src, "Can't overload this device.")
+		return
+	
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
