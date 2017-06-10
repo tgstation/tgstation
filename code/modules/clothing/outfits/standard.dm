@@ -264,6 +264,7 @@
 	back = /obj/item/weapon/storage/backpack
 	backpack_contents = list(/obj/item/weapon/storage/box=1)
 
+/datum/outfit/wizard/post_equip(mob/living/carbon/human/H, var/visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 	var/obj/item/weapon/spellbook/spellbook = new(H.loc)
