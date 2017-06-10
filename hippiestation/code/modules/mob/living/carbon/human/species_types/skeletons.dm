@@ -1,6 +1,6 @@
 /datum/species/skeleton/playable
-	name = "Scary Skeleton"
-	id = "hippieskeleton"
+	name = "Spooky Scary Skeleton"
+	id = "spookyskeleton"
 	say_mod = "rattles"
 	blacklisted = 0
 	sexes = 0
