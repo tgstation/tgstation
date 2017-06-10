@@ -58,8 +58,8 @@ Medical Doctor
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_chemistry, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_mineral_storeroom)
-	minimal_access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_cloning)
+	access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_chemistry, GLOB.access_genetics, GLOB.access_cloning, GLOB.access_mineral_storeroom, GLOB.access_maint_tunnels)
+	minimal_access = list(GLOB.access_medical, GLOB.access_morgue, GLOB.access_surgery, GLOB.access_cloning, GLOB.access_maint_tunnels)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
