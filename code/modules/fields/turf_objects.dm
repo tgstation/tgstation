@@ -70,7 +70,7 @@
 		return parent.field_turf_block_air(src)
 	return FALSE
 
-/obj/effect/abstract/proximity_checker/advanced/field_turf/get_explosion_block()
+/obj/effect/abstract/proximity_checker/advanced/field_turf/GetExplosionBlock()
 	if(inactive || !parent)
 		return 0
 	return parent.field_turf_explosion_block(src)
@@ -114,7 +114,7 @@
 		return parent.field_edge_block_air(src)
 	return FALSE
 
-/obj/effect/abstract/proximity_checker/advanced/field_edge/get_explosion_block()
+/obj/effect/abstract/proximity_checker/advanced/field_edge/GetExplosionBlock()
 	if(inactive || !parent)
 		return 0
 	return parent.field_edge_explosion_block()

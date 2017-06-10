@@ -457,7 +457,17 @@
 
 		deactivate_forcefield()
 
-		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
+		gang.gang_broadcast("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]", null, "Automatic Broadcast", "userdanger")
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G != gang)
-				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
+				G.gang_broadcast("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",null, "Automatic Broadcast", "userdanger")
+
+/obj/machinery/dominator/proc/ping_gang(mob/user)
+	if(!istype(user))
+		return
+	var/message = stripped_input(user, "Send a wide-wide broadcast.", "Send Message") as null|text
+	if(!message||!can_use(user))
+		return
+	if(user.z != ZLEVEL_STATION)
+		to_chat(user, "<span class='boldwarning'>[bicon(src)]Error: Relays out of range!</span>")
+	gang.gang_broadcast(message, user)
