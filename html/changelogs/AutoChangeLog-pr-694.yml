@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "APCs hacked by a malfunctioning AI are no longer immune to alien attacks."

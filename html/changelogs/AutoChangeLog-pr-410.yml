@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Lighting visuals have been changed slightly to reduce it's cost to the client. If you had trouble running the new lighting, it might run a little better now."

@@ -1,5 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Showers and sinks added to gulag and mining station for hygiene and fire safety."
-  - rscadd: "Watertanks added to mining station for convenient fire extinguisher refill."

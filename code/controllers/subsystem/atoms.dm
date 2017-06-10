@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(atoms)
 	else if(!A.initialized)
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
 	
-	return qdeleted || QDELETED(A)
+	return qdeleted || QDELING(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	old_initialized = initialized

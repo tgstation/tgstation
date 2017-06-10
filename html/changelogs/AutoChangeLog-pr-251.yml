@@ -1,5 +1,0 @@
-author: "Penguaro"
-delete-after: True
-changes: 
-  - rscadd: "Brig - Added Air Alarm"
-  - rscdel: "Engineering - Removed Brig Shutter"

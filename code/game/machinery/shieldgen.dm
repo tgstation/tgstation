@@ -49,9 +49,7 @@
 /obj/structure/emergency_shield/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(.) //damage was dealt
-		set_opacity(1)
-		spawn(20)
-			set_opacity(0)
+		new /obj/effect/temp_visual/impact_effect/ion(loc)
 
 /obj/structure/emergency_shield/sanguine
 	name = "sanguine barrier"

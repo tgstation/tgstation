@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug preventing chameleon stamps from being picked up"

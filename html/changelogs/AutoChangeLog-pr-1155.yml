@@ -1,4 +1,0 @@
-author: "optional name here"
-delete-after: True
-changes: 
-  - rscadd: "Zombies can now see in the dark. If you steal their eyes you'll be able to see in the dark as well!"

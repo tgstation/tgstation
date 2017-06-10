@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen decided to remove the integrated jet engines from jetpacks. They can no longer be used successfully indoors."

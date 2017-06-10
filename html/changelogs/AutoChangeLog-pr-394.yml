@@ -1,4 +1,0 @@
-author: "Penguaro"
-delete-after: True
-changes: 
-  - bugfix: "[Meta] The maintenance tunnels in the Xeno Lab now have radiation shielding. The Slime Euthanization Chamber will not have radiation shielding at this time as dead slimes will not mind radiation."

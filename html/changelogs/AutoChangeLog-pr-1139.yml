@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Wraiths now refund Phase Shift's cooldown by attacking; 1 second on normal attacks, 5 seconds when putting a target into critical, and a full refund when killing a target.
-balance: Increased Phase Shift's cooldown from 20 seconds to 25 seconds."

@@ -1,6 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "The crafting menu now has subcategories!"
-  - rscadd: "Food recipe categories have been combined as subcategories of the Foods category."
-  - rscadd: "Weaponry and Ammunition have been combined as subcategories of the Weaponry category."

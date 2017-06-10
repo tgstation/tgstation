@@ -1,4 +1,0 @@
-author: "QualityVan"
-delete-after: True
-changes: 
-  - bugfix: "Fixed fire alarms not being repairable if the board was broken"

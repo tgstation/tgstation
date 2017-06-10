@@ -259,9 +259,9 @@
 
 	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
-			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
+			add_atom_colour(rgb(255,223,0), FIXED_COLOUR_PRIORITY)
 		else
-			overlays += mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing")
+			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
 		set_light(3)
 
 	update_icon_hoses()
@@ -741,9 +741,12 @@
 			var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
 			S.my_atom = H
 
-			reagent_source.reagents.trans_to(S,split)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
+				while (reagent_source.reagents.total_volume > 0) //keep transferring reagents until the produce or pill is empty
+					reagent_source.reagents.trans_to(S,split)
 				qdel(reagent_source)
+			else
+				reagent_source.reagents.trans_to(S,split)
 
 			H.applyChemicals(S, user)
 

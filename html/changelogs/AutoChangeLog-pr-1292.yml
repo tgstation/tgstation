@@ -1,4 +1,0 @@
-author: "Steelpoint"
-delete-after: True
-changes: 
-  - rscadd: "ERT, non-red alert, Security Response Officers spawn with a Tactical Energy Gun. This is a military variant of the Egun that, in addition to laser and disable rounds, has access to stun rounds."

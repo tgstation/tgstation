@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,27)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -28,7 +28,7 @@
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
-			new /obj/item/borg/upgrade/modkit/resonator_blasts(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
@@ -38,7 +38,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/borg/upgrade/modkit/cooldown/repeater(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/rapid_repeater(src)
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
@@ -46,7 +46,7 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
 		if(18)
 			new /obj/item/device/warp_cube/red(src)
 		if(19)
@@ -69,11 +69,71 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/weapon/bedsheet/cult(src)
+		if(28)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
 
+//KA modkit design discs
+/obj/item/weapon/disk/design_disk/modkit_disc
+	name = "KA Mod Disk"
+	desc = "A design disc containing the design for a unique kinetic accelerator modkit."
+	icon_state = "datadisk1"
+	var/modkit_design = /datum/design/unique_modkit
 
+/obj/item/weapon/disk/design_disk/modkit_disc/Initialize()
+	. = ..()
+	blueprints[1] = new modkit_design
+
+/obj/item/weapon/disk/design_disk/modkit_disc/mob_and_turf_aoe
+	name = "Offensive Mining Explosion Mod Disk"
+	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+
+/obj/item/weapon/disk/design_disk/modkit_disc/rapid_repeater
+	name = "Rapid Repeater Mod Disk"
+	modkit_design = /datum/design/unique_modkit/rapid_repeater
+
+/obj/item/weapon/disk/design_disk/modkit_disc/resonator_blast
+	name = "Resonator Blast Mod Disk"
+	modkit_design = /datum/design/unique_modkit/resonator_blast
+
+/obj/item/weapon/disk/design_disk/modkit_disc/bounty
+	name = "Death Syphon Mod Disk"
+	modkit_design = /datum/design/unique_modkit/bounty
+
+/datum/design/unique_modkit
+	category = list("Mining Designs", "Cyborg Upgrade Modules")
+	req_tech = list("materials" = 12) //can't be normally obtained
+	build_type = PROTOLATHE | MECHFAB
+
+/datum/design/unique_modkit/offensive_turf_aoe
+	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
+	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
+	id = "hyperaoemod"
+	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
+	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
+
+/datum/design/unique_modkit/rapid_repeater
+	name = "Kinetic Accelerator Rapid Repeater Mod"
+	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
+	id = "repeatermod"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
+	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
+
+/datum/design/unique_modkit/resonator_blast
+	name = "Kinetic Accelerator Resonator Blast Mod"
+	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
+	id = "resonatormod"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
+	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
+
+/datum/design/unique_modkit/bounty
+	name = "Kinetic Accelerator Death Syphon Mod"
+	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
+	id = "bountymod"
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
+	reagents_list = list("blood" = 40)
+	build_path = /obj/item/borg/upgrade/modkit/bounty
 
 //Spooky special loot
-
 /obj/item/device/wisp_lantern
 	name = "spooky lantern"
 	desc = "This lantern gives off no light, but is home to a friendly wisp."

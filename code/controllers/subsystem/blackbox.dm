@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(blackbox)
 		if(M.client)
 			playercount += 1
 	var/admincount = GLOB.admins.len
-	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', COALESCE(INET_ATON('[world.internet_address]'), 0), '[world.port]')")
+	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')), '[world.port]')")
 	query_record_playercount.Execute()
 
 /datum/controller/subsystem/blackbox/Recover()
@@ -168,17 +168,18 @@ SUBSYSTEM_DEF(blackbox)
 		var/mob/LA = L.lastattacker
 		laname = sanitizeSQL(LA.real_name)
 		lakey = sanitizeSQL(LA.key)
-	var/sqlgender = sanitizeSQL(L.gender)
 	var/sqlbrute = sanitizeSQL(L.getBruteLoss())
 	var/sqlfire = sanitizeSQL(L.getFireLoss())
 	var/sqlbrain = sanitizeSQL(L.getBrainLoss())
 	var/sqloxy = sanitizeSQL(L.getOxyLoss())
-	var/sqltox = sanitizeSQL(L.getStaminaLoss())
-	var/sqlclone = sanitizeSQL(L.getStaminaLoss())
+	var/sqltox = sanitizeSQL(L.getToxLoss())
+	var/sqlclone = sanitizeSQL(L.getCloneLoss())
 	var/sqlstamina = sanitizeSQL(L.getStaminaLoss())
-	var/coord = sanitizeSQL("[L.x], [L.y], [L.z]")
+	var/x_coord = sanitizeSQL(L.x)
+	var/y_coord = sanitizeSQL(L.y)
+	var/z_coord = sanitizeSQL(L.z)
 	var/map = sanitizeSQL(SSmapping.config.map_name)
-	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, coord, mapname, server_ip, server_port) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[SQLtime()]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[coord]', '[map]', COALESCE(INET_ATON('[world.internet_address]'), 0), '[world.port]')")
+	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina])")
 	query_report_death.Execute()
 
 

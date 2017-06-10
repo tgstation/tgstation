@@ -1,5 +1,0 @@
-author: "Swindly"
-delete-after: True
-changes: 
-  - tweak: "Solid plasma now begins burning at the temperature at which it was ignited.
-balance: Snow walls no longer block explosions, are deconstructed faster, and no longer leave girders when deconstructed."

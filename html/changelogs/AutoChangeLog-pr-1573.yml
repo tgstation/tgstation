@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Goliaths, Watchers, and Legions have a small chance of dropping a kinetic crusher trophy item when killed with a kinetic crusher. Like the boss trophy items, these give various effects."
-  - tweak: "Kinetic crushers recharge very slightly slower."

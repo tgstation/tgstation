@@ -1,8 +1,0 @@
-author: "optional name here"
-delete-after: True
-changes: 
-  - bugfix: "Plasma Golems now have the correct updated tip."
-  - tweak: "Plasma Golems no longer take damage from fire, and take normal instead of increased burn damage from other sources. They will still explode if on fire and hot enough."
-  - rscadd: "Plasma Golems can now self-ignite with an action button."
-  - tweak: "Plasma Golems are now warned when they're close to exploding."
-  - tweak: "Plasma Golems now have a constant chance of exploding after 850K instead of a precise threshold at 900K, making it less predictable."

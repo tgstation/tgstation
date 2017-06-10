@@ -1,7 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Moved to a new system to make top menu items easier to edit."
-  - tweak: "Moved icon size stuff to a sub menu"
-  - rscadd: "Added option to change icon scaling mode."
-  - bugfix: "Byond added fancy shader supported scaling(Point Sampling), this sucks because it's blurry, the default for /tg/station has changed back to the old nearest neighbor scaling."

@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Golem Shells can now be completed with medical gauze or cloth to form cloth golems, which are weaker and extremely flammable. However, if they die, they turn into a pile of cloth that will eventually re-animate back into full health. That is, unless someone lights it on fire."
