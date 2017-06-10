@@ -3502,7 +3502,7 @@
 /area/awaymission/centcomAway/general)
 "kN" = (
 /obj/structure/table/wood,
-/obj/item/clothing/tie/medal,
+/obj/item/clothing/accessory/medal,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kO" = (
@@ -3516,7 +3516,7 @@
 /area/awaymission/centcomAway/general)
 "kQ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/tie/medal/gold,
+/obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kR" = (

@@ -249,8 +249,8 @@
 /obj/item/weapon/storage/belt/military
 	name = "chest rig"
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
-	icon_state = "explorer1"
-	item_state = "explorer1"
+	icon_state = "militarywebbing"
+	item_state = "militarywebbing"
 	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/abductor

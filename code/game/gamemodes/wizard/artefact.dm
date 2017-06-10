@@ -243,7 +243,7 @@
 			if(!is_gangster(user))
 				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
 				SSticker.mode.gangs += G
-				G.bosses += user.mind
+				G.bosses[user.mind] = 0
 				G.add_gang_hud(user.mind)
 				user.mind.gang_datum = G
 				to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")

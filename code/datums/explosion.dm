@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	if(GLOB.Debug2)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
-	if(!stopped)	//if we aren't in a hurry
+	if(running)	//if we aren't in a hurry
 		//Machines which report explosions.
 		for(var/array in GLOB.doppler_arrays)
 			var/obj/machinery/doppler_array/A = array
@@ -278,7 +278,11 @@ GLOBAL_LIST_EMPTY(explosions)
 		for(I in (processed + 1) to affected_turfs.len) // we cache the explosion block rating of every turf in the explosion area
 			var/turf/T = affected_turfs[I]
 
-			.[T] = T.get_explosion_block()
+			for(var/obj/O in T)
+				var/the_block = O.explosion_block
+				current_exp_block += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
+			
+			.[T] = current_exp_block
 
 			if(TICK_CHECK)
 				break
@@ -339,19 +343,12 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/TT = T
 			while(TT != epicenter)
 				TT = get_step_towards(TT,epicenter)
-				if(TT.density && TT.explosion_block)
+				if(TT.density)
 					dist += TT.explosion_block
-
-				for(var/obj/machinery/door/D in TT)
-					if(D.density && D.explosion_block)
-						dist += D.explosion_block
-
-				for(var/obj/structure/window/W in TT)
-					if(W.explosion_block && W.fulltile)
-						dist += W.explosion_block
-
-				for(var/obj/structure/blob/B in T)
-					dist += B.explosion_block
+				
+				for(var/obj/O in T)
+					var/the_block = O.explosion_block
+					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
 		if(dist < dev)
 			T.color = "red"

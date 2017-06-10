@@ -568,7 +568,7 @@
 
 /obj/item/weapon/storage/box/deputy/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/clothing/tie/armband/deputy(src)
+		new /obj/item/clothing/accessory/armband/deputy(src)
 
 /obj/item/weapon/storage/box/metalfoam
 	name = "box of metal foam grenades"

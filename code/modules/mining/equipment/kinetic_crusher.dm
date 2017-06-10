@@ -21,7 +21,7 @@
 	sharpness = IS_SHARP
 	var/list/trophies = list()
 	var/charged = TRUE
-	var/charge_time = 14
+	var/charge_time = 15
 
 /obj/item/weapon/twohanded/required/mining_hammer/Destroy()
 	for(var/a in trophies)
@@ -92,16 +92,21 @@
 		for(var/t in trophies)
 			var/obj/item/crusher_trophy/T = t
 			T.on_mark_detonation(target, user)
-		new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
-		var/backstab_dir = get_dir(user, L)
-		var/def_check = L.getarmor(type = "bomb")
-		if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-			L.apply_damage(80, BRUTE, blocked = def_check)
-			playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
-		else
-			L.apply_damage(50, BRUTE, blocked = def_check)
-		if(!QDELETED(C) && !QDELETED(L))
-			C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
+		if(!QDELETED(L))
+			if(!QDELETED(C))
+				C.total_damage += target_health - L.health //we did some damage, but let's not assume how much we did
+			new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
+			var/backstab_dir = get_dir(user, L)
+			var/def_check = L.getarmor(type = "bomb")
+			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
+				if(!QDELETED(C))
+					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
+				L.apply_damage(80, BRUTE, blocked = def_check)
+				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+			else
+				if(!QDELETED(C))
+					C.total_damage += 50
+				L.apply_damage(50, BRUTE, blocked = def_check)
 
 /obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
 	if(!charged)
@@ -185,9 +190,70 @@
 /obj/item/crusher_trophy/proc/on_mark_application(mob/living/target, datum/status_effect/crusher_mark/mark, had_mark) //the target, the mark applied, and if the target had a mark before
 /obj/item/crusher_trophy/proc/on_mark_detonation(mob/living/target, mob/living/user) //the target and the user
 
+//goliath
+/obj/item/crusher_trophy/goliath_tentacle
+	name = "goliath tentacle"
+	desc = "A sliced-off goliath tentacle. Suitable as a trophy for a kinetic crusher."
+	icon_state = "goliath_tentacle"
+	denied_type = /obj/item/crusher_trophy/goliath_tentacle
+	bonus_value = 2
+	var/missing_health_ratio = 0.1
+	var/missing_health_desc = 10
+
+/obj/item/crusher_trophy/goliath_tentacle/effect_desc()
+	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
+
+/obj/item/crusher_trophy/goliath_tentacle/on_mark_detonation(mob/living/target, mob/living/user)
+	var/missing_health = user.health - user.maxHealth
+	missing_health *= missing_health_ratio //bonus is active at all times, even if you're above 90 health
+	missing_health *= bonus_value //multiply the remaining amount by bonus_value
+	if(missing_health > 0)
+		target.adjustBruteLoss(missing_health) //and do that much damage
+
+//watcher
+/obj/item/crusher_trophy/watcher_wing
+	name = "watcher wing"
+	desc = "A wing ripped from a watcher. Suitable as a trophy for a kinetic crusher."
+	icon_state = "watcher_wing"
+	denied_type = /obj/item/crusher_trophy/watcher_wing
+	bonus_value = 8
+
+/obj/item/crusher_trophy/watcher_wing/effect_desc()
+	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second[bonus_value*0.1 == 1 ? "":"s"]"
+
+/obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
+	if(ishostile(target))
+		var/mob/living/simple_animal/hostile/H = target
+		if(H.ranged) //briefly delay ranged attacks
+			if(H.ranged_cooldown_time >= world.time)
+				H.ranged_cooldown_time += bonus_value
+			else
+				H.ranged_cooldown_time = bonus_value + world.time
+
+//legion
+/obj/item/crusher_trophy/legion_skull
+	name = "legion skull"
+	desc = "A dead and lifeless legion skull. Suitable as a trophy for a kinetic crusher."
+	icon_state = "legion_skull"
+	denied_type = /obj/item/crusher_trophy/legion_skull
+	bonus_value = 3
+
+/obj/item/crusher_trophy/legion_skull/effect_desc()
+	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second[bonus_value*0.1 == 1 ? "":"s"] faster"
+
+/obj/item/crusher_trophy/legion_skull/add_to(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.charge_time -= bonus_value
+
+/obj/item/crusher_trophy/legion_skull/remove_from(obj/item/weapon/twohanded/required/mining_hammer/H, mob/living/user)
+	. = ..()
+	if(.)
+		H.charge_time += bonus_value
+
 //ash drake
 /obj/item/crusher_trophy/tail_spike
-	desc = "A spike taken from a ash drake's tail."
+	desc = "A spike taken from a ash drake's tail. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/tail_spike
 	bonus_value = 5
 
@@ -210,7 +276,7 @@
 //bubblegum
 /obj/item/crusher_trophy/demon_claws
 	name = "demon claws"
-	desc = "A set of blood-drenched claws from a massive demon's hand."
+	desc = "A set of blood-drenched claws from a massive demon's hand. Suitable as a trophy for a kinetic crusher."
 	icon_state = "demon_claws"
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/demon_claws
@@ -244,7 +310,7 @@
 //colossus
 /obj/item/crusher_trophy/blaster_tubes
 	name = "blaster tubes"
-	desc = "The blaster tubes from a colossus's arm."
+	desc = "The blaster tubes from a colossus's arm. Suitable as a trophy for a kinetic crusher."
 	icon_state = "blaster_tubes"
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/blaster_tubes
@@ -273,7 +339,7 @@
 //hierophant
 /obj/item/crusher_trophy/vortex_talisman
 	name = "vortex talisman"
-	desc = "A glowing trinket that was originally the Hierophant's beacon."
+	desc = "A glowing trinket that was originally the Hierophant's beacon. Suitable as a trophy for a kinetic crusher."
 	icon_state = "vortex_talisman"
 	denied_type = /obj/item/crusher_trophy/vortex_talisman
 

@@ -1,6 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - rscadd: "Research and Development have recieved designs for new prototype Beam Marksman Rifles. These rifles require a short aiming cycle to fire, however, have extreme velocity over other weapons."
-  - experiment: "Aiming time is 2 seconds, hold down mouse to aim, aiming time increases if you change your aim based on angle changed, or if you move while aiming. The weapon can not be fired while unscoped."
-  - rscdel: "However, someone tripped and pulled out the power cord while your servers were being updated with the latest revision of accelerator laser cannons. All data have been lost..."

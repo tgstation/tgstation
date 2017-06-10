@@ -1582,8 +1582,8 @@ window "outputwindow"
 		macro = ""
 		menu = ""
 		on-close = ""
-	elem "output"
-		type = OUTPUT
+	elem "browseroutput"
+		type = BROWSER
 		pos = 0,0
 		size = 640x480
 		anchor1 = 0,0
@@ -1594,20 +1594,20 @@ window "outputwindow"
 		text-color = #000000
 		background-color = #ffffff
 		is-visible = true
-		is-disabled = false
+		is-disabled = true
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = "max-lines"
+		saved-params = ""
 		on-size = ""
-		link-color = #0000ff
-		visited-color = #ff00ff
-		style = ""
-		enable-http-images = false
-		max-lines = 1000
-		image = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on_show = ""
+		on_hide = ""
 
 window "statwindow"
 	elem "statwindow"
@@ -1682,4 +1682,3 @@ window "statwindow"
 		on-tab = ""
 		prefix-color = none
 		suffix-color = none
-

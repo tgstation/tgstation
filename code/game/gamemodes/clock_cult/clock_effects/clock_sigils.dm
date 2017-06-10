@@ -204,7 +204,7 @@
 		else if(!GLOB.ratvar_awakens)
 			to_chat(user, "<span class='brass'>Hitting the [sigil_name] with brass sheets will convert them to power at a rate of <b>1</b> brass sheet to <b>[POWER_FLOOR]W</b> power.</span>")
 		if(!GLOB.ratvar_awakens)
-			to_chat(user, "<span class='brass'>You can recharge Clockwork Proselytizers from the [sigil_name].</span>")
+			to_chat(user, "<span class='brass'>You can recharge Replica Fabricators from the [sigil_name].</span>")
 
 /obj/effect/clockwork/sigil/transmission/attackby(obj/item/I, mob/living/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/stack/tile/brass) && !GLOB.ratvar_awakens)

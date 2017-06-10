@@ -3,6 +3,7 @@
  *		Morgue
  *		Morgue tray
  *		Crematorium
+ *		Creamatorium
  *		Crematorium tray
  *		Crematorium button
  */
@@ -189,7 +190,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	// Make sure we don't delete the actual morgue and its tray
 	var/list/conts = GetAllContents() - src - connected
 
-	if(conts.len <= 1)
+	if(!conts.len)
 		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
@@ -223,6 +224,20 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
+/obj/structure/bodycontainer/crematorium/creamatorium
+	name = "creamatorium"
+	desc = "A human incinerator. Works well during ice cream socials."
+
+/obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
+	var/list/icecreams = new()
+	for(var/mob/living/i_scream in GetAllContents())
+		var/obj/item/weapon/reagent_containers/food/snacks/icecream/IC = new()
+		IC.set_cone_type("waffle")
+		IC.add_mob_flavor(i_scream)
+		icecreams += IC
+	. = ..()
+	for(var/obj/IC in icecreams)
+		IC.forceMove(src)
 
 /*
  * Generic Tray
