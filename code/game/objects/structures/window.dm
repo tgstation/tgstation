@@ -670,7 +670,7 @@
 /obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.ison())
+		if(WT.isOn())
 			fire_act(W.is_hot())
 		return
 	else if(W.ishot())
