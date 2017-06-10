@@ -335,7 +335,7 @@
 
 /datum/gang/proc/announce_total_influence(datum/mind/gangster_mind)
 	announce_to_mind(gangster_mind, "<span class='boldnotice'>[name] Gang: You now have a total of [get_influence(gangster_mind)] influence!</span>")
-  if(bosses_working == FALSE)
+	if(bosses_working == FALSE)
 		announce_to_mind(gangster_mind, "<span class='danger'><b>Your gang no longer has a functioning leader. Your gangtool has been updated with the option to claim leadership for yourself.</b></span>")
 	if(!gateways)
 		announce_to_mind(gangster_mind, "<span class='danger'><b>Your gang not yet placed its reinforcement gateway. The gateway is crucial to sustaining your forces on this station and <b>does NOT require influence</b>. [name] leadership should plan where to create your gateway - immediately!</b></span>")
