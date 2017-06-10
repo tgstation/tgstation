@@ -62,9 +62,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		for(var/n in 1 to 3)
 			var/datum/mind/boss = pick(antag_candidates)
 			antag_candidates -= boss
-
 			G.bosses[boss] = GANGSTER_BOSS_STARTING_INFLUENCE
-
 			boss.gang_datum = G
 			var/title
 			if(n == 1)
@@ -118,7 +116,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.dna.remove_mutation(CLOWNMUT)
 
-	var/obj/item/device/gangtool/gangtool = new(mob)
+	//var/obj/item/device/gangtool/gangtool = new(mob)
 	var/obj/item/weapon/pen/gang/T = new(mob)
 	var/obj/item/toy/crayon/spraycan/gang/SC = new(mob,gang)
 	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob,gang)
@@ -131,14 +129,14 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	. = 0
 
-	var/where = mob.equip_in_one_of_slots(gangtool, slots)
-	if (!where)
-		to_chat(mob, "Your Syndicate benefactors were unfortunately unable to get you a Gangtool.")
-		. += 1
-	else
-		gangtool.register_device(mob)
-		to_chat(mob, "The <b>Gangtool</b> in your [where] will allow you to purchase weapons and equipment, send messages to your gang, and recall the emergency shuttle from anywhere on the station.")
-		to_chat(mob, "As the gang boss, you can also promote your gang members to <b>lieutenant</b>. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools.")
+	//var/where = mob.equip_in_one_of_slots(gangtool, slots)
+	//if (!where)
+	//	to_chat(mob, "Your Syndicate benefactors were unfortunately unable to get you a Gangtool.")
+	//	. += 1
+	//else
+	//	gangtool.register_device(mob)
+	//	to_chat(mob, "The <b>Gangtool</b> in your [where] will allow you to purchase weapons and equipment, send messages to your gang, and recall the emergency shuttle from anywhere on the station.")
+	//	to_chat(mob, "As the gang boss, you can also promote your gang members to <b>lieutenant</b>. Unlike regular gangsters, Lieutenants cannot be deconverted and are able to use recruitment pens and gangtools.")
 
 	var/where2 = mob.equip_in_one_of_slots(T, slots)
 	if (!where2)
@@ -359,44 +357,3 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = TRUE
 
-/datum/gang/proc/ping(message, mob/user)
-	gang_broadcast(message, src, user)
-
-//PING
-/proc/gang_broadcast(message, datum/gang/gang, mob/user, ignore_checks = FALSE)
-	if(!user && !ignore_checks)
-		return
-	if(!ignore_checks)
-		message = stripped_input(message)
-	else
-		if(!message)
-			return
-	if(user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM && !ignore_checks)
-		to_chat(user, "<span class='info'>\icon[src]Error: Station out of range.</span>")
-		return
-	var/list/members = list()
-	members += gang.gangsters
-	members += gang.bosses
-	if(members.len)
-		var/gang_rank = "Gang Broadcaster"
-		if(user)
-		var/gang_rank = gang.bosses.Find(user.mind)
-			switch(gang_rank)
-				if(1)
-					gang_rank = "Gang Boss"
-				if(2)
-					gang_rank = "1st Lieutenant"
-				if(3)
-					gang_rank = "2nd Lieutenant"
-				if(4)
-					gang_rank = "3rd Lieutenant"
-				else
-					gang_rank = "[gang_rank - 1]th Lieutenant"
-		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
-		for(var/datum/mind/ganger in members)
-			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
-				to_chat(ganger.current, ping)
-		for(var/mob/M in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(M, user)
-			to_chat(M, "[link] [ping]")
-		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")

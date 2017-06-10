@@ -65,7 +65,7 @@
 	if(!SSticker.mode.gang_points)
 		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
 
-/obj/machinery/dominator/can_use(mob/living/user)
+/obj/machinery/dominator/proc/can_use(mob/living/user)
 	if(!istype(user))
 		return FALSE
 	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
@@ -132,7 +132,7 @@
 			log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
 			message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
 			var/turf/userturf = get_turf(user)
-			if(userturf.Z == ZLEVEL_STATION) //Check one more time that they are on station.
+			if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
 				if(SSshuttle.cancelEvac(user))
 					gang.recalls -= 1
 					return TRUE

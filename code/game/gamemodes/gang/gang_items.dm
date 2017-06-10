@@ -9,9 +9,9 @@
 /datum/gang_item/proc/purchase(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator, check_canbuy = TRUE)
 	if(check_canbuy && !can_buy(user, gang, dominator))
 		return FALSE
-	var/real_cost = get_cost(user, gang, gangtool)
+	var/real_cost = get_cost(user, gang, dominator)
 	gang.adjust_influence(user.mind, -real_cost)
-	spawn_item(user, gang, gangtool)
+	spawn_item(user, gang, dominator)
 	return TRUE
 
 /datum/gang_item/proc/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
@@ -378,7 +378,7 @@
 		return "(GET ONE FREE)"
 	return ..()
 
-
+/*
 /datum/gang_item/equipment/gangtool
 	id = "gangtool"
 	cost = 10
@@ -398,7 +398,7 @@
 	if(gang && isboss(user, gang) && (gang.bosses.len < 3))
 		return "Promote a Gangster"
 	return "Spare dominator"
-
+*/
 
 /datum/gang_item/equipment/dominator
 	name = "Station Dominator"
