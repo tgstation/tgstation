@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - imageadd: "Glass tables are shinier"
