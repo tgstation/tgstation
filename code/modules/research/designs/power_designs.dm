@@ -68,6 +68,16 @@
 	build_path = /obj/item/device/lightreplacer
 	category = list("Power Designs")
 
+/datum/design/inducer
+	name = "Inducer"
+	desc = "The NT-75 Electromagnetic Power Inducer can wirelessly induce electric charge in an object, allowing you to recharge power cells without having to remove them."
+	id = "inducer"
+	req_tech = list("powerstorage" = 4, "engineering" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/inducer/sci
+	category = list("Power Designs")
+
 /datum/design/board/pacman
 	name = "Machine Design (PACMAN-type Generator Board)"
 	desc = "The circuit board that for a PACMAN-type portable generator."

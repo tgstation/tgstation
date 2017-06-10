@@ -194,6 +194,7 @@ Difficulty: Medium
 			return
 	animate(src, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
+	mouse_opacity = 0
 	sleep(7)
 	var/list/flame_hit = list()
 	while(swoop_duration > 0)
@@ -234,6 +235,7 @@ Difficulty: Medium
 	animate(src, transform = oldtransform, time = 5)
 	sleep(5)
 	swooping &= ~SWOOP_INVULNERABLE
+	mouse_opacity = initial(mouse_opacity)
 	icon_state = "dragon"
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))

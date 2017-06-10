@@ -59,11 +59,11 @@
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
-	cmd_admin_pm(whom, msg, AH)
+	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
 //Fetching a message if needed. src is the sender and C is the target client
-/client/proc/cmd_admin_pm(whom, msg, datum/admin_help/AH)
+/client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
 		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
@@ -144,9 +144,9 @@
 
 	if(irc)
 		to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [rawmsg]</font>")
-		admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)] to <i>IRC</i>: [keywordparsedmsg]</font>")
+		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)] to <i>IRC</i>: [keywordparsedmsg]</font>")
 		ircreplyamount--
-		send2irc("Reply: [ckey]",rawmsg)
+		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
 			if(holder)	//both are admins
@@ -221,42 +221,44 @@
 
 	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
 	var/compliant_msg = trim(lowertext(msg))
-	var/unhandled = FALSE
 	var/irc_tagged = "[sender](IRC)"
-	switch(compliant_msg)
-		if("ticket close")
-			if(ticket)
-				ticket.Close(irc_tagged)
-				return "Ticket #[ticket.id] successfully closed"
-		if("ticket resolve")
-			if(ticket)
-				ticket.Resolve(irc_tagged)
-				return "Ticket #[ticket.id] successfully resolved"
-		if("ticket ic")
-			if(ticket)
-				ticket.ICIssue(irc_tagged)
-				return "Ticket #[ticket.id] successfully marked as IC issue"
-		if("ticket reject")
-			if(ticket)
-				ticket.Reject(irc_tagged)
-				return "Ticket #[ticket.id] successfully rejected"
-		else
-			unhandled = TRUE
-	if(!unhandled)
-		return "Ticket could not be found"
+	var/list/splits = splittext(compliant_msg, " ")
+	if(splits.len && splits[1] == "ticket")
+		if(splits.len < 2)
+			return "Usage: ticket <close|resolve|icissue|reject>"
+		switch(splits[2])
+			if("close")
+				if(ticket)
+					ticket.Close(irc_tagged)
+					return "Ticket #[ticket.id] successfully closed"
+			if("resolve")
+				if(ticket)
+					ticket.Resolve(irc_tagged)
+					return "Ticket #[ticket.id] successfully resolved"
+			if("icissue")
+				if(ticket)
+					ticket.ICIssue(irc_tagged)
+					return "Ticket #[ticket.id] successfully marked as IC issue"
+			if("reject")
+				if(ticket)
+					ticket.Reject(irc_tagged)
+					return "Ticket #[ticket.id] successfully rejected"
+			else
+				return "Usage: ticket <close|resolve|icissue|reject>"
+		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
 	var/adminname = config.showircname ? irc_tagged : "Administrator"
 
 	if(!C)
-		return "No client"
+		return "Error: No client"
 
 	if(!stealthkey)
 		stealthkey = GenIrcStealthKey()
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)
-		return "No message"
+		return "Error: No message"
 
 	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
 	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
@@ -275,8 +277,6 @@
 	C.ircreplyamount = IRCREPLYCOUNT
 
 	return "Message Successful"
-
-
 
 /proc/GenIrcStealthKey()
 	var/num = (rand(0,1000))

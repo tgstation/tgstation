@@ -138,7 +138,7 @@
 	return boolets
 
 /obj/item/weapon/gun/ballistic/suicide_act(mob/user)
-	if (chambered && chambered.BB && !chambered.BB.nodamage)
+	if (chambered && chambered.BB && can_trigger_gun(user) && !chambered.BB.nodamage)
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))

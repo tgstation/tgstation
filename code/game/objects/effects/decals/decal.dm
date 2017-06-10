@@ -65,3 +65,6 @@
 
 /obj/effect/turf_decal/sand/plating
 	icon_state = "sandyplating"
+
+/obj/effect/turf_decal/plaque
+	icon_state = "plaque"

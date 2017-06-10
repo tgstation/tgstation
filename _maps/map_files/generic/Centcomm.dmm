@@ -5590,8 +5590,8 @@
 /obj/item/clothing/under/skirt/black,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/neck/stripedredscarf,
@@ -11175,7 +11175,7 @@
 /obj/structure/rack,
 /obj/item/clothing/head/that,
 /obj/item/clothing/under/suit_jacket,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "BI" = (
@@ -11379,7 +11379,7 @@
 /obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
-/obj/item/clothing/tie/lawyers_badge{
+/obj/item/clothing/accessory/lawyers_badge{
 	desc = "A badge of upmost glory.";
 	name = "thunderdome badge"
 	},
@@ -11400,7 +11400,7 @@
 /obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
-/obj/item/clothing/tie/medal/silver{
+/obj/item/clothing/accessory/medal/silver{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -11605,11 +11605,11 @@
 	name = "Thunderdome Plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/tie/medal/gold{
+/obj/item/clothing/accessory/medal/gold{
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/clothing/tie/medal/gold,
+/obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/plasteel/grimy,
 /area/tdome/tdomeobserve)
 "CF" = (
@@ -11625,7 +11625,7 @@
 	name = "Thunderdome Plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/tie/medal{
+/obj/item/clothing/accessory/medal{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -14897,6 +14897,27 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"Mg" = (
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	dir = 1;
+	icon_state = "cutout_ntsec";
+	name = "Private Security Officer"
+	},
+/turf/open/floor/plasteel/darkred/side{
+	dir = 1
+	},
+/area/centcom/evac)
+"Mh" = (
+/obj/item/cardboard_cutout{
+	desc = "They seem to be ignoring you... Typical.";
+	icon_state = "cutout_ntsec";
+	name = "Private Security Officer"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 5
+	},
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -65195,7 +65216,7 @@ sv
 wW
 xt
 xQ
-xZ
+Mg
 yC
 yC
 yU
@@ -65454,7 +65475,7 @@ xp
 xR
 xZ
 yC
-yC
+Mh
 yV
 qk
 aa
@@ -71987,14 +72008,14 @@ fj
 fy
 fC
 fN
-fO
-fO
-fO
-fO
-fO
-fO
-fO
-fO
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -72244,14 +72265,14 @@ fi
 fv
 fC
 fN
-fO
+ab
 fR
 fR
 fR
 fR
 fR
 fR
-fO
+ab
 aa
 aa
 aa
@@ -72501,16 +72522,16 @@ ag
 ag
 ag
 ab
-fO
+ab
 fS
 fS
 fS
 fS
 fS
 fS
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -72758,7 +72779,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -72767,7 +72788,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73015,7 +73036,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73024,7 +73045,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73272,7 +73293,7 @@ fl
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73281,7 +73302,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73529,7 +73550,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73538,7 +73559,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -73786,7 +73807,7 @@ fk
 dZ
 fD
 fN
-fO
+ab
 ab
 ab
 ab
@@ -73795,7 +73816,7 @@ ab
 ab
 fZ
 ga
-fO
+ab
 aa
 aa
 aa
@@ -74043,16 +74064,16 @@ ag
 ag
 ag
 ab
-fO
+ab
 fT
 fT
 fT
 fT
 fT
 fT
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -78155,16 +78176,16 @@ fr
 em
 fI
 fN
-fO
+ab
 fT
 fT
 fT
 fT
 fT
 fT
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -78412,7 +78433,7 @@ en
 en
 fJ
 fN
-fO
+ab
 ab
 ab
 ab
@@ -78421,7 +78442,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -78669,7 +78690,7 @@ ag
 ag
 ag
 ab
-fO
+ab
 ab
 ab
 ab
@@ -78678,7 +78699,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -78926,7 +78947,7 @@ dP
 dP
 dP
 fN
-fO
+ab
 ab
 ab
 ab
@@ -78935,7 +78956,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -79183,7 +79204,7 @@ fs
 fB
 fK
 fN
-fO
+ab
 ab
 ab
 ab
@@ -79192,7 +79213,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -79440,7 +79461,7 @@ ft
 fB
 fL
 fN
-fO
+ab
 ab
 ab
 ab
@@ -79449,7 +79470,7 @@ ab
 ab
 fZ
 gb
-fO
+ab
 aa
 aa
 aa
@@ -79697,16 +79718,16 @@ fu
 fB
 fM
 fN
-fO
+ab
 fS
 fS
 fS
 fS
 fS
 fS
-fO
-fO
-fO
+ab
+ab
+ab
 aa
 aa
 aa
@@ -79954,14 +79975,14 @@ dT
 dT
 dT
 fN
-fO
+ab
 fW
 fW
 fW
 fW
 fW
 fW
-fO
+ab
 aa
 aa
 aa
@@ -80211,14 +80232,14 @@ ag
 ag
 ag
 ab
-fO
-fO
-fO
-fO
-fO
-fO
-fO
-fO
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa

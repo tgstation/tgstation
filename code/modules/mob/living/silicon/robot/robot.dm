@@ -97,6 +97,9 @@
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
 
+/mob/living/silicon/robot/get_cell()
+	return cell
+
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -193,6 +196,10 @@
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/weapon/robot_module)
+		return
+
+	if(wires.is_cut(WIRE_RESET_MODULE))
+		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
 	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
@@ -1109,7 +1116,7 @@
 		return
 	if(incapacitated())
 		return
-	if(M.restrained())
+	if(M.incapacitated())
 		return
 	if(module)
 		if(!module.allow_riding)

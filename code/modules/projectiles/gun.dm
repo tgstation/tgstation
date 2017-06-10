@@ -1,3 +1,6 @@
+
+#define DUALWIELD_PENALTY_EXTRA_MULTIPLIER 1.4
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -62,8 +65,8 @@
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
 	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
+	var/zoom_out_amt = 0
 	var/datum/action/toggle_scope_zoom/azoom
-
 
 /obj/item/weapon/gun/Initialize()
 	. = ..()
@@ -214,6 +217,7 @@
 
 	var/sprd = 0
 	var/randomized_gun_spread = 0
+	var/rand_spr = rand()
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
 	var/randomized_bonus_spread = rand(0, bonus_spread)
@@ -228,9 +232,9 @@
 					break
 			if(chambered && chambered.BB)
 				if(randomspread)
-					sprd = round((rand() - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
+					sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 				else //Smart spread
-					sprd = round((i / burst_size - 0.5) * (randomized_gun_spread + randomized_bonus_spread))
+					sprd = round((((rand_spr/burst_size) * i) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
 
 				if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
@@ -249,7 +253,7 @@
 		firing_burst = 0
 	else
 		if(chambered)
-			sprd = round((pick(1,-1)) * (randomized_gun_spread + randomized_bonus_spread))
+			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
 				shoot_with_empty_chamber(user)
 				return
@@ -297,7 +301,9 @@
 		if(bayonet)
 			M.attackby(bayonet, user)
 			return
-	return ..()
+		else
+			return ..()
+	return
 
 /obj/item/weapon/gun/attack_obj(obj/O, mob/user)
 	if(user.a_intent == INTENT_HARM)
@@ -501,12 +507,14 @@
 			if(WEST)
 				_x = -zoom_amt
 
+		user.client.view = zoom_out_amt
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
+		user.client.view = world.view
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
-
+	return zoomed
 
 //Proc, so that gun accessories/scopes/etc. can easily add zooming.
 /obj/item/weapon/gun/proc/build_zooming()

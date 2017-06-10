@@ -16,7 +16,7 @@
 			if(search)
 				emoji = lowertext(copytext(text, pos+1, search))
 				if(emoji in emojis)
-					parsed += " <img class=icon src=\ref['icons/emoji.dmi'] iconstate='[emoji]'>"
+					parsed += bicon(icon('icons/emoji.dmi', emoji))
 					pos = search + 1
 				else
 					parsed += copytext(text, pos, search)

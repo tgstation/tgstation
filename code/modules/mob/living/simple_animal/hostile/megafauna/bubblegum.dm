@@ -381,17 +381,22 @@ Difficulty: Hard
 			break
 		max_amount--
 		var/obj/effect/decal/cleanable/blood/B = H
-		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(B.loc)
+		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(B.loc)
 	return max_amount
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter
 	name = "slaughterling"
 	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
+	icon_state = "bloodbrood"
+	icon_living = "bloodbrood"
+	icon_aggro = "bloodbrood"
+	attacktext = "pierces"
+	color = "#C80000"
 	density = 0
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0
