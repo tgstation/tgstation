@@ -99,9 +99,6 @@
 
 	return ..()
 
-/atom/proc/get_explosion_block()
-	return 0
-
 /atom/proc/handle_ricochet(obj/item/projectile/P)
 	return
 

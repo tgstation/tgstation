@@ -34,11 +34,6 @@
 	var/damage_deflection = 10
 	var/real_explosion_block	//ignore this, just use explosion_block
 
-/obj/machinery/door/get_explosion_block()
-	if(density)
-		return explosion_block
-	return 0
-
 /obj/machinery/door/New()
 	..()
 	if(density)

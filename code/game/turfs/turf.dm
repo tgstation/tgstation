@@ -61,13 +61,6 @@
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
-/turf/get_explosion_block()
-	. = 0
-	if(density)
-		. = explosion_block
-	for(var/atom/A in src)
-		. += A.get_explosion_block()
-
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
 	if(!changing_turf)

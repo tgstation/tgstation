@@ -32,14 +32,12 @@
 	var/datum/gang/gang
 	var/datum/mind/user_mind
 	var/area/territory
-	var/datum/mind/tagger_mind
 
 /obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0,  var/mob/user)
 	if(!type || !G)
 		qdel(src)
 	user_mind = user.mind
 	territory = get_area(src)
-	tagger_mind = user.mind
 	gang = G
 	var/newcolor = G.color_hex
 	icon_state = G.name
@@ -62,5 +60,5 @@
 		gang.territory -= territory.type
 		set_mind_owner(null)
 		gang.territory_new -= territory.type
-		gang.territory_lost[src] = tagger_mind
+		gang.territory_lost |= list(territory.type = territory.name)
 	return ..()

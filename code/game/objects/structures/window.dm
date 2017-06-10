@@ -26,11 +26,6 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/real_explosion_block	//ignore this, just use explosion_block
 
-/obj/structure/window/get_explosion_block()
-	if(reinf && fulltile)
-		return explosion_block
-	return 0
-
 /obj/structure/window/examine(mob/user)
 	..()
 	if(reinf)
