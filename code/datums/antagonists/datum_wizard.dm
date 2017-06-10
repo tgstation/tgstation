@@ -76,6 +76,7 @@
 	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
 	owner.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
+	SSticker.mode.update_wiz_icons_added(owner)
 	return
 
 /datum/antagonist/wizard/greet()
@@ -180,5 +181,5 @@
 		owner.objectives -= O
 	LAZYCLEARLIST(objectives_given)
 	owner.special_role = null
-	SSticker.mode.update_wiz_icons_removed(src)
+	SSticker.mode.update_wiz_icons_removed(owner)
 	..()

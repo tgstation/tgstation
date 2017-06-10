@@ -15,7 +15,6 @@
 	announce_text = "There is a space wizard attacking the station!\n\
 	<span class='danger'>Wizard</span>: Accomplish your objectives and cause mayhem on the station.\n\
 	<span class='notice'>Crew</span>: Eliminate the wizard before they can succeed!"
-	var/use_huds = 0
 	var/finished = 0
 
 	var/antag_datum = ANTAG_DATUM_WIZARD
@@ -36,8 +35,6 @@
 	for(var/datum/mind/wizard in wizards)
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		wizard.add_antag_datum(antag_datum)
-		if(use_huds)
-			update_wiz_icons_added(wizard)
 	return ..()
 
 /datum/game_mode/wizard/check_finished()
