@@ -92,9 +92,11 @@
 /obj/effect/temp_visual/dir_setting/ninja/phase
 	name = "ninja energy"
 	icon_state = "phasein"
+	duration = 2
 
 /obj/effect/temp_visual/dir_setting/ninja/phase/out
 	icon_state = "phaseout"
+	duration = 2
 
 /obj/effect/temp_visual/dir_setting/wraith
 	name = "blood"

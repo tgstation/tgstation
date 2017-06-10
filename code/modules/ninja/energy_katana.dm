@@ -1,9 +1,13 @@
 /obj/item/weapon/dash
-	name = "energy katana"
+	name = "abstract dash weapon"
 	var/max_charges = 3
 	var/current_charges = 3
 	var/charge_rate = 30 //In deciseconds
 	var/dash_toggled = FALSE
+
+	var/start_effect_type = /obj/effect/temp_visual/dir_setting/ninja/phase/out
+	var/end_effect_type = /obj/effect/temp_visual/dir_setting/ninja/phase
+	var/beam_icon = "blur"
 
 /obj/item/weapon/dash/proc/charge()
 	current_charges = Clamp(current_charges + 1, 0, max_charges)
@@ -13,9 +17,9 @@
 /obj/item/weapon/dash/attack_self(mob/user)
 	dash_toggled = !dash_toggled
 	if(dash_toggled)
-		to_chat(loc, "<span class='notice'>[src] is now in dash mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now in dash mode.</span>")
 	else
-		to_chat(loc, "<span class='notice'>You disable the dash function on [src].</span>")
+		to_chat(user, "<span class='notice'>You disable the dash function on [src].</span>")
 
 /obj/item/weapon/dash/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
@@ -26,7 +30,7 @@
 	if(!current_charges)
 		return
 
-	if(isliving(target))
+	if(isAdjacent(target))
 		return
 
 	if(target.density)
@@ -34,19 +38,14 @@
 
 	var/turf/T = get_turf(target)
 	if(target in view(user.client.view, get_turf(user)))
-		var/obj/spot1 = new /obj/effect/temp_visual/dir_setting/ninja/phase/out(get_turf(user), user.dir)
+		var/obj/spot1 = new start_effect_type(T, user.dir)
 		user.forceMove(T)
 		playsound(T, 'sound/magic/blink.ogg', 25, 1)
 		playsound(T, "sparks", 50, 1)
-		var/obj/spot2 = new /obj/effect/temp_visual/dir_setting/ninja/phase(get_turf(user), user.dir)
-		var/chain = spot1.Beam(spot2,"blur",time=15)
+		var/obj/spot2 = new end_effect_type(get_turf(user), user.dir)
+		var/chain = spot1.Beam(spot2, beam_icon,time=2)
 		current_charges--
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
-		sleep(2)
-		qdel(spot1)
-		qdel(spot2)
-		qdel(chain)
-
 
 /obj/item/weapon/dash/energy_katana
 	name = "energy katana"
@@ -68,14 +67,13 @@
 
 /obj/item/weapon/dash/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
-		..()
+		return ..()
 	else
-		if(proximity_flag)
-			if(isobj(target) || issilicon(target))
-				spark_system.start()
-				playsound(user, "sparks", 50, 1)
-				playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
-				target.emag_act(user)
+		if(proximity_flag && (isobj(target) || issilicon(target))
+			spark_system.start()
+			playsound(user, "sparks", 50, 1)
+			playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
+			target.emag_act(user)
 
 
 //If we hit the Ninja who owns this Katana, they catch it.
