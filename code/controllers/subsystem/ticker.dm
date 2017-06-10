@@ -579,7 +579,7 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 	//medals, placed far down so that people can actually see the commendations.
-	if(GLOB.commendations)
+	if(GLOB.commendations.len)
 		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
 		for (var/com in GLOB.commendations)
 			to_chat(world, com)
