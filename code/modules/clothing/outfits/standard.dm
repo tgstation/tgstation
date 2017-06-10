@@ -260,10 +260,14 @@
 	ears = /obj/item/device/radio/headset
 	head = /obj/item/clothing/head/wizard
 	r_pocket = /obj/item/weapon/teleportation_scroll
-	r_hand = /obj/item/weapon/spellbook
 	l_hand = /obj/item/weapon/staff
 	back = /obj/item/weapon/storage/backpack
 	backpack_contents = list(/obj/item/weapon/storage/box=1)
+
+	if(visualsOnly)
+		return
+	var/obj/item/weapon/spellbook/spellbook = new(H.loc)
+	H.put_in_hands(spellbook)
 
 /datum/outfit/wizard/red
 	name = "Red Wizard"

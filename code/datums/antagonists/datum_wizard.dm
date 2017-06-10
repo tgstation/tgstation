@@ -1,0 +1,162 @@
+/datum/antagonist/wizard
+	name = "Wizard"
+	var/special_role = "wizard"
+
+/datum/antagonist/apprentice
+	name = "Wizard Apprentice"
+	special_role = "apprentice"
+	var/school = "robeless"
+	var/mob/living/carbon/human/summoner = null
+
+/datum/antagonist/wizard/on_gain()
+	if(!ishuman(owner.current))
+		message_admins("This is a bug: error making [owner.current.real_name] a wizard!")
+		LAZYREMOVE(owner.antag_datums, src)
+		qdel(src)
+	SSticker.mode.wizards += owner
+	owner.special_role = special_role
+	name_wizard()
+	greet()
+	forge_wizard_objectives()
+	finalize_wizard()
+	return
+
+/datum/antagonist/wizard/proc/forge_wizard_objectives()
+	switch(rand(1,100))
+		if(1 to 30)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = owner
+			kill_objective.find_target()
+			add_objective(kill_objective)
+			
+			forge_escape_objective()
+
+		if(31 to 60)
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.find_target()
+			add_objective(steal_objective)
+			
+			forge_escape_objective()
+
+		if(61 to 85)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = owner
+			kill_objective.find_target()
+			add_objective(kill_objective)
+
+			var/datum/objective/steal/steal_objective = new
+			steal_objective.owner = owner
+			steal_objective.find_target()
+			add_objective(steal_objective)
+			
+			forge_escape_objective()
+
+		else if(!(locate(/datum/objective/hijack) in wizard.objectives))
+			var/datum/objective/hijack/hijack_objective = new
+			hijack_objective.owner = wizard
+			add_objective(hijack_objective)
+	return
+
+/datum/antagonist/wizard/forge_escape_objective()
+	if(!(locate(/datum/objective/escape) in owner.current.objectives))
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = owner
+		add_objective(escape_objective)
+
+/datum/antagonist/wizard/apply_innate_effects()
+	var/mob/living/carbon/human/H = owner.current
+	H.equipOutfit(/datum/outfit/wizard)
+	return
+
+/datum/antagonist/wizard/proc/finalize_wizard()
+	apply_innate_effects()
+	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
+	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
+	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
+	owner.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
+	return
+
+/datum/antagonist/wizard/greet()
+	to_chat(owner, "<span class='boldannounce'>You are the Space Wizard!</span>")
+	to_chat(owner, "<B>The Space Wizards Federation has given you the following tasks:</B>")
+	owner.current.announce_objectives()
+	return
+
+/datum/antagonist/wizard/proc/name_wizard()
+	var/newname = copytext(sanitize(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	if(!newname)
+		newname = "[pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)]"
+	owner.current.real_name = newname
+	owner.current.name = newname
+	owner.name = newname
+	if(owner.current.age < WIZARD_AGE_MIN)
+		owner.current.age = WIZARD_AGE_MIN
+	owner.current.dna.update_dna_identity()
+	return
+
+/datum/antagonist/wizard/apprentice/on_gain()
+	if(!ishuman(owner.current))
+		LAZYREMOVE(owner.antag_datums, src)
+		qdel(src)
+	SSticker.mode.apprentices += owner
+	owner.special_role = special_role
+	name_wizard()
+	greet()
+	forge_wizard_objectives()
+	finalize_wizard()
+	return
+
+/datum/antagonist/wizard/apprentice/apply_innate_effects()
+	var/mob/living/carbon/human/H = owner.current
+	var/outfit = pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb)
+	H.equipOutfit(outfit, TRUE)
+	return
+
+/datum/antagonist/wizard/apprentice/name_wizard()
+	var/newname = copytext(sanitize(input(M, "You are [summoner.real_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	if(!newname)
+		newname = "[pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)]"
+	owner.current.real_name = newname
+	owner.current.name = newname
+	owner.name = newname
+	owner.current.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
+	owner.current.dna.update_dna_identity()
+	return
+
+/datum/antagonist/wizard/apprentice/forge_wizard_objectives()
+	if(summoner)
+		var/datum/objective/protect/new_objective = new /datum/objective/protect
+		new_objective.owner = owner
+		new_objective.target = summoner.mind
+		new_objective.explanation_text = "Protect [summoner.real_name], the wizard."
+		add_objective(new_objective)
+	else
+		var/datum/objective/escape/escape_objective = new
+		escape_objective.owner = owner
+		add_objective(escape_objective)
+	return
+
+/datum/antagonist/wizard/apprentice/greet()
+	if(summoner)
+		to_chat(owner, "<B>You are [wizard_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</B>")
+	else
+		to_chat(owner, "<B>You are an apprentice of the Wizard Federation! You are bound by magic contract to serve the Federation for the rest of your immortal life.</B>")
+	switch(school)
+		if("destruction")
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned powerful, destructive spells. You are able to cast magic missile and fireball.</B>")
+		if("bluespace")
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.</B>")
+		if("healing")
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
+			owner.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned livesaving survival spells. You are able to cast charge and forcewall.</B>")
+		else
+			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned stealthy, robeless spells. You are able to cast knock and mindswap.</B>")

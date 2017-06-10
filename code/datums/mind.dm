@@ -201,10 +201,9 @@
 
 /datum/mind/proc/remove_wizard()
 	if(src in SSticker.mode.wizards)
-		SSticker.mode.wizards -= src
 		current.spellremove(current)
-	special_role = null
-	remove_antag_equip()
+		src.remove_antag_datum(ANTAG_DATUM_WIZARD)
+	SSticker.mode.update_wiz_icons_removed(src)
 
 /datum/mind/proc/remove_cultist()
 	if(src in SSticker.mode.cult)
@@ -1498,20 +1497,12 @@
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in SSticker.mode.wizards))
-		SSticker.mode.wizards += src
-		special_role = "Wizard"
-		assigned_role = "Wizard"
+		wizard.add_antag_datum(antag_datum)
 		if(!GLOB.wizardstart.len)
 			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)
-
-		SSticker.mode.equip_wizard(current)
-		SSticker.mode.name_wizard(current)
-		SSticker.mode.forge_wizard_objectives(src)
-		SSticker.mode.greet_wizard(src)
-
 
 /datum/mind/proc/make_Cultist()
 	if(!(src in SSticker.mode.cult))

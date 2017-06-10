@@ -75,60 +75,15 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/wizard_name = "the wizard"
+	var/datum/antagonist/wizard/apprentice/antag_datum = new()
 	if(usr)
 		wizard_name = usr.real_name
-	to_chat(M, "<B>You are [wizard_name]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.")
-	switch(type)
-		if("destruction")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned powerful, destructive spells. You are able to cast magic missile and fireball.")
-		if("bluespace")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
-		if("healing")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
-			M.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing(M))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
-		if("robeless")
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-			M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
-			to_chat(M, "<B>Your service has not gone unrewarded, however. Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
-
-	equip_antag(M)
-	var/wizard_name_first = pick(GLOB.wizard_first)
-	var/wizard_name_second = pick(GLOB.wizard_second)
-	var/randomname = "[wizard_name_first] [wizard_name_second]"
-	if(usr)
-		var/datum/objective/protect/new_objective = new /datum/objective/protect
-		new_objective.owner = M.mind
-		new_objective.target = usr.mind
-		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
-		M.mind.objectives += new_objective
-	SSticker.mode.apprentices += M.mind
-	M.mind.special_role = "apprentice"
+		antag_datum.summoner = usr
+	antag_datum.school = type
+	M.add_antag_datum(antag_datum)
 	SSticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
-	var/newname = copytext(sanitize(input(M, "You are [wizard_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
-	if (!newname)
-		newname = randomname
-	M.mind.name = newname
-	M.real_name = newname
-	M.name = newname
-	M.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
-	M.dna.update_dna_identity()
 
-/obj/item/weapon/antag_spawner/contract/equip_antag(mob/target)
-	target.equip_to_slot_or_del(new /obj/item/device/radio/headset(target), slot_ears)
-	target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(target), slot_w_uniform)
-	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(target), slot_shoes)
-	target.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(target), slot_wear_suit)
-	target.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(target), slot_head)
-	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
-	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
-	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
 ///////////BORGS AND OPERATIVES
 
 
