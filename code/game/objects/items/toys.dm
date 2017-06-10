@@ -1040,8 +1040,10 @@
 	src.throw_at(target, throw_range, throw_speed)
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom)
-	if(!..())
+	if((ishuman(hit_atom)))
+		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
+		M.apply_damage(15, STAMINA)
 		qdel(src)
 
 /*
