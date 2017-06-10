@@ -227,12 +227,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"
 
-				if (istype(cartridge, /obj/item/weapon/cartridge/syndicate))
-					dat += "<b>[cartridge:shock_charges] detonation charges left.</b><HR>"
-				if (istype(cartridge, /obj/item/weapon/cartridge/clown))
-					dat += "<b>[cartridge:honk_charges] viral files left.</b><HR>"
-				if (istype(cartridge, /obj/item/weapon/cartridge/mime))
-					dat += "<b>[cartridge:mime_charges] viral files left.</b><HR>"
+				if(cartridge)
+					dat += cartridge.message_header()
 
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
 
@@ -244,12 +240,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						if (P == src)
 							continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-						if (istype(cartridge, /obj/item/weapon/cartridge/syndicate) && P.detonate)
-							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
-						if (istype(cartridge, /obj/item/weapon/cartridge/clown))
-							dat += " (<a href='byond://?src=\ref[src];choice=Send Honk;target=\ref[P]'><img src=pda_honk.png>*Send Virus*</a>)"
-						if (istype(cartridge, /obj/item/weapon/cartridge/mime))
-							dat += " (<a href='byond://?src=\ref[src];choice=Send Silence;target=\ref[P]'>*Send Virus*</a>)"
+						if(cartridge)
+							dat += cartridge.message_special(P)
 						dat += "</li>"
 						count++
 				dat += "</ul>"
@@ -424,16 +416,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 				tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
-				if(in_range(src, U) && loc == U)
-					if(t)
-						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
-							hidden_uplink.interact(U)
-							to_chat(U, "The PDA softly beeps.")
-							U << browse(null, "window=pda")
-							src.mode = 0
-						else
-							t = copytext(sanitize(t), 1, 20)
-							ttone = t
+				if(in_range(src, U) && loc == U && t)
+					if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+						hidden_uplink.interact(U)
+						to_chat(U, "The PDA softly beeps.")
+						U << browse(null, "window=pda")
+						src.mode = 0
+					else
+						t = copytext(sanitize(t), 1, 20)
+						ttone = t
 				else
 					U << browse(null, "window=pda")
 					return
@@ -444,30 +435,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("MessageAll")
 				src.send_to_all(U)
 
-			if("Send Honk")//Honk virus
-				if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
-					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
-					if(!isnull(P))
-						if (!P.toff && cartridge:honk_charges > 0)
-							cartridge:honk_charges--
-							U.show_message("<span class='notice'>Virus sent!</span>", 1)
-							P.honkamt = (rand(15,20))
-					else
-						to_chat(U, "PDA not found.")
-				else
-					U << browse(null, "window=pda")
-					return
-			if("Send Silence")//Silent virus
-				if(istype(cartridge, /obj/item/weapon/cartridge/mime))
-					var/obj/item/device/pda/P = locate(href_list["target"])
-					if(!isnull(P))
-						if (!P.toff && cartridge:mime_charges > 0)
-							cartridge:mime_charges--
-							U.show_message("<span class='notice'>Virus sent!</span>", 1)
-							P.silent = 1
-							P.ttone = "silence"
-					else
-						to_chat(U, "PDA not found.")
+			if("cart")
+				if(cartridge)
+					cartridge.special(U, href_list)
 				else
 					U << browse(null, "window=pda")
 					return
@@ -482,38 +452,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 								M.open()
 							else
 								M.close()
-
-
-			if("Detonate")//Detonate PDA
-				if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
-					var/obj/item/device/pda/P = locate(href_list["target"])
-					if(!isnull(P))
-						if (!P.toff && cartridge:shock_charges > 0)
-							cartridge:shock_charges--
-
-							var/difficulty = 0
-
-							if(P.cartridge)
-								difficulty += P.cartridge.access_medical
-								difficulty += P.cartridge.access_security
-								difficulty += P.cartridge.access_engine
-								difficulty += P.cartridge.access_clown
-								difficulty += P.cartridge.access_janitor
-								difficulty += P.cartridge.access_manifest * 2
-							else
-								difficulty += 2
-
-							if(prob(difficulty * 15) || (P.hidden_uplink))
-								U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
-							else
-								U.show_message("<span class='notice'>Success!</span>", 1)
-								P.explode()
-					else
-						to_chat(U, "PDA not found.")
-				else
-					U.unset_machine()
-					U << browse(null, "window=pda")
-					return
 
 //pAI FUNCTIONS===================================
 			if("pai")
@@ -896,7 +834,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+		if(istype(cartridge, /obj/item/weapon/cartridge/virus/syndicate))
 			explosion(T, -1, 1, 3, 4)
 		else
 			explosion(T, -1, -1, 2, 3)
@@ -1002,4 +940,3 @@ GLOBAL_LIST_EMPTY(PDAs)
 	for(var/obj/item/device/pda/P in GLOB.PDAs)
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
-	return .
