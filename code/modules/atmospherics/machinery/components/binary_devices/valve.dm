@@ -6,8 +6,9 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	icon_state = "mvalve_map"
 	name = "manual valve"
 	desc = "A pipe valve"
-
+	
 	can_unwrench = 1
+	can_be_overridden = 0
 
 	var/frequency = 0
 	var/id = null
@@ -60,6 +61,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	desc = "A digitally controlled valve."
 	icon_state = "dvalve_map"
 	valve_type = "d"
+	can_be_overridden = 1
 
 /obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
