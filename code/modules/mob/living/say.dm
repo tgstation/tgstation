@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
-	var/in_critical = InCritical()
+	var/in_critical = ((health < HEALTH_THRESHOLD_CRIT) ? TRUE : FALSE)
 
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
