@@ -21,8 +21,8 @@
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
 
-/datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+/datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
+	return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, dominator)) && can_see(user, gang, dominator)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
 	return TRUE

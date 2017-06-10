@@ -197,10 +197,6 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 ////////////////////////////////////////////////////////////////////
 /datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
-	for(var/obj/O in gangster_mind.current.contents)
-		if(istype(O, /obj/item/device/gangtool/soldier))
-			qdel(O)
-
 	if(!gang)
 		return 0
 
