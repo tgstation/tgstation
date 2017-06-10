@@ -757,6 +757,7 @@
 #include "code\game\objects\items\devices\PDA\PDA.dm"
 #include "code\game\objects\items\devices\PDA\PDA_types.dm"
 #include "code\game\objects\items\devices\PDA\radio.dm"
+#include "code\game\objects\items\devices\PDA\virus_cart.dm"
 #include "code\game\objects\items\devices\radio\beacon.dm"
 #include "code\game\objects\items\devices\radio\electropack.dm"
 #include "code\game\objects\items\devices\radio\encryptionkey.dm"
