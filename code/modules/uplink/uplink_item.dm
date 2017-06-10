@@ -856,7 +856,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
-	desc = "An upgraded, elite version of the syndicate hardsuit. It features fire shielding, and also \
+	desc = "An upgraded, elite version of the syndicate hardsuit. It features fireproofing, and also \
 			provides the user with superior armor and mobility compared to the standard syndicate hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
