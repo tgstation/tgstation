@@ -1748,7 +1748,7 @@
 "aHF" = (/obj/structure/disposalpipe/segment,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plating,/area/maintenance/department/crew_quarters/bar)
 "aHG" = (/turf/open/floor/plasteel/black,/area/chapel/main)
 "aHH" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel/black,/area/chapel/main)
-"aHI" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/computer/pod/old/chapel,/turf/open/floor/plasteel/black,/area/chapel/main)
+"aHI" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/computer/pod/old/chapel{density = 0},/turf/open/floor/plasteel/black,/area/chapel/main)
 "aHJ" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/shuttle/arrival)
 "aHK" = (/obj/structure/chair,/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
 "aHL" = (/obj/structure/chair,/obj/machinery/light/small{dir = 4},/turf/open/floor/mineral/titanium/blue,/area/shuttle/arrival)
