@@ -69,7 +69,7 @@
 	if(dash_toggled)
 		return ..()
 	else
-		if(proximity_flag && (isobj(target) || issilicon(target))
+		if(proximity_flag && (isobj(target) || issilicon(target)))
 			spark_system.start()
 			playsound(user, "sparks", 50, 1)
 			playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
