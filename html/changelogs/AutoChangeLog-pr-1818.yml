@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Cloning dismembered heads and brains now respects husking and other clone preventing disabilities."

@@ -1,7 +1,0 @@
-author: "Tacolizard and Cyberboss, idea by RandomMarine"
-delete-after: True
-changes: 
-  - rscadd: "You can now add a commendation message when pinning a medal on someone."
-  - rscadd: "Medal commendations will be displayed when the round ends."
-  - tweak: "Refactored the outfit datum to allow accessories as part of an outfit."
-  - bugfix: "The Captain spawns with the Medal of Captaincy again."
