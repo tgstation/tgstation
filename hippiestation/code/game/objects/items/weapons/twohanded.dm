@@ -50,7 +50,7 @@
 		playsound(user, 'sound/magic/Fireball.ogg', 100, 1)
 		F.fire()
 		charged = FALSE
-		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
+		addtimer(CALLBACK(src, .proc/recharge), charge_time)
 		return
 	if(wielded && proximity_flag)
 		var/atom/A = target
@@ -64,7 +64,7 @@
 				Wall.overlays = list()
 				Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
 				burnwall = FALSE
-				addtimer(CALLBACK(src, .proc/Rekindle), kindle_time)
+				addtimer(CALLBACK(src, .proc/rekindle), kindle_time)
 			else
 				to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
 			..()
@@ -73,13 +73,13 @@
 
 
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/Recharge()
+/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/recharge()
 	if(!charged)
 		charged = TRUE
 		playsound(src.loc, 'hippiestation/sound/effects/corpseexplosion.ogg', 100, 1)
 
 
-/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/Rekindle()
+/obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/rekindle()
 	if(!burnwall)
 		burnwall = TRUE
 		var/mob/M = get(src, /mob)
