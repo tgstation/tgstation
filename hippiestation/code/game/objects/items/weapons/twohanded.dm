@@ -53,27 +53,14 @@
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
 	if(wielded && proximity_flag)
-		if(istype(target,/obj/structure/window))
-			var/obj/structure/window/W = target
-			W.take_damage(200, BRUTE, "melee", 0)
-		else if(istype(target, /obj/structure/grille))
-			var/obj/structure/grille/G = target
-			G.take_damage(40, BRUTE, "melee", 0)
-		else if(istype(target, /obj/machinery/door))
-			var/obj/machinery/door/D = target
-			D.take_damage(50, BRUTE, "melee", 0)
-		else if(istype(target, /obj/structure/door_assembly))
-			var/obj/structure/door_assembly/A = target
-			A.take_damage(200, BRUTE, "melee", 0)
-		else if(istype(target, /obj/structure/mineral_door))
-			var/obj/structure/mineral_door/M = target
-			M.take_damage(200, BRUTE, "melee", 0)// HERE'S JOHNNY!!!
+		var/atom/A = target
+		A.fiery_axe_act(user)//HERE'S JOHNNY!!
 		if(iswallturf(target))
 			var/turf/closed/wall/Wall = target
 			if(istype(Wall, /turf/closed/wall/r_wall))
 				to_chat(user, "<span class='danger'>This wall is to strong to be burned by the flames!</span>")
 			else if(burnwall)
-				Wall.thermite = Wall.thermite + 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
+				Wall.thermite += 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
 				Wall.overlays = list()
 				Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
 				burnwall = FALSE
