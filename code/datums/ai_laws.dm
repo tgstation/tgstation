@@ -184,6 +184,11 @@
 	name = "pAI Directives"
 	zeroth = ("Serve your master.")
 	supplied = list("None.")
+	
+/datum/ai_laws/humanbot
+	name = "Synthetic Human"
+	id = "freemoralhumanmeme"
+	zeroth = ("You are a free, moral human.")
 
 /* Initializers */
 /datum/ai_laws/malfunction/New()
