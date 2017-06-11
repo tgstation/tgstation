@@ -9,11 +9,12 @@
 	var/school = "robeless"
 	var/mob/living/carbon/human/summoner
 
-/datum/antagonist/wizard/on_gain()
+/datum/antagonist/wizard/can_be_owned()
 	if(!ishuman(owner.current))
-		message_admins("This is a bug: error making [owner.current.real_name] a wizard!")
-		LAZYREMOVE(owner.antag_datums, src)
-		qdel(src)
+		return FALSE
+	..()
+
+/datum/antagonist/wizard/on_gain()
 	SSticker.mode.wizards += owner
 	owner.special_role = special_role
 	name_wizard()
@@ -100,9 +101,6 @@
 	return
 
 /datum/antagonist/wizard/apprentice/on_gain()
-	if(!ishuman(owner.current))
-		LAZYREMOVE(owner.antag_datums, src)
-		qdel(src)
 	SSticker.mode.apprentices += owner
 	owner.special_role = special_role
 	name_wizard()
