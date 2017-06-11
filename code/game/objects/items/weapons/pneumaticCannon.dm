@@ -37,6 +37,7 @@
 		return
 	for(var/obj/item/I in loadedItems)
 		to_chat(user, "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>")
+		CHECK_TICK
 	if(tank)
 		to_chat(user, "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>")
 
