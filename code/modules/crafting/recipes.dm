@@ -379,12 +379,6 @@
 	result = /obj/item/toy/sword
 	category = CAT_MISC
 
-/datum/crafting_recipe/blackcarpet
-	name = "Black Carpet"
-	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
-	result = /obj/item/stack/tile/carpet/black/fifty
-	category = CAT_MISC
-
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
 	reqs = 	list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
