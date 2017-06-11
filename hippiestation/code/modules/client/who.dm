@@ -47,9 +47,7 @@
 			Lines += "<b>Mentors:</b>"
 			for(var/X in mentorslist)
 				var/client/C = X
-				var/mentor = mentor_datums[C.ckey]
-				if(mentor)
-					Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)] ([round(C.avgping, 1)]ms)"
+				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)] ([round(C.avgping, 1)]ms)"
 
 	Lines += "<b>Players:</b>"
 	for(var/X in sortList(GLOB.clients))
