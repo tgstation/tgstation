@@ -91,6 +91,15 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
+/obj/item/drone_shell/dusty
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	drone_type = /mob/living/simple_animal/drone/derelict
+
+/mob/living/simple_animal/drone/derelict
+	name = "derelict drone"
+	default_hatmask = /obj/item/clothing/head/ushanka
+
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
 	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
@@ -190,11 +199,41 @@
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
 
-/obj/item/drone_shell/dusty
-	name = "derelict drone shell"
-	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	drone_type = /mob/living/simple_animal/drone/derelict
+/mob/living/simple_animal/drone/cogscarab/update_icons()
+	if(stat != DEAD)
+		if(incapacitated())
+			icon_state = "[visualAppearence]_flipped"
+		else
+			icon_state = visualAppearence
+	else
+		icon_state = "[visualAppearence]_dead"
 
-/mob/living/simple_animal/drone/derelict
-	name = "derelict drone"
-	default_hatmask = /obj/item/clothing/head/ushanka
+/mob/living/simple_animal/drone/cogscarab/Stun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/SetStunned(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/Weaken(amount, updating = 1, ignore_canweaken = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
+	. = ..()
+	if(.)
+		update_icons()
