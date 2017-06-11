@@ -114,13 +114,9 @@
 
 /obj/item/stack/tile/carpet/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/toy/crayon/black))
-		amount -= 1
+		use(1)
 		new/obj/item/stack/tile/carpet/black(user.loc)
-		if(amount == 0)
-			del src
-		else
-	else
-		return ..()
+		..()
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
