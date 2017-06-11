@@ -446,7 +446,7 @@
 				return
 			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 100, 1, -1)
 			H.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)

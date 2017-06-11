@@ -41,7 +41,7 @@
 	var/maximum_idle = 3
 
 	var/work_sound = 'sound/items/rped.ogg'
-	var/create_sound = 'sound/items/Deconstruct.ogg'
+	var/create_sound = 'sound/items/deconstruct.ogg'
 	var/recharge_sound = 'sound/machines/ping.ogg'
 
 	var/begin_create_message = "whirs to life!"
@@ -149,9 +149,9 @@
 	end_create_message = "materializes a strange shell, which drops to the \
 		ground."
 	recharging_text = "Its lights are slowly increasing in brightness."
-	work_sound = 'sound/effects/EMPulse.ogg'
+	work_sound = 'sound/effects/empulse.ogg'
 	create_sound = 'sound/effects/phasein.ogg'
-	break_sound = 'sound/effects/EMPulse.ogg'
+	break_sound = 'sound/effects/empulse.ogg'
 	break_message = "slowly falls dark, lights stuttering."
 
 /obj/machinery/droneDispenser/examine(mob/user)

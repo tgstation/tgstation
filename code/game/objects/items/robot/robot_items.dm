@@ -14,7 +14,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
-			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -29,7 +29,7 @@
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
@@ -310,7 +310,7 @@
 			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(iscyborg(user))

@@ -301,7 +301,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
-				
+
 				if(!T)
 					SSjob.SendToLateJoin(new_xeno, FALSE)
 
@@ -378,7 +378,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
 		traitordatum.equip()
 
-		
+
 	switch(new_character.mind.special_role)
 		if("Wizard")
 			new_character.loc = pick(GLOB.wizardstart)
@@ -483,7 +483,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
-			priority_announce(input, null, 'sound/AI/commandreport.ogg')
+			priority_announce(input, null, 'sound/ai/commandreport.ogg')
 			announce_command_report = FALSE
 		if("Cancel")
 			return
@@ -1055,7 +1055,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			continue
 
 		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
+		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, 1, -1)
 
 		wabbajack(M)
 

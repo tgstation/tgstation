@@ -74,11 +74,11 @@
 	var/obj/item/device/doorCharge/charge = null //If applied, causes an explosion upon opening the door
 	var/detonated = 0
 	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/AirlockClose.ogg'
-	var/doorDeni = 'sound/machines/DeniedBeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/BoltsUp.ogg'
-	var/boltDown = 'sound/machines/BoltsDown.ogg'
-	var/noPower = 'sound/machines/DoorClick.ogg'
+	var/doorClose = 'sound/machines/airlockclose.ogg'
+	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
+	var/boltUp = 'sound/machines/boltsup.ogg'
+	var/boltDown = 'sound/machines/boltsdown.ogg'
+	var/noPower = 'sound/machines/doorclick.ogg'
 
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -1132,7 +1132,7 @@
 								"<span class='italics'>You hear welding.</span>")
 				playsound(loc, W.usesound, 40, 1)
 				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					welded = !welded
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
@@ -1145,7 +1145,7 @@
 									"<span class='italics'>You hear welding.</span>")
 					playsound(loc, W.usesound, 40, 1)
 					if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 						obj_integrity = max_integrity
 						stat &= ~BROKEN
 						user.visible_message("[user.name] has repaired [src].", \

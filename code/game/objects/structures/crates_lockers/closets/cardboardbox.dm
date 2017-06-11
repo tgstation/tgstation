@@ -67,6 +67,6 @@
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weapon/weldingtool
 	open_sound = 'sound/machines/click.ogg'
-	cutting_sound = 'sound/items/Welder.ogg'
+	cutting_sound = 'sound/items/welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS

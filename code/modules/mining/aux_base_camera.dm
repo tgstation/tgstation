@@ -183,7 +183,7 @@
 
 	owner.changeNext_move(CLICK_CD_RANGE)
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
-	playsound(target_turf, 'sound/items/Deconstruct.ogg', 60, 1)
+	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, 1)
 
 /datum/action/innate/aux_base/switch_mode
 	name = "Switch Mode"

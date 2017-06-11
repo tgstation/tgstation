@@ -92,14 +92,14 @@
 	container_resist(user)
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			AM.forceMove(src)
