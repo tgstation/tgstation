@@ -251,7 +251,7 @@
 			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn()) return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 1

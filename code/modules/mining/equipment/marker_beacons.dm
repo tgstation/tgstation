@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		M.update_icon()
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			qdel(src) //otherwise delete us
 
 /obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
 		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
 			M.add(1)
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			qdel(src)
 	else
 		return ..()

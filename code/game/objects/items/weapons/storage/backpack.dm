@@ -36,8 +36,8 @@
 	max_w_class = WEIGHT_CLASS_GIGANTIC
 	max_combined_w_class = 35
 	resistance_flags = FIRE_PROOF
-	var/pshoom = 'sound/items/PSHOOM.ogg'
-	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
+	var/pshoom = 'sound/items/pshoom.ogg'
+	var/alt_sound = 'sound/items/pshoom_2.ogg'
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
 
 

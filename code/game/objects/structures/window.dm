@@ -73,7 +73,7 @@
 		debris += new /obj/item/weapon/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
-		
+
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
@@ -144,7 +144,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(loc, 'sound/effects/glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
@@ -157,7 +157,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
-	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(loc, 'sound/effects/glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -181,7 +181,7 @@
 				playsound(loc, WT.usesound, 40, 1)
 				if(do_after(user, 40*I.toolspeed, target = src))
 					obj_integrity = max_integrity
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					update_nearby_icons()
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -226,7 +226,7 @@
 			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
@@ -265,11 +265,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)

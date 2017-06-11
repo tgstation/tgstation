@@ -169,7 +169,7 @@
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
-			M << 'sound/magic/Charge.ogg'
+			M << 'sound/magic/charge.ogg'
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
@@ -226,7 +226,7 @@
 		//capping damage
 		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 		if(damage > damage_archived && prob(10))
-			playsound(get_turf(src), 'sound/effects/EMPulse.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
 	//calculating gas related values

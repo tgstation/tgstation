@@ -717,7 +717,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 60*I.toolspeed, target = src))
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
 				new /obj/item/stack/sheet/metal(loc, 5)
@@ -739,7 +739,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					update_icon()
@@ -754,9 +754,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 			else
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
@@ -769,7 +769,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/obj_break()
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		stat |= BROKEN
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		update_icon()
 
 
