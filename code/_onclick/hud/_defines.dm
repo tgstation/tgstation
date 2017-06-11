@@ -112,9 +112,6 @@
 #define ui_alienplasmadisplay "EAST,CENTER-2:15"
 #define ui_alien_queen_finder "EAST,CENTER-3:15"
 
-//reagent indicator for dwarves, lets them know how much alcohol they have in their system
-#define ui_alcohol_amount "EAST,CENTER-4:15"
-
 //constructs
 #define ui_construct_pull "EAST,CENTER-2:15"
 #define ui_construct_health "EAST,CENTER:15"  //same as borgs and humans

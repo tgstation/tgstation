@@ -156,5 +156,4 @@
 		if(HM != user)
 			to_chat(HM, "<span class = 'userdanger'>A new mandate has been issued! You take the time to read it and contemplate it:</span>")
 			to_chat(HM, "<span class = 'danger'>[sign_message]</span>")
-			HM.Stun(2)
 	sign_message = null
