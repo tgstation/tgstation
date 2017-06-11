@@ -631,7 +631,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/spirit/examine(mob/user)
 	..()
 	if(affecting)
-		to_chat(user, "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>")
+		to_chat(user, "<span class='cultitalic'>A translucent field encases [affecting] above the rune!</span>")
 
 /obj/effect/rune/spirit/can_invoke(mob/living/user)
 	if(rune_in_use)
