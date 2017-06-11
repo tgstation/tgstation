@@ -154,7 +154,7 @@
 	module_name = "Doomsday Device"
 	mod_pick_name = "nukestation"
 	description = "Activate a weapon that will disintegrate all organic life on the station after a 450 second delay. Can only be used while on the station, will fail if your core is moved off station or destroyed."
-	cost = 0 //130
+	cost = 130
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/nuke_station
 	unlock_text = "<span class='notice'>You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.</span>"
@@ -348,10 +348,12 @@
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:"), 900)
 
+
+//Destroy RCDs: Detonates all non-cyborg RCDs on the station.
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"
 	mod_pick_name = "rcd"
-	description = "Send a specialised pulse to detonate all hand-held and exosuit Rapid Cconstruction Devices on the station."
+	description = "Send a specialised pulse to detonate all hand-held and exosuit Rapid Construction Devices on the station."
 	cost = 25
 	one_purchase = 1
 	power_type = /datum/action/innate/ai/destroy_rcds
@@ -373,75 +375,74 @@
 	to_chat(owner, "<span class='warning'>RCD detonation pulse emitted.</span>")
 	owner_AI.malf_cooldown = world.time + 100
 
-/*/datum/AI_Module/large/mecha_domination
-	module_name = "Viral Mech Domination"
+
+//Unlock Mech Domination: Unlocks the ability to dominate mechs. Big shocker, right?
+/datum/AI_Module/large/mecha_domination
+	module_name = "Unlock Mech Domination"
 	mod_pick_name = "mechjack"
-	description = "Hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. Once uploaded to the mech, it is impossible to leave.\
+	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. Once uploaded to the mech, it is impossible to leave.\
 	Do not allow the mech to leave the station's vicinity or allow it to be destroyed."
 	cost = 30
-	one_time = 1
+	upgrade = TRUE
+	unlock_text = "<span class='notice'>Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b></span>"
+	unlock_sound = 'sound/mecha/nominal.ogg'
 
-	power_type = /mob/living/silicon/ai/proc/mech_takeover
+/datum/AI_Module/large/mecha_domination/upgrade(mob/living/silicon/ai/AI)
+	AI.can_dominate_mechs = TRUE //Yep. This is all it does. Honk!
 
-/mob/living/silicon/ai/proc/mech_takeover()
-	set name = "Compile Mecha Virus"
-	set category = "Malfunction"
-	set desc = "Target a mech by clicking it. Click the appropriate command when ready."
-	if(stat)
-		return
-	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
-	to_chat(src, "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>")
-	verbs -= /mob/living/silicon/ai/proc/mech_takeover
 
+//Thermal Sensor Override: Unlocks the ability to disable all fire alarms from doing their job.
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
 	mod_pick_name = "burnpigs"
 	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert. \
 	Anyone can check the fire alarm's interface and may be tipped off by its status."
-	one_time = 1
+	one_purchase = TRUE
 	cost = 25
+	power_type = /datum/action/innate/ai/break_fire_alarms
+	unlock_text = "<span class='notice'>You replace the thermal sensing capabilities of all fire alarms with a manual override, allowing you to turn them off at will.</span>"
+	unlock_sound = 'goon/sound/machinery/FireAlarm.ogg'
 
-	power_type = /mob/living/silicon/ai/proc/break_fire_alarms
+/datum/action/innate/ai/break_fire_alarms
+	name = "Override Thermal Sensors"
+	desc = "Disables the automatic temperature sensing on all fire alarms, making them effectively useless."
+	button_icon_state = "break_fire_alarms"
+	one_use = TRUE
 
-/mob/living/silicon/ai/proc/break_fire_alarms()
-	set name = "Override Thermal Sensors"
-	set category = "Malfunction"
-
-	if(!canUseTopic())
-		return
-
+/datum/action/innate/ai/break_fire_alarms/Activate()
 	for(var/obj/machinery/firealarm/F in GLOB.machines)
 		if(F.z != ZLEVEL_STATION)
 			continue
 		F.emagged = 1
-	to_chat(src, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
-	src.verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
+	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 
+
+//Air Alarm Safety Override: Unlocks the ability to enable flooding on all air alarms.
 /datum/AI_Module/large/break_air_alarms
 	module_name = "Air Alarm Safety Override"
 	mod_pick_name = "allow_flooding"
 	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use the environmental mode Flood, which disables scrubbers as well as pressure checks on vents. \
 	Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
-	one_time = 1
+	one_purchase = 1
 	cost = 50
+	power_type = /datum/action/innate/ai/break_air_alarms
+	unlock_text = "<span class='notice'>You remove the safety overrides on all air alarms, but you leave the confirm prompts open. You can hit 'Yes' at any time... you bastard.</span>"
+	unlock_sound = 'sound/effects/spray.ogg'
 
-	power_type = /mob/living/silicon/ai/proc/break_air_alarms
+/datum/action/innate/ai/break_air_alarms
+	name = "Override Air Alarm Safeties"
+	desc = "Enables the Flood setting on all air alarms."
+	button_icon_state = "break_air_alarms"
+	one_use = TRUE
 
-/mob/living/silicon/ai/proc/break_air_alarms()
-	set name = "Disable Air Alarm Safeties"
-	set category = "Malfunction"
-
-	if(!canUseTopic())
-		return
-
+/datum/action/innate/ai/break_air_alarms/Activate()
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		if(AA.z != ZLEVEL_STATION)
 			continue
 		AA.emagged = 1
-	to_chat(src, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
-	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
+	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
 
-/datum/AI_Module/small/overload_machine
+/*/datum/AI_Module/small/overload_machine
 	module_name = "Machine Overload"
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
