@@ -6,6 +6,7 @@
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer"
 
 	can_unwrench = 1
+	can_be_overridden = 0
 
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle

@@ -6,6 +6,7 @@ On top of that, now people can add component-speciic procs/vars if they want!
 /obj/machinery/atmospherics/components
 	var/welded = 0 //Used on pumps and scrubbers
 	var/showpipe = 0
+	can_be_overridden = 1
 
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs

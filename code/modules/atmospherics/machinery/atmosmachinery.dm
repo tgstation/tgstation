@@ -23,7 +23,8 @@ Pipelines + Other Objects -> Pipe network
 	var/can_unwrench = 0
 	var/initialize_directions = 0
 	var/pipe_color
-
+	var/can_be_overridden = 0
+	
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
 
@@ -330,3 +331,9 @@ Pipelines + Other Objects -> Pipe network
 	else
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
+		
+/obj/machinery/atmospherics/can_be_overridden()
+	if(can_be_overridden)
+		return 1
+	else
+		return 0

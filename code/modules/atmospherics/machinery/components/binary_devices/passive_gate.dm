@@ -13,6 +13,7 @@ Passive gate is similar to the regular pump except:
 	desc = "A one-way air valve that does not require power."
 
 	can_unwrench = 1
+	can_be_overridden = 0
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
