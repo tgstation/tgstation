@@ -18,11 +18,9 @@
 	icon_state = "fireaxe[wielded]"
 	return
 
-
 /obj/item/projectile/bullet/incendiary/shell/firehammer
 	name = "fiery gout"
 	damage = 0 //Its for burnin' not shootin'
-
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/attack(mob/living/carbon/M, mob/user)
 	if(!wielded)
@@ -69,15 +67,10 @@
 				to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
 			..()
 
-
-
-
-
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/recharge()
 	if(!charged)
 		charged = TRUE
 		playsound(src.loc, 'hippiestation/sound/effects/corpseexplosion.ogg', 100, 1)
-
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/rekindle()
 	if(!burnwall)
