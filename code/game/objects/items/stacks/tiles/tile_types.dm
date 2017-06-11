@@ -116,7 +116,7 @@
 	if (istype(O, /obj/item/toy/crayon/black))
 		use(1)
 		new/obj/item/stack/tile/carpet/black(user.loc)
-		..()
+	..()
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
