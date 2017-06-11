@@ -614,6 +614,6 @@ GLOBAL_PROTECT(VVpixelmovement)
 		return
 	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[var_new]")]")
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [var_new]")
-	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]]"
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)
