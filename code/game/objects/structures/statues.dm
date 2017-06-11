@@ -43,7 +43,7 @@
 				anchored = 1
 
 	else if(istype(W, /obj/item/weapon/gun/energy/plasmacutter))
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		user.visible_message("[user] is slicing apart the [name]...", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
 		if(do_after(user,40*W.toolspeed, target = src))
@@ -69,7 +69,7 @@
 		if(do_after(user, 40*W.toolspeed, target = src))
 			if(!src.loc)
 				return
-			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
 			deconstruct(TRUE)

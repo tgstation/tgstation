@@ -181,7 +181,7 @@
 		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
-	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
@@ -947,7 +947,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
+		playsound(src, 'sound/machines/alarm.ogg', 100, 0, surround = 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1270,7 +1270,7 @@
 	name = "Wizard action figure"
 	icon_state = "wizard"
 	toysay = "Ei Nath!"
-	toysound = 'sound/magic/Disintegrate.ogg'
+	toysound = 'sound/magic/disintegrate.ogg'
 
 /obj/item/toy/figure/rd
 	name = "Research Director action figure"

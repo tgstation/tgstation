@@ -36,7 +36,7 @@
 		return
 
 	to_chat(src, "<span class='notice'>Doomsday device armed.</span>")
-	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
 	set_security_level("delta")
 	nuking = TRUE
 	var/obj/machinery/doomsday_device/DOOM = new (src)
@@ -109,7 +109,7 @@
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION)
 	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/Alarm.ogg'
+		M << 'sound/machines/alarm.ogg'
 	sleep(100)
 	for(var/mob/living/L in GLOB.mob_list)
 		var/turf/T = get_turf(L)

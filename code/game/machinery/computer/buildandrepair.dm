@@ -42,7 +42,7 @@
 			if(istype(P, /obj/item/weapon/circuitboard/computer) && !circuit)
 				if(!user.drop_item())
 					return
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
@@ -78,7 +78,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
 					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 2)
@@ -106,7 +106,7 @@
 					to_chat(user, "<span class='warning'>You need two glass sheets to continue construction!</span>")
 					return
 				else
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start to put in the glass panel...</span>")
 					if(do_after(user, 20, target = src))
 						if(G.get_amount() >= 2 && state == 3)

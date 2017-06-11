@@ -428,10 +428,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(sacrificial)
 		if(iscyborg(sacrificial))
-			playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
+			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, 1)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
-			playsound(sacrificial, 'sound/magic/Disintegrate.ogg', 100, 1)
+			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
 			sacrificial.gib()
 	return TRUE
 
@@ -601,15 +601,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message("<span class='warning'>[src] glows blue for a moment before vanishing.</span>")
 	switch(invokers.len)
 		if(1 to 2)
-			playsound(E, 'sound/items/Welder2.ogg', 25, 1)
+			playsound(E, 'sound/items/welder2.ogg', 25, 1)
 			for(var/M in invokers)
 				to_chat(M, "<span class='warning'>You feel a minute vibration pass through you...</span>")
 		if(3 to 6)
-			playsound(E, 'sound/magic/Disable_Tech.ogg', 50, 1)
+			playsound(E, 'sound/magic/disable_tech.ogg', 50, 1)
 			for(var/M in invokers)
 				to_chat(M, "<span class='danger'>Your hair stands on end as a shockwave eminates from the rune!</span>")
 		if(7 to INFINITY)
-			playsound(E, 'sound/magic/Disable_Tech.ogg', 100, 1)
+			playsound(E, 'sound/magic/disable_tech.ogg', 100, 1)
 			for(var/M in invokers)
 				var/mob/living/L = M
 				to_chat(L, "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>")

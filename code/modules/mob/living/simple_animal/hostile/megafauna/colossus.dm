@@ -682,7 +682,7 @@ Difficulty: Very Hard
 	observer_desc = "This crystal \"refreshes\" items that it affects, rendering them as new."
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 50
-	activation_sound = 'sound/magic/TIMEPARADOX2.ogg'
+	activation_sound = 'sound/magic/timeparadox2.ogg'
 	var/list/banned_items_typecache = list(/obj/item/weapon/storage, /obj/item/weapon/implant, /obj/item/weapon/implanter, /obj/item/weapon/disk/nuclear, /obj/item/projectile, /obj/item/weapon/spellbook)
 
 /obj/machinery/anomalous_crystal/refresher/Initialize()

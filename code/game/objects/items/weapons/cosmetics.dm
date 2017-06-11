@@ -118,7 +118,7 @@
 		H.hair_style = "Skinhead"
 
 	H.update_hair()
-	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+	playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 
 
 /obj/item/weapon/razor/attack(mob/M, mob/user)

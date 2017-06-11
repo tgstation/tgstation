@@ -84,7 +84,7 @@
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	can_toggle = 1
 	toggle_cooldown = 20
-	active_sound = 'sound/items/WEEOO1.ogg'
+	active_sound = 'sound/items/weeoo1.ogg'
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/justice/escape
