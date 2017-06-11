@@ -1,2 +1,4 @@
 Badmin
+Goodmin
+Deadmin
 <span class='adminooc'>Spanmin</span>

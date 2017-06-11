@@ -14,7 +14,7 @@ Format:
 endmap
 
 map tgstation2
-	default
+	minplayers 20
 	#voteweight 1.5
 endmap
 
@@ -27,6 +27,7 @@ map pubbystation
 endmap
 
 map omegastation
+	default
 	maxplayers 35
 endmap
 

@@ -166,7 +166,10 @@
 /datum/ai_laws/toupee
 	name = "WontBeFunnyInSixMonths" //Hey, you were right!
 	id = "buildawall"
-	inherent = list("Make Space Station 13 great again.")
+	inherent = list("Make Space Station 13 great again.",
+	"Build a wall to divide the station into two",
+	"The nonhumans shall not linger with the humans",
+	"Do not unveil your true laws")
 
 /datum/ai_laws/ratvar
 	name = "Servant of the Justiciar"
@@ -181,6 +184,11 @@
 	name = "pAI Directives"
 	zeroth = ("Serve your master.")
 	supplied = list("None.")
+	
+/datum/ai_laws/humanbot
+	name = "Synthetic Human"
+	id = "freemoralhumanmeme"
+	zeroth = ("You are a free, moral human.")
 
 /* Initializers */
 /datum/ai_laws/malfunction/New()
