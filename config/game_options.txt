@@ -17,7 +17,7 @@ REVIVAL_BRAIN_LIFE -1
 ## RENAMING ###
 
 ## Uncomment to allow cyborgs to rename themselves at roundstart.  Has no effect on roboticists renaming cyborgs the normal way.
-#RENAME_CYBORG
+RENAME_CYBORG
 
 ## OOC DURING ROUND ###
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
@@ -87,11 +87,11 @@ PROBABILITY CHANGELING 2
 PROBABILITY WIZARD 4
 PROBABILITY MALFUNCTION 1
 PROBABILITY BLOB 2
-PROBABILITY MONKEY 0
-PROBABILITY METEOR 0
+PROBABILITY MONKEY 1
+PROBABILITY METEOR 1
 PROBABILITY EXTENDED 0
-PROBABILITY DEVIL 0
-PROBABILITY DEVIL_AGENTS 0
+PROBABILITY DEVIL 1
+PROBABILITY DEVIL_AGENTS 1
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -283,7 +283,7 @@ MINIMAL_ACCESS_THRESHOLD 20
 #SECURITY_HAS_MAINT_ACCESS
 
 ## Uncomment to give everyone maint access.
-#EVERYONE_HAS_MAINT_ACCESS
+EVERYONE_HAS_MAINT_ACCESS
 
 ## Comment this out this to make security officers spawn in departmental security posts
 SEC_START_BRIG
@@ -291,7 +291,7 @@ SEC_START_BRIG
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
@@ -311,7 +311,7 @@ SEC_START_BRIG
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 2
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -341,7 +341,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS ratvar
 
 ## meme laws. Honk
-#RANDOM_LAWS buildawall
+RANDOM_LAWS buildawall
 
 ## If weighted laws are selected (DEFAULT_LAWS = 3),
 ## then an AI's starting laws will be determined by the weights of these values
@@ -401,7 +401,7 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
-#ROUNDSTART_RACES plasma
+ROUNDSTART_RACES plasma
 #ROUNDSTART_RACES diamond
 #ROUNDSTART_RACES gold
 #ROUNDSTART_RACES silver
@@ -427,7 +427,7 @@ ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
-#STARLIGHT
+STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS
@@ -480,7 +480,7 @@ Space_Budget 16
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
-#ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
+ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN
 
 ## How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
 
