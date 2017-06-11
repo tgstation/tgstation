@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "cell-off"
+	icon_state = "pod-off"
 	density = 1
 	anchored = 1
 	obj_integrity = 350
@@ -25,6 +25,9 @@
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
+
+	var/mutable_appearance/occupant_overlay
+	var/bobbing = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -87,17 +90,46 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+	cut_overlays()
+
 	if(panel_open)
-		icon_state = "cell-o"
-	else if(state_open)
-		icon_state = "cell-open"
+		icon_state = "pod-o"
 	else if(on && is_operational())
-		if(occupant)
-			icon_state = "cell-occupied"
-		else
-			icon_state = "cell-on"
+		icon_state = "pod-on"
 	else
-		icon_state = "cell-off"
+		icon_state = "pod-off"
+
+	if(occupant)
+		occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
+		occupant_overlay.overlays = occupant.overlays
+		occupant_overlay.pixel_y = 22
+		add_overlay(occupant_overlay)
+		if(on && is_operational() && !bobbing)
+			var/bobup = TRUE
+			spawn(0) // Time to bob
+				bobbing = TRUE
+				while(on && is_operational() && occupant)
+					cut_overlays()
+					switch(occupant_overlay.pixel_y)
+						if(22)
+							bobup = TRUE
+						if(24)
+							bobup = FALSE
+					if(bobup)
+						occupant_overlay.pixel_y++
+					else
+						occupant_overlay.pixel_y--
+					add_overlay(occupant_overlay)
+					add_overlay("cover-on")
+					sleep(7)
+				bobbing = FALSE
+		else
+			add_overlay("cover")
+	else if(!state_open)
+		if(on && is_operational())
+			add_overlay("cover-on")
+		else
+			add_overlay("cover")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -175,6 +207,7 @@
 	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
+	update_icon()
 	if(!state_open && !panel_open)
 		on = FALSE
 		..()
