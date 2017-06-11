@@ -12,6 +12,9 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
 
+/proc/is_gangboss(var/mob/living/M)
+	return is_gangster(M) && (M.mind in M.mind.gang_datum.bosses)
+
 /proc/is_in_gang(var/mob/living/M, var/gang_type)
 	if(!is_gangster(M) || !gang_type)
 		return 0

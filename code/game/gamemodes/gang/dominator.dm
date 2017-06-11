@@ -297,9 +297,22 @@
 	..()
 
 /obj/machinery/dominator/attack_hand(mob/user)
-	if(operating || (stat & BROKEN))
-		examine(user)
+	if(!is_gangster(user))
+		return to_chat(user, "<span class='warning'>What.. is this? And what's all the mumble jumbo with .. bling?</span>")
+	if(!gang)
+		if(!is_gangboss(user))
+			return to_chat(user, "<span class='warning'>An unclaimed dominator. You should probably inform your boss about this instead of trying to make your own gang by activating it.</span>")
+		var/redpill = input(user, "Do you want to claim this dominator for your gang?", "Claim Dominator") as null|anything in list("Yes", "No")
+		if(redpill == "yes")
+			claim_dominator(user)
 		return
+	if(!is_in_gang(user, gang.name))
+		to_chat(user, "<span class='warning'>You seem to lack the credentials to interface with another gang's equipment..</span>")
+		return
+	if(is_gangboss(user))
+		interface_boss(user)
+	else
+		interface_soldier(user)
 
 /obj/machinery/dominator/proc/get_gang_item_interface(mob/user, boss = FALSE, soldier = FALSE)
 	. = list()
@@ -345,6 +358,18 @@
 					. += "<br><i>[extra]</i>"
 				. += "<br>"
 			. += "<br>"
+
+/obj/machinery/dominator/proc/claim_dominator(mob/user)
+	if(!is_gang_boss(user))
+		return
+	var/datum/gang/new_boss_in_town = user.mind.gang_datum
+	if(new_boss_in_town.current_dominator)
+		var/area/current_area = get_area(new_boss_in_town.current_dominator.loc)
+		to_chat(user, "<span class='boldwarning'>Your gang already has an established dominator at [current_area.map_name]!</span>")
+		return
+	////////////////////wip
+
+
 
 /obj/machinery/dominator/proc/get_gang_dominator_interface(takeover = TRUE, start = FALSE)
 	. = list()
