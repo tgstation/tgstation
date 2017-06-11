@@ -20,6 +20,7 @@
 	if(newPaper)
 		internalPaper = newPaper
 		flags = newPaper.flags
+		color = newPaper.color
 		newPaper.forceMove(src)
 	else
 		internalPaper = new /obj/item/weapon/paper(src)

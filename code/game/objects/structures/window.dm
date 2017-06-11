@@ -25,6 +25,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 100)
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/real_explosion_block	//ignore this, just use explosion_block
+	var/breaksound = "shatter"
+	var/hitsound = 'sound/effects/Glasshit.ogg'
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -73,7 +75,7 @@
 		debris += new /obj/item/weapon/shard(src)
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
-		
+
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
@@ -226,7 +228,7 @@
 			if(do_after(user, decon_speed*I.toolspeed, target = src, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
@@ -265,18 +267,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+				playsound(src, hitsound, 75, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, "shatter", 70, 1)
+		playsound(src, breaksound, 70, 1)
 		var/turf/T = loc
 		if(!(flags & NODECONSTRUCT))
 			for(var/i in debris)
@@ -429,7 +431,6 @@
 	name = "tinted window"
 	icon_state = "twindow"
 	opacity = 1
-
 /obj/structure/window/reinforced/tinted/frosted
 	name = "frosted window"
 	icon_state = "fwindow"
@@ -599,3 +600,93 @@
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
+
+/obj/structure/window/paperframe
+	name = "paper frame"
+	desc = "A fragile separator made of thin wood and paper."
+	icon = 'icons/obj/smooth_structures/paperframes.dmi'
+	icon_state = "frame"
+	dir = FULLTILE_WINDOW_DIR
+	opacity = TRUE
+	max_integrity = 15
+	obj_integrity = 15
+	fulltile = TRUE
+	flags = PREVENT_CLICK_UNDER
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)
+	glass_amount = 2
+	glass_type = /obj/item/stack/sheet/paperframes
+	heat_resistance = 233
+	decon_speed = 10
+	CanAtmosPass = ATMOS_PASS_YES
+	resistance_flags = FLAMMABLE
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	breaksound = 'sound/items/poster_ripped.ogg'
+	hitsound = 'sound/weapons/slashmiss.ogg'
+	var/static/mutable_appearance/torn
+	var/static/mutable_appearance/paper
+
+/obj/structure/window/paperframe/Initialize()
+	. = ..()
+	torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
+	paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
+	for(var/obj/item/I in debris)
+		debris -= I
+		qdel(I)
+
+	var/papers = rand(1,4)
+	debris += new /obj/item/stack/sheet/mineral/wood()
+	for(var/i in 1 to papers)
+		debris += new /obj/item/weapon/paper/natural()
+	update_icon()
+
+/obj/structure/window/paperframe/attack_hand(mob/user)
+	if(!can_be_reached(user))
+		return
+	add_fingerprint(user)
+	if(user.a_intent != INTENT_HARM)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.visible_message("[user] knocks on [src].")
+		playsound(loc, "pageturn", 50, 1)
+	else
+		take_damage(4,BRUTE,"melee", 0)
+		playsound(loc, hitsound, 50, 1)
+		if(!QDELETED(src))
+			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
+			update_icon()
+
+/obj/structure/window/paperframe/update_icon()
+	if(obj_integrity < max_integrity)
+		cut_overlay(paper)
+		add_overlay(torn)
+		set_opacity(0)
+	else
+		cut_overlay(torn)
+		add_overlay(paper)
+		set_opacity(1)
+	queue_smooth(src)
+
+
+/obj/structure/window/paperframe/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.isOn())
+			fire_act(W.is_hot())
+		return
+	else if(W.is_hot())
+		fire_act(W.is_hot())
+		return
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+	else
+		if(istype(W, /obj/item/weapon/paper) && obj_integrity < max_integrity)
+			user.visible_message("[user] starts to patch the holes in \the [src].")
+			if(do_after(user, 20, target = src))
+				obj_integrity = min(obj_integrity+4,max_integrity)
+				qdel(W)
+				user.visible_message("[user] patches some of the holes in \the [src].")
+				if(obj_integrity == max_integrity)
+					update_icon()
+				return
+	..()
+	update_icon()
