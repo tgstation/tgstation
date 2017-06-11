@@ -5,9 +5,24 @@
 #define TRAITOR_AGENT_ROLE "Syndicate External Affairs Agent"
 
 /datum/antagonist/traitor/internal_affairs
+	var/datum/mind/target 				//starting target
 	base_datum_custom = ANTAG_DATUM_IAA_CUSTOM
 	human_datum = ANTAG_DATUM_IAA_HUMAN
 	ai_datum = ANTAG_DATUM_IAA_AI
+
+/datum/antagonist/traitor/internal_affairs/create_antagonist_group(var/list/datum/mind/targets)
+	var/counter = 1
+	shuffle_inplace(targets)
+	for(var/M in targets)
+		var/datum/mind/traitor = M
+		var/datum/antagonist/traitor/internal_affairs/to_add = new type
+		if(counter == length(targets))
+			to_add.target = targets[1]
+		else
+			to_add.target = targets[counter + 1]
+		traitor.add_preexisting_antag_datum(to_add)
+		counter += 1
+		
 
 	
 
@@ -18,7 +33,8 @@
 	base_datum_custom = ANTAG_DATUM_IAA_CUSTOM
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
-	var/list/datum/mind/targets_stolen
+	var/list/datum/mind/targets_stolen = list()
+	var/datum/mind/target 				//starting target
 
 /datum/antagonist/traitor/AI/internal_affairs/custom
 	silent = TRUE
@@ -32,7 +48,8 @@
 	base_datum_custom = ANTAG_DATUM_IAA_CUSTOM
 	var/syndicate = FALSE
 	var/last_man_standing = FALSE
-	var/list/datum/mind/targets_stolen
+	var/list/datum/mind/targets_stolen = list()
+	var/datum/mind/target 				//starting target
 	
 /datum/antagonist/traitor/human/internal_affairs/custom
 	silent = TRUE
@@ -40,17 +57,22 @@
 	give_objectives = FALSE
 	should_equip = FALSE //Duplicating TCs is dangerous
 
+/datum/antagonist/traitor/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
+	..(other)
+	other.target = target
 /datum/antagonist/traitor/human/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
 	..(other)
 	other.syndicate = syndicate
 	other.last_man_standing = last_man_standing
 	other.targets_stolen = targets_stolen
+	other.target = target
 
 /datum/antagonist/traitor/AI/internal_affairs/transfer_important_variables(datum/antagonist/traitor/human/internal_affairs/other)
 	..(other)
 	other.syndicate = syndicate
 	other.last_man_standing = last_man_standing
 	other.targets_stolen = targets_stolen
+	other.target = target
 
 /datum/antagonist/traitor/human/internal_affairs/proc/give_pinpointer()
 	if(owner && owner.current)
@@ -258,20 +280,20 @@
 
 /datum/antagonist/traitor/proc/forge_iaa_objectives()
 	var/datum/antagonist/traitor/human/internal_affairs/this = src //Should only use this if IAA
-	if(SSticker.mode.target_list.len && SSticker.mode.target_list[owner]) // Is a double agent
-
+	if(this.target)
 		// Assassinate
-		var/datum/mind/target_mind = SSticker.mode.target_list[owner]
-		if(issilicon(target_mind.current))
+		if(issilicon(this.target.current))
 			var/datum/objective/destroy/internal/destroy_objective = new
 			destroy_objective.owner = owner
-			destroy_objective.target = target_mind
+			destroy_objective.target = this.target
 			destroy_objective.update_explanation_text()
+			this.targets_stolen += this.target
 		else
 			var/datum/objective/assassinate/internal/kill_objective = new
 			kill_objective.owner = owner
-			kill_objective.target = target_mind
+			kill_objective.target = this.target
 			kill_objective.update_explanation_text()
+			this.targets_stolen += this.target
 			add_objective(kill_objective)
 
 		//Optional traitor objective

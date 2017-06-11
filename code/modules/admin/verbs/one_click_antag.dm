@@ -38,8 +38,7 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
+	var/list/datum/mind/candidates = list()
 
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
@@ -49,19 +48,16 @@
 						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate"))
 							if(temp.age_check(applicant.client))
 								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
+									candidates += applicant.mind
 
 	if(candidates.len)
 		var/numTraitors = min(candidates.len, 3)
-
-		for(var/i = 0, i<numTraitors, i++)
-			H = pick(candidates)
-			H.mind.make_Traitor()
-			candidates.Remove(H)
-
+		shuffle_inplace(candidates)
+		var/list/datum/mind/final_cut = candidates.Copy(1,numTraitors + 1)
+		var/datum/antagonist/traitor/T = new
+		T.create_antagonist_group(final_cut)
+		
 		return 1
-
-
 	return 0
 
 
