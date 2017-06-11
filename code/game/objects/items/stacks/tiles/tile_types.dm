@@ -112,8 +112,11 @@
 	icon_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
 
-/obj/item/stack/tile/carpet/black/fifty
-	amount = 50
+/obj/item/stack/tile/carpet/attackby(obj/item/O, mob/user, params)
+	if (istype(O, /obj/item/toy/crayon/black))
+		use(1)
+		new/obj/item/stack/tile/carpet/black(user.loc)
+	..()
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
