@@ -46934,9 +46934,10 @@
 /area/tcommsat/server)
 "bZo" = (
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8";
+	pixel_y = 0
 	},
 /turf/open/floor/circuit{
 	name = "Mainframe Base";
@@ -46969,6 +46970,10 @@
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
@@ -47346,9 +47351,6 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/port/aft)
 "cag" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit{
 	name = "Mainframe Base";
@@ -47406,13 +47408,9 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -66160,6 +66158,28 @@
 	},
 /turf/closed/wall,
 /area/security/courtroom)
+"cSE" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
+"cSF" = (
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 
 (1,1,1) = {"
 aaa
@@ -91258,7 +91278,7 @@ bXA
 bYB
 bYz
 cai
-bYz
+cSF
 ccg
 cdd
 cea
@@ -92028,7 +92048,7 @@ bWE
 bXB
 bYC
 bZo
-caj
+bWB
 bWB
 cch
 cde
@@ -92284,8 +92304,8 @@ bVI
 bWG
 bXD
 bYz
-bYz
-cam
+cSE
+bWB
 bYz
 bYz
 cdf
