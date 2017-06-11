@@ -5,7 +5,7 @@
 # SERVERSQLNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+STATIONNAME OBA Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
@@ -171,7 +171,7 @@ CHECK_RANDOMIZER
 # RULESURL http://www.tgstation13.org/wiki/Rules
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+GITHUBURL https://github.com/OBA-code/tgstation/
 
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
@@ -230,19 +230,19 @@ TICKLAG 0.5
 ##Note: all population caps can be used with each other if desired.
 
 ## Uncomment for 'soft' population caps, players will be warned while joining if the living crew exceeds the listed number.
-#SOFT_POPCAP 100
+#SOFT_POPCAP 20
 
 ## Message for soft cap
 SOFT_POPCAP_MESSAGE Be warned that the server is currently serving a high number of users, consider using alternative game servers.
 
 ## Uncomment for 'hard' population caps, players will not be allowed to spawn if the living crew exceeds the listed number, though they may still observe or wait for the living crew to decrease in size.
-#HARD_POPCAP 150
+HARD_POPCAP 40
 
 ## Message for hard cap
 HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You cannot currently join. You may wait for the number of living crew to decline, observe, or find alternative servers.
 
 ## Uncomment for 'extreme' population caps, players will not be allowed to join the server if living crew exceeds the listed number.
-#EXTREME_POPCAP 200
+EXTREME_POPCAP 60
 
 ## Message for extreme cap
 EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, find alternative servers.
@@ -311,7 +311,7 @@ ALLOW_MAP_VOTING 1
 ## These messages will be followed by one stating the clients current version and the required version for clarity.
 #CLIENT_WARN_VERSION 511
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
-CLIENT_ERROR_VERSION 511
+CLIENT_ERROR_VERSION 510
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 
 ## TOPIC RATE LIMITING
