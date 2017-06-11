@@ -242,9 +242,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	//send this msg to all admins
 
-	for(var/client/X in GLOB.admins)
+	for(var/C in GLOB.admins)
+		var/client/X = C
 		if(!check_rights_for(X, R_ADMIN))
-			return
+			continue
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X, ignorepref = TRUE)
