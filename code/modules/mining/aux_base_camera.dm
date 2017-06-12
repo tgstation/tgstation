@@ -123,7 +123,7 @@
 
 	eyeobj.invisibility = 0 //When the eye is in use, make it visible to players so they know when someone is building.
 
-/obj/machinery/computer/camera_advanced/base_construction/EjectUser()
+/obj/machinery/computer/camera_advanced/base_construction/remove_eye_control(mob/living/user)
 	..()
 	eyeobj.invisibility = INVISIBILITY_MAXIMUM //Hide the eye when not in use.
 

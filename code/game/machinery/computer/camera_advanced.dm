@@ -28,19 +28,18 @@
 		jump_action.Grant(user)
 		actions += jump_action
 
-/obj/machinery/computer/camera_advanced/proc/EjectUser()
-	if(!current_user)
+/obj/machinery/computer/camera_advanced/proc/remove_eye_control(mob/living/user)
+	if(!user)
 		return
 	for(var/V in actions)
 		var/datum/action/A = V
-		A.Remove(current_user)
-	if(current_user.client)
-		current_user.reset_perspective(null)
+		A.Remove(user)
+	if(user.client)
+		user.reset_perspective(null)
 		eyeobj.RemoveImages()
 	eyeobj.eye_user = null
-	current_user.remote_control = null
+	user.remote_control = null
 
-	var/mob/user = current_user
 	current_user = null
 	user.unset_machine()
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
@@ -58,7 +57,7 @@
 
 /obj/machinery/computer/camera_advanced/on_unset_machine(mob/M)
 	if(M == current_user)
-		EjectUser()
+		remove_eye_control(M)
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
@@ -181,7 +180,7 @@
 	var/mob/living/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
-	console.EjectUser()
+	console.remove_eye_control(target)
 
 /datum/action/innate/camera_jump
 	name = "Jump To Camera"
