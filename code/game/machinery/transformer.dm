@@ -16,8 +16,8 @@
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
-	
-/obj/machinery/transformer/New()
+
+/obj/machinery/transformer/Initialize()
 	// On us
 	..()
 	new /obj/machinery/conveyor/auto(loc, WEST)
