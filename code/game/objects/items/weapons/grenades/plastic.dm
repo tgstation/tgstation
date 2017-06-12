@@ -60,9 +60,9 @@
 	if(location)
 		if(directional && target && target.density)
 			var/turf/T = get_step(location, aim_dir)
-			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
+			explosion(src, boom_sizes[1], boom_sizes[2], boom_sizes[3], target_turf = get_step(T, aim_dir))
 		else
-			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
+			explosion(src, boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		location.ex_act(2, target)
 	if(istype(target, /mob))
 		var/mob/M = target
@@ -141,7 +141,7 @@
 			else if(user.mind.gang_datum)
 				message_say = "[uppertext(user.mind.gang_datum.name)] RULES!"
 	user.say(message_say)
-	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
+	explosion(src,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 
@@ -262,7 +262,7 @@
 		location = get_turf(src)
 	if(location)
 		location.ex_act(2, target)
-		explosion(location,0,0,3)
+		explosion(src,0,0,3)
 	qdel(src)
 
 /obj/item/weapon/grenade/plastic/c4/attack(mob/M, mob/user, def_zone)

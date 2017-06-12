@@ -172,7 +172,7 @@
 		if(on)
 			if(electricity_level > 11)
 				if(prob(electricity_level))
-					explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
+					explosion(src, 0, 1, 2, 3) // ooo dat shit EXPLODES son
 					spawn(2)
 						qdel(src)
 		*/

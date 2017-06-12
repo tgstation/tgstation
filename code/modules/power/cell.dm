@@ -108,7 +108,6 @@
 
 
 /obj/item/weapon/stock_parts/cell/proc/explode()
-	var/turf/T = get_turf(src.loc)
 /*
  * 1000-cell	explosion(T, -1, 0, 1, 1)
  * 2500-cell	explosion(T, -1, 0, 1, 1)
@@ -126,7 +125,7 @@
 		corrupt()
 		return
 	//explosion(T, 0, 1, 2, 2)
-	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	explosion(src, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 	qdel(src)
 
 /obj/item/weapon/stock_parts/cell/proc/corrupt()

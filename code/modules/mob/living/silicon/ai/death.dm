@@ -23,7 +23,7 @@
 
 	if(explosive)
 		spawn(10)
-			explosion(src.loc, 3, 6, 12, 15)
+			explosion(src, 3, 6, 12, 15)
 
 	for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
 		if(src.key)

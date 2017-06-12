@@ -30,3 +30,12 @@
 	if(!S.crit_fail)
 		return FALSE
 	return TRUE
+
+/datum/export/fusion_cell
+	cost = 500
+	unit_name = "fusion cell"
+	export_types = list(/obj/item/fusion_cell)
+
+/datum/export/fusion_cell/get_cost(obj/O)
+	var/obj/item/fusion_cell/F = O
+	return ..() * F.rating

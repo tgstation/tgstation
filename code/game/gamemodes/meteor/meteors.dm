@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(src, 0, 1, 2, 3, 0)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(src, 1, 2, 3, 4, 0)
 
 //Flaming meteor
 /obj/effect/meteor/flaming
@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0, 0, 5)
+	explosion(src, 1, 2, 3, 4, 0, 0, 5)
 
 //Radiation meteor
 /obj/effect/meteor/irradiated
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src.loc, 0, 0, 4, 3, 0)
+	explosion(src, 0, 0, 4, 3, 0)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	radiation_pulse(get_turf(src), 2, 5, 50, 1)
 
@@ -332,12 +332,12 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
-	explosion(src.loc, 5, 10, 15, 20, 0)
+	explosion(src, 5, 10, 15, 20, 0)
 
 /obj/effect/meteor/tunguska/Bump()
 	..()
 	if(prob(20))
-		explosion(src.loc,2,4,6,8)
+		explosion(src,2,4,6,8)
 
 //////////////////////////
 //Spookoween meteors

@@ -835,9 +835,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(T)
 		T.hotspot_expose(700,125)
 		if(istype(cartridge, /obj/item/weapon/cartridge/virus/syndicate))
-			explosion(T, -1, 1, 3, 4)
+			explosion(src, -1, 1, 3, 4)
 		else
-			explosion(T, -1, -1, 2, 3)
+			explosion(src, -1, -1, 2, 3)
 	qdel(src)
 	return
 

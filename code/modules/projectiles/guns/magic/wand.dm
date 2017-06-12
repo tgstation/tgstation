@@ -166,5 +166,5 @@
 
 /obj/item/weapon/gun/magic/wand/fireball/zap_self(mob/living/user)
 	..()
-	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(user, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--

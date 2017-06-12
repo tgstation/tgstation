@@ -103,7 +103,7 @@ Bonus
 				M.emote("scream")
 				if(M.fire_stacks < 0)
 					M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-					explosion(M.loc,0,0,2)
+					explosion(M,0,0,2)
 					Alkali_fire_stage_5(M, A)
 	return
 

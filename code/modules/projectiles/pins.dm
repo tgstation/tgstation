@@ -62,7 +62,7 @@
 	if(selfdestruct)
 		user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
 		to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
-		explosion(get_turf(gun), -1, 0, 2, 3)
+		explosion(gun, -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
 
