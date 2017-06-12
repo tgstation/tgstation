@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - spellcheck: "Renamed AI liquid dispensers to foam dispensers."
+  - tweak: "Foam dispensers now activate immediately when clicked, rather than forcing the user to go through a menu. They also have better visual, message, and examine feedback on if they can be activated."

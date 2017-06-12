@@ -18,7 +18,7 @@
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
-	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
+	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
 		INVOKE_ASYNC(src, .proc/do_jaunt, target)
 
@@ -49,7 +49,7 @@
 	jaunt_steam(mobloc)
 	target.canmove = 0
 	holder.reappearing = 1
-	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
+	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
 	new jaunt_in_type(mobloc, target.dir)
 	sleep(jaunt_in_time)

@@ -163,7 +163,7 @@
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
 	sleep(16)
 	layer = ABOVE_ALL_MOB_LAYER

@@ -14,7 +14,7 @@
 	var/list/missing = user.get_missing_limbs()
 	missing -= "head" // headless changelings are funny
 	if(missing.len)
-		playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+		playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user]'s missing limbs \
 			reform, making a loud, grotesque sound!</span>",
 			"<span class='userdanger'>Your limbs regrow, making a \

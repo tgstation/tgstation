@@ -11,7 +11,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
 	break_message = null
-	break_sound = 'sound/magic/Teleport_app.ogg'
+	break_sound = 'sound/magic/teleport_app.ogg'
 	debris = list()
 	var/timerid
 
@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/structure/destructible/clockwork/taunting_trail/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src, 'sound/items/welder.ogg', 50, 1)
 
 /obj/structure/destructible/clockwork/taunting_trail/CanPass(atom/movable/mover, turf/target, height=0)
 	return TRUE

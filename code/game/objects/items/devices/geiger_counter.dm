@@ -125,7 +125,7 @@
 		if(!do_after(user, 40*I.toolspeed, target = user))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
-		playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+		playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 		emagged = 0
 		radiation_count = 0
 		update_icon()

@@ -865,15 +865,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
-	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate hardsuit."
+	desc = "An upgraded, elite version of the syndicate hardsuit. It features fireproofing, and also \
+			provides the user with superior armor and mobility compared to the standard syndicate hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear)
 	exclude_modes = list()
 
 /datum/uplink_item/suits/hardsuit/shielded
-	name = "Shielded Hardsuit"
-	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	name = "Shielded Syndicate Hardsuit"
+	desc = "An upgraded version of the standard syndicate hardsuit. It features a built-in energy shielding system. \
+			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear)

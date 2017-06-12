@@ -1,0 +1,4 @@
+author: "Nanotrasen Robotics Department"
+delete-after: True
+changes: 
+  - rscadd: "To aid in general-purpose cleaning and maintaining of station faculties, all janitor cyborgs are now outfitted with a screwdriver, crowbar, and floor tile synthesizer."

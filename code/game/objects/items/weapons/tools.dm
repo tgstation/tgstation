@@ -24,7 +24,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	usesound = 'sound/items/Ratchet.ogg'
+	usesound = 'sound/items/ratchet.ogg'
 	materials = list(MAT_METAL=150)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -53,7 +53,7 @@
 	desc = "A polarized wrench. It causes anything placed between the jaws to turn."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wrench"
-	usesound = 'sound/effects/EMPulse.ogg'
+	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 	origin_tech = "materials=5;engineering=5;abductor=3"
 
@@ -138,7 +138,7 @@
 	materials = list(MAT_METAL=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	usesound = 'sound/items/Screwdriver.ogg'
+	usesound = 'sound/items/screwdriver.ogg'
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
@@ -178,7 +178,7 @@
 	desc = "An ultrasonic screwdriver."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "screwdriver"
-	usesound = 'sound/items/PSHOOM.ogg'
+	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 
 /obj/item/weapon/screwdriver/power
@@ -231,8 +231,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=80)
 	attack_verb = list("pinched", "nipped")
-	hitsound = 'sound/items/Wirecutter.ogg'
-	usesound = 'sound/items/Wirecutter.ogg'
+	hitsound = 'sound/items/wirecutter.ogg'
+	usesound = 'sound/items/wirecutter.ogg'
 	origin_tech = "materials=1;engineering=1"
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -323,9 +323,9 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit"
-	usesound = 'sound/items/Welder.ogg'
-	var/acti_sound = 'sound/items/WelderActivate.ogg'
-	var/deac_sound = 'sound/items/WelderDeactivate.ogg'
+	usesound = 'sound/items/welder.ogg'
+	var/acti_sound = 'sound/items/welderactivate.ogg'
+	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -657,7 +657,7 @@
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
-	usesound = 'sound/items/Crowbar.ogg'
+	usesound = 'sound/items/crowbar.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 5

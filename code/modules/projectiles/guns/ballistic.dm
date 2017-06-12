@@ -78,7 +78,7 @@
 				suppressed = A
 				S.oldsound = fire_sound
 				S.initial_w_class = w_class
-				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
+				fire_sound = 'sound/weapons/gunshot_silenced.ogg'
 				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
 				update_icon()
 				return
