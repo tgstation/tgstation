@@ -156,8 +156,6 @@ SUBSYSTEM_DEF(blackbox)
 	if(sealed)
 		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
-	if(sealed)
-		return
 	FV.set_details(details)
 
 /datum/controller/subsystem/blackbox/proc/add_details(variable,details)
