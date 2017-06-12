@@ -422,7 +422,7 @@
 	safety = TRUE
 	update_icon()
 	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/Alarm.ogg'
+		M << 'sound/machines/alarm.ogg'
 	if(SSticker && SSticker.mode)
 		SSticker.mode.explosion_in_progress = 1
 	sleep(100)
@@ -527,7 +527,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
+	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
 	var/newcolor = "#00FF00"
 	while(world.time < end_time)

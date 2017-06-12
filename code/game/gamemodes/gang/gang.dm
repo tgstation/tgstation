@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		for(var/n in 1 to 3)
 			var/datum/mind/boss = pick(antag_candidates)
 			antag_candidates -= boss
-			G.bosses += boss
+			G.bosses[boss] = GANGSTER_BOSS_STARTING_INFLUENCE
 			boss.gang_datum = G
 			var/title
 			if(n == 1)
@@ -85,6 +85,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	sleep(rand(10,100))
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
+			G.bosses[boss_mind] = GANGSTER_BOSS_STARTING_INFLUENCE			//Force influence to be put on it.
 			G.add_gang_hud(boss_mind)
 			forge_gang_objectives(boss_mind)
 			greet_gang(boss_mind)
@@ -170,7 +171,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		return 0
 	if(check && gangster_mind.current.isloyal()) //Check to see if the potential gangster is implanted
 		return 1
-	G.gangsters += gangster_mind
+	G.gangsters[gangster_mind] = GANGSTER_SOLDIER_STARTING_INFLUENCE
 	gangster_mind.gang_datum = G
 	if(check)
 		if(iscarbon(gangster_mind.current))
@@ -209,14 +210,23 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		if(!G.is_deconvertible && !remove_bosses)
 			return 0
 		if(gangster_mind in G.gangsters)
+			G.reclaim_points(G.gangsters[gangster_mind])
 			G.gangsters -= gangster_mind
 			removed = 1
 		if(remove_bosses && (gangster_mind in G.bosses))
+			G.reclaim_points(G.bosses[gangster_mind])
 			G.bosses -= gangster_mind
 			removed = 1
+		if(G.tags_by_mind[gangster_mind] && islist(G.tags_by_mind[gangster_mind]))
+			var/list/tags_cache = G.tags_by_mind[gangster_mind]
+			for(var/v in tags_cache)
+				var/obj/effect/decal/cleanable/crayon/gang/c = v
+				c.set_mind_owner(null)
+			G.tags_by_mind -= gangster_mind
 
 	if(!removed)
 		return 0
+
 
 	gangster_mind.special_role = null
 	gangster_mind.gang_datum = null

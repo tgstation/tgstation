@@ -340,7 +340,7 @@
 					damage_clothes(dmg, BRUTE, "melee", temp.body_zone)
 				if("fire")
 					update |= temp.receive_damage(0, dmg)
-					playsound(src, 'sound/items/Welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', 50, 1)
 					damage_clothes(dmg, BURN, "melee", temp.body_zone)
 				if("tox")
 					M.mech_toxin_damage(src)
@@ -665,10 +665,10 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
+				to_chat(src, "\t <span class='[status == "OK" ? "notice" : "warning"]'>Your [LB.name] is [status].</span>")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

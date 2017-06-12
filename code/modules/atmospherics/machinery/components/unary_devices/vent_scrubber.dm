@@ -344,7 +344,7 @@
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
 					welded = 1

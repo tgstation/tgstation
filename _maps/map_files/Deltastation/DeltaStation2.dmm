@@ -17576,6 +17576,8 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
+/obj/item/toy/figure/clown,
+/obj/item/weapon/clipboard,
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "aKQ" = (
@@ -19702,10 +19704,7 @@
 /obj/item/weapon/reagent_containers/glass/bottle/facid{
 	pixel_x = 7
 	},
-/obj/item/weapon/storage/backpack/dufflebag/sec{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
-	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
-	name = "dufflebag";
+/obj/item/weapon/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -41696,7 +41695,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/head/det_hat{
+/obj/item/clothing/head/fedora/det_hat{
 	icon_state = "curator"
 	},
 /obj/item/clothing/suit/det_suit{
@@ -53333,7 +53332,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Fore Starboard";
 	dir = 8;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/floor/plating/airless,
@@ -55064,7 +55062,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Fore Port";
 	dir = 4;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/space,
@@ -61496,12 +61493,7 @@
 /turf/open/floor/plasteel/black,
 /area/library)
 "crP" = (
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
+/obj/structure/closet/wardrobe/curator,
 /turf/open/floor/plasteel/black,
 /area/library)
 "crQ" = (
@@ -63522,7 +63514,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Aft Port";
 	dir = 4;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/space,
@@ -65208,7 +65199,6 @@
 /obj/machinery/camera/emp_proof{
 	c_tag = "Containment - Aft Starboard";
 	dir = 8;
-	icon_state = "camera";
 	network = list("Singularity")
 	},
 /turf/open/floor/plating/airless,
@@ -90567,7 +90557,7 @@
 "dzi" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/storage/backpack/dufflebag/med,
+/obj/item/weapon/storage/backpack/duffelbag/med,
 /obj/item/device/flashlight/pen,
 /turf/open/floor/plating,
 /area/medical/morgue)
@@ -104910,12 +104900,10 @@
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "efc" = (
-/obj/structure/table/wood,
-/obj/item/weapon/clipboard,
-/obj/item/toy/figure/clown,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "efd" = (

@@ -8,8 +8,8 @@
 
 	var/include_space = 0 //whether it includes space tiles in possible teleport locations
 	var/include_dense = 0 //whether it includes dense tiles in possible teleport locations
-	var/sound1 = 'sound/weapons/ZapBang.ogg'
-	var/sound2 = 'sound/weapons/ZapBang.ogg'
+	var/sound1 = 'sound/weapons/zapbang.ogg'
+	var/sound2 = 'sound/weapons/zapbang.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets,mob/user = usr)
 	playsound(get_turf(user), sound1, 50,1)

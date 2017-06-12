@@ -52,7 +52,7 @@ Head of Security
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/sec
 	box = /obj/item/weapon/storage/box/security
 
 	implants = list(/obj/item/weapon/implant/mindshield)
@@ -101,7 +101,7 @@ Warden
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/sec
 	box = /obj/item/weapon/storage/box/security
 
 	implants = list(/obj/item/weapon/implant/mindshield)
@@ -137,7 +137,7 @@ Detective
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/det_hat
+	head = /obj/item/clothing/head/fedora/det_hat
 	l_pocket = /obj/item/toy/crayon/white
 	r_pocket = /obj/item/weapon/lighter
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/sec
 	box = /obj/item/weapon/storage/box/security
 
 	implants = list(/obj/item/weapon/implant/mindshield)

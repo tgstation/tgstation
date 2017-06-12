@@ -1,3 +1,19 @@
+8 June 2017, by Jordie0608
+
+Modified table 'death', adding column 'round_id', removing column 'gender' and replacing column 'coord' with the columns 'x_coord', 'y_coord' and 'z_coord'.
+
+START TRANSACTION;
+ALTER TABLE `feedback`.`death` DROP COLUMN `gender`, ADD COLUMN `x_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `coord`, ADD COLUMN `y_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `x_coord`, ADD COLUMN `z_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `y_coord`, ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`;
+SET SQL_SAFE_UPDATES = 0;
+UPDATE `feedback`.`death` SET `x_coord` = SUBSTRING_INDEX(`coord`, ',', 1), `y_coord` = SUBSTRING_INDEX(SUBSTRING_INDEX(`coord`, ',', 2), ',', -1), `z_coord` = SUBSTRING_INDEX(`coord`, ',', -1);
+SET SQL_SAFE_UPDATES = 1;
+ALTER TABLE `feedback`.`death` DROP COLUMN `coord`;
+COMMIT;
+
+Remember to add a prefix to the table name if you use them.
+
+---------------------------------------------------
+
 30 May 2017, by MrStonedOne
 
 Z levels changed, this query allows you to convert old ss13 death records:

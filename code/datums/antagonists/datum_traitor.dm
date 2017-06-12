@@ -5,7 +5,7 @@
 	var/ai_datum = ANTAG_DATUM_TRAITOR_AI
 	var/human_datum = ANTAG_DATUM_TRAITOR_HUMAN
 	var/special_role = "traitor"
-	var/employer = "The Syndicate" 
+	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	var/list/objectives_given = list()
@@ -14,7 +14,7 @@
 	other.silent = silent
 	other.employer = employer
 	other.special_role = special_role
-	other.objectives_given = objectives_given	
+	other.objectives_given = objectives_given
 
 /datum/antagonist/traitor/custom
 	ai_datum = ANTAG_DATUM_TRAITOR_AI_CUSTOM
@@ -35,7 +35,7 @@
 	silent = TRUE
 	should_give_codewords = FALSE
 	give_objectives = FALSE
-	
+
 
 /datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	if(istype(new_body,/mob/living/silicon/ai)==istype(old_body,/mob/living/silicon/ai))
@@ -49,8 +49,8 @@
 			transfer_important_variables(new_datum)
 			break
 		on_removal()
-		
-		
+
+
 
 /datum/antagonist/traitor/human/custom //used to give custom objectives
 	silent = TRUE
@@ -67,11 +67,11 @@
 		owner.add_antag_datum(ai_datum)
 	else owner.add_antag_datum(human_datum)
 	on_removal()
-	
+
 /datum/antagonist/traitor/on_gain()
 	if(should_specialise)
 		specialise()
-		return	
+		return
 	SSticker.mode.traitors+=owner
 	owner.special_role = special_role
 	if(give_objectives)
@@ -91,9 +91,9 @@
 		var/mob/living/carbon/human/traitor_mob = owner.current
 		if(traitor_mob&&istype(traitor_mob))
 			traitor_mob.dna.add_mutation(CLOWNMUT)
-			
-/datum/antagonist/traitor/on_removal() 
-	if(should_specialise) 
+
+/datum/antagonist/traitor/on_removal()
+	if(should_specialise)
 		return ..()//we never did any of this anyway
 	SSticker.mode.traitors -= owner
 	for(var/O in objectives_given)
@@ -247,13 +247,13 @@
 /datum/antagonist/traitor/AI/finalize_traitor()
 	..()
 	add_law_zero()
-	owner.current.playsound_local('sound/ambience/antag/Malf.ogg',100,0)
+	owner.current.playsound_local('sound/ambience/antag/malf.ogg',100,0)
 	owner.current.grant_language(/datum/language/codespeak)
 
 /datum/antagonist/traitor/human/finalize_traitor()
 	..()
 	if(should_equip) equip(silent)
-	owner.current.playsound_local('sound/ambience/antag/TatorAlert.ogg',100,0)
+	owner.current.playsound_local('sound/ambience/antag/tatoralert.ogg',100,0)
 
 /datum/antagonist/traitor/proc/give_codewords()
 	if(!owner.current)

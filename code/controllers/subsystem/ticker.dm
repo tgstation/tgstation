@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
-	world << sound('sound/AI/welcome.ogg')
+	world << sound('sound/ai/welcome.ogg')
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -575,44 +575,14 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	//Borers
-	var/borerwin = FALSE
-	if(GLOB.borers.len)
-		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.controlling) && B.stat != DEAD)
-				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
-				var/turf/location = get_turf(B)
-				if(location.z == ZLEVEL_CENTCOM && B.victim)
-					borertext += "escaped with host"
-				else
-					borertext += "failed"
-				borertext += ")"
-		to_chat(world, borertext)
-
-		var/total_borers = 0
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.victim) && B.stat != DEAD)
-				total_borers++
-		if(total_borers)
-			var/total_borer_hosts = 0
-			for(var/mob/living/carbon/C in GLOB.mob_list)
-				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
-				var/turf/location = get_turf(C)
-				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
-					total_borer_hosts++
-			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
-				borerwin = TRUE
-			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
-			if(borerwin)
-				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
-			else
-				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
+	mode.declare_station_goal_completion()
 
 	CHECK_TICK
-
-	mode.declare_station_goal_completion()
+	//medals, placed far down so that people can actually see the commendations.
+	if(GLOB.commendations.len)
+		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
+		for (var/com in GLOB.commendations)
+			to_chat(world, com)
 
 	CHECK_TICK
 

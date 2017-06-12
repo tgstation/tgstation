@@ -1847,10 +1847,7 @@
 	pixel_x = -28
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/sec{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
-	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
-	name = "dufflebag";
+/obj/item/weapon/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,
@@ -13412,9 +13409,7 @@
 "aza" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -15127,12 +15122,7 @@
 /obj/item/weapon/storage/secure/briefcase{
 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/suppressor,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/weapon/soap/nanotrasen)
 	},
-/obj/item/weapon/storage/backpack/dufflebag{
-	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/accessory/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
-	desc = "A large dufflebag for holding extra things. There is a NanoTrasen logo on the back.";
-	icon_state = "duffle-syndieammo";
-	item_state = "duffle-syndieammo"
-	},
+/obj/item/weapon/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/weapon/card/id/silver{
 	access = list(12);
 	assignment = "Reaper";
@@ -31818,9 +31808,7 @@
 "bhv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
@@ -34603,9 +34591,7 @@
 "bmy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -38250,9 +38236,7 @@
 "bsN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -38332,9 +38316,7 @@
 	req_access_txt = "19"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/machinery/button/door{
 	id = "council blast";
@@ -41603,17 +41585,17 @@
 	},
 /area/engine/atmos)
 "bzc" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Distro to Waste";
-	on = 0
-	},
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	on = 1
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Distro to Waste";
+	on = 0
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 1
@@ -42034,9 +42016,7 @@
 "bzT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/machinery/vending/coffee{
 	pixel_x = -3
@@ -42154,9 +42134,7 @@
 "bAg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
@@ -43638,9 +43616,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -43786,9 +43762,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -47555,9 +47529,7 @@
 "bKz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -47985,9 +47957,7 @@
 "bLs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -50365,12 +50335,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 30
 	},
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
+/obj/structure/closet/wardrobe/curator,
 /turf/open/floor/engine/cult,
 /area/library)
 "bPY" = (
@@ -50399,9 +50364,7 @@
 "bQa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -50530,9 +50493,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
@@ -50569,9 +50530,7 @@
 "bQq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -50640,9 +50599,7 @@
 "bQu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	on = 1
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -73652,7 +73609,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/weapon/storage/backpack/dufflebag/med,
+/obj/item/weapon/storage/backpack/duffelbag/med,
 /obj/item/device/flashlight/pen{
 	pixel_x = 4;
 	pixel_y = 3
@@ -82886,10 +82843,7 @@
 /area/shuttle/abandoned)
 "cYD" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/med{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgicaldrill,/obj/item/weapon/razor);
-	desc = "A large dufflebag for holding extra medical supplies - this one seems to be designed for holding surgical tools.";
-	name = "surgical dufflebag";
+/obj/item/weapon/storage/backpack/duffelbag/med/surgery{
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium,
@@ -87227,20 +87181,20 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
+/obj/item/clothing/mask/cigarette/pipe,
+/obj/item/clothing/mask/fakemoustache,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "dir" = (
-/obj/item/clothing/mask/fakemoustache,
-/obj/item/clothing/mask/cigarette/pipe,
 /obj/machinery/camera{
 	c_tag = "Theatre - Backstage";
 	dir = 1;
 	network = list("SS13")
 	},
-/obj/structure/table/wood,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "dis" = (

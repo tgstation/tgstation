@@ -79414,12 +79414,10 @@
 	},
 /area/crew_quarters/theatre)
 "cNT" = (
-/obj/structure/table,
-/obj/item/clothing/mask/facehugger/toy,
-/obj/item/clothing/mask/fakemoustache,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/redyellow{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -79435,6 +79433,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/clothing/mask/facehugger/toy,
+/obj/item/clothing/mask/fakemoustache,
 /turf/open/floor/plasteel/redyellow{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

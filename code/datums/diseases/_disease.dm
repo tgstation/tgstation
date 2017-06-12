@@ -115,12 +115,19 @@
 		else
 			return
 
-	if(isturf(source.loc))
+	var/turf/T = source.loc
+	if(istype(T))
 		for(var/mob/living/carbon/C in oview(spread_range, source))
-			if(isturf(C.loc))
-				if(AStar(source, C.loc,/turf/proc/Distance, spread_range, adjacent = (spread_flags & AIRBORNE) ? /turf/proc/reachableAdjacentAtmosTurfs : /turf/proc/reachableAdjacentTurfs))
-					C.ContractDisease(src)
-
+			var/turf/V = get_turf(C)
+			if(V)
+				while(TRUE)
+					if(V == T)
+						C.ContractDisease(src)
+						break
+					var/turf/Temp = get_step_towards(V, T)
+					if(!CANATMOSPASS(V, Temp))
+						break
+					V = Temp
 
 /datum/disease/process()
 	if(!holder)
