@@ -71,6 +71,8 @@
 			new /obj/item/weapon/bedsheet/cult(src)
 		if(28)
 			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
+		if(29)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/bonus_shot(src)
 
 //KA modkit design discs
 /obj/item/weapon/disk/design_disk/modkit_disc
@@ -98,6 +100,10 @@
 /obj/item/weapon/disk/design_disk/modkit_disc/bounty
 	name = "Death Syphon Mod Disk"
 	modkit_design = /datum/design/unique_modkit/bounty
+
+/obj/item/weapon/disk/design_disk/modkit_disc/bonus_shot
+	name = "Bonus Shot Mod Disk"
+	modkit_design = /datum/design/unique_modkit/bonus_shot
 
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
@@ -132,6 +138,13 @@
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
 	reagents_list = list("blood" = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
+
+/datum/design/unique_modkit/bonus_shot
+	name = "Kinetic Accelerator Bonus Shot Mod"
+	desc = "A device which causes kinetic accelerators to fire another shot for slightly increased total damage."
+	id = "bonusshotmod"
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 6000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/borg/upgrade/modkit/bonus_shot
 
 //Spooky special loot
 /obj/item/device/wisp_lantern
