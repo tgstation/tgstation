@@ -135,7 +135,7 @@
 			dat += "Use the button in the upper left corner to"
 			dat += "change the direction of built objects."
 			dat += "***********************************************************"
-		if(VAR_BUILDMODE
+		if(VAR_BUILDMODE)
 			dat += "***********************************************************"
 			dat += "Right Mouse Button on buildmode button = Select var(type) & value"
 			dat += "Left Mouse Button on turf/obj/mob      = Set var(type) & value"
