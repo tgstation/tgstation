@@ -215,7 +215,7 @@
 
 
 
-
+#define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/IrcPm(target,msg,sender)
 	var/client/C = GLOB.directory[target]
 
@@ -223,10 +223,9 @@
 	var/compliant_msg = trim(lowertext(msg))
 	var/irc_tagged = "[sender](IRC)"
 	var/list/splits = splittext(compliant_msg, " ")
-	var/usage_string = "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 	if(splits.len && splits[1] == "ticket")
 		if(splits.len < 2)
-			return usage_string
+			return IRC_AHELP_USAGE
 		switch(splits[2])
 			if("close")
 				if(ticket)
@@ -251,7 +250,7 @@
 				if(!isnull(fail))
 					fail = text2num(splits[3])
 				if(isnull(fail))
-					return "Error: No/Invalid ticket id specified. [usage_string]"
+					return "Error: No/Invalid ticket id specified. [IRC_AHELP_USAGE]"
 				var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(fail)
 				if(!AH)
 					return "Error: Ticket #[fail] not found"
@@ -273,7 +272,7 @@
 					. += "#[AH.id]"
 				return
 			else
-				return usage_string
+				return IRC_AHELP_USAGE
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
