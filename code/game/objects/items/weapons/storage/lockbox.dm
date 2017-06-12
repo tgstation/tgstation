@@ -148,15 +148,8 @@
 			icon_state += "+b"
 		if(contents && open)
 			for (var/i in 1 to contents.len)
-				var/medaltype = "medal"
 				var/obj/item/clothing/accessory/medal/M = contents[i]
-				if(istype(M, /obj/item/clothing/accessory/medal/gold))
-					medaltype += "-gold"
-				if(istype(M, /obj/item/clothing/accessory/medal/silver))
-					medaltype += "-silver"
-				if(istype(M, /obj/item/clothing/accessory/medal/plasma))
-					medaltype += "-plasma"
-				var/icon/medalicon = icon(initial(icon), medaltype)
+				var/icon/medalicon = icon(initial(icon), M.medaltype)
 				if(i > 1 && i <= 5)
 					medalicon.Shift(EAST, (i-1)*3)
 				else if(i > 5)
