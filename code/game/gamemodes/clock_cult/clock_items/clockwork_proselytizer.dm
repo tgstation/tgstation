@@ -158,4 +158,9 @@
 		return FALSE
 	if(repair_values["amount_to_heal"] <= 0) //nothing to heal!
 		return FALSE
+	if(!HAS_CLOCKWORK_WISDOM(1))
+		if(!silent)
+			to_chat(user, "<span class='warning'>There's no available wisdom to repair [target]! Wait for some to regenerate.</span>")
+		return
+	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], PROSELYTIZER_REPAIR_PER_TICK)
 	return TRUE

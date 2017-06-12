@@ -90,7 +90,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
 
-#define PROSELYTIZER_REPAIR_PER_TICK 4 //how much a proselytizer repairs each tick, and also how many deciseconds each tick is
+#define PROSELYTIZER_REPAIR_RATE 4 //time in deciseconds between each repair operation
+
+#define PROSELYTIZER_REPAIR_PER_TICK 10 //how much a proselytizer repairs each tick, and also how many deciseconds each tick is
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
 
