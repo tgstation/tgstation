@@ -236,7 +236,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
-			to_chat(owner, "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>")
+			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
 		return FALSE
 	return ..()
 
