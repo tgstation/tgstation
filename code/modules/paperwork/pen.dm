@@ -64,6 +64,17 @@
 	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
+/obj/item/weapon/pen/gold
+	name = "fountain pen"
+	desc = "It's an expensive golden fountain pen. The nib is quite sharp."
+	icon_state = "pen_gold"
+	force = 5
+	throwforce = 5
+	throw_speed = 4
+	colour = "crimson"
+	materials = list(MAT_GOLD = 750)
+	sharpness = IS_SHARP
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num

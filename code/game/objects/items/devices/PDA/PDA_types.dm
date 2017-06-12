@@ -116,6 +116,7 @@
 /obj/item/device/pda/captain
 	name = "captain PDA"
 	default_cartridge = /obj/item/weapon/cartridge/captain
+	inserted_item = /obj/item/weapon/pen/gold
 	icon_state = "pda-captain"
 	detonate = 0
 
