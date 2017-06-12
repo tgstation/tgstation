@@ -1,0 +1,4 @@
+author: "shizcalev"
+delete-after: True
+changes: 
+  - tweak: "\"Radiation immune species are now incompatible with the radiation based genetics DNA scanner/modifier.\""

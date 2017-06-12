@@ -96,18 +96,6 @@
 	access_security = 1
 	spam_enabled = 1
 
-/obj/item/weapon/cartridge/clown
-	name = "\improper Honkworks 5.0 cartridge"
-	icon_state = "cart-clown"
-	access_clown = 1
-	var/honk_charges = 5
-
-/obj/item/weapon/cartridge/mime
-	name = "\improper Gestur-O 1000 cartridge"
-	icon_state = "cart-mi"
-	access_mime = 1
-	var/mime_charges = 5
-
 /obj/item/weapon/cartridge/curator
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
@@ -231,13 +219,6 @@
 /obj/item/weapon/cartridge/captain/New()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
-
-/obj/item/weapon/cartridge/syndicate
-	name = "\improper Detomatix cartridge"
-	icon_state = "cart"
-	access_remote_door = 1
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
-	var/shock_charges = 4
 
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))
@@ -785,3 +766,14 @@ Code:
 			return
 
 	return menu
+
+//If the cartridge adds a special line to the top of the messaging app
+/obj/item/weapon/cartridge/proc/message_header()
+	return ""
+
+//If the cartridge adds something to each potetial messaging target
+/obj/item/weapon/cartridge/proc/message_special(obj/item/device/pda/target)
+	return ""
+
+//This is called for special abilities of cartridges
+/obj/item/weapon/cartridge/proc/special(mov/living/user, list/params)

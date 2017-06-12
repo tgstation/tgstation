@@ -42,7 +42,7 @@
 	name = "\improper disintegrating touch"
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
-	on_use_sound = 'sound/magic/Disintegrate.ogg'
+	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
 

@@ -11,7 +11,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/captainparade(src)
@@ -83,6 +83,7 @@
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
 	new /obj/item/clothing/under/rank/head_of_security/grey(src)
+	new /obj/item/weapon/storage/lockbox/secmedal(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

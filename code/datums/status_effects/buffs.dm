@@ -12,7 +12,7 @@
 
 /datum/status_effect/shadow_mend/on_apply()
 	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
-	playsound(owner, 'sound/magic/Teleport_app.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_app.ogg', 50, 1)
 	return ..()
 
 /datum/status_effect/shadow_mend/tick()
@@ -21,7 +21,7 @@
 
 /datum/status_effect/shadow_mend/on_remove()
 	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
-	playsound(owner, 'sound/magic/Teleport_diss.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, 1)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
 
 
@@ -37,7 +37,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/void_price/tick()
-	owner << sound('sound/magic/Summon_Karp.ogg', volume = 25)
+	owner << sound('sound/magic/summon_karp.ogg', volume = 25)
 	owner.adjustBruteLoss(3)
 
 
@@ -130,14 +130,14 @@
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
-	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, 1)
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	add_logs(owner, null, "lost Inath-neq's invulnerability")
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
-	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
 
 
 /datum/status_effect/cyborg_power_regen

@@ -186,12 +186,12 @@
 
 /mob/Moved(oldLoc, dir)
 	. = ..()
-	for(var/obj/O in contents|held_items)
+	for(var/obj/O in contents)
 		O.on_mob_move(dir, src, oldLoc)
 
 /mob/setDir(newDir)
 	. = ..()
-	for(var/obj/O in contents|held_items)
+	for(var/obj/O in contents)
 		O.on_mob_turn(newDir, src)
 
 ///Process_Grab()

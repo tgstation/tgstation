@@ -50,7 +50,7 @@
 	if(istype(core))
 		STOP_PROCESSING(SSobj, core)
 		icon_state = "core_container_sealed"
-		playsound(loc, 'sound/items/Deconstruct.ogg', 60, 1)
+		playsound(loc, 'sound/items/deconstruct.ogg', 60, 1)
 		if(ismob(loc))
 			to_chat(loc, "<span class='warning'>[src] is permanently sealed, [core]'s radiation is contained.</span>")
 

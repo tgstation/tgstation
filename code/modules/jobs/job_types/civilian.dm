@@ -34,16 +34,13 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,
-		/obj/item/weapon/pneumatic_cannon/pie = 1
 		)
 
 	implants = list(/obj/item/weapon/implant/sad_trombone)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/weapon/storage/box/hug/survival
 

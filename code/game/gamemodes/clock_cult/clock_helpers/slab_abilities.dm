@@ -133,7 +133,7 @@
 		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		L.visible_message("<span class='warning'>A blue light washes over [L], mending [L.p_their()] bruises and burns!</span>", \
 		"<span class='heavy_brass'>You feel Inath-neq's power healing your wounds, but a deep nausea overcomes you!</span>")
-		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
 		if(L.reagents && L.reagents.has_reagent("holywater"))
 			L.reagents.remove_reagent("holywater", 1000)

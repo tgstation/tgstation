@@ -394,7 +394,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
-			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return 0
 
 	switch (mode)
@@ -420,7 +420,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -432,7 +432,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(L.stunned || L.sleeping)
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 		L.Sleeping(60)
 		add_logs(user, L, "put to sleep")
 	else
@@ -608,7 +608,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)
@@ -704,7 +704,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return

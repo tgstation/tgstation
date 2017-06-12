@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "A self recharging, ranged mining tool that does increased damage in low pressure. Capable of holding up to six slots worth of mod kits."
+	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
@@ -145,7 +145,7 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg' // fine spelling there chap
+	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -256,7 +256,7 @@
 			if(!user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
-			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
 			KA.modkits += src
 		else
 			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")
@@ -334,28 +334,6 @@
 	..()
 	modifier = initial(modifier) //get our modifiers back
 	turf_aoe = initial(turf_aoe)
-	if(stats_stolen) //if we had our stats stolen, find the stealer and take them from it
-		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits)
-			if(AOE.stats_stolen)
-				continue
-			AOE.modifier -= modifier
-			AOE.turf_aoe -= turf_aoe
-	else //otherwise, reset the stolen stats and have it recalculate
-		var/obj/item/borg/upgrade/modkit/aoe/new_stealer
-		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits)
-			if(!new_stealer)
-				new_stealer = AOE //just make the first one a stealer
-			AOE.modifier = initial(AOE.modifier)
-			AOE.turf_aoe = initial(AOE.turf_aoe)
-			AOE.stats_stolen = FALSE
-		if(new_stealer) //if there's no stealer, then there's no other aoe modkits
-			for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits)
-				if(AOE != new_stealer)
-					new_stealer.modifier += AOE.modifier
-					AOE.modifier = 0
-					new_stealer.turf_aoe += AOE.turf_aoe
-					AOE.turf_aoe = FALSE
-					AOE.stats_stolen = TRUE
 	stats_stolen = FALSE
 
 /obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/item/projectile/kinetic/K)
@@ -418,7 +396,6 @@
 	name = "lifesteal crystal"
 	desc = "Causes kinetic accelerator shots to slightly heal the firer on striking a living target."
 	icon_state = "modkit_crystal"
-	denied_type = /obj/item/borg/upgrade/modkit/lifesteal
 	modifier = 2.5 //Not a very effective method of healing.
 	cost = 20
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
