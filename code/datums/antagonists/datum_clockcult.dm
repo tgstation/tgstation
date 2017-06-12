@@ -50,11 +50,14 @@
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
 		if(iscyborg(current) && !silent)
+			var/mob/living/silicon/robot/R = current
 			if(R.connected_ai && !is_servant_of_ratvar(R.connected_ai))
-				to_chat(current, "<span class='boldwarning'>You have been desynced from your master AI.</span>")
-			to_chat(current, "<span class='boldwarning'>In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
+				to_chat(R, "<span class='boldwarning'>You have been desynced from your master AI.<br>\
+				In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
+			else
+				to_chat(R, "<span class='boldwarning'>Your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
 		if(isAI(current))
-			to_chat(current, "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>")
+			to_chat(current, "<span class='boldwarning'>You are noew able to use your cameras to listen in on conversations, but can no longer speak in anything but Ratvarian.</span>")
 		to_chat(current, "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	else if(isbrain(current) || isclockmob(current))
 		to_chat(current, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
