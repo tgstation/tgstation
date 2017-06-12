@@ -175,17 +175,18 @@
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))
 		return
-	if(kinetic_gun)
-		var/list/mods = kinetic_gun.get_modkits()
-		for(var/obj/item/borg/upgrade/modkit/M in mods)
-			M.projectile_prehit(src, target, kinetic_gun)
-	var/datum/gas_mixture/environment = target_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure > 50)
-		name = "weakened [name]"
-		damage = damage * pressure_decrease
-		pressure_decrease_active = TRUE
 	. = ..()
+	if(.)
+		if(kinetic_gun)
+			var/list/mods = kinetic_gun.get_modkits()
+			for(var/obj/item/borg/upgrade/modkit/M in mods)
+				M.projectile_prehit(src, target, kinetic_gun)
+		var/datum/gas_mixture/environment = target_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure > 50)
+			name = "weakened [name]"
+			damage = damage * pressure_decrease
+			pressure_decrease_active = TRUE
 
 /obj/item/projectile/kinetic/on_range()
 	strike_thing()
@@ -360,7 +361,6 @@
 			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
 			to_chat(L, "<span class='userdanger'>You're struck by a [K.name]!</span>")
 
-
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
@@ -406,7 +406,7 @@
 	cost = 20
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
-/obj/item/borg/upgrade/modkit/lifesteal/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/lifesteal/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target) && isliving(K.firer))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
@@ -429,44 +429,6 @@
 			R.burst()
 			return
 		new /obj/effect/temp_visual/resonance(target_turf, K.firer, null, 30)
-
-/obj/item/borg/upgrade/modkit/bonus_shot
-	name = "bonus shot"
-	desc = "Causes kinetic accelerators to rapidly fire an additional shot for slightly increased total damage."
-	cost = 25
-	modifier = 1
-	var/shot_delay = 2 //small delay on additional shots
-	var/is_divider = TRUE
-	var/damage_bonus = 4 //it only gives a slight damage boost; the real bonus is in the fact that it fires multiple shots, which has synergy with certain other modkits.
-
-/obj/item/borg/upgrade/modkit/bonus_shot/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
-	. = ..()
-	if(.)
-		if(!KA.cell)
-			return FALSE
-		for(var/obj/item/borg/upgrade/modkit/bonus_shot/MUL in KA.modkits) //make sure only one of the bonus shot kits affects damage if somebody has multiple
-			if(MUL == src)
-				continue
-			MUL.is_divider = FALSE
-		var/charge_bonus = initial(KA.cell.maxcharge) * modifier //we need more charge to actually fire multiple shots
-		KA.cell.maxcharge += charge_bonus
-		if(KA.cell.charge) //KA is charged, add charge properly
-			KA.cell.charge += charge_bonus
-		KA.burst_size += modifier
-		KA.fire_delay = shot_delay
-
-/obj/item/borg/upgrade/modkit/bonus_shot/uninstall(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	..()
-	KA.cell.maxcharge -= initial(KA.cell.maxcharge) * modifier //remove the bonus charge
-	KA.cell.charge = min(KA.cell.maxcharge, KA.cell.charge)
-	KA.burst_size -= modifier
-	KA.fire_delay = initial(KA.fire_delay)
-	is_divider = TRUE
-
-/obj/item/borg/upgrade/modkit/bonus_shot/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	if(is_divider)
-		K.damage /= KA.burst_size
-		K.damage += damage_bonus
 
 /obj/item/borg/upgrade/modkit/bounty
 	name = "death syphon"
