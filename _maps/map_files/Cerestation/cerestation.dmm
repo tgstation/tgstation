@@ -47708,7 +47708,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/maintenance/asteroid/starboard)
 "bHK" = (
 /obj/structure/weightlifter,
@@ -55205,7 +55207,9 @@
 	on = 0
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/vault,
+/turf/open/floor/plasteel/vault{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
 /area/engine/atmos)
 "bVA" = (
 /obj/machinery/atmospherics/components/trinary/filter{
