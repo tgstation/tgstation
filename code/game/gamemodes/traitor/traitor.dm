@@ -123,7 +123,7 @@
 			if(uplink_true)
 				text += " (used [TC_uses] TC) [purchases]"
 				if(TC_uses==0 && traitorwin)
-					var/static/icon/badass = icon('icons/BadAss.dmi', "badass")
+					var/static/icon/badass = icon('icons/badass.dmi', "badass")
 					text += "<BIG>[bicon(badass)]</BIG>"
 
 			text += objectives

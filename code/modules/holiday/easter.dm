@@ -37,7 +37,7 @@
 /mob/living/simple_animal/chicken/rabbit
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
-	icon = 'icons/mob/Easter.dmi'
+	icon = 'icons/mob/easter.dmi'
 	icon_state = "rabbit_white"
 	icon_living = "rabbit_white"
 	icon_dead = "rabbit_white_dead"
@@ -67,7 +67,7 @@
 //Easter Baskets
 /obj/item/weapon/storage/bag/easterbasket
 	name = "Easter Basket"
-	icon = 'icons/mob/Easter.dmi'
+	icon = 'icons/mob/easter.dmi'
 	icon_state = "basket"
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,/obj/item/weapon/reagent_containers/food/snacks/boiledegg)
 
