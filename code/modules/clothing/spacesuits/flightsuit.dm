@@ -804,6 +804,7 @@
 	suit = null
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
+	var/change = FALSE
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
@@ -812,31 +813,37 @@
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 				part_manip = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
 				part_scan = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 				part_laser = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 				part_bin = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
 			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
 				part_cap = I
-	update_parts()
+				changed = TRUE
+	if(changed)
+		update_parts()
 	..()
 
 //MOB MOVEMENT STUFF----------------------------------------------------------------------------------------------------------------------------------------------
