@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(blackbox)
 
 	var/list/feedback = list()	//list of datum/feedback_variable
 
+	var/sealed = FALSE	//time to stop tracking stats?
+
 //poll population
 /datum/controller/subsystem/blackbox/fire()
 	if(!SSdbcore.Connect())
@@ -97,6 +99,8 @@ SUBSYSTEM_DEF(blackbox)
 
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
+	if(sealed)
+		return
 	switch(freq)
 		if(1459)
 			msg_common += blackbox_msg
@@ -131,26 +135,40 @@ SUBSYSTEM_DEF(blackbox)
 	return FV
 
 /datum/controller/subsystem/blackbox/proc/set_val(variable, value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.set_value(value)
 
 /datum/controller/subsystem/blackbox/proc/inc(variable, value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.inc(value)
 
 /datum/controller/subsystem/blackbox/proc/dec(variable,value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.dec(value)
 
 /datum/controller/subsystem/blackbox/proc/set_details(variable,details)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
+	if(sealed)
+		return
 	FV.set_details(details)
 
 /datum/controller/subsystem/blackbox/proc/add_details(variable,details)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.add_details(details)
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
+	if(sealed)
+		return
 	if(!SSdbcore.Connect())
 		return
 	if(!L || !L.key || !L.mind)
@@ -182,6 +200,15 @@ SUBSYSTEM_DEF(blackbox)
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina])")
 	query_report_death.Execute()
 
+/datum/controller/subsystem/blackbox/proc/Seal()
+	if(sealed)
+		return
+	if(IsAdminAdvancedProcCall())
+		var/msg = "[key_name(usr)] sealed the blackbox!"
+		message_admins(msg)
+		log_admin(msg)
+	log_game("Blackbox sealed")
+	sealed = TRUE
 
 //feedback variable datum, for storing all kinds of data
 /datum/feedback_variable
