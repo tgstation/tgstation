@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(blackbox)
 
 	feedback = SSblackbox.feedback
 
+	sealed = SSblackbox.sealed
+
 //no touchie
 /datum/controller/subsystem/blackbox/can_vv_get(var_name)
 	if(var_name == "feedback")
