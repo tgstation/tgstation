@@ -32,15 +32,16 @@
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
+	var/text = ""
 	if(!in_range(user, src))
-		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
+		text += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		to_chat(user, "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>")
+		text += "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>"
 		CHECK_TICK
 	if(tank)
-		to_chat(user, "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>")
-
+		text += "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>"
+	to_chat(user, text)
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
