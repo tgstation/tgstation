@@ -47708,9 +47708,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/asteroid/airless
-	},
+/turf/open/floor/plating,
 /area/maintenance/asteroid/starboard)
 "bHK" = (
 /obj/structure/weightlifter,
@@ -48459,7 +48457,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/cigarettes,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/maintenance/asteroid/starboard)
 "bJl" = (
 /obj/structure/disposalpipe/segment,
@@ -51101,7 +51099,7 @@
 	dir = 4
 	},
 /obj/structure/closet/firecloset/full,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/maintenance/asteroid/starboard)
 "bNS" = (
 /obj/structure/disposalpipe/junction{
@@ -55177,8 +55175,7 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/vault{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/engine/atmos)
 "bVy" = (
@@ -55194,9 +55191,8 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=500;TEMP=80";
-	temperature = 80
+	baseturf = /turf/open/floor/plating/asteroid/airless;
+	dir = 5
 	},
 /area/engine/atmos)
 "bVz" = (
@@ -55209,10 +55205,7 @@
 	on = 0
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "bVA" = (
 /obj/machinery/atmospherics/components/trinary/filter{
@@ -97448,6 +97441,10 @@
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/starboard)
+"dzb" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/maintenance/asteroid/starboard)
 
 (1,1,1) = {"
 aaa
@@ -156183,7 +156180,7 @@ bgF
 beH
 cPV
 bHI
-bJj
+dzb
 beH
 bLv
 bLv
