@@ -226,12 +226,10 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode/gang/post_setup()
 	set waitfor = FALSE
 	..()
-	var/list/bosses = list()
 	for(var/datum/gang/G in gangs)
 		for(var/datum/mind/boss_mind in G.bosses)
 			G.bosses[boss_mind] = GANGSTER_BOSS_STARTING_INFLUENCE			//Force influence to be put on it.
 			G.add_gang_hud(boss_mind)
-
 			forge_gang_objectives(boss_mind)
 			greet_gang(boss_mind)
 			G.add_gang_hud(boss_mind)

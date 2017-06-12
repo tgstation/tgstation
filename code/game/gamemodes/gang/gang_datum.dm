@@ -257,7 +257,7 @@
 	var/control = round((territory.len/GLOB.start_state.num_territories)*100, 1)
 	message += "Your gang now has <b>[control]% control</b> of the station.<BR>*---------*<BR>"
 	pay_territory_income_to_bosses()
-	pay_territory_income_to_soldiers(sbonus)
+	pay_territory_income_to_soldiers()
 	pay_all_clothing_bonuses()
 	announce_all_influence()
 
@@ -274,10 +274,10 @@
 	var/static/outer = outer_outfit
 	for(var/obj/item/C in gangbanger.contents)
 		if(C.type == inner_outfit)
-			. += 2
+			. += 1
 			continue
 		else if(C.type == outer_outfit)
-			. += 2
+			. += 1
 			continue
 		. += C.gang_contraband_value()
 	adjust_influence(gangsta, .)
@@ -286,9 +286,9 @@
 	else
 		announce_to_mind(gangsta, "<span class='warning'>Unfortunately, you have not gained any additional influence from your drab, old, boring clothing. Learn to dress like a gangsta, bro!</span>")	//Kek
 
-/datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier, sbonus = 0)
+/datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier)
 	. = 0
-	. = max(0,round(3 - gangsters[soldier]/10)) + (sbonus) + (get_soldier_territories(soldier)/2)
+	. = max(0,round((3 - gangsters[soldier]/10) + (get_soldier_territories(soldier)*0.5) + (LAZYLEN(territory)*0.3)))
 	adjust_influence(soldier, .)
 
 /datum/gang/proc/get_soldier_territories(datum/mind/soldier)
@@ -297,7 +297,7 @@
 	var/list/tags = tags_by_mind[soldier]
 	return tags.len
 
-/datum/gang/proc/pay_territory_income_to_soldiers(sbonus = 0)
+/datum/gang/proc/pay_territory_income_to_soldiers()
 	for(var/datum/mind/soldier in gangsters)
 		var/returned = pay_soldier_territory_income(soldier)
 		if(!returned)
@@ -312,10 +312,10 @@
 /datum/gang/proc/pay_territory_income_to_bosses()
 	. = 0
 	for(var/datum/mind/boss_mind in bosses)
-		var/inc = max(0,round(5 - bosses[boss_mind]/10)) + LAZYLEN(territory)
+		var/inc = max(0,round((5 - bosses[boss_mind]/10) + (LAZYLEN(territory)*0.6)))
 		. += inc
 		adjust_influence(boss_mind, inc)
-		announce_to_mind(boss_mind, "<span class='boldnotice'>Your influence has increased by [inc] from your gang holding [LAZYLEN(territory)] territories!</span>")
+		announce_to_mind(boss_mind, "<span class='notice'>Your influence has increased by [inc] from your gang holding [LAZYLEN(territory)] territories!</span>")
 
 /datum/gang/proc/get_influence(datum/mind/gangster_mind)
 	if(gangster_mind in gangsters)
@@ -334,7 +334,7 @@
 		to_chat(gangster_mind.current, message)
 
 /datum/gang/proc/announce_total_influence(datum/mind/gangster_mind)
-	announce_to_mind(gangster_mind, "<span class='boldnotice'>[name] Gang: You now have a total of [get_influence(gangster_mind)] influence!</span>")
+	announce_to_mind(gangster_mind, "<span class='boldnotice'>You now have a total of [get_influence(gangster_mind)] influence!</span>")
 	if(bosses_working == FALSE)
 		announce_to_mind(gangster_mind, "<span class='danger'><b>Your gang no longer has a functioning leader. Your gangtool has been updated with the option to claim leadership for yourself.</b></span>")
 	if(!gateways)
