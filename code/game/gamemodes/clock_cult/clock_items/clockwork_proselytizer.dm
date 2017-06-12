@@ -2,33 +2,21 @@
 /obj/item/clockwork/clockwork_proselytizer
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A dual-use construction tool that creates clockwork objects. It has a limited battery that only recharges when at the City of Cogs."
+	clockwork_desc = "A dual-use construction tool that creates clockwork objects. It uses wisdom and potential to function."
 	icon_state = "clockwork_proselytizer"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
 	flags = NOBLUDGEON
-	var/stored_power = 0 //Requires power to function
-	var/max_power = CLOCKCULT_POWER_UNIT * 10
-	var/uses_power = TRUE
-	var/metal_to_power = FALSE
 	var/repairing = null //what we're currently repairing, if anything
-	var/obj/effect/clockwork/sigil/transmission/recharging = null //the sigil we're charging from, if any
 	var/speed_multiplier = 1 //how fast this proselytizer works
-	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
-	var/charge_delay = 2 //how many proccess ticks remain before we can start to charge
 	var/mode = PROSELYTIZER_MODE_CONVERSION //The operating mode of the proselytizer
-
-/obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_power = POWER_WALL_MINUS_FLOOR+POWER_WALL_TOTAL
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
-	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires power to function."
-	metal_to_power = TRUE
+	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab."
 	item_state = "nothing"
 	w_class = WEIGHT_CLASS_TINY
 	speed_multiplier = 0.5
-	charge_rate = MIN_CLOCKCULT_POWER * 2
 	var/debug = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
@@ -38,93 +26,12 @@
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/debug
 	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Ratvarian variant."
-	uses_power = FALSE
 	debug = TRUE
-
-/obj/item/clockwork/clockwork_proselytizer/cyborg
-	name = "cyborg proselytizer"
-	clockwork_desc = "A cyborg's internal proselytizer. It is capable of using the cyborg's power in addition to stored power."
-	metal_to_power = TRUE
-
-/obj/item/clockwork/clockwork_proselytizer/cyborg/get_power() //returns power and cyborg's power
-	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-	var/borg_power = 0
-	var/current_charge = 0
-	if(istype(R) && R.cell)
-		current_charge = R.cell.charge
-		while(current_charge > MIN_CLOCKCULT_POWER)
-			current_charge -= MIN_CLOCKCULT_POWER
-			borg_power += MIN_CLOCKCULT_POWER
-	return ..() + borg_power
-
-/obj/item/clockwork/clockwork_proselytizer/cyborg/get_max_power()
-	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-	var/cell_maxcharge = 0
-	if(istype(R) && R.cell)
-		cell_maxcharge = R.cell.maxcharge
-	return ..() + cell_maxcharge
-
-/obj/item/clockwork/clockwork_proselytizer/cyborg/can_use_power(amount)
-	if(amount != RATVAR_POWER_CHECK)
-		var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-		var/current_charge = 0
-		if(istype(R) && R.cell)
-			current_charge = R.cell.charge
-			while(amount > 0 && stored_power - amount < 0) //amount is greater than 0 and stored power minus the amount is still less than 0
-				current_charge -= MIN_CLOCKCULT_POWER
-				amount -= MIN_CLOCKCULT_POWER
-		if(current_charge < 0)
-			return FALSE
-	. = ..()
-
-/obj/item/clockwork/clockwork_proselytizer/cyborg/modify_stored_power(amount)
-	var/mob/living/silicon/robot/R = get_atom_on_turf(src, /mob/living)
-	if(istype(R) && R.cell && amount)
-		if(amount < 0)
-			while(amount < 0 && stored_power + amount < 0) //amount is less than 0 and stored alloy plus the amount is less than 0
-				R.cell.use(MIN_CLOCKCULT_POWER)
-				amount += MIN_CLOCKCULT_POWER
-		else
-			while(amount > 0 && R.cell.charge + MIN_CLOCKCULT_POWER < R.cell.maxcharge) //amount is greater than 0 and cell charge plus MIN_CLOCKCULT_POWER is less than maximum cell charge
-				R.cell.give(MIN_CLOCKCULT_POWER)
-				amount -= MIN_CLOCKCULT_POWER
-	. = ..()
-
-/obj/item/clockwork/clockwork_proselytizer/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clockwork/clockwork_proselytizer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/clockwork/clockwork_proselytizer/process()
-	if(GLOB.ark_of_the_clockwork_justiciar)
-		var/obj/O = GLOB.ark_of_the_clockwork_justiciar
-		var/turf/T = get_turf(src)
-		if(O.z == T.z)
-			stored_power = max_power //Constantly recharges when at the City of Cogs
-	if(!charge_rate)
-		return
-	var/mob/living/L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && is_servant_of_ratvar(L))
-		if(charge_delay)
-			charge_delay--
-			return
-		modify_stored_power(charge_rate)
-		for(var/obj/item/clockwork/clockwork_proselytizer/S in L.GetAllContents()) //no multiple proselytizers
-			if(S == src)
-				continue
-			S.charge_delay = 2
-	else
-		charge_delay = 2
 
 /obj/item/clockwork/clockwork_proselytizer/ratvar_act()
 	if(GLOB.ratvar_awakens)
-		uses_power = FALSE
 		speed_multiplier = initial(speed_multiplier) * 0.25
 	else
-		uses_power = initial(uses_power)
 		speed_multiplier = initial(speed_multiplier)
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
@@ -133,45 +40,18 @@
 		to_chat(user, "<span class='brass'>It's set to <b>[mode]</b> mode.</span>")
 		switch(mode)
 			if(PROSELYTIZER_MODE_CONVERSION)
-				to_chat(user, "<span class='brass'>In this mode, it can be used to convert walls, floors, windows, airlocks, and a variety of other objects to clockwork variants.</span>")
-				to_chat(user, "<span class='brass'>It can also convert some objects into brass sheets, and transform clockwork walls into floors (and vice-versa.)</span>")
-				if(uses_power)
-					if(metal_to_power)
-						to_chat(user, "<span class='alloy'>It can convert rods, metal, plasteel, and brass to power at rates of <b>1:[POWER_ROD]W</b>, <b>1:[POWER_METAL]W</b>, \
-						<b>1:[POWER_PLASTEEL]W</b>, and <b>1:[POWER_FLOOR]W</b>, respectively.</span>")
-					else
-						to_chat(user, "<span class='alloy'>It can convert brass to power at a rate of <b>1:[POWER_FLOOR]W</b>.</span>")
-					to_chat(user, "<span class='alloy'>It is storing <b>[get_power()]W/[get_max_power()]W</b> of power, and is gaining <b>[charge_rate*0.5]W</b> of power per second.</span>")
+				to_chat(user, "<span class='brass'>In this mode, it can be used to <b>convert walls, floors, windows, airlocks, and a variety of other objects</b> to clockwork variants.</span>")
+				to_chat(user, "<span class='brass'>It can also transform clockwork walls into floors (and vice-versa.)</span>")
+				to_chat(user, "<span class='brass'>It requires <b>1 Wisdom</b> per object conversion.</span>")
+				to_chat(user, "<span class='brass'><b>Current Wisdom:</b> [GLOB.clockwork_wisdom]/[GLOB.max_clockwork_wisdom]</span>")
 			if(PROSELYTIZER_MODE_CONSTRUCTION)
-				to_chat("<span class='brass'>In this mode, it can be used to build clockwork structures, walls, and floors from scratch using potential, wisdom, and power.</span>")
-				to_chat("<span class='brass'></span>")
+				to_chat(user, "<span class='alloy'>In this mode, it can be used to build clockwork structures, walls, and floors from scratch using Potential and Wisdom.</span>")
+				to_chat(user, "<span class='alloy'>It alsos <b>repair clockwork structures and mobs</b> by attacking them, at a rate of <b>1 Wisdom per 10 health.</b></span>")
 
 /obj/item/clockwork/clockwork_proselytizer/pre_attackby(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/weapon/storage))
 		return TRUE
 	return proselytize(target, user)
-
-/obj/item/clockwork/clockwork_proselytizer/proc/get_power()
-	return stored_power
-
-/obj/item/clockwork/clockwork_proselytizer/proc/get_max_power()
-	return max_power
-
-/obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_power(amount)
-	stored_power = Clamp(stored_power + amount, 0, max_power)
-	return TRUE
-
-/obj/item/clockwork/clockwork_proselytizer/proc/can_use_power(amount)
-	if(amount == RATVAR_POWER_CHECK)
-		if(GLOB.ratvar_awakens || !uses_power)
-			return TRUE
-		else
-			return FALSE
-	if(stored_power - amount < 0)
-		return FALSE
-	if(stored_power - amount > max_power)
-		return FALSE
-	return TRUE
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user, silent, no_table_check)
@@ -180,10 +60,6 @@
 	if(repairing)
 		if(!silent)
 			to_chat(user, "<span class='warning'>You are currently repairing [repairing] with [src]!</span>")
-		return FALSE
-	if(recharging)
-		if(!silent)
-			to_chat(user, "<span class='warning'>You are currently recharging [src] from the [recharging.sigil_name]!</span>")
 		return FALSE
 	var/list/proselytize_values = target.proselytize_vals(user, src, silent) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
@@ -195,21 +71,11 @@
 			if(!no_table_check)
 				return TRUE
 		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
-		proselytize_values["power_cost"] = 0
-
-	var/turf/Y = get_turf(user)
-	if(!Y || (Y.z != ZLEVEL_STATION && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
-		proselytize_values["operation_time"] *= 2
-		if(proselytize_values["power_cost"] > 0)
-			proselytize_values["power_cost"] *= 2
 
 	var/target_type = target.type
 
 	if(!proselytize_checks(proselytize_values, target, target_type, user, silent))
 		return FALSE
-
-	proselytize_values["operation_time"] *= speed_multiplier
 
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"])
@@ -224,6 +90,7 @@
 			user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+	ADJUST_CLOCKWORK_WISDOM(-1)
 	var/new_thing_type = proselytize_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
@@ -237,12 +104,12 @@
 				A.setDir(proselytize_values["spawn_dir"])
 		if(!proselytize_values["no_target_deletion"]) //for some cases where proselytize_vals() modifies the object but doesn't want it deleted
 			qdel(target)
-	modify_stored_power(-proselytize_values["power_cost"])
 	if(no_table_check)
 		return TRUE
 	return FALSE
 
 //The following three procs are heavy wizardry.
+//(for actual wizardry see wizard.dm)
 //What these procs do is they take an existing list of values, which they then modify.
 //This(modifying an existing object, in this case the list) is the only way to get information OUT of a do_after callback, which this is used as.
 
@@ -250,20 +117,13 @@
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize_checks(list/proselytize_values, atom/target, expected_type, mob/user, silent) //checked constantly while proselytizing
 	if(!islist(proselytize_values) || QDELETED(target) || QDELETED(user))
 		return FALSE
-	if(repairing || recharging)
+	if(repairing)
 		return FALSE
 	if(target.type != expected_type)
 		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
-		proselytize_values["power_cost"] = 0
-	if(!can_use_power(proselytize_values["power_cost"]))
-		if(stored_power - proselytize_values["power_cost"] < 0)
-			if(!silent)
-				to_chat(user, "<span class='warning'>You need <b>[proselytize_values["power_cost"]]W</b> power to proselytize [target]!</span>")
-		else if(stored_power - proselytize_values["power_cost"] > max_power)
-			if(!silent)
-				to_chat(user, "<span class='warning'>Your [name] contains too much power to proselytize [target]!</span>")
-		return FALSE
+	if(!HAS_CLOCKWORK_WISDOM(1))
+		to_chat(user, "<span class='warning'>There's no Wisdom available to use! Wait for some to regenerate first.</span>")
+		return
 	return TRUE
 
 //The repair check proc.
@@ -297,29 +157,5 @@
 	else
 		return FALSE
 	if(repair_values["amount_to_heal"] <= 0) //nothing to heal!
-		return FALSE
-	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], PROSELYTIZER_REPAIR_PER_TICK) //modify the healing for this cycle
-	repair_values["power_required"] = round(repair_values["healing_for_cycle"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER) //and get the power cost from that
-	if(!can_use_power(RATVAR_POWER_CHECK) && !can_use_power(repair_values["power_required"]))
-		if(!silent)
-			to_chat(user, "<span class='warning'>You need at least <b>[repair_values["power_required"]]W</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
-			<b>[round(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")
-		return FALSE
-	return TRUE
-
-//The sigil charge check proc.
-/obj/item/clockwork/clockwork_proselytizer/proc/sigil_charge_checks(list/charge_values, obj/effect/clockwork/sigil/transmission/sigil, mob/user, silent)
-	if(!islist(charge_values) || QDELETED(sigil) || QDELETED(user))
-		return FALSE
-	if(can_use_power(RATVAR_POWER_CHECK))
-		return FALSE
-	charge_values["power_gain"] = Clamp(sigil.power_charge, 0, POWER_WALL_MINUS_FLOOR)
-	if(!charge_values["power_gain"])
-		if(!silent)
-			to_chat(user, "<span class='warning'>The [sigil.sigil_name] contains no power!</span>")
-		return FALSE
-	if(stored_power + charge_values["power_gain"] > max_power)
-		if(!silent)
-			to_chat(user, "<span class='warning'>Your [name] contains too much power to charge from the [sigil.sigil_name]!</span>")
 		return FALSE
 	return TRUE
