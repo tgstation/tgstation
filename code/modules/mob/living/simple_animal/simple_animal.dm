@@ -346,7 +346,9 @@
 	for(var/mob/M in view(7, src))
 		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children SECOND.
+		if(M.mob_size == MOB_SIZE_SMALL) // Check if it's underage SECOND
+			continue
+		else if(istype(M, childtype)) //Check for existing kids NOW.
 			children++
 		else if(istype(M, animal_species))
 			if(M.ckey)

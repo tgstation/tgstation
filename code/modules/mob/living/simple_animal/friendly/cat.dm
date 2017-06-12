@@ -68,7 +68,6 @@
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
 	density = 0
-	gender = NEUTER
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 
