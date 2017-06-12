@@ -580,7 +580,8 @@
 
 	if(client && client.holder)
 		if(statpanel("MC"))
-			stat("Location:", COORD(get_turf(client.eye)))
+			var/turf/T = get_turf(client.eye)
+			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
 			GLOB.stat_entry()
