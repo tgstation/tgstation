@@ -134,6 +134,7 @@ GLOBAL_LIST_INIT(message_servers, list())
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = 1
+	desc = "A machine that attempts to learn everything there is in the universe."
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 10

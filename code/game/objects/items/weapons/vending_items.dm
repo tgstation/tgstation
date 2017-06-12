@@ -5,6 +5,7 @@
 	icon = 'icons/obj/vending_restock.dmi'
 	icon_state = "refill_snack"
 	item_state = "restock_unit"
+	desc = "A vending machine restock cart,"
 	flags = CONDUCT
 	force = 7
 	throwforce = 10

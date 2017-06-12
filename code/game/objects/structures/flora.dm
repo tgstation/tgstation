@@ -7,6 +7,7 @@
 //trees
 /obj/structure/flora/tree
 	name = "tree"
+	desc = "A large tree."
 	density = 1
 	pixel_x = -16
 	layer = FLY_LAYER
@@ -41,6 +42,7 @@
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
+	desc = "A large pine tree."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 
@@ -50,6 +52,7 @@
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
+	desc = "A wondrous Christmas tree."
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/xmas/Initialize()
@@ -58,10 +61,12 @@
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
+	desc = "A dead tree. How it died, you know not."
 	icon_state = "tree_1"
 
 /obj/structure/flora/tree/palm
 	icon = 'icons/misc/beach2.dmi'
+	desc = "A tree straight from the tropics."
 	icon_state = "palm1"
 
 /obj/structure/flora/tree/palm/Initialize()
@@ -123,6 +128,7 @@
 //bushes
 /obj/structure/flora/bush
 	name = "bush"
+	desc = "Some kind of shrub or something."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = 1
@@ -135,6 +141,7 @@
 
 /obj/structure/flora/ausbushes
 	name = "bush"
+	desc = "Some kind of plant."
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 
@@ -250,6 +257,7 @@
 
 /obj/item/weapon/twohanded/required/kirbyplants
 	name = "potted plant"
+	desc = "A little bit of nature contained in a pot."
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 	layer = ABOVE_MOB_LAYER
@@ -352,6 +360,7 @@
 
 /obj/structure/flora/junglebush
 	name = "bush"
+	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 

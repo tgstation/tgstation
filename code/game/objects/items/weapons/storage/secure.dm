@@ -177,6 +177,7 @@
 	icon_opened = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
+	desc = "Great for securing things against the masses."
 	force = 8
 	w_class = WEIGHT_CLASS_GIGANTIC
 	max_w_class = 8

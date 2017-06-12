@@ -1,13 +1,10 @@
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
-
 	level = 1
-
 	use_power = 0
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
-
 	//Buckling
 	can_buckle = 1
 	buckle_requires_restraints = 1
