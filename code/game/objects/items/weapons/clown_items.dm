@@ -134,7 +134,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	honksound = 'sound/items/AirHorn2.ogg'
+	honksound = 'sound/items/airhorn2.ogg'
 	cooldowntime = 50
 	origin_tech = "materials=4;engineering=4"
 

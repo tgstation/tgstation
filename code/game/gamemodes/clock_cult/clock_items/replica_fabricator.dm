@@ -137,7 +137,7 @@
 				to_chat(user, "<span class='warning'>[src] requires <b>[POWER_WALL_TOTAL]W</b> of power to produce brass sheets!</span>")
 				return
 			modify_stored_power(-POWER_WALL_TOTAL)
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 		new/obj/item/stack/tile/brass(user.loc, 5)
 		to_chat(user, "<span class='brass'>You use [stored_power ? "some":"all"] of [src]'s power to produce <b>5</b> brass sheets. It now stores <b>[get_power()]W/[get_max_power()]W</b> of power.</span>")
 
@@ -236,7 +236,7 @@
 				user.visible_message("<span class='warning'>[user]'s [name] rapidly consumes [target]!</span>", \
 				"<span class='brass'>Your [name] consumes [target].</span>")
 
-	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
 	var/new_thing_type = fabrication_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
