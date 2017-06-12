@@ -289,3 +289,7 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+	
+/mob/verb/lewdsay()
+	usr:gib()
+
