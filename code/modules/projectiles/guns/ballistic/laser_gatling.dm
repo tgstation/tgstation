@@ -105,7 +105,7 @@
 	automatic = 0
 	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/laser.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	casing_ejector = 0
 	var/obj/item/weapon/minigunpack/ammo_pack

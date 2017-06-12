@@ -340,7 +340,7 @@
 					damage_clothes(dmg, BRUTE, "melee", temp.body_zone)
 				if("fire")
 					update |= temp.receive_damage(0, dmg)
-					playsound(src, 'sound/items/Welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', 50, 1)
 					damage_clothes(dmg, BURN, "melee", temp.body_zone)
 				if("tox")
 					M.mech_toxin_damage(src)

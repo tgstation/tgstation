@@ -78,7 +78,7 @@ obj/item/weapon/construction
 	return 0
 
 /obj/item/weapon/construction/proc/activate()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 /obj/item/weapon/construction/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)

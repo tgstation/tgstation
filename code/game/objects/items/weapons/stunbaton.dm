@@ -142,7 +142,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return 0
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -162,7 +162,7 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		add_logs(user, L, "stunned")
 
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L

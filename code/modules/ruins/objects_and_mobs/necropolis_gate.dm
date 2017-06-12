@@ -35,7 +35,7 @@
 	visible_message("<span class='warning'>Locks along the door begin clicking open from within...</span>")
 	var/volume = 60
 	for(var/i in 1 to 3)
-		playsound(src, 'sound/items/Deconstruct.ogg', volume, 0)
+		playsound(src, 'sound/items/deconstruct.ogg', volume, 0)
 		volume += 20
 		sleep(10)
 	sleep(10)

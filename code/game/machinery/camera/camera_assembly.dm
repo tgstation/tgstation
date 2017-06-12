@@ -137,7 +137,7 @@
 	playsound(src.loc, WT.usesound, 50, 1)
 	if(do_after(user, 20*WT.toolspeed, target = src))
 		if(WT.isOn())
-			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 			return 1
 	return 0
 
