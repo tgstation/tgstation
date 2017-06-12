@@ -21,19 +21,22 @@
 		. = is_eligible_servant(new_owner.current)
 		if(!silent && new_owner.current)
 			if(issilicon(new_owner.current))
-				to_chat(new_owner.current, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the \
-				Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
+				to_chat(new_owner.current, "<span class='heavy_brass'>You are unable to compute this truth! Your circuits surge with energy! Your world glows a brilliant yellow!\
+				<br>All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 			else
-				to_chat(new_owner.current, "<span class='heavy_brass'>[iscarbon(new_owner.current) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant \
-				yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
+				to_chat(new_owner.current, "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow!\
+				<br>All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 			if(!.)
-				new_owner.current.visible_message("<span class='boldwarning'>[new_owner.current] seems to resist an unseen force!</span>")
+				new_owner.current.visible_message("<span class='boldwarning'>[new_owner.current] seems to resist an unseen force!</span>", null, null, 7, owner.current)
 				to_chat(new_owner.current, "<span class='userdanger'>And yet, you somehow push it all away.</span>")
+				flash_color(new_owner.current, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 5)
+			else
+				flash_color(new_owner.current, flash_color = list("#BE8700", "#BE8700", "#BE8700", rgb(0,0,0)), flash_time = 50)
 
 /datum/antagonist/clockcult/greet()
 	if(!owner.current || silent)
 		return
-	owner.current.visible_message("<span class='heavy_brass'>[owner.current]'s eyes glow a blazing yellow!</span>")
+	owner.current.visible_message("<span class='heavy_brass'>[owner.current]'s eyes glow a blazing yellow!</span>", null, null, 7, owner.current) //don't show the owner this message
 	to_chat(owner.current, "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork \
 	Justiciar above all else. Perform his every whim without hesitation.</span>")
 
