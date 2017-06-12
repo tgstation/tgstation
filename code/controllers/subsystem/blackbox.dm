@@ -204,7 +204,7 @@ SUBSYSTEM_DEF(blackbox)
 	if(sealed)
 		return
 	if(IsAdminAdvancedProcCall())
-		var/msg = "[key_name(usr)] sealed the blackbox!"
+		var/msg = "[key_name_admin(usr)] sealed the blackbox!"
 		message_admins(msg)
 		log_admin(msg)
 	log_game("Blackbox sealed")
