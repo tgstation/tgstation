@@ -50,7 +50,8 @@
 	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
 		if(iscyborg(current) && !silent)
-			to_chat(current, "<span class='boldwarning'>You have been desynced from your master AI.</span>")
+			if(R.connected_ai && !is_servant_of_ratvar(R.connected_ai))
+				to_chat(current, "<span class='boldwarning'>You have been desynced from your master AI.</span>")
 			to_chat(current, "<span class='boldwarning'>In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
 		if(isAI(current))
 			to_chat(current, "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>")
@@ -91,11 +92,7 @@
 				A.eyeobj.relay_speech = TRUE
 			for(var/mob/living/silicon/robot/R in A.connected_robots)
 				if(R.connected_ai == A)
-					R.visible_message("<span class='heavy_brass'>[R]'s eyes glow a blazing yellow!</span>", \
-					"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-					whim without hesitation.</span>")
-					to_chat(R, "<span class='boldwarning'>Your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
-					add_servant_of_ratvar(R, TRUE)
+					add_servant_of_ratvar(R)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
