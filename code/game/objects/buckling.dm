@@ -109,7 +109,7 @@
 
 	add_fingerprint(user)
 	. = buckle_mob(M, check_loc = check_loc)
-	if(.))
+	if(.)
 		if(M == user)
 			M.visible_message(\
 				"<span class='notice'>[M] buckles [M.p_them()]self to [src].</span>",\
