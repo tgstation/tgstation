@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(blackbox)
 		var/msg = "[key_name_admin(usr)] sealed the blackbox!"
 		message_admins(msg)
 		log_admin(msg)
-	log_game("Blackbox sealed")
+	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
 
 //feedback variable datum, for storing all kinds of data
