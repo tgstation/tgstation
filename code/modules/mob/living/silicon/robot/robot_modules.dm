@@ -384,6 +384,9 @@
 	name = "Janitor"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/screwdriver/cyborg,
+		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
 		/obj/item/weapon/mop/cyborg,
