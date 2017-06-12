@@ -203,7 +203,8 @@
 
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
-		message_admins("<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</font>")
+		for(var/client/X in GLOB.admins)
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</font>")
 	else
 		window_flash(recipient, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
