@@ -9,6 +9,7 @@
 	flags = NOBLUDGEON
 	var/repairing = null //what we're currently repairing, if anything
 	var/speed_multiplier = 1 //how fast this proselytizer works
+	var/requires_resources = TRUE //if the proselytizer needs wisdom and potential to function
 	var/mode = PROSELYTIZER_MODE_CONVERSION //The operating mode of the proselytizer
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
@@ -31,27 +32,33 @@
 /obj/item/clockwork/clockwork_proselytizer/ratvar_act()
 	if(GLOB.ratvar_awakens)
 		speed_multiplier = initial(speed_multiplier) * 0.25
+		requires_resources = FALSE
 	else
 		speed_multiplier = initial(speed_multiplier)
+		requires_resources = TRUE
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
+		to_chat(user, "<span class='brass italics'>It's been empowered by Ratvar, and doesn't need Wisdom or Potential to function!</span>")
 		to_chat(user, "<span class='brass'>It's set to <b>[mode]</b> mode.</span>")
 		switch(mode)
 			if(PROSELYTIZER_MODE_CONVERSION)
 				to_chat(user, "<span class='brass'>In this mode, it can be used to <b>convert walls, floors, windows, airlocks, and a variety of other objects</b> to clockwork variants.</span>")
-				to_chat(user, "<span class='brass'>It can also transform clockwork walls into floors (and vice-versa.)</span>")
+				to_chat(user, "<span class='brass'>It also <b>repair clockwork structures and mobs</b> by attacking them, at a rate of <b>1 Wisdom per 10 health.</b></span>")
 				to_chat(user, "<span class='brass'>It requires <b>1 Wisdom</b> per object conversion.</span>")
 				to_chat(user, "<span class='brass'><b>Current Wisdom:</b> [GLOB.clockwork_wisdom]/[GLOB.max_clockwork_wisdom]</span>")
 			if(PROSELYTIZER_MODE_CONSTRUCTION)
 				to_chat(user, "<span class='alloy'>In this mode, it can be used to build clockwork structures, walls, and floors from scratch using Potential and Wisdom.</span>")
-				to_chat(user, "<span class='alloy'>It alsos <b>repair clockwork structures and mobs</b> by attacking them, at a rate of <b>1 Wisdom per 10 health.</b></span>")
+				to_chat(user, "<span class='alloy'>It requires <b>1 Wisdom per construction, and variable Wisdom and Potential depending on the object.</b></span>")
 
 /obj/item/clockwork/clockwork_proselytizer/pre_attackby(atom/target, mob/living/user, params)
 	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/weapon/storage))
 		return TRUE
-	return proselytize(target, user)
+	if(mode == PROSELYTIZER_MODE_CONVERSION)
+		return proselytize(target, user)
+	else if(mode == PROSELYTIZER_MODE_CONSTRUCTION)
+		return construct(target, user)
 
 //A note here; return values are for if we CAN BE PUT ON A TABLE, not IF WE ARE SUCCESSFUL, unless no_table_check is TRUE
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user, silent, no_table_check)
@@ -90,7 +97,8 @@
 			user.visible_message("<span class='warning'>[user]'s [name] tears apart [target], covering it in golden energy!</span>", "<span class='brass'>You proselytize [target].</span>")
 
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-	ADJUST_CLOCKWORK_WISDOM(-1)
+	if(requires_resources)
+		ADJUST_CLOCKWORK_WISDOM(-1)
 	var/new_thing_type = proselytize_values["new_obj_type"]
 	if(isturf(target)) //if our target is a turf, we're just going to ChangeTurf it and assume it'll work out.
 		var/turf/T = target
@@ -108,7 +116,7 @@
 		return TRUE
 	return FALSE
 
-//The following three procs are heavy wizardry.
+//The following two procs are heavy wizardry.
 //(for actual wizardry see wizard.dm)
 //What these procs do is they take an existing list of values, which they then modify.
 //This(modifying an existing object, in this case the list) is the only way to get information OUT of a do_after callback, which this is used as.
@@ -121,7 +129,7 @@
 		return FALSE
 	if(target.type != expected_type)
 		return FALSE
-	if(!HAS_CLOCKWORK_WISDOM(1))
+	if(!HAS_CLOCKWORK_WISDOM(1) && requires_resources)
 		to_chat(user, "<span class='warning'>There's no Wisdom available to use! Wait for some to regenerate first.</span>")
 		return
 	return TRUE
@@ -158,9 +166,15 @@
 		return FALSE
 	if(repair_values["amount_to_heal"] <= 0) //nothing to heal!
 		return FALSE
-	if(!HAS_CLOCKWORK_WISDOM(1))
+	if(!HAS_CLOCKWORK_WISDOM(1) && requires_resources)
 		if(!silent)
 			to_chat(user, "<span class='warning'>There's no available wisdom to repair [target]! Wait for some to regenerate.</span>")
 		return
 	repair_values["healing_for_cycle"] = min(repair_values["amount_to_heal"], PROSELYTIZER_REPAIR_PER_TICK)
 	return TRUE
+
+///////////////////////////
+
+/obj/item/clockwork/clockwork_proselytizer/proc/construct(atom/target, mob/living/user)
+	var/list/costs = list("wisdom" = 0, "potential" = 0)
+	return

@@ -176,7 +176,8 @@
 		if(!do_after(user, PROSELYTIZER_REPAIR_RATE * proselytizer.speed_multiplier, target = src, \
 			extra_checks = CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/proselytizer_repair_checks, repair_values, src, user, TRUE)))
 			break
-		ADJUST_CLOCKWORK_WISDOM(-1)
+		if(requires_resources)
+			ADJUST_CLOCKWORK_WISDOM(-1)
 		obj_integrity = Clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
