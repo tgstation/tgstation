@@ -14,7 +14,7 @@
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
 
-/obj/vehicle/deconstruct(disassembled = TRUE)
+/obj/structure/dresser/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood (loc, 10)
 	qdel(src)
 
