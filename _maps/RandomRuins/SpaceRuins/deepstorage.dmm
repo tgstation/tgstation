@@ -3472,7 +3472,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -3490,7 +3490,7 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -3509,7 +3509,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -3616,7 +3616,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -3635,7 +3635,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -3712,7 +3712,7 @@
 	d1 = 1;
 	d2 = 4
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -3726,7 +3726,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
@@ -4269,7 +4269,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating/airless{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/ruin/deepstorage/power)
