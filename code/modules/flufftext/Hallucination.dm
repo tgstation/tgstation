@@ -286,9 +286,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target.client.images |= fakerune
 	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
 	bubblegum = new(wall, target)
-	addtimer(CALLBACK(src, .proc/bubble_attack), 10)
+	addtimer(CALLBACK(src, .proc/bubble_attack, landing), 10)
 
-/obj/effect/hallucination/oh_yeah/proc/bubble_attack()
+/obj/effect/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
 	var/charged = FALSE //only get hit once
 	while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
 		bubblegum.forceMove(get_step_towards(bubblegum, landing))
