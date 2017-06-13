@@ -95,6 +95,8 @@
 			unique_reskin = 0
 			to_chat(user, "Your pen now has a [choice] finish.")
 			desc = "It's an expensive [choice] fountain pen. The nib is quite sharp."
+		else
+			..()
 
 /obj/item/weapon/pen/fountain/captain/examine(mob/user)
 	..()
