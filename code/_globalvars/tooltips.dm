@@ -1,0 +1,1 @@
+GLOBAL_VAR_INIT(enable_examine_tips, TRUE)
