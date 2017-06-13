@@ -6,6 +6,8 @@
 	if(prefs.enable_tips)
 		prefs.enable_tips = FALSE
 		prefs.save_preferences()
+		to_chat(usr, "<span class='danger'>Examine tooltips disabled.</span>")
 	else
 		prefs.enable_tips = TRUE
 		prefs.save_preferences()
+		to_chat(usr, "<span class='danger'>Examine tooltips enabled.</span>")
