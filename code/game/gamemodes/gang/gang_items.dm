@@ -378,54 +378,24 @@
 		return "(GET ONE FREE)"
 	return ..()
 
-/*
-/datum/gang_item/equipment/gangtool
-	id = "gangtool"
-	cost = 10
-
-/datum/gang_item/equipment/gangtool/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	var/item_type
-	if(gang && isboss(user, gang))
-		item_type = /obj/item/device/gangtool/spare/lt
-		if(gang.bosses.len < 3)
-			to_chat(user, "<span class='notice'><b>dominators</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the dominator. You may promote up to [3-gang.bosses.len] more Lieutenants</span>")
-	else
-		item_type = /obj/item/device/gangtool/spare
-	var/obj/item/device/dominator/spare/tool = new item_type(user.loc)
-	user.put_in_hands(tool)
-
-/datum/gang_item/equipment/gangtool/get_name_display(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	if(gang && isboss(user, gang) && (gang.bosses.len < 3))
-		return "Promote a Gangster"
-	return "Spare dominator"
-*/
-
-/datum/gang_item/equipment/dominator
-	name = "Station Dominator"
-	id = "dominator"
+/datum/gang_item/equipment/dominator_spawner
+	name = "Dominator Warp Beacon"
+	id = "dominator_spawner"
 	cost = 30
-	item_path = /obj/machinery/dominator
-	spawn_msg = "<span class='notice'>The <b>dominator</b> will secure your gang's dominance over the station. Turn it on when you are ready to defend it.</span>"
+	item_path = /obj/item/device/dominator_spawner
+	spawn_msg = "<span class='notice'>A device that can warp a new dominator configured and ready to go for your gang at your location.</span>"
 
 /datum/gang_item/equipment/dominator/can_buy(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	if(!gang || !gang.dom_attempts)
+	if(!gang)
 		return FALSE
 	return ..()
 
 /datum/gang_item/equipment/dominator/get_name_display(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	if(!gang || !gang.dom_attempts)
+	if(!gang )
 		return ..()
 	return "<b>[..()]</b>"
 
-/datum/gang_item/equipment/dominator/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/machinery/dominator/dominator)
-	if(!gang || !gang.dom_attempts)
-		return "(Out of stock)"
-	return ..()
-
-/datum/gang_item/equipment/dominator/get_extra_info(mob/living/carbon/user, datum/gang/G, obj/machinery/dominator/dominator)
-	if(G)
-		return "(Estimated Takeover Time: [round(determine_domination_time(G)/60,0.1)] minutes)"
-
+/////////////////////////////////////
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/G, obj/machinery/dominator/dominator)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
