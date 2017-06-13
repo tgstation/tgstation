@@ -105,6 +105,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+	var/in_inventory = FALSE
+	var/f_force = null
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -368,9 +371,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		A.Remove(user)
 	if(DROPDEL & flags)
 		qdel(src)
+	in_inventory = FALSE
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	in_inventory = TRUE
 	return
 
 
@@ -396,6 +401,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	in_inventory = TRUE
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
@@ -546,6 +552,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	throw_speed = initial(throw_speed) //explosions change this.
+	in_inventory = FALSE
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
@@ -632,3 +639,31 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.dirty++
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
+
+/obj/item/proc/friendly_force()
+	if(force)
+		if(force <= 3)
+			f_force = "very low"
+		else if(force <= 5)
+			f_force = "low"
+		else if(force <= 7)
+			f_force = "medium"
+		else if(force <= 10)
+			f_force = "<font color=green>high</font>"
+		else if(force <= 15)
+			f_force = "<font color=red>robust</combat>"
+		else if(force <= 24)
+			f_force = "<font color=orange>very robust</font>"
+		else if(force >= 25)
+			f_force = "<font color=white>Exceptionally Robust</font>"
+
+
+/obj/item/MouseEntered(location,control,params)
+	if(in_inventory)
+		friendly_force()
+		openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [f_force]" : ""]",theme = "")
+
+
+/obj/item/MouseExited()
+	closeToolTip(usr)
+
