@@ -62,8 +62,8 @@
 	setDir(SOUTH)
 	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
 	anchored = TRUE
-	if(user.client)
-		user.client.change_view(view_range)
+	if(M.client)
+		M.client.change_view(view_range)
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
