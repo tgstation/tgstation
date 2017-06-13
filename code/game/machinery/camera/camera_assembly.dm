@@ -15,8 +15,8 @@
 	obj_integrity = 150
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
-	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer)
-	var/list/upgrades = list()
+	var/static/list/possible_upgrades
+	var/list/upgrades
 	var/state = 1
 
 	/*
@@ -26,15 +26,15 @@
 			4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-/obj/structure/camera_assembly/New(loc, ndir, building)
-	..()
+/obj/structure/camera_assembly/Initialize(mapload, ndir, building)
+	. = ..()
 	if(building)
 		setDir(ndir)
+	possible_upgrades = typecacheof(list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer))
+	upgrades = list()
 
 /obj/structure/camera_assembly/Destroy()
-	for(var/I in upgrades)
-		qdel(I)
-	upgrades.Cut()
+	QDEL_LIST(upgrades)
 	return ..()
 
 /obj/structure/camera_assembly/attackby(obj/item/W, mob/living/user, params)
@@ -110,7 +110,7 @@
 				return
 
 	// Upgrades!
-	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
+	if(is_type_in_typecache(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
 		if(!user.drop_item(W))
 			return
 		to_chat(user, "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>")

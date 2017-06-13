@@ -50,6 +50,9 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
+/obj/item/weapon/grown/log/Initialize()
+	. = ..()
+	accepted = typecacheof(accepted)
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.sharpness)

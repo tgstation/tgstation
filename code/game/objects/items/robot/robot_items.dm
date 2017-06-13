@@ -154,10 +154,13 @@
 	icon_state = "charger_draw"
 	flags = NOBLUDGEON
 	var/mode = "draw"
-	var/list/charge_machines = list(/obj/machinery/cell_charger, /obj/machinery/recharger,
-		/obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port)
-	var/list/charge_items = list(/obj/item/weapon/stock_parts/cell, /obj/item/weapon/gun/energy,
-		)
+	var/static/list/charge_machines
+	var/static/list/charge_items
+
+/obj/item/borg/charger/Initialize()
+	. = ..()
+	charge_machines = typecacheof(list(/obj/machinery/cell_charger, /obj/machinery/recharger, /obj/machinery/recharge_station, /obj/machinery/mech_bay_recharge_port))
+	charge_items = typecacheof(list(/obj/item/weapon/stock_parts/cell, /obj/item/weapon/gun/energy))
 
 /obj/item/borg/charger/update_icon()
 	..()

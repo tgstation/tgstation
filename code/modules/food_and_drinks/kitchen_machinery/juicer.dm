@@ -11,8 +11,12 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	pass_flags = PASSTABLE
-	var/obj/item/weapon/reagent_containers/beaker = null
-	var/global/list/allowed_items = list (
+	var/obj/item/weapon/reagent_containers/beaker
+	var/static/list/allowed_items
+
+/obj/machinery/juicer/Initialize()
+	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	allowed_items = typecacheof(list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
@@ -27,11 +31,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = "poisonberryjuice",
 		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = "pumpkinjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = "blumpkinjuice",
-	)
-
-/obj/machinery/juicer/New()
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = "blumpkinjuice"))
 
 /obj/machinery/juicer/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))

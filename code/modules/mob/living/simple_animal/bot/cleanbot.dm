@@ -21,7 +21,7 @@
 	var/trash = 0
 	var/pests = 0
 
-	var/list/target_types = list()
+	var/list/target_types
 	var/obj/effect/decal/cleanable/target
 	var/max_targets = 50 //Maximum number of targets a cleanbot can ignore.
 	var/oldloc = null
@@ -32,7 +32,7 @@
 	var/next_dest_loc
 
 /mob/living/simple_animal/bot/cleanbot/Initialize()
-	..()
+	. = ..()
 	get_targets()
 	icon_state = "cleanbot[on]"
 
@@ -192,6 +192,8 @@
 
 	if(trash)
 		target_types += /obj/item/trash
+
+	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(istype(A, /obj/effect/decal/cleanable))
