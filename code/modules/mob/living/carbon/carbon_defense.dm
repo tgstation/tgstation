@@ -35,6 +35,14 @@
 		number += E.bang_protect
 	return number
 
+/mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
+	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
+		return 1
+
+/mob/living/carbon/is_eyes_covered()
+	if( (glasses && (glasses.flags_cover & GLASSESCOVERSEYES)) || (head && (head.flags_cover & HEADCOVERSEYES)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)))
+		return 1
+
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
