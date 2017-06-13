@@ -30,7 +30,7 @@
 /obj/item/weapon/inducer/emp_act(severity)
 	..()
 	if(cell)
-		cell.emp_act()
+		cell.emp_act(severity)
 
 /obj/item/weapon/inducer/attack_obj(obj/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
