@@ -1,4 +1,4 @@
-/client/verb/enable_tips()
+/client/verb/toggle_tips()
 	set name = "Toggle examine tooltips"
 	set desc = "Toggles examine hover-over tooltips"
 	set category = "OOC"
