@@ -1,14 +1,14 @@
+//Defines for alarms, see (code/datums/alarmlisteners.dm)
 //Contains alarm/alert defines
-ALARM_POWER = 1
-ALARM_FIRE = 2
-ALARM_ATMOS = 3
-ALARM_MOTION = 4
-ALARM_BURGLAR = 5
+#define ALARM_POWER  1
+#define ALARM_FIRE  2
+#define ALARM_ATMOS  3
+#define ALARM_MOTION  4
+#define ALARM_BURGLAR  5
 
 //event types that a listener may want a hook on
-//bitflag for conciseness and speed
-ALARM_SOURCE_ADDED = 1 << 1
-ALARM_SOURCE_REMOVED = 1 << 2
-ALARM_CREATED = 1 << 3
-ALARM_CANCELLED = 1 << 4
-
+//bitflag
+#define ALARM_SOURCE_ADDED  1
+#define ALARM_SOURCE_REMOVED  2
+#define ALARM_CREATED  4
+#define ALARM_CANCELLED  8

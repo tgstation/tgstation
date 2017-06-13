@@ -78,6 +78,14 @@
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
 	var/datum/alarm_listener/a_listener
 
+//TODO fucking remove this it's a hack for comiple purposes
+/mob/living/simple_animal/drone/proc/triggerAlarm()
+	return TRUE
+
+//TODO fucking remove this it's a hack for comiple purposes
+/mob/living/simple_animal/drone/proc/cancelAlarm()
+	return TRUE
+
 /mob/living/simple_animal/drone/Initialize()
 	. = ..()
 
@@ -105,7 +113,7 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	//Handles alarm related functionality for this mob
-	a_listener = new datum/alarm_listener(src, (ALARM_POWER, ALARM_FIRE, ALARM_ATMOS), ALARM_CREATED|ALARM_CANCELLED)
+	a_listener = new /datum/alarm_listener(src, list(ALARM_POWER, ALARM_FIRE, ALARM_ATMOS), ALARM_CREATED|ALARM_CANCELLED)
 
 /mob/living/simple_animal/drone/Destroy()
 	QDEL_NULL(a_listener)
@@ -235,39 +243,6 @@
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
-
-
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
-	if(alarmsource.z != z)
-		return
-	if(stat != DEAD)
-		var/list/L = src.alarms[class]
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/sources = alarm[2]
-				if (!(alarmsource in sources))
-					sources += alarmsource
-				return
-		L[A.name] = list(A, list(alarmsource))
-		to_chat(src, "--- [class] alarm detected in [A.name]!")
-
-
-/mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat != DEAD)
-		var/list/L = alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs  = alarm[2]
-				if (origin in srcs)
-					srcs -= origin
-				if (srcs.len == 0)
-					cleared = 1
-					L -= I
-		if(cleared)
-			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

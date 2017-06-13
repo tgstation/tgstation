@@ -244,12 +244,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
+	//Trigger fire alarm to listeners
+	triggerAlarm(ALARM_FIRE, src, cameras, source)
+
 	for (var/obj/machinery/computer/station_alert/a in GLOB.machines)
 		a.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
-	for (var/mob/living/simple_animal/drone/D in GLOB.mob_list)
-		D.triggerAlarm("Fire", src, cameras, source)
 	for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 		p.triggerAlarm("Fire", src, cameras, source)
 
@@ -265,12 +266,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
+	//cancel fire alarm to listeners
+	cancelAlarm(ALARM_FIRE, src, source)
+
 	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		aiPlayer.cancelAlarm("Fire", src, source)
 	for (var/obj/machinery/computer/station_alert/a in GLOB.machines)
 		a.cancelAlarm("Fire", src, source)
-	for (var/mob/living/simple_animal/drone/D in GLOB.mob_list)
-		D.cancelAlarm("Fire", src, source)
 	for(var/datum/computer_file/program/alarm_monitor/p in GLOB.alarmdisplay)
 		p.cancelAlarm("Fire", src, source)
 
