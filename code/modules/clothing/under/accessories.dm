@@ -265,10 +265,10 @@
 	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector
 
 /obj/item/clothing/accessory/pocketprotector/full
-	pockets = /obj/item/clothing/accessory/pocketprotector/full
+	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector/full
 
 /obj/item/clothing/accessory/pocketprotector/cosmetology
-	pockets = /obj/item/clothing/accessory/pocketprotector/cosmetology
+	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector/cosmetology
 
 
 ////////////////
