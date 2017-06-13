@@ -317,10 +317,16 @@
 	begin_month = DECEMBER
 
 /datum/holiday/thanksgiving
-	name = "Thanksgiving"
+	name = "Thanksgiving in the United States"
 	begin_week = 4
 	begin_month = NOVEMBER
 	begin_weekday = THURSDAY
+
+/datum/holiday/thanksgiving/canada
+	name = "Thanksgiving in Canada"
+	begin_week = 2
+	begin_month = OCTOBER
+	begin_weekday = MONDAY
 
 /datum/holiday/columbus
 	name = "Columbus Day"
