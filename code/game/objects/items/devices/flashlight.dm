@@ -57,6 +57,10 @@
 			to_chat(user, "<span class='warning'>[M] doesn't have a head!</span>")
 			return
 
+		if(flashlight_power < 1)
+			to_chat(user, "<span class='warning'>\The [src] isn't bright enough to see anything!</span> ")
+			return
+		
 		switch(user.zone_selected)
 			if("eyes")
 				if((M.head && M.head.flags_cover & HEADCOVERSEYES) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSEYES) || (M.glasses && M.glasses.flags_cover & GLASSESCOVERSEYES))

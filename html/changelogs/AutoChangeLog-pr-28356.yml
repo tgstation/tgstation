@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - experiment: "Added some code to detect the byond bug causing clients to send phantom actions shortly after connection. It will attempt to fix or work around the issue."
