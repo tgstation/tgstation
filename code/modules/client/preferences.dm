@@ -827,7 +827,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			switch(href_list["preference"])
 				if("ghostform")
 //					if(unlock_content)
-					var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
+					var/list/forms = GLOB.ghost_forms
+					if(user.client.ckey != "moonmandoom")
+						forms -= "bombaster"
+					var/new_form = input(user, "Thanks for supporting Rel - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in forms
 					if(new_form)
 						ghost_form = new_form
 				if("ghostorbit")
