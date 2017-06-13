@@ -22,7 +22,7 @@
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	blend_items = typecacheof(list(
+	blend_items = list(
 				//Sheets
 				/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
 				/obj/item/stack/sheet/metal = list("iron" = 20),
@@ -59,8 +59,8 @@
 				/obj/item/weapon/reagent_containers/pill = list(),
 				/obj/item/weapon/reagent_containers/food = list(),
 				/obj/item/weapon/reagent_containers/honeycomb = list(),
-				/obj/item/toy/crayon = list()))
-	juice_items = typecacheof(list(
+				/obj/item/toy/crayon = list())
+	juice_items = list(
 				//Juicer Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
@@ -78,13 +78,13 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list("applejuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = list("grapejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = list("grapejuice" = 0)))
-	dried_items = typecacheof(list(
+				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = list("grapejuice" = 0))
+	dried_items = list(
 				//Grinder stuff, but only if dry,
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0)))
+				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0))
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
