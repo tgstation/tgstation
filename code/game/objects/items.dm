@@ -646,7 +646,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		switch(force)
 			if(1 to 3)
 				force_string = "very low"
-			if(3 to 6)
+			if(4 to 6)
 				force_string = "low"
 			if(7 to 9)
 				force_string = "medium"
