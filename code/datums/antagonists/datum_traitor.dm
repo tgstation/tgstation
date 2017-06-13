@@ -1,3 +1,4 @@
+#define TRAITORS_REQUIRED_FOR_EXCHANGE 8
 /datum/antagonist/traitor
 	name = "Traitor"
 	var/should_specialise = TRUE //do we split into AI and human
@@ -9,6 +10,39 @@
 	var/give_objectives = TRUE
 	var/should_give_codewords = TRUE
 	var/list/objectives_given = list()
+
+/datum/antagonist/traitor/create_antagonist_group(var/list/datum/mind/targets)
+	.=..(targets)
+	if(length(targets)>=TRAITORS_REQUIRED_FOR_EXCHANGE)
+		shuffle_inplace(targets)
+
+		var/datum/mind/M1
+		var/datum/mind/M2
+		for(var/T in targets)
+			var/datum/mind/M = T
+			if(ishuman(M.current))
+				M1 = M
+				break
+		if(!M1)
+			return .
+		for(var/T in targets)
+			var/datum/mind/M = T
+			if(M == M1)
+				continue
+			if(ishuman(M.current))
+				M2 = M
+				break
+		if(!M2)
+			return .
+		var/datum/antagonist/traitor/human/A1 = M1.has_antag_datum(type)
+		if(!A1)
+			return .
+		var/datum/antagonist/traitor/human/A2 = M2.has_antag_datum(type)
+		if(!A2)
+			return .
+		A2.add_exchange("red", M2)
+		A1.add_exchange("blue", M1)
+		
 
 /datum/antagonist/traitor/proc/transfer_important_variables(datum/antagonist/traitor/other)
 	other.silent = silent
@@ -41,13 +75,13 @@
 	if(istype(new_body,/mob/living/silicon/ai)==istype(old_body,/mob/living/silicon/ai))
 		..()
 	else
-		silent = TRUE
 		owner.add_antag_datum(base_datum_custom)
 		for(var/datum/antagonist/traitor/new_datum in owner.antag_datums)
 			if(new_datum == src)
 				continue
 			transfer_important_variables(new_datum)
 			break
+		silent = TRUE
 		on_removal()
 
 
@@ -62,10 +96,15 @@
 	should_give_codewords = FALSE
 
 /datum/antagonist/traitor/proc/specialise()
-	silent = TRUE
 	if(owner.current&&istype(owner.current,/mob/living/silicon/ai))
-		owner.add_antag_datum(ai_datum)
-	else owner.add_antag_datum(human_datum)
+		var/datum/antagonist/traitor/A = new ai_datum
+		transfer_important_variables(A)
+		owner.add_preexisting_antag_datum(A)
+	else 
+		var/datum/antagonist/traitor/A = new human_datum
+		transfer_important_variables(A)
+		owner.add_preexisting_antag_datum(A)
+	silent = TRUE
 	on_removal()
 
 /datum/antagonist/traitor/on_gain()
@@ -127,14 +166,6 @@
 	var/is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
-	if(!SSticker.mode.exchange_blue && SSticker.mode.traitors.len >= 8) 	//Set up an exchange if there are enough traitors
-		if(!SSticker.mode.exchange_red)
-			SSticker.mode.exchange_red = owner
-		else
-			SSticker.mode.exchange_blue = owner
-			assign_exchange_role(SSticker.mode.exchange_red)
-			assign_exchange_role(SSticker.mode.exchange_blue)
-		objective_count += 1					//Exchange counts towards number of objectives
 	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 		forge_single_objective()
 
@@ -284,29 +315,26 @@
 /datum/antagonist/traitor/human/equip(var/silent = FALSE)
 	owner.equip_traitor(employer, silent)
 
-/datum/antagonist/traitor/human/proc/assign_exchange_role()
-	//set faction
-	var/faction = "red"
-	if(owner == SSticker.mode.exchange_blue)
-		faction = "blue"
-
+/datum/antagonist/traitor/human/proc/add_exchange(var/faction, var/datum/mind/target)
 	//Assign objectives
 	var/datum/objective/steal/exchange/exchange_objective = new
-	exchange_objective.set_faction(faction,((faction == "red") ? SSticker.mode.exchange_blue : SSticker.mode.exchange_red))
+	exchange_objective.set_faction(faction,target)
 	exchange_objective.owner = owner
 	add_objective(exchange_objective)
+	owner.announce_last_objective()
 
 	if(prob(20))
 		var/datum/objective/steal/exchange/backstab/backstab_objective = new
 		backstab_objective.set_faction(faction)
 		backstab_objective.owner = owner
 		add_objective(backstab_objective)
+		owner.announce_last_objective()
 
 	//Spawn and equip documents
 	var/mob/living/carbon/human/mob = owner.current
 
 	var/obj/item/weapon/folder/syndicate/folder
-	if(owner == SSticker.mode.exchange_red)
+	if(faction == "red")
 		folder = new/obj/item/weapon/folder/syndicate/red(mob.loc)
 	else
 		folder = new/obj/item/weapon/folder/syndicate/blue(mob.loc)
@@ -323,3 +351,4 @@
 		where = "In your [equipped_slot]"
 	to_chat(mob, "<BR><BR><span class='info'>[where] is a folder containing <b>secret documents</b> that another Syndicate group wants. We have set up a meeting with one of their agents on station to make an exchange. Exercise extreme caution as they cannot be trusted and may be hostile.</span><BR>")
 
+#undef TRAITORS_REQUIRED_FOR_EXCHANGE

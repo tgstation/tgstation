@@ -25,7 +25,7 @@
 	var/list/datum/mind/pre_traitors = list()
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
-	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
+	var/datum/antagonist/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -60,9 +60,8 @@
 
 
 /datum/game_mode/traitor/post_setup()
-	for(var/datum/mind/traitor in pre_traitors)
-		spawn(rand(10,100))
-			traitor.add_antag_datum(antag_datum)
+	var/datum/antagonist/A = new antag_datum
+	A.create_antagonist_group(pre_traitors)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
@@ -162,3 +161,4 @@
 	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
 	traitorhud.leave_hud(traitor_mind.current)
 	set_antag_hud(traitor_mind.current, null)
+

@@ -128,16 +128,20 @@
 	memory = null
 
 // Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type)
-	if(!datum_type)
-		return
-	var/datum/antagonist/A = new datum_type(src)
+/datum/mind/proc/add_preexisting_antag_datum(var/datum/antagonist/A)
+	A.owner = src
 	if(!A.can_be_owned(src))
 		qdel(A)
 		return
 	LAZYADD(antag_datums, A)
 	A.on_gain()
 	return A
+	
+/datum/mind/proc/add_antag_datum(datum_type)
+	if(!datum_type)
+		return
+	var/datum/antagonist/A = new datum_type()
+	add_preexisting_antag_datum(A)
 
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
@@ -1419,12 +1423,19 @@
 
 	edit_memory()
 
+/datum/mind/proc/announce_objective(var/obj_count)
+	var/datum/objective/O = objectives[obj_count]
+	var/exp_text = O.explanation_text
+	to_chat(current, "<B>Objective #[obj_count]</B>: [exp_text]")
+
+/datum/mind/proc/announce_last_objective()
+	announce_objective(length(objectives))
+
 /datum/mind/proc/announce_objectives()
 	var/obj_count = 1
 	to_chat(current, "<span class='notice'>Your current objectives:</span>")
 	for(var/objective in objectives)
-		var/datum/objective/O = objective
-		to_chat(current, "<B>Objective #[obj_count]</B>: [O.explanation_text]")
+		announce_objective(obj_count)
 		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()

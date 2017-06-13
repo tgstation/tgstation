@@ -1,5 +1,4 @@
 /datum/game_mode
-	var/list/target_list = list()
 	var/list/late_joining_list = list()
 
 /datum/game_mode/traitor/internal_affairs
@@ -21,40 +20,14 @@
 
 
 
-/datum/game_mode/traitor/internal_affairs/post_setup()
-	var/i = 0
-	for(var/datum/mind/traitor in pre_traitors)
-		i++
-		if(i + 1 > pre_traitors.len)
-			i = 0
-		target_list[traitor] = pre_traitors[i+1]	
-	..()
-
-
 /datum/game_mode/traitor/internal_affairs/add_latejoin_traitor(datum/mind/character)
 
 	check_potential_agents()
 
 	// As soon as we get 3 or 4 extra latejoin traitors, make them traitors and kill each other.
 	if(late_joining_list.len >= rand(3, 4))
-		// True randomness
-		shuffle_inplace(late_joining_list)
-		// Reset the target_list, it'll be used again in force_traitor_objectives
-		target_list = list()
-
-		// Basically setting the target_list for who is killing who
-		var/i = 0
-		for(var/datum/mind/traitor in late_joining_list)
-			i++
-			if(i + 1 > late_joining_list.len)
-				i = 0
-			target_list[traitor] = late_joining_list[i + 1]
-			traitor.special_role = traitor_name
-
-		// Now, give them their targets
-		for(var/datum/mind/traitor in target_list)
-			..(traitor)
-
+		var/datum/antagonist/A = new antag_datum
+		A.create_antagonist_group(late_joining_list)
 		late_joining_list = list()
 	else
 		late_joining_list += character

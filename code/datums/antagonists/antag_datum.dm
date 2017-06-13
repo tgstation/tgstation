@@ -22,11 +22,15 @@
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	. = TRUE
-	if(owner.has_antag_datum(type))
+	if(!new_owner)
+		new_owner = owner
+	if(new_owner.has_antag_datum(type))
 		return FALSE
-	for(var/i in owner.antag_datums)
+	for(var/i in new_owner.antag_datums)
 		var/datum/antagonist/A = i
 		if(is_type_in_typecache(src, A.typecache_datum_blacklist))
+			return FALSE
+		if(is_type_in_typecache(A, typecache_datum_blacklist))
 			return FALSE
 
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -61,3 +65,9 @@
 
 /datum/antagonist/proc/farewell()
 	return
+
+/datum/antagonist/proc/create_antagonist_group(var/list/datum/mind/targets) //overridden where creating a group is different, e.g double agents (internal affairs) 
+	for(var/M in targets)
+		var/datum/mind/target = M
+		target.add_antag_datum(type)
+	
