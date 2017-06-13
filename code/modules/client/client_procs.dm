@@ -223,7 +223,7 @@ GLOBAL_LIST(external_rsc_urls)
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
-	winset(src, null, "command=\".configure graphics-hwmode on\"")
+//	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	if (byond_version < config.client_error_version)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
 		to_chat(src, config.client_error_message)
@@ -266,8 +266,8 @@ GLOBAL_LIST(external_rsc_urls)
 	add_verbs_from_config()
 	set_client_age_from_db()
 
-	if (isnum(player_age) && player_age == -1) //first connection
-		player_age = 0
+//	if (isnum(player_age) && player_age == -1) //first connection
+//		player_age = 0
 	if (isnum(player_age) && player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
