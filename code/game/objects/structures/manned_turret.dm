@@ -178,7 +178,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON
+	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
