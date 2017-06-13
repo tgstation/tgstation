@@ -341,7 +341,7 @@
 	name = "Toggle PDA Flashlight"
 
 /datum/action/item_action/toggle_pda_light/Trigger()
-	/obj/item/device/pda/P = target
+	var/obj/item/device/pda/P = target
 	if(IsAvailable())
 		target.fon = !target.fon
 		if(target.fon)
