@@ -3,7 +3,7 @@
 	set desc = "Toggles examine hover-over tooltips"
 	set category = "OOC"
 
-	if(GLOB.enable_examine_tips)
-		GLOB.enable_examine_tips = FALSE
+	if(prefs.enable_tips)
+		prefs.enable_tips = FALSE
 	else
-		GLOB.enable_examine_tips = TRUE
+		prefs.enable_tips = TRUE
