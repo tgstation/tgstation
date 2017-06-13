@@ -104,7 +104,6 @@
 #include "code\_globalvars\logging.dm"
 #include "code\_globalvars\misc.dm"
 #include "code\_globalvars\sensitive.dm"
-#include "code\_globalvars\tooltips.dm"
 #include "code\_globalvars\lists\flavor_misc.dm"
 #include "code\_globalvars\lists\maintenance_loot.dm"
 #include "code\_globalvars\lists\mapping.dm"

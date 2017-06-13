@@ -5,5 +5,7 @@
 
 	if(prefs.enable_tips)
 		prefs.enable_tips = FALSE
+		prefs.save_preferences()
 	else
 		prefs.enable_tips = TRUE
+		prefs.save_preferences()
