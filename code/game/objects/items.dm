@@ -659,10 +659,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 
 /obj/item/MouseEntered(location,control,params)
-	if(client)
-		if(in_inventory && client.prefs.enable_tips)
-			friendly_force()
-			openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [f_force]" : ""]",theme = "")
+	if(in_inventory && datum/preferences/enable_tips)
+		friendly_force()
+		openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [f_force]" : ""]",theme = "")
 
 
 /obj/item/MouseExited()
