@@ -149,13 +149,13 @@
 		if(contents && open)
 			for (var/i in 1 to contents.len)
 				var/obj/item/clothing/accessory/medal/M = contents[i]
-				var/icon/medalicon = icon(initial(icon), M.medaltype)
+				var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
 				if(i > 1 && i <= 5)
-					medalicon.Shift(EAST, (i-1)*3)
+					medalicon.pixel_x += ((i-1)*3)
 				else if(i > 5)
-					medalicon.Shift(SOUTH, 7)
-					medalicon.Shift(WEST, 2)
-					medalicon.Shift(EAST, (i-6)*3)
+					medalicon.pixel_y -= 7
+					medalicon.pixel_x -= 2
+					medalicon.pixel_x += ((i-6)*3)
 				add_overlay(medalicon)
 
 /obj/item/weapon/storage/lockbox/medal/sec
