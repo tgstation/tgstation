@@ -76,7 +76,7 @@
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	var/unique_reskin = 1
-	var/list/skins = list("Oak" = "pen-fountain", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b", "Cancel" = null)
+	var/list/skins = list("Oak" = "pen-fountain", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb", "Cancel" = null)
 
 /obj/item/weapon/pen/fountain/attack_self(mob/living/carbon/user)
 	if(unique_reskin)
