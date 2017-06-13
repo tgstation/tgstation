@@ -612,8 +612,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 	if (O.vv_edit_var(variable, var_new) == FALSE)
 		to_chat(src, "Your edit was rejected by the object.")
 		return
-	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]")
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]"
+	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[var_new]")]")
+	log_admin("[key_name(src)] modified [original_name]'s [variable] to [var_new]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [var_new]"
 	message_admins(msg)
 	admin_ticket_log(O, msg)
