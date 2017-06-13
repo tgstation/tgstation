@@ -204,13 +204,9 @@
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in GLOB.admins)
-<<<<<<< HEAD
 			if(!check_rights_for(X, R_ADMIN))
 				continue
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" )
-=======
 			to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</font>")
->>>>>>> 298b68e550... Merge pull request #28367 from Cyberboss/patch-123
 	else
 		window_flash(recipient, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
