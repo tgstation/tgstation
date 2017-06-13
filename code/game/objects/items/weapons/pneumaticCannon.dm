@@ -32,7 +32,7 @@
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
-	var/list/text = ""
+	var/list/text = list()
 	if(!in_range(user, src))
 		text += "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
