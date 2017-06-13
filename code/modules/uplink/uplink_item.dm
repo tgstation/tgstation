@@ -686,7 +686,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			detonate PDAs of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen \
 			them for longer. Beware, it has a chance to detonate your PDA."
-	item = /obj/item/weapon/cartridge/syndicate
+	item = /obj/item/weapon/cartridge/virus/syndicate
 	cost = 6
 
 /datum/uplink_item/stealthy_weapons/suppressor
@@ -743,6 +743,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 20
+
+/datum/uplink_item/stealthy_tools/frame
+	name = "F.R.A.M.E. PDA Cartridge"
+	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
+			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked.  \
+			You will recieve the unlock code upon activating the virus, and the new uplink may be charged with \
+			telecrystals normally."
+	item = /obj/item/weapon/cartridge/virus/frame
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
