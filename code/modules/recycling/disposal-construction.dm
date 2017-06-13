@@ -50,6 +50,9 @@
 		if(DISP_YJUNCTION)
 			base_state = "pipe-y"
 			dpdir = dir | left | right
+		if(DISP_4JUNCTION)
+			base_state = "pipe-4"
+			dpdir = dir | left | right | flip
 		if(DISP_END_TRUNK)
 			base_state = "pipe-t"
 			dpdir = dir

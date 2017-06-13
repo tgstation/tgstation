@@ -34,12 +34,13 @@ Construction breaks otherwise
 #define DISP_JUNCTION			2
 #define DISP_JUNCTION_FLIP		3
 #define DISP_YJUNCTION			4
-#define DISP_END_TRUNK			5
-#define DISP_END_BIN			6
-#define DISP_END_OUTLET			7
-#define DISP_END_CHUTE			8
-#define DISP_SORTJUNCTION		9
-#define DISP_SORTJUNCTION_FLIP	10
+#define DISP_4JUNCTION			5
+#define DISP_END_TRUNK			6
+#define DISP_END_BIN			7
+#define DISP_END_OUTLET			8
+#define DISP_END_CHUTE			9
+#define DISP_SORTJUNCTION		10
+#define DISP_SORTJUNCTION_FLIP	11
 
 //Transit tubes
 #define TRANSIT_TUBE_STRAIGHT			0

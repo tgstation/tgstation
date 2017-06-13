@@ -170,6 +170,8 @@
 				stored.ptype = DISP_JUNCTION_FLIP
 			if("pipe-y")
 				stored.ptype = DISP_YJUNCTION
+			if("pipe-4")
+				stored.ptype = DISP_4JUNCTION
 			if("pipe-t")
 				stored.ptype = DISP_END_TRUNK
 			if("pipe-j1s")
@@ -308,8 +310,15 @@
 					if(!src || !W.isOn()) return
 					deconstruct()
 					to_chat(user, "<span class='notice'>You slice the disposal pipe.</span>")
+
 	else
 		return ..()
+
+/obj/structure/disposalpipe/attack_hand(mob/user)
+	if(stored.ptype == DISP_4JUNCTION)
+		setDir(turn(dir, -90))
+		dpdir = dir
+		update_icon()
 
 //checks if something is blocking the deconstruction (e.g. trunk with a bin still linked to it)
 /obj/structure/disposalpipe/proc/can_be_deconstructed()
@@ -383,6 +392,8 @@
 			dpdir = dir | turn(dir, 90) | turn(dir,180)
 		if(DISP_YJUNCTION)
 			dpdir = dir | turn(dir,90) | turn(dir, -90)
+		if(DISP_4JUNCTION)
+			dpdir = dir | turn(dir,90) | turn(dir, -90) | turn(dir, 180)
 	update()
 
 

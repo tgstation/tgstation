@@ -180,4 +180,17 @@
 	. = ..()
 	update_icon()
 
+/obj/item/weapon/inducer/vehicle
+	name = "mounted inducer"
+	desc = "A vehicle-mounted tool for charging internal power cells."
+	cell_type = /obj/item/weapon/stock_parts/cell/high/slime
+	powertransfer = 2000
+	var/obj/vehicle/space/speedbike/repair/vehicle = null
 
+/obj/item/weapon/inducer/vehicle/dropped(mob/user)
+	..()
+	user << "<span class='notice'>The [src] snaps back into its compartment!</span>"
+	playsound(get_turf(src),'sound/items/change_jaws.ogg', 75, 1)
+	if(vehicle)
+		loc = vehicle
+		vehicle.inducer_out = FALSE

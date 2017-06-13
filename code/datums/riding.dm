@@ -230,6 +230,46 @@
 /datum/riding/space/speedbike/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list("[NORTH]" = list(0, -8), "[SOUTH]" = list(0, 4), "[EAST]" = list(-10, 5), "[WEST]" = list( 10, 5))
 
+/datum/riding/space/speedbike/repair
+	vehicle_move_delay = 1
+	var/obj/vehicle/space/speedbike/repair/R
+
+
+
+/datum/riding/space/speedbike/repair/handle_vehicle_layer()
+	. = ..()
+	R = ridden
+	if(R.turret)
+		if(ridden.dir == SOUTH)
+			R.turret.layer = BELOW_MOB_LAYER
+		else
+			R.turret.layer = ABOVE_MOB_LAYER
+
+
+/datum/riding/space/speedbike/repair/get_offsets(pass_index)
+	. = ..()
+	R = ridden
+	if(R.turret)
+		R.turret.forceMove(get_turf(R))
+		switch(R.dir)
+			if(NORTH)
+				R.turret.pixel_x = 1
+				R.turret.pixel_y = -16
+			if(EAST)
+				R.turret.pixel_x = -23
+				R.turret.pixel_y = 10
+			if(SOUTH)
+				R.turret.pixel_x = 1
+				R.turret.pixel_y = 23
+			if(WEST)
+				R.turret.pixel_x = 23
+				R.turret.pixel_y = 10
+
+
+
+datum/riding/space/speedbike/atmos
+	vehicle_move_delay = 1
+
 //SPEEDUWAGON
 
 /datum/riding/space/speedwagon

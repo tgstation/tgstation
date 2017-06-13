@@ -23,6 +23,7 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	var/recoil = TRUE
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -115,7 +116,7 @@
 
 		var/direction = get_dir(src,target)
 
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
+		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored && recoil)
 			spawn(0)
 				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)
@@ -137,7 +138,8 @@
 				sleep(3)
 				step(B, movementdirection)
 
-		else user.newtonian_move(turn(direction, 180))
+		else if(recoil)
+			user.newtonian_move(turn(direction, 180))
 
 		var/turf/T = get_turf(target)
 		var/turf/T1 = get_step(T,turn(direction, 90))
