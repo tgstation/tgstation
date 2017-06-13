@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	origin_tech = "programming=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	actions_types = list(/datum/action/item_action/toggle_light)
 
 
 	//Main variables
@@ -106,6 +107,22 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
 		return attack_self(M)
 	return
+
+/obj/item/device/pda/ui_action_click()
+	if(fon)
+		fon = 0
+		set_light(0)
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+	else
+		fon = 1
+		set_light(2.3)
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+	update_icon()
+
 
 /obj/item/device/pda/attack_self(mob/user)
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
@@ -352,9 +369,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(fon)
 					fon = 0
 					set_light(0)
+					for(var/X in actions)
+						var/datum/action/A = X
+						A.UpdateButtonIcon()
 				else
 					fon = 1
 					set_light(2.3)
+					for(var/X in actions)
+						var/datum/action/A = X
+						A.UpdateButtonIcon()
 				update_icon()
 			if("Medical Scan")
 				if(scanmode == 1)
