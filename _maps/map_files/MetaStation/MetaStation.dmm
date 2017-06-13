@@ -7198,7 +7198,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/security/range)
+/area/maintenance/fore)
 "anE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance{
@@ -7500,7 +7500,7 @@
 	req_one_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/security/brig)
+/area/maintenance/port/fore)
 "aon" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -12985,7 +12985,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/quartermaster/miningoffice)
+/area/maintenance/port/fore)
 "ayl" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
@@ -13002,7 +13002,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/quartermaster/warehouse)
+/area/maintenance/port/fore)
 "ayn" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -16755,7 +16755,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/security/detectives_office)
+/area/maintenance/fore)
 "aFc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/firealarm{
@@ -18232,7 +18232,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/lawoffice)
+/area/maintenance/fore)
 "aHI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -24215,7 +24215,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/hydroponics/garden)
+/area/maintenance/starboard/fore)
 "aTD" = (
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -27836,7 +27836,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/quartermaster/storage)
+/area/maintenance/port/fore)
 "bal" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -30402,7 +30402,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/security/checkpoint/customs)
+/area/maintenance/port/fore)
 "beS" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -30436,7 +30436,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/quartermaster/sorting)
+/area/maintenance/port/fore)
 "beV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -37282,7 +37282,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/bar)
+/area/maintenance/starboard)
 "brm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45048,7 +45048,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/theatre)
+/area/maintenance/starboard)
 "bFB" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -49949,7 +49949,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/theatre)
+/area/maintenance/starboard)
 "bPg" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -50218,7 +50218,7 @@
 	req_one_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice)
+/area/maintenance/port)
 "bPJ" = (
 /obj/structure/rack{
 	dir = 8;
@@ -54299,7 +54299,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/engine/atmos)
+/area/maintenance/starboard)
 "bXf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/cable/yellow{
@@ -56256,7 +56256,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/hydroponics)
+/area/maintenance/starboard)
 "caU" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -59449,7 +59449,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/sleeper)
+/area/maintenance/port/aft)
 "cgP" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -60105,7 +60105,7 @@
 	initialize_directions = 11
 	},
 /turf/open/floor/plating,
-/area/medical/surgery)
+/area/maintenance/port/aft)
 "cie" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -64118,7 +64118,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
-/area/science/explab)
+/area/maintenance/starboard/aft)
 "cpG" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -64245,7 +64245,7 @@
 	req_access_txt = "45"
 	},
 /turf/open/floor/plating,
-/area/medical/surgery)
+/area/maintenance/port/aft)
 "cpU" = (
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
@@ -65631,7 +65631,7 @@
 	req_access_txt = "5"
 	},
 /turf/open/floor/plating,
-/area/medical/cryo)
+/area/maintenance/port/aft)
 "css" = (
 /turf/closed/wall,
 /area/medical/cryo)
@@ -71831,7 +71831,7 @@
 	req_access_txt = "5"
 	},
 /turf/open/floor/plating,
-/area/medical/medbay/aft)
+/area/maintenance/port/aft)
 "cDQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -73816,7 +73816,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/science/mixing)
+/area/maintenance/starboard/aft)
 "cHi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -75716,7 +75716,7 @@
 	req_access_txt = "29"
 	},
 /turf/open/floor/plating,
-/area/science/robotics/lab)
+/area/maintenance/aft)
 "cKI" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/r_wall,
@@ -75875,8 +75875,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/maintenance{
 	name = "Crematorium Maintenance";
-	req_access_txt = "12;27";
-	req_one_access_txt = "0"
+	req_access_txt = "0";
+	req_one_access_txt = "27"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -75890,8 +75890,8 @@
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Chapel Office Maintenance";
-	req_access_txt = "12;22";
-	req_one_access_txt = "0"
+	req_access_txt = "0";
+	req_one_access_txt = "22"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -76485,8 +76485,8 @@
 "cMb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chapel Maintenance";
-	req_access_txt = "12";
-	req_one_access_txt = "0"
+	req_access_txt = "0";
+	req_one_access_txt = "12;22"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -91636,6 +91636,12 @@
 "dBt" = (
 /turf/closed/wall,
 /area/maintenance/starboard/aft)
+"dBu" = (
+/turf/closed/wall,
+/area/engine/gravity_generator)
+"dBv" = (
+/turf/closed/wall,
+/area/engine/gravity_generator)
 
 (1,1,1) = {"
 aaa
@@ -121627,7 +121633,7 @@ cGY
 cHU
 cIO
 cJN
-clK
+cCq
 cgN
 cMl
 bTs
@@ -121884,7 +121890,7 @@ cGZ
 cHV
 cIP
 cCq
-clK
+cCq
 cLA
 bTs
 bTs
@@ -125159,7 +125165,7 @@ aTt
 aUN
 aUM
 aYc
-aZu
+aTC
 bbe
 bcp
 bdT
@@ -126417,7 +126423,7 @@ alf
 amv
 acP
 aoS
-agq
+acP
 arB
 arB
 arB
@@ -131810,8 +131816,8 @@ acP
 acQ
 acQ
 acQ
-dnh
-dnh
+acP
+acP
 dnh
 dnh
 dnh
@@ -133101,8 +133107,8 @@ dnh
 apg
 aqs
 arM
-dnh
-dnh
+dBu
+dBv
 avv
 axY
 axU
