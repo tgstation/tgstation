@@ -580,7 +580,8 @@
 
 	if(client && check_rights_for(client, R_ADMIN))
 		if(statpanel("MC"))
-			stat("Location:", "([x], [y], [z])")
+			var/turf/T = get_turf(client.eye)
+			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
 			GLOB.stat_entry()
