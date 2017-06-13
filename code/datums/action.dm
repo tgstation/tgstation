@@ -337,6 +337,19 @@
 	check_flags = 0
 	name = "Activate Explosive Implant"
 
+/datum/action/item_action/toggle_pda_light
+	name = "Toggle PDA Flashlight"
+
+/datum/action/item_action/toggle_pda_light/Trigger()
+	var/obj/item/device/pda/P = target
+	if(IsAvailable())
+		P.fon = !P.fon
+		if(P.fon)
+			P.set_light(0)
+		else
+			P.set_light(2.3)
+		return 1
+
 /datum/action/item_action/toggle_research_scanner
 	name = "Toggle Research Scanner"
 	button_icon_state = "scan_mode"
