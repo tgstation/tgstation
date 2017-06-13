@@ -106,7 +106,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/datum/rpg_loot/rpg_loot = null
 
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
-	var/f_force = null
+	var/force_string = null//string form of an item's force
+	var/last_force_string_check = null
 
 /obj/item/Initialize()
 	if (!materials)
@@ -640,28 +641,31 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
 
-/obj/item/proc/friendly_force()
+/obj/item/proc/update_force_string()
 	if(force)
-		if(force <= 3)
-			f_force = "very low"
-		else if(force <= 5)
-			f_force = "low"
-		else if(force <= 7)
-			f_force = "medium"
-		else if(force <= 10)
-			f_force = "<font color=green>high</font>"
-		else if(force <= 15)
-			f_force = "<font color=red>robust</combat>"
-		else if(force <= 24)
-			f_force = "<font color=orange>very robust</font>"
-		else if(force >= 25)
-			f_force = "<font color=white>Exceptionally Robust</font>"
+		switch(force)
+			if(1 to 3)
+				force_string = "very low"
+			if(3 to 6)
+				force_string = "low"
+			if(7 to 9)
+				force_string = "medium"
+			if(10 to 14)
+				force_string = "<font color=green>high</font>"
+			if(15 to 20)
+				force_string = "<font color=red>robust</combat>"
+			if(20 to 25)
+				force_string = "<font color=orange>very robust</font>"
+			else
+				force_string = "<font color=white>Exceptionally Robust</font>"
+		last_force_string_check = force
 
 
 /obj/item/MouseEntered(location,control,params)
 	if(in_inventory && usr.client.prefs.enable_tips)
-		friendly_force()
-		openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [f_force]" : ""]",theme = "")
+		if(last_force_string_check != force)
+    		update_force_string()
+		openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
 
 
 /obj/item/MouseExited()
