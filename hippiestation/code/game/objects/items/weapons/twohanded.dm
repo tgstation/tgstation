@@ -13,6 +13,12 @@
 	var/burnwall = TRUE
 	var/charge_time = 15
 	var/kindle_time = 100
+	var/list/extra_damage_targets = list(/obj/structure/door_assembly, /obj/structure/grille, /obj/structure/mineral_door, /obj/structure/window, /obj/machinery/door)
+
+/obj/item/weapon/twohanded/fireaxe/fireyaxe/Initialize()
+	.=..()
+	extra_damage_targets = typecacheof(extra_damage_targets)
+
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/update_icon()
 	icon_state = "fireaxe[wielded]"
@@ -51,21 +57,22 @@
 		addtimer(CALLBACK(src, .proc/recharge), charge_time)
 		return
 	if(wielded && proximity_flag)
-		var/atom/A = target
-		A.fiery_axe_act(user)//HERE'S JOHNNY!!
-		if(iswallturf(target))
-			var/turf/closed/wall/Wall = target
-			if(istype(Wall, /turf/closed/wall/r_wall))
-				to_chat(user, "<span class='danger'>This wall is to strong to be burned by the flames!</span>")
-			else if(burnwall)
-				Wall.thermite += 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
-				Wall.overlays = list()
-				Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
-				burnwall = FALSE
-				addtimer(CALLBACK(src, .proc/rekindle), kindle_time)
-			else
-				to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
-			..()
+		var/obj/J = target
+		if(is_type_in_typecache(J, extra_damage_targets))
+			J.take_damage(75, BRUTE, "melee", 0)
+	if(iswallturf(target))
+		var/turf/closed/wall/Wall = target
+		if(istype(Wall, /turf/closed/wall/r_wall))
+			to_chat(user, "<span class='danger'>This wall is to strong to be burned by the flames!</span>")
+		else if(burnwall)
+			Wall.thermite += 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
+			Wall.overlays = list()
+			Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+			burnwall = FALSE
+			addtimer(CALLBACK(src, .proc/rekindle), kindle_time)
+		else
+			to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
+		..()
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/proc/recharge()
 	if(!charged)
