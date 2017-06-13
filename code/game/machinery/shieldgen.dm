@@ -190,20 +190,27 @@
 			anchored = 0
 
 	else if(W.GetID())
-		if(allowed(user))
+		if(allowed(user) && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
+		else if(emagged)
+			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
 		return ..()
 
-/obj/machinery/shieldgen/emag_act()
-	if(!(stat & BROKEN))
-		stat |= BROKEN
-		obj_integrity = 0
-		update_icon()
+/obj/machinery/shieldgen/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		locked = 0
+		playsound(src.loc, "sparks", 100, 1)
+		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
+		if(!(stat & BROKEN))
+			stat |= BROKEN
+			obj_integrity = 0
+			update_icon()
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -349,15 +356,24 @@
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())
-		if(allowed(user))
+		if(allowed(user) && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+		else if(emagged)
+			to_chat(user, "<span class='danger'>Error, access controller damaged!</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else
 		add_fingerprint(user)
 		return ..()
+
+/obj/machinery/shieldwallgen/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+		locked = 0
+		playsound(src.loc, "sparks", 100, 1)
+		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(!anchored)
