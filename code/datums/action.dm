@@ -343,11 +343,11 @@
 /datum/action/item_action/toggle_pda_light/Trigger()
 	var/obj/item/device/pda/P = target
 	if(IsAvailable())
-		target.fon = !target.fon
-		if(target.fon)
-			target.set_light(0)
+		P.fon = !P.fon
+		if(P.fon)
+			P.set_light(0)
 		else
-			target.set_light(2.3)
+			P.set_light(2.3)
 		return 1
 
 /datum/action/item_action/toggle_research_scanner
