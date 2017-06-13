@@ -6006,7 +6006,7 @@
 	},
 /obj/structure/shuttle/engine/heater,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "ajO" = (
 /obj/structure/window/reinforced{
@@ -6015,7 +6015,7 @@
 /obj/structure/shuttle/engine/heater,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "ajP" = (
 /obj/structure/barricade/wooden,
@@ -6859,19 +6859,19 @@
 	icon_state = "burst_l"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "akR" = (
 /obj/structure/shuttle/engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "akS" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_r"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "akT" = (
 /obj/structure/sign/electricshock{

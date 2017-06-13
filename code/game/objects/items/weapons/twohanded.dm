@@ -625,7 +625,7 @@
 	if(istype(target, /turf/closed/wall))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
-		playsound(target, 'sound/magic/Disintegrate.ogg', 100, 1)
+		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)
 		W.break_wall()
 		return 1
 	..()

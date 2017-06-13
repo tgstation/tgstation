@@ -408,6 +408,11 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
+/datum/mutation/human/chameleon/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+	if(proximity) //stops tk from breaking chameleon
+		owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
+		return
+	
 /datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return

@@ -47,25 +47,27 @@
 	if(user.incapacitated() || !istype(user))
 		return
 	if(do_after(user, 30, target = M))
-		M.forceMove(get_turf(src))
-		..()
-		for(var/V in M.held_items)
-			var/obj/item/I = V
-			if(istype(I))
-				if(M.dropItemToGround(I))
-					var/obj/item/gun_control/TC = new(src)
-					M.put_in_hands(TC)
-			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-				var/obj/item/gun_control/TC = new(src)
-				M.put_in_hands(TC)
-		M.pixel_y = 14
-		layer = ABOVE_MOB_LAYER
-		setDir(SOUTH)
-		playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
-		anchored = TRUE
-		if(user.client)
-			user.client.change_view(view_range)
-		START_PROCESSING(SSfastprocess, src)
+    M.forceMove(get_turf(src))
+    . = ..()
+    if(!.)
+      return
+    for(var/V in M.held_items)
+      var/obj/item/I = V
+      if(istype(I))
+        if(M.dropItemToGround(I))
+          var/obj/item/gun_control/TC = new(src)
+          M.put_in_hands(TC)
+      else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
+        var/obj/item/gun_control/TC = new(src)
+        M.put_in_hands(TC)
+    M.pixel_y = 14
+    layer = ABOVE_MOB_LAYER
+    setDir(SOUTH)
+    playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+    anchored = TRUE
+    if(M.client)
+      M.client.change_view(view_range)
+    START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/manned_turret/process()
 	if(!LAZYLEN(buckled_mobs))
@@ -152,7 +154,7 @@
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
-	playsound(src, 'sound/weapons/Gunshot_smg.ogg', 75, 1)
+	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, 1)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
 	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)
@@ -177,7 +179,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON
+	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 

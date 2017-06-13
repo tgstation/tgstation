@@ -109,7 +109,7 @@
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
 
@@ -467,7 +467,7 @@
 			else
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, 'sound/items/welder.ogg', 40, 1)
 
 /*
  * Rack destruction

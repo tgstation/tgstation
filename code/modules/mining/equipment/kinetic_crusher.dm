@@ -102,7 +102,7 @@
 				if(!QDELETED(C))
 					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
 				L.apply_damage(80, BRUTE, blocked = def_check)
-				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
 				if(!QDELETED(C))
 					C.total_damage += 50
@@ -264,7 +264,7 @@
 	for(var/mob/living/L in oview(2, user))
 		if(L.stat == DEAD)
 			continue
-		playsound(L, 'sound/magic/Fireball.ogg', 20, 1)
+		playsound(L, 'sound/magic/fleshtostone.ogg', 20, 1)
 		new /obj/effect/temp_visual/fire(L.loc)
 		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustBruteLoss(bonus_value)

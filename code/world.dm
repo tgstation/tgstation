@@ -91,21 +91,25 @@
 		log_game("Round ID: [GLOB.round_id]")
 
 /world/Topic(T, addr, master, key)
-	if(config && config.log_world_topic)
+	var/list/input = params2list(T)
+	
+	var/pinging = ("ping" in input)
+	var/playing = ("players" in input)
+	
+	if(!pinging && !playing && config && config.log_world_topic)
 		GLOB.world_game_log << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
 
-	var/list/input = params2list(T)
 	if(input[SERVICE_CMD_PARAM_KEY])
 		return ServiceCommand(input)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
 
-	if("ping" in input)
+	if(pinging)
 		var/x = 1
 		for (var/client/C in GLOB.clients)
 			x++
 		return x
 
-	else if("players" in input)
+	else if(playing)
 		var/n = 0
 		for(var/mob/M in GLOB.player_list)
 			if(M.client)

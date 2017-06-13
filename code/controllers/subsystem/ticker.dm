@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
-	world << sound('sound/AI/welcome.ogg')
+	world << sound('sound/ai/welcome.ogg')
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -579,7 +579,7 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 	//medals, placed far down so that people can actually see the commendations.
-	if(GLOB.commendations)
+	if(GLOB.commendations.len)
 		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
 		for (var/com in GLOB.commendations)
 			to_chat(world, com)
