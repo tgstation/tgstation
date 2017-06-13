@@ -14,6 +14,7 @@
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	mutatelist = list(/obj/item/seeds/onion/red)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/onion
 	seed = /obj/item/seeds/onion
@@ -22,6 +23,7 @@
 	icon_state = "onion"
 	filling_color = "#C0C9A0"
 	bitesize_mod = 2
+	tastes = list("onions" = 1)
 
 /obj/item/seeds/onion/red
 	name = "pack of red onion seeds"
@@ -31,6 +33,7 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/onion/red
+	genes = list(/datum/plant_gene/trait/smoke)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "tearjuice" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/onion/red

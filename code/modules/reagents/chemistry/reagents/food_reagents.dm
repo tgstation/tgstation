@@ -537,7 +537,7 @@
 	id = "tearjuice"
 	description = "A blinding substance extracted from certain onions."
 	color = "#c0c9a0"
-	taste_description = "bitter"
+	taste_description = "bitterness"
 
 /datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M))

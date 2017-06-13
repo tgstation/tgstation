@@ -128,7 +128,7 @@
 
 /datum/food_processor_process/onion
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/onion
-	output = /obj/item/weapon/reagent_container/food/snacks/onionrings
+	output = /obj/item/weapon/reagent_containers/food/snacks/onionrings
 
 /* mobs */
 /datum/food_processor_process/mob/process_food(loc, what, processor)
