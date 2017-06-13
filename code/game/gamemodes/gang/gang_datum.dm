@@ -109,6 +109,7 @@
 		/datum/gang_item/equipment/medpatch,
 		/datum/gang_item/equipment/spraycan,
 		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/sandbag,
 		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/frag,
 		/datum/gang_item/equipment/recruiter,

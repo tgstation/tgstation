@@ -280,11 +280,11 @@
 	return ..()
 
 /obj/item/projectile/bullet/sniper/gang
-	damage = 55
-	stun = 1
-	weaken = 1
+	damage = 60
+	stun = 0
+	weaken = 2
 	dismemberment = 15
-	armour_penetration = 25
+	armour_penetration = 30
 
 /obj/item/projectile/bullet/sniper/gang/sleeper
 	nodamage = 1

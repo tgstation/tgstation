@@ -119,7 +119,7 @@
 	item_path = /obj/machinery/gang/backup
 
 /datum/gang_item/function/backup/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	if(gang.gateways >= GATEWAYMAX)
+	if(gang.gateways >= GATEWAYMAX || !SSticker.mode.vigilantes)
 		return FALSE
 	return TRUE
 
@@ -665,8 +665,15 @@
 	name = "Gangbreaker Implant"
 	id = "gangbreaker"
 	cost = 15
-	item_path = /obj/item/weapon/implanter/mindshield
+	item_path = /obj/item/weapon/implanter/mindshield/strong
 	spawn_msg = "<span class='notice'>Nanotrasen has provided you with a prototype mindshield implant that will both break a gang's control over a person and shield them from further conversion attempts.Gang bosses are immune.</b></u></span>"
+
+/obj/item/weapon/implanter/mindshield/strong
+	name = "Gangbreaker Implanter"
+	imp_type = /obj/item/weapon/implant/mindshield/strong
+
+/obj/item/weapon/implant/mindshield/strong
+	strong = TRUE
 
 /datum/gang_item/equipment/recruiter
 	name = "Advanced Recruitment Implant"

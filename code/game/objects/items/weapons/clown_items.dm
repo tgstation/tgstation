@@ -50,6 +50,14 @@
 	cleanspeed = 35
 	slippyness = 0
 
+/obj/item/weapon/soap/vigilante/Scrub(mob/user, obj/effect/decal/cleanable/scum)
+	if(istype(scum, /obj/effect/decal/cleanable/crayon/gang))
+		var/obj/item/device/vigilante_tool/VT = locate(/obj/item/device/vigilante_tool) in user.contents
+		var/obj/effect/decal/cleanable/crayon/gang/tag = scum
+		VT.tags += tag.territory
+		to_chat(user, "<span class='notice'><b> The [tag.territory] is no longer under gang control. Keep this area clean for additional influence.</b></span>")
+	. = ..()
+
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to their mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!")
@@ -73,13 +81,7 @@
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
-			if(istype(src, /obj/item/weapon/soap/vigilante) && istype(target, /obj/effect/decal/cleanable/crayon/gang))
-				var/obj/item/device/vigilante_tool/VT = locate(/obj/item/device/vigilante_tool) in user.contents
-				var/obj/effect/decal/cleanable/crayon/gang/tag = target
-				VT.tags += tag.territory
-				to_chat(user, "<span class='notice'><b> The [tag.territory] is no longer under gang control. Keep this area clean for additional influence.</b></span>")
-			qdel(target)
+			Scrub(user, target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
 		var/mob/living/carbon/human/H = user
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
@@ -103,6 +105,9 @@
 			target.wash_cream()
 	return
 
+/obj/item/weapon/soap/proc/Scrub(mob/user, obj/effect/decal/cleanable/scum)
+	to_chat(user, "<span class='notice'>You scrub \the [scum.name] out.</span>")
+	qdel(scum)
 
 /*
  * Bike Horns
