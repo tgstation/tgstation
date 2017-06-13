@@ -1,6 +1,7 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 #define DOM_REQUIRED_TURFS 30
 #define DOM_REQUIRED_SEPARATION 10
+#define DOM_REQUIRED_DISTANCE_FROM_CRITICAL 25
 #define DOMINATOR_FORCEFIELD_RADIUS 6
 #define DOMINATOR_TELEGRAPH_DELAY 100		//No visual effects yet but prevents instant combat dominator dropping.
 #define DOMINATOR_FORCEFIELD FALSE			//Dominators have forcefields.
@@ -48,6 +49,15 @@
 		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION)
 			return TRUE
 	return FALSE
+
+/proc/dominator_location_check(turf/T)
+	var/atom/A = SSshuttle.getDock("emergency_home")
+	var/atom/B = SSshuttle.getDock("arrivals_stationary")
+	if(!istype(A) || !istype(B))			//Well great, someone fucked up the map, whatever.
+		return TRUE
+	if(get_dist(A, T) < DOM_REQUIRED_DISTANCE_FROM_CRITICAL || get_dist(B, T) < DOM_REQUIRED_DISTANCE_FROM_CRITICAL)
+		return FALSE
+	return TRUE
 
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
@@ -360,16 +370,17 @@
 			. += "<br>"
 
 /obj/machinery/dominator/proc/claim_dominator(mob/user)
-	if(!is_gang_boss(user))
+	if(!is_gangboss(user))
 		return
+	var/area/A = get_area(src)
 	var/datum/gang/new_boss_in_town = user.mind.gang_datum
 	if(new_boss_in_town.current_dominator)
 		var/area/current_area = get_area(new_boss_in_town.current_dominator.loc)
 		to_chat(user, "<span class='boldwarning'>Your gang already has an established dominator at [current_area.map_name]!</span>")
 		return
-	////////////////////wip
-
-
+	gang = new_boss_in_town
+	to_chat(user, "<span clas='boldnotice'>You claim [src] for your new gang!</span>")
+	new_boss_in_town.gang_broadcast("[user] has designated a new dominator for your gang at [A.map_name]!")
 
 /obj/machinery/dominator/proc/get_gang_dominator_interface(takeover = TRUE, start = FALSE)
 	. = list()
