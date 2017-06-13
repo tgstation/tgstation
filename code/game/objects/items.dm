@@ -664,7 +664,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/MouseEntered(location,control,params)
 	if(in_inventory && usr.client.prefs.enable_tips)
 		if(last_force_string_check != force)
-    		update_force_string()
+			update_force_string()
 		openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
 
 
