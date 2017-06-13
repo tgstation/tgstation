@@ -6,6 +6,9 @@
 	var/mouseObject = null
 	var/mouseControlObject = null
 
+/mob
+	var/list/mousemove_intercept_objects
+
 /client/MouseDown(object, location, control, params)
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
@@ -90,3 +93,9 @@
 	mouseLocation = location
 	mouseObject = object
 	mouseControlObject = control
+	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
+		for(obj/item/I in mob.mousemove_intercept_objects)
+			I.on_mouse_move(object, location, control, params)
+
+/obj/item/proc/on_mouse_move(object, location, control, params)
+	return

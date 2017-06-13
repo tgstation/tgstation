@@ -12,22 +12,13 @@
 	force = 15
 	materials = list()
 	origin_tech = ""
-	recoil = 5
+	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3
 	modifystate = FALSE
-	zoomable = TRUE
-	zoom_amt = 17
-	zoom_out_amt = 20
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
-	var/hipfire_inaccuracy = 2
-	var/hipfire_recoil = 10
-	var/scoped_inaccuracy = 0
-	var/scoped_recoil = 3
-	var/scoped = FALSE
-	var/noscope = FALSE	//Can you fire this without a scope?
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
 	pin = null
@@ -60,6 +51,15 @@
 	var/delay = 65
 	var/lastfire = 0
 
+	//ZOOMING
+	var/zooming = FALSE
+	var/zoomed = FALSE
+	var/break_zooming = FALSE
+	var/current_zoom = 0
+	var/zoom_max = 10
+	var/zoom_time_per_tile = 2
+	var/scoping = FALSE
+
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
@@ -68,11 +68,62 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/infinite
 	aiming_time = 0
 	recoil = 0
-	scoped_recoil = 0
-	hipfire_recoil = 0
-	hipfire_inaccuracy = 0
-	scoped_inaccuracy = 0
-	noscope = 1
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/stop_zooming()
+	break_zooming = TRUE
+	if((zoomed || zooming || current_zoom) && istype(current_user) && current_user.client)
+		current_user.client.view = world.view
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
+	if(!scoping)
+		return
+	if(!istype(current_user) || !current_user.client)
+		return
+	if((zooming || zoomed) && break_zooming)
+		animate(current_uesr.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+		current_user.client.view = world.view
+		break_zooming = FALSE
+		current_zoom = 0
+	if(++current_zoom > zoom_max)
+		return
+	current_user.client.view += current_zoom
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming(direction)
+	if(zooming || zoomed || !istype(current_user) || !current_user.client)
+		return
+	var/x_s = 0
+	var/y_s = 0
+	var/time = zoom_time_per_tile * zoom_max
+	switch(direction)
+		if(NORTH)
+			y_s = 64
+		if(SOUTH)
+			y_s = -64
+		if(WEST)
+			x_s = -64
+		if(EAST)
+			x_s = 64
+		if(NORTHEAST)
+			x_s = 64
+			y_s = 64
+		if(SOUTHEAST)
+			x_s = 64
+			y_s = -64
+		if(NORTHWEST)
+			x_s = -64
+			y_s = 64
+		if(SOUTHWEST)
+			x_s = -64
+			y_s = -64
+		else
+			return
+	x_s *= zoom_max
+	y_s *= zoom_max
+	var/x_c = current_user.client.pixel_x
+	var/y_c = current_user.client.pixel_y
+	animate(current_user.client, pixel_x = (x_c + x_s), pixel_y = (y_c + y_s), time, FALSE, SINE_EASING)
+	zooming = FALSE
+	zoomed = TRUE
 
 /obj/item/weapon/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
@@ -87,7 +138,7 @@
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
-	if(scoped)
+	if(zooming || zoomed)
 		slowdown = scoped_slow
 	else
 		slowdown = initial(slowdown)
@@ -99,37 +150,6 @@
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	..()
-
-/obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
-	. = ..()
-	scope(user, .)
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/scope(mob/user, forced)
-	var/scoping
-	switch(forced)
-		if(TRUE)
-			scoping = TRUE
-		if(FALSE)
-			scoping = FALSE
-		else
-			scoping = !scoped
-	if(scoping)
-		spread = scoped_inaccuracy
-		recoil = scoped_recoil
-		scoped = TRUE
-		user << "<span class='boldnotice'>You bring your [src] up and use its scope...</span>"
-	else
-		spread = hipfire_inaccuracy
-		recoil = hipfire_recoil
-		scoped = FALSE
-		user << "<span class='boldnotice'>You lower your [src].</span>"
-	update_slowdown()
-
-/obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
-	if(!scoped && !noscope)
-		user << "<span class='userdanger'>This beam rifle can only be used while scoped!</span>"
-		return FALSE
-	. = ..(user)
 
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
@@ -165,17 +185,18 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
 	clear_tracers()
+	set_user(null)
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
+	process_zoom()
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
 		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
-	process_aim()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
 	if(current_user.client.mouseParams)
@@ -198,21 +219,42 @@
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
 	delay_penalty(aiming_time_increase_user_movement)
+	process_aim()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming()
+/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming(atom/location)
+	var/turf/T = location
+	if(!istype(T))
+		T = get_turf(T)
+		if(!istype(T))
+			return
+	var/zoomdir = get_dir(get_turf(src), T)
 	aiming_time_left = aiming_time
 	aiming = TRUE
+	scoping = TRUE
+	start_zooming(zoomdir)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
 	aiming_time_left = aiming_time
 	aiming = FALSE
+	scoping = FALSE
+	stop_zooming()
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
+	if(user == current_user)
+		return
+	if(istype(current_user))
+		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
+	current_user = null
+	if(istype(user))
+		current_user = user
+		LAZYADD(current_user.movemove_intercept_object, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-	current_user = mob
+	set_user(mob)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
-	start_aiming()
-	current_user = mob
+	start_aiming(location)
+	set_user(mob)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
 	process_aim()
@@ -221,6 +263,10 @@
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
 	clear_tracers()
+
+/obj/item/weapon/gun/energy/beam_rifle/dropped()
+	. = ..()
+	set_user(null)
 
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
@@ -296,7 +342,7 @@
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
-	HS_BB.gun = host	
+	HS_BB.gun = host
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
