@@ -163,6 +163,10 @@
 	name = "Launchpad Control Console (Computer Board)"
 	build_path = /obj/machinery/computer/launchpad
 	origin_tech = "programming=3;bluespace=3;plasmatech=2"
+/obj/item/weapon/circuitboard/computer/telesci_console
+	name = "Telescience Console (Computer Board)"
+	build_path = /obj/machinery/computer/telescience
+	origin_tech = "programming=3;bluespace=3;plasmatech=4"
 /obj/item/weapon/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
 	build_path = /obj/machinery/computer/message_monitor
