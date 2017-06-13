@@ -108,22 +108,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return attack_self(M)
 	return
 
-/obj/item/device/pda/ui_action_click()
-	if(fon)
-		fon = 0
-		set_light(0)
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
-	else
-		fon = 1
-		set_light(2.3)
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
-	update_icon()
-
-
 /obj/item/device/pda/attack_self(mob/user)
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
