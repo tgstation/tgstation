@@ -214,7 +214,7 @@
 		t = replacetext(t, "\[list\]", "<ul>")
 		t = replacetext(t, "\[/list\]", "</ul>")
 
-		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
+		t = "<font face=\"[P.font]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
 		var/obj/item/toy/crayon/C = P
 		t = replacetext(t, "\[*\]", "")

@@ -26,6 +26,7 @@
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
+	var/font = PEN_FONT
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -66,8 +67,14 @@
 
 /obj/item/weapon/pen/fountain
 	name = "fountain pen"
-	desc = "It's an expensive fountain pen. The nib is quite sharp."
+	desc = "It's a common fountain pen, with a faux wood body."
 	icon_state = "pen-fountain"
+	font = FOUNTAIN_PEN_FONT
+
+/obj/item/weapon/pen/fountain/captain
+	name = "captain's fountain pen"
+	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
+	icon_state = "pen-fountain-o"
 	force = 5
 	throwforce = 5
 	throw_speed = 4
@@ -76,9 +83,9 @@
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	var/unique_reskin = 1
-	var/list/skins = list("Oak" = "pen-fountain", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb", "Cancel" = null)
+	var/list/skins = list("Oak" = "pen-fountain-o", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb", "Cancel" = null)
 
-/obj/item/weapon/pen/fountain/attack_self(mob/living/carbon/user)
+/obj/item/weapon/pen/fountain/captain/attack_self(mob/living/carbon/user)
 	if(unique_reskin)
 		var/choice = input(user,"Choose the finish for your pen.","Reskin Pen") in skins
 		if(src && choice && !user.incapacitated() && in_range(user,src))
@@ -87,6 +94,12 @@
 			icon_state = skins[choice]
 			unique_reskin = 0
 			to_chat(user, "Your pen now has a [choice] finish.")
+			desc = "It's an expensive [choice] fountain pen. The nib is quite sharp."
+
+/obj/item/weapon/pen/fountain/captain/examine(mob/user)
+	..()
+	if(unique_reskin)
+		to_chat(user, "<span class='notice'>This item can be reskinned. Use it in hand to select a skin.</span>")
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
