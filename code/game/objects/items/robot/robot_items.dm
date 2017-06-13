@@ -578,6 +578,10 @@
 	. = ..()
 	host = loc
 
+/obj/item/borg/projectile_dampen/on_mob_death()
+	deactivate_field()
+	. = ..()
+
 /obj/item/borg/projectile_dampen/process()
 	process_recharge()
 	process_usage()
