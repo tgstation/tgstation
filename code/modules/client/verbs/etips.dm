@@ -21,4 +21,5 @@
 	indelay = text2num(indelay)
 	prefs.tip_delay = indelay
 	prefs.save_preferences()
-	to_chat(usr, "<span class='danger'>Tooltip delay set to [indelay] milliseconds.</span>")
+	if(usr)//is this what you mean?
+		to_chat(usr, "<span class='danger'>Tooltip delay set to [indelay] milliseconds.</span>")
