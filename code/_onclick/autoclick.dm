@@ -94,8 +94,8 @@
 	mouseObject = object
 	mouseControlObject = control
 	if(mob && LAZYLEN(mob.mousemove_intercept_objects))
-		for(obj/item/I in mob.mousemove_intercept_objects)
-			I.on_mouse_move(object, location, control, params)
+		for(var/obj/item/I in mob.mousemove_intercept_objects)
+			I.onMouseMove(object, location, control, params)
 
-/obj/item/proc/on_mouse_move(object, location, control, params)
+/obj/item/proc/onMouseMove(object, location, control, params)
 	return
