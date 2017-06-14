@@ -64,7 +64,7 @@ GLOBAL_LIST_EMPTY(menulist)
 	M.Set_checked(src, verbpath)
 
 
-/datum/verbs/menu/Icon/Load_checked(client/C) //So we can be lazy, we invoke the "checked" menu item on menu load.
+/datum/verbs/menu/Icon/Load_checked(client/C) //So we can be lazy, we invoke the "checked" menu item on menu load. ~bugged, byond bug id:2253345 hacky workaround below (look for the switch trees)
 	var/atom/verb/verbpath = Get_checked(C)
 	if (!verbpath || !(verbpath in typesof("[type]/verb")))
 		return
@@ -76,6 +76,23 @@ GLOBAL_LIST_EMPTY(menulist)
 /datum/verbs/menu/Icon/Size
 	checkbox = CHECKBOX_GROUP
 	default = /datum/verbs/menu/Icon/Size/verb/iconstretchtofit
+/datum/verbs/menu/Icon/Size/Load_checked(client/C)
+	var/atom/verb/verbpath = Get_checked(C)
+	if (!verbpath || !(verbpath in typesof("[type]/verb")))
+		return
+	switch (verbpath)
+		if (/datum/verbs/menu/Icon/Size/verb/iconstretchtofit)
+			winset(C, "mapwindow.map", "icon-size=0")
+		if (/datum/verbs/menu/Icon/Size/verb/icon96)
+			winset(C, "mapwindow.map", "icon-size=96")
+		if (/datum/verbs/menu/Icon/Size/verb/icon64)
+			winset(C, "mapwindow.map", "icon-size=64")
+		if (/datum/verbs/menu/Icon/Size/verb/icon48)
+			winset(C, "mapwindow.map", "icon-size=48")
+		if (/datum/verbs/menu/Icon/Size/verb/icon32)
+			winset(C, "mapwindow.map", "icon-size=32")
+		else
+			winset(C, "mapwindow.map", "icon-size=0")
 
 /datum/verbs/menu/Icon/Size/verb/iconstretchtofit()
 	set name = "@.winset \"mapwindow.map.icon-size=0\""
@@ -103,6 +120,18 @@ GLOBAL_LIST_EMPTY(menulist)
 	name = "Scaling Mode"
 	default = /datum/verbs/menu/Icon/Scaling/verb/NN
 
+/datum/verbs/menu/Icon/Scaling/Load_checked(client/C)
+	var/atom/verb/verbpath = Get_checked(C)
+	switch (verbpath)
+		if (/datum/verbs/menu/Icon/Scaling/verb/NN)
+			winset(C, "mapwindow.map", "zoom-mode=distort")
+		if (/datum/verbs/menu/Icon/Scaling/verb/PS)
+			winset(C, "mapwindow.map", "zoom-mode=normal")
+		if (/datum/verbs/menu/Icon/Scaling/verb/BL)
+			winset(C, "mapwindow.map", "zoom-mode=blur")
+		else
+			winset(C, "mapwindow.map", "zoom-mode=distort")
+			
 /datum/verbs/menu/Icon/Scaling/verb/NN()
 	set name = "@.winset \"mapwindow.map.zoom-mode=distort\""
 	set desc = "Nearest Neighbor"
