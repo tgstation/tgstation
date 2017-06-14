@@ -123,7 +123,7 @@
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
 		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M))
+			if(can_recite_scripture(M, TRUE))
 				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
@@ -154,7 +154,7 @@
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
 		for(var/mob/living/M in GLOB.living_mob_list)
-			if(can_recite_scripture(M))
+			if(can_recite_scripture(M, TRUE))
 				servants++
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
