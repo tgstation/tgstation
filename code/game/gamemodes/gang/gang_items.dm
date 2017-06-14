@@ -14,7 +14,11 @@
 	if(check_canbuy && !can_buy(user, gang, gangtool))
 		return FALSE
 	var/real_cost = get_cost(user, gang, gangtool)
-	gang.adjust_influence(user.mind, -real_cost)
+	if(gang == "Vigilante")
+		var/obj/item/device/vigilante_tool/VT = gangtool
+		VT.points -= real_cost
+	else
+		gang.adjust_influence(user.mind, -real_cost)
 	spawn_item(user, gang, gangtool)
 	return TRUE
 
@@ -26,7 +30,11 @@
 		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+	if(gang == "Vigilante")
+		var/obj/item/device/vigilante_tool/VT = gangtool
+		return (VT.points >= get_cost(user, gang, gangtool) && can_see(user, gang, gangtool))
+	else
+		return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return TRUE
@@ -102,6 +110,12 @@
 	name = "Influence-Enhancing Mindshield"
 	id = "mindshield"
 	cost = 10
+
+/datum/gang_item/function/implant/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	for(var/obj/item/weapon/implant/I in user.implants)
+		if(istype(I, /obj/item/weapon/implant/mindshield))
+			return FALSE
+	return TRUE
 
 /datum/gang_item/function/implant/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/vigilante_tool/VT)
 	var/obj/item/weapon/implant/mindshield/MS = new()
@@ -211,8 +225,6 @@
 		we = 1
 	if(repeat)
 		cooldown = 250+((we/(rival+we))*100)**2
-		if(!SSticker.mode.vigilantes)
-			cooldown += 650
 		addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
 	spawn_gangster()
 

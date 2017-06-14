@@ -172,8 +172,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			qdel(TTV)
 	if(target_atmos)
 		for(var/turf/open/floor/engine/plasma/T in area_contents(target_atmos))
-			qdel(T)
-			new /turf/open/floor/engine(T)
+			CHECK_TICK
+			T.ChangeTurf(/turf/open/floor/engine/airless)
 			new /obj/structure/barricade/wooden(T)
 
 /datum/game_mode/gang/post_setup()
@@ -387,20 +387,19 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 	return gang_bosses
 
 /datum/game_mode/proc/shuttle_check()
-
 	if(SSshuttle.emergencyNoRecall)
 		return
 	var/alive = 0
 	for(var/mob/living/L in GLOB.player_list)
 		if(L.stat != DEAD)
 			alive++
-	if((alive <= (GLOB.joined_player_list.len * 0.5)) && (SSshuttle.emergency.mode == SHUTTLE_RECALL || SSshuttle.emergency.mode == SHUTTLE_IDLE || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
+	if((alive <= (GLOB.player_list.len * 0.45)) && (SSshuttle.emergency.mode == SHUTTLE_RECALL || SSshuttle.emergency.mode == SHUTTLE_IDLE || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
 		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
 	if(vigilantes)
 		posse_timer++
-		if((alive < (GLOB.joined_player_list.len *  0.75)) && posse_timer >= 4)
+		if((alive <= (GLOB.player_list.len *  0.75)) && posse_timer >= 4)
 			posse_timer = 0
 			vigilante_vengeance()
 

@@ -283,7 +283,7 @@
 	if(gang && user.mind && user.mind.gang_datum)
 		gang_mode = TRUE
 
-	// discontinue if the area isn't valid for tagging because gang "honour"
+	// discontinue if the area isn't valid for tagging because gang "honor"
 	if(gang_mode && (!can_claim_for_gang(user, target)))
 		return
 

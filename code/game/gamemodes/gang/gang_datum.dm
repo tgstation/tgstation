@@ -285,7 +285,7 @@
 	if(.)
 		announce_to_mind(gangsta, "<span class='notice'>Your influential choice of clothing has increased your influence by [.] points!</span>")
 	else
-		announce_to_mind(gangsta, "<span class='warning'>Unfortunately, you have not gained any additional influence from your drab, old, boring clothing. Learn to dress like a gangsta, bro!</span>")	//Kek
+		announce_to_mind(gangsta, "<span class='warning'>Unfortunately, you have not gained any additional influence from your drab, old, boring clothing. </span>")	//Kek
 
 /datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier)
 	. = 0
