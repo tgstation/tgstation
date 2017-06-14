@@ -346,14 +346,9 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-<<<<<<< HEAD
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(!jobban_isbanned(player, CATBAN) && !jobban_isbanned(player, CLUWNEBAN))
 				players += player
-=======
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-			players += player
->>>>>>> 7ec5c0e5d3... Merge pull request #28255 from optimumtact/revert-28229-revert-28170-observerspeep
 
 	// Shuffling, the players list is now ping-independent!!!
 	// Goodbye antag dante
