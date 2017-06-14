@@ -654,27 +654,32 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
 
+/obj/item/proc/set_force_string()
+	var/roundForce = round(force)
+	switch(roundForce)
+		if(1 to 3)
+			force_string = default_strings[1]
+		if(4 to 6)
+			force_string = default_strings[2]
+		if(7 to 9)
+			force_string = default_strings[3]
+		if(10 to 11)
+			force_string = default_strings[4]
+		if(12 to 20) //12 is the force of a toolbox
+			force_string = default_strings[5]
+		if(20 to 25)
+			force_string = default_strings[6]
+		else
+			force_string = default_strings[7]
+
 /obj/item/proc/update_force_string()
 	if(force)
-		if(force_string)
-			for(var/S in default_strings)
-				if(force_string = S)
-					var/roundForce = round(force)
-					switch(roundForce)
-					if(1 to 3)
-						force_string = default_strings[1]
-					if(4 to 6)
-						force_string = default_strings[2]
-					if(7 to 9)
-						force_string = default_strings[3]
-					if(10 to 11)
-						force_string = default_strings[4]
-					if(12 to 20) //12 is the force of a toolbox
-						force_string = default_strings[5]
-					if(20 to 25)
-						force_string = default_strings[6]
-					else
-						force_string = default_strings[7]
+		if(force_string)//is there already a force string?
+			for(var/S in default_strings)//if the force string is one of the deafults, update it
+				if(force_string = S)//if it isn't default, leave it alone
+					set_force_string()
+		else//if there is no force string, make one
+			set_force_string()
 		last_force_string_check = force
 
 
