@@ -106,8 +106,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/datum/rpg_loot/rpg_loot = null
 
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
-	var/force_string = null//string form of an item's force
-	var/last_force_string_check = null
+	var/force_string = ""//string form of an item's force
+	var/last_force_string_check = 0
 
 /obj/item/Initialize()
 	if (!materials)
