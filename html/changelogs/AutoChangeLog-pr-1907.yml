@@ -1,0 +1,4 @@
+author: "Tacolizard"
+delete-after: True
+changes: 
+  - bugfix: "Flamethrowers no longer say they're being ignited when you extinguish them"
