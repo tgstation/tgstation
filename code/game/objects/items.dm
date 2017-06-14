@@ -646,7 +646,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_force_string()
 	if(force)
-		switch(force)
+		var/roundForce = round(force)
+		switch(roundForce)
 			if(1 to 3)
 				force_string = "very low"
 			if(4 to 6)
