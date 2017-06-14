@@ -112,7 +112,7 @@
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
-		cult_mind.current.playsound_local('sound/ambience/antag/bloodcult.ogg',100,0)//subject to change
+		cult_mind.current.playsound_local(get_turf(cult_mind.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
 		add_cultist(cult_mind, 0)
 	..()
 
