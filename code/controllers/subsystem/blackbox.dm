@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(blackbox)
 	wait = 6000
 	flags = SS_NO_TICK_CHECK | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/msg_common = list()
 	var/list/msg_science = list()
