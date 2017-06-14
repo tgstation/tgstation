@@ -162,6 +162,10 @@
 
 	. = 1
 	sleep(rand(600,1800))
+	if(!SSticker.IsRoundInProgress())
+		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
+		round_converted = 0
+		return
 	 //somewhere between 1 and 3 minutes from now
 	if(!config.midround_antag[SSticker.mode.config_tag])
 		round_converted = 0
@@ -177,7 +181,7 @@
 	return 0
 
 
-/datum/game_mode/proc/check_finished() //to be called by SSticker
+/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -208,7 +212,7 @@
 					living_antag_player = Player
 					return 0
 
-		if(!config.continuous[config_tag])
+		if(!config.continuous[config_tag] || force_ending)
 			return 1
 
 		else
