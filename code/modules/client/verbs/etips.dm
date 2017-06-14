@@ -11,3 +11,14 @@
 		prefs.enable_tips = TRUE
 		prefs.save_preferences()
 		to_chat(usr, "<span class='danger'>Examine tooltips enabled.</span>")
+
+/client/verb/change_tip_delay()
+	set name = "Set examine tooltip delay"
+	set desc = "Sets the delay in milliseconds before examine tooltips appear"
+	set category = "OOC"
+
+	var/indelay = stripped_input(usr, "Enter the tooltip delay in milliseconds (default: 500)", "Enter tooltip delay", "", 10)
+	indelay = text2num(indelay)
+	prefs.tip_delay = indelay
+	prefs.save_preferences()
+	to_chat(usr, "<span class='danger'>Tooltip delay set to [indelay] milliseconds.</span>")

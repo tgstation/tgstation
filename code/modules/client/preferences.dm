@@ -20,6 +20,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
 	var/enable_tips = TRUE
+	var/tip_delay = 500 //tip delay in milliseconds
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection

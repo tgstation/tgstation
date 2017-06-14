@@ -105,9 +105,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+
+	//Tooltip vars
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
 	var/force_string = ""//string form of an item's force
 	var/last_force_string_check = 0
+	var/mouseOver = FALSE
+	var/tip_is_open = FALSE
+	var/tipParams = null //var to store the parameters passed to openTooltip()
 
 /obj/item/Initialize()
 	if (!materials)
@@ -661,13 +666,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		last_force_string_check = force
 
 
+/obj/item/proc/openTip()
+	if(last_force_string_check != force)
+		update_force_string()
+	openToolTip(usr,src,tipParams,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+
 /obj/item/MouseEntered(location,control,params)
 	if(in_inventory && usr.client.prefs.enable_tips)
-		if(last_force_string_check != force)
-			update_force_string()
-		openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+		mouseOver = TRUE
+		tipParams = params
 
 
 /obj/item/MouseExited()
+	tip_is_open = FALSE
 	closeToolTip(usr)
+
+/obj/item/Process()
+	if(mouseOver && !tip_is_open)
+		tip_is_open = TRUE //ok it's not open yet but whatever. This is here to prevent running more than one timer
+		addtimer(CALLBACK(src, .proc/openTip), usr.client.prefs.tip_delay/100)
 
