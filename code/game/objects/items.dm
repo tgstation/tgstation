@@ -110,9 +110,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
 	var/force_string = ""//string form of an item's force
 	var/last_force_string_check = 0
-	var/mouseOver = FALSE
-	var/tip_is_open = FALSE
-	var/tipParams = null //var to store the parameters passed to openTooltip()
+	var/tip_timer = null
 
 /obj/item/Initialize()
 	if (!materials)
@@ -666,24 +664,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		last_force_string_check = force
 
 
-/obj/item/proc/openTip()
+/obj/item/proc/openTip(location,control,params)
 	if(last_force_string_check != force)
 		update_force_string()
-	openToolTip(usr,src,tipParams,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+	openToolTip(usr,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
 
 /obj/item/MouseEntered(location,control,params)
 	if(in_inventory && usr.client.prefs.enable_tips)
-		mouseOver = TRUE
-		tipParams = params
-
+		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location,control,params), usr.client.prefs.tip_delay/100)
 
 /obj/item/MouseExited()
-	tip_is_open = FALSE
-	mouseOver = FALSE
+	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
-
-/obj/item/process()//this process() adds an additional delay to the tooltip, but I don't know how to work around it.
-	if(mouseOver && !tip_is_open)
-		tip_is_open = TRUE //ok it's not open yet but whatever. This is here to prevent running more than one timer
-		addtimer(CALLBACK(src, .proc/openTip), usr.client.prefs.tip_delay/100)
 
