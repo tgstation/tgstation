@@ -80,7 +80,7 @@
 /obj/item/device/vigilante_tool/attack_self(mob/user)
 	if(user.mind in SSticker.mode.get_all_gangsters())
 		return
-	var/dat
+	var/list/dat = list()
 	dat += "Your Influence: <B>[points]</B><br>"
 	dat += "<center><a href='?src=\ref[src];destroy=TRUE'><B>DESTROY HELD CONTRABAND</a></center></B><br>"
 	dat += "<hr>"
@@ -103,8 +103,8 @@
 
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to Vigilante's Companion v1.1", 400, 750)
-	popup.set_content(dat)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to Vigilante's Companion v1.2", 400, 750)
+	dat.Join()
 	popup.open()
 
 

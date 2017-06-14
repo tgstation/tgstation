@@ -25,8 +25,8 @@
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))
 		return
+	var/list/dat = list()
 
-	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
 		if(user.mind in SSticker.mode.get_gang_bosses())
@@ -75,7 +75,7 @@
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
 	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
-	popup.set_content(dat)
+	dat.Join()
 	popup.open()
 
 
