@@ -594,6 +594,13 @@
 	item_color = "villain"
 	can_adjust = 0
 
+/obj/item/clothing/under/vine
+	name = "dress of vines"
+	desc = "this outfit makes you want to shave a few pounds on a green-energy treadmill."
+	icon_state = "vine"
+	item_color = "vine"
+	can_adjust = 0
+
 /obj/item/clothing/under/sailor
 	name = "sailor suit"
 	desc = "Skipper's in the wardroom drinkin gin'."
