@@ -219,8 +219,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
 	S["menuoptions"]		<< menuoptions
-	S["enable_tips"]		>> enable_tips
-	S["tip_delay"]			>> tip_delay
+	S["enable_tips"]		<< enable_tips
+	S["tip_delay"]			<< tip_delay
 
 	return 1
 
