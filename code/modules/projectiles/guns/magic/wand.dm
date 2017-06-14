@@ -60,7 +60,7 @@
 /obj/item/weapon/gun/magic/wand/death
 	name = "wand of death"
 	desc = "This deadly wand overwhelms the victim's body with pure energy, slaying them without fail."
-	fire_sound = 'sound/magic/WandoDeath.ogg'
+	fire_sound = 'sound/magic/wandodeath.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/death
 	icon_state = "deathwand"
 	max_charges = 3 //3, 2, 2, 1
@@ -82,7 +82,7 @@
 	name = "wand of healing"
 	desc = "This wand uses healing magics to heal and revive. They are rarely utilized within the Wizard Federation for some reason."
 	ammo_type = /obj/item/ammo_casing/magic/heal
-	fire_sound = 'sound/magic/Staff_Healing.ogg'
+	fire_sound = 'sound/magic/staff_healing.ogg'
 	icon_state = "revivewand"
 	max_charges = 10 //10, 5, 5, 4
 
@@ -105,7 +105,7 @@
 	desc = "This wand is attuned to chaos and will radically alter the victim's form."
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "polywand"
-	fire_sound = 'sound/magic/Staff_Change.ogg'
+	fire_sound = 'sound/magic/staff_change.ogg'
 	max_charges = 10 //10, 5, 5, 4
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user)
@@ -121,7 +121,7 @@
 	name = "wand of teleportation"
 	desc = "This wand will wrench targets through space and time to move them somewhere else."
 	ammo_type = /obj/item/ammo_casing/magic/teleport
-	fire_sound = 'sound/magic/Wand_Teleport.ogg'
+	fire_sound = 'sound/magic/wand_teleport.ogg'
 	icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
 	no_den_usage = 1
@@ -143,7 +143,7 @@
 	desc = "This particular wand can create doors in any wall for the unscrupulous wizard who shuns teleportation magics."
 	ammo_type = /obj/item/ammo_casing/magic/door
 	icon_state = "doorwand"
-	fire_sound = 'sound/magic/Staff_Door.ogg'
+	fire_sound = 'sound/magic/staff_door.ogg'
 	max_charges = 20 //20, 10, 10, 7
 	no_den_usage = 1
 
@@ -159,7 +159,7 @@
 /obj/item/weapon/gun/magic/wand/fireball
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
-	fire_sound = 'sound/magic/Fireball.ogg'
+	fire_sound = 'sound/magic/fleshtostone.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/fireball
 	icon_state = "firewand"
 	max_charges = 8 //8, 4, 4, 3

@@ -1,6 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - rscadd: "Curator's fedora has a pocket, like all the other fedoras."
-  - tweak: "Treasure hunter suits can now hold large internal tanks, to ease the exploration of lavaland."
-  - tweak: "The curator can now access the Auxillary Base and open doors on the mining station."

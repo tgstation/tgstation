@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - bugfix: "Blood and other decals will no longer remain on turfs they shouldn't"

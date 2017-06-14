@@ -126,15 +126,23 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_stun(M, user))
-				user.do_attack_animation(M)
-				return
+			if(istype(src, /obj/item/weapon/melee/baton/cattleprod/hippie_cattleprod))
+				if(baton_stun_hippie_makeshift(M, user))
+					user.do_attack_animation(M)
+					return
+			else
+				if(baton_stun(M, user))
+					user.do_attack_animation(M)
+					return
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_stun(M, user)
+			if(istype(src, /obj/item/weapon/melee/baton/cattleprod/hippie_cattleprod))
+				baton_stun_hippie_makeshift(M, user)
+			else
+				baton_stun(M, user)
 		..()
 
 
@@ -142,7 +150,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
 			return 0
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -162,7 +170,7 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		add_logs(user, L, "stunned")
 
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L

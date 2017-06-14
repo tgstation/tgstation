@@ -75,5 +75,5 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//Here we paralyze both mobs and knock them out for a time.
 	caster.Paralyse(paralysis_amount_caster)
 	victim.Paralyse(paralysis_amount_victim)
-	caster << sound('sound/magic/MandSwap.ogg')
-	victim << sound('sound/magic/MandSwap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
+	caster << sound('sound/magic/mandswap.ogg')
+	victim << sound('sound/magic/mandswap.ogg')// only the caster and victim hear the sounds, that way no one knows for sure if the swap happened

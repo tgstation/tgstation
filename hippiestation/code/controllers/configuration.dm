@@ -1,5 +1,6 @@
-	/datum/configuration/var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
-	/datum/configuration/var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
+/datum/configuration
+	var/mentors_mobname_only = 0	// Only display mob name to mentors in mentorhelps
+	var/internet_address_to_use = null
 
 //Here we can load hippie specific config settings.
 //They go in hippiestation/config/config.txt
@@ -18,9 +19,11 @@
 
 		var/pos = findtext(t, " ")
 		var/name = null
+		var/value = null
 
 		if(pos)
 			name = lowertext(copytext(t, 1, pos))
+			value = copytext(t, pos + 1)
 		else
 			name = lowertext(t)
 
@@ -30,7 +33,7 @@
 		if(type == "config") //Add new config options here.
 			if ("mentor_mobname_only")
 				config.mentors_mobname_only = 1
-			if ("mentor_legacy_system")
-				config.mentor_legacy_system = 1
+			if ("internet_address_to_use")
+				config.internet_address_to_use = value
 		else
 			GLOB.world_game_log << "Unknown setting in configuration: '[name]'"

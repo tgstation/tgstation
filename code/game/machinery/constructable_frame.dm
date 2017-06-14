@@ -84,7 +84,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 					to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
 					if(do_after(user, 20*P.toolspeed, target = src))
 						if(C.get_amount() >= 5 && state == 1)
@@ -131,7 +131,7 @@
 				var/obj/item/weapon/circuitboard/machine/B = P
 				if(!user.drop_item())
 					return
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 				circuit = B
 				B.loc = src

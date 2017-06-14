@@ -71,7 +71,7 @@ Difficulty: Hard
 	medal_type = MEDAL_PREFIX
 	score_type = BIRD_SCORE
 	del_on_death = TRUE
-	death_sound = 'sound/magic/Repulse.ogg'
+	death_sound = 'sound/magic/repulse.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
@@ -123,6 +123,11 @@ Difficulty: Hard
 	visible_message("<span class='hierophant_warning'>[src] annihilates [L]!</span>","<span class='userdanger'>You annihilate [L], restoring your health!</span>")
 	adjustHealth(-L.maxHealth*0.5)
 	L.dust()
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
+	. = ..()
+	if(istype(the_target, /mob/living/simple_animal/hostile/asteroid/hivelordbrood)) //ignore temporary targets in favor of more permenant targets
+		return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
@@ -367,8 +372,8 @@ Difficulty: Hard
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
 	new /obj/effect/temp_visual/hierophant/telegraph(source, src)
-	playsound(T,'sound/magic/Wand_Teleport.ogg', 200, 1)
-	playsound(source,'sound/machines/AirlockOpen.ogg', 200, 1)
+	playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
+	playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
 	blinking = TRUE
 	sleep(2) //short delay before we start...
 	new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, src)
@@ -406,7 +411,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original) //release a wave of blasts
-	playsound(original,'sound/machines/AirlockOpen.ogg', 200, 1)
+	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
 		var/turf/T = t
@@ -584,7 +589,7 @@ Difficulty: Hard
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	playsound(T,'sound/magic/Blind.ogg', 125, 1, -5) //make a sound
+	playsound(T,'sound/magic/blind.ogg', 125, 1, -5) //make a sound
 	sleep(6) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
@@ -644,7 +649,7 @@ Difficulty: Hard
 			H.timer = world.time + 51
 			INVOKE_ASYNC(H, /obj/item/weapon/hierophant_club.proc/prepare_icon_update)
 			if(do_after(user, 50, target = src))
-				playsound(src,'sound/magic/Blind.ogg', 200, 1, -4)
+				playsound(src,'sound/magic/blind.ogg', 200, 1, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
 				to_chat(user, "<span class='hierophant_warning'>You collect [src], reattaching it to the club!</span>")
 				H.beacon = null

@@ -269,13 +269,15 @@
 		return
 	if(!in_range(src, user))
 		return
+	if(is_cyborg)
+		return
 	else
 		if(zero_amount())
 			return
 		//get amount from user
 		var/min = 0
 		var/max = src.get_amount()
-		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max]") as num)
+		var/stackmaterial = round(input(user,"How many sheets do you wish to take out of this stack? (Maximum  [max])") as num)
 		if(stackmaterial == null || stackmaterial <= min || stackmaterial >= src.get_amount())
 			return
 		else

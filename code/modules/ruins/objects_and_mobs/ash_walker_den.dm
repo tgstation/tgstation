@@ -12,6 +12,15 @@
 	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
 	del_on_death = 1
 	var/meat_counter
+	var/obj/effect/light_emitter/tendril/emitted_light
+	
+/mob/living/simple_animal/hostile/spawner/ash_walker/Initialize()
+	. = ..()
+	emitted_light = new(loc)
+
+/mob/living/simple_animal/hostile/spawner/ash_walker/Destroy()
+	QDEL_NULL(emitted_light)
+	. = ..()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/Life()
 	..()
@@ -23,7 +32,7 @@
 	for(var/mob/living/H in view(src,1)) //Only for corpse right next to/on same tile
 		if(H.stat)
 			visible_message("<span class='warning'>Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs.</span>")
-			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
+			playsound(get_turf(src),'sound/magic/demon_consume.ogg', 100, 1)
 			if(ismegafauna(H))
 				meat_counter += 20
 			else

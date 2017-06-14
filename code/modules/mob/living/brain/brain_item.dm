@@ -72,6 +72,8 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
+		if(L.disabilities & NOCLONE)
+			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot("zombie_infection")
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned

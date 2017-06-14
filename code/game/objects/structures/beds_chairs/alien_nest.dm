@@ -83,7 +83,7 @@
 		if(BRUTE)
 			playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
 	if(user.a_intent != INTENT_HARM)

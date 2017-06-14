@@ -1,4 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "When jumpsuits take severe damage, their suit sensors break. They can be fixed by applying a cable coil."

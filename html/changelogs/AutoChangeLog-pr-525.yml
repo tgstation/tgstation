@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Examining a ghost determines whether it is visible."

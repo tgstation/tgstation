@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixed people understanding languages over the radio when they
-shouldn't."

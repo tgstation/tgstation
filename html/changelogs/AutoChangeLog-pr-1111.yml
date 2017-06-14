@@ -1,9 +1,0 @@
-author: "HonkBot"
-delete-after: True
-changes: 
-  - tweak: "Modified chances for returning someone's soul using an employment contract.  Now everyone has a chance, not just lawyers and HoP."
-  - rscadd: "Particularly brain damaged people can no longer sign infernal contracts properly."
-  - tweak: "Infernal contracts for power no longer give fireball, and instead give robeless 'lightning bolt' spell."
-  - rscadd: "Devils can now sell you a friend, for the cost of your soul."
-  - tweak: "The codex gigas should now be easier to use, and less finicky."
-  - rscdel: "The codex gigas no longer sintouches readers."

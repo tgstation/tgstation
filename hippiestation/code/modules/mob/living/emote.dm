@@ -33,6 +33,8 @@
 				sound = 'hippiestation/sound/voice/scream_moth.ogg'
 			if (is_species(user, /datum/species/bird))
 				sound = 'hippiestation/sound/voice/caw.ogg'
+			if (is_species(user, /datum/species/tarajan))
+				sound = 'hippiestation/sound/voice/cat.ogg'
 		if(isalien(user))
 			sound = 'sound/voice/hiss6.ogg'
 		LAZYINITLIST(user.alternate_screams)

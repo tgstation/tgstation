@@ -28,4 +28,4 @@ tgui assets are licensed under a [Creative Commons Attribution-ShareAlike 4.0 In
 See tgui/LICENSE.md for the MIT license.
 See tgui/assets/fonts/SIL-OFL-1.1-LICENSE.md for the SIL Open Font License.
 
-All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated..

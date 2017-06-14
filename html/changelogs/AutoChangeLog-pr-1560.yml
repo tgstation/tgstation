@@ -1,5 +1,0 @@
-author: "Goodstuff"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the crafting recipe for black carpet"
-  - bugfix: "Removed a random white dot on the black carpet sprite"

@@ -111,7 +111,6 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
 	var/mob/living/carbon/human/stored_mob
-	var/fromtendril = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
@@ -125,6 +124,9 @@
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged/legioninfested(T)
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
+	fromtendril = TRUE
 
 //Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
@@ -319,7 +321,7 @@
 		if("Shadow")
 			mob_species = /datum/species/shadow
 			r_pocket = /obj/item/weapon/reagent_containers/pill/shadowtoxin
-			neck = /obj/item/clothing/tie/medal/nobel_science
+			neck = /obj/item/clothing/accessory/medal/plasma/nobel_science
 			uniform = /obj/item/clothing/under/color/black
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			suit = /obj/item/clothing/suit/toggle/labcoat

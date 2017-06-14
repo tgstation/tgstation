@@ -1,7 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Manifest Spirit will no longer continue to cost the user health if the summoned ghost is put into critical or gibbed."
-  - rscadd: "Ghosts summoned by Manifest Spirit are outfitted with ghostly armor and a ghostly cult blade that does slightly less damage than a normal cult blade.
-balance: Manifest Spirit now consumes 1 health per second per summoned ghost, from 0.333~.
-balance: Manifest Spirit can now only summon a maximum of 5 ghosts per rune, and the summoned ghosts cannot use Manifest Spirit to summon more ghosts."
