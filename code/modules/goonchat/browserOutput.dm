@@ -73,9 +73,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if("debug")
 			data = debug(arglist(params))
 
-		if("ping")
-			data = ping(arglist(params))
-
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
@@ -97,14 +94,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	messageQueue = null
 	sendClientData()
 
-	pingLoop()
-
-/datum/chatOutput/proc/pingLoop()
-	set waitfor = FALSE
-
-	while (owner)
-		ehjax_send(data = owner.is_afk(29) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
-		sleep(30)
+/datum/chatOutput/proc/Pang()
+	ehjax_send(data = "softPang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
 
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))

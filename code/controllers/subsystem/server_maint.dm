@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(server_maint)
 	
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
+	var/ping_chats = !(times_fired % 5) || last_fire <= (world.time - 30)
 
 	for(var/I in currentrun)
 		var/client/C = I
@@ -31,9 +32,15 @@ SUBSYSTEM_DEF(server_maint)
 					log_access("AFK: [key_name(C)]")
 					to_chat(C, "<span class='danger'>You have been inactive for more than [config.afk_period / 600] minutes and have been disconnected.</span>")
 					qdel(C)
+		
+		if(C)
+			if(ping_chats)
+				var/datum/chatOutput/chat = C.chatOutput
+				if(chat.loaded)
+					chat.Pang()
 
-		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
-			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*world.tick_usage/100]")
+			if (!(world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
+				winset(C, null, "command=.update_ping+[world.time+world.tick_lag*world.tick_usage/100]")
 
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
