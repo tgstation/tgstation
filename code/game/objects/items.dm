@@ -129,10 +129,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	default_strings += "very low"
 	default_strings += "low"
 	default_strings += "medium"
-	default_strings += "<font color=green>high</font>"
-	default_strings += "<font color=red>robust</font>"
-	default_strings += "<font color=orange>very robust</font>"
-	default_strings += "<font color=white>exceptionally robust</font>"
+	default_strings += "high"
+	default_strings += "robust"
+	default_strings += "very robust"
+	default_strings += "exceptionally robust"
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
