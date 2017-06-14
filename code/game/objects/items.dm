@@ -661,7 +661,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if(20 to 25)
 				force_string = "<font color=orange>very robust</font>"
 			else
-				force_string = "<font color=white>Exceptionally Robust</font>"
+				force_string = "<font color=white>exceptionally robust</font>"
 		last_force_string_check = force
 
 
