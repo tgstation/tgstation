@@ -676,7 +676,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(force)
 		if(force_string)//is there already a force string?
 			for(var/S in default_strings)//if the force string is one of the deafults, update it
-				if(force_string = S)//if it isn't default, leave it alone
+				if(force_string == S)//if it isn't default, leave it alone
 					set_force_string()
 		else//if there is no force string, make one
 			set_force_string()
