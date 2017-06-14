@@ -81,7 +81,7 @@ the new version.
 
 ## MAPS
 
-/tg/station currently comes equipped with five maps.
+/tg/station currently comes equipped with six maps.
 
 * [BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
