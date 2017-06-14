@@ -289,7 +289,7 @@
 
 /datum/gang/proc/pay_soldier_territory_income(datum/mind/soldier)
 	. = 0
-	. = max(0,round((3 - gangsters[soldier]/10) + (get_soldier_territories(soldier)*0.5) + (LAZYLEN(territory)*0.3)))
+	. = round(max(0,(3 - gangsters[soldier]/10)) + (get_soldier_territories(soldier)*0.5) + (LAZYLEN(territory)*0.3))
 	adjust_influence(soldier, .)
 
 /datum/gang/proc/get_soldier_territories(datum/mind/soldier)
@@ -313,7 +313,7 @@
 /datum/gang/proc/pay_territory_income_to_bosses()
 	. = 0
 	for(var/datum/mind/boss_mind in bosses)
-		var/inc = max(0,round((5 - bosses[boss_mind]/10) + (LAZYLEN(territory)*0.6)))
+		var/inc = round(max(0,(5 - bosses[boss_mind]/10)) + (LAZYLEN(territory)*0.6))
 		. += inc
 		adjust_influence(boss_mind, inc)
 		announce_to_mind(boss_mind, "<span class='notice'>Your influence has increased by [inc] from your gang holding [LAZYLEN(territory)] territories!</span>")
@@ -338,7 +338,7 @@
 	announce_to_mind(gangster_mind, "<span class='boldnotice'>You now have a total of [get_influence(gangster_mind)] influence!</span>")
 	if(bosses_working == FALSE)
 		announce_to_mind(gangster_mind, "<span class='danger'><b>Your gang no longer has a functioning leader. Your gangtool has been updated with the option to claim leadership for yourself.</b></span>")
-	if(!gateways)
+	if(!gateways && SSticker.mode.vigilantes)
 		announce_to_mind(gangster_mind, "<span class='danger'><b>Your gang not yet placed its reinforcement gateway. The gateway is crucial to sustaining your forces on this station and <b>does NOT require influence</b>. [name] leadership should plan where to create your gateway - immediately!</b></span>")
 
 /datum/gang/proc/reclaim_points(amount)
