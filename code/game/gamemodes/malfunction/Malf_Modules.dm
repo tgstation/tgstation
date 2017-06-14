@@ -154,8 +154,10 @@
 			if(AM.upgrade) //upgrade and upgrade() are separate, be careful!
 				AM.upgrade(A)
 				possible_modules -= AM
+				to_chat(A, AM.unlock_text)
+				A.playsound_local(A, AM.unlock_sound, 50, 0)
 			else
-				if(AM.power_type && AM.power_type != /datum/action/innate/ai)
+				if(AM.power_type)
 					if(!action) //Unlocking for the first time
 						var/datum/action/AC = new AM.power_type
 						AC.Grant(A)
@@ -163,15 +165,14 @@
 						temp = AM.description
 						if(AM.one_purchase)
 							possible_modules -= AM
+						if(AM.unlock_text)
+							to_chat(A, AM.unlock_text)
+						if(AM.unlock_sound)
+							A.playsound_local(A, AM.unlock_sound, 50, 0)
 					else //Adding uses to an existing module
 						action.uses += initial(action.uses)
 						temp = "Additional use[action.uses > 1 ? "s" : ""] added to [action.name]!"
 			processing_time -= AM.cost
-			if(!action)
-				if(AM.unlock_text)
-					to_chat(A, AM.unlock_text)
-				if(AM.unlock_sound)
-					A.playsound_local(A, AM.unlock_sound, 50, 0)
 
 		if(href_list["showdesc"])
 			if(AM.mod_pick_name == href_list["showdesc"])
@@ -741,6 +742,7 @@
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
 	desc = "[desc] There are 30 reactivations remaining."
+	button.desc = desc
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
