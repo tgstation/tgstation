@@ -55,7 +55,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
-	desc = "A highly pressurized water tank made to hold gargantuan amounts of water.."
+	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
 
