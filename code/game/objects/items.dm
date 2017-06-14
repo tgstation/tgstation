@@ -690,7 +690,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/MouseEntered(location,control,params)
 	if(in_inventory && usr.client.prefs.enable_tips)
-		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location,control,params), usr.client.prefs.tip_delay/100)
+		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location,control,params), usr.client.prefs.tip_delay/100, TIMER_STOPPABLE)
 
 /obj/item/MouseExited()
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
