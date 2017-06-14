@@ -1,5 +1,5 @@
-#define faxe_gout_time 15
-#define faxe_burnwall_time 100
+#define FAXE_GOUT_TIME 15
+#define FAXE_BURNWALL_TIME 100
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe
 	desc = "This axe has become touched by the very flames it was built to destroy..."
@@ -53,7 +53,7 @@
 		playsound(user, 'sound/magic/Fireball.ogg', 100, 1)
 		F.fire()
 		charged = FALSE
-		addtimer(CALLBACK(src, .proc/recharge), faxe_gout_time)
+		addtimer(CALLBACK(src, .proc/recharge), FAXE_GOUT_TIME)
 		return
 	if(wielded && proximity_flag)
 		var/obj/J = target
@@ -67,8 +67,9 @@
 			Wall.thermite += 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
 			Wall.overlays = list()
 			Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+			to_chat(user, "<span class='danger'>The wall has been marked, strike it once more to ignite the flames!</span>")
 			burnwall = FALSE
-			addtimer(CALLBACK(src, .proc/rekindle), faxe_burnwall_time)
+			addtimer(CALLBACK(src, .proc/rekindle), FAXE_BURNWALL_TIME)
 		else
 			to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
 		..()
@@ -82,7 +83,7 @@
 	if(!burnwall)
 		burnwall = TRUE
 		var/mob/M = get(src, /mob)
-		to_chat(M, "<span class='danger'>The axe grows warmer in your hands, it's ready to rend walls asunder once more!</span>")
+		to_chat(M, "<span class='danger'>The axe grows warmer in your hands, it's ready to mark another wall!</span>")
 
-#undef faxe_gout_time
-#undef faxe_burnwall_time
+#undef FAXE_GOUT_TIME
+#undef FAXE_BURNWALL_TIME
