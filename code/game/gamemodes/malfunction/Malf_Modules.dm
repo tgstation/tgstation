@@ -14,7 +14,7 @@
 /datum/action/innate/ai/Grant(mob/living/L)
 	. = ..()
 	if(!isAI(owner))
-		Remove(owner)
+		WARNING("AI action [name] attempted to grant itself to non-AI mob [L.real_name] ([L.key])!")
 		qdel(src)
 	else
 		owner_AI = owner
@@ -50,6 +50,7 @@
 
 /datum/action/innate/ai/ranged/New()
 	if(!linked_ability_type)
+		WARNING("Ranged AI action [name] attempted to spawn without a linked ability!")
 		qdel(src) //uh oh!
 		return
 	linked_ability = new linked_ability_type()
@@ -93,7 +94,7 @@
 
 //The datum and interface for the malf unlock menu, which lets them choose actions to unlock.
 /datum/module_picker
-	var/temp = null
+	var/temp
 	var/processing_time = 50
 	var/list/possible_modules
 
@@ -154,7 +155,7 @@
 				AM.upgrade(A)
 				possible_modules -= AM
 			else
-				if(AM.power_type)
+				if(AM.power_type && AM.power_type != /datum/action/innate/ai)
 					if(!action) //Unlocking for the first time
 						var/datum/action/AC = new AM.power_type
 						AC.Grant(A)
@@ -185,7 +186,7 @@
 	var/description = ""
 	var/engaged = 0
 	var/cost = 5
-	var/one_purchase = 0 //If this module can only be purchased once. This always applies to upgrades, even if the variable is set to false.
+	var/one_purchase = FALSE //If this module can only be purchased once. This always applies to upgrades, even if the variable is set to false.
 
 	var/power_type = /datum/action/innate/ai //If the module gives an active ability, use this. Mutually exclusive with upgrade.
 	var/upgrade //If the module gives a passive upgrade, use this. Mutually exclusive with power_type.
@@ -223,44 +224,71 @@
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
 	active = TRUE
-	INVOKE_ASYNC(src, .proc/set_us_up_the_bomb, owner)
+	set_us_up_the_bomb(owner)
 
 /datum/action/innate/ai/nuke_station/proc/set_us_up_the_bomb(mob/living/owner)
+	set waitfor = FALSE
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
 	sleep(5)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
 	sleep(rand(10, 30))
+	if(!owner || QDELETED(owner))
+		return
 	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0)
 	to_chat(owner, "<span class='userdanger'>!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!</span>")
 	to_chat(owner, "<span class='boldannounce'>This is a class-3 security violation. This incident will be reported to Central Command.</span>")
 	for(var/i in 1 to 3)
 		sleep(20)
+		if(!owner || QDELETED(owner))
+			return
 		to_chat(owner, "<span class='boldannounce'>Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%</span>")
 	sleep(3)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' ******************</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0)
 	sleep(30)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Welcome, akjv9c88asdf12nb.</span>")
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
 	sleep(5)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='boldnotice'>Arm self-destruct device? (Y/N)</span>")
 	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0)
 	sleep(20)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(15)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='boldnotice'>Confirm arming of self-destruct device? (Y/N)</span>")
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
 	sleep(10)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(rand(15, 25))
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='boldnotice'>Please repeat password to confirm.</span>")
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0)
 	sleep(14)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='small boldannounce'>******************</span>")
 	sleep(40)
+	if(!owner || QDELETED(owner))
+		return
 	to_chat(owner, "<span class='boldnotice'>Credentials accepted. Transmitting arming signal...</span>")
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0)
 	sleep(30)
+	if(!owner || QDELETED(owner))
+		return
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
 	var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
@@ -270,7 +298,6 @@
 	for(var/pinpointer in GLOB.pinpointer_list)
 		var/obj/item/weapon/pinpointer/P = pinpointer
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
-	Remove(owner)
 	qdel(src)
 
 /obj/machinery/doomsday_device
@@ -373,7 +400,7 @@
 	description = "Overload the airlock, blast door and fire control networks, locking them down. Caution! This command also electrifies all airlocks. The networks will automatically reset after 90 seconds, briefly \
 	opening all doors on the station."
 	cost = 30
-	one_purchase = 1
+	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/lockdown
 	unlock_text = "<span class='notice'>You upload a sleeper trojan into the door control systems. You can send a signal to set it off at any time.</span>"
 	unlock_sound = 'sound/machines/boltsdown.ogg'
@@ -395,7 +422,7 @@
 	if(C)
 		C.post_status("alert", "lockdown")
 
-	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
+	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.","Network Alert:", TRUE)
 	to_chat(owner, "<span class='danger'>Lockdown initiated. Network reset in 90 seconds.</span>")
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
 		"Automatic system reboot complete. Have a secure day.",
@@ -408,7 +435,7 @@
 	mod_pick_name = "rcd"
 	description = "Send a specialised pulse to detonate all hand-held and exosuit Rapid Construction Devices on the station."
 	cost = 25
-	one_purchase = 1
+	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/destroy_rcds
 	unlock_text = "<span class='notice'>After some improvisation, you rig your onboard radio to be able to send a signal to detonate all RCDs.</span>"
 	unlock_sound = 'sound/items/timer.ogg'
@@ -466,7 +493,7 @@
 	for(var/obj/machinery/firealarm/F in GLOB.machines)
 		if(F.z != ZLEVEL_STATION)
 			continue
-		F.emagged = 1
+		F.emagged = TRUE
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -477,7 +504,7 @@
 	mod_pick_name = "allow_flooding"
 	description = "Gives you the ability to disable safeties on all air alarms. This will allow you to use the environmental mode Flood, which disables scrubbers as well as pressure checks on vents. \
 	Anyone can check the air alarm's interface and may be tipped off by their nonfunctionality."
-	one_purchase = 1
+	one_purchase = TRUE
 	cost = 50
 	power_type = /datum/action/innate/ai/break_air_alarms
 	unlock_text = "<span class='notice'>You remove the safety overrides on all air alarms, but you leave the confirm prompts open. You can hit 'Yes' at any time... you bastard.</span>"
@@ -493,7 +520,7 @@
 	for(var/obj/machinery/airalarm/AA in GLOB.machines)
 		if(AA.z != ZLEVEL_STATION)
 			continue
-		AA.emagged = 1
+		AA.emagged = TRUE
 	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -619,7 +646,9 @@
 /datum/action/innate/ai/place_transformer/Activate()
 	if(!owner_AI.can_place_transformer(src))
 		return
+	active = TRUE
 	if(alert(owner, "Are you sure you want to place the machine here?", "Are you sure?", "Yes", "No") == "No")
+		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))
 		return
@@ -627,9 +656,13 @@
 	var/obj/machinery/transformer/conveyor = new(T)
 	conveyor.masterAI = owner
 	playsound(T, 'sound/effects/phasein.ogg', 100, 1)
-	owner_AI.can_shunt = 0
+	owner_AI.can_shunt = TRUE
 	to_chat(owner, "<span class='warning'>You are no longer able to shunt your core to APCs.</span>")
 	adjust_uses(-1)
+
+/mob/living/silicon/ai/proc/remove_transformer_image(client/C, image/I, turf/T)
+	if(C && I.loc == T)
+		C.images -= I
 
 /mob/living/silicon/ai/proc/can_place_transformer(datum/action/innate/ai/place_transformer/action)
 	if(!eyeobj || !isturf(loc) || !canUseTopic() || !action)
@@ -654,9 +687,7 @@
 		I.loc = T
 		client.images += I
 		I.icon_state = "[success ? "green" : "red"]Overlay" //greenOverlay and redOverlay for success and failure respectively
-		spawn(30)
-			if(client && (I.loc == T))
-				client.images -= I
+		addtimer(CALLBACK(src, .proc/remove_transformer_image, client, I, T), 30)
 	if(!success)
 		to_chat(src, "<span class='warning'>[alert_msg]</span>")
 	return success
@@ -694,7 +725,7 @@
 	mod_pick_name = "recam"
 	description = "Runs a network-wide diagnostic on the camera network, resetting focus and re-routing power to failed cameras. Can be used to repair up to 30 cameras."
 	cost = 10
-	one_purchase = 1
+	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/reactivate_cameras
 	unlock_text = "<span class='notice'>You deploy nanomachines to the cameranet.</span>"
 	unlock_sound = 'sound/items/wirecutter.ogg'
@@ -735,7 +766,7 @@
 	mod_pick_name = "upgradecam"
 	description = "Install broad-spectrum scanning and electrical redundancy firmware to the camera network, enabling EMP-proofing and light-amplified X-ray vision." //I <3 pointless technobabble
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
-	one_purchase = 1
+	one_purchase = TRUE
 	cost = 35 //Decent price for omniscience!
 	upgrade = TRUE
 	unlock_text = "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: CAMSUPGRADED. Light amplification system online.</span>"
@@ -771,7 +802,7 @@
 	mod_pick_name = "eavesdrop"
 	description = "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
 	cost = 30
-	one_purchase = 1
+	one_purchase = TRUE
 	upgrade = TRUE
 	unlock_text = "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
 	unlock_sound = 'sound/items/rped.ogg'
