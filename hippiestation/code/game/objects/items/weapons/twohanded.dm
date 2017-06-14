@@ -1,3 +1,6 @@
+#define faxe_gout_time 15
+#define faxe_burnwall_time 100
+
 /obj/item/weapon/twohanded/fireaxe/fireyaxe
 	desc = "This axe has become touched by the very flames it was built to destroy..."
 	force_wielded = 5
@@ -11,14 +14,10 @@
 	attack_verb = list("incinerated", "conflagrated", "seared", "scorched", "roasted", "immolated")
 	var/charged = TRUE
 	var/burnwall = TRUE
-	var/charge_time = 15
-	var/kindle_time = 100
-	var/list/extra_damage_targets = list(/obj/structure/door_assembly, /obj/structure/grille, /obj/structure/mineral_door, /obj/structure/window, /obj/machinery/door)
+	var/static/list/extra_damage_targets = typecacheof(list(/obj/structure/door_assembly, /obj/structure/grille, /obj/structure/mineral_door, /obj/structure/window, /obj/machinery/door))
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/Initialize()
 	.=..()
-	extra_damage_targets = typecacheof(extra_damage_targets)
-
 
 /obj/item/weapon/twohanded/fireaxe/fireyaxe/update_icon()
 	icon_state = "fireaxe[wielded]"
@@ -54,7 +53,7 @@
 		playsound(user, 'sound/magic/Fireball.ogg', 100, 1)
 		F.fire()
 		charged = FALSE
-		addtimer(CALLBACK(src, .proc/recharge), charge_time)
+		addtimer(CALLBACK(src, .proc/recharge), faxe_gout_time)
 		return
 	if(wielded && proximity_flag)
 		var/obj/J = target
@@ -62,14 +61,14 @@
 			J.take_damage(75, BRUTE, "melee", 0)
 	if(iswallturf(target))
 		var/turf/closed/wall/Wall = target
-		if(istype(Wall, /turf/closed/wall/r_wall))
+		if(Wall.hardness <= 10)// Rwalls have hardness 10, this can be adjusted to make certain walls resistant to burning
 			to_chat(user, "<span class='danger'>This wall is to strong to be burned by the flames!</span>")
 		else if(burnwall)
 			Wall.thermite += 50 //how wall.thermite works is funny but the end result of any logic needs to be 50 for a wall to melt
 			Wall.overlays = list()
 			Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
 			burnwall = FALSE
-			addtimer(CALLBACK(src, .proc/rekindle), kindle_time)
+			addtimer(CALLBACK(src, .proc/rekindle), faxe_burnwall_time)
 		else
 			to_chat(user, "<span class='danger'>The flames need time to rekindle!</span>")
 		..()
@@ -85,3 +84,5 @@
 		var/mob/M = get(src, /mob)
 		to_chat(M, "<span class='danger'>The axe grows warmer in your hands, it's ready to rend walls asunder once more!</span>")
 
+#undef faxe_gout_time
+#undef faxe_burnwall_time
