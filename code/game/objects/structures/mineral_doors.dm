@@ -230,3 +230,11 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 20
 	max_integrity = 20
+
+/obj/structure/mineral_door/paperframe/Initialize()
+	. = ..()
+	queue_smooth_neighbors(src)
+
+/obj/structure/mineral_door/paperframe/deconstruct(disassembled = TRUE)
+	..()
+	queue_smooth_neighbors(src)
