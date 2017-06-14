@@ -663,9 +663,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			force_string = default_strings[2]
 		if(7 to 10)
 			force_string = default_strings[3]
-		if(10 to 12)
+		if(10 to 11)
 			force_string = default_strings[4]
-		if(12 to 21) //12 is the force of a toolbox
+		if(11 to 20) //12 is the force of a toolbox
 			force_string = default_strings[5]
 		if(20 to 25)
 			force_string = default_strings[6]
