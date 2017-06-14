@@ -125,7 +125,7 @@ SUBSYSTEM_DEF(ticker)
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
 
-			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
