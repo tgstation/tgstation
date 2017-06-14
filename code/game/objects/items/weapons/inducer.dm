@@ -128,6 +128,7 @@
 		user.visible_message("[user] recharged \the [A]!","<span class='notice'>You recharged \the [A]!</span>")
 		recharging = FALSE
 		return TRUE
+	recharging = FALSE
 
 
 /obj/item/weapon/inducer/attack(mob/M, mob/user)
