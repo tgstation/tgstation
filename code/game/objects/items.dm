@@ -679,9 +679,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/MouseExited()
 	tip_is_open = FALSE
+	mouseOver = FALSE
 	closeToolTip(usr)
 
-/obj/item/process()
+/obj/item/process()//this process() adds an additional delay to the tooltip, but I don't know how to work around it.
 	if(mouseOver && !tip_is_open)
 		tip_is_open = TRUE //ok it's not open yet but whatever. This is here to prevent running more than one timer
 		addtimer(CALLBACK(src, .proc/openTip), usr.client.prefs.tip_delay/100)
