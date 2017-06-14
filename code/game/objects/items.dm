@@ -111,7 +111,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/force_string = ""//string form of an item's force
 	var/last_force_string_check = 0
 	var/tip_timer
-	var/list/default_strings
 
 /obj/item/Initialize()
 	if (!materials)
@@ -124,6 +123,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
 
+	LAZYINITLIST(default_strings)
 	//populate default_strings
 	default_strings += "very low"
 	default_strings += "low"
