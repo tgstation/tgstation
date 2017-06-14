@@ -650,9 +650,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				force_string = "low"
 			if(7 to 9)
 				force_string = "medium"
-			if(10 to 14)
+			if(10 to 11)
 				force_string = "<font color=green>high</font>"
-			if(15 to 20)
+			if(12 to 20) //12 is the force of a toolbox
 				force_string = "<font color=red>robust</combat>"
 			if(20 to 25)
 				force_string = "<font color=orange>very robust</font>"
