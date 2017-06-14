@@ -110,7 +110,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
 	var/force_string = ""//string form of an item's force
 	var/last_force_string_check = 0
-	var/tip_timer = null
+	var/tip_timer
+	var/list/default_strings
 
 /obj/item/Initialize()
 	if (!materials)
@@ -122,6 +123,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
+
+	//populate default_strings
+	default_strings += "very low"
+	default_strings += "low"
+	default_strings += "medium"
+	default_strings += "<font color=green>high</font>"
+	default_strings += "<font color=red>robust</font>"
+	default_strings += "<font color=orange>very robust</font>"
+	default_strings += "<font color=white>exceptionally robust</font>"
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -646,22 +656,25 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_force_string()
 	if(force)
-		var/roundForce = round(force)
-		switch(roundForce)
-			if(1 to 3)
-				force_string = "very low"
-			if(4 to 6)
-				force_string = "low"
-			if(7 to 9)
-				force_string = "medium"
-			if(10 to 11)
-				force_string = "<font color=green>high</font>"
-			if(12 to 20) //12 is the force of a toolbox
-				force_string = "<font color=red>robust</combat>"
-			if(20 to 25)
-				force_string = "<font color=orange>very robust</font>"
-			else
-				force_string = "<font color=white>exceptionally robust</font>"
+		if(force_string)
+			for(var/S in default_strings)
+				if(force_string = S)
+					var/roundForce = round(force)
+					switch(roundForce)
+					if(1 to 3)
+						force_string = default_strings[1]
+					if(4 to 6)
+						force_string = default_strings[2]
+					if(7 to 9)
+						force_string = default_strings[3]
+					if(10 to 11)
+						force_string = default_strings[4]
+					if(12 to 20) //12 is the force of a toolbox
+						force_string = default_strings[5]
+					if(20 to 25)
+						force_string = default_strings[6]
+					else
+						force_string = default_strings[7]
 		last_force_string_check = force
 
 
