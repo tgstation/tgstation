@@ -26,8 +26,9 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
-	var/mutable_appearance/occupant_overlay
-	var/bobbing = FALSE
+	var/running_bob_anim = FALSE
+
+	var/static/list/cryo_overlays = list()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -92,44 +93,44 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
 	cut_overlays()
 
-	if(panel_open)
-		icon_state = "pod-o"
+	if(state_open)
+		icon_state = "pod-open"
+	else if(occupant)
+		var/mutable_appearance/occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
+		occupant_overlay.copy_overlays(occupant)
+		occupant_overlay.pixel_y = 22
+		if(on && is_operational() && !running_bob_anim)
+			icon_state = "pod-on"
+			running_bob_anim = TRUE
+			run_bob_anim(TRUE, occupant_overlay)
+		else
+			icon_state = "pod-off"
+			add_overlay(occupant_overlay)
+			add_overlay("cover-off")
 	else if(on && is_operational())
 		icon_state = "pod-on"
+		add_overlay("cover-on")
 	else
 		icon_state = "pod-off"
+		add_overlay("cover-off")
 
-	if(occupant)
-		occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
-		occupant_overlay.overlays = occupant.overlays
-		occupant_overlay.pixel_y = 22
-		add_overlay(occupant_overlay)
-		if(on && is_operational() && !bobbing)
-			var/bobup = TRUE
-			spawn(0) // Time to bob
-				bobbing = TRUE
-				while(on && is_operational() && occupant)
-					cut_overlays()
-					switch(occupant_overlay.pixel_y)
-						if(22)
-							bobup = TRUE
-						if(24)
-							bobup = FALSE
-					if(bobup)
-						occupant_overlay.pixel_y++
-					else
-						occupant_overlay.pixel_y--
-					add_overlay(occupant_overlay)
-					add_overlay("cover-on")
-					sleep(7)
-				bobbing = FALSE
-		else
-			add_overlay("cover")
-	else if(!state_open)
-		if(on && is_operational())
-			add_overlay("cover-on")
-		else
-			add_overlay("cover")
+	if(panel_open)
+		add_overlay("pod-panel")
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, mutable_appearance/occupant_overlay)
+	if(!on || !occupant || !is_operational())
+		running_bob_anim = FALSE
+		return
+	cut_overlays()
+	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
+		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(anim_up)
+		occupant_overlay.pixel_y++
+	else
+		occupant_overlay.pixel_y--
+	add_overlay(occupant_overlay)
+	add_overlay("cover-on")
+	addtimer(CALLBACK(src, .proc/run_bob_anim, anim_up, occupant_overlay), 7)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -207,7 +208,6 @@
 	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
-	update_icon()
 	if(!state_open && !panel_open)
 		on = FALSE
 		..()
@@ -217,6 +217,7 @@
 			var/mob/living/L = M
 			L.update_canmove()
 	occupant = null
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
