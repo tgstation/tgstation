@@ -33,6 +33,8 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
+	S.environment = -1 //-1 disables the sound environment feature
+
 
 	if (vary)
 		if(frequency)
@@ -42,6 +44,16 @@
 
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
+		var/source_location
+
+		source_location = turf_source.loc
+		if(source_location != null && isarea(source_location))
+			var/area/A = source_location
+			if(A.sound_environment)
+				S.environment = A.sound_environment
+
+		var/area/hearer_location = get_area(T)
+
 
 		if(pressure_affected)
 			//Atmosphere affects sound
@@ -59,6 +71,11 @@
 			var/distance = get_dist(T, turf_source)
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
+
+			if(hearer_location != source_location)
+				S.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7) //Sound is occluded
+			else
+				S.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
