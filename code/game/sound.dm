@@ -126,7 +126,7 @@
 		if(isInSight(LA, SA))
 			occlude_amount = 50
 		else
-			var/occlude_amount = 100
+			occlude_amount = 100
 
 		var/occlude = occlude_amount
 		var/distance
