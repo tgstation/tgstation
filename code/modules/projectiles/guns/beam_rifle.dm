@@ -3,6 +3,10 @@
 #define ZOOM_LOCK_OFF 1
 #define ZOOM_LOCK_INSTANT 2
 
+#define AUTOZOOM_PIXEL_STEP_FACTOR 48
+
+#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 1
+
 /obj/item/weapon/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
 	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targetted by one. \
@@ -35,6 +39,7 @@
 	var/aiming_time_increase_angle_multiplier = 0.3	//More reasonable.
 
 	var/lastangle = 0
+	var/aiming_lastangle = 0
 	var/mob/current_user = null
 	var/list/obj/effect/projectile_beam/current_tracers = list()
 	var/tracer_position = 1
@@ -61,6 +66,9 @@
 	var/zoom_target_view_increase = 10
 	var/zooming = FALSE
 	var/zoom_lock = ZOOM_LOCK_AUTOZOOM
+	var/zooming_angle
+	var/current_zoom_x = 0
+	var/current_zoom_y = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
@@ -75,21 +83,19 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/smooth_zooming(dir)
 	if(!check_user() || !zooming)
 		return
-	to_chat(world, "DEBUG: smoothing zoom with dir [dir]!")
-	var/total_time = zoom_target_view_increase * SSfastprocess.wait
-	var/new_x = 0
-	var/new_y = 0
-	if(dir & NORTH)
-		new_y += zoom_target_view_increase * 32 * 2
-	if(dir & SOUTH)
-		new_y += zoom_target_view_increase * -32 * 2
-	if(dir & EAST)
-		new_x += zoom_target_view_increase * 32 * 2
-	if(dir & WEST)
-		new_x += zoom_target_view_increase * -32 * 2
-	if(zoom_lock == ZOOM_LOCK_INSTANT)
-		total_time = 0
-	animate(current_user.client, pixel_x = new_x, pixel_y = new_y, total_time, SINE_EASING, ANIMATION_END_NOW)
+	var/total_time = SSfastprocess.wait
+	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING)
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/increment_autozoom_pixel_offsets()
+	var/current_angle = zooming_angle
+	var/new_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR
+	var/new_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR
+	current_zoom_x += new_x
+	current_zoom_y += new_y
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
+	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
+	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
@@ -100,12 +106,13 @@
 	if(++zoom_current_view_increase > zoom_target_view_increase)
 		return
 	current_user.client.view += 1
+	increment_autozoom_pixel_offsets()
+	smooth_zooming()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming(dir)
+/obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
 		return
 	zooming = TRUE
-	smooth_zooming(dir)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/stop_zooming()
 	zooming = FALSE
@@ -117,6 +124,9 @@
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
 	current_user.client.view = world.view
+	zooming_angle = 0
+	current_zoom_x = 0
+	current_zoom_y = 0
 
 /obj/item/weapon/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
@@ -150,7 +160,11 @@
 	chambered = null
 	recharge_newshot()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam()
+/obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
+	var/diff = abs(aiming_lastangle - lastangle)
+	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
+		return
+	aiming_lastangle = lastangle
 	var/atom/A = current_user.client.mouseObject
 	if(!istype(A) || !A.loc)
 		return
@@ -180,7 +194,7 @@
 	else
 		for(var/I in current_tracers)
 			var/obj/effect/projectile_beam/PB = I
-			PB.loc = src	//No forcemove for performance.
+			PB.forceMove(src)	//No forcemove for performance.
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
@@ -192,7 +206,6 @@
 		return
 	check_user()
 	handle_zooming()
-	aiming_beam()
 	if(aiming_time_left > 0)
 		aiming_time_left--
 
@@ -222,7 +235,6 @@
 			var/difference = abs(lastangle - angle)
 			delay_penalty(difference * aiming_time_increase_angle_multiplier)
 			lastangle = angle
-		to_chat(world, "DEBUG: [current_user.client.mouseParams]")
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
 	check_user()
@@ -231,17 +243,13 @@
 		process_aim()
 		aiming_beam()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming(atom/location)
-	var/turf/T = location
-	if(!istype(T))
-		T = get_turf(T)
-		if(!istype(T))
-			return
+/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming(n)
 	aiming_time_left = aiming_time
 	aiming = TRUE
 	process_aim()
-	aiming_beam()
-	start_zooming(get_dir(get_turf(src), location))
+	aiming_beam(TRUE)
+	zooming_angle = lastangle
+	start_zooming()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
 	aiming_time_left = aiming_time
@@ -267,7 +275,7 @@
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
 	set_user(mob)
-	start_aiming(location)
+	start_aiming()
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
 	process_aim()
@@ -544,9 +552,7 @@
 		cached = get_turf(src)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
-	set waitfor = FALSE
-	var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc)
-	T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+	var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
 	QDEL_IN(T, 5)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
@@ -566,20 +572,18 @@
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/spawn_tracer_effect()
+	var/turf/target = get_turf(src)
 	if(!istype(gun))
-		var/obj/effect/projectile_beam/T = new tracer_type(loc)
-		T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+		var/obj/effect/projectile_beam/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
 		QDEL_IN(T, 5)
 		return
 	var/current_position = gun.tracer_position
 	if(gun.current_tracers.len < current_position)	//Not enough, make a new one!
-		var/obj/effect/projectile_beam/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-		T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+		var/obj/effect/projectile_beam/T = new tracer_type(target, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
 		gun.current_tracers += T
 	else		//Use the old one.
 		var/obj/effect/projectile_beam/T = gun.current_tracers[current_position]
-		T.loc = loc
-		T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+		T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color, new_loc = target)
 	gun.tracer_position++	//Increment
 
 /obj/effect/projectile_beam
@@ -590,7 +594,11 @@
 	light_range = 2
 	light_color = "#00ffff"
 
-/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override)
+/obj/effect/projectile_beam/New(angle_override, p_x, p_y, color_override)
+	apply_vars(angle_override, p_x, p_y, color_override)
+	return ..()
+
+/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, new_loc)
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
@@ -600,6 +608,8 @@
 	M.Turn(angle_override)
 	look.transform = M
 	appearance = look
+	if(!isnull(new_loc))	//If you want to null it just delete it...
+		forceMove(new_loc)
 
 /obj/effect/projectile_beam/tracer
 	icon_state = "tracer_beam"
