@@ -530,6 +530,7 @@
 #include "code\game\machinery\dna_scanner.dm"
 #include "code\game\machinery\doppler_array.dm"
 #include "code\game\machinery\droneDispenser.dm"
+#include "code\game\machinery\engi_adv.dm"
 #include "code\game\machinery\firealarm.dm"
 #include "code\game\machinery\flasher.dm"
 #include "code\game\machinery\gulag_item_reclaimer.dm"
