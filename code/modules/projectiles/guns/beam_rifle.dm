@@ -80,18 +80,15 @@
 	recoil = 0
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/smooth_zooming(dir)
+/obj/item/weapon/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
 	if(!check_user() || !zooming)
 		return
 	var/total_time = SSfastprocess.wait
-	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING)
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/increment_autozoom_pixel_offsets()
-	var/current_angle = zooming_angle
-	var/new_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR
-	var/new_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR
-	current_zoom_x += new_x
-	current_zoom_y += new_y
+	if(delay_override)
+		total_time = delay_override
+	if(zoom_lock == ZOOM_LOCK_INSTANT)
+		total_time = 0
+	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
@@ -102,12 +99,14 @@
 		return
 	if(zoom_lock == ZOOM_LOCK_INSTANT)
 		current_user.client.view = world.view + zoom_target_view_increase
+		set_autozoom_pixel_offsets_immediate(zooming_angle)
+		smooth_zooming()
 		return
 	if(++zoom_current_view_increase > zoom_target_view_increase)
 		return
 	current_user.client.view += 1
-	increment_autozoom_pixel_offsets()
-	smooth_zooming()
+	set_autozoom_pixel_offsets_immediate(zooming_angle)
+	smooth_zooming(SSfastprocess.wait * zoom_target_view_increase)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
@@ -218,7 +217,7 @@
 	return TRUE
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
-	if(istype(current_user) && current_user.client.mouseParams)
+	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
 		if(isturf(current_user.client.mouseLocation))
 			current_user.face_atom(current_user.client.mouseLocation)
@@ -241,7 +240,7 @@
 	if(aiming)
 		delay_penalty(aiming_time_increase_user_movement)
 		process_aim()
-		aiming_beam()
+		aiming_beam(TRUE)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming(n)
 	aiming_time_left = aiming_time
@@ -272,6 +271,9 @@
 	if(aiming)
 		process_aim()
 		aiming_beam()
+		zooming_angle = lastangle
+		set_autozoom_pixel_offsets_immediate(zooming_angle)
+		smooth_zooming(2)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
 	set_user(mob)
