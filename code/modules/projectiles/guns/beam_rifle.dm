@@ -79,28 +79,15 @@
 	var/total_time = zoom_target_view_increase * SSfastprocess.wait
 	var/new_x = 0
 	var/new_y = 0
-	switch(dir)
-		if(NORTH)
-			new_y += zoom_target_view_increase * 32 * 2
-		if(SOUTH)
-			new_y += zoom_target_view_increase * -32 * 2
-		if(EAST)
-			new_x += zoom_target_view_increase * 32 * 2
-		if(WEST)
-			new_x += zoom_target_view_increase * -32 * 2
-		if(NORTHEAST)
-			new_y += zoom_target_view_increase * 32 * 2
-			new_x += zoom_target_view_increase * 32 * 2
-		if(NORTHWEST)
-			new_y += zoom_target_view_increase * 32 * 2
-			new_x += zoom_target_view_increase * -32 * 2
-		if(SOUTHEAST)
-			new_y += zoom_target_view_increase * -32 * 2
-			new_x += zoom_target_view_increase * 32 * 2
-		if(SOUTHWEST)
-			new_y += zoom_target_view_increase * -32 * 2
-			new_x += zoom_target_view_increase * -32 * 2
-	if(zoom_lock = ZOOM_LOCK_INSTANT)
+	if(dir & NORTH)
+		new_y += zoom_target_view_increase * 32 * 2
+	if(dir & SOUTH)
+		new_y += zoom_target_view_increase * -32 * 2
+	if(dir & EAST)
+		new_x += zoom_target_view_increase * 32 * 2
+	if(dir & WEST)
+		new_x += zoom_target_view_increase * -32 * 2
+	if(zoom_lock == ZOOM_LOCK_INSTANT)
 		total_time = 0
 	animate(current_user.client, pixel_x = new_x, pixel_y = new_y, total_time, SINE_EASING, ANIMATION_END_NOW)
 
@@ -557,6 +544,7 @@
 		cached = get_turf(src)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
+	set waitfor = FALSE
 	var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc)
 	T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
 	QDEL_IN(T, 5)
