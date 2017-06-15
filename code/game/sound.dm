@@ -114,29 +114,26 @@
 	//type 1 = area-based
 	//type 2 = distance-based
 	var/sound/ME = sin
+	var/list/modlist[18]
 	if(type == 1)
-		var/list/modlist = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
-		for(var/i=1, i<=18, i++)
-			ME.echo[i] += modlist[i]
-		return ME.echo
+		modlist = 0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7
 	if(type == 2)
 		var/atom/SA = sourceatom
 		var/atom/LA = listeneratom
 		var/occlude_amount
 		if(isInSight(LA, SA))
-			occlude_amount = 50
+			occlude_amount = -50
 		else
-			occlude_amount = 100
+			occlude_amount = -100
 
 		var/occlude = occlude_amount
 		var/distance
 		distance = get_dist(SA, LA)
-		occlude += (distance*occlude_amount) //each tile of distance = 100 more occlusion
-		var/list/modlist[18]
-		modlist[7] = occlude
-		ME.echo[7] -= occlude
+		modlist[7] += (distance*occlude_amount) //each tile of distance = 100 more occlusion
 
-		return ME.echo
+	for(var/i=1, i<=18, i++)
+		ME.echo[i] += modlist[i]
+	return ME.echo
 
 
 
