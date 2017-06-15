@@ -31,5 +31,5 @@ The following list contains all of the sound environments:
 24	dizzy
 25	psychotic
 
-For information on how to further customize reverb, view http://www.byond.com/docs/ref/info.html#/sound/var/environment
+For information on how to further customize reverb, view http://www.byond.com/docs/ref/info.html#/sound/var/echo
 */

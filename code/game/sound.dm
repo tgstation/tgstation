@@ -47,17 +47,10 @@
 		var/source_location
 		source_location = turf_source.loc
 
-
-		/*
-		this makes reverb based on where the listener is standing
-		that may not be totally accurate, but it prevents sounds
-		in different environments from changing the env of an
-		already-playing sound.
-		*/
-		if(hearer_location != null && isarea(hearer_location))
-			var/area/A = hearer_location
+		if(source_location != null && isarea(source_location))
+			var/area/A = source_location
 			if(A.sound_environment)
-				S.environment = A.sound_environment
+				S.echo = var/datum/sound/presets[A.sound_environment+1]
 
 
 		if(pressure_affected)
@@ -82,11 +75,6 @@
 
 		if(S.volume <= 0)
 			return //No sound
-
-		if(hearer_location != source_location)
-			S.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7) //Sound is occluded
-		else
-			S.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 
 		// 3D sounds, the technology is here!
 		if (surround)
