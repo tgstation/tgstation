@@ -339,6 +339,13 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/vine
+	name = "Vine Clothing"
+	result = /obj/item/clothing/under/vine
+	time = 10
+	reqs = list(/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris = 5)
+	category = CAT_MISC
+
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
 	result = /obj/vehicle/scooter/skateboard
