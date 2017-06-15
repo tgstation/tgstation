@@ -57,8 +57,9 @@
 		if(!D || !D.symptoms || !D.symptoms.len)
 			symptoms = GenerateSymptoms(0, 2)
 		else
-			for(var/datum/symptom/S in D.symptoms)
-				symptoms += new S.type
+			for(var/S in D.symptoms)
+				var/datum/symptom/SY
+				symptoms += new SY.type
 
 	Refresh()
 	..(process, D)
@@ -66,7 +67,8 @@
 
 /datum/disease/advance/Destroy()
 	if(processing)
-		for(var/datum/symptom/S in symptoms)
+		for(var/SY in symptoms)
+			var/datum/symptom/S = SY
 			S.End(src)
 	return ..()
 
@@ -77,11 +79,15 @@
 
 		if(!processing)
 			processing = 1
-			for(var/datum/symptom/S in symptoms)
+			for(var/SY in symptoms)
+				var/datum/symptom/S = SY
 				S.Start(src)
+				CHECK_TICK
 
-		for(var/datum/symptom/S in symptoms)
+		for(var/SY in symptoms)
+			var/datum/symptom/S = SY
 			S.Activate(src)
+			CHECK_TICK
 	else
 		CRASH("We do not have any symptoms during stage_act()!")
 
@@ -118,8 +124,10 @@
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
 	if(!(src.IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
-		for(var/datum/symptom/S in possible_symptoms)
+		for(var/SY in possible_symptoms)
+			var/datum/symptom/S = SY
 			AddSymptom(new S.type)
+			CHECK_TICK
 
 /datum/disease/advance/proc/HasSymptom(datum/symptom/S)
 	for(var/datum/symptom/symp in symptoms)
@@ -139,6 +147,7 @@
 		if(S.level >= level_min && S.level <= level_max)
 			if(!HasSymptom(S))
 				possible_symptoms += S
+		CHECK_TICK
 
 	if(!possible_symptoms.len)
 		return generated
@@ -150,7 +159,9 @@
 		while(prob(20))
 			number_of += 1
 
-	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)
+	for(var/i in 1 to number_of)
+		if(!possible_symptoms.len)
+			break
 		generated += pick_n_take(possible_symptoms)
 
 	return generated
@@ -179,12 +190,14 @@
 
 	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
 
-	for(var/datum/symptom/S in symptoms)
+	for(var/SY in symptoms)
+		var/datum/symptom/S = SY
 		properties["resistance"] += S.resistance
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
+		CHECK_TICK
 	return
 
 // Assign the properties that are in the list.
@@ -343,6 +356,7 @@
 
 		var/datum/disease/advance/D2 = pick(diseases)
 		D2.Mix(D1)
+		CHECK_TICK
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	//to_chat(world, "END MIXING!!!!!")
@@ -356,6 +370,7 @@
 		if(istype(data) && data["viruses"])
 			for(var/datum/disease/A in data["viruses"])
 				preserve += A.Copy()
+				CHECK_TICK
 			R.data = data.Copy()
 		if(preserve.len)
 			R.data["viruses"] = preserve
@@ -373,7 +388,7 @@
 	var/list/symptoms = list()
 	symptoms += "Done"
 	symptoms += SSdisease.list_symptoms.Copy()
-	do
+	while(i > 0)
 		if(user)
 			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
 			if(isnull(symptom))
@@ -385,7 +400,7 @@
 				if(!D.HasSymptom(S))
 					D.symptoms += S
 					i -= 1
-	while(i > 0)
+
 
 	if(D.symptoms.len > 0)
 
@@ -397,6 +412,7 @@
 
 		for(var/datum/disease/advance/AD in SSdisease.processing)
 			AD.Refresh()
+			CHECK_TICK
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
 			if(H.z != ZLEVEL_STATION)
@@ -404,6 +420,7 @@
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)
 				break
+			CHECK_TICK
 
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
