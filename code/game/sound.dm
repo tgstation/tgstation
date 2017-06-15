@@ -118,7 +118,7 @@
 	//todo: implement type 2
 
 //this proc is used to modify an parameter to echo
-/proc/modify_echo(modlist, var/sound/echo/echoin, var/sound/soundin)
+/proc/modify_echo(modlist, var/list/echoin, var/sound/soundin)
 	for(var/i=1, i<=18, i++)
 		echoin[i] += modlist[i]
 	soundin.echo = echoin
