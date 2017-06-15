@@ -136,6 +136,8 @@
 		modlist[7] = occlude
 		ME.echo[7] -= occlude
 
+		return ME.echo
+
 
 
 
