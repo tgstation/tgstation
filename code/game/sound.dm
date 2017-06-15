@@ -117,7 +117,7 @@
 		modify_echo(list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7), sin.echo, sin)
 	//todo: implement type 2
 
-/proc/modify_echo(modlist[18], echoin[18], var/sound/soundin)//this proc is used to modify an parameter to echo
+/proc/modify_echo(var/list/modlist[18], var/list/echoin[18], var/sound/soundin)//this proc is used to modify an parameter to echo
 	for(var/i=1, i<=18, i++)
 		echoin[i] += modlist[i]
 	soundin.echo = echoin
