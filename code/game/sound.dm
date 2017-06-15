@@ -50,7 +50,8 @@
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
-				S.echo = var/datum/sound/presets[A.sound_environment+1]
+				PR = new /datum/sound
+				S.echo = PR.presets[PR.presets[A.sound_environment+1]]
 
 
 		if(pressure_affected)
