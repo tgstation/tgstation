@@ -33,7 +33,6 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
-	S.environment = -1 //-1 disables the sound environment feature
 
 
 	if (vary)
@@ -44,15 +43,21 @@
 
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
+		var/area/hearer_location = get_area(T)
 		var/source_location
-
 		source_location = turf_source.loc
-		if(source_location != null && isarea(source_location))
-			var/area/A = source_location
+
+
+		/*
+		this makes reverb based on where the listener is standing
+		that may not be totally accurate, but it prevents sounds
+		in different environments from changing the env of an
+		already-playing sound.
+		*/
+		if(hearer_location != null && isarea(hearer_location))
+			var/area/A = hearer_location
 			if(A.sound_environment)
 				S.environment = A.sound_environment
-
-		var/area/hearer_location = get_area(T)
 
 
 		if(pressure_affected)
@@ -72,16 +77,16 @@
 			if(distance <= 1)
 				pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
-			if(hearer_location != source_location)
-				S.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7) //Sound is occluded
-			else
-				S.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
-
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-			if(S.volume <= 0)
-				return //No sound
+		if(S.volume <= 0)
+			return //No sound
+
+		if(hearer_location != source_location)
+			S.echo = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7) //Sound is occluded
+		else
+			S.echo = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 
 		// 3D sounds, the technology is here!
 		if (surround)
