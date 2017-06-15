@@ -110,7 +110,7 @@
 	var/sound/ME = sin
 	var/modlist = ECHO_GENERIC
 	if(type == 1)
-		modlist = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
+		modlist = list(0,0,0,0,0,0,-5000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 	if(type == 2)
 		var/atom/SA = sourceatom
 		var/atom/LA = listeneratom
