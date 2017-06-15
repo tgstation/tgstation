@@ -34,6 +34,7 @@
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
 	S.environment = 10 //apparently you need to set an env for echo to work. dumb.
+	S.echo = ECHO_GENERIC //default echo, pretty much does nothing
 
 
 	if (vary)
@@ -44,15 +45,14 @@
 
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
-		//var/area/hearer_location = get_area(T) //this will be used later
+		var/area/hearer_location = get_area(T)
 		var/area/source_location = get_area(turf_source)
 
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
 				S.echo = A.sound_environment
-			else
-				S.echo = null
+
 
 
 		if(pressure_affected)
@@ -78,6 +78,12 @@
 			if(S.volume <= 0)
 				return //No sound
 
+		//Occlusion
+		if(hearer_location != source_location)//Area-based occlusion
+			apply_occlusion(1, S)
+		//no need for an else because the default echo we set in takes care of non-occluded sounds
+
+
 		// 3D sounds, the technology is here!
 		if (surround)
 			var/dx = turf_source.x - T.x // Hearing from the right/left
@@ -91,6 +97,19 @@
 		S.falloff = falloff || FALLOFF_SOUNDS
 
 	src << S
+
+
+/proc/apply_occlusion(type, sin, distance)
+	//type 1 = area-based
+	//type 2 = distance-based
+	if(type == 1)
+		modify_echo(list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7), sin.echo, sin)
+
+/proc/modify_echo(modlist[18], echoin[18], soundin)
+	for(var/i=1, i<=18, i++)
+		echoin[i] + modlist[i]
+	soundin.echo = echoin
+
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
