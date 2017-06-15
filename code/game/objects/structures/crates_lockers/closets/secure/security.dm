@@ -76,7 +76,7 @@
 	new /obj/item/device/megaphone/sec(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/weapon/storage/lockbox/secmedal(src)
-  new /obj/item/weapon/storage/lockbox/medal/sec(src)
+    new /obj/item/weapon/storage/lockbox/medal/sec(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
