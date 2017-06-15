@@ -83,7 +83,7 @@
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
 	new /obj/item/clothing/under/rank/head_of_security/grey(src)
-	new /obj/item/weapon/storage/lockbox/secmedal(src)
+	new /obj/item/weapon/storage/lockbox/medal/sec(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"

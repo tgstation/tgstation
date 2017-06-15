@@ -24,6 +24,8 @@ GLOBAL_PROTECT(reboot_mode)
 		if(REBOOT_MODE_SHUTDOWN)
 			to_chat(src, "<span class='boldannounce'>The server is shutting down...</span>")
 			ServiceEndProcess()
+		else
+			ExportService(SERVICE_REQUEST_WORLD_REBOOT)	//just let em know
 
 /world/proc/ServiceCommand(list/params)
 	var/sCK = RunningService()
