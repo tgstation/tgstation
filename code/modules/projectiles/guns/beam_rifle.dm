@@ -161,6 +161,7 @@
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
+	check_user()
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
@@ -181,22 +182,23 @@
 		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
 		P.color = rgb(0, 255, 0)
-	clear_tracers()
+	tracer_position = 1
 	P.fire()
+	clear_tracers()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracers(delete_all = FALSE)
-	tracer_position = 1
 	if(delete_all)
 		for(var/I in current_tracers)
 			current_tracers -= I
 			qdel(I)
 	else
-		for(var/I in current_tracers)
-			var/obj/effect/projectile_beam/PB = I
-			PB.forceMove(src)	//No forcemove for performance.
+		for(var/I in tracer_position to current_tracers.len)
+			var/obj/effect/projectile_beam/PB = current_tracers[I]
+			PB.forceMove(src)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
+	tracer_position = 1
 	clear_tracers()
 	set_user(null)
 
@@ -234,6 +236,7 @@
 			var/difference = abs(lastangle - angle)
 			delay_penalty(difference * aiming_time_increase_angle_multiplier)
 			lastangle = angle
+		calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(current_user, current_user.client.mouseParams)
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
 	check_user()
@@ -258,6 +261,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
+	terminate_aiming()
 	if(istype(current_user))
 		reset_zooming()
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
@@ -301,6 +305,7 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
+	terminate_aiming()
 	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
@@ -595,6 +600,8 @@
 	light_power = 1
 	light_range = 2
 	light_color = "#00ffff"
+	mouse_opacity = 0
+	flags = ABSTRACT
 
 /obj/effect/projectile_beam/New(angle_override, p_x, p_y, color_override)
 	apply_vars(angle_override, p_x, p_y, color_override)

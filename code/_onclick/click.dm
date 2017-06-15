@@ -114,7 +114,7 @@
 		W.attack_self(src)
 		update_inv_hands()
 		return
-	
+
 	//These are always reachable.
 	//User itself, current loc, and user inventory
 	if(DirectAccess(A))
@@ -125,7 +125,7 @@
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
-	
+
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
 		return
@@ -452,7 +452,6 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-
 
 /* MouseWheelOn */
 
