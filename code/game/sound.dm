@@ -125,8 +125,6 @@
 			occlude_amount = -50
 		else
 			occlude_amount = -100
-
-		var/occlude = occlude_amount
 		var/distance
 		distance = get_dist(SA, LA)
 		modlist[7] += (distance*occlude_amount) //each tile of distance = 100 more occlusion
