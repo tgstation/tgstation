@@ -43,7 +43,7 @@
 
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
-		var/area/hearer_location = get_area(T)
+		//var/area/hearer_location = get_area(T) //this will be used later
 		var/area/source_location = get_area(turf_source)
 
 		if(source_location != null && isarea(source_location))
