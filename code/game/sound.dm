@@ -107,7 +107,7 @@
 
 /proc/modify_echo(modlist[18], echoin[18], var/sound/soundin)
 	for(var/i=1, i<=18, i++)
-		echoin[i] + modlist[i]
+		echoin[i] += modlist[i]
 	soundin.echo = echoin
 
 
