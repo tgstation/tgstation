@@ -36,7 +36,6 @@
 	S.environment = 10 //apparently you need to set an env for echo to work. dumb.
 	S.echo = ECHO_GENERIC //default echo, pretty much does nothing
 
-	var/debug_prints = TRUE //just for while this is WIP, it will be removed
 
 
 	if (vary)
@@ -49,16 +48,11 @@
 		var/turf/T = get_turf(src)
 		var/area/hearer_location = get_area(T)
 		var/area/source_location = get_area(turf_source)
-		if(debug_prints)
-			to_chat(world, "Hearer location: [hearer_location]\n")
-			to_chat(world, "Source location: [source_location]\n")
 
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
 				S.echo = A.sound_environment
-				if(debug_prints)
-					to_chat(world, "Sound env: [english_list(A.sound_environment)]\n")
 
 
 
@@ -93,9 +87,6 @@
 		//distance based occlusion
 		S.echo = gen_occlusion(2, S, turf_source, T)
 
-		if(debug_prints)
-			to_chat(world, "Occluded final echo: [english_list(S.echo)]\n")
-
 
 		// 3D sounds, the technology is here!
 		if (surround)
@@ -125,9 +116,9 @@
 		var/atom/LA = listeneratom
 		var/occlude_amount
 		if(isInSight(LA, SA))
-			occlude_amount = -50
+			occlude_amount = -20
 		else
-			occlude_amount = -100
+			occlude_amount = -65
 		var/distance
 		distance = get_dist(SA, LA)
 		modlist[7] += (distance*occlude_amount) //each tile of distance = 100 more occlusion
