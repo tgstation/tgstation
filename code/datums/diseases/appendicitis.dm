@@ -31,4 +31,4 @@
 				affected_mob.adjustToxLoss(1)
 		if(3)
 			if(prob(1))
-				affected_mob.vomit(95)
+				affected_mob.vomit(lost_nutrition = 95)
