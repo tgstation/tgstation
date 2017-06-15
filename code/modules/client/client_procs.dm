@@ -299,8 +299,7 @@ GLOBAL_LIST(external_rsc_urls)
 			mentor_memo_output("Show")
 
 	add_verbs_from_config()
-	set_client_age_from_db(tdata)
-	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
+	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -487,6 +486,9 @@ GLOBAL_LIST(external_rsc_urls)
 		account_join_date = "Error"
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
+	if(new_player)
+		player_age = -1
+	. = player_age
 
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")
