@@ -34,15 +34,16 @@
 	else if(!storedorgan)
 		to_chat(user, "<span class='notice'>[src] currently has no implant stored.</span>")
 		return
-	storedorgan.Insert(user)//insert stored organ into the user
-	user.visible_message("<span class='notice'>[user] holds [src] against [t_himself] and presses a button. A short mechanical noise emanates from the autoimplanter.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
-	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
-	storedorgan = null
-	name = initial(name)
-	if(uses != INFINITE)
-		uses--
-	if(!uses)
-		desc = "[initial(desc)] Looks like it's been used up."
+	if(do_after(user, 20, target = user))
+		storedorgan.Insert(user)//insert stored organ into the user
+		user.visible_message("<span class='notice'>[user] holds [src] close and presses a button. A short mechanical noise emanates from the autoimplanter.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
+		playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
+		storedorgan = null
+		name = initial(name)
+		if(uses != INFINITE)
+			uses--
+		if(!uses)
+			desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/device/autosurgeon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, organ_type))
