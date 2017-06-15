@@ -51,7 +51,8 @@
 			if(A.sound_environment)
 				to_chat(world, "reverb triggered")
 				S.echo = A.sound_environment
-				to_chat(world, "S.echo: [S.echo]")//the reverb doesn't play and this just outputs '/list'
+				to_chat(world, "env: [english_list(A.sound_environment)]")
+				to_chat(world, "S.echo: [english_list(S.echo)]")//the reverb doesn't play and this just outputs '/list'
 			else
 				S.echo = null
 				to_chat(world, "S.echo is null/no sound env detected")
