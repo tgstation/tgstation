@@ -222,8 +222,9 @@
 /obj/item/weapon/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))
+/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AM)
+	var/obj/item/projectile/P = AM
+	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
