@@ -44,17 +44,25 @@
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
 		var/area/hearer_location = get_area(T)
-		var/source_location
-		source_location = turf_source.loc
+		var/area/source_location = get_area(turf_source)
 
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
-				var/datum/sound/SD = new /datum/sound
-				var/list/echocopy[18]
-				for(var/i=1;i < echocopy.len; i++)
-					echocopy[i] = SD.presets[A.sound_environment+1]
-				S.echo = echocopy
+				to_chat(world, "reverb triggered")
+				var/datum/sound/SD = new /datum/sound //todo: move this somewhere so it's only created once
+				to_chat(world, "environment: [A.sound_environment]")
+				var/i = A.sound_environments + 1
+				to_chat(world, "SD.presets: [SD.presets[i]]")
+				/*var/list/echocopy
+				for(var/i=1;i<=18;i++)
+					LAZYINITLIST(echocopy)
+					echocopy+=SD.presets[SD.presets[A.sound_environment+1]]*/
+				S.echo = SD.presets[i]
+				to_chat(world, "S.echo: [S.echo]")
+			else
+				S.echo = null
+				to_chat(world, "S.echo is null/no sound env detected")
 
 
 		if(pressure_affected)
@@ -77,8 +85,8 @@
 			S.volume *= pressure_factor
 			//End Atmosphere affecting sound
 
-		if(S.volume <= 0)
-			return //No sound
+			if(S.volume <= 0)
+				return //No sound
 
 		// 3D sounds, the technology is here!
 		if (surround)
