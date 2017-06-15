@@ -298,7 +298,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(bubblegum.Adjacent(target) && !charged)
 			charged = TRUE
 			target.Weaken(4)
-			target.staminaloss += 40
+			target.adjustStaminaLoss(40)
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
 			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
