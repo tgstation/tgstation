@@ -63,17 +63,13 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-<<<<<<< HEAD
 	/client/proc/reset_atmos, /* Clean air */
 	/client/proc/fill_breach, /* Fill hullbreach */
 	/client/proc/aooc, /* Antag OOC */
 	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
-=======
-	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
 	/client/proc/toggleadminhelpsound
->>>>>>> bc8185c0bb... Merge pull request #28430 from lzimann/prefs
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel,/client/proc/DB_ban_panel,/client/proc/stickybanpanel))
