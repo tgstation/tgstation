@@ -104,7 +104,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg')
 	valid_territory = 0
-	sound_environment = 12
+	sound_environment = ECHO_HALLWAY
 
 
 //Departments
@@ -272,7 +272,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Cere / Asteroid Specific
 /area/maintenance/asteroid
-	sound_environment = 8
+	sound_environment = ECHO_CAVE
 
 /area/maintenance/asteroid/aft/science
 	name = "Aft Maintenance"
@@ -345,7 +345,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 /area/hallway/primary
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/hallway/primary/fore
 	name = "Fore Primary Hallway"
@@ -441,98 +441,98 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Bridge"
 	icon_state = "bridge"
 	music = "signal"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
 	icon_state = "meeting"
 	music = null
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/bridge/meeting_room/council
 	name = "Council Chamber"
 	icon_state = "meeting"
 	music = null
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/bridge/showroom/corporate
 	name = "Corporate Showroom"
 	icon_state = "showroom"
 	music = null
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/captain
 //	/area/crew_quarters/captain
 	name = "Captain's Office"
 	icon_state = "captain"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/captain/private
 //	/area/crew_quarters/captain/captains_quarters
 	name = "Captain's Quarters"
 	icon_state = "captain"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/heads/chief
 //	/area/crew_quarters/chief
 //	/area/engine/chiefs_office
 	name = "Chief Engineer's Office"
 	icon_state = "ce_office"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/chief/private
 //	/area/crew_quarters/chief/private
 	name = "Chief Engineer's Private Quarters"
 	icon_state = "ce_private"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/heads/cmo
 //	/area/medical/cmo
 	name = "Chief Medical Officer's Office"
 	icon_state = "cmo_office"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/cmo/private
 //	/area/medical/cmo/private
 	name = "Chief Medical Officer's Private Quarters"
 	icon_state = "cmo_private"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/heads/hop
 //	/area/crew_quarters/heads
 	name = "Head of Personnel's Office"
 	icon_state = "hop_office"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/hop/private
 //	/area/crew_quarters/heads
 	name = "Head of Personnel's Private Quarters"
 	icon_state = "hop_private"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/heads/hos
 //	/area/security/hos
 	name = "Head of Security's Office"
 	icon_state = "hos_office"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/hos/private
 //	/area/security/hos/private
 	name = "Head of Security's Private Quarters"
 	icon_state = "hos_private"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/heads/hor
 //	/area/crew_quarters/hor
 	name = "Research Director's Office"
 	icon_state = "rd_office"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/heads/hor/private
 //	/area/crew_quarters/hor/private
 	name = "Research Director's Private Quarters"
 	icon_state = "rd_private"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/mint
 	name = "Mint"
@@ -541,12 +541,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/comms
 	name = "Communications Relay"
 	icon_state = "tcomsatcham"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/server
 	name = "Messaging Server Room"
 	icon_state = "server"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 //Crew
 
@@ -556,7 +556,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/dorms/male
 //	/area/crew_quarters/sleep_male
@@ -575,7 +575,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/crew_quarters/toilet/auxiliary
 	name = "Auxiliary Restrooms"
@@ -603,52 +603,52 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/locker
 	name = "Locker Room"
 	icon_state = "locker"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/crew_quarters/lounge
 	name = "Lounge"
 	icon_state = "yellow"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/fitness
 	name = "Fitness Room"
 	icon_state = "fitness"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "fitness"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/cafeteria/lunchroom
 	name = "Lunchroom"
 	icon_state = "cafeteria"
-	sound_environment = 4
+	sound_environment = ECHO_LIVINGROOM
 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/kitchen/backroom
 	name = "Kitchen Coldroom"
 	icon_state = "kitchen"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
 	icon_state = "bar"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/crew_quarters/electronic_marketing_den
 	name = "Electronic Marketing Den"
@@ -661,7 +661,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "Theatre"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/crew_quarters/theatre/abandoned
 	name = "Abandoned Theatre"
@@ -671,7 +671,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
  	name = "Library"
  	icon_state = "library"
  	flags = NONE
- 	sound_environment = 10
+ 	sound_environment = ECHO_HANGAR
 
 /area/library/lounge
  	name = "Library Lounge"
@@ -687,7 +687,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
 	flags = NONE
-	sound_environment = 7
+	sound_environment = ECHO_CONCERT_HALL
 
 /area/chapel/main
 	name = "Chapel"
@@ -698,7 +698,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/chapel/office
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
-	sound_environment = 11
+	sound_environment = ECHO_CARPETTED_HALLWAY
 
 /area/chapel/asteroid
 	name = "Chapel Asteroid"
@@ -711,19 +711,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/lawoffice
 	name = "Law Office"
 	icon_state = "law"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 
 //Engineering
 
 /area/engine
 	ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
 	icon_state = "engine_smes"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/engine/engineering
 	name = "Engineering"
@@ -734,27 +734,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
  	name = "Atmospherics"
  	icon_state = "atmos"
  	flags = NONE
- 	sound_environment = 10
+ 	sound_environment = ECHO_HANGAR
 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/engine/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/engine/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine_foyer"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "grav_gen"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/engine/secure_construction
 	name = "Secure Construction Area"
@@ -763,12 +763,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/storage
 	name = "Engineering Storage"
 	icon_state = "engi_storage"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/engine/transit_tube
 	name = "Transit Tube"
 	icon_state = "transit_tube"
-	sound_environment = 21 //transit tube, sewer pipe, whats the difference
+	sound_environment = ECHO_ROOM1 //transit tube, sewer pipe, whats the difference
 
 
 //Solars
@@ -921,7 +921,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/teleporter/quantum/cargo
 	name = "Cargo Quantum Pad"
@@ -953,7 +953,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical
 	name = "Medical"
 	icon_state = "medbay3"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/medical/abandoned
 //	/area/medical/abandoned_medbay
@@ -1005,7 +1005,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/patients_rooms
 	name = "Patients' Rooms"
 	icon_state = "patients"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/medical/patients_rooms/room_a
 	name = "Patient Room A"
@@ -1019,13 +1019,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Virology"
 	icon_state = "virology"
 	flags = NONE
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
 	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -1062,7 +1062,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security
 	name = "Security"
 	icon_state = "security"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/security/main
 	name = "Security Office"
@@ -1111,7 +1111,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/range
 	name = "Firing Range"
 	icon_state = "firingrange"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/security/transfer
 	name = "Transfer Centre"
@@ -1187,26 +1187,26 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 ////////////WORK IN PROGRESS//////////
 /area/quartermaster
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 /area/quartermaster/office
 	name = "Cargo Office"
 	icon_state = "quartoffice"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/quartermaster/storage
 	name = "Cargo Bay"
 	icon_state = "cargo_bay"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/quartermaster/qm
 	name = "Quartermaster's Office"
 	icon_state = "quart"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/quartermaster/qm/private
 	name = "Quartermaster's Private Quarters"
 	icon_state = "quart"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/quartermaster/miningdock
 	name = "Mining Dock"
@@ -1228,17 +1228,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Custodial Closet"
 	icon_state = "janitor"
 	flags = NONE
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/hydroponics
 	name = "Hydroponics"
 	icon_state = "hydro"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/hydroponics/garden
 	name = "Garden"
 	icon_state = "garden"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/hydroponics/garden/abandoned
 	name = "Abandoned Garden"
@@ -1254,22 +1254,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science
 	name = "Science Division"
 	icon_state = "toxlab"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/lab
 	name = "Research and Development"
 	icon_state = "toxlab"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "toxlab"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/storage
 	name = "Toxins Storage"
 	icon_state = "toxstorage"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/science/mineral_storeroom
 	name = "Mineral Storeroom"
@@ -1283,39 +1283,39 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/mixing
 	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/misc_lab
 	name = "Testing Lab"
 	icon_state = "toxmisc"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/science/misc_lab/range
 	name = "Research Testing Range"
 	icon_state = "toxmisc"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/science/server
 	name = "Research Division Server Room"
 	icon_state = "server"
-	sound_environment = 3
+	sound_environment = ECHO_BATHROOM
 
 /area/science/explab
 	name = "Experimentation Lab"
 	icon_state = "toxmisc"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/robotics
 //	/area/medical/robotics
 	name = "Robotics"
 	icon_state = "medresearch"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/robotics/mechbay
 //	/area/assembly/chargebay
 	name = "Mech Bay"
 	icon_state = "mechbay"
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/science/robotics/mechbay_cargo
 //	/area/quartermaster/mechbay
@@ -1350,7 +1350,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Storage
 /area/storage
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/storage/tools
 	name = "Auxiliary Tool Storage"
@@ -1427,7 +1427,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //	/area/mining_construction
 	name = "Auxiliary Base Construction"
 	icon_state = "yellow"
-	sound_environment = 10
+	sound_environment = ECHO_HANGAR
 
 /area/construction/mining/aux_base/closet
 //	/area/mining_construction/closet
@@ -1470,7 +1470,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //AI
 /area/ai_monitored
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/ai_monitored/security/armory
 	name = "Armory"
@@ -1562,7 +1562,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/tcommsat
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-	sound_environment = 2
+	sound_environment = ECHO_ROOM
 
 /area/tcommsat/entrance
 	name = "Telecoms Teleporter"

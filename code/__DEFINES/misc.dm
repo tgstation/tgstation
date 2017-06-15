@@ -433,3 +433,31 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
+
+//Reverb preset defines
+#define ECHO_GENERIC 0
+#define ECHO_PADDED_CELL 1
+#define ECHO_ROOM 2
+#define ECHO_BATHROOM 3
+#define ECHO_LIVINGROOM 4
+#define ECHO_STONEROOM 5
+#define ECHO_AUDITORIUM 6
+#define ECHO_CONCERT_HALL 7
+#define ECHO_CAVE 8
+#define ECHO_ARENA 9
+#define ECHO_HANGAR 10
+#define ECHO_CARPETTED_HALLWAY 11
+#define ECHO_HALLWAY 12
+#define ECHO_STONE_CORRIDOR 13
+#define ECHO_ALLEY 14
+#define ECHO_FOREST 15
+#define ECHO_CITY 16
+#define ECHO_MOUNTAINS 17
+#define ECHO_QUARRY 18
+#define ECHO_PLAIN 19
+#define ECHO_PARKING_LOT 20
+#define ECHO_SEWER_PIPE 21
+#define ECHO_UNDERWATER 22
+#define ECHO_DRUGGED 23
+#define ECHO_DIZZY 24
+#define ECHO_PSYCHOTIC 25
