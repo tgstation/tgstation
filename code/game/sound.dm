@@ -24,7 +24,7 @@
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, channel, pressure_affected)
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
-	if(!client || !can_hear())
+	if(!client || !can_hear() || !vol)
 		return
 
 	soundin = get_sfx(soundin)
