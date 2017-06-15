@@ -23,10 +23,10 @@
 	var/payload = "plasteel"
 	var/payload_wall = /turf/closed/wall/r_wall
 	var/payload_floor = /turf/open/floor/engine
-	var/static/list/possible_payloads = list("wood","sand","ice","mining","silver","gold","bananium","abductor","desolation", "plasma","uranium","bluespace","diamond","plasteel","safety","titanium","plastitanium", )
+	var/static/list/possible_payloads = list("wood","sand","ice","mining","silver","gold","bananium","abductor","desolation", "plasma","uranium","bluespace","diamond","plasteel","safety","titanium","plastitanium")
 
 /obj/machinery/construction_nuke/Initialize()
-	..()
+	. = ..()
 	GLOB.poi_list += src
 
 /obj/machinery/construction_nuke/Destroy()
@@ -97,7 +97,7 @@
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	payload = input(usr, "Choose your Payload", "Payload:") as null|anything in possible_payloads
-	if (!src || QDELETED(src))
+	if (QDELETED(src))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	switch(payload)
@@ -136,7 +136,7 @@
 /obj/machinery/construction_nuke/proc/set_timer()
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	timer_set = input("Set timer in seconds:", name, timer_set)
-	if (!src || QDELETED(src))
+	if (QDELETED(src))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	if(timer_set < 90)
@@ -217,11 +217,11 @@
 	update_icon()
 	for(var/mob/M in GLOB.player_list)
 		M << 'sound/machines/Alarm.ogg'
-	addtimer(CALLBACK(src, .proc/boom), 100)
+	addtimer(CALLBACK(src, .proc/boom), 100, TIMER_CLIENT_TIME)
 
 /obj/machinery/construction_nuke/proc/boom()
 	var/turf/startpoint = get_turf(src)
-	spawn_atom_to_turf(/obj/effect/temp_visual/explosion, startpoint, 1, FALSE)
+	new /obj/effect/temp_visual/explosion(startpoint)
 	qdel(src)
 	for(var/I in spiral_range_turfs(range, startpoint))
 		var/turf/T = I
@@ -229,10 +229,10 @@
 			continue
 		if(istype(T, /turf/open/floor))
 			T.ChangeTurf(payload_floor)
-			spawn_atom_to_turf(/obj/effect/temp_visual/fire, T, 1, FALSE)
+			new /obj/effect/temp_visual/fire(T)
 		else if(istype(T, /turf/closed/wall))
 			T.ChangeTurf(payload_wall)
-			spawn_atom_to_turf(/obj/effect/temp_visual/fire, T, 1, FALSE)
+			new /obj/effect/temp_visual/fire(T)
 		CHECK_TICK
 	if((payload == "uranium" || payload == "plasma") && (SSshuttle.emergency.mode == SHUTTLE_RECALL || SSshuttle.emergency.mode == SHUTTLE_IDLE || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
 		SSshuttle.emergencyNoRecall = TRUE
