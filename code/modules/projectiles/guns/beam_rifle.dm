@@ -64,6 +64,7 @@
 	//ZOOMING
 	var/zoom_current_view_increase = 0
 	var/zoom_target_view_increase = 10
+	var/zoom_speed = 1
 	var/zooming = FALSE
 	var/zoom_lock = ZOOM_LOCK_AUTOZOOM
 	var/zooming_angle
@@ -102,11 +103,12 @@
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming()
 		return
-	if(++zoom_current_view_increase > zoom_target_view_increase)
-		return
-	current_user.client.view += 1
-	set_autozoom_pixel_offsets_immediate(zooming_angle)
-	smooth_zooming(SSfastprocess.wait * zoom_target_view_increase)
+	for(var/i in 1 to zoom_speed)
+		if(++zoom_current_view_increase > zoom_target_view_increase)
+			return
+		current_user.client.view += 1
+		set_autozoom_pixel_offsets_immediate(zooming_angle)
+		smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
@@ -200,7 +202,6 @@
 	stop_aiming()
 	tracer_position = 1
 	clear_tracers()
-	set_user(null)
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -261,7 +262,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
 	if(user == current_user)
 		return
-	terminate_aiming()
+		terminate_aiming()
 	if(istype(current_user))
 		reset_zooming()
 		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
