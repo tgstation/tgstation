@@ -73765,10 +73765,6 @@
 	id = "xenosecure";
 	name = "Secure Pen Shutters"
 	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xenosecure";
-	name = "Secure Pen Shutters"
-	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cQt" = (
