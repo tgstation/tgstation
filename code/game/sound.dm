@@ -37,8 +37,6 @@
 	S.echo = ECHO_GENERIC //default echo, pretty much does nothing
 
 	var/debug_prints = TRUE //just for while this is WIP, it will be removed
-	var/list/debug_message
-	LAZYINITLIST(debug_message)
 
 
 	if (vary)
@@ -51,14 +49,16 @@
 		var/turf/T = get_turf(src)
 		var/area/hearer_location = get_area(T)
 		var/area/source_location = get_area(turf_source)
-		debug_message += "Hearer location: [hearer_location]\n"
-		debug_message += "Source location: [source_location]\n"
+		if(debug_prints)
+			to_chat(world, "Hearer location: [hearer_location]\n")
+			to_chat(world, "Source location: [source_location]\n")
 
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
 				S.echo = A.sound_environment
-				debug_message += "Sound env: [english_list(A.sound_environment)]\n"
+				if(debug_prints)
+					to_chat(world, "Sound env: [english_list(A.sound_environment)]\n")
 
 
 
@@ -88,7 +88,8 @@
 		//Occlusion
 		if(hearer_location != source_location)//Area-based occlusion
 			apply_occlusion(1, S)
-			debug_message += "Occluded final echo: [english_list(S.echo)]\n"
+			if(debug_prints)
+				to_chat(world, "Occluded final echo: [english_list(S.echo)]\n")
 		//no need for an else because the default echo we set in takes care of non-occluded sounds
 
 
@@ -104,8 +105,6 @@
 		S.y = 1
 		S.falloff = falloff || FALLOFF_SOUNDS
 
-		if(debug_prints)
-			to_chat(world, "[english_list(debug_prints)]")
 
 	src << S
 
