@@ -88,6 +88,7 @@
 		//Occlusion
 		if(hearer_location != source_location)//Area-based occlusion
 			S.echo = gen_occlusion(1, S)
+			S.echo = gen_occlusion(2, S)
 			if(debug_prints)
 				to_chat(world, "Occluded final echo: [english_list(S.echo)]\n")
 		//no need for an else because the default echo we set in takes care of non-occluded sounds
@@ -109,7 +110,7 @@
 	src << S
 
 
-/proc/gen_occlusion(type, sound/sin, distance)
+/proc/gen_occlusion(type, sound/sin, sourceatom, listeneratom)
 	//type 1 = area-based
 	//type 2 = distance-based
 	var/sound/ME = sound/sin
@@ -118,7 +119,26 @@
 		for(var/i=1, i<=18, i++)
 			ME.echo[i] += modlist[i]
 		return ME.echo
-	//todo: implement type 2
+	if(type == 2)
+		var/atom/SA = sourceatom
+		var/atom/LA = listeneratom
+		if(isInSight(LA, SA))
+			var/occlude = 50
+			var/distance
+			distance = get_dist(SA, LA)
+			occlude += (distance*50) //each tile of distance = 100 more occlusion
+			var/list/modlist[18]
+			modlist[7] = occlude
+			ME.echo[7] -= occlude
+		else
+			var/occlude = 100
+			var/distance
+			distance = get_dist(SA, LA)
+			occlude += (distance*100) //each tile of distance = 100 more occlusion
+			var/list/modlist[18]
+			modlist[7] = occlude
+			ME.echo[7] -= occlude
+
 
 
 
