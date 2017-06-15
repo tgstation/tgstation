@@ -87,7 +87,7 @@
 
 		//Occlusion
 		if(hearer_location != source_location)//Area-based occlusion
-			apply_occlusion(1, S)
+			S.echo = gen_occlusion(1, S)
 			if(debug_prints)
 				to_chat(world, "Occluded final echo: [english_list(S.echo)]\n")
 		//no need for an else because the default echo we set in takes care of non-occluded sounds
@@ -109,19 +109,17 @@
 	src << S
 
 
-//this proc calls modify_echo with a preset used to create occlusion
-/proc/apply_occlusion(type, sound/sin, distance)
+/proc/gen_occlusion(type, sound/sin, distance)
 	//type 1 = area-based
 	//type 2 = distance-based
+	var/sound/ME = sound/sin
 	if(type == 1)
-		modify_echo(list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7), sin.echo, sin)
+		var/list/modlist = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
+		for(var/i=1, i<=18, i++)
+			ME.echo[i] += modlist[i]
+		return ME.echo
 	//todo: implement type 2
 
-//this proc is used to modify an parameter to echo
-/proc/modify_echo(modlist, list/echoin, sound/soundin)
-	for(var/i=1, i<=18, i++)
-		echoin[i] += modlist[i]
-	soundin.echo = echoin
 
 
 /proc/open_sound_channel()
