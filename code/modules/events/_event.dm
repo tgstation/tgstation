@@ -63,7 +63,7 @@
 	if (alertadmins)
 		message_admins("Random Event triggering in 10 seconds: [name] ([typepath]) (<a href='?src=\ref[src];cancel=1'>CANCEL</a>)")
 		sleep(100)
-		if(!canRunEvent())
+		if(!canSpawnEvent())
 			message_admins("Second pre-condition check for [name] failed, skipping...")
 			return EVENT_INTERRUPTED
 
