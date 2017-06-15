@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(blackbox)
 	wait = 6000
 	flags = SS_NO_TICK_CHECK | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	init_order = INIT_ORDER_BLACKBOX
 
 	var/list/msg_common = list()
 	var/list/msg_science = list()
@@ -17,6 +18,8 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/msg_other = list()
 
 	var/list/feedback = list()	//list of datum/feedback_variable
+
+	var/sealed = FALSE	//time to stop tracking stats?
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
@@ -45,6 +48,8 @@ SUBSYSTEM_DEF(blackbox)
 
 	feedback = SSblackbox.feedback
 
+	sealed = SSblackbox.sealed
+
 //no touchie
 /datum/controller/subsystem/blackbox/can_vv_get(var_name)
 	if(var_name == "feedback")
@@ -55,6 +60,7 @@ SUBSYSTEM_DEF(blackbox)
 	return FALSE
 
 /datum/controller/subsystem/blackbox/Shutdown()
+	sealed = FALSE
 	set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 
 	var/pda_msg_amt = 0
@@ -97,6 +103,8 @@ SUBSYSTEM_DEF(blackbox)
 
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
+	if(sealed)
+		return
 	switch(freq)
 		if(1459)
 			msg_common += blackbox_msg
@@ -131,26 +139,38 @@ SUBSYSTEM_DEF(blackbox)
 	return FV
 
 /datum/controller/subsystem/blackbox/proc/set_val(variable, value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.set_value(value)
 
 /datum/controller/subsystem/blackbox/proc/inc(variable, value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.inc(value)
 
 /datum/controller/subsystem/blackbox/proc/dec(variable,value)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.dec(value)
 
 /datum/controller/subsystem/blackbox/proc/set_details(variable,details)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.set_details(details)
 
 /datum/controller/subsystem/blackbox/proc/add_details(variable,details)
+	if(sealed)
+		return
 	var/datum/feedback_variable/FV = find_feedback_datum(variable)
 	FV.add_details(details)
 
 /datum/controller/subsystem/blackbox/proc/ReportDeath(mob/living/L)
+	if(sealed)
+		return
 	if(!SSdbcore.Connect())
 		return
 	if(!L || !L.key || !L.mind)
@@ -182,6 +202,14 @@ SUBSYSTEM_DEF(blackbox)
 	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina])")
 	query_report_death.Execute()
 
+/datum/controller/subsystem/blackbox/proc/Seal()
+	if(sealed)
+		return
+	if(IsAdminAdvancedProcCall())
+		var/msg = "[key_name_admin(usr)] sealed the blackbox!"
+		message_admins(msg)
+	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
+	sealed = TRUE
 
 //feedback variable datum, for storing all kinds of data
 /datum/feedback_variable

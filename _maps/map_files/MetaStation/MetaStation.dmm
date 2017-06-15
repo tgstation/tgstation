@@ -947,9 +947,7 @@
 /area/security/prison)
 "acf" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/security/prison)
 "acg" = (
 /obj/machinery/light/small,
@@ -8868,9 +8866,7 @@
 "aqT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8886,9 +8882,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqV" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -26548,9 +26542,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aYd" = (
 /obj/structure/window/reinforced{
@@ -26595,9 +26587,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aYh" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -29869,9 +29859,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bdX" = (
 /obj/structure/rack{
@@ -30298,7 +30286,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "beK" = (
 /obj/structure/grille,
@@ -31162,14 +31150,14 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bgu" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "propulsion"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bgv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -34241,7 +34229,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "blT" = (
 /obj/structure/cable/yellow{
@@ -50232,9 +50220,7 @@
 	req_access_txt = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port)
 "bPL" = (
 /obj/structure/rack,
@@ -51664,9 +51650,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port)
 "bSo" = (
 /obj/structure/cable/yellow{
@@ -51700,9 +51684,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port)
 "bSr" = (
 /obj/structure/cable/yellow{
@@ -66919,9 +66901,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/aft)
 "cuC" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -71638,10 +71618,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	temperature = 2.7
+/turf/open/floor/plating/airless{
+	luminosity = 2
 	},
 /area/science/test_area)
 "cDz" = (
@@ -71809,9 +71787,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cDO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -81037,7 +81013,7 @@
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "cVh" = (
 /obj/structure/closet/emcloset,
@@ -81052,26 +81028,26 @@
 /area/library)
 "cVj" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "cVk" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "cVl" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_r"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "cVm" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "propulsion_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cVn" = (
 /turf/closed/wall/mineral/titanium,
@@ -81087,7 +81063,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cVu" = (
 /obj/structure/chair,
@@ -81104,7 +81080,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cVx" = (
 /obj/machinery/door/airlock/titanium,
@@ -81142,7 +81118,7 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/engine/atmos)
 "cVB" = (
 /obj/structure/chair{
@@ -81218,10 +81194,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cVN" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -85421,7 +85394,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "ddM" = (
 /obj/machinery/door/airlock/external,
@@ -87820,7 +87793,7 @@
 	name = "arrivals";
 	width = 7
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "djN" = (
 /obj/structure/chair{

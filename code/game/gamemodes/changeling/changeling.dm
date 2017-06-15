@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 		to_chat(changeling.current, "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
 	to_chat(changeling.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
 	to_chat(changeling.current, "<b>You must complete the following tasks:</b>")
-	changeling.current.playsound_local('sound/ambience/antag/ling_aler.ogg',100,0)
+	changeling.current.playsound_local(get_turf(changeling.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	if (changeling.current.mind)
 		var/mob/living/carbon/human/H = changeling.current

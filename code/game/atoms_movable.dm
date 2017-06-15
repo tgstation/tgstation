@@ -197,6 +197,8 @@
 
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
+	
+	unbuckle_all_mobs(force=1)
 
 	. = ..()
 	if(loc)
