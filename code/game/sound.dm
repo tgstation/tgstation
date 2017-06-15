@@ -33,6 +33,7 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
+	S.environment = 10 //apparently you need to set an env for echo to work. dumb.
 
 
 	if (vary)
@@ -49,13 +50,9 @@
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
-				to_chat(world, "reverb triggered")
 				S.echo = A.sound_environment
-				to_chat(world, "env: [english_list(A.sound_environment)]")
-				to_chat(world, "S.echo: [english_list(S.echo)]")//the reverb doesn't play and this just outputs '/list'
 			else
 				S.echo = null
-				to_chat(world, "S.echo is null/no sound env detected")
 
 
 		if(pressure_affected)
