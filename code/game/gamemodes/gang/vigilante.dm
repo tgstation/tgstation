@@ -7,7 +7,7 @@
 	origin_tech = "programming=5;bluespace=2"
 	var/datum/action/innate/vigilante_tool/linked_action
 	var/points = 0
-	var/list/tags = list()
+	var/list/tags
 	var/vig_item_list
 	var/vig_category_list
 	var/static/gang = "Vigilante"
@@ -37,23 +37,25 @@
 
 /obj/item/device/vigilante_tool/Initialize()
 	. = ..()
-	if(ismob(loc))
-		vig_item_list = list()
-		vig_category_list = list()
-		for(var/V in vigilante_items)
-			var/datum/gang_item/G = new V()
-			vig_item_list[G.id] = G
-			var/list/Cat = vig_category_list[G.category]
-			if(Cat)
-				Cat += G
-			else
-				vig_category_list[G.category] = list(G)
-		var/mob/living/M = loc
-		linked_action = new(src)
-		linked_action.Grant(M, src)
-		addtimer(CALLBACK(src, .proc/earnings), 1500, TIMER_UNIQUE)
-	else
+	tags = list()
+	if(!ismob(loc))
 		return INITIALIZE_HINT_QDEL
+	vig_item_list = list()
+	vig_category_list = list()
+	for(var/V in vigilante_items)
+		var/datum/gang_item/G = new V()
+		vig_item_list[G.id] = G
+		var/list/Cat = vig_category_list[G.category]
+		if(Cat)
+			Cat += G
+		else
+			vig_category_list[G.category] = list(G)
+	var/mob/living/M = loc
+	linked_action = new(src)
+	linked_action.Grant(M, src)
+	addtimer(CALLBACK(src, .proc/earnings), 1500, TIMER_UNIQUE)
+
+
 
 /obj/item/device/vigilante_tool/Destroy()
 	var/mob/living/M = loc
@@ -104,7 +106,7 @@
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
 	var/datum/browser/popup = new(user, "gangtool", "Welcome to Vigilante's Companion v1.2", 400, 750)
-	dat.Join()
+	popup.set_content(dat.Join())
 	popup.open()
 
 

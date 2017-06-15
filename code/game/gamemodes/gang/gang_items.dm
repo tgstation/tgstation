@@ -96,8 +96,8 @@
 /datum/gang_item/function/leadership/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(!gang || (src in gang.bosses))
 		return
-	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool/spare/lt(user.loc)
-	qdel(gangtool)
+	var/obj/item/device/gangtool/O = new /obj/item/device/gangtool/spare/lt(get_turf(user))
+	QDEL_NULL(gangtool)
 	O.register_device(user)
 	gang.bosses_working = TRUE
 	user.put_in_hands(O)
@@ -153,7 +153,7 @@
 		to_chat(user, "<span class='warning'>This device can only be spawned in territory controlled by your gang!</span>")
 		return FALSE
 	var/confirm_final = alert(user, "Your gang can only place ONE gateway, make sure it is in a well-secured location.", "Are you ready to place the gateway?", "This location is secure", "I should wait...")
-	if(confirm_final == "No")
+	if(confirm_final == "I should wait...")
 		return FALSE
 	return ..()
 
@@ -164,15 +164,16 @@
 	density = TRUE
 	icon = 'icons/obj/machines/teleporter.dmi'
 	icon_state = "gang_teleporter_on"
-	var/datum/gang/G
-	var/list/mob/dead/observer/queue = list()
 	max_integrity = 400
 	obj_integrity = 400
 	var/final_guard = TRUE
+	var/datum/gang/G
+	var/list/mob/dead/observer/queue
 
 /obj/machinery/gang/backup/Initialize(mapload, datum/gang/gang)
 	. = ..()
 	G = gang
+	queue = list()
 	name = "[G] reinforcements gateway"
 	addtimer(CALLBACK(src, .proc/reinforce), max(10, (4500 - world.time)))
 	do_sparks(4, TRUE, src)
@@ -182,16 +183,14 @@
 		qdel(M)
 	return ..()
 
-/obj/machinery/gang/backup/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/gang/backup/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE)
 	. = ..()
 	if(.)
 		if((obj_integrity < 300) && final_guard == TRUE)
 			final_guard = FALSE
 			reinforce(FALSE)
 
-/obj/machinery/gang/backup/proc/reinforce(var/repeat = TRUE)
-	if(!src)
-		return
+/obj/machinery/gang/backup/proc/reinforce(repeat = TRUE)
 	var/we = 0
 	var/rival = 0
 	var/cooldown = 0
@@ -750,7 +749,7 @@
 			if (H.suiciding || (H.disabilities & NOCLONE) || !H.getorgan(/obj/item/organ/heart) || !H.getorgan(/obj/item/organ/brain) || !H.mind)
 				H.visible_message("<span class='warning'>[H]'s body falls still again, they're gone for good.")
 				return
-			if(!H.key)
+			if(!H.client)
 				var/identity
 				var/mob/dead/observer/winner
 				H.visible_message("<span class='warning'>[H]'s body twitches as a spirit seeks to return to this broken form.")
@@ -781,6 +780,7 @@
 			H.setBrainLoss(40)
 			add_logs(user, H, "revived", src)
 			icon_state = "implanter0"
+			update_icon()
 
 
 ////// Gangbuster Seraph //////
@@ -797,17 +797,18 @@
 	desc = "Heavy-duty, combat-type exosuit. This is a custom gangbuster model, utilized only by employees who have proven themselves in the line of fire."
 	name = "\improper 'Gangbuster' Seraph" // Mostly for theming since this is a Nanotrasen funded initiative
 	icon_state = "seraph"
-	operation_req_access = list()
+
 	step_in = 2
 	obj_integrity = 300
 	max_integrity = 300
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	max_equip = 4
-	bumpsmash = 0
+	bumpsmash = FALSE
 
-/obj/mecha/combat/marauder/gangbuster_seraph/New()
-	..()
+/obj/mecha/combat/marauder/gangbuster_seraph/Initialize()
+	. = ..()
+	operation_req_access = list()
 	var/obj/item/mecha_parts/mecha_equipment/ME
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot(src)
 	ME.attach(src)

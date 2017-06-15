@@ -15,7 +15,6 @@
 	var/outfits = 2
 	var/free_pen = 0
 	var/promotable = 0
-	var/list/tags = list()
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
 	..()
@@ -75,7 +74,7 @@
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
 	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
-	dat.Join()
+	popup.set_content(dat.Join())
 	popup.open()
 
 
@@ -246,13 +245,13 @@
 /obj/item/device/gangtool/soldier
 	var/datum/action/innate/gang/tool/linked_action
 
-/obj/item/device/gangtool/soldier/New(mob/user)
+/obj/item/device/gangtool/soldier/Initialize()
 	. = ..()
 	var/mob/living/M = loc
-	gang = user.mind.gang_datum
+	gang = M.mind.gang_datum
 	gang.gangtools += src
 	linked_action = new(M)
-	linked_action.Grant(user, src, gang)
+	linked_action.Grant(M, src, gang)
 
 /obj/item/device/gangtool/soldier/Destroy()
 	var/mob/living/M = loc
@@ -264,7 +263,7 @@
 /obj/item/device/gangtool/soldier/attack_self(mob/user)
 	if (!can_use(user))
 		return
-	var/dat
+	var/list/dat = list()
 	if(gang.is_dominating)
 		dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 	dat += "[gang.name] Gang Leadership: "
@@ -273,9 +272,9 @@
 	dat += "<br>"
 	dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
 	dat += "Your Influence: <B>[gang.get_influence(user.mind)]</B><br>"
-	if(LAZYLEN(tags))
+	if(LAZYLEN(gang.tags_by_mind[user.mind]))
 		dat += "Your tags generate bonus influence for you.<br> You have tagged the following territories:"
-		for(var/obj/effect/decal/cleanable/crayon/gang/T in tags)
+		for(var/obj/effect/decal/cleanable/crayon/gang/T in gang.tags_by_mind[user.mind])
 			dat += " [T] -"
 	else
 		dat += "You have not personally tagged any territory for your gang. Use a spray can to mark your territory and receive bonus influence."
@@ -305,7 +304,7 @@
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
 	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
-	popup.set_content(dat)
+	popup.set_content(dat.Join())
 	popup.open()
 
 /obj/item/device/gangtool/soldier/Topic(href, href_list)

@@ -67,50 +67,23 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		SSjob.DisableJob(/datum/job/cyborg)
 
 		// For removing problematic items
-		for(var/area/ai_monitored/security/armory/A in GLOB.sortedAreas)
-			target_armory = A
-			break
-
-		for(var/area/crew_quarters/heads/hos/S in GLOB.sortedAreas)
-			target_hos = S
-			break
-
-		for(var/area/security/brig/B in GLOB.sortedAreas)
-			target_brig = B
-			break
-
-		for(var/area/security/main/M in GLOB.sortedAreas)
-			target_equip  = M
-			break
-
-		for(var/area/security/warden/W in GLOB.sortedAreas)
-			target_ward = W
-			break
-
-		for(var/area/security/detectives_office/D in GLOB.sortedAreas)
-			target_det = D
-			break
-
-		for(var/area/crew_quarters/heads/captain/private/V in GLOB.sortedAreas)
-			target_captain = V
-			break
+		target_armory = locate(/area/ai_monitored/security/armory in GLOB.sortedAreas)
+		target_hos = locate(/area/crew_quarters/heads/hos in GLOB.sortedAreas)
+		target_brig = locate(/area/security/brig in GLOB.sortedAreas)
+		target_equip = locate(/area/security/main in GLOB.sortedAreas)
+		target_ward = locate(/area/security/warden in GLOB.sortedAreas)
+		target_det = locate(/area/security/detectives_office in GLOB.sortedAreas)
+		target_captain = locate(/area/crew_quarters/heads/captain/private in GLOB.sortedAreas)
+		target_hop = locate(/area/crew_quarters/heads/hop in GLOB.sortedAreas)
+		target_science = locate(/area/science/mixing in GLOB.sortedAreas)
+		target_atmos = locate(/area/engine/atmos in GLOB.sortedAreas)
 
 		for(var/area/crew_quarters/heads/captain/C in GLOB.sortedAreas)
 			if(C != /area/crew_quarters/heads/captain/private)
 				target_captain2 = C
 				break
-		for(var/area/crew_quarters/heads/hop/P in GLOB.sortedAreas)
-			target_hop = P
-			break
-
-		for(var/area/science/mixing/T in GLOB.sortedAreas)
-			target_science = T
-			break
-
-		for(var/area/engine/atmos/O in GLOB.sortedAreas)
-			target_atmos = O
-			break
 		gangpocalypse()
+
 	//Spawn more bosses depending on server population
 	var/gangs_to_create = 2
 	if(prob(num_players() * 2))
@@ -357,11 +330,11 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
 				gangster_mind.current.visible_message("<FONT size=3><B>[gangster_mind.current] looks like they've given up the life of crime!<B></font>")
+				if(vigilantes)
+					vigilize(gangster_mind.current)
 			to_chat(gangster_mind.current, "<FONT size=3 color=red><B>You have been reformed! You are no longer a gangster!</B><BR>You try as hard as you can, but you can't seem to recall any of the identities of your former gangsters...</FONT>")
 			gangster_mind.memory = ""
 	gang.remove_gang_hud(gangster_mind)
-	if(vigilantes)
-		vigilize(gangster_mind.current)
 	return 1
 
 ////////////////
@@ -421,10 +394,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 		character = equip
 		SSjob.SendToLateJoin(character)
 		GLOB.data_core.manifest_inject(character)
-		if(SSshuttle.arrivals)
-			SSshuttle.arrivals.QueueAnnounce(character, "Vigilante")
-		else
-			AnnounceArrival(character, "Vigilante")
+		SSshuttle.arrivals.QueueAnnounce(character, "Vigilante")
 		GLOB.joined_player_list += character.ckey
 		var/mob/dead/observer/spoo = pick_n_take(finalists)
 		character.key = spoo.key
