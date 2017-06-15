@@ -768,7 +768,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/transit_tube
 	name = "Transit Tube"
 	icon_state = "transit_tube"
-	sound_environment = ECHO_ROOM1 //transit tube, sewer pipe, whats the difference
+	sound_environment = ECHO_SEWER_PIPE //transit tube, sewer pipe, whats the difference
 
 
 //Solars
