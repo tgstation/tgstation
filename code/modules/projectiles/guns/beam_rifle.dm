@@ -237,7 +237,6 @@
 			var/difference = abs(lastangle - angle)
 			delay_penalty(difference * aiming_time_increase_angle_multiplier)
 			lastangle = angle
-		calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(current_user, current_user.client.mouseParams)
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
 	check_user()
