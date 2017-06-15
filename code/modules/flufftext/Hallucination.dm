@@ -631,7 +631,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	to_chat(my_target, currentimage)
+	SEND_IMAGE(my_target, currentimage)
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
@@ -675,7 +675,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	to_chat(target, I)
+	SEND_IMAGE(target, I)
 	QDEL_IN(O, 300)
 
 
@@ -792,7 +792,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			new /obj/effect/hallucination/items_other(src.loc,src)
 		if("sounds")
 			//Strange audio
-			//to_chat(src, "Strange Audio")
 			switch(rand(1,20))
 				if(1) playsound_local(null,'sound/machines/airlock.ogg', 15, 1)
 				if(2)
