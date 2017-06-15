@@ -110,10 +110,10 @@
 	src << S
 
 
-/proc/gen_occlusion(type, sound/sin, sourceatom, listeneratom)
+/proc/gen_occlusion(type, sin, sourceatom, listeneratom)
 	//type 1 = area-based
 	//type 2 = distance-based
-	var/sound/ME = sound/sin
+	var/sound/ME = sin
 	if(type == 1)
 		var/list/modlist = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 		for(var/i=1, i<=18, i++)
