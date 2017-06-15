@@ -122,22 +122,19 @@
 	if(type == 2)
 		var/atom/SA = sourceatom
 		var/atom/LA = listeneratom
+		var/occlude_amount
 		if(isInSight(LA, SA))
-			var/occlude = 50
-			var/distance
-			distance = get_dist(SA, LA)
-			occlude += (distance*50) //each tile of distance = 100 more occlusion
-			var/list/modlist[18]
-			modlist[7] = occlude
-			ME.echo[7] -= occlude
+			occlude_amount = 50
 		else
-			var/occlude = 100
-			var/distance
-			distance = get_dist(SA, LA)
-			occlude += (distance*100) //each tile of distance = 100 more occlusion
-			var/list/modlist[18]
-			modlist[7] = occlude
-			ME.echo[7] -= occlude
+			var/occlude_amount = 100
+
+		var/occlude = occlude_amount
+		var/distance
+		distance = get_dist(SA, LA)
+		occlude += (distance*occlude_amount) //each tile of distance = 100 more occlusion
+		var/list/modlist[18]
+		modlist[7] = occlude
+		ME.echo[7] -= occlude
 
 
 
