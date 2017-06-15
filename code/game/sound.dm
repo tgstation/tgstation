@@ -110,13 +110,15 @@
 	src << S
 
 
+//this proc calls modify_echo with a preset used to create occlusion
 /proc/apply_occlusion(var/type, var/sound/sin, var/distance)
 	//type 1 = area-based
 	//type 2 = distance-based
 	if(type == 1)
 		modify_echo(list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7), sin.echo, sin)
+	//todo: implement type 2
 
-/proc/modify_echo(modlist[18], echoin[18], var/sound/soundin)
+/proc/modify_echo(modlist[18], echoin[18], var/sound/soundin)//this proc is used to modify an parameter to echo
 	for(var/i=1, i<=18, i++)
 		echoin[i] += modlist[i]
 	soundin.echo = echoin
