@@ -50,16 +50,8 @@
 			var/area/A = source_location
 			if(A.sound_environment)
 				to_chat(world, "reverb triggered")
-				//var/datum/sound/SD = new /datum/sound //todo: move this somewhere so it's only created once
-				//to_chat(world, "environment: [A.sound_environment]")
-				//var/i = A.sound_environment + 1
-				//to_chat(world, "SD.presets: [SD.presets[i]]")
-				/*var/list/echocopy
-				for(var/i=1;i<=18;i++)
-					LAZYINITLIST(echocopy)
-					echocopy+=SD.presets[SD.presets[A.sound_environment+1]]*/
 				S.echo = A.sound_environment
-				to_chat(world, "S.echo: [S.echo]")
+				to_chat(world, "S.echo: [S.echo]")//the reverb doesn't play and this just outputs '/list'
 			else
 				S.echo = null
 				to_chat(world, "S.echo is null/no sound env detected")
