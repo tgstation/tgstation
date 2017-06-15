@@ -15,9 +15,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 
 /*-----------------------------------------------------------------------------*/
-/area
-	var/sound_environment = 2
-
 /area/ai_monitored	//stub defined ai_monitored.dm
 
 /area/ai_monitored/turret_protected
