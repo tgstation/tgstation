@@ -117,7 +117,7 @@
 	//type 1 = area-based
 	//type 2 = distance-based
 	var/sound/ME = sin
-	var/list/modlist[18] = ECHO_GENERIC
+	var/modlist = ECHO_GENERIC
 	if(type == 1)
 		modlist = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 	if(type == 2)
