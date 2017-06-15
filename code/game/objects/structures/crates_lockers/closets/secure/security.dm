@@ -66,6 +66,7 @@
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
 	new /obj/item/clothing/under/hosparademale(src)
+	new /obj/item/clothing/under/rank/head_of_security/grey(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
@@ -74,6 +75,8 @@
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/device/megaphone/sec(src)
 	new /obj/item/weapon/holosign_creator/security(src)
+	new /obj/item/weapon/storage/lockbox/secmedal(src)
+    new /obj/item/weapon/storage/lockbox/medal/sec(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
@@ -82,8 +85,6 @@
 	new /obj/item/weapon/gun/energy/e_gun/hos(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/pinpointer(src)
-	new /obj/item/clothing/under/rank/head_of_security/grey(src)
-	new /obj/item/weapon/storage/lockbox/medal/sec(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
