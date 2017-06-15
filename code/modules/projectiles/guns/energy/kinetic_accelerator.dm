@@ -98,7 +98,7 @@
 		empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
-	cell.use(500)
+	cell.use(cell.charge)
 	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload(recharge_time)
@@ -125,7 +125,7 @@
 	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
-	cell.give(500)
+	cell.give(cell.maxcharge)
 	recharge_newshot(1)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
@@ -175,13 +175,18 @@
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))
 		return
-	var/datum/gas_mixture/environment = target_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure > 50)
-		name = "weakened [name]"
-		damage = damage * pressure_decrease
-		pressure_decrease_active = TRUE
 	. = ..()
+	if(.)
+		if(kinetic_gun)
+			var/list/mods = kinetic_gun.get_modkits()
+			for(var/obj/item/borg/upgrade/modkit/M in mods)
+				M.projectile_prehit(src, target, kinetic_gun)
+		var/datum/gas_mixture/environment = target_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure > 50)
+			name = "weakened [name]"
+			damage = damage * pressure_decrease
+			pressure_decrease_active = TRUE
 
 /obj/item/projectile/kinetic/on_range()
 	strike_thing()
@@ -270,6 +275,8 @@
 
 /obj/item/borg/upgrade/modkit/proc/modify_projectile(obj/item/projectile/kinetic/K)
 
+//use this one for effects you want to trigger before any damage is done at all and before damage is decreased by pressure
+/obj/item/borg/upgrade/modkit/proc/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 //use this one for effects you want to trigger before mods that do damage
 /obj/item/borg/upgrade/modkit/proc/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 //and this one for things that don't need to trigger before other damage-dealing mods
@@ -354,7 +361,6 @@
 			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
 			to_chat(L, "<span class='userdanger'>You're struck by a [K.name]!</span>")
 
-
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
@@ -400,7 +406,7 @@
 	cost = 20
 	var/static/list/damage_heal_order = list(BRUTE, BURN, OXY)
 
-/obj/item/borg/upgrade/modkit/lifesteal/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/lifesteal/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target) && isliving(K.firer))
 		var/mob/living/L = target
 		if(L.stat == DEAD)
@@ -433,7 +439,7 @@
 	var/maximum_bounty = 25
 	var/list/bounties_reaped = list()
 
-/obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/bounty/projectile_prehit(obj/item/projectile/kinetic/K, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))
 		var/mob/living/L = target
 		var/list/existing_marks = L.has_status_effect_list(STATUS_EFFECT_SYPHONMARK)
@@ -444,6 +450,10 @@
 				qdel(SM)
 		var/datum/status_effect/syphon_mark/SM = L.apply_status_effect(STATUS_EFFECT_SYPHONMARK)
 		SM.reward_target = src
+
+/obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	if(isliving(target))
+		var/mob/living/L = target
 		if(bounties_reaped[L.type])
 			var/kill_modifier = 1
 			if(K.pressure_decrease_active)

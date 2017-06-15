@@ -17,10 +17,12 @@
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
 	
-/obj/machinery/transformer/New()
+/obj/machinery/transformer/Initialize()
 	// On us
-	..()
+	. = ..()
+	new /obj/machinery/conveyor/auto(locate(x - 1, y, z), WEST)
 	new /obj/machinery/conveyor/auto(loc, WEST)
+	new /obj/machinery/conveyor/auto(locate(x + 1, y, z), WEST)	
 	countdown = new(src)
 	countdown.start()
 
@@ -116,19 +118,3 @@
 	if(R)
 		R.SetLockdown(0)
 		R.notify_ai(NEW_BORG)
-
-/obj/machinery/transformer/conveyor/New()
-	..()
-	var/turf/T = loc
-	if(T)
-		// Spawn Conveyor Belts
-
-		//East
-		var/turf/east = locate(T.x + 1, T.y, T.z)
-		if(isfloorturf(east))
-			new /obj/machinery/conveyor/auto(east, WEST)
-
-		// West
-		var/turf/west = locate(T.x - 1, T.y, T.z)
-		if(isfloorturf(west))
-			new /obj/machinery/conveyor/auto(west, WEST)
