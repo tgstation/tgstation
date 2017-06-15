@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/message_mode = get_message_mode(message)
 	var/original_message = message
-	var/in_critical = ((health < HEALTH_THRESHOLD_CRIT) ? TRUE : FALSE)
+	var/in_critical = InCritical()
 
 	if(one_character_prefix[message_mode])
 		message = copytext(message, 2)
@@ -102,11 +102,17 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	if(stat == DEAD)
+		if(message == "*fart" || message == "*scream") //Avoid deachat spam via the hotkeys
+			return
 		say_dead(original_message)
 		return
 
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
+
+	if(is_nearcrit()) //in_critical variable is handled separately.
+		if(!(message_mode in crit_allowed_modes))
+			message_mode = MODE_WHISPER
 
 	if(in_critical)
 		if(!(crit_allowed_modes[message_mode]))
