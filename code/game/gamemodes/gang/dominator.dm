@@ -32,6 +32,15 @@
 /obj/machinery/dominator/hulk_damage()
 	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
 
+/proc/check_valid_location_for_dominator(turf/T)
+	if(dominator_excessive_walls(T))
+		return "<span class='boldwarning'>This area has too many walls around it!</span>"
+	if(dominator_interference_check(T))
+		return "<span class='boldwarning'>This is too close to an existing dominator!</span>"
+	if(!dominator_location_check(T))
+		return "<span class='boldwarning'>Putting a dominator near such a critical location will surely attract the attention of the Nanotrasen Emergency Response Teams!</span>" //lol
+	return TRUE
+
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
 	for(var/turf/T in view(3, A))
@@ -46,7 +55,7 @@
 	if(!DOMINATOR_FORCEFIELD)
 		return TRUE
 	for(var/obj/machinery/dominator/DM in world)
-		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION)
+		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION && !(DM.stat & BROKEN))
 			return TRUE
 	return FALSE
 
