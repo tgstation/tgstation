@@ -5,7 +5,6 @@ sound that is already playing will have its reverb removed. The workaround is to
 works on one sound only. However, echo does not have presets. This list stores the arguments to be passed
 to echo, in order to simulate an environment preset.
 */
-
 /datum/sound/var/list/presets=list(\
 	"Generic"=          list(7.5,   1.00,   -1000,  -100,   0,  1.49,  0.83, 1.0,  -2602, 0.007,  200,   0.011, 0.250,  0.00,  0.25, 0.000, -5.0,  5000.0,  250.0, 0.0, 100.0, 100.0, 0x3f),
 	"Padded Cell"=      list(1.4,   1.00,   -1000,  -6000,  0,  0.17,  0.10, 1.0,  -1204, 0.001,  207,   0.002, 0.250,  0.00,  0.25, 0.000, -5.0,  5000.0,  250.0, 0.0, 100.0, 100.0, 0x3f),

@@ -51,7 +51,10 @@
 			var/area/A = source_location
 			if(A.sound_environment)
 				var/datum/sound/SD = new /datum/sound
-				S.echo = SD.presets[SD.presets[A.sound_environment+1]]
+				var/list/echocopy[18]
+				for(var/i=1;i < echocopy.len; i++)
+					echocopy[i] = SD.presets[A.sound_environment+1]
+				S.echo = echocopy
 
 
 		if(pressure_affected)
