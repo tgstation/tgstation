@@ -105,8 +105,7 @@
 		S.falloff = falloff || FALLOFF_SOUNDS
 
 		if(debug_prints)
-			for(var/d in debug_prints)
-				to_chat(world, d)
+			to_chat(world, "[english_list(debug_prints)]")
 
 	src << S
 
