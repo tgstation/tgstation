@@ -450,7 +450,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = FALSE, var/stun = TRUE, var/distance = 1, var/message = TRUE, var/toxic = FALSE)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 

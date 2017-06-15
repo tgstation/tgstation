@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		if(istype(user, /mob/living/carbon))
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)
-				C.vomit(lost_nutrition = 0, blood = TRUE, stun = FALSE, distance = 4, message = FALSE)
+				C.vomit(0, TRUE, FALSE, 4, FALSE)
 				if(prob(20))
 					C.spew_organ()
 				sleep(5)

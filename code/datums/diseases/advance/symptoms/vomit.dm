@@ -42,7 +42,7 @@ Bonus
 	return
 
 /datum/symptom/vomit/proc/Vomit(mob/living/carbon/M)
-	M.vomit(lost_nutrition = 20)
+	M.vomit(20)
 
 /*
 //////////////////////////////////////
@@ -75,7 +75,7 @@ Bonus
 	severity = 5
 
 /datum/symptom/vomit/blood/Vomit(mob/living/carbon/M)
-	M.vomit(lost_nutrition = 0, blood = TRUE)
+	M.vomit(0,TRUE)
 
 
 /*
@@ -103,4 +103,4 @@ Bonus
 	level = 4
 
 /datum/symptom/vomit/projectile/Vomit(mob/living/carbon/M)
-	M.vomit(lost_nutrition = 6, distance = 5)
+	M.vomit(6, distance = 5)

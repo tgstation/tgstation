@@ -46,7 +46,7 @@
 				to_chat(affected_mob, "<span class='userdanger'>You feel your mind relax and your thoughts drift!</span>")
 				affected_mob.confused = min(100, affected_mob.confused + 8)
 			if(prob(10))
-				affected_mob.vomit(lost_nutrition = 20)
+				affected_mob.vomit(20)
 			if(prob(3))
 				to_chat(affected_mob, "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>")
 				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
