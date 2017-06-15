@@ -2,7 +2,7 @@
 
 /obj/item/device/autosurgeon
 	name = "autosurgeon"
-	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. It has a slot to insert implants/organs and a screwdriver slot for removing accidentally added items."
+	desc = "A device that automatically inserts an implant or organ into the user without the hassle of extensive surgery. It has a slot to insert implants/organs and a screwdriver slot for removing accidentally added items. Can only be used on oneself."
 	icon_state = "autoimplanter"
 	item_state = "walkietalkie"//left as this so as to intentionally not have inhands
 	w_class = WEIGHT_CLASS_SMALL
@@ -21,7 +21,13 @@
 	I.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])"
 
-/obj/item/device/autosurgeon/attack_self(mob/user)//when the object it used...
+/obj/item/device/autosurgeon/afterattack(obj/target, mob/user , proximity)//when the object it used..
+	if(!proximity)
+		return
+	if(!ishuman(target))
+		return
+	if(target != user) // no drive-by autoimplanting
+		return.
 	if(!uses)
 		to_chat(user, "<span class='warning'>[src] has already been used. The tools are dull and won't reactivate.</span>")
 		return
@@ -29,7 +35,7 @@
 		to_chat(user, "<span class='notice'>[src] currently has no implant stored.</span>")
 		return
 	storedorgan.Insert(user)//insert stored organ into the user
-	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
+	user.visible_message("<span class='notice'>[user] holds [src] against [t_himself] and presses a button. A short mechanical noise emanates from the autoimplanter.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
 	storedorgan = null
 	name = initial(name)
