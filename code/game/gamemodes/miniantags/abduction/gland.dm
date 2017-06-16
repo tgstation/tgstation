@@ -75,7 +75,7 @@
 
 /obj/item/organ/heart/gland/slime/activate()
 	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
-	owner.vomit(lost_nutrition = 20)
+	owner.vomit(20)
 
 	var/mob/living/simple_animal/slime/Slime
 	Slime = new(get_turf(owner), "grey")
