@@ -172,7 +172,7 @@
 
 /obj/structure/fluff/hivebot_swarm_core/examine(mob/user)
 	..()
-	user << "<span class='warning'>It's gently vibrating...</span>" //Hint at the treasure inside
+	to_chat(user, "<span class='warning'>It's gently vibrating...</span>") //Hint at the treasure inside
 
 /obj/structure/fluff/hivebot_swarm_core/Destroy()
 	visible_message("<span class='warning'>Something tumbles free of [src]!</span>")
