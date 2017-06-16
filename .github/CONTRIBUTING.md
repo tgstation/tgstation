@@ -118,10 +118,11 @@ var/path_type = /obj/item/weapon/baseball_bat
 var/path_type = "/obj/item/weapon/baseball_bat"
 ```
 
-### Tabs not spaces
-You must use tabs to indent your code, NOT SPACES.
+### Spaces not tabs
+You MUST use spaces to indent code, not tabs.
 
-(You may use spaces to align something, but you should tab to the block level first, then add the remaining spaces)
+See this article for reference:
+http://www.bbc.co.uk/news/technology-40302410
 
 ### No Hacky code
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: 'I couldn't immediately think of a proper way so thus there must be no other option' is not gonna cut it here )
