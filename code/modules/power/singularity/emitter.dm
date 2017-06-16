@@ -1,6 +1,6 @@
 /obj/machinery/power/emitter
 	name = "emitter"
-	desc = "A heavy-duty industrial laser used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "A heavy-duty industrial laser, often used in containment fields and power generation.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	var/icon_state_on = "emitter_+a"
