@@ -20,13 +20,13 @@
 
 /datum/round_event/hivebot_invasion/announce()
 	priority_announce("Long-range scanners have detected an unidentified object on collision course with [station_name()]. Intent appears hostile. ETA: 30 seconds. All crew brace for impact.", "Impact Warning", sound = 'sound/machines/warning_alarm.ogg' )
-	spawn(150)
-		priority_announce("Impact location determined from trajectory to be [get_area(invasion_point)]. Leave the area immediately or risk annihilation.", "Impact Warning", sound = 'sound/misc/notice1.ogg')
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/priority_announce, "Impact location determined from trajectory to be [get_area(invasion_point)]. Leave the area immediately or risk annihilation.", "Impact Warning", 'sound/misc/notice1.ogg'), 150)
 
 /datum/round_event/hivebot_invasion/start()
 	var/turf/T = get_turf(invasion_point)
 	priority_announce("Object has made impact. Heavy bluespace activity detected; object likely serves as a beacon. Destroy the object as quickly as possible.", "Invasion Warning", sound = 'sound/misc/notice1.ogg')
-	for(var/mob/player in player_list)
+	for(var/P in player_list)
+		var/mob/player = P
 		if(player.z == invasion_point.z)
 			shake_camera(player, 15, 1)
 			player.playsound_local(T, 'sound/effects/explosionfar.ogg', 100, 1)
