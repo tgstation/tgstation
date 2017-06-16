@@ -11,6 +11,7 @@
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
+	return
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday
 /datum/holiday/proc/greet()
@@ -231,7 +232,7 @@
 /datum/holiday/programmers
 	name = "Programmers' Day"
 
-/datum/holiday/programmers/shouldCelebrate(dd, mm, yy) //Programmer's day falls on the 2^8th day of the year
+/datum/holiday/programmers/shouldCelebrate(dd, mm, yy, ww, ddd) //Programmer's day falls on the 2^8th day of the year
 	if(mm == 9)
 		if(yy/4 == round(yy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
 			if(dd == 12)
@@ -335,13 +336,16 @@
 	begin_weekday = MONDAY
 
 /datum/holiday/mother
-	name = "Mothers' Day"
+	name = "Mother's Day"
 	begin_week = 2
 	begin_month = MAY
 	begin_weekday = SUNDAY
 
+/datum/holiday/mother/greet()
+	return "Happy Mother's Day in most of the Americas, Asia, and Oceania!"
+
 /datum/holiday/father
-	name = "Fathers' Day"
+	name = "Father's Day"
 	begin_week = 3
 	begin_month = JUNE
 	begin_weekday = SUNDAY
@@ -377,10 +381,9 @@
 /datum/holiday/friday_thirteenth
 	name = "Friday the 13th"
 
-/datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yy)
-	if(dd == 13)
-		if(time2text(world.timeofday, "DDD") == "Fri")
-			return TRUE
+/datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yy, ww, ddd)
+	if(dd == 13 && ddd == FRIDAY)
+		return TRUE
 	return FALSE
 
 /datum/holiday/friday_thirteenth/getStationPrefix()
@@ -391,7 +394,7 @@
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 
-/datum/holiday/easter/shouldCelebrate(dd, mm, yy)
+/datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
 // Easter's celebration day is as snowflakey as Uhangi's code
 
 	if(!begin_month)
@@ -456,7 +459,6 @@
 	return ..()
 
 /datum/holiday/easter/celebrate()
-	..()
 	GLOB.maintenance_loot += list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15,
 		/obj/item/weapon/storage/bag/easterbasket = 15)
