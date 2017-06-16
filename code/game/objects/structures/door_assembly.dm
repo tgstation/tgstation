@@ -2,6 +2,7 @@
 	name = "airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "construction"
+	desc = "The mechanical framework for an airlock."
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	anchored = 0
 	density = 1

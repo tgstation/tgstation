@@ -8,6 +8,7 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
+	desc = "A covered turret that shoots at its enemies."
 	anchored = 1
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
@@ -548,6 +549,8 @@
 	installation = /obj/item/weapon/gun/energy/laser
 
 /obj/machinery/porta_turret/syndicate
+	name = "mechanical turret"
+	desc = "A ballistic machine gun auto-turret."
 	installation = null
 	always_up = 1
 	use_power = 0

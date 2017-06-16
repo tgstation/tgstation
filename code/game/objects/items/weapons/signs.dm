@@ -1,7 +1,7 @@
 /obj/item/weapon/picket_sign
 	icon_state = "picket"
 	name = "blank picket sign"
-	desc = "It's blank"
+	desc = "It's blank."
 	force = 5
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed","smacked")

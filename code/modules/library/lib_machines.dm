@@ -19,6 +19,7 @@
 	icon_state = "oldcomp"
 	icon_screen = "library"
 	icon_keyboard = null
+	desc = "Ordered books MUST be returned on time."
 	circuit = /obj/item/weapon/circuitboard/computer/libraryconsole
 	var/screenstate = 0
 	var/title
@@ -161,6 +162,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 // It's December 25th, 2014, and this is STILL here, and it's STILL relevant. Kill me
 /obj/machinery/computer/libraryconsole/bookmanagement
 	name = "book inventory management console"
+	desc = "Librarian's command station."
 	var/arcanecheckout = 0
 	screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
 	verb_say = "beeps"
@@ -554,6 +556,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	name = "book binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
+	desc = "Only useful for binding paper products."
 	anchored = 1
 	density = 1
 	var/busy = 0

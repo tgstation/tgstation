@@ -14,6 +14,7 @@
 	name = "bookcase"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookempty"
+	desc = "A great place for storing knowledge."
 	anchored = 0
 	density = 1
 	opacity = 0
@@ -166,6 +167,7 @@
 	name = "book"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
+	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
@@ -289,6 +291,7 @@
 	name = "barcode scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state ="scanner"
+	desc = "A great tool if you want to scan a barcode."
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
