@@ -14,7 +14,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
-			playsound(M, 'sound/weapons/Genhit.ogg', 50, 1)
+			playsound(M, 'sound/weapons/genhit.ogg', 50, 1)
 			return FALSE
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -29,7 +29,7 @@
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 
-	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
@@ -111,7 +111,7 @@
 							"<span class='warning'>You bop [M] on the head!</span>")
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1, -1)
 		if(2)
-			if(!scooldown)
+			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
 						M.electrocute_act(5, "[user]", safety = 1)
@@ -128,11 +128,9 @@
 								"<span class='danger'>You shock [M] to no effect.</span>")
 					playsound(loc, 'sound/effects/sparks2.ogg', 50, 1, -1)
 					user.cell.charge -= 500
-					scooldown = TRUE
-					spawn(20)
-					scooldown = FALSE
+					scooldown = world.time + 20
 		if(3)
-			if(!ccooldown)
+			if(ccooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M))
 						user.visible_message("<span class='userdanger'>[user] crushes [M] in their grip!</span>", \
@@ -143,9 +141,7 @@
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1, -1)
 					M.adjustBruteLoss(15)
 					user.cell.charge -= 300
-					ccooldown = TRUE
-					spawn(10)
-					ccooldown = FALSE
+					ccooldown = world.time + 10
 
 /obj/item/borg/cyborghug/peacekeeper
 	shockallowed = TRUE
@@ -314,7 +310,7 @@
 			if(M.get_ear_protection() == FALSE)
 				M.confused += 6
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
-		playsound(get_turf(src), 'sound/AI/harmalarm.ogg', 70, 3)
+		playsound(get_turf(src), 'sound/ai/harmalarm.ogg', 70, 3)
 		cooldown = world.time + 200
 		log_game("[user.ckey]([user]) used a Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
 		if(iscyborg(user))
@@ -581,6 +577,10 @@
 /obj/item/borg/projectile_dampen/equipped()
 	. = ..()
 	host = loc
+
+/obj/item/borg/projectile_dampen/on_mob_death()
+	deactivate_field()
+	. = ..()
 
 /obj/item/borg/projectile_dampen/process()
 	process_recharge()

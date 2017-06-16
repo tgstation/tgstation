@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -50,7 +50,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
 		SK.loc = E

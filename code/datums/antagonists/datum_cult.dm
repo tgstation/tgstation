@@ -1,3 +1,5 @@
+#define SUMMON_POSSIBILITIES 3
+
 /datum/antagonist/cult
 	var/datum/action/innate/cult/comm/communion = new
 	var/datum/action/innate/cult/mastervote/vote = new
@@ -35,6 +37,11 @@
 		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
 		GLOB.sac_complete = TRUE
 	SSticker.mode.cult_objectives += "sacrifice"
+	if(!GLOB.summon_spots.len)
+		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
+			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
+			if(summon && (summon.z == ZLEVEL_STATION) && summon.valid_territory)
+				GLOB.summon_spots += summon
 	SSticker.mode.cult_objectives += "eldergod"
 
 /datum/antagonist/cult/proc/cult_memorization(datum/mind/cult_mind)
@@ -47,8 +54,9 @@
 					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 				else
 					explanation = "The veil has already been weakened here, proceed to the final objective."
+					GLOB.sac_complete = TRUE
 			if("eldergod")
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
+				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(GLOB.summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
 		if(!silent)
 			to_chat(current, "<B>Objective #[obj_count]</B>: [explanation]")
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
@@ -112,10 +120,12 @@
 /datum/antagonist/cult/master
 	var/datum/action/innate/cult/master/finalreck/reckoning = new
 	var/datum/action/innate/cult/master/cultmark/bloodmark = new
+	var/datum/action/innate/cult/master/pulse/throwing = new
 
 /datum/antagonist/cult/master/Destroy()
 	QDEL_NULL(reckoning)
 	QDEL_NULL(bloodmark)
+	QDEL_NULL(throwing)
 	return ..()
 
 /datum/antagonist/cult/master/on_gain()
@@ -136,6 +146,7 @@
 	if(!GLOB.reckoning_complete)
 		reckoning.Grant(current)
 	bloodmark.Grant(current)
+	throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 
@@ -146,5 +157,6 @@
 		current = mob_override
 	reckoning.Remove(current)
 	bloodmark.Remove(current)
+	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)

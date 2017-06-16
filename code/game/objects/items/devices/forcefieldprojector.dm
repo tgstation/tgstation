@@ -99,7 +99,7 @@
 	return !density
 
 /obj/structure/projected_forcefield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+	playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 
 /obj/structure/projected_forcefield/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(sound_effect)

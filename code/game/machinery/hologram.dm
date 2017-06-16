@@ -105,25 +105,10 @@ Possible to do for anyone motivated enough:
 		return
 	return ..()
 
-/obj/machinery/holopad/proc/CheckCallClose()
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
-		if(usr == HC.eye)
-			HC.Disconnect(HC.calling_holopad)	//disconnect via clicking the called holopad
-			return TRUE
-	return FALSE
-
-/obj/machinery/holopad/Click(location,control,params)
-	if(!CheckCallClose())
-		return ..()
-
 /obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
 	if(isAI(user))
 		hangup_all_calls()
 		return
-
-	if(!CheckCallClose())
-		interact(user)
 
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))

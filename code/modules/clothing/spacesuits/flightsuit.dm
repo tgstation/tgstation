@@ -782,13 +782,13 @@
 
 /obj/item/device/flightpack/proc/usermessage(message, urgency = 0)
 	if(urgency == 0)
-		to_chat(wearer, "\icon[src]|<span class='boldnotice'>[message]</span>")
+		to_chat(wearer, "[bicon(src)]|<span class='boldnotice'>[message]</span>")
 	if(urgency == 1)
-		to_chat(wearer, "\icon[src]|<span class='warning'>[message]</span>")
+		to_chat(wearer, "[bicon(src)]|<span class='warning'>[message]</span>")
 	if(urgency == 2)
-		to_chat(wearer, "\icon[src]|<span class='boldwarning'>[message]</span>")
+		to_chat(wearer, "[bicon(src)]|<span class='boldwarning'>[message]</span>")
 	if(urgency == 3)
-		to_chat(wearer, "\icon[src]|<span class='userdanger'>[message]</span>")
+		to_chat(wearer, "[bicon(src)]|<span class='userdanger'>[message]</span>")
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
 	if(ishuman(user) && !ishuman(src.loc))
@@ -935,11 +935,11 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, urgency = 0)
 	if(!urgency)
-		to_chat(user, "\icon[src]<span class='notice'>|[message]</span>")
+		to_chat(user, "[bicon(src)]<span class='notice'>|[message]</span>")
 	else if(urgency == 1)
-		to_chat(user, "\icon[src]<span class='warning'>|[message]</span>")
+		to_chat(user, "[bicon(src)]<span class='warning'>|[message]</span>")
 	else if(urgency == 2)
-		to_chat(user, "\icon[src]<span class='userdanger'>|[message]</span>")
+		to_chat(user, "[bicon(src)]<span class='userdanger'>|[message]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
 	..()

@@ -129,7 +129,7 @@
 	icon_state = "pylon"
 	light_range = 5
 	light_color = LIGHT_COLOR_RED
-	break_sound = 'sound/effects/Glassbr2.ogg'
+	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
 	var/heal_delay = 25
 	var/last_heal = 0

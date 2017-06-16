@@ -23,7 +23,7 @@
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
-	var/igniter_type = /obj/item/device/assembly/igniter 
+	var/igniter_type = /obj/item/device/assembly/igniter
 
 /obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
@@ -145,7 +145,7 @@
 	if(!status)
 		to_chat(user, "<span class='notice'>Secure the igniter first!</span>")
 		return
-	to_chat(user, "<span class='notice'>You ignite [src]!</span>")
+	to_chat(user, "<span class='notice'>You [lit ? "extinguish" : "ignite"] [src]!</span>")
 	lit = !lit
 	if(lit)
 		START_PROCESSING(SSobj, src)

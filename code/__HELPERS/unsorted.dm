@@ -834,11 +834,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [bicon(icon)] [target].", "<span class='notice'>You use the analyzer on [bicon(icon)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
@@ -1344,7 +1344,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //kevinz000 if you touch this I will hunt you down
 GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 GLOBAL_PROTECT(valid_HTTPSGet)
-/proc/HTTPSGet(url)
+/proc/HTTPSGet(url)	//tgs2 support
 	if(findtext(url, "\""))
 		GLOB.valid_HTTPSGet = FALSE
 
@@ -1394,9 +1394,6 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 	fdel(temp_file)
 
 #define UNTIL(X) while(!(X)) stoplag()
-
-/proc/to_chat(target, message)
-	target << message
 
 /proc/pass()
 	return

@@ -87,7 +87,7 @@
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/sbeacondrop/powersink(src)
-			new /obj/item/weapon/cartridge/syndicate(src)
+			new /obj/item/weapon/cartridge/virus/syndicate(src)
 			new /obj/item/weapon/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb
 

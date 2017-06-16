@@ -11,7 +11,7 @@
 	if(check_canbuy && !can_buy(user, gang, gangtool))
 		return FALSE
 	var/real_cost = get_cost(user, gang, gangtool)
-	gangtool.points -= real_cost
+	gang.adjust_influence(user.mind, -real_cost)
 	spawn_item(user, gang, gangtool)
 	return TRUE
 
@@ -23,7 +23,7 @@
 		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gangtool.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+	return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return TRUE
@@ -118,6 +118,9 @@
 	name = "pimpin' hat"
 	desc = "The undisputed king of style."
 
+/obj/item/clothing/head/collectable/petehat/gang/gang_contraband_value()
+	return 4
+
 /datum/gang_item/clothing/mask
 	name = "Golden Death Mask"
 	id = "mask"
@@ -129,6 +132,8 @@
 	icon_state = "gskull"
 	desc = "Strike terror, and envy, into the hearts of your enemies."
 
+/obj/item/clothing/mask/gskull/gang_contraband_value()
+	return 5
 
 /datum/gang_item/clothing/shoes
 	name = "Bling Boots"
@@ -141,12 +146,14 @@
 	desc = "Stand aside peasants."
 	icon_state = "bling"
 
+/obj/item/clothing/shoes/gang/gang_contraband_value()
+	return 6
+
 /datum/gang_item/clothing/neck
 	name = "Gold Necklace"
 	id = "necklace"
 	cost = 9
 	item_path = /obj/item/clothing/neck/necklace/dope
-
 
 /datum/gang_item/clothing/hands
 	name = "Decorative Brass Knuckles"
@@ -159,6 +166,9 @@
 	desc = "Purely decorative, don't find out the hard way."
 	icon_state = "knuckles"
 	w_class = 3
+
+/obj/item/clothing/gloves/gang/gang_contraband_value()
+	return 3
 
 /datum/gang_item/clothing/belt
 	name = "Badass Belt"
@@ -173,7 +183,8 @@
 	desc = "The belt buckle simply reads 'BAMF'."
 	storage_slots = 1
 
-
+/obj/item/weapon/storage/belt/military/gang/gang_contraband_value()
+	return 4
 
 ///////////////////
 //WEAPONS
@@ -215,6 +226,7 @@
 	name = "Sawn-Off Improvised Shotgun"
 	id = "sawn"
 	cost = 6
+	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
 
 /datum/gang_item/weapon/ammo/improvised_ammo
 	name = "Box of Buckshot"
@@ -238,7 +250,7 @@
 	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
 	cost = 40
-	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
+	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo
 	name = "Smuggled .50cal Sniper Rounds"

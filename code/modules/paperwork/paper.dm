@@ -379,8 +379,8 @@
 
 /obj/item/weapon/paper/construction
 
-/obj/item/weapon/paper/construction/New()
-	..()
+/obj/item/weapon/paper/construction/Initialize()
+	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
 
 /*

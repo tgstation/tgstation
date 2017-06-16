@@ -15614,20 +15614,12 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aHZ" = (
-/obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
 	pixel_x = -22
 	},
-/obj/item/weapon/storage/crayons{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/redblue,
 /area/crew_quarters/theatre)
 "aIa" = (
@@ -19077,12 +19069,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aQr" = (
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
+/obj/structure/closet/wardrobe/curator,
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/library)
@@ -46947,9 +46934,10 @@
 /area/tcommsat/server)
 "bZo" = (
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8";
+	pixel_y = 0
 	},
 /turf/open/floor/circuit{
 	name = "Mainframe Base";
@@ -46982,6 +46970,10 @@
 /obj/structure/cable{
 	icon_state = "0-2";
 	d2 = 2
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
@@ -47359,9 +47351,6 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/port/aft)
 "cag" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit{
 	name = "Mainframe Base";
@@ -47419,13 +47408,9 @@
 	},
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -48284,10 +48269,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -60380,7 +60361,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cBS" = (
@@ -61028,8 +61011,7 @@
 /area/space/nearstation)
 "cDv" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -62039,13 +62021,12 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFL" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "co2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4;
+	filter_type = "co2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62062,13 +62043,12 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFN" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "o2";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4;
+	filter_type = "o2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62089,13 +62069,12 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cFP" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "plasma";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4;
+	filter_type = "plasma"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62112,13 +62091,11 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFR" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	filter_type = "";
-	on = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter/critical{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -66183,6 +66160,28 @@
 	},
 /turf/closed/wall,
 /area/security/courtroom)
+"cSE" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
+"cSF" = (
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 
 (1,1,1) = {"
 aaa
@@ -91281,7 +91280,7 @@ bXA
 bYB
 bYz
 cai
-bYz
+cSF
 ccg
 cdd
 cea
@@ -92051,7 +92050,7 @@ bWE
 bXB
 bYC
 bZo
-caj
+bWB
 bWB
 cch
 cde
@@ -92307,8 +92306,8 @@ bVI
 bWG
 bXD
 bYz
-bYz
-cam
+cSE
+bWB
 bYz
 bYz
 cdf

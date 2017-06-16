@@ -13,11 +13,17 @@
 	response_harm = "strikes"
 	status_flags = 0
 	a_intent = INTENT_HARM
+	var/crusher_loot
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	var/fromtendril = FALSE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	mob_size = MOB_SIZE_LARGE
+
+/mob/living/simple_animal/hostile/asteroid/Initialize(mapload)
+	. = ..()
+	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -44,13 +50,19 @@
 		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
-			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
+			visible_message("<span class='notice'>The [T.name] [throw_message] [src.name]!</span>")
 			return
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
 	SSblackbox.add_details("mobs_killed_mining","[src.type]")
+	var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	if(C && crusher_loot && prob((C.total_damage/maxHealth)) * 5) //on average, you'll need to kill 20 creatures before getting the item
+		spawn_crusher_loot()
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/proc/spawn_crusher_loot()
+	butcher_results[crusher_loot] = 1
 
 /mob/living/simple_animal/hostile/asteroid/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
