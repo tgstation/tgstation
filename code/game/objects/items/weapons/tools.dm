@@ -58,8 +58,8 @@
 	origin_tech = "materials=5;engineering=5;abductor=3"
 
 /obj/item/weapon/wrench/power
-	name = "Hand Drill"
-	desc ="A simple powered drill with a bolt bit"
+	name = "hand drill"
+	desc = "A simple powered hand drill. It's fitted with a bolt bit."
 	icon_state = "drill_bolt"
 	item_state = "drill"
 	usesound = 'sound/items/drill_use.ogg'
@@ -182,8 +182,8 @@
 	toolspeed = 0.1
 
 /obj/item/weapon/screwdriver/power
-	name = "Hand Drill"
-	desc = "A simple hand drill with a screwdriver bit attached."
+	name = "hand drill"
+	desc = "A simple powered hand drill. It's fitted with a screw bit."
 	icon_state = "drill_screw"
 	item_state = "drill"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
@@ -283,8 +283,8 @@
 	toolspeed = 0.5
 
 /obj/item/weapon/wirecutters/power
-	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
+	name = "jaws of life"
+	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
@@ -714,8 +714,8 @@
 	toolspeed = 0.5
 
 /obj/item/weapon/crowbar/power
-	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
+	name = "jaws of life"
+	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a prying head."
 	icon_state = "jaws_pry"
 	item_state = "jawsoflife"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
