@@ -47,10 +47,10 @@
 	if(user.incapacitated() || !istype(user))
 		return
 	if(do_after(user, 30, target = M))
+		M.forceMove(get_turf(src))
 		. = ..()
 		if(!.)
 			return
-		M.forceMove(get_turf(src))
 		for(var/V in M.held_items)
 			var/obj/item/I = V
 			if(istype(I))

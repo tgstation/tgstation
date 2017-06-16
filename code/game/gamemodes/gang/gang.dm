@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/gang/pre_setup()
-	if(prob(40)) // 40% chance for Vigilantes to appear in place of security
+	if(prob(100)) // 100% chance for Vigilantes to appear in place of security
 		name = "vigilante gang war"
 		vigilantes = TRUE
 		//turn off sec and captain

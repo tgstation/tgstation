@@ -275,7 +275,7 @@
 	if(LAZYLEN(gang.tags_by_mind[user.mind]))
 		dat += "Your tags generate bonus influence for you.<br> You have tagged the following territories:"
 		for(var/obj/effect/decal/cleanable/crayon/gang/T in gang.tags_by_mind[user.mind])
-			dat += " [T] -"
+			dat += " [T.territory] -"
 	else
 		dat += "You have not personally tagged any territory for your gang. Use a spray can to mark your territory and receive bonus influence."
 	dat += "<br>Time until Influence grows: <B>[time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss")]</B><br>"
