@@ -10,11 +10,11 @@
 	M.adjustStaminaLoss(2)
 	M.adjustBrainLoss(1)
 	M.bodytemperature = max(M.bodytemperature - 10, TCMB)
-	..()
+	return ..()
 
 /datum/reagent/cryogenic_fluid/on_tick()
 	holder.chem_temp -= 5
-	..()
+	return ..()
 
 /datum/reagent/cryogenic_fluid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -36,10 +36,11 @@
 			else
 			 M.bodytemperature = max(M.bodytemperature - 15, TCMB)
 			 M.adjust_fire_stacks(-(6*reac_volume))
-	 ..()
+	return ..()
 
 /datum/reagent/cryogenic_fluid/reaction_turf(turf/T, reac_volume)
-	if (!istype(T)) return
+	if (!istype(T))
+		return FALSE
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T) //instantly delts hotspots
 	if(isopenturf(T))
 		var/turf/open/O = T
@@ -49,6 +50,5 @@
 				G.temperature = 0
 				G.react()
 				qdel(hotspot)
-
 		if(reac_volume >= 6)
 			O.freon_gas_act() //freon in my pocket
