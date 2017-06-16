@@ -212,22 +212,23 @@
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
 	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
-		var/list/mouse_control = params2list(current_user.client.mouseParams)
-		if(isturf(current_user.client.mouseLocation))
-			current_user.face_atom(current_user.client.mouseLocation)
-		if(mouse_control["screen-loc"])
-			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
-			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
-			var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
-			var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
-			var/screenview = (current_user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
-			var/ox = round(screenview/2) - current_user.client.pixel_x //"origin" x
-			var/oy = round(screenview/2) - current_user.client.pixel_y //"origin" y
-			var/angle = NORM_ROT(Atan2(y - oy, x - ox))
-			var/difference = abs(lastangle - angle)
-			delay_penalty(difference * aiming_time_increase_angle_multiplier)
-			lastangle = angle
+		var/angle = mouse_angle_from_client(current_user.client)
+		switch(angle)
+			if(316 to 360)
+				current_user.setDir(NORTH)
+			if(0 to 45)
+				current_user.setDir(NORTH)
+			if(46 to 135)
+				current_user.setDir(EAST)
+			if(136 to 225)
+				current_user.setDir(SOUTH)
+			if(226 to 315)
+				current_user.setDir(WEST)
+		var/difference = abs(lastangle - angle)
+		if(difference > 350)			//Too lazy to properly math, detects 360 --> 0 changes.
+			difference = (lastangle > 350? ((360 - lastangle) + angle) : ((360 - angle) + lastangle))
+		delay_penalty(difference * aiming_time_increase_angle_multiplier)
+		lastangle = angle
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
 	check_user()
@@ -236,7 +237,7 @@
 		process_aim()
 		aiming_beam(TRUE)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming(n)
+/obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming()
 	aiming_time_left = aiming_time
 	aiming = TRUE
 	process_aim()
@@ -367,6 +368,25 @@
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
 	HS_BB.gun = host
+
+/obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
+	var/turf/curloc = get_turf(user)
+	if (!istype(curloc) || !BB)
+		return FALSE
+	var/obj/item/weapon/gun/energy/beam_rifle/gun = loc
+	if(!targloc && gun)
+		targloc = get_turf_in_angle(gun.lastangle, curloc, 10)
+	else
+		return FALSE
+	var/firing_dir
+	if(BB.firer)
+		firing_dir = BB.firer.dir
+	if(!BB.suppressed && firing_effect_type)
+		new firing_effect_type(get_turf(src), firing_dir)
+	BB.preparePixelProjectile(target, targloc, user, params, spread)
+	BB.fire(gun? gun.lastangle : null, null)
+	BB = null
+	return TRUE
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
@@ -617,6 +637,7 @@
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+	to_chat(world, "ON_HIT CALLED")
 	spawn_tracer()
 	qdel(src)
 	return FALSE

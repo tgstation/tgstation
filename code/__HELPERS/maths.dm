@@ -182,3 +182,41 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
+
+/proc/mouse_angle_from_client(client/client)
+	var/list/mouse_control = params2list(client.mouseParams)
+	if(mouse_control["screen-loc"])
+		var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
+		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+		var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+		var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
+		var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
+		var/screenview = (client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+		var/ox = round(screenview/2) - client.pixel_x //"origin" x
+		var/oy = round(screenview/2) - client.pixel_y //"origin" y
+		var/angle = NORM_ROT(Atan2(y - oy, x - ox))
+		return angle
+
+/proc/get_turf_in_angle(angle, turf/starting, increments)
+	var/pixel_x = 0
+	var/pixel_y = 0
+	for(var/i in 1 to increments)
+		pixel_x += sin(angle)+16*sin(angle)*2
+		pixel_y += cos(angle)+16*cos(angle)*2
+	var/new_x = starting.x
+	var/new_y = starting.y
+	while(pixel_x > 16)
+		pixel_x -= 32
+		new_x++
+	while(pixel_x < -16)
+		pixel_x += 32
+		new_x--
+	while(pixel_y > 16)
+		pixel_y -= 32
+		new_y++
+	while(pixel_y < -16)
+		pixel_y += 32
+		new_y--
+	new_x = Clamp(new_x, 0, world.maxx)
+	new_y = Clamp(new_y, 0, world.maxy)
+	return locate(new_x, new_y, starting.z)
