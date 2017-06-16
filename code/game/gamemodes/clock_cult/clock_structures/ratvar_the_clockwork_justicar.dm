@@ -49,7 +49,7 @@
 /obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
-		T = get_step(T, get_dir(src, A)) //please don't run into a window like a bird, ratvar
+		T = get_step(T, dir) //please don't run into a window like a bird, ratvar
 	forceMove(T)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
