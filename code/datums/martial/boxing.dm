@@ -1,6 +1,7 @@
 /datum/martial_art/boxing
 	name = "Boxing"
-	remove_on_death = TRUE
+	required_object = /obj/item/clothing/gloves/boxing
+	required_slot = slot_gloves
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
@@ -56,13 +57,5 @@
 		return
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
-		style.teach(H,1)
-	return
-
-/obj/item/clothing/gloves/boxing/dropped(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_gloves) == src)
-		style.remove(H)
+		style.teach(H,1) //Style removal is handled by the martial art itself!
 	return

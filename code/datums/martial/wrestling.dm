@@ -10,7 +10,8 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
-	remove_on_death = TRUE
+	required_object = /obj/item/weapon/storage/belt/champion/wrestling
+	required_slot = slot_belt
 	var/datum/action/slam/slam = new/datum/action/slam()
 	var/datum/action/throw_wrassle/throw_wrassle = new/datum/action/throw_wrassle()
 	var/datum/action/kick/kick = new/datum/action/kick()
@@ -452,12 +453,4 @@
 	if(slot == slot_belt)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-	return
-
-/obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_belt) == src)
-		style.remove(H)
 	return

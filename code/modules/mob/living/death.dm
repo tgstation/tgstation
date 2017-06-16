@@ -57,8 +57,6 @@
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-		if(mind.martial_art && mind.martial_art.remove_on_death)
-			mind.martial_art.remove(src)
 	GLOB.living_mob_list -= src
 	if(!gibbed)
 		GLOB.dead_mob_list += src

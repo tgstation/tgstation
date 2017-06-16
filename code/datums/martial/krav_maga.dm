@@ -1,6 +1,7 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
-	remove_on_death = TRUE
+	required_object = /obj/item/clothing/gloves/krav_maga
+	required_slot = slot_gloves
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
 	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
@@ -172,13 +173,6 @@
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
-
-/obj/item/clothing/gloves/krav_maga/dropped(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.get_item_by_slot(slot_gloves) == src)
-		style.remove(H)
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"

@@ -9,9 +9,41 @@
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
+	var/mob/living/carbon/human/martial_art_owner //The human that owns this martial art
+	var/datum/mind/owner_mind
 	var/no_guns = FALSE
-	var/remove_on_death = FALSE //If this martial art is removed from its owner upon death
+	var/obj/required_object //Any object required to use the martial art
+	var/required_slot //If there's a required object, it needs to be in this slot
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
+
+/datum/martial_art/New()
+	..()
+	if(required_object) //so we can check for dem objects!
+		START_PROCESSING(SSfastprocess, src)
+
+/datum/martial_art/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/datum/martial_art/process()
+	if(!martial_art_owner) //No need to process anything if we don't have anyone to check
+		return
+	if(required_object)
+		if(martial_art_owner.mind != owner_mind)
+			if(locate(required_object) in owner_mind.current) //if the new mob has the item (somehow), keep the martial art!
+				martial_art_owner = owner_mind.current
+			else //otherwise, get rid of it
+				remove(owner_mind.current)
+				return
+		var/obj/O = locate(required_object) in martial_art_owner
+		if(!O)
+			remove(martial_art_owner)
+			return
+		if(required_slot && martial_art_owner.get_item_by_slot(required_slot) != O)
+			remove(martial_art_owner)
+			return
+	if(martial_art_owner.mind != owner_mind) //desync between mob and mind, like if someone's cloned
+		martial_art_owner = owner_mind.current
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -87,6 +119,8 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
+	martial_art_owner = H
+	owner_mind = H.mind
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.mind.martial_art != src)
@@ -94,3 +128,5 @@
 	H.mind.martial_art = base
 	if(help_verb)
 		H.verbs -= help_verb
+	martial_art_owner = null
+	owner_mind = null
