@@ -92,8 +92,6 @@
 	if(unique_reskin)
 		var/choice = input(user,"Choose the finish for your pen.","Reskin Pen") as null|anything in skins
 		if(!QDELETED(src) && choice && !user.incapacitated() && in_range(user,src))
-			if(skins[choice] == null)
-				return
 			icon_state = skins[choice]
 			unique_reskin = FALSE
 			to_chat(user, "Your pen now has a [choice] finish.")
