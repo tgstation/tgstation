@@ -102,7 +102,7 @@
 	id = "stun_talisman"
 	invocation = "Fuu ma'jin!"
 	desc = "Allows you to stun a person by attacking them with the talisman. Does not work on people holding a holy weapon!"
-	summon_type = /obj/item/weapon/paper/talisman/paralyse
+	summon_type = /obj/item/weapon/paper/talisman/stun
 
 /datum/cult_supply/talisman/veil
 	id = "veil_talisman"

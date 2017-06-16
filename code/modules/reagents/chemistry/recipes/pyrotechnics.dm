@@ -67,7 +67,7 @@
 			else
 				deity = "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
-			R.paralyse(20)
+			R.stun(20)
 			R.reveal(100)
 			R.adjustHealth(50)
 		sleep(20)

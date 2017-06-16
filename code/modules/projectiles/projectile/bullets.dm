@@ -140,13 +140,11 @@
 	icon_state = "dust"
 	damage = 30
 	knockdown = 80
-	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/meteorshot/weak
 	damage = 10
-	knockdown = 4
-	stun = 4
+	knockdown = 40
 
 /obj/item/projectile/bullet/honker
 	damage = 0
