@@ -1034,15 +1034,16 @@
 	desc = "A compact ball of snow. Good for throwing at people."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snowball"
-	throwforce = 12 //pelt your enemies to death with lumps of snow
 
 /obj/item/toy/snowball/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	user.drop_item()
 	src.throw_at(target, throw_range, throw_speed)
 
 /obj/item/toy/snowball/throw_impact(atom/hit_atom)
-	if(!..())
+	if((ishuman(hit_atom)))
+		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
+		M.apply_damage(15, STAMINA)
 		qdel(src)
 
 /*
