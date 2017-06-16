@@ -82,26 +82,27 @@
 	materials = list(MAT_GOLD = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
-	var/unique_reskin = 1
-	var/list/skins = list("Oak" = "pen-fountain-o", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb", "Cancel" = null)
+	var/unique_reskin = TRUE
+	var/list/skins = list("Oak" = "pen-fountain-o", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb")
 
-/obj/item/weapon/pen/fountain/captain/attack_self(mob/living/carbon/user)
+/obj/item/weapon/pen/fountain/captain/AltClick()
+	var/mob/living/carbon/user = usr
+	if(!istype(user))
+		return
 	if(unique_reskin)
-		var/choice = input(user,"Choose the finish for your pen.","Reskin Pen") in skins
-		if(src && choice && !user.incapacitated() && in_range(user,src))
+		var/choice = input(user,"Choose the finish for your pen.","Reskin Pen") as null|anything in skins
+		if(!QDELETED(src) && choice && !user.incapacitated() && in_range(user,src))
 			if(skins[choice] == null)
 				return
 			icon_state = skins[choice]
 			unique_reskin = 0
 			to_chat(user, "Your pen now has a [choice] finish.")
 			desc = "It's an expensive [choice] fountain pen. The nib is quite sharp."
-		else
-			..()
 
 /obj/item/weapon/pen/fountain/captain/examine(mob/user)
 	..()
 	if(unique_reskin)
-		to_chat(user, "<span class='notice'>This item can be reskinned. Use it in hand to select a skin.</span>")
+		to_chat(user, "<span class='notice'>This item can be reskinned. Alt-click to select a skin.</span>")
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
