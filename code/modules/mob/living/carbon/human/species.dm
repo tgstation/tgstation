@@ -1349,7 +1349,7 @@
 				else
 					burn_damage = HEAT_DAMAGE_LEVEL_2
 		burn_damage *= heatmod
-		if(prob(burn_damage) * 10)	//30% for level 3 damage on humans
+		if((prob(burn_damage) * 10) / 4)	//40% for level 3 damage on humans
 			H.emote("scream")
 		H.apply_damage(burn_damage, BURN)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
