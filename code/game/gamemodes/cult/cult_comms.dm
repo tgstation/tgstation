@@ -81,17 +81,12 @@
 	popup.open()
 	return 1
 
-/mob/living/proc/cult_master()
-	set category = "Cultist"
-	set name = "Assert Leadership"
-	pollCultists(src)  // This proc handles the distribution of cult master actions
-
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
 /datum/action/innate/cult/mastervote/IsAvailable()
-	if(GLOB.cult_vote_called)
+	if(GLOB.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 

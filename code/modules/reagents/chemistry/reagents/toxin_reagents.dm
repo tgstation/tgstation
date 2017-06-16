@@ -565,7 +565,7 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Unconscious(20, 0)
+		M.Paralyse(20, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
@@ -661,7 +661,7 @@
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)) && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit(lost_nutrition = 10, blood = prob(10), paralyse = prob(50), distance = rand(0,4), message = TRUE, toxic = prob(30))
+		H.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
 		for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
 			if(R != src)
 				H.reagents.remove_reagent(R.id,1)
@@ -671,7 +671,7 @@
 	if(current_cycle >=33 && prob(15) && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.spew_organ()
-		H.vomit(lost_nutrition = 0, blood = 1, paralyse = 1, distance = 4)
+		H.vomit(0, TRUE, TRUE, 4)
 		to_chat(H, "<span class='userdanger'>You feel something lumpy come up as you vomit.</span>")
 
 /datum/reagent/toxin/curare

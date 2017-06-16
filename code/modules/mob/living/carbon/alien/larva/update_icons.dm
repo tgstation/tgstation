@@ -17,7 +17,7 @@
 	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "larva[state]_sleep"
 	else if (paralysis)
-		icon_state = "larva[state]_paralyse"
+		icon_state = "larva[state]_stun"
 	else
 		icon_state = "larva[state]"
 
