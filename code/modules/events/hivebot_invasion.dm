@@ -13,7 +13,7 @@
 	var/beacon_probability = 1 //% chance for a beacon to spawn near the invasion point during the event
 
 /datum/round_event/hivebot_invasion/setup()
-	invasion_point = pick(generic_event_spawns)
+	invasion_point = pick(GLOB.generic_event_spawns)
 	message_admins("Hivebot invasion point set to [get_area(invasion_point)]! ([invasion_point.x],[invasion_point.y],[invasion_point.z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[invasion_point.x];Y=[invasion_point.y];Z=[invasion_point.z]'>JMP</a>)")
 	log_game("Hivebot invasion point set to [get_area(invasion_point)]! ([invasion_point.x],[invasion_point.y],[invasion_point.z])")
 
@@ -25,7 +25,7 @@
 /datum/round_event/hivebot_invasion/start()
 	var/turf/T = get_turf(invasion_point)
 	priority_announce("Object has made impact. Heavy bluespace activity detected; object likely serves as a beacon. Destroy the object as quickly as possible.", "Invasion Warning", sound = 'sound/misc/notice1.ogg')
-	for(var/P in player_list)
+	for(var/P in GLOB.player_list)
 		var/mob/player = P
 		if(player.z == invasion_point.z)
 			shake_camera(player, 15, 1)
