@@ -10,7 +10,6 @@
 	announceWhen	= 0
 	startWhen		= 20
 	var/obj/effect/landmark/invasion_point
-	var/beacon_probability = 1 //% chance for a beacon to spawn near the invasion point during the event
 
 /datum/round_event/hivebot_invasion/setup()
 	invasion_point = pick(GLOB.generic_event_spawns)
