@@ -358,52 +358,16 @@
 	name = EASTER
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
+	var/current_year = 0
+	var/year_offset = 0
 
 /datum/holiday/easter/shouldCelebrate(dd, mm, yy)
-// Easter's celebration day is as snowflakey as Uhangi's code
-
 	if(!begin_month)
+		current_year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/easterResults = EasterDate(current_year+year_offset)
 
-		var/yy_string = "[yy]"
-// year = days after March 22that Easter falls on that year.
-// For 2015 Easter is on April 5th, so 2015 = 14 since the 5th is 14 days past the 22nd
-// If it's 2040 and this is still in use, invent a time machine and teach me a better way to do this. Also tell us about HL3.
-		var/list/easters = list(
-		"15" = 14,\
-		"16" = 6,\
-		"17" = 25,\
-		"18" = 10,\
-		"19" = 30,\
-		"20" = 22,\
-		"21" = 13,\
-		"22" = 26,\
-		"23" = 18,\
-		"24" = 9,\
-		"25" = 29,\
-		"26" = 14,\
-		"27" = 6,\
-		"28" = 25,\
-		"29" = 10,\
-		"30" = 30,\
-		"31" = 23,\
-		"32" = 6,\
-		"33" = 26,\
-		"34" = 18,\
-		"35" = 3,\
-		"36" = 22,\
-		"37" = 14,\
-		"38" = 34,\
-		"39" = 19,\
-		"40" = 9,\
-		)
-
-		begin_day = easters[yy_string]
-		if(begin_day <= 9)
-			begin_day += 22
-			begin_month = MARCH
-		else
-			begin_day -= 9
-			begin_month = APRIL
+		begin_day = easterResults["day"]
+		begin_month = easterResults["month"]
 
 		end_day = begin_day + days_extra
 		end_month = begin_month
@@ -420,7 +384,6 @@
 				begin_day += 31
 				begin_month-- //begins in march, ends in april
 
-//	to_chat(world, "Easter calculates to be on [begin_day] of [begin_month] ([days_early] early) to [end_day] of [end_month] ([days_extra] extra) for 20[yy]")
 	return ..()
 
 /datum/holiday/easter/celebrate()
@@ -428,3 +391,30 @@
 	GLOB.maintenance_loot += list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15,
 		/obj/item/weapon/storage/bag/easterbasket = 15)
+
+/datum/holiday/easter/greet()
+	return "Greetings! in the far flung past of [current_year], today would be easter, Be sure to have a happy one and keep an eye out for Bunnies!"
+
+
+/datum/holiday/easter/spess
+	name = SPACE_EASTER
+	year_offset = 540 //Canonicially the year is CURRENT YEAR + 540, so this is Easter as it would be IN SS13 itself
+
+/datum/holiday/easter/spess/greet()
+	return "Greetings! the year is [current_year+year_offset], and it's easter! be sure to have a happy one and keep an eye out for Easter Bunnies!"
+
+
+/datum/holiday/mothering_sunday
+	name = "Mothering Sunday"
+
+/datum/holiday/mothering_sunday/shouldCelebrate(dd, mm, yy)
+	if(!begin_month)
+		var/year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/motheringSundayResults = MotheringSundayDate(year)
+		end_day = begin_day = motheringSundayResults["day"]
+		end_month = begin_month = motheringSundayResults["month"]
+
+	return ..()
+
+/datum/holiday/mothering_sunday/greet()
+	return "It's Mothering Sunday! the -REAL- Mother's Day, you did remember to get her a gift right?"

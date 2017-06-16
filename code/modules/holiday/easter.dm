@@ -1,6 +1,4 @@
 //Easter start
-/datum/holiday/easter/greet()
-	return "Greetings! Have a Happy Easter and keep an eye out for Easter Bunnies!"
 
 /datum/round_event_control/easter
 	name = "Easter Eggselence"
