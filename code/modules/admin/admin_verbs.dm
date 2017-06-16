@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 	/client/proc/clear_dynamic_transit,
 	/client/proc/toggle_medal_disable,
 	/client/proc/view_runtimes,
-	/client/proc/pump_random_event,	/client/proc/sql_query,
+	/client/proc/pump_random_event,
 	/client/proc/cmd_display_init_log
 	)
 GLOBAL_PROTECT(admin_verbs_possess)
