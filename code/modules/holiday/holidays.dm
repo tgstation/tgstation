@@ -350,6 +350,35 @@
 	begin_month = JUNE
 	begin_weekday = SUNDAY
 
+/datum/holiday/ramadan
+	name = "Start of Ramadan"
+
+/datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
+	var/list/acceptible_values = list(0,1)
+	if(world.realtime < 4265568000)
+		return FALSE //This doesn't work before 2013, you filthy casual
+	//Days since July 9, 2013, when Ramadan started then. 
+	var/days_strt_ramadan_2013 = round((world.realtime - 4265568000) / 864000)
+
+	if(round(days_strt_ramadan_2013 % (357.03 - 0.0013 * days_strt_ramadan_2013)) in acceptible_values)
+		return TRUE
+	return FALSE
+
+/datum/holiday/ramadan/getStationPrefix()
+	return pick("Harm","Halaal","Jihad","Muslim")
+
+/datum/holiday/ramadan/end
+	name = "End of Ramadan"
+
+/datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
+	var/list/acceptible_values = list(0,1)
+	if(world.realtime < 4291488000)
+		return FALSE //This doesn't work before 2013, you filthy casual
+	var/days_end_ramadan_2013 = round((world.realtime - 4291488000) / 864000) //Days since August 8, 2013, when Ramadan ended then.
+	if(round(days_end_ramadan_2013 % (357.03 - 0.0013 * days_end_ramadan_2013)) in acceptible_values)
+		return TRUE
+	return FALSE
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
