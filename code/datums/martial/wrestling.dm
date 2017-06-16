@@ -10,6 +10,7 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
+	remove_on_death = TRUE
 	var/datum/action/slam/slam = new/datum/action/slam()
 	var/datum/action/throw_wrassle/throw_wrassle = new/datum/action/throw_wrassle()
 	var/datum/action/kick/kick = new/datum/action/kick()
