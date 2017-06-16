@@ -23,7 +23,7 @@
 /obj/machinery/hivebot_swarm_core/examine(mob/user)
 	..()
 	if(recharge_period)
-		user << "<span class='warning'>It seems to be recharging.</span>"
+		to_chat(user, "<span class='warning'>It seems to be recharging.</span>")
 
 /obj/machinery/hivebot_swarm_core/process()
 	if(recharge_period)
