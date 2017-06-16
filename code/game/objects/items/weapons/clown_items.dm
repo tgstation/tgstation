@@ -56,7 +56,7 @@
 		var/obj/effect/decal/cleanable/crayon/gang/tag = scum
 		if(VT)
 			VT.tags |= tag.territory
-			to_chat(user, "<span class='notice'><b> \The [tag.territory] is no longer under gang control. Keep this area clean for additional influence.</b></span>")
+			to_chat(user, "<span class='notice'><b>\The [tag.territory] is no longer under gang control. Keep this area clean for additional influence.</b></span>")
 	. = ..()
 
 /obj/item/weapon/soap/suicide_act(mob/user)

@@ -37,9 +37,9 @@
 
 /obj/item/device/vigilante_tool/Initialize()
 	. = ..()
-	tags = list()
 	if(!ismob(loc))
 		return INITIALIZE_HINT_QDEL
+	tags = list()
 	vig_item_list = list()
 	vig_category_list = list()
 	for(var/V in vigilante_items)

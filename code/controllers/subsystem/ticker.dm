@@ -592,6 +592,9 @@ SUBSYSTEM_DEF(ticker)
 	//Collects persistence features
 	SSpersistence.CollectData()
 
+	//stop collecting feedback during grifftime
+	SSblackbox.Seal()
+
 	sleep(50)
 	if(mode.station_was_nuked)
 		Reboot("Station destroyed by Nuclear Device.", "nuke")
