@@ -18,7 +18,7 @@ Pipelines + Other Objects -> Pipe network
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
-	layer = GAS_PIPE_HIDDEN_LAYER //under wires, visible pipes, unary, and scrubbers/vents
+	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	obj_integrity = 200
 	max_integrity = 200
