@@ -151,23 +151,23 @@
 			B.show_to(mob)
 		return 1
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
+/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, paralyse) //BASE
 	if (!istype(cult_mind))
 		return 0
 	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
-		if(stun)
-			cult_mind.current.Paralyse(5)
+		if(paralyse)
+			cult_mind.current.Unconscious(50)
 		return 1
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
+/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, paralyse)
 	if(cult_mind.current)
 		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(ANTAG_DATUM_CULT)
 		if(!cult_datum)
 			return FALSE
 		cult_datum.silent = silent
 		cult_datum.on_removal()
-		if(stun)
-			cult_mind.current.Paralyse(5)
+		if(paralyse)
+			cult_mind.current.Unconscious(50)
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)

@@ -103,7 +103,7 @@
 	               "Would you spend some time in my upgraded sleeper?",
 	               "You must be a silicon, because you've unbolted my heart.",
 	               "Are you Nar-Sie? Because there's nar-one else I sie.",
-	               "If you were a taser, you'd be set to stunning.",
+	               "If you were a taser, you'd be set to paralysening.",
 	               "Do you have stamina damage from running through my dreams?",
 	               "If I were an alien, would you let me hug you?",
 	               "My love for you is stronger than a reinforced wall.",

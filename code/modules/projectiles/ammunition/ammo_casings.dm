@@ -226,11 +226,11 @@
 	variance = 40
 
 
-/obj/item/ammo_casing/shotgun/stunslug
+/obj/item/ammo_casing/shotgun/paralyseslug
 	name = "taser slug"
-	desc = "A stunning taser slug."
-	icon_state = "stunshell"
-	projectile_type = /obj/item/projectile/bullet/stunshot
+	desc = "A paralysening taser slug."
+	icon_state = "paralyseshell"
+	projectile_type = /obj/item/projectile/bullet/paralyseshot
 	materials = list(MAT_METAL=250)
 
 

@@ -90,7 +90,7 @@
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.Weaken(2)
+	pushed_mob.Knockdown(20)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "pushed")
@@ -209,7 +209,7 @@
 		debris -= AM
 		if(istype(AM, /obj/item/weapon/shard))
 			AM.throw_impact(M)
-	M.Weaken(5)
+	M.Knockdown(50)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -313,10 +313,10 @@
 					to_chat(user, "<span class='notice'>You strengthen the table.</span>")
 					deconstruction_ready = 0
 			else
-				to_chat(user, "<span class='notice'>You start weakening the reinforced table...</span>")
+				to_chat(user, "<span class='notice'>You start knockdowning the reinforced table...</span>")
 				if (do_after(user, 50*W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
-					to_chat(user, "<span class='notice'>You weaken the table.</span>")
+					to_chat(user, "<span class='notice'>You knockdown the table.</span>")
 					deconstruction_ready = 1
 	else
 		. = ..()
@@ -451,7 +451,7 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
-	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+	if(user.knockdown || user.resting || user.lying || user.get_num_legs() < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)

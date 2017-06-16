@@ -190,7 +190,7 @@
 	name = "shotgun magazine (12g taser slugs)"
 	desc = "A drum magazine."
 	icon_state = "m12gs"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/paralyseslug
 	origin_tech = "combat=3;syndicate=1"
 	caliber = "shotgun"
 	max_ammo = 8

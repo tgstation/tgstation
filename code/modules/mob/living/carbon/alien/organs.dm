@@ -111,7 +111,7 @@
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
 	w_class = WEIGHT_CLASS_TINY
-	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
+	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily knockdown while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
@@ -130,12 +130,12 @@
 		to_chat(owner, "<span class='userdanger'>Your Queen has been struck down!</span>")
 		to_chat(owner, "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed.")
 		owner.emote("roar")
-		owner.Stun(10) //Actually just slows them down a bit.
+		owner.Paralyse(100) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
 		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!")
 		owner.emote("scream")
-		owner.Weaken(5)
+		owner.Knockdown(50)
 
 	owner.jitteriness += 30
 	owner.confused += 30

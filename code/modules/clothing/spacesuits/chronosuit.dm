@@ -85,7 +85,7 @@
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user.SetStunned(0)
+		user.SetParalysis(0)
 		user.next_move = 1
 		user.alpha = 255
 		user.update_atom_colour()
@@ -137,7 +137,7 @@
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
 		user.anchored = 1
-		user.Stun(INFINITY)
+		user.Paralyse(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
 		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_2, user, to_turf, phase_in_ds), 3, TIMER_STOPPABLE)
@@ -222,7 +222,7 @@
 			if(user.wear_suit == src)
 				if(hard_landing)
 					user.electrocute_act(35, src, safety = 1)
-					user.Weaken(10)
+					user.Knockdown(100)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 					if(camera)

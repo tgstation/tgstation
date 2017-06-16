@@ -329,7 +329,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Weaken(2)
+			M.Knockdown(20)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
 	cut_overlays()

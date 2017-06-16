@@ -190,7 +190,7 @@
 				eat(I, sound=FALSE)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
-	L.Paralyse(5)
+	L.Unconscious(5)
 
 	// For admin fun, var edit emagged to 2.
 	if(gib || emagged == 2)

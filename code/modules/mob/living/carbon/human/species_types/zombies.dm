@@ -19,7 +19,7 @@
 	speedmod = 2
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 
-/datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
+/datum/species/zombie/infectious/spec_paralyse(mob/living/carbon/human/H,amount)
 	. = min(2, amount)
 
 /datum/species/zombie/infectious/spec_life(mob/living/carbon/C)

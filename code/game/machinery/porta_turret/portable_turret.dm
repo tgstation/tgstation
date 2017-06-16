@@ -1,4 +1,4 @@
-#define TURRET_STUN 0
+#define TURRET_PARALYSE 0
 #define TURRET_LETHAL 1
 
 #define POPUP_ANIM_TIME 5
@@ -40,10 +40,10 @@
 	var/obj/item/weapon/gun/stored_gun = null
 	var/gun_charge = 0		//the charge of the gun when retrieved from wreckage
 
-	var/mode = TURRET_STUN
+	var/mode = TURRET_PARALYSE
 
-	var/stun_projectile = null		//stun mode projectile type
-	var/stun_projectile_sound
+	var/paralyse_projectile = null		//paralyse mode projectile type
+	var/paralyse_projectile_sound
 	var/lethal_projectile = null	//lethal mode projectile type
 	var/lethal_projectile_sound
 
@@ -60,7 +60,7 @@
 	var/check_records = 1	//checks if it can use the security records
 	var/criminals = 1		//checks if it can shoot people on arrest
 	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
-	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
+	var/paralyse_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
 	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
@@ -104,8 +104,8 @@
 		if(powered())
 			if(on && raised)
 				switch(mode)
-					if(TURRET_STUN)
-						icon_state = "[base_icon_state]_stun"
+					if(TURRET_PARALYSE)
+						icon_state = "[base_icon_state]_paralyse"
 					if(TURRET_LETHAL)
 						icon_state = "[base_icon_state]_lethal"
 			else
@@ -127,8 +127,8 @@
 	var/list/gun_properties = stored_gun.get_turret_properties()
 
 	//required properties
-	stun_projectile = gun_properties["stun_projectile"]
-	stun_projectile_sound = gun_properties["stun_projectile_sound"]
+	paralyse_projectile = gun_properties["paralyse_projectile"]
+	paralyse_projectile_sound = gun_properties["paralyse_projectile_sound"]
 	lethal_projectile = gun_properties["lethal_projectile"]
 	lethal_projectile_sound = gun_properties["lethal_projectile_sound"]
 	base_icon_state = gun_properties["base_icon_state"]
@@ -178,7 +178,7 @@
 		dat += "Check for Weapon Authorization: <A href='?src=\ref[src];operation=authweapon'>[auth_weapons ? "Yes" : "No"]</A><BR>"
 		dat += "Check Security Records: <A href='?src=\ref[src];operation=checkrecords'>[check_records ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize Identified Criminals: <A href='?src=\ref[src];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=\ref[src];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=\ref[src];operation=shootall'>[paralyse_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=\ref[src];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
 
 	var/datum/browser/popup = new(user, "autosec", "Automatic Portable Turret Installation", 300, 300)
@@ -208,7 +208,7 @@
 			if("shootcrooks")
 				criminals = !criminals
 			if("shootall")
-				stun_all = !stun_all
+				paralyse_all = !paralyse_all
 			if("checkxenos")
 				check_anomalies = !check_anomalies
 		interact(usr)
@@ -301,7 +301,7 @@
 		check_records = pick(0, 1)
 		criminals = pick(0, 1)
 		auth_weapons = pick(0, 1)
-		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
+		paralyse_all = pick(0, 0, 0, 0, 1)	//paralyse_all is a pretty big deal, so it's least likely to get turned on
 
 		on=0
 		spawn(rand(60,600))
@@ -457,7 +457,7 @@
 	if(emagged)
 		return 10	//if emagged, always return 10.
 
-	if((stun_all || attacked) && !allowed(perp))
+	if((paralyse_all || attacked) && !allowed(perp))
 		//if the turret has been attacked or is angry, target all non-sec people
 		if(!allowed(perp))
 			return 10
@@ -515,10 +515,10 @@
 	update_icon()
 	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
-	if(mode == TURRET_STUN)
+	if(mode == TURRET_PARALYSE)
 		use_power(reqpower)
-		A = new stun_projectile(T)
-		playsound(loc, stun_projectile_sound, 75, 1)
+		A = new paralyse_projectile(T)
+		playsound(loc, paralyse_projectile_sound, 75, 1)
 	else
 		use_power(reqpower * 2)
 		A = new lethal_projectile(T)
@@ -554,20 +554,20 @@
 	has_cover = 0
 	scan_range = 9
 	req_access = list(GLOB.access_syndicate)
-	stun_projectile = /obj/item/projectile/bullet
+	paralyse_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
+	paralyse_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"
 	emp_vunerable = 0
 
 /obj/machinery/porta_turret/syndicate/energy
-	icon_state = "standard_stun"
+	icon_state = "standard_paralyse"
 	base_icon_state = "standard"
-	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/taser.ogg'
+	paralyse_projectile = /obj/item/projectile/energy/electrode
+	paralyse_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -581,7 +581,7 @@
 	max_integrity = 40
 	integrity_failure = 20
 	obj_integrity = 40
-	stun_projectile = /obj/item/projectile/bullet/weakbullet3
+	paralyse_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
 
 /obj/machinery/porta_turret/ai
@@ -596,7 +596,7 @@
 	installation = null
 	lethal_projectile = /obj/item/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
-	mode = TURRET_LETHAL //It would be useless in stun mode anyway
+	mode = TURRET_LETHAL //It would be useless in paralyse mode anyway
 	faction = "neutral" //Minebots, medibots, etc that should not be shot.
 
 /obj/machinery/porta_turret/aux_base/assess_perp(mob/living/carbon/human/perp)
@@ -621,10 +621,10 @@
 	use_power = 0
 	has_cover = 0
 	scan_range = 9
-	stun_projectile = /obj/item/projectile/beam/laser
+	paralyse_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
-	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
+	paralyse_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "turret"
@@ -751,7 +751,7 @@
 		if(!issilicon(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=\ref[src];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
-		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=\ref[src];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
+		t += "Currently set for [lethal?"lethal":"paralyse repeatedly"] - <A href='?src=\ref[src];toggleLethal=1'>Change to [lethal?"Paralyse repeatedly":"Lethal"]?</a><br>"
 
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
@@ -796,7 +796,7 @@
 		if (lethal)
 			icon_state = "control_kill"
 		else
-			icon_state = "control_stun"
+			icon_state = "control_paralyse"
 	else
 		icon_state = "control_standby"
 
@@ -811,8 +811,8 @@
 	. = list()
 	.["lethal_projectile"] = null
 	.["lethal_projectile_sound"] = null
-	.["stun_projectile"] = null
-	.["stun_projectile_sound"] = null
+	.["paralyse_projectile"] = null
+	.["paralyse_projectile_sound"] = null
 	.["base_icon_state"] = "standard"
 
 /obj/item/weapon/gun/energy/get_turret_properties()
@@ -820,16 +820,16 @@
 
 	var/obj/item/ammo_casing/primary_ammo = ammo_type[1]
 
-	.["stun_projectile"] = initial(primary_ammo.projectile_type)
-	.["stun_projectile_sound"] = initial(primary_ammo.fire_sound)
+	.["paralyse_projectile"] = initial(primary_ammo.projectile_type)
+	.["paralyse_projectile_sound"] = initial(primary_ammo.fire_sound)
 
 	if(ammo_type.len > 1)
 		var/obj/item/ammo_casing/secondary_ammo = ammo_type[2]
 		.["lethal_projectile"] = initial(secondary_ammo.projectile_type)
 		.["lethal_projectile_sound"] = initial(secondary_ammo.fire_sound)
 	else
-		.["lethal_projectile"] = .["stun_projectile"]
-		.["lethal_projectile_sound"] = .["stun_projectile_sound"]
+		.["lethal_projectile"] = .["paralyse_projectile"]
+		.["lethal_projectile_sound"] = .["paralyse_projectile_sound"]
 
 /obj/item/weapon/gun/ballistic/get_turret_properties()
 	. = ..()
@@ -837,15 +837,15 @@
 	var/obj/item/ammo_casing/primary_ammo = initial(mag.ammo_type)
 
 	.["base_icon_state"] = "syndie"
-	.["stun_projectile"] = initial(primary_ammo.projectile_type)
-	.["stun_projectile_sound"] = initial(primary_ammo.fire_sound)
-	.["lethal_projectile"] = .["stun_projectile"]
-	.["lethal_projectile_sound"] = .["stun_projectile_sound"]
+	.["paralyse_projectile"] = initial(primary_ammo.projectile_type)
+	.["paralyse_projectile_sound"] = initial(primary_ammo.fire_sound)
+	.["lethal_projectile"] = .["paralyse_projectile"]
+	.["lethal_projectile_sound"] = .["paralyse_projectile_sound"]
 
 
 /obj/item/weapon/gun/energy/laser/bluetag/get_turret_properties()
 	. = ..()
-	.["stun_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
+	.["paralyse_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
 	.["lethal_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
 	.["base_icon_state"] = "blue"
 	.["shot_delay"] = 30
@@ -853,7 +853,7 @@
 
 /obj/item/weapon/gun/energy/laser/redtag/get_turret_properties()
 	. = ..()
-	.["stun_projectile"] = /obj/item/projectile/beam/lasertag/redtag
+	.["paralyse_projectile"] = /obj/item/projectile/beam/lasertag/redtag
 	.["lethal_projectile"] = /obj/item/projectile/beam/lasertag/redtag
 	.["base_icon_state"] = "red"
 	.["shot_delay"] = 30
@@ -867,7 +867,7 @@
 	check_records = 0
 	criminals = 0
 	auth_weapons = 1
-	stun_all = 0
+	paralyse_all = 0
 	check_anomalies = 0
 	var/team_color
 

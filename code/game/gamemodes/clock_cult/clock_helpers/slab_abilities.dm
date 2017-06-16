@@ -56,7 +56,7 @@
 				to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>")
 				return TRUE
 
-			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just stun them
+			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just paralyse them
 				var/obj/structure/destructible/clockwork/geis_binding/GB = L.buckled
 				GB.repair_and_interrupt()
 				add_logs(ranged_ability_user, L, "rebound with Geis")
@@ -186,7 +186,7 @@
 		if(L.stat == DEAD)
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
 			return TRUE
-		if(islist(L.stun_absorption) && L.stun_absorption["vanguard"] && L.stun_absorption["vanguard"]["end_time"] > world.time)
+		if(islist(L.paralyse_absorption) && L.paralyse_absorption["vanguard"] && L.paralyse_absorption["vanguard"]["end_time"] > world.time)
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>")
 			return TRUE
 
@@ -195,7 +195,7 @@
 		if(L == ranged_ability_user)
 			for(var/mob/living/LT in spiral_range(7, T))
 				if(LT.stat == DEAD || !is_servant_of_ratvar(LT) || LT == ranged_ability_user || !(LT in view(7, get_turf(ranged_ability_user))) || \
-				(islist(LT.stun_absorption) && LT.stun_absorption["vanguard"] && LT.stun_absorption["vanguard"]["end_time"] > world.time))
+				(islist(LT.paralyse_absorption) && LT.paralyse_absorption["vanguard"] && LT.paralyse_absorption["vanguard"]["end_time"] > world.time))
 					continue
 				L = LT
 				break

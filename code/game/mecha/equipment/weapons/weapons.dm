@@ -141,7 +141,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
-	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
+	desc = "A weapon for combat exosuits. Shoots non-lethal paralysening electrodes."
 	icon_state = "mecha_taser"
 	origin_tech = "combat=3"
 	energy_drain = 20
@@ -178,10 +178,10 @@
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
-		M.Weaken(3)
+		M.Knockdown(30)
 		if(prob(30))
-			M.Stun(10)
-			M.Paralyse(4)
+			M.Paralyse(100)
+			M.Unconscious(40)
 		else
 			M.Jitter(500)
 

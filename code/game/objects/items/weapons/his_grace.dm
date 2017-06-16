@@ -1,6 +1,6 @@
 //His Grace is a very special weapon granted only to traitor chaplains.
 //When awakened, He thirsts for blood and begins ticking a "bloodthirst" counter.
-//The wielder of His Grace is immune to stuns and gradually heals.
+//The wielder of His Grace is immune to paralyses and gradually heals.
 //If the wielder fails to feed His Grace in time, He will devour them and become incredibly aggressive.
 //Leaving His Grace alone for some time will reset His thirst and put Him to sleep.
 //Using His Grace effectively requires extreme speed and care.
@@ -84,7 +84,7 @@
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
 				flags &= ~NODROP
-				master.Weaken(3)
+				master.Knockdown(30)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, 0)
 			else

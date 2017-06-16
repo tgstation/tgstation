@@ -238,12 +238,12 @@
 	crate_name = "armor crate"
 
 /datum/supply_pack/security/baton
-	name = "Stun Batons Crate"
+	name = "Paralyse Batons Crate"
 	cost = 1000
 	contains = list(/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/melee/baton/loaded)
-	crate_name = "stun baton crate"
+	crate_name = "paralyse baton crate"
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"

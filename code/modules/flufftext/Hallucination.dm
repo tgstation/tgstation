@@ -179,7 +179,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
 	if(A == target && target.stat!=DEAD)
-		target.Weaken(5)
+		target.Knockdown(50)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /obj/effect/hallucination/xeno_attack
@@ -227,7 +227,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_state = "brainslug"
 
 /obj/effect/hallucination/borer
-	//A borer paralyzes you and crawls in your ear
+	//A borer unconsciouss you and crawls in your ear
 	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/borer/borer = null
 
@@ -244,7 +244,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			walk_to(borer, get_step(borer, get_cardinal_dir(borer, T)))
 			if(borer.Adjacent(T))
 				to_chat(T, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-				T.Stun(4)
+				T.Paralyse(40)
 				sleep(50)
 				qdel(borer)
 				sleep(rand(60, 90))
@@ -275,7 +275,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		break
 	if(!wall)
 		return INITIALIZE_HINT_QDEL
-	
+
 	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
 	var/turf/landing = get_turf(target)
 	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
@@ -297,7 +297,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		shake_camera(target, 2, 1)
 		if(bubblegum.Adjacent(target) && !charged)
 			charged = TRUE
-			target.Weaken(4)
+			target.Knockdown(40)
 			target.adjustStaminaLoss(40)
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
@@ -348,7 +348,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = SCREWYHUD_CRIT
-		target.SetSleeping(8, no_alert = TRUE)
+		target.SetSleeping(80, no_alert = TRUE)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
@@ -383,7 +383,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
-		if(4) //Stunprod + cablecuff
+		if(4) //Paralyseprod + cablecuff
 			target.playsound_local(null, 'sound/weapons/egloves.ogg', 40, 1)
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 			sleep(20)
@@ -399,7 +399,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/items_other/Initialize(mapload, mob/living/carbon/T)
 	..()
 	target = T
-	var/item = pick(list("esword","dual_esword","stunpaper","clockspear","ttv","flash","armblade"))
+	var/item = pick(list("esword","dual_esword","paralysepaper","clockspear","ttv","flash","armblade"))
 	var/image_file
 	var/image/A = null
 	for(var/mob/living/carbon/human/H in view(7,target))
@@ -419,7 +419,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					if("dual_esword")
 						target.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
 						A = image(image_file,H,"dualsaberred1", layer=ABOVE_MOB_LAYER)
-					if("stunpaper")
+					if("paralysepaper")
 						A = image(image_file,H,"paper", layer=ABOVE_MOB_LAYER)
 						A.color = rgb(255,0,0)
 					if("clockspear")
@@ -962,10 +962,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							halitem.icon = 'icons/obj/weapons.dmi'
 							halitem.icon_state = "sword1"
 							halitem.name = "Sword"
-						if(4) //stun baton
+						if(4) //paralyse baton
 							halitem.icon = 'icons/obj/weapons.dmi'
-							halitem.icon_state = "stunbaton"
-							halitem.name = "Stun Baton"
+							halitem.icon_state = "paralysebaton"
+							halitem.name = "Paralyse Baton"
 						if(5) //emag
 							halitem.icon = 'icons/obj/card.dmi'
 							halitem.icon_state = "emag"
@@ -1008,7 +1008,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if("death")
 			//Fake death
 			hal_screwyhud = SCREWYHUD_DEAD
-			SetSleeping(20, no_alert = TRUE)
+			SetSleeping(200, no_alert = TRUE)
 			var/area/area = get_area(src)
 			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))

@@ -19,7 +19,7 @@
 	anchored = 1
 	density = 1
 	canmove = 0
-	status_flags = CANSTUN|CANPUSH
+	status_flags = CANPARALYSE|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8

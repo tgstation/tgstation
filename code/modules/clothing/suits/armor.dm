@@ -276,7 +276,7 @@
 	var/tesla_power = 25000
 	var/tesla_range = 20
 	var/tesla_boom = FALSE
-	var/tesla_stun = FALSE
+	var/tesla_paralyse = FALSE
 
 /obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(!active)
@@ -289,7 +289,7 @@
 			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>")
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
-		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_stun)
+		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_paralyse)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 
@@ -308,7 +308,7 @@
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
-		owner.Weaken(2)
+		owner.Knockdown(20)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)

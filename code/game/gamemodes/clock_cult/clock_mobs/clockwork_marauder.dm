@@ -157,7 +157,7 @@
 	if(amount > 0)
 		for(var/mob/living/L in view(2, src))
 			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
-				to_chat(src, "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>")
+				to_chat(src, "<span class='userdanger'>The presence of a brandished holy artifact knockdowns your armor!</span>")
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
 	. = ..()
@@ -322,8 +322,8 @@
 	forceMove(host)
 	if(resulthealth > MARAUDER_EMERGE_THRESHOLD && health != maxHealth)
 		recovering = TRUE
-		to_chat(src, "<span class='userdanger'>You have weakened and will need to recover before manifesting again!</span>")
-		to_chat(host, "<span class='sevtug'>[true_name] has weakened and will need to recover before manifesting again!</span>")
+		to_chat(src, "<span class='userdanger'>You have knockdown and will need to recover before manifesting again!</span>")
+		to_chat(host, "<span class='sevtug'>[true_name] has knockdown and will need to recover before manifesting again!</span>")
 	return TRUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/try_emerge()

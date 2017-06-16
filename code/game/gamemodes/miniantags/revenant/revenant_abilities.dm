@@ -50,9 +50,9 @@
 					return //hey, wait a minute...
 				to_chat(src, "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>")
 				if(target.stat != DEAD)
-					to_chat(target, "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>")
+					to_chat(target, "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life knockdowns...</span>")
 				reveal(46)
-				stun(46)
+				paralyse(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
@@ -64,7 +64,7 @@
 						essence_regen_cap += 15
 						perfectsouls++
 						to_chat(src, "<span class='revenboldnotice'>The perfection of [target]'s soul has increased your maximum essence level. Your new maximum essence is [essence_regen_cap].</span>")
-					to_chat(src, "<span class='revennotice'>[target]'s soul has been considerably weakened and will yield no more essence for the time being.</span>")
+					to_chat(src, "<span class='revennotice'>[target]'s soul has been considerably knockdown and will yield no more essence for the time being.</span>")
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 										   "<span class='revenwarning'>Violets lights, dancing in your vision, getting clo--</span>")
 					drained_mobs.Add(target)
@@ -124,7 +124,7 @@
 	panel = "Revenant Abilities (Locked)"
 	name = "Report this to a coder"
 	var/reveal = 80 //How long it reveals the revenant in deciseconds
-	var/stun = 20 //How long it stuns the revenant in deciseconds
+	var/paralyse = 20 //How long it paralyses the revenant in deciseconds
 	var/locked = TRUE //If it's locked and needs to be unlocked before use
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
@@ -172,7 +172,7 @@
 		return FALSE
 	name = "[initial(name)] ([cast_amount]E)"
 	user.reveal(reveal)
-	user.stun(stun)
+	user.paralyse(paralyse)
 	if(action)
 		action.UpdateButtonIcon()
 	return TRUE
@@ -183,7 +183,7 @@
 	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
 	charge_max = 200
 	range = 5
-	stun = 30
+	paralyse = 30
 	cast_amount = 40
 	var/shock_range = 2
 	var/shock_damage = 15
@@ -223,7 +223,7 @@
 	desc = "Twists and corrupts the nearby area as well as dispelling holy auras on floors."
 	charge_max = 150
 	range = 4
-	stun = 20
+	paralyse = 20
 	reveal = 40
 	unlock_amount = 75
 	cast_amount = 30

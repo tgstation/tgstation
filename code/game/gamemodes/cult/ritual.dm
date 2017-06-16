@@ -127,7 +127,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Talisman of Electromagnetic Pulse</b></font><br>This talisman will EMP anything else nearby. It disappears after one use.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Stunning</b></font><br>Attacking a target will knock them down for a long duration in addition to inhibiting their speech. \
+	text += "<font color='red'><b>Talisman of Paralysening</b></font><br>Attacking a target will knock them down for a long duration in addition to inhibiting their speech. \
 	Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armored robes, a backpack, an eldritch longsword, an empowered bola, and a pair of boots. Any items that cannot \
@@ -162,7 +162,7 @@ This file contains the arcane tome files.
 	text += "<font color='red'><b>Juggernaut</b></font><br>The Juggernaut is a slow, but durable, melee attacker which can produce temporary forcewalls. It will also reflect most lethal energy weapons.<br><br>"
 
 	text += "<font color='red'><b>Artificer</b></font><br>The Artificer is a weak and fragile construct, able to heal other constructs, shades, or itself, produce more <font color='red'><b>soulstones</b></font> and <font color='red'><b>construct shells</b></font>, \
-	construct fortifying cult walls and flooring, and finally, it can release a few indiscriminate stunning missiles.<br><br>"
+	construct fortifying cult walls and flooring, and finally, it can release a few indiscriminate paralysening missiles.<br><br>"
 
 	text += "<font color='red'><b>Harvester</b></font><br>If you see one, know that you have done all you can and your life is void.<br><br>"
 

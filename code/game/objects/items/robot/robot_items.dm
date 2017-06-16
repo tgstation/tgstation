@@ -5,12 +5,12 @@
 	icon = 'icons/mob/robot_items.dmi'
 
 
-/obj/item/borg/stun
+/obj/item/borg/paralyse
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/charge_cost = 30
 
-/obj/item/borg/stun/attack(mob/living/M, mob/living/user)
+/obj/item/borg/paralyse/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
@@ -22,16 +22,15 @@
 			return
 
 	user.do_attack_animation(M)
-	M.Weaken(5)
+	M.Knockdown(50)
 	M.apply_effect(STUTTER, 5)
-	M.Stun(5)
 
 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
 					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
-	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
+	add_logs(user, M, "paralysis", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
 	name = "Hugging Module"
@@ -40,7 +39,7 @@
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
 	var/ccooldown = 0
 	var/scooldown = 0
-	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
+	var/shockallowed = FALSE//Can it be a paralysearm when emagged. Only PK borgs get this by default.
 	var/boop = FALSE
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
@@ -329,7 +328,7 @@
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
-					C.Weaken(2)
+					C.Knockdown(20)
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
@@ -505,8 +504,8 @@
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
 	name = "Hyperkinetic Dampening projector"
-	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
-		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
+	desc = "A device that projects a dampening field that knockdowns kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
+		while active, that will knockdown and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield"
 	var/maxenergy = 1500
@@ -595,7 +594,7 @@
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/item/projectile/P = I
-		if(!P.stun && P.nodamage)	//No damage
+		if(!P.paralyse && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)

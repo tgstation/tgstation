@@ -16,7 +16,7 @@
 
 /obj/item/weapon/implant/adrenalin
 	name = "adrenal implant"
-	desc = "Removes all stuns and knockdowns."
+	desc = "Removes all paralyses and knockdowns."
 	icon_state = "adrenal"
 	origin_tech = "materials=2;biotech=4;combat=3;syndicate=4"
 	uses = 3
@@ -28,16 +28,16 @@
 				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
 				<HR>
 				<b>Implant Details:</b> Subjects injected with implant can activate an injection of medical cocktails.<BR>
-				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>
+				<b>Function:</b> Removes paralyses, increases speed, and has a mild healing effect.<BR>
 				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
 	return dat
 
 /obj/item/weapon/implant/adrenalin/activate()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	imp_in.SetStunned(0)
-	imp_in.SetWeakened(0)
 	imp_in.SetParalysis(0)
+	imp_in.SetKnockdown(0)
+	imp_in.SetUnconscious(0)
 	imp_in.adjustStaminaLoss(-75)
 	imp_in.lying = 0
 	imp_in.update_canmove()

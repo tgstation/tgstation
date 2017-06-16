@@ -374,7 +374,7 @@
 			emp_area()
 		if(2,3)//tox damage all carbon mobs in area
 			toxmob()
-		if(4)//Stun mobs who lack optic scanners
+		if(4)//Paralyse mobs who lack optic scanners
 			mezzer()
 		if(5,6) //Sets all nearby mobs on fire
 			if(current_size < STAGE_SIX)
@@ -419,7 +419,7 @@
 						to_chat(H, "<span class='notice'>You look directly into the [src.name], good thing you had your protective eyewear on!</span>")
 						return
 
-		M.apply_effect(3, STUN)
+		M.apply_effect(30, PARALYSE)
 		M.visible_message("<span class='danger'>[M] stares blankly at the [src.name]!</span>", \
 						"<span class='userdanger'>You look directly into the [src.name] and feel weak.</span>")
 	return

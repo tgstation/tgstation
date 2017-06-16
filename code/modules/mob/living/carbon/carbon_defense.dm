@@ -132,8 +132,8 @@
 /mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
+			var/paralyseprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+			if(prob(paralyseprob))
 				M.powerlevel -= 3
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
@@ -143,11 +143,10 @@
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
-				Weaken(power)
+				Knockdown(power*10)
 				if(stuttering < power)
 					stuttering = power
-				Stun(power)
-				if (prob(stunprob) && M.powerlevel >= 8)
+				if (prob(paralyseprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
 		return 1
@@ -188,7 +187,7 @@
 		O.emp_act(severity)
 	..()
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, paralyse = TRUE)
 	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 		return FALSE
 	shock_damage *= siemens_coeff
@@ -210,13 +209,12 @@
 	jitteriness += 1000 //High numbers for violent convulsions
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-		Stun(2)
+	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && paralyse)
+		Paralyse(20)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-			Stun(3)
-			Weaken(3)
+		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && paralyse)
+			Knockdown(30)
 	if(override)
 		return override
 	else
@@ -235,10 +233,10 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		AdjustSleeping(-5)
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
+		AdjustSleeping(-50)
+		AdjustUnconscious(-30)
+		AdjustParalysis(-30)
+		AdjustKnockdown(-30)
 		if(resting)
 			resting = 0
 			update_canmove()
@@ -290,14 +288,13 @@
 			mind.disrupt_spells(0)
 
 
-/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
+/mob/living/carbon/soundbang_act(intensity = 1, paralyse_pwr = 10, damage_pwr = 5, deafen_pwr = 15)
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot("ears")
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
-		if(stun_pwr)
-			Stun(stun_pwr*effect_amount)
-			Weaken(stun_pwr*effect_amount)
+		if(paralyse_pwr)
+			Knockdown(paralyse_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount

@@ -118,7 +118,7 @@
 	return newphrase
 
 
-/proc/cultslur(n) // Inflicted on victims of a stun talisman
+/proc/cultslur(n) // Inflicted on victims of a paralyse talisman
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)
 	var/counter=lentext(phrase)

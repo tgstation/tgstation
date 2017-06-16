@@ -10,7 +10,7 @@
 	heatmod = 0.5//it's a little tough to burn them to death not as hard though.
 	punchdamagelow = 20
 	punchdamagehigh = 30//they are inhumanly strong
-	punchstunthreshold = 25
+	punchparalysethreshold = 25
 	attack_verb = "smash"
 	attack_sound = 'sound/weapons/resonator_blast.ogg'
 	blacklisted = 1

@@ -5,7 +5,7 @@
 	if(target.check_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(2)
+		user.Paralyse(20)
 		return TRUE
 
 
@@ -84,7 +84,7 @@
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Knockdown(30 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
@@ -110,8 +110,8 @@
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Weaken(3)
-			add_logs(user, target, "stunned", src)
+			target.Knockdown(30)
+			add_logs(user, target, "paralysis", src)
 			src.add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
 				"<span class ='userdanger'>[user] has knocked down [target] with [src]!</span>")
@@ -158,7 +158,7 @@
 		icon_state = "telebaton_1"
 		item_state = "nullrod"
 		w_class = WEIGHT_CLASS_BULKY //doesnt fit in backpack when its on for balance
-		force = 10 //stunbaton damage
+		force = 10 //paralysebaton damage
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
 		to_chat(user, "<span class ='notice'>You collapse the baton.</span>")

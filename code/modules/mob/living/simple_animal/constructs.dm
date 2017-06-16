@@ -91,7 +91,7 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, paralyse = TRUE)
 	return 0
 
 /mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -330,8 +330,8 @@
 		if(!LAZYLEN(parts))
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
-			C.Weaken(30)
-			visible_message("<span class='danger'>[src] paralyzes [C]!</span>")
+			C.Knockdown(30)
+			visible_message("<span class='danger'>[src] unconsciouss [C]!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE
 		do_attack_animation(C)

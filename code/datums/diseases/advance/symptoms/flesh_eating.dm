@@ -77,7 +77,7 @@ Bonus
 			if(2,3)
 				to_chat(M, "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
 			if(4,5)
-				to_chat(M, "<span class='userdanger'>[pick("You feel your muscles weakening.", "Your skin begins detaching itself.", "You feel sandy.")]</span>")
+				to_chat(M, "<span class='userdanger'>[pick("You feel your muscles knockdowning.", "Your skin begins detaching itself.", "You feel sandy.")]</span>")
 				Flesh_death(M, A)
 	return
 

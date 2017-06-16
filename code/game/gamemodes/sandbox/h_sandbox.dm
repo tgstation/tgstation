@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 		/obj/item/tk_grab, /obj/item/weapon/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly,/obj/item/device/onetankbomb, /obj/item/radio, /obj/item/device/pda/ai,
 		/obj/item/device/uplink, /obj/item/smallDelivery, /obj/item/projectile,
-		/obj/item/borg/sight,/obj/item/borg/stun,/obj/item/weapon/robot_module)
+		/obj/item/borg/sight,/obj/item/borg/paralyse,/obj/item/weapon/robot_module)
 
 /datum/hSB/proc/update()
 	var/global/list/hrefs = list(

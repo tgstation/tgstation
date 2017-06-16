@@ -21,11 +21,11 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			AdjustSleeping(-5)
+			AdjustSleeping(-50)
 			resting = 0
+			AdjustUnconscious(-3)
 			AdjustParalysis(-3)
-			AdjustStunned(-3)
-			AdjustWeakened(-3)
+			AdjustKnockdown(-3)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 
 		if ("grab")
@@ -116,10 +116,10 @@ In all, this is a lot like the monkey code. /N
 		if(3)
 			take_overall_damage(30,0)
 			if(prob(50))
-				Paralyse(1)
+				Unconscious(10)
 			adjustEarDamage(15,60)
 
-/mob/living/carbon/alien/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
+/mob/living/carbon/alien/soundbang_act(intensity = 1, paralyse_pwr = 10, damage_pwr = 5, deafen_pwr = 15)
 	return 0
 
 /mob/living/carbon/alien/acid_act(acidpwr, acid_volume)

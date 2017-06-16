@@ -42,13 +42,13 @@
 	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
 
 
-/obj/effect/mine/stun
-	name = "stun mine"
-	var/stun_time = 8
+/obj/effect/mine/paralyse
+	name = "paralyse mine"
+	var/paralyse_time = 80
 
-/obj/effect/mine/stun/mineEffect(mob/victim)
+/obj/effect/mine/paralyse/mineEffect(mob/victim)
 	if(isliving(victim))
-		victim.Weaken(stun_time)
+		victim.Knockdown(paralyse_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -128,7 +128,7 @@
 
 	spawn(0)
 		new /obj/effect/hallucination/delusion(victim.loc,victim,"demon",duration,0)
-		
+
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
 	victim.drop_all_held_items()

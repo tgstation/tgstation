@@ -512,7 +512,7 @@
 	R.set_frequency(GLOB.REDTEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
-	H.dna.species.stunmod = 0
+	H.dna.species.paralysemod = 0
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
@@ -520,7 +520,7 @@
 	R.set_frequency(GLOB.BLUETEAM_FREQ)
 	R.freqlock = TRUE
 	R.independent = TRUE
-	H.dna.species.stunmod = 0
+	H.dna.species.paralysemod = 0
 
 
 

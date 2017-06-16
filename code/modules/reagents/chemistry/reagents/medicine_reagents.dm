@@ -47,9 +47,9 @@
 	M.disabilities = 0
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetWeakened(0, 0)
-	M.SetStunned(0, 0)
+	M.SetKnockdown(0, 0)
 	M.SetParalysis(0, 0)
+	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
@@ -77,14 +77,14 @@
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
-	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
+	description = "Increases resistance to paralyses as well as reducing drowsiness and hallucinations."
 	color = "#FF00FF"
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
+	M.AdjustUnconscious(-1, 0)
 	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustKnockdown(-1, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -537,7 +537,7 @@
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases paralyse resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -546,9 +546,9 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
+	M.AdjustUnconscious(-1, 0)
 	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustKnockdown(-1, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
@@ -621,7 +621,7 @@
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(20, 0)
 			. = 1
 	..()
 
@@ -737,7 +737,7 @@
 /datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
-	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
+	description = "Minor boost to paralyse resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -757,9 +757,9 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
+		M.AdjustUnconscious(-1, 0)
 		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-1, 0)
-		M.AdjustWeakened(-1, 0)
+		M.AdjustKnockdown(-1, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -852,7 +852,7 @@
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
 	id = "stimulants"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
+	description = "Increases paralyse resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
@@ -864,9 +864,9 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
+	M.AdjustUnconscious(-3, 0)
 	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
+	M.AdjustKnockdown(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -889,7 +889,7 @@
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
 	if(M.sleeping)
-		M.AdjustSleeping(-1, 0)
+		M.AdjustSleeping(-10, 0)
 		. = 1
 	M.reagents.remove_reagent("sugar", 3)
 	..()
@@ -1097,14 +1097,14 @@
 /datum/reagent/medicine/changelingAdrenaline
 	name = "Adrenaline"
 	id = "changelingAdrenaline"
-	description = "Reduces stun times. Also deals toxin damage at high amounts."
+	description = "Reduces paralyse times. Also deals toxin damage at high amounts."
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
+	M.AdjustUnconscious(-1, 0)
 	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustKnockdown(-1, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()

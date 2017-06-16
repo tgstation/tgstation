@@ -102,7 +102,7 @@
 				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
-			Weaken(1)
+			Knockdown(10)
 			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
@@ -111,8 +111,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
-			victim.Weaken(1)
-			Weaken(1)
+			victim.Knockdown(10)
+			Knockdown(10)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
@@ -258,7 +258,7 @@
 
 /mob/living/carbon/resist_fire()
 	fire_stacks -= 5
-	Weaken(3, 1, 1)
+	Knockdown(30, 1, 1)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -450,7 +450,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/paralyse = 1, var/distance = 0, var/message = 1, var/toxic = 0)
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
@@ -458,8 +458,8 @@
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
-		if(stun)
-			Weaken(10)
+		if(paralyse)
+			Knockdown(10)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -471,8 +471,8 @@
 		if(message)
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 
-	if(stun)
-		Stun(4)
+	if(paralyse)
+		Paralyse(40)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
@@ -480,7 +480,7 @@
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
-			if(stun)
+			if(paralyse)
 				adjustBruteLoss(3)
 		else
 			if(T)
@@ -686,7 +686,7 @@
 		if(health<= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+		if(unconscious || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

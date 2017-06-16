@@ -166,13 +166,13 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/weapon/gun/magic/wand/fireball/inert
-	name = "weakened wand of fireball"
-	desc = "This wand shoots scorching balls of fire that explode into destructive flames. The years of the cold have weakened the magic inside the wand."
+	name = "knockdown wand of fireball"
+	desc = "This wand shoots scorching balls of fire that explode into destructive flames. The years of the cold have knockdown the magic inside the wand."
 	max_charges = 4
 
 /obj/item/weapon/gun/magic/wand/resurrection/inert
-	name = "weakened wand of healing"
-	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
+	name = "knockdown wand of healing"
+	desc = "This wand uses healing magics to heal and revive. The years of the cold have knockdown the magic inside the wand."
 	max_charges = 5
 
 /obj/item/device/radio/uplink/old

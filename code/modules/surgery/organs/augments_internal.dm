@@ -1,4 +1,4 @@
-#define STUN_SET_AMOUNT	2
+#define PARALYSE_SET_AMOUNT	20
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -31,10 +31,10 @@
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
 		return
-	var/stun_amount = 5 + (severity-1 ? 0 : 5)
-	owner.Stun(stun_amount)
+	var/paralyse_amount = 50 + (severity-1 ? 0 : 50)
+	owner.Paralyse(paralyse_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
-	return stun_amount
+	return paralyse_amount
 
 
 /obj/item/organ/cyberimp/brain/anti_drop
@@ -95,31 +95,31 @@
 	..()
 
 
-/obj/item/organ/cyberimp/brain/anti_stun
+/obj/item/organ/cyberimp/brain/anti_paralyse
 	name = "CNS Rebooter implant"
-	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
+	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when paralysis."
 	implant_color = "#FFFF00"
-	slot = "brain_antistun"
+	slot = "brain_antiparalyse"
 	origin_tech = "materials=5;programming=4;biotech=5"
 
-/obj/item/organ/cyberimp/brain/anti_stun/on_life()
+/obj/item/organ/cyberimp/brain/anti_paralyse/on_life()
 	..()
 	if(crit_fail)
 		return
 
-	if(owner.stunned > STUN_SET_AMOUNT)
-		owner.stunned = STUN_SET_AMOUNT
-	if(owner.weakened > STUN_SET_AMOUNT)
-		owner.weakened = STUN_SET_AMOUNT
+	if(owner.paralysis > PARALYSE_SET_AMOUNT)
+		owner.SetParalysis(PARALYSE_SET_AMOUNT)
+	if(owner.knockdown > PARALYSE_SET_AMOUNT)
+		owner.SetKnockdown(PARALYSE_SET_AMOUNT)
 
-/obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_paralyse/emp_act(severity)
 	if(crit_fail)
 		return
 	crit_fail = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 	..()
 
-/obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
+/obj/item/organ/cyberimp/brain/anti_paralyse/proc/reboot()
 	crit_fail = FALSE
 
 
@@ -151,7 +151,7 @@
 	var/list/boxed = list(
 		/obj/item/device/autosurgeon/thermal_eyes,
 		/obj/item/device/autosurgeon/xray_eyes,
-		/obj/item/device/autosurgeon/anti_stun,
+		/obj/item/device/autosurgeon/anti_paralyse,
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 

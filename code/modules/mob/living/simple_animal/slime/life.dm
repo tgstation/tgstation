@@ -2,9 +2,9 @@
 /mob/living/simple_animal/slime
 	var/AIproc = 0 // determines if the AI loop is activated
 	var/Atkcool = 0 // attack cooldown
-	var/Tempstun = 0 // temporary temperature stuns
+	var/Tempparalyse = 0 // temporary temperature paralyses
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
-	var/SStun = 0 // stun variable
+	var/SParalyse = 0 // paralyse variable
 
 
 /mob/living/simple_animal/slime/Life()
@@ -120,8 +120,8 @@
 	//Account for massive pressure differences
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
-		if(bodytemperature <= (T0C - 40)) // stun temperature
-			Tempstun = 1
+		if(bodytemperature <= (T0C - 40)) // paralyse temperature
+			Tempparalyse = 1
 
 		if(bodytemperature <= (T0C - 50)) // hurt temperature
 			if(bodytemperature <= 50) // sqrting negative numbers is bad
@@ -130,7 +130,7 @@
 				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
 
 	else
-		Tempstun = 0
+		Tempparalyse = 0
 
 	if(stat != DEAD)
 		var/bz_percentage =0
@@ -279,7 +279,7 @@
 
 
 /mob/living/simple_animal/slime/proc/handle_targets()
-	if(Tempstun)
+	if(Tempparalyse)
 		if(!buckled) // not while they're eating!
 			canmove = 0
 	else
@@ -309,11 +309,11 @@
 
 		if(Target)
 			--target_patience
-			if (target_patience <= 0 || SStun > world.time || Discipline || attacked || docile) // Tired of chasing or something draws out attention
+			if (target_patience <= 0 || SParalyse > world.time || Discipline || attacked || docile) // Tired of chasing or something draws out attention
 				target_patience = 0
 				Target = null
 
-		if(AIproc && SStun > world.time)
+		if(AIproc && SParalyse > world.time)
 			return
 
 		var/hungry = 0 // determines if the slime is hungry

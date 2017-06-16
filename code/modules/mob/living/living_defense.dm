@@ -98,7 +98,7 @@
 			step_away(src,M,15)
 		switch(M.damtype)
 			if(BRUTE)
-				Paralyse(1)
+				Unconscious(10)
 				take_overall_damage(rand(M.force/2, M.force))
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
@@ -270,7 +270,7 @@
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, paralyse = TRUE)
 	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 		return FALSE
 	if(shock_damage > 0)

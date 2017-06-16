@@ -64,8 +64,8 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/stunprod
-	name = "Stunprod"
+/datum/crafting_recipe/paralyseprod
+	name = "Paralyseprod"
 	result = /obj/item/weapon/melee/baton/cattleprod
 	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,

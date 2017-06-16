@@ -1,5 +1,5 @@
 #define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
+#define AB_CHECK_PARALYSIS 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_CONSCIOUS 8
 
@@ -72,8 +72,8 @@
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
 			return 0
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
+	if(check_flags & AB_CHECK_PARALYSIS)
+		if(owner.paralysis || owner.knockdown)
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)
@@ -117,7 +117,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_PARALYSIS|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
 	button_icon_state = null
 	// If you want to override the normal icon being the item
 	// then change this to an icon state
@@ -250,7 +250,7 @@
 
 /datum/action/item_action/clock/toggle_visor
 	name = "Create Judicial Marker"
-	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
+	desc = "Allows you to create a paralysening Judicial Marker at any location in view. Click again to disable."
 
 /datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))

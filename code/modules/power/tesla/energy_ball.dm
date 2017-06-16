@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	var/mob/living/carbon/C = A
 	C.dust()
 
-/proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE, stun_mobs = TRUE)
+/proc/tesla_zap(atom/source, zap_range = 3, power, explosive = FALSE, paralyse_mobs = TRUE)
 	. = source.dir
 	if(power < 1000)
 		return
@@ -261,27 +261,27 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 
 	//per type stuff:
 	if(closest_tesla_coil)
-		closest_tesla_coil.tesla_act(power, explosive, stun_mobs)
+		closest_tesla_coil.tesla_act(power, explosive, paralyse_mobs)
 
 	else if(closest_grounding_rod)
-		closest_grounding_rod.tesla_act(power, explosive, stun_mobs)
+		closest_grounding_rod.tesla_act(power, explosive, paralyse_mobs)
 
 	else if(closest_mob)
 		var/shock_damage = Clamp(round(power/400), 10, 90) + rand(-5, 5)
-		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, stun = stun_mobs)
+		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, paralyse = paralyse_mobs)
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
-			if(stun_mobs)
+			if(paralyse_mobs)
 				S.emp_act(2)
-			tesla_zap(S, 7, power / 1.5, explosive, stun_mobs) // metallic folks bounce it further
+			tesla_zap(S, 7, power / 1.5, explosive, paralyse_mobs) // metallic folks bounce it further
 		else
-			tesla_zap(closest_mob, 5, power / 1.5, explosive, stun_mobs)
+			tesla_zap(closest_mob, 5, power / 1.5, explosive, paralyse_mobs)
 
 	else if(closest_machine)
-		closest_machine.tesla_act(power, explosive, stun_mobs)
+		closest_machine.tesla_act(power, explosive, paralyse_mobs)
 
 	else if(closest_blob)
-		closest_blob.tesla_act(power, explosive, stun_mobs)
+		closest_blob.tesla_act(power, explosive, paralyse_mobs)
 
 	else if(closest_structure)
-		closest_structure.tesla_act(power, explosive, stun_mobs)
+		closest_structure.tesla_act(power, explosive, paralyse_mobs)

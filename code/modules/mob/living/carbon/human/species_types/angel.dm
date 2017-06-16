@@ -47,7 +47,7 @@
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.stunned || H.weakened)
+	if(H.stat || H.paralysis || H.knockdown)
 		return 0
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "Your suit blocks your wings from extending!")
@@ -65,7 +65,7 @@
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_PARALYSIS
 	button_icon_state = "flight"
 
 /datum/action/innate/flight/Activate()
@@ -108,7 +108,7 @@
 	return 1
 
 
-/datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
+/datum/species/angel/spec_paralyse(mob/living/carbon/human/H,amount)
 	if(H.movement_type & FLYING)
 		ToggleFlight(H,0)
 		flyslip(H)
@@ -124,14 +124,14 @@
 
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
-		stunmod = 2
+		paralysemod = 2
 		speedmod = -1
 		H.movement_type |= FLYING
 		override_float = 1
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
-		stunmod = 1
+		paralysemod = 1
 		speedmod = 0
 		H.movement_type &= ~FLYING
 		override_float = 0

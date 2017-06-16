@@ -194,7 +194,7 @@
 			else if(pestlevel >= 5)
 				adjustHealth(-1 / rating)
 
-			// If it's a weed, it doesn't stunt the growth
+			// If it's a weed, it doesn't paralyset the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-1 / rating)
 
@@ -509,7 +509,7 @@
 		yieldmod = 1.3
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
-	
+
 	// Ambrosia Gaia produces earthsblood.
 	if(S.has_reagent("earthsblood"))
 		self_sufficiency_progress += S.get_reagent_amount("earthsblood")

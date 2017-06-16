@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Miniature Energy Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to \
 		fit into a pocket or slip into a bag unnoticed. It will synthesize \
-		and fire bolts tipped with a paralyzing toxin that will briefly stun \
+		and fire bolts tipped with a paralyzing toxin that will briefly paralyse \
 		targets and cause them to slur as if inebriated. It can produce an \
 		infinite number of bolts, but takes time to automatically recharge \
 		after each shot."
@@ -433,9 +433,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 3
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
-/datum/uplink_item/ammo/shotgun/stun
-	name = "12g Stun Slug Drum"
-	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
+/datum/uplink_item/ammo/shotgun/paralyse
+	name = "12g Paralyse Slug Drum"
+	desc = "An alternative 8-round paralyse slug magazine for use with the Bulldog shotgun. \
 			Saying that they're completely non-lethal would be lying."
 	item = /obj/item/ammo_box/magazine/m12g
 	include_modes = list(/datum/game_mode/nuclear)
@@ -799,7 +799,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
-	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
+	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to paralyses and knockdowns for about \
 			5 minutes after injection."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
 	cost = 5
@@ -1166,7 +1166,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will inject a chemical \
-			cocktail which has a mild healing effect along with removing all stuns and increasing movement speed."
+			cocktail which has a mild healing effect along with removing all paralyses and increasing movement speed."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 	player_minimum = 25
@@ -1223,10 +1223,10 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/device/autosurgeon/xray_eyes
 	cost = 10
 
-/datum/uplink_item/cyber_implants/antistun
+/datum/uplink_item/cyber_implants/antiparalyse
 	name = "CNS Rebooter Implant"
-	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
-	item = /obj/item/device/autosurgeon/anti_stun
+	desc = "This implant will help you get back up on your feet faster after being paralysis. Comes with an autosurgeon."
+	item = /obj/item/device/autosurgeon/anti_paralyse
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
@@ -1275,7 +1275,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
-	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
+	His Grace grants gradual regeneration and complete paralyse immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
 	However, if left alone for long enough, He will fall back to slumber. \
 	To activate His Grace, simply unlatch Him."
 	item = /obj/item/weapon/his_grace

@@ -400,11 +400,11 @@
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
-	M.Weaken(5)
+	M.Knockdown(50)
 	M.updatehealth() //forces health update before next life tick
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
-	add_logs(user, M, "stunned", src)
+	add_logs(user, M, "paralysis", src)
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = 1
@@ -455,7 +455,7 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
 			add_logs(user, H, "overloaded the heart of", defib)
-			H.Weaken(5)
+			H.Knockdown(50)
 			H.Jitter(100)
 			if(req_defib)
 				defib.deductcharge(revivecost)

@@ -25,7 +25,7 @@
 	..()
 	if(obj_integrity <= 75)
 		icon_state = "blob_shield_damaged"
-		name = "weakened strong blob"
+		name = "knockdown strong blob"
 		desc = "A wall of twitching tendrils."
 		atmosblock = 0
 	else

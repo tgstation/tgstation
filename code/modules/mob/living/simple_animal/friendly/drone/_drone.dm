@@ -32,7 +32,7 @@
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
+	status_flags = (CANPUSH | CANPARALYSE | CANKNOCKDOWN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
@@ -224,7 +224,7 @@
 
 
 /mob/living/simple_animal/drone/emp_act(severity)
-	Stun(5)
+	Paralyse(50)
 	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
@@ -283,5 +283,5 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, paralyse = TRUE)
 	return 0 //So they don't die trying to fix wiring

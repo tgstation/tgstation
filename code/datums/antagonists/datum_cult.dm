@@ -53,7 +53,7 @@
 				if(GLOB.sac_mind)
 					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 				else
-					explanation = "The veil has already been weakened here, proceed to the final objective."
+					explanation = "The veil has already been knockdown here, proceed to the final objective."
 					GLOB.sac_complete = TRUE
 			if("eldergod")
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(GLOB.summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"

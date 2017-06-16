@@ -96,8 +96,8 @@
 	// TODO Make them glow with the power of the M E D I C A L W R E N C H
 	// during their ascension
 
-	// Stun stops them from wandering off
-	user.Stun(5)
+	// Paralyse stops them from wandering off
+	user.Paralyse(50)
 	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
 
 	// Let the sound effect finish playing

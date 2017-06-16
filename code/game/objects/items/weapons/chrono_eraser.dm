@@ -209,7 +209,7 @@
 			qdel(captured)
 			qdel(src)
 		else
-			captured.Paralyse(4)
+			captured.Unconscious(40)
 			if(captured.loc != src)
 				captured.loc = src
 			update_icon()

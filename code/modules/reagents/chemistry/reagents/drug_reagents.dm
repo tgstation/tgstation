@@ -32,7 +32,7 @@
 /datum/reagent/drug/nicotine
 	name = "Nicotine"
 	id = "nicotine"
-	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
+	description = "Slightly reduces paralyse times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	addiction_threshold = 30
@@ -42,9 +42,9 @@
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+	M.AdjustUnconscious(-1, 0)
 	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustKnockdown(-1, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
 	. = 1
@@ -60,7 +60,7 @@
 /datum/reagent/drug/crank
 	name = "Crank"
 	id = "crank"
-	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
+	description = "Reduces paralyse times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#FA00C8"
 	overdose_threshold = 20
@@ -70,9 +70,9 @@
 	var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
+	M.AdjustUnconscious(-1, 0)
 	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustKnockdown(-1, 0)
 	..()
 	. = 1
 
@@ -158,7 +158,7 @@
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
 	id = "methamphetamine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	description = "Reduces paralyse times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
@@ -169,9 +169,9 @@
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
+	M.AdjustUnconscious(-2, 0)
 	M.AdjustParalysis(-2, 0)
-	M.AdjustStunned(-2, 0)
-	M.AdjustWeakened(-2, 0)
+	M.AdjustKnockdown(-2, 0)
 	M.adjustStaminaLoss(-2, 0)
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
@@ -235,7 +235,7 @@
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
 	id = "bath_salts"
-	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
+	description = "Makes you nearly impervious to paralyses and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
@@ -247,9 +247,9 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
+	M.AdjustUnconscious(-3, 0)
 	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
+	M.AdjustKnockdown(-3, 0)
 	M.adjustStaminaLoss(-5, 0)
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)

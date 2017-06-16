@@ -74,7 +74,7 @@
 
 /obj/item/ammo_casing/energy/electrode
 	projectile_type = /obj/item/projectile/energy/electrode
-	select_name = "stun"
+	select_name = "paralyse"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
 
@@ -194,7 +194,7 @@
 /obj/item/ammo_casing/energy/tesla_revolver
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 	e_cost = 200
-	select_name = "stun"
+	select_name = "paralyse"
 	projectile_type = /obj/item/projectile/energy/tesla/revolver
 
 /obj/item/ammo_casing/energy/gravityrepulse

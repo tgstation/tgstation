@@ -9,7 +9,7 @@
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
+	punchparalysethreshold = 11 //about 40% chance to paralyse
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	nojumpsuit = 1
 	sexes = 1
@@ -143,29 +143,29 @@
 	info_text = "As a <span class='danger'>Gold Golem</span>, you are faster but less resistant than the average golem."
 	prefix = "Golden"
 
-//Heavier, thus higher chance of stunning when punching
+//Heavier, thus higher chance of paralysening when punching
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver golem"
 	fixed_mut_color = "ddd"
-	punchstunthreshold = 9 //60% chance, from 40%
+	punchparalysethreshold = 9 //60% chance, from 40%
 	meat = /obj/item/weapon/ore/silver
-	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of stunning."
+	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks are heavier and have a higher chance of paralysening."
 	prefix = "Silver"
 	special_names = list("Surfer", "Chariot", "Lining")
 
-//Harder to stun, deals more damage, but it's even slower
+//Harder to paralyse, deals more damage, but it's even slower
 /datum/species/golem/plasteel
 	name = "Plasteel Golem"
 	id = "plasteel golem"
 	fixed_mut_color = "bbb"
-	stunmod = 0.40
+	paralysemod = 0.40
 	punchdamagelow = 12
 	punchdamagehigh = 21
-	punchstunthreshold = 18 //still 40% stun chance
+	punchparalysethreshold = 18 //still 40% paralyse chance
 	speedmod = 4 //pretty fucking slow
 	meat = /obj/item/weapon/ore/iron
-	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to stun, and hit very hard when punching."
+	info_text = "As a <span class='danger'>Plasteel Golem</span>, you are slower, but harder to paralyse, and hit very hard when punching."
 	attack_verb = "smash"
 	attack_sound = 'sound/effects/meteorimpact.ogg' //hits pretty hard
 	prefix = "Plasteel"
@@ -472,7 +472,7 @@
 	say_mod = "honks"
 	punchdamagelow = 0
 	punchdamagehigh = 1
-	punchstunthreshold = 2 //Harmless and can't stun
+	punchparalysethreshold = 2 //Harmless and can't paralyse
 	meat = /obj/item/weapon/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
 	attack_verb = "honk"
@@ -596,7 +596,7 @@
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
 	punchdamagelow = 4
-	punchstunthreshold = 7
+	punchparalysethreshold = 7
 	punchdamagehigh = 8 // not as heavy as stone
 	prefix = "Cloth"
 

@@ -235,7 +235,7 @@ Auto Patrol[]"},
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-					stun_attack(target)
+					paralyse_attack(target)
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -255,7 +255,7 @@ Auto Patrol[]"},
 		if(BOT_PREP_ARREST)		// preparing to arrest target
 
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) ||  target.weakened < 2)
+			if(!Adjacent(target) || !isturf(target.loc) ||  target.knockdown < 2)
 				back_to_hunt()
 				return
 
@@ -282,7 +282,7 @@ Auto Patrol[]"},
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.weakened < 2)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.knockdown < 2)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 			else
@@ -504,8 +504,8 @@ Auto Patrol[]"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(!C.stunned || arrest_type)
-			stun_attack(A)
+		if(!C.paralysis || arrest_type)
+			paralyse_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
 	else
@@ -516,24 +516,23 @@ Auto Patrol[]"},
 		return
 	shootAt(A)
 
-/mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
+/mob/living/simple_animal/bot/ed209/proc/paralyse_attack(mob/living/carbon/C)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	icon_state = "[lasercolor]ed209-c"
 	spawn(2)
 		icon_state = "[lasercolor]ed209[on]"
 	var/threat = 5
-	C.Weaken(5)
-	C.Stun(5)
+	C.Knockdown(50)
 	C.stuttering = 5
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(src)
-	add_logs(src,C,"stunned")
+	add_logs(src,C,"paralysis")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
-							"<span class='userdanger'>[src] has stunned you!</span>")
+	C.visible_message("<span class='danger'>[src] has paralysis [C]!</span>",\
+							"<span class='userdanger'>[src] has paralysis you!</span>")
 
 /mob/living/simple_animal/bot/ed209/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST

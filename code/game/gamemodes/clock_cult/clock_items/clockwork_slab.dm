@@ -357,7 +357,7 @@
 		However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning Servants, and higher tiers of scripture are even \
 		stronger in the right hands.<br><br>\
 		\
-		Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, or even binding a powerful \
+		Some effects of scripture include granting the invoker a temporary complete immunity to paralyses, summoning a turret that can attack anything that sets eyes on it, or even binding a powerful \
 		guardian to the invoker.<br>\
 		However, the most important scripture is <font color=#AF0AAF>Geis</font>, which allows you to convert heathens with relative ease.<br><br>\
 		\
