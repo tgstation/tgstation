@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/components/trinary/mixer
 	icon_state = "mixer_off"
 	density = 0
+	desc = "Very useful for mixing gasses."
 
 	name = "gas mixer"
 	can_unwrench = 1

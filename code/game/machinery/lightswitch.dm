@@ -3,6 +3,7 @@
 // can also operate on non-loc area through "otherarea" var
 /obj/machinery/light_switch
 	name = "light switch"
+	desc = "Make dark."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = 1

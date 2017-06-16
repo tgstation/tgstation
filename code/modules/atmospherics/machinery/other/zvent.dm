@@ -1,8 +1,8 @@
 /obj/machinery/zvent
 	name = "interfloor air transfer system"
-
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi'
 	icon_state = "vent_map"
+	desc = "This may be needed some day."
 	density = 0
 	anchored=1
 

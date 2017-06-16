@@ -4,6 +4,7 @@
 	name = "stacking machine console"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
+	desc = "Controls a stacking machine. In theory."
 	density = 0
 	anchored = 1
 	var/obj/machinery/mineral/stacking_machine/machine = null
@@ -60,6 +61,7 @@
 	name = "stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
+	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = 1
 	anchored = 1
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE

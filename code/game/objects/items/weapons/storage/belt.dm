@@ -289,7 +289,9 @@
 	icon_state = "grenadebeltnew"
 	item_state = "security"
 	max_w_class = WEIGHT_CLASS_BULKY
+	display_contents_with_number = 1
 	storage_slots = 30
+	max_combined_w_class = 60 //needs to be this high
 	can_hold = list(
 		/obj/item/weapon/grenade,
 		/obj/item/weapon/screwdriver,
