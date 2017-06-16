@@ -28,8 +28,8 @@
 	else
 		return ..()
 
-/obj/structure/ore_box/examine(mob/user)
-	if(Adjacent(user))
+/obj/structure/ore_box/examine(mob/living/user)
+	if(Adjacent(user) && istype(user))
 		show_contents(user)
 	. = ..()
 
@@ -40,7 +40,6 @@
 /obj/structure/ore_box/attack_robot(mob/user)
 	if(Adjacent(user))
 		show_contents(user)
-	..()
 
 /obj/structure/ore_box/proc/show_contents(mob/user)
 	var/dat = text("<b>The contents of the ore box reveal...</b><br>")
