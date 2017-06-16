@@ -5,7 +5,7 @@
 	icon_state = "hivebot_swarm_core"
 	pixel_x = -32
 	pixel_y = -16
-	use_power = 0
+	use_power = FALSE
 	obj_integrity = 250
 	max_integrity = 250
 	anchored = TRUE
