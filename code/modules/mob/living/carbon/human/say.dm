@@ -128,4 +128,4 @@
 						temp += pick(append)
 
 					say(temp)
-				winset(client, "input", "text=[null]")
+				client.ResetHotkeyInputFocus(TRUE)

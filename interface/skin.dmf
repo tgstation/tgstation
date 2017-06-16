@@ -403,7 +403,7 @@ macro "hotkeys"
 		is-disabled = false
 	elem 
 		name = "T"
-		command = "say"
+		command = ".say_hotkey"
 		is-disabled = false
 	elem "w_key"
 		name = "W+REP"
@@ -879,7 +879,7 @@ macro "robot-hotkeys"
 		is-disabled = false
 	elem 
 		name = "T"
-		command = "say"
+		command = ".say_hotkey"
 		is-disabled = false
 	elem "w_key"
 		name = "W+REP"

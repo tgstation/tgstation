@@ -1,12 +1,22 @@
 //Speech verbs.
 /mob/verb/say_verb(message as text)
 	set name = "Say"
-	set category = "IC"
+	set hidden = TRUE
+	var/static/list/client_default_macros = list("default", "robot-default")
+
+	if(client)
+		client.ResetHotkeyInputFocus(FALSE)
+
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	usr.say(message)
 
+/mob/verb/say_hotkey_verb()
+	set name = ".say_hotkey"
+	set hidden = TRUE
+	//even in hotkey mode, we need this to make them forcesay
+	winset(usr, null, "input.focus=true input.text=\"Say \\\"\"")
 
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
