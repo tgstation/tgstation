@@ -543,6 +543,36 @@
 	else
 		return FALSE
 
+	//Old Prototype
+/obj/item/clothing/head/helmet/space/hardsuit/ancient
+	name = "prototype hardsuit helmet"
+	desc = "Prototype exosuit helmet."
+	icon_state = "hardsuit0-ancient"
+	item_state = "anc_helm"
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 0, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 75)
+	tint = 2
+	item_color = "ancient"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/ancient
+	name = "prototype hardsuit"
+	desc = "Prototype powered exosuit."
+	icon_state = "hardsuit-ancient"
+	item_state = "anc_hardsuit"
+	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 75)
+	slowdown = 3
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
+	resistance_flags = FIRE_PROOF
+	var/footstep = 1
+
+obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+	if(footstep > 1)
+		playsound(src.loc, "suitstep", 50, 1)
+		footstep = 0
+	else
+		footstep++
+
+//step_action()
 
 /////////////SHIELDED//////////////////////////////////
 
