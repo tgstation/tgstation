@@ -1,0 +1,4 @@
+author: "Tacolizard"
+delete-after: True
+changes: 
+  - rscdel: "Flashes no longer have a tech requirement"
