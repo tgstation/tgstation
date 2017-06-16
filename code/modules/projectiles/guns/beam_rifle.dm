@@ -41,8 +41,7 @@
 	var/lastangle = 0
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
-	var/list/obj/effect/projectile_beam/current_tracers = list()
-	var/tracer_position = 1
+	var/obj/effect/projectile_beam/current_tracer
 
 	var/structure_piercing = 4				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled.
 	var/structure_bleed_coeff = 0.7
@@ -154,7 +153,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
-	clear_tracers(TRUE)
+	clear_tracer(TRUE)
 	..()
 
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
@@ -184,24 +183,15 @@
 		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
 		P.color = rgb(0, 255, 0)
-	tracer_position = 1
+	clear_tracer()
 	P.fire()
-	clear_tracers()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracers(delete_all = FALSE)
-	if(delete_all)
-		for(var/I in current_tracers)
-			current_tracers -= I
-			qdel(I)
-	else
-		for(var/I in tracer_position to current_tracers.len)
-			var/obj/effect/projectile_beam/PB = current_tracers[I]
-			PB.forceMove(src)
+/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracer()
+	qdel(current_tracer)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
-	tracer_position = 1
-	clear_tracers()
+	clear_tracer()
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -289,7 +279,7 @@
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
-	clear_tracers()
+	clear_tracer()
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
 	. = ..()
@@ -569,6 +559,50 @@
 	hitsound_wall = null
 	nodamage = TRUE
 	damage = 0
+	var/starting_x		//i can't be assed to port trajectory datums from baystation today so have this
+	var/starting_y
+	var/proj_z
+	var/starting_p_x
+	var/starting_p_y
+	var/dest_x
+	var/dest_y
+	var/dest_p_x
+	var/dest_p_y
+
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Destroy()
+	spawn_tracer()
+	return ..()
+
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/proc/spawn_tracer()
+	if(!starting_x || !starting_y || !proj_z || !starting_p_x || !starting_p_y || !dest_x || !dest_y || !dest_p_x || !dest_p_y)
+		return
+	var/x_offset = dest_x - starting_x
+	var/y_offset = dest_y - starting_y
+	var/turf/midpoint = locate(round((starting_x + x_offset) / 2, 1), round((starting_y + y_offset) / 2, 1), proj_z)
+	var/obj/effect/projectile_beam/tracer/aiming = new
+	if(istype(gun))
+		gun.current_tracer = aiming
+	var/pixels_between_points = round(sqrt((abs(x_offset) ** 2) + (abs(y_offset) ** 2)), 1)
+	var/scaling = round(pixels_between_points/32, 1)
+	aiming.apply_vars(Angle, pixel_x, pixel_y, color, scaling, midpoint)
+	to_chat(world, "DEBUG: x_offset [x_offset] y_offset [y_offset] pixels [pixels_between_points] scaling [scaling]")
+
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/fire()
+	var/turf/T = get_turf(src)
+	starting_x = T.x
+	starting_y = T.y
+	proj_z = T.z
+	starting_p_x = pixel_x
+	starting_p_y = pixel_y
+	. = ..()
+
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Bump(atom/target, yes)
+	var/turf/T = get_turf(src)
+	dest_x = T.x
+	dest_y = T.y
+	dest_p_x = pixel_x
+	dest_p_y = pixel_y
+	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
@@ -579,19 +613,7 @@
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/spawn_tracer_effect()
-	var/turf/target = get_turf(src)
-	if(!istype(gun))
-		var/obj/effect/projectile_beam/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-		QDEL_IN(T, 5)
-		return
-	var/current_position = gun.tracer_position
-	if(gun.current_tracers.len < current_position)	//Not enough, make a new one!
-		var/obj/effect/projectile_beam/T = new tracer_type(target, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-		gun.current_tracers += T
-	else		//Use the old one.
-		var/obj/effect/projectile_beam/T = gun.current_tracers[current_position]
-		T.apply_vars(angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color, new_loc = target)
-	gun.tracer_position++	//Increment
+	return
 
 /obj/effect/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
@@ -607,7 +629,7 @@
 	apply_vars(angle_override, p_x, p_y, color_override)
 	return ..()
 
-/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, new_loc)
+/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, scaling = 1, new_loc)
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
@@ -615,6 +637,7 @@
 		look.color = color_override
 	var/matrix/M = new
 	M.Turn(angle_override)
+	M.Scale(1,scaling)
 	look.transform = M
 	appearance = look
 	if(!isnull(new_loc))	//If you want to null it just delete it...
