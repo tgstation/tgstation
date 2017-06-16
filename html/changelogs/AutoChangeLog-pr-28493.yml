@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - spellcheck: "The names of the hand drill, jaws of life, and emitter are now lowercase."
+  - spellcheck: "The descriptions of the hand drill, jaws of life, and emitter have been changed to be more descriptive and less lengthy."
