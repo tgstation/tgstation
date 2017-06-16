@@ -53,6 +53,7 @@
 	var/extended_inventory = 0	//can we access the hidden inventory?
 	var/scan_id = 1
 	var/obj/item/weapon/coin/coin
+	var/obj/item/stack/spacecash/bill
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -122,6 +123,8 @@
 	wires = null
 	qdel(coin)
 	coin = null
+	qdel(bill)
+	bill = null
 	return ..()
 
 /obj/machinery/vending/snack/Destroy()
@@ -311,6 +314,12 @@
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin))
+		if(coin)
+			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
+			return
+		if(bill)
+			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
+			return
 		if(!premium.len)
 			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
 			return
@@ -318,6 +327,21 @@
 			return
 		W.loc = src
 		coin = W
+		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+		return
+	else if(istype(W, /obj/item/stack/spacecash))
+		if(coin)
+			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
+			return
+		if(bill)
+			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
+			return
+		var/obj/item/stack/S = W
+		if(!premium.len)
+			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
+			return
+		S.use(1)
+		bill = new S.type(src,1)
 		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
@@ -386,9 +410,9 @@
 			var/list/display_records = product_records
 			if(extended_inventory)
 				display_records = product_records + hidden_records
-			if(coin)
+			if(coin || bill)
 				display_records = product_records + coin_records
-			if(coin && extended_inventory)
+			if((coin || bill) && extended_inventory)
 				display_records = product_records + hidden_records + coin_records
 			dat += "<ul>"
 			for (var/datum/data/vending_product/R in display_records)
@@ -403,11 +427,11 @@
 			dat += "</ul>"
 		dat += "</div>"
 		if(premium.len > 0)
-			dat += "<b>Coin slot:</b> "
-			if (coin)
-				dat += "[coin]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
+			dat += "<b>Change Return:</b> "
+			if (coin || bill)
+				dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=\ref[src];remove_coin=1'>Remove</a>"
 			else
-				dat += "<i>No coin</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+				dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
 		if(istype(src, /obj/machinery/vending/snack))
 			dat += "<h3>Chef's Food Selection</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -443,16 +467,21 @@
 			return
 
 	if(href_list["remove_coin"])
-		if(!coin)
-			to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
+		if(!(coin || bill))
+			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
 			return
-
-		coin.loc = loc
-		if(!usr.get_active_held_item())
-			usr.put_in_hands(coin)
-		to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-		coin = null
-
+		if(coin)
+			coin.loc = loc
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(coin)
+				to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
+				coin = null
+		if(bill)
+			bill.loc = loc
+			if(!usr.get_active_held_item())
+				usr.put_in_hands(bill)
+				to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+				bill = null
 
 	usr.set_machine(src)
 
@@ -494,26 +523,25 @@
 				vend_ready = 1
 				return
 		else if(R in coin_records)
-			if(!coin)
-				to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
+			if(!(coin || bill))
+				to_chat(usr, "<span class='warning'>You need to insert money to get this item!</span>")
 				vend_ready = 1
 				return
-			if(coin.string_attached)
+			if(coin && coin.string_attached)
 				if(prob(50))
 					if(usr.put_in_hands(coin))
 						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
 					else
 						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
-						qdel(coin)
-						coin = null
+						QDEL_NULL(coin)
 				else
 					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-					qdel(coin)
-					coin = null
+					QDEL_NULL(coin)
 			else
-				qdel(coin)
-				coin = null
+				QDEL_NULL(coin)
+				QDEL_NULL(bill)
+
 		else if (!(R in product_records))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
