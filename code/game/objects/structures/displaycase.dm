@@ -256,11 +256,10 @@
 	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
-	var/is_locked = TRUE
+	var/scanned_for_replication = FALSE
 
 	alert = TRUE
 	integrity_failure = 0
-	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
@@ -280,39 +279,29 @@
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
-	if(user.a_intent == INTENT_HARM)
+
+	if(istype(user.get_active_held_item(),/obj/item/key/displaycase))
+		to_chat(user,  "<span class='notice'>You [open ? "close":"open"] \the [src]</span>")
+		toggle_lock(user)
+		return
+
+	if(user.a_intent == INTENT_HARM || !open)
 		return ..()
 
-	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
-		if(added_roundstart)
-			is_locked = !is_locked
-			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
-		else
-			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
-		return
-
-	if(is_locked)
-		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
-		return
-
-	if(!added_roundstart)
-		to_chat(user, "You've already put something new in this case.")
-		return
-
 	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+		to_chat(user, "<span class='danger'>The case rejects \the [W].</span>")
 		return
 
 	for(var/a in W.GetAllContents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
+			to_chat(user, "<span class='danger'>The case rejects \the [W].</span>")
 			return
 
 	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
-			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
-			QDEL_NULL(showpiece)
+			to_chat(user, "The case already has something in it.")
+			return
 
 		to_chat(user, "You insert [W] into the case.")
 		showpiece = W
@@ -331,33 +320,40 @@
 			else
 				to_chat(user, "You are too far to set the plaque's text.")
 
-		SSpersistence.SaveTrophy(src)
+		if(scanned_for_replication == FALSE)
+			var/scan = alert(user, "Scan this item for replication in future shifts? You can only do this once.", "Scan for replication?", "No", "Yes")
+			if(scan == "Yes")
+				visible_message("[src]'s sensor array whirs as it scans the [W] for future replication.")
+				scanned_for_replication = TRUE
+				SSpersistence.SaveTrophy(src)
+
 		return TRUE
 
 	else
-		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
+		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in \the [src.name]!</span>")
 
 	return
-
-/obj/structure/displaycase/trophy/dump()
-	if (showpiece)
-		if(added_roundstart)
-			visible_message("<span class='danger'>The [showpiece] crumbles to dust!</span>")
-			new /obj/effect/decal/cleanable/ash(loc)
-			QDEL_NULL(showpiece)
-		else
-			..()
 
 /obj/item/key/displaycase
 	name = "display case key"
 	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
-	name = "Cheap replica"
+	name = "replica"
+	desc = "A cheap plastic approximation."
 
 /obj/item/showpiece_dummy/Initialize(mapload, path)
 	. = ..()
 	var/obj/item/I = path
-	name = initial(I.name)
+
 	icon = initial(I.icon)
 	icon_state = initial(I.icon_state)
+	item_state = initial(I.item_state)
+	lefthand_file = initial(I.lefthand_file)
+	righthand_file = initial(I.righthand_file)
+
+	if(name == initial(name))
+		name = "replica [initial(I.name)]"
+
+	if(desc == initial(desc))
+		desc = "A cheap plastic approximation of [initial(I.name)]."
