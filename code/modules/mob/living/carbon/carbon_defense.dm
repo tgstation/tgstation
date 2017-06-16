@@ -37,11 +37,15 @@
 
 /mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
-		return 1
+		return TRUE
 
-/mob/living/carbon/is_eyes_covered()
-	if( (glasses && (glasses.flags_cover & GLASSESCOVERSEYES)) || (head && (head.flags_cover & HEADCOVERSEYES)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)))
-		return 1
+/mob/living/carbon/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return TRUE
+	if(check_head && head && (head.flags_cover & HEADCOVERSEYES))
+		return TRUE
+	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
+		return TRUE
 
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)

@@ -24,6 +24,8 @@
 	filling_color = "#C0C9A0"
 	bitesize_mod = 2
 	tastes = list("onions" = 1)
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/onion_slice
+	slices_num = 2
 
 /obj/item/seeds/onion/red
 	name = "pack of red onion seeds"
@@ -33,7 +35,6 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/onion/red
-	genes = list(/datum/plant_gene/trait/smoke)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "tearjuice" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/onion/red
@@ -42,3 +43,30 @@
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
 	filling_color = "#C29ACF"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/onion_slice/red
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/onion/slice(accuracy, obj/item/weapon/W, mob/user)
+	var/datum/effect_system/smoke_spread/chem/S = new	//Since the onion is destroyed when it's sliced,
+	var/splat_location = get_turf(src)	//we need to set up the smoke beforehand
+	S.attach(splat_location)
+	S.set_up(reagents, 0, splat_location, 0)
+	if(..())
+		S.start()
+		return TRUE
+	qdel(S)
+
+/obj/item/weapon/reagent_containers/food/snacks/onion_slice
+	name = "onion slices"
+	desc = "Rings, not for wearing."
+	icon_state = "onionslice"
+	list_reagents = list("nutriment" = 5, "vitamin" = 2)
+	filling_color = "#C0C9A0"
+	gender = PLURAL
+	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/onionrings
+
+/obj/item/weapon/reagent_containers/food/snacks/onion_slice/red
+	name = "red onion slices"
+	desc = "They shine like exceptionally low quality amethyst."
+	icon_state = "onionslice_red"
+	filling_color = "#C29ACF"
+	list_reagents = list("nutriment" = 5, "vitamin" = 2, "tearjuice" = 2.5)

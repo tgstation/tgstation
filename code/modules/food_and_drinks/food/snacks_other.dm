@@ -483,4 +483,5 @@
 	icon_state = "onionrings"
 	list_reagents = list("nutriment" = 3)
 	filling_color = "#C0C9A0"
+	gender = PLURAL
 	tastes = list("batter" = 3, "onion" = 1)

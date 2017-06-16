@@ -34,10 +34,10 @@
 	return 0
 
 /mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	return 0
+	return FALSE
 
-/mob/living/proc/is_eyes_covered()
-	return 0
+/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return
