@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - tweak: "Default short/medium/long brig times are now, in order, 2, 3, and 5 minutes."
