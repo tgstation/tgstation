@@ -74,7 +74,7 @@
 	. = 1
 
 //Please don't roast me too hard
-/client/proc/onMouseMove(object,location,control,params)
+/client/MouseMove(object,location,control,params)
 	mouseParams = params
 	mouseLocation = location
 	mouseObject = object
@@ -83,13 +83,10 @@
 		for(var/obj/item/I in mob.mousemove_intercept_objects)
 			I.onMouseMove(object, location, control, params)
 
-/client/MouseMove(object,location,control,params)
-	onMouseMove(object,location,control,params)
-
 /obj/item/proc/onMouseMove(object, location, control, params)
 	return
 
-/client/proc/onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
@@ -99,9 +96,6 @@
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-
-/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
