@@ -1,7 +1,11 @@
 
-#define ZOOM_LOCK_AUTOZOOM 0
-#define ZOOM_LOCK_OFF 1
-#define ZOOM_LOCK_INSTANT 2
+#define ZOOM_LOCK_AUTOZOOM_FREEMOVE 0
+#define ZOOM_LOCK_AUTOZOOM_ANGLELOCK 1
+#define ZOOM_LOCK_CENTER_VIEW 2
+#define ZOOM_LOCK_OFF 3
+
+#define ZOOM_SPEED_STEP 1
+#define ZOOM_SPEED_INSTANT 0
 
 #define AUTOZOOM_PIXEL_STEP_FACTOR 48
 
@@ -63,15 +67,19 @@
 	//ZOOMING
 	var/zoom_current_view_increase = 0
 	var/zoom_target_view_increase = 10
-	var/zoom_speed = 1
+	var/zoom_speed = ZOOM_SPEED_STEP
 	var/zooming = FALSE
-	var/zoom_lock = ZOOM_LOCK_AUTOZOOM
+	var/zoom_lock = ZOOM_LOCK_AUTOZOOM_FREEMOVE
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
+	var/zoom_animating = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
+
+	var/datum/action/item_action/zoom_speed_action
+	var/datum/action/item_action/zoom_lock_action
 
 /obj/item/weapon/gun/energy/beam_rifle/debug
 	delay = 0
@@ -80,17 +88,48 @@
 	recoil = 0
 	pin = /obj/item/device/firing_pin
 
+/obj/item/weapon/gun/energy/beam_rifle/ui_action_click(owner, action)
+	if(istype(action, /datum/action/item_action/zoom_speed_action))
+		zoom_speed++
+		if(zoom_speed > 1)
+			zoom_speed = ZOOM_SPEED_STEP
+		switch(zoom_speed)
+			if(ZOOM_SPEED_STEP)
+				to_chat(owner, "<span class='boldnotice'>You switch [src]'s digital zoom to stepper mode.</span>")
+			if(ZOOM_SPEED_INSTANT)
+				to_chat(owner, "<span class='boldnotice'>You switch [src]'s digital zoom to instant mode.</span>")
+	if(istype(action, /datum/action/item_action/zoom_lock_action))
+		zoom_lock++
+		if(zoom_lock > 3)
+			zoom_lock = 0
+		switch(zoom_lock)
+			if(ZOOM_LOCK_AUTOZOOM_FREEMOVE)
+				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
+			if(ZOOM_LOCK_AUTOZOOM_ANGLELOCK)
+				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to locked directional.</span>")
+			if(ZOOM_LOCK_CENTER_VIEW)
+				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
+			if(ZOOM_LOCK_OFF)
+				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
+	reset_zooming()
+
 /obj/item/weapon/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
-	if(!check_user() || !zooming)
+	if(!check_user() || !zooming || zoom_lock == ZOOM_LOCK_OFF || zoom_lock == ZOOM_LOCK_CENTER_VIEW)
 		return
+	if(zoom_animating && delay_override != 0)
+		return smooth_zooming(zoom_animating + delay_override)	//Automatically compensate for ongoing zooming actions.
 	var/total_time = SSfastprocess.wait
 	if(delay_override)
 		total_time = delay_override
-	if(zoom_lock == ZOOM_LOCK_INSTANT)
+	if(zoom_speed = ZOOM_SPEED_INSTANT)
 		total_time = 0
+	zoom_animating = total_time
 	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
+	zoom_animating = 0
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
+	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
+		return
 	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
 	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
 	to_chat(world, "Debug: Autozoom setting to x [current_zoom_x] y [current_zoom_y]")
@@ -98,17 +137,16 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
-	if(zoom_lock == ZOOM_LOCK_INSTANT)
+	if(zoom_speed == ZOOM_SPEED_INSTANT)
 		current_user.client.change_view(world.view + zoom_target_view_increase)
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming()
 		return
-	for(var/i in 1 to zoom_speed)
-		if(++zoom_current_view_increase > zoom_target_view_increase)
-			return
-		current_user.client.change_view(zoom_current_view_increase + world.view)
-		set_autozoom_pixel_offsets_immediate(zooming_angle)
-		smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
+	if(++zoom_current_view_increase > zoom_target_view_increase)
+		return
+	current_user.client.change_view(zoom_current_view_increase + world.view)
+	set_autozoom_pixel_offsets_immediate(zooming_angle)
+	smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
@@ -122,6 +160,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/reset_zooming()
 	if(!check_user())
 		return
+	zoom_animating = 0
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
 	current_user.client.change_view(world.view)
@@ -150,6 +189,8 @@
 /obj/item/weapon/gun/energy/beam_rifle/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
+	zoom_speed_action = new(src)
+	zoom_lock_action = new(src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -267,10 +308,10 @@
 	if(aiming)
 		process_aim()
 		aiming_beam()
-		zooming_angle = lastangle
-		set_autozoom_pixel_offsets_immediate(zooming_angle)
-		smooth_zooming(2)
-		to_chat(world, "DEBUG: ANGLE [lastangle]")
+		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
+			zooming_angle = lastangle
+			set_autozoom_pixel_offsets_immediate(zooming_angle)
+			smooth_zooming(2)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
 	set_user(mob)
@@ -371,12 +412,12 @@
 
 /obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
-	if (!istype(curloc) || !BB)
+	if(!istype(curloc) || !BB)
 		return FALSE
 	var/obj/item/weapon/gun/energy/beam_rifle/gun = loc
 	if(!targloc && gun)
 		targloc = get_turf_in_angle(gun.lastangle, curloc, 10)
-	else
+	else if(!targloc)
 		return FALSE
 	var/firing_dir
 	if(BB.firer)
@@ -678,3 +719,13 @@
 
 /obj/effect/projectile_beam/tracer/aiming
 	icon_state = "gbeam"
+
+/datum/action/item_action/zoom_speed_action
+	name = "Toggle Zooming Speed"
+	button_icon_state = "projectile"
+	background_icon_state = "bg_tech"
+
+/datum/action/item_action/zoom_lock_action
+	name = "Switch Zoom Mode"
+	button_icon_state = "zoom_mode"
+	background_icon_state = "bg_tech"
