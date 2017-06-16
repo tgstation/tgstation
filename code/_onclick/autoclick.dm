@@ -27,17 +27,6 @@
 		active_mousedown_item.onMouseUp(object, location, params, mob)
 		active_mousedown_item = null
 
-/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	mouseParams = params
-	mouseLocation = over_location
-	mouseObject = over_object
-	mouseControlObject = over_control
-	if(selected_target[1] && over_object && over_object.IsAutoclickable())
-		selected_target[1] = over_object
-		selected_target[2] = params
-	if(active_mousedown_item)
-		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-
 /mob/proc/CanMobAutoclick(object, location, params)
 
 /mob/living/carbon/CanMobAutoclick(atom/object, location, params)
@@ -66,9 +55,6 @@
 /obj/item/proc/onMouseUp(object, location, params, mob)
 	return
 
-/obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-	return
-
 /obj/item
 	var/canMouseDown = FALSE
 
@@ -88,7 +74,7 @@
 	. = 1
 
 //Please don't roast me too hard
-/client/MouseMove(object,location,control,params)
+/client/proc/onMouseMove(object,location,control,params)
 	mouseParams = params
 	mouseLocation = location
 	mouseObject = object
@@ -97,5 +83,25 @@
 		for(var/obj/item/I in mob.mousemove_intercept_objects)
 			I.onMouseMove(object, location, control, params)
 
+/client/MouseMove(object,location,control,params)
+	onMouseMove(object,location,control,params)
+
 /obj/item/proc/onMouseMove(object, location, control, params)
+	return
+
+/client/proc/onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	mouseParams = params
+	mouseLocation = over_location
+	mouseObject = over_object
+	mouseControlObject = over_control
+	if(selected_target[1] && over_object && over_object.IsAutoclickable())
+		selected_target[1] = over_object
+		selected_target[2] = params
+	if(active_mousedown_item)
+		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+
+/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
+
+/obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return

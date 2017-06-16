@@ -93,19 +93,20 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
 	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
+	to_chat(world, "Debug: Autozoom setting to x [current_zoom_x] y [current_zoom_y]")
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
 	if(zoom_lock == ZOOM_LOCK_INSTANT)
-		current_user.client.view = world.view + zoom_target_view_increase
+		current_user.client.change_view(world.view + zoom_target_view_increase)
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming()
 		return
 	for(var/i in 1 to zoom_speed)
 		if(++zoom_current_view_increase > zoom_target_view_increase)
 			return
-		current_user.client.view += 1
+		current_user.client.change_view(zoom_current_view_increase + world.view)
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
 
@@ -123,7 +124,7 @@
 		return
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
-	current_user.client.view = world.view
+	current_user.client.change_view(world.view)
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
@@ -268,6 +269,7 @@
 		zooming_angle = lastangle
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming(2)
+		to_chat(world, "DEBUG: ANGLE [lastangle]")
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
 	set_user(mob)
@@ -464,17 +466,21 @@
 		handle_impact(target)
 
 /obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
+	paused = TRUE
 	if(check_pierce(target))
 		permutated += target
 		return FALSE
 	if(!QDELETED(target))
 		cached = get_turf(target)
+	paused = FALSE
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = 0)
+	paused = TRUE
 	if(!QDELETED(target))
 		cached = get_turf(target)
 	handle_hit(target)
+	paused = FALSE
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan
@@ -569,13 +575,10 @@
 	var/dest_p_x
 	var/dest_p_y
 
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Destroy()
-	spawn_tracer()
-	return ..()
-
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/proc/spawn_tracer()
-	if(!starting_x || !starting_y || !proj_z || !starting_p_x || !starting_p_y || !dest_x || !dest_y || !dest_p_x || !dest_p_y)
-		return
+	if(!dest_x || !dest_y)
+		dest_x = cached.x
+		dest_y = cached.y
 	var/x_offset = dest_x - starting_x
 	var/y_offset = dest_y - starting_y
 	var/turf/midpoint = locate(round((starting_x + x_offset) / 2, 1), round((starting_y + y_offset) / 2, 1), proj_z)
@@ -597,11 +600,16 @@
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Bump(atom/target, yes)
-	var/turf/T = get_turf(src)
-	dest_x = T.x
-	dest_y = T.y
-	dest_p_x = pixel_x
-	dest_p_y = pixel_y
+	paused = TRUE
+	if(!QDELETED(src))
+		var/turf/T = get_turf(src)
+		dest_x = T.x
+		dest_y = T.y
+		dest_p_x = pixel_x
+		dest_p_y = pixel_y
+	else
+		to_chat(world, "DEBUG: Beam already deleted.")
+	paused = FALSE
 	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
@@ -609,6 +617,7 @@
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+	spawn_tracer()
 	qdel(src)
 	return FALSE
 

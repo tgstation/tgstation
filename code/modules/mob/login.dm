@@ -39,7 +39,7 @@
 	if(client)
 		client.click_intercept = null
 
-		client.view = world.view // Resets the client.view in case it was changed.
+		client.change_view(world.view) // Resets the client.view in case it was changed.
 
 	if(!GLOB.individual_log_list[ckey])
 		GLOB.individual_log_list[ckey] = logging
