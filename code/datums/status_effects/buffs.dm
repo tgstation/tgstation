@@ -230,7 +230,8 @@
 
 /datum/status_effect/cult_master
 	id = "The Cult Master"
-	duration = -1	alert_type = null
+	duration = -1
+	alert_type = null
 	on_remove_on_mob_delete = TRUE
 	var/alive = TRUE
 

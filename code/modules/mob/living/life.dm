@@ -100,11 +100,11 @@
 //this updates all special effects: paralysis, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
 	if(unconscious)
-		AdjustUnconscious(-1, 1, 1)
+		AdjustUnconscious(-10, 1, 1)
 	if(paralysis)
-		AdjustParalysis(-1, 1, 1)
+		AdjustParalysis(-10, 1, 1)
 	if(knockdown)
-		AdjustKnockdown(-1, 1, 1)
+		AdjustKnockdown(-10, 1, 1)
 	if(confused)
 		confused = max(0, confused - 1)
 

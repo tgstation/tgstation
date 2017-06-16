@@ -247,9 +247,9 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustUnconscious(-1, 0)
-		M.AdjustParalysis(-2, 0)
-		M.AdjustKnockdown(-2, 0)
+		M.AdjustUnconscious(-10, 0)
+		M.AdjustParalysis(-20, 0)
+		M.AdjustKnockdown(-20, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
@@ -363,8 +363,8 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustParalysis(2)
-			M.AdjustKnockdown(2)
+			M.AdjustParalysis(20)
+			M.AdjustKnockdown(20)
 	..()
 
 

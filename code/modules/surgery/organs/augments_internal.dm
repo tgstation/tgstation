@@ -1,4 +1,5 @@
-#define PARALYSE_SET_AMOUNT	20
+#define PARALYSE_SET_AMOUNT 20
+#define PARALYSE_CHECK_AMOUNT 2
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -107,9 +108,9 @@
 	if(crit_fail)
 		return
 
-	if(owner.paralysis > PARALYSE_SET_AMOUNT)
+	if(owner.paralysis > PARALYSE_CHECK_AMOUNT)
 		owner.SetParalysis(PARALYSE_SET_AMOUNT)
-	if(owner.knockdown > PARALYSE_SET_AMOUNT)
+	if(owner.knockdown > PARALYSE_CHECK_AMOUNT)
 		owner.SetKnockdown(PARALYSE_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)

@@ -415,6 +415,7 @@
 #include "code\game\gamemodes\clock_cult\clock_helpers\component_helpers.dm"
 #include "code\game\gamemodes\clock_cult\clock_helpers\fabrication_helpers.dm"
 #include "code\game\gamemodes\clock_cult\clock_helpers\hierophant_network.dm"
+#include "code\game\gamemodes\clock_cult\clock_helpers\ratvarian_language.dm"
 #include "code\game\gamemodes\clock_cult\clock_helpers\scripture_checks.dm"
 #include "code\game\gamemodes\clock_cult\clock_helpers\slab_abilities.dm"
 #include "code\game\gamemodes\clock_cult\clock_items\clock_components.dm"

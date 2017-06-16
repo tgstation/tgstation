@@ -135,7 +135,7 @@
 		return
 
 	SetEmagged(1)
-	SetParalysis(3) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetParalysis(30) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
