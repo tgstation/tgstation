@@ -278,6 +278,6 @@
 	if(holder)
 		holder.update_icon()
 
-/obj/item/device/assembly/flash/shield/hit_reaction(obj/item/weapon/W, mob/user, params)
+/obj/item/device/assembly/flash/shield/hit_reaction(mob/aggressor, atom/movable/AM)
 	activate()
 	return ..()
