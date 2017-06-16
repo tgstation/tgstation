@@ -66,12 +66,21 @@
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
+	var/obj/item/device/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
 	else if(istype(pda))
 		. = pda.owner
+	else if(istype(tablet))
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
+		if(card_slot && (card_slot.stored_card || card_slot.stored_card2))
+			if(card_slot.stored_card) //Prioritize the first card over the second, if it exists
+				. = card_slot.stored_card.registered_name
+			else
+				if(card_slot.stored_card2)
+					. = card_slot.stored_card2.registered_name
 	if(!.)
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
