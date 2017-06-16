@@ -82,9 +82,9 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustUnconscious(-1, 0)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustKnockdown(-1, 0)
+	M.AdjustUnconscious(-10, 0)
+	M.AdjustParalysis(-10, 0)
+	M.AdjustKnockdown(-10, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -546,9 +546,9 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustUnconscious(-1, 0)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustKnockdown(-1, 0)
+	M.AdjustUnconscious(-10, 0)
+	M.AdjustParalysis(-10, 0)
+	M.AdjustKnockdown(-10, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
@@ -757,9 +757,9 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustUnconscious(-1, 0)
-		M.AdjustParalysis(-1, 0)
-		M.AdjustKnockdown(-1, 0)
+		M.AdjustUnconscious(-10, 0)
+		M.AdjustParalysis(-10, 0)
+		M.AdjustKnockdown(-10, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -864,9 +864,9 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustUnconscious(-3, 0)
-	M.AdjustParalysis(-3, 0)
-	M.AdjustKnockdown(-3, 0)
+	M.AdjustUnconscious(-30, 0)
+	M.AdjustParalysis(-30, 0)
+	M.AdjustKnockdown(-30, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -1102,9 +1102,9 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.AdjustUnconscious(-1, 0)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustKnockdown(-1, 0)
+	M.AdjustUnconscious(-10, 0)
+	M.AdjustParalysis(-10, 0)
+	M.AdjustKnockdown(-10, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()
