@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		var/discount = A.get_discount()
 		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
 		A.limited_stock = 1
+		I.name += " (Available at a lower price!)"
 		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
 		A.refundable = FALSE
 		if(A.cost >= 20) //Tough love for nuke ops
