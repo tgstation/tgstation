@@ -149,7 +149,7 @@
 	projectile_type = /obj/item/projectile/bullet/saw
 
 /obj/item/ammo_casing/mm195x129/bleeding
-	desc = "A 1.95x129mm bullet casing with specialized inner-casing, that when it makes contact with a target, releasez tiny shrapnel to induce internal bleeding."
+	desc = "A 1.95x129mm bullet casing with specialized inner-casing, that when it makes contact with a target, releases tiny shrapnel to induce internal bleeding."
 	icon_state = "762-casing"
 	projectile_type = /obj/item/projectile/bullet/saw/bleeding
 
