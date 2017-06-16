@@ -42,13 +42,13 @@
 	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
 
 
-/obj/effect/mine/paralyse
+/obj/effect/mine/stun
 	name = "paralyse mine"
-	var/paralyse_time = 80
+	var/stun_time = 80
 
-/obj/effect/mine/paralyse/mineEffect(mob/victim)
+/obj/effect/mine/stun/mineEffect(mob/victim)
 	if(isliving(victim))
-		victim.Knockdown(paralyse_time)
+		victim.Knockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"

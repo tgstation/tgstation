@@ -591,7 +591,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(unconscious || paralysis || knockdown || low_power_mode)) //Not dead, not paralysis.
+	if(stat != DEAD && !(unconscious || paralysis || knockdown || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)

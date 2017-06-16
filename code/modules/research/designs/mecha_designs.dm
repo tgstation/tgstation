@@ -364,7 +364,7 @@
 
 /datum/design/mech_taser
 	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
-	desc = "A weapon for combat exosuits. Shoots non-lethal paralysening electrodes."
+	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
 	id = "mech_taser"
 	build_type = MECHFAB
 	req_tech = list("combat" = 3)

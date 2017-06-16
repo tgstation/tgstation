@@ -41,7 +41,7 @@
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "combat=3"
-	attack_verb = list("paralyseg")
+	attack_verb = list("stung")
 
 /obj/item/weapon/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -99,13 +99,13 @@
 	if(..())
 		if(prob(50))
 			user.Knockdown(50)
-			to_chat(user, "<span class='userdanger'>You are paralysis by the Deathnettle when you try picking it up!</span>")
+			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
 /obj/item/weapon/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are paralysis by the powerful acid of the Deathnettle!</span>")
+		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>")
 		add_logs(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)

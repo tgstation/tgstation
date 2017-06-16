@@ -210,7 +210,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 
 //COMBAT
 1	|	Flashbang, Mousetrap, Nettle
-2	|	Paralyse Baton
+2	|	Stun Baton
 3	|	Power Axe, Death Nettle, Nuclear Gun
 4	|
 5	|

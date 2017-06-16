@@ -12,7 +12,7 @@
 	icon_state = "revenant_idle"
 	var/icon_idle = "revenant_idle"
 	var/icon_reveal = "revenant_revealed"
-	var/icon_paralyse = "revenant_paralyse"
+	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
 	var/stasis = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
@@ -53,7 +53,7 @@
 	var/essence_accumulated = 0 //How much essence the revenant has stolen
 	var/revealed = FALSE //If the revenant can take damage from normal sources.
 	var/unreveal_time = 0 //How long the revenant is revealed for, is about 2 seconds times this var.
-	var/unparalyse_time = 0 //How long the revenant is paralysis for, is about 2 seconds times this var.
+	var/unstun_time = 0 //How long the revenant is stunned for, is about 2 seconds times this var.
 	var/inhibited = FALSE //If the revenant's abilities are blocked by a chaplain's power.
 	var/essence_drained = 0 //How much essence the revenant will drain from the corpse it's feasting on.
 	var/draining = FALSE //If the revenant is draining someone.
@@ -105,8 +105,8 @@
 		incorporeal_move = INCORPOREAL_MOVE_JAUNT
 		invisibility = INVISIBILITY_REVENANT
 		to_chat(src, "<span class='revenboldnotice'>You are once more concealed.</span>")
-	if(unparalyse_time && world.time >= unparalyse_time)
-		unparalyse_time = 0
+	if(unstun_time && world.time >= unstun_time)
+		unstun_time = 0
 		notransform = FALSE
 		to_chat(src, "<span class='revenboldnotice'>You can move again!</span>")
 	if(essence_regenerating && !inhibited && essence < essence_regen_cap) //While inhibited, essence will not regenerate
@@ -228,7 +228,7 @@
 	return
 
 
-//reveal, paralyse, icon updates, cast checks, and essence changing
+//reveal, stun, icon updates, cast checks, and essence changing
 /mob/living/simple_animal/revenant/proc/reveal(time)
 	if(!src)
 		return
@@ -245,18 +245,18 @@
 		unreveal_time = unreveal_time + time
 	update_spooky_icon()
 
-/mob/living/simple_animal/revenant/proc/paralyse(time)
+/mob/living/simple_animal/revenant/proc/stun(time)
 	if(!src)
 		return
 	if(time <= 0)
 		return
 	notransform = TRUE
-	if(!unparalyse_time)
+	if(!unstun_time)
 		to_chat(src, "<span class='revendanger'>You cannot move!</span>")
-		unparalyse_time = world.time + time
+		unstun_time = world.time + time
 	else
 		to_chat(src, "<span class='revenwarning'>You cannot move!</span>")
-		unparalyse_time = unparalyse_time + time
+		unstun_time = unstun_time + time
 	update_spooky_icon()
 
 /mob/living/simple_animal/revenant/proc/update_spooky_icon()
@@ -265,7 +265,7 @@
 			if(draining)
 				icon_state = icon_drain
 			else
-				icon_state = icon_paralyse
+				icon_state = icon_stun
 		else
 			icon_state = icon_reveal
 	else
@@ -311,7 +311,7 @@
 	revealed = FALSE
 	unreveal_time = 0
 	notransform = 0
-	unparalyse_time = 0
+	unstun_time = 0
 	inhibited = FALSE
 	draining = FALSE
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT

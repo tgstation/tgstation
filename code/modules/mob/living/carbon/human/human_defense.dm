@@ -201,12 +201,12 @@
 		..() //shaking
 		return 0
 
-	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get paralysis instead.
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		if(get_active_held_item() && drop_item())
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
-		else if(!M.client || prob(5)) // only natural monkeys get to paralyse reliably, (they only do it occasionaly)
+		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			Knockdown(50)
 			add_logs(M, src, "tackled")

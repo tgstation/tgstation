@@ -1500,7 +1500,7 @@
 	taste_mult = 1.5
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
-	name = "knockdown virus plasma"
+	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
 	taste_description = "bitterness"

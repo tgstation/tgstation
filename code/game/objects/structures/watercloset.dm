@@ -483,9 +483,9 @@
 		if(B.cell)
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
-				var/paralyseforce = B.paralyseforce
-				user.Knockdown(paralyseforce)
-				user.stuttering = paralyseforce
+				var/stunforce = B.stunforce
+				user.Knockdown(stunforce)
+				user.stuttering = stunforce
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
 									"<span class='userdanger'>You unwisely attempt to wash [B] while it's still on.</span>")

@@ -239,10 +239,10 @@
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"
 
-	if(islist(paralyse_absorption))
-		for(var/i in paralyse_absorption)
-			if(paralyse_absorption[i]["end_time"] > world.time && paralyse_absorption[i]["examine_message"])
-				msg += "[t_He] [t_is][paralyse_absorption[i]["examine_message"]]\n"
+	if(islist(stun_absorption))
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
+				msg += "[t_He] [t_is][stun_absorption[i]["examine_message"]]\n"
 
 	if(drunkenness && !skipface && !appears_dead) //Drunkenness
 		switch(drunkenness)

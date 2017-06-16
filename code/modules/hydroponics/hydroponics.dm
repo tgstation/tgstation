@@ -194,7 +194,7 @@
 			else if(pestlevel >= 5)
 				adjustHealth(-1 / rating)
 
-			// If it's a weed, it doesn't paralyset the growth
+			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
 				adjustHealth(-1 / rating)
 

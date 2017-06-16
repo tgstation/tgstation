@@ -311,7 +311,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
-	emag_modules = list(/obj/item/borg/paralyse)
+	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
 		/obj/item/clockwork/replica_fabricator/cyborg)
@@ -496,7 +496,7 @@
 		/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/device/gps/cyborg,
 		/obj/item/stack/marker_beacon)
-	emag_modules = list(/obj/item/borg/paralyse)
+	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,
 		/obj/item/clockwork/ratvarian_spear/cyborg,

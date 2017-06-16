@@ -1,4 +1,4 @@
-//Judicial visor: Grants the ability to smite an area and paralyse the unfaithful nearby every thirty seconds.
+//Judicial visor: Grants the ability to smite an area and knocking down the unfaithful nearby every thirty seconds.
 /obj/item/clothing/glasses/judicial_visor
 	name = "judicial visor"
 	desc = "A strange purple-lensed visor. Looking at it inspires an odd sense of guilt."
@@ -145,7 +145,7 @@
 		return TRUE
 	return FALSE
 
-//Judicial marker: Created by the judicial visor. After three seconds, paralyses any non-servants nearby and damages Nar-Sian cultists.
+//Judicial marker: Created by the judicial visor. After three seconds, knocks down any non-Servants nearby and damages Nar-Sian cultists.
 /obj/effect/clockwork/judicial_marker
 	name = "judicial marker"
 	desc = "You get the feeling that you shouldn't be standing here."
@@ -184,11 +184,11 @@
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Knockdown(80) //paralyse targets for 14-16 seconds
+			L.Knockdown(80) //knocks down targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Knockdown(40) //paralyse for 6-8 seconds, but set cultist targets on fire
+			L.Knockdown(40) //knocks down for 6-8 seconds, but set cultist targets on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))

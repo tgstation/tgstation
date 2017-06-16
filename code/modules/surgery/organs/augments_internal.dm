@@ -95,14 +95,14 @@
 	..()
 
 
-/obj/item/organ/cyberimp/brain/anti_paralyse
+/obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
-	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when paralysis."
+	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
-	slot = "brain_antiparalyse"
+	slot = "brain_antistun"
 	origin_tech = "materials=5;programming=4;biotech=5"
 
-/obj/item/organ/cyberimp/brain/anti_paralyse/on_life()
+/obj/item/organ/cyberimp/brain/anti_stun/on_life()
 	..()
 	if(crit_fail)
 		return
@@ -112,14 +112,14 @@
 	if(owner.knockdown > PARALYSE_SET_AMOUNT)
 		owner.SetKnockdown(PARALYSE_SET_AMOUNT)
 
-/obj/item/organ/cyberimp/brain/anti_paralyse/emp_act(severity)
+/obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail)
 		return
 	crit_fail = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 	..()
 
-/obj/item/organ/cyberimp/brain/anti_paralyse/proc/reboot()
+/obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
 
 
@@ -151,7 +151,7 @@
 	var/list/boxed = list(
 		/obj/item/device/autosurgeon/thermal_eyes,
 		/obj/item/device/autosurgeon/xray_eyes,
-		/obj/item/device/autosurgeon/anti_paralyse,
+		/obj/item/device/autosurgeon/anti_stun,
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 

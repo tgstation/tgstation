@@ -12,9 +12,9 @@
 	damage = 5
 	stamina = 80
 
-/obj/item/projectile/bullet/weakbullet2 //detective revolver instaparalyses, but multiple shots are better for keeping punks down
+/obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
 	damage = 15
-	knockdown = 3
+	knockdown = 30
 	stamina = 50
 
 /obj/item/projectile/bullet/weakbullet3
@@ -100,11 +100,10 @@
 	damage = 3
 	stamina = 25
 
-/obj/item/projectile/bullet/paralyseshot //taser slugs for shotguns, nothing special
-	name = "paralyseshot"
+/obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
+	name = "stunshot"
 	damage = 5
-	paralyse = 5
-	knockdown = 5
+	knockdown = 50
 	stutter = 5
 	jitter = 20
 	range = 7
@@ -140,19 +139,18 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
 	damage = 30
-	knockdown = 8
-	paralyse = 8
+	knockdown = 80
+	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/meteorshot/weak
 	damage = 10
 	knockdown = 4
-	paralyse = 4
+	stun = 4
 
 /obj/item/projectile/bullet/honker
 	damage = 0
-	knockdown = 3
-	paralyse = 3
+	knockdown = 30
 	forcedodge = 1
 	nodamage = 1
 	hitsound = 'sound/items/bikehorn.ogg'
@@ -232,7 +230,7 @@
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
-	knockdown = 5
+	knockdown = 50
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = 0)
 	if(isalien(target))
@@ -268,8 +266,7 @@
 /obj/item/projectile/bullet/sniper
 	speed = 0		//360 alwaysscope.
 	damage = 70
-	paralyse = 5
-	knockdown = 5
+	knockdown = 50
 	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
@@ -281,14 +278,12 @@
 
 /obj/item/projectile/bullet/sniper/gang
 	damage = 55
-	paralyse = 1
-	knockdown = 1
+	knockdown = 10
 	dismemberment = 15
 	armour_penetration = 25
 
 /obj/item/projectile/bullet/sniper/gang/sleeper
 	nodamage = 1
-	paralyse = 0
 	knockdown = 0
 	dismemberment = 0
 	breakthings = FALSE
@@ -306,7 +301,6 @@
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0
 	nodamage = 1
-	paralyse = 0
 	dismemberment = 0
 	knockdown = 0
 	breakthings = FALSE
@@ -321,7 +315,6 @@
 /obj/item/projectile/bullet/sniper/haemorrhage
 	armour_penetration = 15
 	damage = 15
-	paralyse = 0
 	dismemberment = 0
 	knockdown = 0
 	breakthings = FALSE
@@ -339,7 +332,6 @@
 	damage = 60
 	forcedodge = 1
 	dismemberment = 0 //It goes through you cleanly.
-	paralyse = 0
 	knockdown = 0
 	breakthings = FALSE
 

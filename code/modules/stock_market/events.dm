@@ -221,7 +221,7 @@
 	if (!A.opinion)
 		article += "While we cannot predict the outcome of this trial, our tip to stay safe is: %sell%"
 	else if (A.opinion > 0)
-		article += "Our own investigation shows that these charges are baseless and the arrest is most likely a publicity paralyset. Our advice? You should %buy%"
+		article += "Our own investigation shows that these charges are baseless and the arrest is most likely a publicity stunt. Our advice? You should %buy%"
 	else
 		article += "[tname] has a prior history of similar misdeeds and we're confident the charges will stand. For investors, now would be an ideal time to %sell%"
 	A.article = A.detokenize(article, company.industry.tokens)

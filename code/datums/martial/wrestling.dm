@@ -192,7 +192,7 @@
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 2))
+			D.throw_at(T, 10, 4, callback = CALLBACK(D, /mob/living/carbon/human/.Knockdown, 20))
 	add_logs(A, D, "has thrown with wrestling")
 	return 0
 
@@ -288,8 +288,7 @@
 		playsound(A.loc, "swing_hit", 50, 1)
 		if (!D.stat)
 			D.emote("scream")
-			D.knockdown += 2
-			D.paralysis += 2
+			D.Knockdown(20)
 
 			switch(rand(1,3))
 				if (2)

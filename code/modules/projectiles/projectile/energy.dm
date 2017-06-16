@@ -13,8 +13,7 @@
 	icon_state = "spark"
 	color = "#FFFF00"
 	nodamage = 1
-	paralyse = 5
-	knockdown = 5
+	knockdown = 50
 	stutter = 5
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
@@ -91,7 +90,7 @@
 	name = "energy snare"
 	icon_state = "e_snare"
 	nodamage = 1
-	knockdown = 1
+	knockdown = 10
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
@@ -142,7 +141,7 @@
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
-	knockdown = 5
+	knockdown = 50
 	range = 7
 
 /obj/item/projectile/energy/bolt //ebow bolts
@@ -151,7 +150,7 @@
 	damage = 8
 	damage_type = TOX
 	nodamage = 0
-	knockdown = 5
+	knockdown = 50
 	stutter = 5
 
 /obj/item/projectile/energy/bolt/halloween

@@ -108,7 +108,7 @@
 	return 1
 
 
-/datum/species/angel/spec_paralyse(mob/living/carbon/human/H,amount)
+/datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
 	if(H.movement_type & FLYING)
 		ToggleFlight(H,0)
 		flyslip(H)
@@ -124,14 +124,14 @@
 
 /datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
 	if(flight && CanFly(H))
-		paralysemod = 2
+		stunmod = 2
 		speedmod = -1
 		H.movement_type |= FLYING
 		override_float = 1
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
-		paralysemod = 1
+		stunmod = 1
 		speedmod = 0
 		H.movement_type &= ~FLYING
 		override_float = 0

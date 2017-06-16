@@ -251,7 +251,7 @@
 	channel_time = 20
 	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and paralyse them, but break the spear."
+	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8

@@ -278,15 +278,15 @@
 	build_path = /obj/item/organ/cyberimp/brain/anti_drop
 	category = list("Misc", "Medical Designs")
 
-/datum/design/cyberimp_antiparalyse
+/datum/design/cyberimp_antistun
 	name = "CNS Rebooter Implant"
-	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when paralysis."
-	id = "ci-antiparalyse"
+	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
+	id = "ci-antistun"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 6)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 500, MAT_GOLD = 1000)
-	build_path = /obj/item/organ/cyberimp/brain/anti_paralyse
+	build_path = /obj/item/organ/cyberimp/brain/anti_stun
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment

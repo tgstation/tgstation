@@ -404,7 +404,7 @@
 	M.updatehealth() //forces health update before next life tick
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
-	add_logs(user, M, "paralysis", src)
+	add_logs(user, M, "stunned", src)
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = 1

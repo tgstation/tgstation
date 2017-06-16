@@ -69,7 +69,7 @@
 	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	breakouttime = 45
-	knockdown = 1
+	knockdown = 10
 
 
 /obj/item/clothing/head/culthood

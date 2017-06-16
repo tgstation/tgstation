@@ -1,7 +1,7 @@
 /obj/item/weapon/melee/baton
-	name = "paralysebaton"
-	desc = "A paralyse baton for incapacitating people with."
-	icon_state = "paralysebaton"
+	name = "stunbaton"
+	desc = "A stun baton for incapacitating people with."
+	icon_state = "stunbaton"
 	item_state = "baton"
 	slot_flags = SLOT_BELT
 	force = 10
@@ -11,7 +11,7 @@
 	attack_verb = list("beaten")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
 
-	var/paralyseforce = 70
+	var/stunforce = 70
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/hitcost = 1000
@@ -30,9 +30,9 @@
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
-	//Only mob/living types have paralyse handling
+	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_paralyse(hit_atom)
+		baton_stun(hit_atom)
 
 /obj/item/weapon/melee/baton/loaded/Initialize() //this one starts with a cell pre-installed.
 	cell = new(src)
@@ -42,7 +42,7 @@
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(cell)
 		//Note this value returned is significant, as it will determine
-		//if a paralyse is applied or not
+		//if a stun is applied or not
 		. = cell.use(chrgdeductamt)
 		if(status && cell.charge < hitcost)
 			//we're below minimum, turn off
@@ -110,7 +110,7 @@
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(paralyseforce*3)
+		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -126,7 +126,7 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(status)
-			if(baton_paralyse(M, user))
+			if(baton_stun(M, user))
 				user.do_attack_animation(M)
 				return
 		else
@@ -134,11 +134,11 @@
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
 		if(status)
-			baton_paralyse(M, user)
+			baton_stun(M, user)
 		..()
 
 
-/obj/item/weapon/melee/baton/proc/baton_paralyse(mob/living/L, mob/user)
+/obj/item/weapon/melee/baton/proc/baton_stun(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK)) //No message; check_shields() handles that
@@ -152,14 +152,14 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Knockdown(paralyseforce)
-	L.apply_effect(STUTTER, paralyseforce)
+	L.Knockdown(stunforce)
+	L.apply_effect(STUTTER, stunforce)
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
-		L.visible_message("<span class='danger'>[user] has paralysis [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has paralysis you with [src]!</span>")
-		add_logs(user, L, "paralysis")
+		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+		add_logs(user, L, "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
@@ -174,16 +174,16 @@
 	deductcharge(1000 / severity)
 	..()
 
-//Makeshift paralyse baton. Replacement for paralyse gloves.
+//Makeshift stun baton. Replacement for stun gloves.
 /obj/item/weapon/melee/baton/cattleprod
-	name = "paralyseprod"
-	desc = "An improvised paralyse baton."
-	icon_state = "paralyseprod_nocell"
+	name = "stunprod"
+	desc = "An improvised stun baton."
+	icon_state = "stunprod_nocell"
 	item_state = "prod"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	paralyseforce = 50
+	stunforce = 50
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = SLOT_BACK
@@ -193,6 +193,6 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/weapon/melee/baton/cattleprod/baton_paralyse()
+/obj/item/weapon/melee/baton/cattleprod/baton_stun()
 	if(sparkler.activate())
 		..()

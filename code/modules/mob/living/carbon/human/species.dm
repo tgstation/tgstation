@@ -43,10 +43,10 @@
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
-	var/paralysemod = 1		// multiplier for paralyse duration
+	var/stunmod = 1		// multiplier for paralyse duration
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
-	var/punchparalysethreshold = 9//damage at which punches from this race will paralyse //yes it should be to the attacked race but it's not useful that way even if it's logical
+	var/punchstunthreshold = 9//damage at which punches from this race will paralyse //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
@@ -1071,9 +1071,9 @@
 			target.dismembering_strike(user, affecting.body_zone)
 		target.apply_damage(damage, BRUTE, affecting, armor_block)
 		add_logs(user, target, "punched")
-		if((target.stat != DEAD) && damage >= user.dna.species.punchparalysethreshold)
-			target.visible_message("<span class='danger'>[user] has knockdown [target]!</span>", \
-							"<span class='userdanger'>[user] has knockdown [target]!</span>")
+		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
+			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
+							"<span class='userdanger'>[user] has knocked [target] down!</span>")
 			target.apply_effect(40, KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
@@ -1174,7 +1174,7 @@
 
 	var/armor_block = H.run_armor_check(affecting, "melee", "<span class='notice'>Your armor has protected your [hit_area].</span>", "<span class='notice'>Your armor has softened a hit to your [hit_area].</span>",I.armour_penetration)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
-	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (paralysening yourself, ninja swords)
+	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
@@ -1469,12 +1469,12 @@
 	return
 
 
-////////
+////////////
 //Paralyse//
-////////
+////////////
 
-/datum/species/proc/spec_paralyse(mob/living/carbon/human/H,amount)
-	. = paralysemod * amount
+/datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
+	. = stunmod * amount
 
 //////////////
 //Space Move//

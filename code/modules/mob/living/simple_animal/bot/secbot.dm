@@ -191,7 +191,7 @@ Auto Patrol: []"},
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if(!C.paralysis || arrest_type)
-			paralyse_attack(A)
+			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
 	else
@@ -221,7 +221,7 @@ Auto Patrol: []"},
 			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 			back_to_idle()
 
-/mob/living/simple_animal/bot/secbot/proc/paralyse_attack(mob/living/carbon/C)
+/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	icon_state = "secbot-c"
 	spawn(2)
@@ -236,12 +236,12 @@ Auto Patrol: []"},
 		C.Knockdown(50)
 		C.stuttering = 5
 		threat = C.assess_threat()
-	add_logs(src,C,"paralysis")
+	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message("<span class='danger'>[src] has paralysis [C]!</span>",\
-							"<span class='userdanger'>[src] has paralysis you!</span>")
+	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
+							"<span class='userdanger'>[src] has stunned you!</span>")
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
 	if(!..())
@@ -266,7 +266,7 @@ Auto Patrol: []"},
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc))	// if right next to perp
-					paralyse_attack(target)
+					stun_attack(target)
 
 					mode = BOT_PREP_ARREST
 					anchored = 1

@@ -1,4 +1,4 @@
-#define COOLDOWN_PARALYSE 1200
+#define COOLDOWN_STUN 1200
 #define COOLDOWN_DAMAGE 600
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
@@ -255,33 +255,33 @@
 
 	//PARALYSE
 	if(findtext(message, paralyse_words))
-		cooldown = COOLDOWN_PARALYSE
+		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Paralyse(30 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
-		cooldown = COOLDOWN_PARALYSE
+		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
 			L.Knockdown(30 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
-		cooldown = COOLDOWN_PARALYSE
+		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
 			C.Sleeping(20 * power_multiplier)
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
-		cooldown = COOLDOWN_PARALYSE
+		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
 			C.vomit(10 * power_multiplier)
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
-		cooldown = COOLDOWN_PARALYSE
+		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
 			if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
@@ -388,7 +388,7 @@
 
 	//STATE LAWS
 	else if((findtext(message, statelaws_words)))
-		cooldown = COOLDOWN_PARALYSE
+		cooldown = COOLDOWN_STUN
 		for(var/mob/living/silicon/S in listeners)
 			S.statelaws(force = 1)
 
@@ -574,7 +574,7 @@
 	return cooldown
 
 
-#undef COOLDOWN_PARALYSE
+#undef COOLDOWN_STUN
 #undef COOLDOWN_DAMAGE
 #undef COOLDOWN_MEME
 #undef COOLDOWN_NONE

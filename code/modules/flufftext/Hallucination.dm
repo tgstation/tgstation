@@ -383,7 +383,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
-		if(4) //Paralyseprod + cablecuff
+		if(4) //Stunprod + cablecuff
 			target.playsound_local(null, 'sound/weapons/egloves.ogg', 40, 1)
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 			sleep(20)
@@ -399,7 +399,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/items_other/Initialize(mapload, mob/living/carbon/T)
 	..()
 	target = T
-	var/item = pick(list("esword","dual_esword","paralysepaper","clockspear","ttv","flash","armblade"))
+	var/item = pick(list("esword","dual_esword","stunpaper","clockspear","ttv","flash","armblade"))
 	var/image_file
 	var/image/A = null
 	for(var/mob/living/carbon/human/H in view(7,target))
@@ -419,7 +419,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					if("dual_esword")
 						target.playsound_local(H, 'sound/weapons/saberon.ogg',35,1)
 						A = image(image_file,H,"dualsaberred1", layer=ABOVE_MOB_LAYER)
-					if("paralysepaper")
+					if("stunpaper")
 						A = image(image_file,H,"paper", layer=ABOVE_MOB_LAYER)
 						A.color = rgb(255,0,0)
 					if("clockspear")
@@ -962,10 +962,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							halitem.icon = 'icons/obj/weapons.dmi'
 							halitem.icon_state = "sword1"
 							halitem.name = "Sword"
-						if(4) //paralyse baton
+						if(4) //stun baton
 							halitem.icon = 'icons/obj/weapons.dmi'
-							halitem.icon_state = "paralysebaton"
-							halitem.name = "Paralyse Baton"
+							halitem.icon_state = "stunbaton"
+							halitem.name = "Stun Baton"
 						if(5) //emag
 							halitem.icon = 'icons/obj/card.dmi'
 							halitem.icon_state = "emag"

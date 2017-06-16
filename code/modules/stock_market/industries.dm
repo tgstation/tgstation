@@ -200,6 +200,6 @@
 	)
 
 /datum/industry/defense/generateProductName(var/company)
-	var/list/equipment = list("energy gun", "laser gun", "machine gun", "grenade", "paralyse baton", "artillery", "bomb", "attack drone", "missile", "chem sprayer")
+	var/list/equipment = list("energy gun", "laser gun", "machine gun", "grenade", "stun baton", "artillery", "bomb", "attack drone", "missile", "chem sprayer")
 	var/list/material = list("bluespace", "stealth", "heat-seeking", "crime-seeking", "wide-range", "bioterror", "auto-reloading", "smart", "sentient", "rapid-fire", "species-targeting", "gibtonite", "mass-market", "perpetual-motion", "nuclear", "fission", "fusion")
 	return "the [pick(material)] [pick(equipment)]"

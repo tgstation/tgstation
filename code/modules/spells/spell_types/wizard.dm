@@ -28,7 +28,7 @@
 	sound = 'sound/magic/magic_missile.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	amt_knockdowned = 3
+	amt_knockdown = 3
 	sound = 'sound/magic/mm_hit.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
@@ -334,7 +334,7 @@
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
-	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will paralyse the target."
+	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
 	clothes_req = 1
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10

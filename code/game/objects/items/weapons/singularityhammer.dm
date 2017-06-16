@@ -101,8 +101,7 @@
 /obj/item/weapon/twohanded/mjollnir/throw_impact(atom/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		shock(L)
+		shock(target)
 
 /obj/item/weapon/twohanded/mjollnir/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"

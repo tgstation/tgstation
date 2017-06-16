@@ -77,7 +77,7 @@
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
-	description = "Increases resistance to paralyses as well as reducing drowsiness and hallucinations."
+	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
 	color = "#FF00FF"
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
@@ -537,7 +537,7 @@
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
 	id = "ephedrine"
-	description = "Increases paralyse resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -737,7 +737,7 @@
 /datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
-	description = "Minor boost to paralyse resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
+	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -852,7 +852,7 @@
 /datum/reagent/medicine/stimulants
 	name = "Stimulants"
 	id = "stimulants"
-	description = "Increases paralyse resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
+	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#78008C"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
@@ -1097,7 +1097,7 @@
 /datum/reagent/medicine/changelingAdrenaline
 	name = "Adrenaline"
 	id = "changelingAdrenaline"
-	description = "Reduces paralyse times. Also deals toxin damage at high amounts."
+	description = "Reduces stun times. Also deals toxin damage at high amounts."
 	color = "#C8A5DC"
 	overdose_threshold = 30
 

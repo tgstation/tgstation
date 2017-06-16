@@ -142,15 +142,15 @@
 	empulse(src, 4, 8)
 
 
-//Rite of Disorientation: Paralyses and inhibit speech on a single target for quite some time
-/obj/item/weapon/paper/talisman/paralyse
-	cultist_name = "Talisman of Paralysening"
-	cultist_desc = "A talisman that will paralyse and inhibit speech on a single target. To use, attack target directly."
+//Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
+/obj/item/weapon/paper/talisman/stun
+	cultist_name = "Talisman of Stunning"
+	cultist_desc = "A talisman that will stun and inhibit speech on a single target. To use, attack target directly."
 	color = "#ff0000" // red
 	invocation = "Fuu ma'jin!"
 	health_cost = 10
 
-/obj/item/weapon/paper/talisman/paralyse/invoke(mob/living/user, successfuluse = 0)
+/obj/item/weapon/paper/talisman/stun/invoke(mob/living/user, successfuluse = 0)
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
 	if(iscultist(user))
@@ -159,11 +159,11 @@
 		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
 	return 0
 
-/obj/item/weapon/paper/talisman/paralyse/attack(mob/living/target, mob/living/user, successfuluse = 1)
+/obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
 	if(iscultist(user))
 		invoke(user, 1)
 		user.visible_message("<span class='warning'>[user] holds up [src], which explodes in a flash of red light!</span>", \
-							 "<span class='cultitalic'>You paralyse [target] with the talisman!</span>")
+							 "<span class='cultitalic'>You stun [target] with the talisman!</span>")
 		var/obj/item/weapon/nullrod/N = locate() in target
 		if(N)
 			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \

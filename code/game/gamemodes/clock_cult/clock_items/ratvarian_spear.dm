@@ -48,9 +48,9 @@
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and paralysening.</span>")
+		to_chat(user, "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and paralysing.</span>")
 		if(!iscyborg(user))
-			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and paralyse the target.</span>")
+			to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and knock down the target.</span>")
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE

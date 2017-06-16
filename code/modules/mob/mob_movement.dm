@@ -263,7 +263,7 @@
 				if(isrevenant(L))
 					var/mob/living/simple_animal/revenant/R = L
 					R.reveal(20)
-					R.paralyse(20)
+					R.stun(20)
 				return
 			if(stepTurf.flags & NOJAUNT)
 				to_chat(L, "<span class='warning'>Holy energies block your path.</span>")

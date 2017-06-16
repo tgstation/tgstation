@@ -11,7 +11,7 @@
 	range = 3
 
 	summon_type = list(
-		/obj/structure/trap/paralyse,
+		/obj/structure/trap/stun,
 		/obj/structure/trap/fire,
 		/obj/structure/trap/chill,
 		/obj/structure/trap/damage

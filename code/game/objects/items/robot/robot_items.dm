@@ -5,12 +5,12 @@
 	icon = 'icons/mob/robot_items.dmi'
 
 
-/obj/item/borg/paralyse
+/obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
 	var/charge_cost = 30
 
-/obj/item/borg/paralyse/attack(mob/living/M, mob/living/user)
+/obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.check_shields(0, "[M]'s [name]", src, MELEE_ATTACK))
@@ -30,7 +30,7 @@
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
-	add_logs(user, M, "paralysis", src, "(INTENT: [uppertext(user.a_intent)])")
+	add_logs(user, M, "stunned", src, "(INTENT: [uppertext(user.a_intent)])")
 
 /obj/item/borg/cyborghug
 	name = "Hugging Module"
@@ -39,7 +39,7 @@
 	var/mode = 0 //0 = Hugs 1 = "Hug" 2 = Shock 3 = CRUSH
 	var/ccooldown = 0
 	var/scooldown = 0
-	var/shockallowed = FALSE//Can it be a paralysearm when emagged. Only PK borgs get this by default.
+	var/shockallowed = FALSE//Can it be a stunarm when emagged. Only PK borgs get this by default.
 	var/boop = FALSE
 
 /obj/item/borg/cyborghug/attack_self(mob/living/user)
@@ -504,8 +504,8 @@
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
 	name = "Hyperkinetic Dampening projector"
-	desc = "A device that projects a dampening field that knockdowns kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
-		while active, that will knockdown and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
+	desc = "A device that projects a dampening field that weakenss kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
+		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield"
 	var/maxenergy = 1500

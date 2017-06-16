@@ -77,8 +77,8 @@
 /obj/item/device/autosurgeon/xray_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/xray
 
-/obj/item/device/autosurgeon/anti_paralyse
-	starting_organ = /obj/item/organ/cyberimp/brain/anti_paralyse
+/obj/item/device/autosurgeon/anti_stun
+	starting_organ = /obj/item/organ/cyberimp/brain/anti_stun
 
 /obj/item/device/autosurgeon/reviver
 	starting_organ = /obj/item/organ/cyberimp/chest/reviver

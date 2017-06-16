@@ -72,7 +72,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	//MIND TRANSFER END
 
-	//Here we unconscious both mobs and knock them out for a time.
+	//Here we knock both mobs out for a time.
 	caster.Unconscious(unconscious_amount_caster)
 	victim.Unconscious(unconscious_amount_victim)
 	caster << sound('sound/magic/mandswap.ogg')

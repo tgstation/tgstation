@@ -244,7 +244,7 @@
 	required_reagents = list("plasma" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
-	name = "knockdowned virus plasma"
+	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	results = list("weakplasmavirusfood" = 2)
 	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)

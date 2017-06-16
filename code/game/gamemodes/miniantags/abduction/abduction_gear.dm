@@ -326,7 +326,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/weapon/paper/abductor/AltClick()
 	return
 
-#define BATON_PARALYSE 0
+#define BATON_STUN 0
 #define BATON_SLEEP 1
 #define BATON_CUFF 2
 #define BATON_PROBE 3
@@ -335,9 +335,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/weapon/abductor_baton
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
-	var/mode = BATON_PARALYSE
+	var/mode = BATON_STUN
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "wonderprodParalyse"
+	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
 	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
@@ -349,8 +349,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	mode = (mode+1)%BATON_MODES
 	var/txt
 	switch(mode)
-		if(BATON_PARALYSE)
-			txt = "paralysening"
+		if(BATON_STUN)
+			txt = "stunning"
 		if(BATON_SLEEP)
 			txt = "sleep inducement"
 		if(BATON_CUFF)
@@ -363,9 +363,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
-		if(BATON_PARALYSE)
-			icon_state = "wonderprodParalyse"
-			item_state = "wonderprodParalyse"
+		if(BATON_STUN)
+			icon_state = "wonderprodStun"
+			item_state = "wonderprodStun"
 		if(BATON_SLEEP)
 			icon_state = "wonderprodSleep"
 			item_state = "wonderprodSleep"
@@ -398,8 +398,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			return 0
 
 	switch (mode)
-		if(BATON_PARALYSE)
-			ParalyseAttack(L,user)
+		if(BATON_STUN)
+			StunAttack(L,user)
 		if(BATON_SLEEP)
 			SleepAttack(L,user)
 		if(BATON_CUFF)
@@ -410,22 +410,22 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/weapon/abductor_baton/attack_self(mob/living/user)
 	toggle(user)
 
-/obj/item/weapon/abductor_baton/proc/ParalyseAttack(mob/living/L,mob/living/user)
+/obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
 	user.lastattacked = L
 	L.lastattacker = user
 
 	L.Knockdown(70)
 	L.apply_effect(STUTTER, 7)
 
-	L.visible_message("<span class='danger'>[user] has paralysis [L] with [src]!</span>", \
-							"<span class='userdanger'>[user] has paralysis you with [src]!</span>")
+	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
+							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-	add_logs(user, L, "paralysis")
+	add_logs(user, L, "stunned")
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.paralysis || L.sleeping)
@@ -436,7 +436,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
-		to_chat(user, "<span class='warning'>Sleep inducement works fully only on paralysis specimens! </span>")
+		to_chat(user, "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>")
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 
@@ -504,8 +504,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
 	switch(mode)
-		if(BATON_PARALYSE)
-			to_chat(user, "<span class='warning'>The baton is in paralyse mode.</span>")
+		if(BATON_STUN)
+			to_chat(user, "<span class='warning'>The baton is in stun mode.</span>")
 		if(BATON_SLEEP)
 			to_chat(user, "<span class='warning'>The baton is in sleep inducement mode.</span>")
 		if(BATON_CUFF)

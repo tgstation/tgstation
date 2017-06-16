@@ -74,12 +74,12 @@
 /obj/structure/trap/proc/trap_effect(mob/living/L)
 	return
 
-/obj/structure/trap/paralyse
+/obj/structure/trap/stun
 	name = "shock trap"
 	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
 
-/obj/structure/trap/paralyse/trap_effect(mob/living/L)
+/obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
 	L.Knockdown(50)
 

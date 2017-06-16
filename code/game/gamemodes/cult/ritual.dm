@@ -127,7 +127,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Talisman of Electromagnetic Pulse</b></font><br>This talisman will EMP anything else nearby. It disappears after one use.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Paralysening</b></font><br>Attacking a target will knock them down for a long duration in addition to inhibiting their speech. \
+	text += "<font color='red'><b>Talisman of Stunning</b></font><br>Attacking a target will knock them down for a long duration in addition to inhibiting their speech. \
 	Robotic lifeforms will suffer the effects of a heavy electromagnetic pulse instead.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Armaments</b></font><br>The Talisman of Arming will equip the user with armored robes, a backpack, an eldritch longsword, an empowered bola, and a pair of boots. Any items that cannot \

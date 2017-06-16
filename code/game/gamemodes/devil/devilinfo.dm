@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		to_chat(owner.current, "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked.")
 
 /datum/antagonist/devil/proc/regress_humanoid()
-	to_chat(owner.current, "<span class='warning'>Your powers knockdown, have more contracts be signed to regain power.")
+	to_chat(owner.current, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/human, 1)
@@ -215,7 +215,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/regress_blood_lizard()
 	var/mob/living/carbon/true_devil/D = owner.current
-	to_chat(D, "<span class='warning'>Your powers knockdown, have more contracts be signed to regain power.")
+	to_chat(D, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
 	D.oldform.loc = D.loc
 	owner.transfer_to(D.oldform)
 	give_lizard_spells()

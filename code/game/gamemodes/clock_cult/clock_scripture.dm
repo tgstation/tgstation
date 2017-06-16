@@ -41,7 +41,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/static/list/sevtug_penalty = list("Fool! Get to the station and don't waste capacitors.", "You go this far out and expect help?", "The veil is too strong, idiot.", \
 	"How does the Justicar get anything done with servants like you?", "Oh, you love wasting time, don't you?")
 	var/static/list/nezbere_penalty = list("You disgrace our master's name with this endeavour.", "This is too far from the station to be a good base.", "This will take too long, friend.", \
-	"The barrier isn't knockdown enough to make this practical.", "Don't waste alloy.")
+	"The barrier isn't weakened enough to make this practical.", "Don't waste alloy.")
 	var/static/list/nzcrentr_penalty = list("You'd be easy to hunt in that little hunk of metal.", "Boss says you need to get back to the beacon.", "Boss says I can kill you if you do this again.", \
 	"Sending you power is too difficult here.", "Boss says stop wasting time.")
 

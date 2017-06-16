@@ -31,7 +31,7 @@
 
 /datum/borer_chem/methamphetamine
 	chemname = "methamphetamine"
-	chem_desc = "Reduces paralyse times, increases stamina and run speed while dealing brain damage. If overdosed it will deal toxin and brain damage."
+	chem_desc = "Reduces stun times, increases stamina and run speed while dealing brain damage. If overdosed it will deal toxin and brain damage."
 	chemuse = 50
 	quantity = 9
 

@@ -235,7 +235,7 @@ Auto Patrol[]"},
 
 			if(target)		// make sure target exists
 				if(Adjacent(target) && isturf(target.loc)) // if right next to perp
-					paralyse_attack(target)
+					stun_attack(target)
 
 					mode = BOT_PREP_ARREST
 					anchored = 1
@@ -505,7 +505,7 @@ Auto Patrol[]"},
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		if(!C.paralysis || arrest_type)
-			paralyse_attack(A)
+			stun_attack(A)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
 			cuff(A)
 	else
@@ -516,7 +516,7 @@ Auto Patrol[]"},
 		return
 	shootAt(A)
 
-/mob/living/simple_animal/bot/ed209/proc/paralyse_attack(mob/living/carbon/C)
+/mob/living/simple_animal/bot/ed209/proc/stun_attack(mob/living/carbon/C)
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 	icon_state = "[lasercolor]ed209-c"
 	spawn(2)
@@ -527,12 +527,12 @@ Auto Patrol[]"},
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(src)
-	add_logs(src,C,"paralysis")
+	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message("<span class='danger'>[src] has paralysis [C]!</span>",\
-							"<span class='userdanger'>[src] has paralysis you!</span>")
+	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
+							"<span class='userdanger'>[src] has stunned you!</span>")
 
 /mob/living/simple_animal/bot/ed209/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST

@@ -677,7 +677,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(user.stat == UNCONSCIOUS)
 			if(prob(1))
 				var/mob/dead/observer/G = user.get_ghost()
-				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body knockdowning... you must hurry!</span>")
+				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>")
 		if(user.stat == DEAD)
 			user.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
 			rune_in_use = FALSE

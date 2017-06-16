@@ -9,7 +9,7 @@
 		/datum/cult_supply/metal,
 		/datum/cult_supply/talisman/teleport,
 		/datum/cult_supply/talisman/emp,
-		/datum/cult_supply/talisman/paralyse,
+		/datum/cult_supply/talisman/stun,
 		/datum/cult_supply/talisman/veil,
 		/datum/cult_supply/soulstone,
 		/datum/cult_supply/construct_shell
@@ -98,10 +98,10 @@
 	desc = "Allows you to destroy technology in a short range."
 	summon_type = /obj/item/weapon/paper/talisman/emp
 
-/datum/cult_supply/talisman/paralyse
-	id = "paralyse_talisman"
+/datum/cult_supply/talisman/stun
+	id = "stun_talisman"
 	invocation = "Fuu ma'jin!"
-	desc = "Allows you to paralyse a person by attacking them with the talisman. Does not work on people holding a holy weapon!"
+	desc = "Allows you to stun a person by attacking them with the talisman. Does not work on people holding a holy weapon!"
 	summon_type = /obj/item/weapon/paper/talisman/paralyse
 
 /datum/cult_supply/talisman/veil

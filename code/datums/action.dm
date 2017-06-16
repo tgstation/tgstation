@@ -250,7 +250,7 @@
 
 /datum/action/item_action/clock/toggle_visor
 	name = "Create Judicial Marker"
-	desc = "Allows you to create a paralysening Judicial Marker at any location in view. Click again to disable."
+	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
 
 /datum/action/item_action/clock/toggle_visor/IsAvailable()
 	if(!is_servant_of_ratvar(owner))

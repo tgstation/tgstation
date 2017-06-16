@@ -500,7 +500,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		return
 
 	if(M.has_brain_worms())
-		to_chat(src, "<span class='warning'>You cannot unconscious someone who is already infested!</span>")
+		to_chat(src, "<span class='warning'>You cannot stun someone who is already infested!</span>")
 		return
 
 	layer = MOB_LAYER
@@ -751,7 +751,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
-	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Paralyse")
+	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Stun")
 
 	if(!punishment)
 		return
@@ -765,7 +765,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 			victim.blind_eyes(2)
 		if("Deafness")
 			victim.minimumDeafTicks(20)
-		if("Paralyse")
+		if("Stun")
 			victim.Knockdown(100)
 
 	log_game("[src]/([src.ckey]) punished [victim]/([victim.ckey] with [punishment]")

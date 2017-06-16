@@ -80,7 +80,7 @@
 		else
 			headarmor = 0
 
-		//Calculate the knockdowning duration for the target.
+		//Calculate the knockdown duration for the target.
 		armor_duration = (duration - headarmor) + force
 
 	else

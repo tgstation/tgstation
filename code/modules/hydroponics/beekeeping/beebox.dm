@@ -191,7 +191,7 @@
 
 /obj/structure/beebox/attack_hand(mob/user)
 	if(!user.bee_friendly())
-		//Time to get paralyseg!
+		//Time to get stung!
 		var/bees = FALSE
 		for(var/b in bees) //everyone who's ever lived here now instantly hates you, suck it assistant!
 			var/mob/living/simple_animal/hostile/poison/bees/B = b

@@ -23,9 +23,9 @@ In all, this is a lot like the monkey code. /N
 		if ("help")
 			AdjustSleeping(-50)
 			resting = 0
-			AdjustUnconscious(-3)
-			AdjustParalysis(-3)
-			AdjustKnockdown(-3)
+			AdjustUnconscious(-30)
+			AdjustParalysis(-30)
+			AdjustKnockdown(-30)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
 
 		if ("grab")

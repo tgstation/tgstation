@@ -22,10 +22,10 @@
 	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 
-/datum/design/paralyserevolver
+/datum/design/stunrevolver
 	name = "Tesla Revolver"
 	desc = "A high-tech revolver that fires internal, reusable shock cartridges in a revolving cylinder. The cartridges can be recharged using conventional rechargers."
-	id = "paralyserevolver"
+	id = "stunrevolver"
 	req_tech = list("combat" = 4, "materials" = 4, "powerstorage" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 10000)
@@ -210,14 +210,14 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
 
-/datum/design/paralyseshell
-	name = "Paralyse Shell"
-	desc = "A paralysening shell for a shotgun."
-	id = "paralyseshell"
+/datum/design/stunshell
+	name = "Stun Shell"
+	desc = "A stunning shell for a shotgun."
+	id = "stunshell"
 	req_tech = list("combat" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 200)
-	build_path = /obj/item/ammo_casing/shotgun/paralyseslug
+	build_path = /obj/item/ammo_casing/shotgun/stunslug
 	category = list("Ammo")
 
 /datum/design/techshell

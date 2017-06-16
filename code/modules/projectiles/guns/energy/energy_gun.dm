@@ -13,7 +13,7 @@
 
 /obj/item/weapon/gun/energy/e_gun/mini
 	name = "miniature energy gun"
-	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: paralyse and kill."
+	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
 	icon_state = "mini"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
@@ -31,9 +31,9 @@
 	if(gun_light && gun_light.on)
 		add_overlay("mini-light")
 
-/obj/item/weapon/gun/energy/e_gun/paralyse
+/obj/item/weapon/gun/energy/e_gun/stun
 	name = "tactical energy gun"
-	desc = "Military issue energy gun, is able to fire paralyse rounds."
+	desc = "Military issue energy gun, is able to fire stun rounds."
 	icon_state = "energytac"
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
@@ -70,7 +70,7 @@
 
 /obj/item/weapon/gun/energy/e_gun/turret
 	name = "hybrid turret gun"
-	desc = "A heavy hybrid energy cannon with two settings: Paralyse and kill."
+	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
 	icon_state = "turretlaser"
 	item_state = "turretlaser"
 	slot_flags = null

@@ -141,7 +141,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
-	desc = "A weapon for combat exosuits. Shoots non-lethal paralysening electrodes."
+	desc = "A weapon for combat exosuits. Shoots non-lethal paralysing electrodes."
 	icon_state = "mecha_taser"
 	origin_tech = "combat=3"
 	energy_drain = 20

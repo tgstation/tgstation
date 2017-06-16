@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/adrenaline
 	name = "Adrenaline Sacs"
 	desc = "We evolve additional sacs of adrenaline throughout our body."
-	helptext = "Removes all paralyses instantly and adds a short-term reduction in further paralyses. Can be used while unconscious. Continued use poisons the body."
+	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Continued use poisons the body."
 	chemical_cost = 30
 	dna_cost = 2
 	req_human = 1

@@ -463,7 +463,7 @@
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a paralyse."
+	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a stun."
 	reagent_state = LIQUID
 	color = "#00B4FF"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -523,7 +523,7 @@
 /datum/reagent/toxin/initropidril
 	name = "Initropidril"
 	id = "initropidril"
-	description = "A powerful poison with insidious effects. It can cause paralyses, lethal breathing failure, and cardiac arrest."
+	description = "A powerful poison with insidious effects. It can cause stuns, lethal breathing failure, and cardiac arrest."
 	reagent_state = LIQUID
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -677,7 +677,7 @@
 /datum/reagent/toxin/curare
 	name = "Curare"
 	id = "curare"
-	description = "Causes slight toxin damage followed by chain-paralysening and oxygen damage."
+	description = "Causes slight toxin damage followed by chain-stunning and oxygen damage."
 	reagent_state = LIQUID
 	color = "#191919"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM

@@ -1,11 +1,11 @@
-// Weapon exports. Paralyse batons, disablers, etc.
+// Weapon exports. Stun batons, disablers, etc.
 
 /datum/export/weapon
 	include_subtypes = FALSE
 
 /datum/export/weapon/baton
 	cost = 100
-	unit_name = "paralyse baton"
+	unit_name = "stun baton"
 	export_types = list(/obj/item/weapon/melee/baton)
 	exclude_types = list(/obj/item/weapon/melee/baton/cattleprod)
 	include_subtypes = TRUE
