@@ -95,7 +95,7 @@
 			if(skins[choice] == null)
 				return
 			icon_state = skins[choice]
-			unique_reskin = 0
+			unique_reskin = FALSE
 			to_chat(user, "Your pen now has a [choice] finish.")
 			desc = "It's an expensive [choice] fountain pen. The nib is quite sharp."
 
