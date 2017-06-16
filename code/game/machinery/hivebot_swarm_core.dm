@@ -8,8 +8,8 @@
 	use_power = 0
 	obj_integrity = 250
 	max_integrity = 250
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/recharge_period = 0 //The number of ticks the core is waiting for and cannot do anything
 	var/mob/living/threat_to_swarm //The core's "target" for its attacks
 	var/hivebot_limit = 50 //Stop making hivebots if there are this many in a 7x7 square around us
