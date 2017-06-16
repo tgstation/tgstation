@@ -35,7 +35,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/hitby(atom/movable/AM)
 	..()
@@ -48,6 +48,8 @@
 	take_damage(tforce, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	..() //contents explosion
 	if(target == src)
 		qdel(src)
@@ -92,26 +94,26 @@
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user))
+	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user))
 
 /obj/attack_alien(mob/living/carbon/alien/humanoid/user)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	attack_generic(user, 60, BRUTE, "melee", 0)
+	if(attack_generic(user, 60, BRUTE, "melee", 0))
+		playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
-		M.emote("custom", message = "[M.friendly] [src]")
+		M.emote("custom", message = "[M.friendly] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
 		if(M.environment_smash)
 			play_soundeffect = 0
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 		if(M.obj_damage)
-			attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect)
+			. = attack_generic(M, M.obj_damage, M.melee_damage_type, "melee", play_soundeffect)
 		else
-			attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
-		return 1
+			. = attack_generic(M, rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, "melee", play_soundeffect)
+		if(. && !play_soundeffect)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 
 /obj/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
@@ -130,7 +132,7 @@
 			if(BRUTE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
-				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 				return 0
@@ -141,14 +143,14 @@
 
 /obj/singularity_act()
 	ex_act(1)
-	if(src && !qdeleted(src))
+	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
 
 
 ///// ACID
 
-var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "icon_state" = "acid")
+GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "acid"))
 
 //the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
@@ -156,7 +158,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 
 		if(!acid_level)
 			SSacid.processing[src] = src
-			add_overlay(acid_overlay, 1)
+			add_overlay(GLOB.acid_overlay, TRUE)
 		var/acid_cap = acidpwr * 300 //so we cannot use huge amounts of weak acids to do as well as strong acids.
 		if(acid_level < acid_cap)
 			acid_level = min(acid_level + acidpwr * acid_volume, acid_cap)
@@ -170,7 +172,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 			if(armour_value != "acid" && armour_value != "fire")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
-			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
+			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
@@ -194,7 +196,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE))
 		resistance_flags |= ON_FIRE
 		SSfire_burning.processing[src] = src
-		add_overlay(fire_overlay)
+		add_overlay(GLOB.fire_overlay, TRUE)
 		return 1
 
 //called when the obj is destroyed by fire
@@ -206,7 +208,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 /obj/proc/extinguish()
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
-		overlays -= fire_overlay
+		cut_overlay(GLOB.fire_overlay, TRUE)
 		SSfire_burning.processing -= src
 
 
@@ -257,3 +259,7 @@ var/global/image/acid_overlay = image("icon" = 'icons/effects/effects.dmi', "ico
 		obj_break(damage_type)
 		return TRUE
 	return FALSE
+
+//returns how much the object blocks an explosion
+/obj/proc/GetExplosionBlock()
+	CRASH("Unimplemented GetExplosionBlock()")

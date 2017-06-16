@@ -8,13 +8,12 @@
 	announceWhen = 50
 	endWhen = 20
 	var/list/area/areasToOpen = list()
-	var/list/potential_areas = list(/area/atmos,
-									/area/bridge,
+	var/list/potential_areas = list(/area/bridge,
 									/area/engine,
 									/area/medical,
 									/area/security,
 									/area/quartermaster,
-									/area/toxins)
+									/area/science)
 	var/severity = 1
 
 
@@ -33,7 +32,7 @@
 	if(areasToOpen && areasToOpen.len > 0)
 		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 	else
-		world.log << "ERROR: Could not initate grey-tide. No areas in the list!"
+		log_world("ERROR: Could not initate grey-tide. No areas in the list!")
 		kill()
 
 

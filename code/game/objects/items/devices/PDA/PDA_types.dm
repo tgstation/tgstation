@@ -1,7 +1,7 @@
 //Clown PDA is slippery.
 /obj/item/device/pda/clown
 	name = "clown PDA"
-	default_cartridge = /obj/item/weapon/cartridge/clown
+	default_cartridge = /obj/item/weapon/cartridge/virus/clown
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
@@ -11,10 +11,10 @@
 		var/mob/living/carbon/M = AM
 		if(M.slip(0, 6, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
-				if (istype(src.cartridge, /obj/item/weapon/cartridge/clown))
-					var/obj/item/weapon/cartridge/clown/cart = src.cartridge
-					if(cart.honk_charges < 5)
-						cart.honk_charges++
+				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
+					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
+					if(cart.charges < 5)
+						cart.charges++
 
 
 // Special AI/pAI PDAs that cannot explode.
@@ -79,7 +79,7 @@
 
 /obj/item/device/pda/mime
 	name = "mime PDA"
-	default_cartridge = /obj/item/weapon/cartridge/mime
+	default_cartridge = /obj/item/weapon/cartridge/virus/mime
 	icon_state = "pda-mime"
 	silent = 1
 	ttone = "silence"
@@ -134,7 +134,7 @@
 	icon_state = "pda-miner"
 
 /obj/item/device/pda/syndicate
-	default_cartridge = /obj/item/weapon/cartridge/syndicate
+	default_cartridge = /obj/item/weapon/cartridge/virus/syndicate
 	icon_state = "pda-syndi"
 	name = "military PDA"
 	owner = "John Doe"
@@ -161,11 +161,11 @@
 	icon_state = "pda-roboticist"
 	default_cartridge = /obj/item/weapon/cartridge/roboticist
 
-/obj/item/device/pda/librarian
-	name = "librarian PDA"
+/obj/item/device/pda/curator
+	name = "curator PDA"
 	icon_state = "pda-library"
 	icon_alert = "pda-r-library"
-	default_cartridge = /obj/item/weapon/cartridge/librarian
+	default_cartridge = /obj/item/weapon/cartridge/curator
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!

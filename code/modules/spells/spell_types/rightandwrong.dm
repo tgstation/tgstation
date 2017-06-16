@@ -6,31 +6,31 @@
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic", "bloodcontract")
 
 	if(user) //in this case either someone holding a spellbook or a badmin
-		user << "<B>You summoned [summon_type ? "magic" : "guns"]!</B>"
+		to_chat(user, "<B>You summoned [summon_type ? "magic" : "guns"]!</B>")
 		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
 		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
-		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
-			ticker.mode.traitors += H.mind
+		if(prob(survivor_probability) && !(H.mind in SSticker.mode.traitors))
+			SSticker.mode.traitors += H.mind
 			if(!summon_type)
 				var/datum/objective/steal_five_of_type/summon_guns/guns = new
 				guns.owner = H.mind
 				H.mind.objectives += guns
 				H.mind.special_role = "survivalist"
-				H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
+				to_chat(H, "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			else
 				var/datum/objective/steal_five_of_type/summon_magic/magic = new
 				magic.owner = H.mind
 				H.mind.objectives += magic
 				H.mind.special_role = "amateur magician"
-				H << "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>"
+				to_chat(H, "<B>You are the amateur magician! Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind
 			H.mind.objectives += survive
-			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
+			H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
 			H.mind.announce_objectives()
 		var/randomizeguns 			= pick(gunslist)
 		var/randomizemagic 			= pick(magiclist)
@@ -124,7 +124,7 @@
 				if("gravgun")
 					G = new /obj/item/weapon/gun/energy/gravity_gun(get_turf(H))
 			G.unlock()
-			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
+			playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
 
 		else
 			switch (randomizemagic)
@@ -170,7 +170,7 @@
 					new /obj/item/weapon/scrying(get_turf(H))
 					if (!(H.dna.check_mutation(XRAY)))
 						H.dna.add_mutation(XRAY)
-						H << "<span class='notice'>The walls suddenly disappear.</span>"
+						to_chat(H, "<span class='notice'>The walls suddenly disappear.</span>")
 				if("voodoo")
 					new /obj/item/voodoo(get_turf(H))
 				if("whistle")
@@ -198,22 +198,22 @@
 							new /obj/item/device/necromantic_stone(get_turf(H))
 						if("bloodcontract")
 							new /obj/item/blood_contract(get_turf(H))
-					H << "<span class='notice'>You suddenly feel lucky.</span>"
-			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
+					to_chat(H, "<span class='notice'>You suddenly feel lucky.</span>")
+			playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
 
 
 /proc/summonevents()
-	if(!SSevent.wizardmode)
-		SSevent.frequency_lower = 600									//1 minute lower bound
-		SSevent.frequency_upper = 3000									//5 minutes upper bound
-		SSevent.toggleWizardmode()
-		SSevent.reschedule()
+	if(!SSevents.wizardmode)
+		SSevents.frequency_lower = 600									//1 minute lower bound
+		SSevents.frequency_upper = 3000									//5 minutes upper bound
+		SSevents.toggleWizardmode()
+		SSevents.reschedule()
 
 	else 																//Speed it up
-		SSevent.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
-		if(SSevent.frequency_upper < SSevent.frequency_lower) //Sanity
-			SSevent.frequency_upper = SSevent.frequency_lower
+		SSevents.frequency_upper -= 600	//The upper bound falls a minute each time, making the AVERAGE time between events lessen
+		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
+			SSevents.frequency_upper = SSevents.frequency_lower
 
-		SSevent.reschedule()
-		message_admins("Summon Events intensifies, events will now occur every [SSevent.frequency_lower / 600] to [SSevent.frequency_upper / 600] minutes.")
+		SSevents.reschedule()
+		message_admins("Summon Events intensifies, events will now occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes.")
 		log_game("Summon Events was increased!")

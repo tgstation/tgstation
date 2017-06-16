@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -22,7 +22,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "ag" = (
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/awaymission/wwvault)
 "ah" = (
 /turf/closed/indestructible{
@@ -55,7 +55,7 @@
 /area/awaymission/wwvault)
 "am" = (
 /mob/living/simple_animal/hostile/faithless,
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/awaymission/wwvault)
 "an" = (
 /turf/open/floor/plasteel/cult{
@@ -64,75 +64,75 @@
 	},
 /area/awaymission/wwvault)
 "ao" = (
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ap" = (
 /obj/machinery/wish_granter_dark,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aq" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ar" = (
 /obj/machinery/gateway{
 	dir = 9
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "as" = (
 /obj/machinery/gateway{
 	dir = 1
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "at" = (
 /obj/machinery/gateway{
 	dir = 5
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "au" = (
 /obj/machinery/gateway{
 	dir = 8
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "av" = (
 /obj/machinery/gateway/centeraway{
 	calibrated = 0
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aw" = (
 /obj/machinery/gateway{
 	dir = 4
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ax" = (
 /obj/machinery/gateway{
 	dir = 10
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "ay" = (
 /obj/machinery/gateway,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "az" = (
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aA" = (
 /obj/effect/meatgrinder,
-/turf/open/floor/plasteel/circuit/gcircuit/off,
+/turf/open/floor/circuit/green/off,
 /area/awaymission/wwvault)
 "aB" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plasteel/circuit/off,
+/turf/open/floor/circuit/off,
 /area/awaymission/wwvault)
 "aC" = (
 /turf/open/floor/plating{
@@ -187,7 +187,7 @@
 /turf/closed/mineral,
 /area/awaymission/wwmines)
 "aO" = (
-/obj/effect/mob_spawn/human/syndicatecommando,
+/obj/effect/mob_spawn/human/corpse/syndicatecommando,
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor";
 	tag = "icon-cult"
@@ -929,7 +929,7 @@
 	},
 /area/awaymission/wwgov)
 "dh" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -2017,7 +2017,7 @@
 	},
 /area/awaymission/wwmines)
 "gy" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,
@@ -2122,7 +2122,7 @@
 /area/awaymission/wwrefine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gM" = (
 /turf/closed/wall/shuttle{
@@ -2141,10 +2141,10 @@
 /area/awaymission/wwrefine)
 "gP" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gQ" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gR" = (
 /turf/closed/wall/shuttle{
@@ -2165,9 +2165,7 @@
 	},
 /area/awaymission/wwrefine)
 "gV" = (
-/obj/effect/landmark{
-	name = "awaystart"
-	},
+/obj/effect/landmark/awaystart,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -2178,7 +2176,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/black/orange,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/weapon/tank/internals/oxygen,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gX" = (
 /obj/structure/grille,
@@ -2194,7 +2192,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gY" = (
 /obj/item/weapon/paper{

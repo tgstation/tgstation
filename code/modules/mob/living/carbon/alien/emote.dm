@@ -21,7 +21,7 @@
 	key = "roar"
 	key_third_person = "roars"
 	message_alien = "roars"
-	message_larva = "sofly roars"
+	message_larva = "softly roars"
 	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/alien/roar/run_emote(mob/user, params)

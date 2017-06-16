@@ -9,22 +9,20 @@
 	var/mob/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
 
-/obj/structure/New()
+/obj/structure/Initialize()
 	if (!armor)
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
-	..()
+	. = ..()
 	if(smooth)
 		queue_smooth(src)
 		queue_smooth_neighbors(src)
 		icon_state = ""
-	if(ticker)
-		cameranet.updateVisibility(src)
+	if(SSticker)
+		GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy()
-	if(ticker)
-		cameranet.updateVisibility(src)
-	if(opacity)
-		UpdateAffectingLights()
+	if(SSticker)
+		GLOB.cameranet.updateVisibility(src)
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
@@ -89,28 +87,27 @@
 				user.Stun(climb_stun)
 				. = 1
 			else
-				user << "<span class='warning'>You fail to climb onto [src].</span>"
+				to_chat(user, "<span class='warning'>You fail to climb onto [src].</span>")
 	structureclimber = null
 
 /obj/structure/examine(mob/user)
 	..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			user << "<span class='warning'>It's on fire!</span>"
+			to_chat(user, "<span class='warning'>It's on fire!</span>")
 		if(broken)
-			user << "<span class='notice'>It looks broken.</span>"
-		var/examine_status = examine_status()
+			to_chat(user, "<span class='notice'>It appears to be broken.</span>")
+		var/examine_status = examine_status(user)
 		if(examine_status)
-			user << examine_status
+			to_chat(user, examine_status)
 
-/obj/structure/proc/examine_status() //An overridable proc, mostly for falsewalls.
+/obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100
 	switch(healthpercent)
-		if(100 to INFINITY)
-			return  "It seems pristine and undamaged."
-		if(50 to 100)
+		if(50 to 99)
 			return  "It looks slightly damaged."
 		if(25 to 50)
 			return  "It appears heavily damaged."
 		if(0 to 25)
-			return  "<span class='warning'>It's falling apart!</span>"
+			if(!broken)
+				return  "<span class='warning'>It's falling apart!</span>"

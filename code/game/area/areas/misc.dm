@@ -5,7 +5,6 @@
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
 	requires_power = 0
-	music = "music/music.ogg"
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -116,15 +115,22 @@
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
+	
+/area/prison/execution_room
+	name = "Prisoner Education Chamber"
+	icon_state = "execution_room"
 
-/area/prison/cell_block/A
+/area/prison/cell_block/a
+//	/area/prison/cell_block/A
 	name = "Prison Cell Block A"
 	icon_state = "brig"
 
-/area/prison/cell_block/B
+/area/prison/cell_block/b
+//	/area/prison/cell_block/B
 	name = "Prison Cell Block B"
 	icon_state = "brig"
 
-/area/prison/cell_block/C
+/area/prison/cell_block/c
+//	/area/prison/cell_block/C
 	name = "Prison Cell Block C"
 	icon_state = "brig"

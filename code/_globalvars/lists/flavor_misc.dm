@@ -1,59 +1,68 @@
 //Preferences stuff
 	//Hairstyles
-var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
-var/global/list/hair_styles_male_list = list()		//stores only hair names
-var/global/list/hair_styles_female_list = list()	//stores only hair names
-var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
-var/global/list/facial_hair_styles_male_list = list()	//stores only hair names
-var/global/list/facial_hair_styles_female_list = list()	//stores only hair names
+GLOBAL_LIST_EMPTY(hair_styles_list)			//stores /datum/sprite_accessory/hair indexed by name
+GLOBAL_LIST_EMPTY(hair_styles_male_list)		//stores only hair names
+GLOBAL_LIST_EMPTY(hair_styles_female_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(facial_hair_styles_list)	//stores /datum/sprite_accessory/facial_hair indexed by name
+GLOBAL_LIST_EMPTY(facial_hair_styles_male_list)	//stores only hair names
+GLOBAL_LIST_EMPTY(facial_hair_styles_female_list)	//stores only hair names
 	//Underwear
-var/global/list/underwear_list = list()		//stores /datum/sprite_accessory/underwear indexed by name
-var/global/list/underwear_m = list()	//stores only underwear name
-var/global/list/underwear_f = list()	//stores only underwear name
+GLOBAL_LIST_EMPTY(underwear_list)		//stores /datum/sprite_accessory/underwear indexed by name
+GLOBAL_LIST_EMPTY(underwear_m)	//stores only underwear name
+GLOBAL_LIST_EMPTY(underwear_f)	//stores only underwear name
 	//Undershirts
-var/global/list/undershirt_list = list() 	//stores /datum/sprite_accessory/undershirt indexed by name
-var/global/list/undershirt_m = list()	 //stores only undershirt name
-var/global/list/undershirt_f = list()	 //stores only undershirt name
+GLOBAL_LIST_EMPTY(undershirt_list) 	//stores /datum/sprite_accessory/undershirt indexed by name
+GLOBAL_LIST_EMPTY(undershirt_m)	 //stores only undershirt name
+GLOBAL_LIST_EMPTY(undershirt_f)	 //stores only undershirt name
 	//Socks
-var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
+GLOBAL_LIST_EMPTY(socks_list)		//stores /datum/sprite_accessory/socks indexed by name
 	//Lizard Bits (all datum lists indexed by name)
-var/global/list/body_markings_list = list()
-var/global/list/tails_list_lizard = list()
-var/global/list/animated_tails_list_lizard = list()
-var/global/list/snouts_list = list()
-var/global/list/horns_list = list()
-var/global/list/frills_list = list()
-var/global/list/spines_list = list()
-var/global/list/legs_list = list()
-var/global/list/animated_spines_list = list()
+GLOBAL_LIST_EMPTY(body_markings_list)
+GLOBAL_LIST_EMPTY(tails_list_lizard)
+GLOBAL_LIST_EMPTY(animated_tails_list_lizard)
+GLOBAL_LIST_EMPTY(snouts_list)
+GLOBAL_LIST_EMPTY(horns_list)
+GLOBAL_LIST_EMPTY(frills_list)
+GLOBAL_LIST_EMPTY(spines_list)
+GLOBAL_LIST_EMPTY(legs_list)
+GLOBAL_LIST_EMPTY(animated_spines_list)
 
 	//Mutant Human bits
-var/global/list/tails_list_human = list()
-var/global/list/animated_tails_list_human = list()
-var/global/list/ears_list = list()
-var/global/list/wings_list = list()
-var/global/list/wings_open_list = list()
-var/global/list/r_wings_list = list()
+GLOBAL_LIST_EMPTY(tails_list_human)
+GLOBAL_LIST_EMPTY(animated_tails_list_human)
+GLOBAL_LIST_EMPTY(ears_list)
+GLOBAL_LIST_EMPTY(wings_list)
+GLOBAL_LIST_EMPTY(wings_open_list)
+GLOBAL_LIST_EMPTY(r_wings_list)
 
-var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
-var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
+GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
+GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
+
+GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"
-#define GDUFFLEBAG "Grey Dufflebag"
+#define GDUFFELBAG "Grey Duffel Bag"
 #define LSATCHEL "Leather Satchel"
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"
-#define DDUFFLEBAG "Department Dufflebag"
-var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
+#define DDUFFELBAG "Department Duffel Bag"
+GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL))
+
+//Uplink spawn loc
+#define UPLINK_PDA		"PDA"
+#define UPLINK_RADIO	"Radio"
+#define UPLINK_PEN		"Pen" //like a real spy!
+GLOBAL_LIST_INIT(uplink_spawn_loc_list, list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN))
+
 	//Female Uniforms
-var/global/list/female_clothing_icons = list()
+GLOBAL_LIST_EMPTY(female_clothing_icons)
 
 	//radical shit
-var/list/hit_appends = list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF")
+GLOBAL_LIST_INIT(hit_appends, list("-OOF", "-ACK", "-UGH", "-HRNK", "-HURGH", "-GLORF"))
 
-var/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/Glassbr1.ogg','sound/effects/Glassbr2.ogg','sound/effects/Glassbr3.ogg','sound/items/Welder.ogg','sound/items/Welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
+GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons/taser.ogg','sound/weapons/armbomb.ogg','sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg','sound/voice/hiss5.ogg','sound/voice/hiss6.ogg','sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg','sound/items/welder.ogg','sound/items/welder2.ogg','sound/machines/airlock.ogg','sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg'))
 
 
 // Reference list for disposal sort junctions. Set the sortType variable on disposal sort junctions to
@@ -87,23 +96,23 @@ var/list/scarySounds = list('sound/weapons/thudswoosh.ogg','sound/weapons/Taser.
 23 Genetics
 */
 
-var/list/TAGGERLOCATIONS = list("Disposals",
+GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"Cargo Bay", "QM Office", "Engineering", "CE Office",
 	"Atmospherics", "Security", "HoS Office", "Medbay",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics"))
 
-var/global/list/guitar_notes = flist("sound/guitar/")
+GLOBAL_LIST_INIT(guitar_notes, flist("sound/guitar/"))
 
-var/global/list/station_prefixes = list("", "Imperium", "Heretical", "Cuban",
+GLOBAL_LIST_INIT(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
 	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
 	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
 	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
 	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
-	"Automated", "Experimental", "Augmented")
+	"Automated", "Experimental", "Augmented"))
 
-var/global/list/station_names = list("", "Stanford", "Dorf", "Alium",
+GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
 	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
 	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
 	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",
@@ -115,9 +124,9 @@ var/global/list/station_names = list("", "Stanford", "Dorf", "Alium",
 	"System", "Mining", "Neckbeard", "Research", "Supply", "Military",
 	"Orbital", "Battle", "Science", "Asteroid", "Home", "Production",
 	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
-	"Robot", "Hats", "Pizza")
+	"Robot", "Hats", "Pizza"))
 
-var/global/list/station_suffixes = list("Station", "Frontier",
+GLOBAL_LIST_INIT(station_suffixes, list("Station", "Frontier",
 	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
 	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
 	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
@@ -126,23 +135,23 @@ var/global/list/station_suffixes = list("Station", "Frontier",
 	"Construct", "Hangar", "Prison", "Center", "Port", "Waystation",
 	"Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object",
 	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
-	"Airstrip")
+	"Airstrip"))
 
-var/global/list/greek_letters = list("Alpha", "Beta", "Gamma", "Delta",
+GLOBAL_LIST_INIT(greek_letters, list("Alpha", "Beta", "Gamma", "Delta",
 	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
 	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
-	"Chi", "Psi", "Omega")
+	"Chi", "Psi", "Omega"))
 
-var/global/list/phonetic_alphabet = list("Alpha", "Bravo", "Charlie",
+GLOBAL_LIST_INIT(phonetic_alphabet, list("Alpha", "Bravo", "Charlie",
 	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
 	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
 	"Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray",
-	"Yankee", "Zulu")
+	"Yankee", "Zulu"))
 
-var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
+GLOBAL_LIST_INIT(numbers_as_words, list("One", "Two", "Three", "Four",
 	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
 	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-	"Eighteen", "Nineteen")
+	"Eighteen", "Nineteen"))
 
 /proc/generate_number_strings()
 	var/list/L
@@ -151,4 +160,6 @@ var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
 		L += "\Roman[i]"
 	return L
 
-var/global/list/station_numerals = greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings()
+GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings())
+
+GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))

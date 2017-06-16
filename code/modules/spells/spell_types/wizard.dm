@@ -25,11 +25,11 @@
 	proj_trail_icon_state = "magicmd"
 
 	action_icon_state = "magicm"
-	sound = "sound/magic/MAGIC_MISSILE.ogg"
+	sound = 'sound/magic/magic_missile.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_weakened = 3
-	sound = "sound/magic/MM_Hit.ogg"
+	sound = 'sound/magic/mm_hit.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -48,7 +48,7 @@
 	cooldown_min = 300 //25 deciseconds reduction per rank
 
 	action_icon_state = "mutate"
-	sound = "sound/magic/Mutate.ogg"
+	sound = 'sound/magic/mutate.ogg'
 
 
 /obj/effect/proc_holder/spell/targeted/smoke
@@ -69,6 +69,24 @@
 
 	action_icon_state = "smoke"
 
+
+/obj/effect/proc_holder/spell/targeted/smoke/lesser //Chaplain smoke book
+	name = "Smoke"
+	desc = "This spell spawns a small cloud of choking smoke at your location."
+
+	school = "conjuration"
+	charge_max = 360
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = -1
+	include_user = 1
+
+	smoke_spread = 1
+	smoke_amt = 2
+
+	action_icon_state = "smoke"
+
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
@@ -82,7 +100,7 @@
 
 	emp_heavy = 6
 	emp_light = 10
-	sound = "sound/magic/Disable_Tech.ogg"
+	sound = 'sound/magic/disable_tech.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
@@ -105,8 +123,8 @@
 	outer_tele_radius = 6
 
 	action_icon_state = "blink"
-	sound1="sound/magic/blink.ogg"
-	sound2="sound/magic/blink.ogg"
+	sound1 = 'sound/magic/blink.ogg'
+	sound2 = 'sound/magic/blink.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
 	name = "quickstep"
@@ -130,8 +148,8 @@
 
 	smoke_spread = 1
 	smoke_amt = 2
-	sound1="sound/magic/Teleport_diss.ogg"
-	sound2="sound/magic/Teleport_app.ogg"
+	sound1 = 'sound/magic/teleport_diss.ogg'
+	sound2 = 'sound/magic/teleport_app.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
@@ -159,7 +177,7 @@
 	range = 1
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
-	cast_sound = "sound/magic/Summon_Karp.ogg"
+	cast_sound = 'sound/magic/summon_karp.ogg'
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -176,7 +194,7 @@
 	summon_type = list(/obj/structure/constructshell)
 
 	action_icon_state = "artificer"
-	cast_sound = "sound/magic/SummonItems_generic.ogg"
+	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
@@ -192,7 +210,7 @@
 	range = 3
 
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
-	cast_sound = "sound/magic/SummonItems_generic.ogg"
+	cast_sound = 'sound/magic/summonitems_generic.ogg'
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -221,84 +239,12 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
 	amt_eye_blind = 10
 	amt_eye_blurry = 20
-	sound="sound/magic/Blind.ogg"
+	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	mutations = list(BLINDMUT)
 	duration = 300
-	sound="sound/magic/Blind.ogg"
-
-/obj/effect/proc_holder/spell/fireball
-	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
-
-	school = "evocation"
-	charge_max = 60
-	clothes_req = 0
-	invocation = "ONI SOMA"
-	invocation_type = "shout"
-	range = 20
-	cooldown_min = 20 //10 deciseconds reduction per rank
-	var/fireball_type = /obj/item/projectile/magic/fireball
-	action_icon_state = "fireball0"
-	sound = "sound/magic/Fireball.ogg"
-
-	active = FALSE
-
-
-/obj/effect/proc_holder/spell/fireball/Click()
-	var/mob/living/user = usr
-	if(!istype(user))
-		return
-
-	var/msg
-
-	if(!can_cast(user))
-		msg = "<span class='warning'>You can no longer cast Fireball.</span>"
-		remove_ranged_ability(msg)
-		return
-
-	if(active)
-		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
-		remove_ranged_ability(msg)
-	else
-		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
-		add_ranged_ability(user, msg, TRUE)
-
-/obj/effect/proc_holder/spell/fireball/update_icon()
-	if(!action)
-		return
-	action.button_icon_state = "fireball[active]"
-	action.UpdateButtonIcon()
-
-/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
-		return FALSE
-
-	if(!cast_check(0, ranged_ability_user))
-		remove_ranged_ability()
-		return FALSE
-
-	var/list/targets = list(target)
-	perform(targets,user = ranged_ability_user)
-
-	return TRUE
-
-/obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
-	var/target = targets[1] //There is only ever one target for fireball
-	var/turf/T = user.loc
-	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
-	if(!isturf(U) || !isturf(T))
-		return 0
-
-	var/obj/item/projectile/magic/fireball/FB = new fireball_type(user.loc)
-	FB.current = get_turf(user)
-	FB.preparePixelProjectile(target, get_turf(target), user)
-	FB.fire()
-	user.newtonian_move(get_dir(U, T))
-	remove_ranged_ability() //Auto-disable the ability once successfully performed
-	return 1
-
+	sound = 'sound/magic/blind.ogg'
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
@@ -309,9 +255,9 @@
 	range = 5
 	cooldown_min = 150
 	selection_type = "view"
-	sound = 'sound/magic/Repulse.ogg'
+	sound = 'sound/magic/repulse.ogg'
 	var/maxthrow = 5
-	var/sparkle_path = /obj/effect/overlay/temp/gravpush
+	var/sparkle_path = /obj/effect/temp_visual/gravpush
 
 	action_icon_state = "repulse"
 
@@ -336,25 +282,25 @@
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Weaken(stun_amt)
-				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
-	sound = 'sound/magic/Tail_swing.ogg'
+	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = 0
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	sparkle_path = /obj/effect/overlay/temp/dir_setting/tailsweep
+	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 
@@ -377,7 +323,7 @@
 	include_user = 1
 	selection_type = "view"
 	action_icon_state = "sacredflame"
-	sound = "sound/magic/Fireball.ogg"
+	sound = 'sound/magic/fleshtostone.ogg'
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)

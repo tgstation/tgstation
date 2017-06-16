@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -163,7 +163,7 @@
 /area/awaymission/beach)
 "aC" = (
 /obj/effect/mob_spawn/human/cook{
-	helmet = null;
+	head = null;
 	id_access = "Bartender";
 	id_job = "Bartender";
 	suit = /obj/item/clothing/suit/armor/vest;

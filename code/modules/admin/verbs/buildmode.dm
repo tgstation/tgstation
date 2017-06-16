@@ -114,47 +114,49 @@
 	return
 
 /datum/buildmode/proc/show_help(mob/user)
+	var/list/dat = list()
 	switch(mode)
 		if(BASIC_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button        = Construct / Upgrade"
-			user << "\blue Right Mouse Button       = Deconstruct / Delete / Downgrade"
-			user << "\blue Left Mouse Button + ctrl = R-Window"
-			user << "\blue Left Mouse Button + alt  = Airlock"
-			user << ""
-			user << "\blue Use the button in the upper left corner to"
-			user << "\blue change the direction of built objects."
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button        = Construct / Upgrade"
+			dat += "Right Mouse Button       = Deconstruct / Delete / Downgrade"
+			dat += "Left Mouse Button + ctrl = R-Window"
+			dat += "Left Mouse Button + alt  = Airlock"
+			dat += ""
+			dat += "Use the button in the upper left corner to"
+			dat += "change the direction of built objects."
+			dat += "***********************************************************"
 		if(ADV_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Right Mouse Button on buildmode button = Set object type"
-			user << "\blue Left Mouse Button on turf/obj          = Place objects"
-			user << "\blue Right Mouse Button                     = Delete objects"
-			user << ""
-			user << "\blue Use the button in the upper left corner to"
-			user << "\blue change the direction of built objects."
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Right Mouse Button on buildmode button = Set object type"
+			dat += "Left Mouse Button on turf/obj          = Place objects"
+			dat += "Right Mouse Button                     = Delete objects"
+			dat += ""
+			dat += "Use the button in the upper left corner to"
+			dat += "change the direction of built objects."
+			dat += "***********************************************************"
 		if(VAR_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Right Mouse Button on buildmode button = Select var(type) & value"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Set var(type) & value"
-			user << "\blue Right Mouse Button on turf/obj/mob     = Reset var's value"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Right Mouse Button on buildmode button = Select var(type) & value"
+			dat += "Left Mouse Button on turf/obj/mob      = Set var(type) & value"
+			dat += "Right Mouse Button on turf/obj/mob     = Reset var's value"
+			dat += "***********************************************************"
 		if(THROW_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Select"
-			user << "\blue Right Mouse Button on turf/obj/mob     = Throw"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on turf/obj/mob      = Select"
+			dat += "Right Mouse Button on turf/obj/mob     = Throw"
+			dat += "***********************************************************"
 		if(AREA_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Select corner"
-			user << "\blue Right Mouse Button on buildmode button = Select generator"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on turf/obj/mob      = Select corner"
+			dat += "Right Mouse Button on buildmode button = Select generator"
+			dat += "***********************************************************"
 		if(COPY_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
-			user << "\blue Right Mouse Button on obj/mob = Select target to copy"
-			user << "\blue ***********************************************************"
+			dat += "***********************************************************"
+			dat += "Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
+			dat += "Right Mouse Button on obj/mob = Select target to copy"
+			dat += "***********************************************************"
+	to_chat(user, "<font color='blue'>[dat.Join("\n")]</font>")
 
 /datum/buildmode/proc/change_settings(mob/user)
 	switch(mode)
@@ -185,7 +187,7 @@
 				if("number")
 					valueholder = input(user,"Enter variable value:" ,"Value", 123) as num
 				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as mob in mob_list
+					valueholder = input(user,"Enter variable value:" ,"Value") as mob in GLOB.mob_list
 				if("obj-reference")
 					valueholder = input(user,"Enter variable value:" ,"Value") as obj in world
 				if("turf-reference")
@@ -218,7 +220,7 @@
 	cornerA = null
 	cornerB = null
 
-/proc/togglebuildmode(mob/M in player_list)
+/proc/togglebuildmode(mob/M in GLOB.player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
@@ -284,7 +286,7 @@
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
 						WIN.setDir(WEST)
 					if(NORTHWEST)
-						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
+						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced/fulltile(get_turf(object))
 						WIN.setDir(NORTHWEST)
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
@@ -305,16 +307,20 @@
 		if(VAR_BUILDMODE)
 			if(left_click) //I cant believe this shit actually compiles.
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = valueholder
+					if(object.vv_edit_var(varholder, valueholder))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
-					user << "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>"
+					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 			if(right_click)
 				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = initial(object.vars[varholder])
+					if(object.vv_edit_var(varholder, initial(object.vars[varholder])))
+						log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
+					else
+						to_chat(user, "<span class='warning'>Varedit rejected</span>")
 				else
-					user << "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>"
+					to_chat(user, "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>")
 
 		if(THROW_BUILDMODE)
 			if(left_click)
@@ -335,7 +341,7 @@
 			if(left_click) //rectangular
 				if(cornerA && cornerB)
 					if(!generator_path)
-						user << "<span class='warning'>Select generator type first.</span>"
+						to_chat(user, "<span class='warning'>Select generator type first.</span>")
 					var/datum/mapGenerator/G = new generator_path
 					G.defineRegion(cornerA,cornerB,1)
 					G.generate()

@@ -14,7 +14,7 @@
 	var/tables_required = 2
 	active = FALSE
 
-/obj/machinery/power/emitter/energycannon/magical/New()
+/obj/machinery/power/emitter/energycannon/magical/Initialize()
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -65,7 +65,7 @@
 	var/never_spoken = TRUE
 	flags = NODECONSTRUCT
 
-/obj/structure/table/abductor/wabbajack/New()
+/obj/structure/table/abductor/wabbajack/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -126,9 +126,7 @@
 
 /obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
 	if(sleeper in sleepers)
-		sleeper << "<span class='revennotice'>While you slumber, you have \
-			the strangest dream, like you can see yourself from the outside.\
-			</span>"
+		to_chat(sleeper, "<span class='revennotice'>While you slumber, you have the strangest dream, like you can see yourself from the outside.</span>")
 		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
@@ -147,14 +145,13 @@
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	languages_spoken = ALL
-	languages_understood = ALL
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
+	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/drone/snowflake/bardrone/New()
+/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = 0
@@ -162,18 +159,17 @@
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
 	status_flags = GODMODE
-	languages_spoken = ALL
-	languages_understood = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
+	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid/New()
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
 	. = ..()
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
-	access_card.access |= access_cent_bar
+	access_card.access |= GLOB.access_cent_bar
 	access_card.flags |= NODROP
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
@@ -198,7 +194,7 @@
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Weaken(2)
 		M.throw_at(throwtarget, 5, 1,src)
-		M << "<span class='notice'>No climbing on the bar please.</span>"
+		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
 
@@ -214,5 +210,60 @@
 			return TRUE
 
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
-	if(ID && (access_cent_bar in ID.access))
+	if(ID && (GLOB.access_cent_bar in ID.access))
 		return TRUE
+
+//Luxury Shuttle Blockers
+
+/obj/effect/forcefield/luxury_shuttle
+	var/threshold = 500
+	var/static/list/approved_passengers = list()
+
+/obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target, height=0)
+	if(mover in approved_passengers)
+		return 1
+
+	if(!isliving(mover)) //No stowaways
+		return 0
+
+	var/total_cash = 0
+	var/list/counted_money = list()
+
+	for(var/obj/item/weapon/coin/C in mover.GetAllContents())
+		total_cash += C.value
+		counted_money += C
+		if(total_cash >= threshold)
+			break
+	for(var/obj/item/stack/spacecash/S in mover.GetAllContents())
+		total_cash += S.value * S.amount
+		counted_money += S
+		if(total_cash >= threshold)
+			break
+
+	if(total_cash >= threshold)
+		for(var/obj/I in counted_money)
+			qdel(I)
+
+		to_chat(mover, "Thank you for your payment! Please enjoy your flight.")
+		approved_passengers += mover
+		return 1
+	else
+		to_chat(mover, "You don't have enough money to enter the main shuttle. You'll have to fly coach.")
+		return 0
+
+/mob/living/simple_animal/hostile/bear/fightpit
+	name = "fight pit bear"
+	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
+	environment_smash = ENVIRONMENT_SMASH_NONE
+
+/obj/effect/decal/hammerandsickle
+	name = "hammer and sickle"
+	desc = "Communism powerful force."
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "communist"
+	layer = ABOVE_OPEN_TURF_LAYER
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/effect/decal/hammerandsickle/shuttleRotate(rotation)
+	setDir(angle2dir(rotation+dir2angle(dir))) // No parentcall, rest of the rotate code breaks the pixel offset.

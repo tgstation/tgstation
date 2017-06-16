@@ -4,7 +4,6 @@
 // https://creativecommons.org/licenses/by-nc-sa/2.0/legalcode
 // Original code by Zuhayr, Polaris Station, ported with modifications
 
-var/global/list/cards_against_space
 
 /obj/item/toy/cards/deck/cas
 	name = "\improper CAS deck (white)"
@@ -29,8 +28,7 @@ var/global/list/cards_against_space
 	card_text_file = "strings/cas_black.txt"
 
 /obj/item/toy/cards/deck/cas/New()
-	if(!cards_against_space)  //saves loading from the files every single time a new deck is created, but still lets each deck have a random assortment, it's purely an optimisation
-		cards_against_space = list("cas_white" = file2list("strings/cas_white.txt"),"cas_black" = file2list("strings/cas_black.txt"))
+	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
@@ -53,14 +51,14 @@ var/global/list/cards_against_space
 		P.name = "Blank Card"
 		P.card_icon = "cas_white"
 		cards += P
-	shuffle(cards) // distribute blank cards throughout deck
+	shuffle_inplace(cards) // distribute blank cards throughout deck
 	..()
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
 		return
 	if(cards.len == 0)
-		user << "<span class='warning'>There are no more cards to draw!</span>"
+		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
 		return
 	var/obj/item/toy/cards/singlecard/cas/H = new/obj/item/toy/cards/singlecard/cas(user.loc)
 	var/datum/playingcard/choice = cards[1]
@@ -80,8 +78,8 @@ var/global/list/cards_against_space
 /obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/cas))
 		var/obj/item/toy/cards/singlecard/cas/SC = I
-		if(!user.unEquip(SC))
-			user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
+		if(!user.temporarilyRemoveItemFromInventory(SC))
+			to_chat(user, "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>")
 			return
 		var/datum/playingcard/RC // replace null datum for the re-added card
 		RC = new()
@@ -107,11 +105,11 @@ var/global/list/cards_against_space
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
 	if (flipped)
-		user << "<span class='notice'>The card is face down.</span>"
+		to_chat(user, "<span class='notice'>The card is face down.</span>")
 	else if (blank)
-		user << "<span class='notice'>The card is blank. Write on it with a pen.</span>"
+		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
 	else
-		user << "<span class='notice'>The card reads: [name]</span>"
+		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -140,7 +138,7 @@ var/global/list/cards_against_space
 /obj/item/toy/cards/singlecard/cas/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(!blank)
-			user << "You cannot write on that card."
+			to_chat(user, "You cannot write on that card.")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext)

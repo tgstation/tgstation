@@ -11,7 +11,7 @@
 
 /datum/round_event/ghost_role/blob
 	announceWhen	= 12
-	role_name = "blob_overmind"
+	role_name = "blob overmind"
 	var/new_rate = 2
 
 /datum/round_event/ghost_role/blob/New(my_processing = TRUE, set_point_rate)
@@ -20,18 +20,18 @@
 		new_rate = set_point_rate
 
 /datum/round_event/ghost_role/blob/announce()
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak5.ogg')
 
 
 /datum/round_event/ghost_role/blob/spawn_role()
-	if(!blobstart.len)
+	if(!GLOB.blobstart.len)
 		return MAP_ERROR
 	var/list/candidates = get_candidates("blob", null, ROLE_BLOB)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
-	var/obj/structure/blob/core/BC = new/obj/structure/blob/core(pick(blobstart), new_blob.client, new_rate)
-	BC.overmind.blob_points = min(20 + player_list.len, BC.overmind.max_blob_points)
+	var/obj/structure/blob/core/BC = new/obj/structure/blob/core(pick(GLOB.blobstart), new_blob.client, new_rate)
+	BC.overmind.blob_points = min(20 + GLOB.player_list.len, BC.overmind.max_blob_points)
 	spawned_mobs += BC.overmind
 	message_admins("[key_name_admin(BC.overmind)] has been made into a blob overmind by an event.")
 	log_game("[key_name(BC.overmind)] was spawned as a blob overmind by an event.")

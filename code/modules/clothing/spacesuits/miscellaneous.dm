@@ -79,7 +79,6 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
@@ -308,3 +307,33 @@ Contains:
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-beserker"
 	item_state = "hardsuit0-beserker"
+
+/obj/item/clothing/head/helmet/space/fragile
+	name = "emergency space helmet"
+	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
+	icon_state = "syndicate-helm-orange"
+	item_state = "syndicate-helm-orange"
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
+	strip_delay = 65
+
+/obj/item/clothing/suit/space/fragile
+	name = "emergency space suit"
+	desc = "A bulky, air-tight suit meant to protect the user during emergency situations. It doesn't look very durable."
+	var/torn = FALSE
+	icon_state = "syndicate-orange"
+	item_state = "syndicate-orange"
+	slowdown = 2
+	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
+	strip_delay = 65
+
+/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(!torn && prob(50))
+		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
+		src.flags -= STOPSPRESSUREDMAGE
+		src.name = "torn [src]."
+		src.desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
+		src.torn = TRUE
+		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
+		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+

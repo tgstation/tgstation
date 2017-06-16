@@ -3,7 +3,7 @@
 
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
-	var/image/wet_overlay = null
+	var/mutable_appearance/wet_overlay
 
 /turf/open/indestructible
 	name = "floor"
@@ -29,10 +29,13 @@
 	baseturf = /turf/open/indestructible/necropolis
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 
-/turf/open/indestructible/necropolis/New()
-	..()
+/turf/open/indestructible/necropolis/Initialize()
+	. = ..()
 	if(prob(12))
 		icon_state = "necro[rand(2,3)]"
+
+/turf/open/indestructible/necropolis/air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
@@ -40,12 +43,10 @@
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 
-/turf/open/indestructible/hierophant/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
-
 /turf/open/indestructible/hierophant/two
+
+/turf/open/indestructible/hierophant/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
 
 /turf/open/indestructible/paper
 	name = "notebook floor"
@@ -59,11 +60,9 @@
 	current_cycle = times_fired
 
 	//cache some vars
-	var/datum/gas_mixture/air = src.air
-	air.holder = src
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
 
-	for(var/direction in cardinal)
+	for(var/direction in GLOB.cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)
 		if(!istype(enemy_tile))
 			if (atmos_adjacent_turfs)
@@ -111,19 +110,17 @@
 	air.temperature += temp
 	air_update_turf()
 
-/turf/open/freon_gas_act()
+/turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
-		if(!I.is_frozen) //let it go
+		if(!HAS_SECONDARY_FLAG(I, FROZEN)) //let it go
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
-		if(L.bodytemperature >= 10)
-			L.bodytemperature -= 10
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)
 	MakeSlippery(TURF_WET_PERMAFROST, 5)
 	return 1
 
-/turf/open/water_vapor_gas_act()
+/turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 	for(var/mob/living/simple_animal/slime/M in src)
@@ -155,8 +152,8 @@
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
 		if(!(lube&SLIDE_ICE))
-			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
-			C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+			C.log_message("<font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>", INDIVIDUAL_ATTACK_LOG)
 		if(!(lube&SLIDE_ICE))
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
@@ -188,18 +185,23 @@
 	wet = wet_setting
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
-			overlays -= wet_overlay
-			wet_overlay = null
+			cut_overlay(wet_overlay)
+		else
+			wet_overlay = mutable_appearance()
 		var/turf/open/floor/F = src
 		if(istype(F))
 			if(wet_setting == TURF_WET_PERMAFROST)
-				wet_overlay = image('icons/effects/water.dmi', src, "ice_floor")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "ice_floor"
 			else if(wet_setting == TURF_WET_ICE)
-				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
+				wet_overlay.icon = 'icons/turf/overlays.dmi'
+				wet_overlay.icon_state = "snowfloor"
 			else
-				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+				wet_overlay.icon = 'icons/effects/water.dmi'
+				wet_overlay.icon_state = "wet_floor_static"
 		else
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
+			wet_overlay.icon = 'icons/effects/water.dmi'
+			wet_overlay.icon_state = "wet_static"
 		add_overlay(wet_overlay)
 	HandleWet()
 
@@ -214,7 +216,7 @@
 		else
 			wet = TURF_DRY
 			if(wet_overlay)
-				overlays -= wet_overlay
+				cut_overlay(wet_overlay)
 
 /turf/open/proc/HandleWet()
 	if(!wet)
@@ -227,7 +229,7 @@
 		wet_time = MAXIMUM_WET_TIME
 	if(wet == TURF_WET_ICE && air.temperature > T0C)
 		for(var/obj/O in contents)
-			if(O.is_frozen)
+			if(HAS_SECONDARY_FLAG(O, FROZEN))
 				O.make_unfrozen()
 		MakeDry(TURF_WET_ICE)
 		MakeSlippery(TURF_WET_WATER)
@@ -258,4 +260,4 @@
 	if(!wet && wet_time)
 		wet_time = 0
 	if(wet)
-		addtimer(CALLBACK(src, .proc/HandleWet), 15)
+		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)

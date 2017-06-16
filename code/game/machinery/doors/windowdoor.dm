@@ -3,6 +3,8 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
+	layer = ABOVE_WINDOW_LAYER
+	closingLayer = ABOVE_WINDOW_LAYER
 	resistance_flags = ACID_PROOF
 	var/base_state = "left"
 	obj_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
@@ -68,7 +70,7 @@
 			else
 				do_animate("deny")
 		return
-	if (!( ticker ))
+	if (!( SSticker ))
 		return
 	var/mob/M = AM
 	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
@@ -93,6 +95,16 @@
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
+	if(istype(mover, /obj/structure/window))
+		var/obj/structure/window/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/structure/windoor_assembly))
+		var/obj/structure/windoor_assembly/W = mover
+		if(!valid_window_location(loc, W.ini_dir))
+			return FALSE
+	else if(istype(mover, /obj/machinery/door/window) && !valid_window_location(loc, mover.dir))
+		return FALSE
 	else
 		return 1
 
@@ -117,8 +129,6 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if(!ticker || !ticker.mode)
-		return 0
 	if(!forced)
 		if(!hasPower())
 			return 0
@@ -133,7 +143,7 @@
 	sleep(10)
 
 	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -166,9 +176,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+			playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
@@ -214,11 +224,11 @@
 	if(!(flags&NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver))
 			if(density || operating)
-				user << "<span class='warning'>You need to open the door to access the maintenance panel!</span>"
+				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
 			playsound(src.loc, I.usesound, 50, 1)
 			panel_open = !panel_open
-			user << "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>"
+			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
@@ -248,11 +258,11 @@
 						WA.created_name = src.name
 
 						if(emagged)
-							user << "<span class='warning'>You discard the damaged electronics.</span>"
+							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
 							qdel(src)
 							return
 
-						user << "<span class='notice'>You remove the airlock electronics.</span>"
+						to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
 						var/obj/item/weapon/electronics/airlock/ae
 						if(!electronics)
@@ -278,7 +288,7 @@
 		else
 			close(2)
 	else
-		user << "<span class='warning'>The door's motors resist your efforts to force it!</span>"
+		to_chat(user, "<span class='warning'>The door's motors resist your efforts to force it!</span>")
 
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)
@@ -318,7 +328,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
@@ -327,8 +337,12 @@
 	change_construction_value(-2)
 	return ..()
 
+/obj/machinery/door/window/clockwork/emp_act(severity)
+	if(prob(80/severity))
+		open()
+
 /obj/machinery/door/window/clockwork/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity
 
 /obj/machinery/door/window/clockwork/hasPower()

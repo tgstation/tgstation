@@ -1,4 +1,5 @@
-var/list/admin_ranks = list()								//list of all admin_rank datums
+GLOBAL_LIST_EMPTY(admin_ranks)								//list of all admin_rank datums
+GLOBAL_PROTECT(admin_ranks)
 
 /datum/admin_rank
 	var/name = "NoRank"
@@ -99,12 +100,12 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
-	admin_ranks.Cut()
+	GLOB.admin_ranks.Cut()
 
 	if(config.admin_legacy_system)
 		var/previous_rights = 0
 		//load text from file and process each line seperately
-		for(var/line in file2list("config/admin_ranks.txt"))
+		for(var/line in world.file2list("config/admin_ranks.txt"))
 			if(!line)
 				continue
 			if(findtextEx(line,"#",1,2))
@@ -114,7 +115,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
 			if(!R)
 				continue
-			admin_ranks += R
+			GLOB.admin_ranks += R
 
 			var/prev = findchar(line, "+-", next, 0)
 			while(prev)
@@ -124,29 +125,29 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			previous_rights = R.rights
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
-			diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+		if(!SSdbcore.Connect())
+			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
+			GLOB.world_game_log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
-		query.Execute()
-		while(query.NextRow())
-			var/rank_name = ckeyEx(query.item[1])
-			var/flags = query.item[2]
+		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
+		if(!query_load_admin_ranks.Execute())
+			return
+		while(query_load_admin_ranks.NextRow())
+			var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
+			var/flags = query_load_admin_ranks.item[2]
 			if(istext(flags))
 				flags = text2num(flags)
 			var/datum/admin_rank/R = new(rank_name, flags)
 			if(!R)
 				continue
-			admin_ranks += R
+			GLOB.admin_ranks += R
 
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
-	for(var/datum/admin_rank/R in admin_ranks)
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		msg += "\t[R.name]"
 		var/rights = rights2text(R.rights,"\n\t\t",R.adds,R.subs)
 		if(rights)
@@ -158,23 +159,23 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 /proc/load_admins(target = null)
 	//clear the datums references
 	if(!target)
-		admin_datums.Cut()
-		for(var/client/C in admins)
+		GLOB.admin_datums.Cut()
+		for(var/client/C in GLOB.admins)
 			C.remove_admin_verbs()
 			C.holder = null
-		admins.Cut()
+		GLOB.admins.Cut()
 		load_admin_ranks()
 		//Clear profile access
 		for(var/A in world.GetConfig("admin"))
 			world.SetConfig("APP/admin", A, null)
 
 	var/list/rank_names = list()
-	for(var/datum/admin_rank/R in admin_ranks)
+	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		rank_names[R.name] = R
 
 	if(config.admin_legacy_system)
 		//load text from file
-		var/list/lines = file2list("config/admins.txt")
+		var/list/lines = world.file2list("config/admins.txt")
 
 		//process each line seperately
 		for(var/line in lines)
@@ -197,21 +198,21 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				continue									//will occur if an invalid rank is provided
 			if(D.rank.rights & R_DEBUG) //grant profile access
 				world.SetConfig("APP/admin", ckey, "role=admin")
-			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_admins(). Reverting to legacy system."
-			diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+		if(!SSdbcore.Connect())
+			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
+			GLOB.world_game_log << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
-		query.Execute()
-		while(query.NextRow())
-			var/ckey = ckey(query.item[1])
-			var/rank = ckeyEx(query.item[2])
+		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		if(!query_load_admins.Execute())
+			return
+		while(query_load_admins.NextRow())
+			var/ckey = ckey(query_load_admins.item[1])
+			var/rank = ckeyEx(query_load_admins.item[2])
 			if(target && ckey != target)
 				continue
 
@@ -224,19 +225,19 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				continue									//will occur if an invalid rank is provided
 			if(D.rank.rights & R_DEBUG) //grant profile access
 				world.SetConfig("APP/admin", ckey, "role=admin")
-			D.associate(directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
+			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
-	for(var/ckey in admin_datums)
-		var/datum/admins/D = admin_datums[ckey]
+	for(var/ckey in GLOB.admin_datums)
+		var/datum/admins/D = GLOB.admin_datums[ckey]
 		msg += "\t[ckey] - [D.rank.name]\n"
 	testing(msg)
 	#endif
 
 
 #ifdef TESTING
-/client/verb/changerank(newrank in admin_ranks)
+/client/verb/changerank(newrank in GLOB.admin_ranks)
 	if(holder)
 		holder.rank = newrank
 	else
@@ -266,18 +267,18 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
 			if(!new_ckey)
 				return
-			if(new_ckey in admin_datums)
-				usr << "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>"
+			if(new_ckey in GLOB.admin_datums)
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>")
 				return
 			adm_ckey = new_ckey
 			task = "rank"
 		else
 			adm_ckey = ckey(href_list["ckey"])
 			if(!adm_ckey)
-				usr << "<font color='red'>Error: Topic 'editrights': No valid ckey</font>"
+				to_chat(usr, "<font color='red'>Error: Topic 'editrights': No valid ckey</font>")
 				return
 
-	var/datum/admins/D = admin_datums[adm_ckey]
+	var/datum/admins/D = GLOB.admin_datums[adm_ckey]
 
 	switch(task)
 		if("remove")
@@ -288,7 +289,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 					message_admins("[key_name_admin(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
 					log_admin("[key_name(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
 					return
-				admin_datums -= adm_ckey
+				GLOB.admin_datums -= adm_ckey
 				D.disassociate()
 
 				updateranktodb(adm_ckey, "player")
@@ -300,7 +301,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			var/datum/admin_rank/R
 
 			var/list/rank_names = list("*New Rank*")
-			for(R in admin_ranks)
+			for(R in GLOB.admin_ranks)
 				rank_names[R.name] = R
 
 			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
@@ -325,7 +326,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 					R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
 				else
 					R = new(new_rank)							//blank new admin_rank
-				admin_ranks += R
+				GLOB.admin_ranks += R
 
 			if(D)	//they were previously an admin
 				D.disassociate()	//existing admin needs to be disassociated
@@ -333,7 +334,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			else
 				D = new(R,adm_ckey)	//new admin
 
-			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
+			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
 			updateranktodb(adm_ckey, new_rank)
@@ -362,7 +363,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 
 			D.rank.process_keyword(keyword)
 
-			var/client/C = directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
+			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
 			D.associate(C)						//link up with the client and add verbs
 
 			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
@@ -372,11 +373,10 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	edit_admin_permissions()
 
 /datum/admins/proc/updateranktodb(ckey,newrank)
-	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if(!SSdbcore.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
-	query_update.Execute()
+	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	query_admin_rank_update.Execute()

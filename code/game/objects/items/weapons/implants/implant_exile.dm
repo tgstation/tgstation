@@ -13,18 +13,11 @@
 				<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant<BR>"}
 	return dat
 
-
 /obj/item/weapon/implanter/exile
 	name = "implanter (exile)"
-
-/obj/item/weapon/implanter/exile/New()
-	imp = new /obj/item/weapon/implant/exile( src )
-	..()
+	imp_type = /obj/item/weapon/implant/exile
 
 /obj/item/weapon/implantcase/exile
 	name = "implant case - 'Exile'"
 	desc = "A glass case containing an exile implant."
-
-/obj/item/weapon/implantcase/exile/New()
-	imp = new /obj/item/weapon/implant/exile(src)
-	..()
+	imp_type = /obj/item/weapon/implant/exile

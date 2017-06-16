@@ -10,9 +10,9 @@
 	// add an entry in change_appearance() if you add to here
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
-		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
+		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
-		"Laughter Demon")
+		"Laughter Demon", "Private Security Officer")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
@@ -22,7 +22,7 @@
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -37,7 +37,7 @@
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
 		return
-	user << "<span class='notice'>You right [src].</span>"
+	to_chat(user, "<span class='notice'>You right [src].</span>")
 	desc = initial(desc)
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
@@ -76,12 +76,12 @@
 	if(!crayon || !user)
 		return
 	if(pushed_over)
-		user << "<span class='warning'>Right [src] first!</span>"
+		to_chat(user, "<span class='warning'>Right [src] first!</span>")
 		return
 	if(crayon.check_empty(user))
 		return
 	if(crayon.is_capped)
-		user << "<span class='warning'>Take the cap off first!</span>"
+		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
 	if(!new_appearance || !crayon || !user.canUseTopic(src))
@@ -97,15 +97,15 @@
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
 		if("Assistant")
-			name = "[pick(first_names_male)] [pick(last_names)]"
+			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"
 		if("Clown")
-			name = pick(clown_names)
+			name = pick(GLOB.clown_names)
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
 			icon_state = "cutout_clown"
 		if("Mime")
-			name = pick(mime_names)
+			name = pick(GLOB.mime_names)
 			desc = "...(A cardboard cutout of a mime.)"
 			icon_state = "cutout_mime"
 		if("Traitor")
@@ -121,7 +121,7 @@
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
 		if("Clockwork Cultist")
-			name = "[pick(first_names_male)] [pick(last_names)]"
+			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
 			icon_state = "cutout_servant"
 		if("Revolutionary")
@@ -129,7 +129,7 @@
 			desc = "A cardboard cutout of a revolutionary."
 			icon_state = "cutout_viva"
 		if("Wizard")
-			name = "[pick(wizard_first)], [pick(wizard_second)]"
+			name = "[pick(GLOB.wizard_first)], [pick(GLOB.wizard_second)]"
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
 		if("Shadowling")
@@ -142,6 +142,10 @@
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
 				alpha = 75 //Spooky sneaking!
+		if("Xenomorph Maid")
+			name = "lusty xenomorph maid ([rand(1, 999)])"
+			desc = "A cardboard cutout of a xenomorph maid."
+			icon_state = "cutout_lusty"
 		if("Swarmer")
 			name = "Swarmer ([rand(1, 999)])"
 			desc = "A cardboard cutout of a swarmer."
@@ -151,7 +155,7 @@
 			desc = "A cardboard cutout of an ash walker."
 			icon_state = "cutout_free_antag"
 		if("Deathsquad Officer")
-			name = pick(commando_names)
+			name = pick(GLOB.commando_names)
 			desc = "A cardboard cutout of a death commando."
 			icon_state = "cutout_deathsquad"
 		if("Ian")
@@ -168,6 +172,10 @@
 			desc = "A cardboard cutout of a laughter demon."
 			icon = 'icons/mob/mob.dmi'
 			icon_state = "bowmon"
+		if("Private Security Officer")
+			name = "Private Security Officer"
+			desc = "A cardboard cutout of a private security officer."
+			icon_state = "cutout_ntsec"
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)

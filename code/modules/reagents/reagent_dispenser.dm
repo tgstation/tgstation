@@ -23,17 +23,17 @@
 	else
 		return ..()
 
-/obj/structure/reagent_dispensers/New()
+/obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
 	reagents.add_reagent(reagent_id, tank_volume)
-	..()
+	. = ..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	if(reagents.total_volume)
-		user << "<span class='notice'>It has [reagents.total_volume] units left.</span>"
+		to_chat(user, "<span class='notice'>It has [reagents.total_volume] units left.</span>")
 	else
-		user << "<span class='danger'>It's empty.</span>"
+		to_chat(user, "<span class='danger'>It's empty.</span>")
 
 
 /obj/structure/reagent_dispensers/proc/boom()
@@ -55,7 +55,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
-	desc = "A highly-pressurized water tank made to hold gargantuan amounts of water.."
+	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
 
@@ -84,34 +84,38 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/P)
 	..()
-	if(!qdeleted(src)) //wasn't deleted by the projectile's effects.
+	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
 			var/boom_message = "[key_name_admin(P.firer)] triggered a fueltank explosion via projectile."
-			bombers += boom_message
+			GLOB.bombers += boom_message
 			message_admins(boom_message)
-			log_game("[key_name(P.firer)] triggered a fueltank explosion via projectile.")
+			var/log_message = "triggered a fueltank explosion via projectile."
+			P.firer.log_message(log_message, INDIVIDUAL_ATTACK_LOG)
+			log_attack("[key_name(P.firer)] [log_message]")
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		if(!reagents.has_reagent("welding_fuel"))
-			user << "<span class='warning'>[src] is out of fuel!</span>"
+			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.welding)
 			if(W.reagents.has_reagent("welding_fuel", W.max_fuel))
-				user << "<span class='warning'>Your [W.name] is already full!</span>"
+				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
 			reagents.trans_to(W, W.max_fuel)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
-			update_icon()
+			W.update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-			var/message = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
-			bombers += message
-			message_admins(message)
-			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
+			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."
+			GLOB.bombers += message_admins
+			message_admins(message_admins)
+			var/message_log = "triggered a fueltank explosion via welding tool."
+			user.log_message(message_log, INDIVIDUAL_ATTACK_LOG)
+			log_attack("[key_name(user)] [message_log]")
 			boom()
 		return
 	return ..()
@@ -125,8 +129,8 @@
 	density = 0
 	reagent_id = "condensedcapsaicin"
 
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
+/obj/structure/reagent_dispensers/peppertank/Initialize()
+	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
 
@@ -142,11 +146,11 @@
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	..()
-	user << "There are [paper_cups ? paper_cups : "no"] paper cups left."
+	to_chat(user, "There are [paper_cups ? paper_cups : "no"] paper cups left.")
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/user)
 	if(!paper_cups)
-		user << "<span class='warning'>There aren't any cups left!</span>"
+		to_chat(user, "<span class='warning'>There aren't any cups left!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] takes a cup from [src].</span>", "<span class='notice'>You take a paper cup from [src].</span>")
 	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
@@ -162,7 +166,7 @@
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
 	explosion(src.loc,0,3,5,7,10)
-	if(!qdeleted(src))
+	if(!QDELETED(src))
 		qdel(src)
 
 

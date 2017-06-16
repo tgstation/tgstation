@@ -2,12 +2,11 @@
 	name = "monkey"
 	voice_name = "monkey"
 	verb_say = "chimpers"
+	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = ""
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	languages_spoken = MONKEY
-	languages_understood = MONKEY
 	ventcrawler = VENTCRAWLER_NUDE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
@@ -18,7 +17,7 @@
 
 
 
-/mob/living/carbon/monkey/New()
+/mob/living/carbon/monkey/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
@@ -31,10 +30,8 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
-/mob/living/carbon/monkey/Initialize()
-	..()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
@@ -44,6 +41,8 @@
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
+	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/ears
 	..()
 
 /mob/living/carbon/monkey/movement_delay()
@@ -133,15 +132,6 @@
 	protection = protection/7 //the rest of the body isn't covered.
 	return protection
 
-/mob/living/carbon/monkey/fully_heal(admin_revive = 0)
-	if(!getorganslot("lungs"))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
-	if(!getorganslot("tongue"))
-		var/obj/item/organ/tongue/T = new()
-		T.Insert(src)
-	..()
-
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot("lungs"))
 		return 0
@@ -149,3 +139,13 @@
 
 /mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
 	return 1
+
+/mob/living/carbon/monkey/angry
+	aggressive = TRUE
+
+/mob/living/carbon/monkey/angry/Initialize()
+	..()
+	if(prob(10))
+		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
+		equip_to_slot_or_del(helmet,slot_head)
+		helmet.attack_self(src) // todo encapsulate toggle

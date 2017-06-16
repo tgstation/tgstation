@@ -19,8 +19,7 @@
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(fireaxe)
-		qdel(fireaxe)
-		fireaxe = null
+		QDEL_NULL(fireaxe)
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
@@ -29,22 +28,22 @@
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(obj_integrity < max_integrity && WT.remove_fuel(2, user))
-			user << "<span class='notice'>You begin repairing [src].</span>"
+			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
 			playsound(loc, WT.usesound, 40, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
-				user << "<span class='notice'>You repair [src].</span>"
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
-			user << "<span class='warning'>[src] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 2)
-			user << "<span class='warning'>You need two glass sheets to fix [src]!</span>"
+			to_chat(user, "<span class='warning'>You need two glass sheets to fix [src]!</span>")
 			return
-		user << "<span class='notice'>You start fixing [src]...</span>"
+		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
 		if(do_after(user, 20, target = src) && G.use(2))
 			broken = 0
 			obj_integrity = max_integrity
@@ -53,13 +52,13 @@
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
-				user << "<span class='warning'>Unwield the [F.name] first.</span>"
+				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.drop_item())
 				return
 			fireaxe = F
 			F.forceMove(src)
-			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
+			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
 		else if(!broken)
@@ -73,9 +72,9 @@
 			if(broken)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
 			else
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(open)
@@ -88,7 +87,7 @@
 	if(!broken && !(flags & NODECONSTRUCT))
 		update_icon()
 		broken = TRUE
-		playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
 
@@ -111,12 +110,12 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			user << "<span class='caution'>You take the fire axe from the [name].</span>"
+			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)
-		user <<"<span class='warning'> The [name] won't budge!</span>"
+		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open
@@ -129,6 +128,15 @@
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
+
+/obj/structure/fireaxecabinet/attack_tk(mob/user)
+	if(locked)
+		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		return
+	else
+		open = !open
+		update_icon()
+		return
 
 /obj/structure/fireaxecabinet/update_icon()
 	cut_overlays()
@@ -156,10 +164,10 @@
 		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	user << "<span class = 'caution'> Resetting circuitry...</span>"
+	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
 	if(do_after(user, 20, target = src))
-		user << "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>"
+		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked
 		update_icon()
 
@@ -169,7 +177,7 @@
 	set src in oview(1)
 
 	if(locked)
-		usr <<"<span class='warning'> The [name] won't budge!</span>"
+		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open

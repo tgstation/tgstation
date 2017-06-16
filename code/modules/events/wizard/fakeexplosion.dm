@@ -6,7 +6,6 @@
 	earliest_start = 0
 
 /datum/round_event/wizard/fake_explosion/start()
-	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
-	spawn(100)
-		ticker.station_explosion_cinematic(1,"fake") //:o)
+	for(var/mob/M in GLOB.player_list)
+		M << 'sound/machines/alarm.ogg'
+	addtimer(CALLBACK(SSticker, /datum/controller/subsystem/ticker/.proc/station_explosion_cinematic, 1, "fake"), 100) //:o)

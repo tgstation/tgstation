@@ -70,13 +70,13 @@
 	if(!istype(target))
 		return
 	if(target.stat == 0)
-		user << "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>"
+		to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
 		return
 	if(target.buckled || target.has_buckled_mobs())
-		user << "<span class='warning'>The monkey is attached to something.</span>"
+		to_chat(user, "<span class='warning'>The monkey is attached to something.</span>")
 		return
 	qdel(target)
-	user << "<span class='notice'>You stuff the monkey into the machine.</span>"
+	to_chat(user, "<span class='notice'>You stuff the monkey into the machine.</span>")
 	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
@@ -84,19 +84,19 @@
 	grinded++
 	sleep(50)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
-	user << "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"
+	to_chat(user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>")
 
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(grinded >= required_grind)
-		user << "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>"
+		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
 			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
-		user << "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>"
+		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
-		user << "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>"
+		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
 	return

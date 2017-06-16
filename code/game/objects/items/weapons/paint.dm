@@ -4,7 +4,7 @@
 /obj/item/weapon/paint
 	gender= PLURAL
 	name = "paint"
-	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
+	desc = "Used to recolor floors and walls. Can be removed by the janitor."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_color = "FFFFFF"
@@ -92,6 +92,7 @@
 /obj/item/weapon/paint/paint_remover
 	gender =  PLURAL
 	name = "paint remover"
+	desc = "Used to remove color from floors and walls."
 	icon_state = "paint_neutral"
 
 /obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user, proximity)

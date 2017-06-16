@@ -8,13 +8,13 @@
 	icon_state = "rare_pepe"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/clockwork/New()
-	..()
+/obj/item/clockwork/Initialize()
+	. = ..()
 	ratvar_act()
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/item/clockwork/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/item/clockwork/examine(mob/user)

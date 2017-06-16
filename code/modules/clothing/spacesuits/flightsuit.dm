@@ -18,11 +18,13 @@
 	var/icon_state_boost = "flightpack_boost"
 	var/item_state_boost = "flightpack_boost"
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 75)
 
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = FIRE_PROOF
+
+	var/processing_mode = FLIGHTSUIT_PROCESSING_FULL
 
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null
 	var/mob/living/carbon/human/wearer = null
@@ -100,17 +102,19 @@
 	var/obj/item/weapon/stock_parts/matter_bin/part_bin = null
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
+	var/atom/movable/dragging_through = FALSE
 
 
 //Start/Stop processing the item to use momentum and flight mechanics.
-/obj/item/device/flightpack/New()
+/obj/item/device/flightpack/Initialize()
 	ion_trail = new
 	ion_trail.set_up(src)
 	START_PROCESSING(SSflightpacks, src)
-	..()
 	update_parts()
+	sync_processing(SSflightpacks)
+	..()
 
-/obj/item/device/flightpack/full/New()
+/obj/item/device/flightpack/full/Initialize()
 	part_manip = new /obj/item/weapon/stock_parts/manipulator/pico(src)
 	part_scan = new /obj/item/weapon/stock_parts/scanning_module/phasic(src)
 	part_cap = new /obj/item/weapon/stock_parts/capacitor/super(src)
@@ -118,6 +122,18 @@
 	part_bin = new /obj/item/weapon/stock_parts/matter_bin/super(src)
 	assembled = TRUE
 	..()
+
+/obj/item/device/flightpack/proc/sync_processing(datum/controller/subsystem/processing/flightpacks/FPS)
+	processing_mode = FPS.flightsuit_processing
+	if(processing_mode == FLIGHTSUIT_PROCESSING_NONE)
+		momentum_x = 0
+		momentum_y = 0
+		momentum_speed_x = 0
+		momentum_speed_y = 0
+		momentum_speed = 0
+		boost_charge = 0
+		boost = FALSE
+		update_slowdown()
 
 /obj/item/device/flightpack/proc/update_parts()
 	boost_chargerate = initial(boost_chargerate)
@@ -173,8 +189,8 @@
 		damage = emp_weak_damage
 	if(emp_damage <= (emp_disable_threshold * 1.5))
 		emp_damage += damage
-	wearer << "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>"
-	wearer << "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>"
+	to_chat(wearer, "<span class='userdanger'>Flightpack: BZZZZZZZZZZZT</span>")
+	to_chat(wearer, "<span class='warning'>Flightpack: WARNING: Class [severity] EMP detected! Circuit damage at [(100/emp_disable_threshold)*emp_damage]!</span>")
 
 //action BUTTON CODE
 /obj/item/device/flightpack/ui_action_click(owner, action)
@@ -246,6 +262,10 @@
 /obj/item/device/flightpack/proc/momentum_drift()
 	if(!flight)
 		return FALSE
+	if(wearer.pulling)
+		dragging_through = wearer.pulling
+	else if(dragging_through)
+		dragging_through = null
 	var/drift_dir_x = 0
 	var/drift_dir_y = 0
 	if(momentum_x > 0)
@@ -264,10 +284,14 @@
 				losecontrol()
 			momentum_decay()
 			for(var/i in 1 to momentum_speed)
+				var/turf/oldturf = get_turf(wearer)
 				if(momentum_speed_x >= i)
 					step(wearer, drift_dir_x)
 				if(momentum_speed_y >= i)
 					step(wearer, drift_dir_y)
+				if(dragging_through && oldturf)
+					dragging_through.forceMove(oldturf)
+					wearer.pulling = dragging_through
 				sleep(1)
 
 //Make the wearer lose some momentum.
@@ -302,9 +326,6 @@
 			disable_flight(1)
 		if(!suit)
 			disable_flight(1)
-		if(!resync)
-			addtimer(CALLBACK(src, .proc/resync), 600)
-			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
 	if(!pressure && brake)
@@ -316,12 +337,6 @@
 			stabilizer = FALSE
 			usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
 
-//Resync the suit
-/obj/item/device/flightpack/proc/resync()
-	resync = FALSE
-	suit.resync()
-
-//How fast should the wearer be?
 /obj/item/device/flightpack/proc/update_slowdown()
 	if(!flight)
 		suit.slowdown = slowdown_ground
@@ -330,22 +345,13 @@
 		suit.slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(!suit)
+	if(!suit || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
-	update_slowdown()
-	update_icon()
 	check_conditions()
 	calculate_momentum_speed()
 	momentum_drift()
 	handle_boost()
 	handle_damage()
-	handle_flight()
-
-/obj/item/device/flightpack/proc/handle_flight()
-	if(!flight)
-		return FALSE
-	if(wearer)
-		wearer.float(TRUE)
 
 /obj/item/device/flightpack/proc/handle_damage()
 	if(crash_damage)
@@ -400,7 +406,6 @@
 	if(boost_charge < boost_maxcharge)
 		boost_charge = Clamp(boost_charge+boost_chargerate, 0, boost_maxcharge)
 
-
 /obj/item/device/flightpack/proc/cycle_power()
 	if(powersetting < powersetting_high)
 		powersetting++
@@ -442,7 +447,7 @@
 	wearer.visible_message("[wearer] is knocked flying by the impact!")
 
 /obj/item/device/flightpack/proc/flight_impact(atom/unmovablevictim, crashdir)	//Yes, victim.
-	if((unmovablevictim == wearer) || crashing)
+	if((unmovablevictim == wearer) || crashing || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	crashing = TRUE
 	var/crashpower = 0
@@ -469,6 +474,7 @@
 			return FALSE
 		if(L.buckled)
 			wearer.visible_message("<span class='warning'>[wearer] reflexively flies over [L]!</span>")
+			wearer.forceMove(get_turf(L))
 			crashing = FALSE
 			return FALSE
 		suit.user.forceMove(get_turf(unmovablevictim))
@@ -526,8 +532,10 @@
 	spawn()
 		door.Open()
 	wearer.forceMove(get_turf(door))
+	if(dragging_through)
+		dragging_through.forceMove(get_turf(door))
+		wearer.pulling = dragging_through
 	wearer.visible_message("<span class='boldnotice'>[wearer] rolls to their sides and slips past [door]!</span>")
-
 
 /obj/item/device/flightpack/proc/crash_grille(obj/structure/grille/target)
 	target.hitby(wearer)
@@ -551,37 +559,21 @@
 		spawn()
 			A.open()
 		wearer.visible_message("<span class='warning'>[wearer] rolls sideways and slips past [A]</span>")
-		wearer.forceMove(get_turf(A))
+		var/turf/target = get_turf(A)
+		if(istype(A, /obj/machinery/door/window) && (get_turf(wearer) == get_turf(A)))
+			target = get_step(A, A.dir)
+		wearer.forceMove(target)
+		if(dragging_through)
+			dragging_through.forceMove(target)
+			wearer.pulling = dragging_through
 	return pass
 
 
 /obj/item/device/flightpack/proc/mobknockback(mob/living/victim, power, direction)
 	if(!ismob(victim))
 		return FALSE
-	var/knockmessage = "<span class='warning'>[victim] is knocked back by [wearer] as they narrowly avoid a collision!"
-	if(power == 1)
-		knockmessage = "<span class='warning'>[wearer] soars into [victim], pushing them away!"
-	var/knockback = 0
-	var/stun = boost * 2 + (power - 2)
-	if((stun >= 0) || (power == 3))
-		knockmessage += " [wearer] dashes across [victim] at full impulse, knocking them [stun ? "down" : "away"]!"	//Impulse...
-	knockmessage += "</span>"
-	knockback += power
-	knockback += (part_manip.rating / 2)
-	knockback += (part_bin.rating / 2)
-	knockback += boost*2
-	switch(power)
-		if(1)
-			knockback = 1
-		if(2)
-			knockback /= 1.5
-	var/throwdir = pick(alldirs)
-	var/turf/target = get_step(victim, throwdir)
-	for(var/i in 1 to (knockback-1))
-		target = get_step(target, throwdir)
-	wearer.visible_message(knockmessage)
-	victim.throw_at(target, knockback, 1)
-	victim.Weaken(stun)
+	wearer.forceMove(get_turf(victim))
+	wearer.visible_message("<span class='notice'>[wearer] flies over [victim]!</span>")
 
 /obj/item/device/flightpack/proc/victimknockback(atom/movable/victim, power, direction)
 	if(!victim)
@@ -606,7 +598,7 @@
 	for(var/i in 1 to knockback)
 		target = get_step(target, direction)
 	for(var/i in 1 to knockback/3)
-		target = get_step(target, pick(alldirs))
+		target = get_step(target, pick(GLOB.alldirs))
 	if(knockback)
 		victim.throw_at(target, knockback, part_manip.rating)
 	if(isobj(victim))
@@ -624,7 +616,7 @@
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
 				sleep(2)
-				step(wearer, pick(cardinal))
+				step(wearer, pick(GLOB.cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
@@ -643,6 +635,8 @@
 	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
 	usermessage("ENGAGING FLIGHT ENGINES.")
+	update_slowdown()
+	wearer.floating = TRUE
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = TRUE
@@ -659,6 +653,8 @@
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
+		update_slowdown()
+		wearer.floating = FALSE
 		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
 		ion_trail.stop()
@@ -667,6 +663,9 @@
 		flight = FALSE
 		if(suit.shoes)
 			suit.shoes.toggle(FALSE)
+		if(isturf(wearer.loc))
+			var/turf/T = wearer.loc
+			T.Entered(src)
 	else
 		if(override_safe)
 			disable_flight(TRUE)
@@ -738,11 +737,13 @@
 	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
 	boost = TRUE
 	update_slowdown()
+	update_icon()
 
 /obj/item/device/flightpack/proc/deactivate_booster()
 	usermessage("Boosters disengaged!")
 	boost = FALSE
 	update_slowdown()
+	update_icon()
 
 /obj/item/device/flightpack/proc/enable_airbrake()
 	if(wearer)
@@ -781,13 +782,13 @@
 
 /obj/item/device/flightpack/proc/usermessage(message, urgency = 0)
 	if(urgency == 0)
-		wearer << "\icon[src]|<span class='boldnotice'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='boldnotice'>[message]</span>")
 	if(urgency == 1)
-		wearer << "\icon[src]|<span class='warning'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='warning'>[message]</span>")
 	if(urgency == 2)
-		wearer << "\icon[src]|<span class='boldwarning'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='boldwarning'>[message]</span>")
 	if(urgency == 3)
-		wearer << "\icon[src]|<span class='userdanger'>[message]</span>"
+		to_chat(wearer, "[bicon(src)]|<span class='userdanger'>[message]</span>")
 
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
 	if(ishuman(user) && !ishuman(src.loc))
@@ -796,43 +797,38 @@
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
 					part_manip = null
-				I.loc = src
 				part_manip = I
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
 					part_scan = null
-				I.loc = src
 				part_scan = I
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
 					part_laser = null
-				I.loc = src
 				part_laser = I
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
 					part_bin = null
-				I.loc = src
 				part_bin = I
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
 			usermessage("[I] has been sucessfully installed into systems.")
-			if(user.unEquip(I))
+			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
 					part_cap = null
-				I.loc = src
 				part_cap = I
 	update_parts()
 	..()
@@ -939,17 +935,17 @@
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, urgency = 0)
 	if(!urgency)
-		user << "\icon[src]<span class='notice'>|[message]</span>"
+		to_chat(user, "[bicon(src)]<span class='notice'>|[message]</span>")
 	else if(urgency == 1)
-		user << "\icon[src]<span class='warning'>|[message]</span>"
+		to_chat(user, "[bicon(src)]<span class='warning'>|[message]</span>")
 	else if(urgency == 2)
-		user << "\icon[src]<span class='userdanger'>|[message]</span>"
+		to_chat(user, "[bicon(src)]<span class='userdanger'>|[message]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
 	..()
-	user << "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>"
-	user << "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>"
-	user << "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>"
+	to_chat(user, "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>")
+	to_chat(user, "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>")
+	to_chat(user, "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
@@ -1084,7 +1080,7 @@
 		pack.flags &= ~NODROP
 		resync()
 		if(user)
-			user.unEquip(pack, 1)
+			user.transferItemToLoc(pack, src, TRUE)
 			user.update_inv_wear_suit()
 			user.visible_message("<span class='notice'>[user]'s [pack.name] detaches from their back and retracts into their [src]!</span>")
 	pack.loc = src
@@ -1115,7 +1111,7 @@
 	shoes.flags &= ~NODROP
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	if(user)
-		user.unEquip(shoes, 1)
+		user.transferItemToLoc(shoes, src, TRUE)
 		user.update_inv_wear_suit()
 		user.visible_message("<span class='notice'>[user]'s [shoes.name] retracts back into their [name]!</span>")
 	shoes.loc = src
@@ -1151,7 +1147,7 @@
 	usermessage("You detach the flightpack.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_pack(obj/item/device/flightpack/F)
-	F.loc = src
+	F.forceMove(src)
 	pack = F
 	pack.relink_suit(src)
 	usermessage("You attach and fasten the flightpack.")
@@ -1163,7 +1159,7 @@
 	usermessage("You detach the flight shoes.")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/attach_shoes(obj/item/clothing/shoes/flightshoes/S)
-	S.loc = src
+	S.forceMove(src)
 	shoes = S
 	shoes.relink_suit(src)
 	usermessage("You attach and fasten a pair of flight shoes.")
@@ -1229,14 +1225,14 @@
 			addmsg += english_list(addmsglist)
 			usermessage("The flightpack you are trying to install is not fully assembled and operational![addmsg].", 1)
 			return FALSE
-		if(user.unEquip(F))
+		if(user.temporarilyRemoveItemFromInventory(F))
 			attach_pack(F)
 	if(istype(I, /obj/item/clothing/shoes/flightshoes))
 		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
 			usermessage("There are already shoes installed!", 1)
 			return FALSE
-		if(user.unEquip(S))
+		if(user.temporarilyRemoveItemFromInventory(S))
 			attach_shoes(S)
 	..()
 
@@ -1249,6 +1245,7 @@
 	item_color = "flight"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	brightness_on = 7
+	light_color = "#30ffff"
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
@@ -1259,13 +1256,13 @@
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/equipped(mob/living/carbon/human/wearer, slot)
 	..()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.add_hud_to(wearer)
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/dropped(mob/living/carbon/human/wearer)
 	..()
 	for(var/hudtype in datahuds)
-		var/datum/atom_hud/H = huds[hudtype]
+		var/datum/atom_hud/H = GLOB.huds[hudtype]
 		H.remove_hud_from(wearer)
 	if(zoom)
 		toggle_zoom(wearer, TRUE)
@@ -1277,13 +1274,13 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/flightsuit/proc/toggle_zoom(mob/living/user, force_off = FALSE)
 	if(zoom || force_off)
-		user.client.view = world.view
-		user << "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>"
+		user.client.change_view(world.view)
+		to_chat(user, "<span class='boldnotice'>Disabling smart zooming image enhancement...</span>")
 		zoom = FALSE
 		return FALSE
 	else
-		user.client.view = zoom_range
-		user << "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>"
+		user.client.change_view(zoom_range)
+		to_chat(user, "<span class='boldnotice'>Enabling smart zooming image enhancement!</span>")
 		zoom = TRUE
 		return TRUE
 

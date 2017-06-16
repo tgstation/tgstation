@@ -3,16 +3,16 @@
 // Gravity Generator
 //
 
-var/list/gravity_generators = list() // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
+GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding new gravity generators to the list, and keying it with the z level.
 
-var/const/POWER_IDLE = 0
-var/const/POWER_UP = 1
-var/const/POWER_DOWN = 2
+#define POWER_IDLE 0
+#define POWER_UP 1
+#define POWER_DOWN 2
 
-var/const/GRAV_NEEDS_SCREWDRIVER = 0
-var/const/GRAV_NEEDS_WELDING = 1
-var/const/GRAV_NEEDS_PLASTEEL = 2
-var/const/GRAV_NEEDS_WRENCH = 3
+#define GRAV_NEEDS_SCREWDRIVER 0
+#define GRAV_NEEDS_WELDING 1
+#define GRAV_NEEDS_PLASTEEL 2
+#define GRAV_NEEDS_WRENCH 3
 
 //
 // Abstract Generator
@@ -20,7 +20,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator
 	name = "gravitational generator"
-	desc = "A device which produces a gravaton field when set up."
+	desc = "A device which produces a graviton field when set up."
 	icon = 'icons/obj/machines/gravity_generator.dmi'
 	anchored = 1
 	density = 1
@@ -69,7 +69,6 @@ var/const/GRAV_NEEDS_WRENCH = 3
 /obj/machinery/gravity_generator/part/Destroy()
 	if(main_part)
 		qdel(main_part)
-		return QDEL_HINT_LETMELIVE
 	set_broken()
 	return ..()
 
@@ -99,7 +98,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 //
 
 /obj/machinery/gravity_generator/main/station/Initialize()
-	..()
+	. = ..()
 	setup_parts()
 	middle.add_overlay("activated")
 	update_list()
@@ -132,12 +131,13 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/broken_state = 0
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
-	investigate_log("was destroyed!", "gravity")
+	investigate_log("was destroyed!", INVESTIGATE_GRAVITY)
 	on = 0
 	update_list()
 	for(var/obj/machinery/gravity_generator/part/O in parts)
 		O.main_part = null
-		qdel(O)
+		if(!QDESTROYING(O))
+			qdel(O)
 	return ..()
 
 /obj/machinery/gravity_generator/main/proc/setup_parts()
@@ -173,7 +173,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	breaker = 0
 	set_power()
 	set_state(0)
-	investigate_log("has broken down.", "gravity")
+	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
 	..()
@@ -191,7 +191,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	switch(broken_state)
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
-				user << "<span class='notice'>You secure the screws of the framework.</span>"
+				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
 				playsound(src.loc, I.usesound, 50, 1)
 				broken_state++
 				update_icon()
@@ -200,28 +200,28 @@ var/const/GRAV_NEEDS_WRENCH = 3
 			if(istype(I, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.remove_fuel(1, user))
-					user << "<span class='notice'>You mend the damaged framework.</span>"
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
+					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 					broken_state++
 					update_icon()
 				else if(WT.isOn())
-					user << "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>"
+					to_chat(user, "<span class='warning'>You don't have enough fuel to mend the damaged framework!</span>")
 				return
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
 				if(PS.get_amount() >= 10)
 					PS.use(10)
-					user << "<span class='notice'>You add the plating to the framework.</span>"
+					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 					broken_state++
 					update_icon()
 				else
-					user << "<span class='warning'>You need 10 sheets of plasteel!</span>"
+					to_chat(user, "<span class='warning'>You need 10 sheets of plasteel!</span>")
 				return
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
-				user << "<span class='notice'>You secure the plating to the framework.</span>"
+				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
 				playsound(src.loc, I.usesound, 75, 1)
 				set_fix()
 				return
@@ -263,7 +263,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 	if(href_list["gentoggle"])
 		breaker = !breaker
-		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
+		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", INVESTIGATE_GRAVITY)
 		set_power()
 		src.updateUsrDialog()
 
@@ -271,7 +271,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 /obj/machinery/gravity_generator/main/power_change()
 	..()
-	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", "gravity")
+	investigate_log("has [stat & NOPOWER ? "lost" : "regained"] power.", INVESTIGATE_GRAVITY)
 	set_power()
 
 /obj/machinery/gravity_generator/main/get_status()
@@ -293,7 +293,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		new_state = 1
 
 	charging_state = new_state ? POWER_UP : POWER_DOWN // Startup sequence animation.
-	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", "gravity")
+	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", INVESTIGATE_GRAVITY)
 	update_icon()
 
 // Set the state of the gravity.
@@ -303,17 +303,18 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	use_power = on ? 2 : 1
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = 0
-	var/area/area = get_area(src)
-	if(on && ticker && ticker.current_state == GAME_STATE_PLAYING) // If we turned on and the game is live.
-		if(gravity_in_level() == 0)
-			alert = 1
-			investigate_log("was brought online and is now producing gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought online. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-	else
-		if(gravity_in_level() == 1)
-			alert = 1
-			investigate_log("was brought offline and there is now no gravity for this level.", "gravity")
-			message_admins("The gravity generator was brought offline with no backup generator. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+	var/area/A = get_area(src)
+	if(SSticker.IsRoundInProgress())
+		if(on) // If we turned on and the game is live.
+			if(gravity_in_level() == 0)
+				alert = 1
+				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
+				message_admins("The gravity generator was brought online [A][ADMIN_COORDJMP(src)]")
+		else
+			if(gravity_in_level() == 1)
+				alert = 1
+				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
+				message_admins("The gravity generator was brought offline with no backup generator. [A][ADMIN_COORDJMP(src)]")
 
 	update_icon()
 	update_list()
@@ -338,7 +339,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
+				playsound(src.loc, 'sound/effects/empulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm." spam.
@@ -371,7 +372,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		if(M.z != z)
 			continue
 		M.update_gravity(M.mob_has_gravity())
@@ -383,19 +384,19 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(gravity_generators["[T.z]"])
-		return length(gravity_generators["[T.z]"])
+	if(GLOB.gravity_generators["[T.z]"])
+		return length(GLOB.gravity_generators["[T.z]"])
 	return 0
 
 /obj/machinery/gravity_generator/main/proc/update_list()
 	var/turf/T = get_turf(src.loc)
 	if(T)
-		if(!gravity_generators["[T.z]"])
-			gravity_generators["[T.z]"] = list()
+		if(!GLOB.gravity_generators["[T.z]"])
+			GLOB.gravity_generators["[T.z]"] = list()
 		if(on)
-			gravity_generators["[T.z]"] |= src
+			GLOB.gravity_generators["[T.z]"] |= src
 		else
-			gravity_generators["[T.z]"] -= src
+			GLOB.gravity_generators["[T.z]"] -= src
 
 // Misc
 

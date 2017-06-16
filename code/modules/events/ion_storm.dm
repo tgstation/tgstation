@@ -8,38 +8,54 @@
 	min_players = 2
 
 /datum/round_event/ion_storm
+	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
+	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
+	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
+	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
 	var/botEmagChance = 10
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
 
-/datum/round_event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
-	src.botEmagChance = botEmagChance
-	src.announceEvent = announceEvent
-	src.ionMessage = ionMessage
-	src.ionAnnounceChance = ionAnnounceChance
-	..()
+/datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
+	replaceLawsetChance = 0
+	removeRandomLawChance = 0
+	removeDontImproveChance = 0
+	shuffleLawsChance = 0
+	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce()
 	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/AI/ionstorm.ogg')
+		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
 
 
 /datum/round_event/ion_storm/start()
 	//AI laws
-	for(var/mob/living/silicon/ai/M in living_mob_list)
+	for(var/mob/living/silicon/ai/M in GLOB.living_mob_list)
+		M.laws_sanity_check()
 		if(M.stat != 2 && M.see_in_dark != 0)
+			if(prob(replaceLawsetChance))
+				M.laws.pick_weighted_lawset()
+
+			if(prob(removeRandomLawChance))
+				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
+
 			var/message = generate_ion_law(ionMessage)
 			if(message)
-				M.add_ion_law(message)
-				log_game("ION law added to [M]: [message]")
-				M << "<br>"
-				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
-				M << "<br>"
+				if(prob(removeDontImproveChance))
+					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+				else
+					M.add_ion_law(message)
+
+			if(prob(shuffleLawsChance))
+				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
+
+			log_game("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
+			M.post_lawchange()
 
 	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
+		for(var/mob/living/simple_animal/bot/bot in GLOB.living_mob_list)
 			if(prob(botEmagChance))
 				bot.emag_act()
 
@@ -91,6 +107,7 @@
 	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
 	var/ionfood = pick_list(ION_FILE, "ionfood")
+	var/iondrinks = pick_list(ION_FILE, "iondrinks")
 
 	var/message = ""
 
@@ -311,15 +328,17 @@
 		if(24 to 26) //The AI must always
 			message = "YOU MUST ALWAYS [ionmust]"
 
-		if(27 to 28) //Humans must eat X to survive
-			switch(rand(1,4)) //What is X?
+		if(27 to 28) //Humans must consume X to survive
+			switch(rand(1,5)) //What is X?
 				if(1) //X is a food
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionfood] TO SURVIVE"
-				if(2) //X is an object
+				if(2) //X is a drink
+					message = "HUMANS MUST DRINK [ionadjectiveshalf][iondrinks] TO SURVIVE"
+				if(3) //X is an object
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionobjects] TO SURVIVE"
-				if(3) //X is a threat
+				if(4) //X is a threat
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ionthreats] TO SURVIVE"
-				if(4) //X is a job
+				if(5) //X is a job
 					message = "HUMANS MUST EAT [ionadjectiveshalf][ioncrew1] TO SURVIVE"
 
 		if(29 to 31) //Change jobs or ranks
@@ -545,7 +564,7 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-							
+
 	return message
 
 #undef ION_RANDOM

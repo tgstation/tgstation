@@ -5,7 +5,7 @@
 	desc = "It's a storage unit for formal clothing."
 	icon_door = "black"
 
-/obj/structure/closet/gmcloset/New()
+/obj/structure/closet/gmcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/head/that(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
@@ -15,8 +15,8 @@
 	new /obj/item/clothing/under/sl_suit(src)
 	new /obj/item/clothing/under/rank/bartender(src)
 	new /obj/item/clothing/under/rank/bartender(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -33,14 +33,14 @@
 	desc = "It's a storage unit for foodservice garments and mouse traps."
 	icon_door = "black"
 
-/obj/structure/closet/chefcloset/New()
+/obj/structure/closet/chefcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/clothing/under/waiter(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
 	new /obj/item/device/radio/headset/headset_srv(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/tie/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
+	new /obj/item/clothing/accessory/waistcoat(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/apron/chef(src)
 	new /obj/item/clothing/head/soft/mime(src)
@@ -57,13 +57,14 @@
 	desc = "It's a storage unit for janitorial clothes and gear."
 	icon_door = "mixed"
 
-/obj/structure/closet/jcloset/New()
+/obj/structure/closet/jcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/janitor(src)
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
 	new /obj/item/weapon/paint/paint_remover(src)
+	new /obj/item/weapon/melee/flyswatter(src)
 	new /obj/item/device/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/caution(src)
@@ -81,7 +82,7 @@
 	desc = "It's a storage unit for courtroom apparel and items."
 	icon_door = "blue"
 
-/obj/structure/closet/lawcloset/New()
+/obj/structure/closet/lawcloset/PopulateContents()
 	..()
 	new /obj/item/clothing/under/lawyer/female(src)
 	new /obj/item/clothing/under/lawyer/black(src)
@@ -94,17 +95,15 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
-	new /obj/item/clothing/tie/lawyers_badge(src)
-	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/accessory/lawyers_badge(src)
+	new /obj/item/clothing/accessory/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
 	desc = "It's a storage unit for Nanotrasen-approved religious attire."
 	icon_door = "black"
 
-/obj/structure/closet/wardrobe/chaplain_black/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
@@ -131,19 +130,19 @@
 	max_integrity = 70
 	horizontal = TRUE
 	delivery_icon = "deliverycrate"
+	material_drop = /obj/item/stack/sheet/mineral/wood
+	material_drop_amount = 5
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
 	icon_door = "red"
 
-/obj/structure/closet/wardrobe/red/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/red/PopulateContents()
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/weapon/storage/backpack/security(src)
 	new /obj/item/weapon/storage/backpack/satchel/sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/sec(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/sec(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/security(src)
 	for(var/i in 1 to 3)
@@ -161,9 +160,7 @@
 	name = "cargo wardrobe"
 	icon_door = "orange"
 
-/obj/structure/closet/wardrobe/cargotech/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/cargotech/PopulateContents()
 	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/cargotech(src)
@@ -179,10 +176,8 @@
 	name = "atmospherics wardrobe"
 	icon_door = "atmos_wardrobe"
 
-/obj/structure/closet/wardrobe/atmospherics_yellow/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
+/obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
+	new /obj/item/weapon/storage/backpack/duffelbag/engineering(src)
 	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	for(var/i in 1 to 3)
@@ -197,10 +192,8 @@
 	name = "engineering wardrobe"
 	icon_door = "yellow"
 
-/obj/structure/closet/wardrobe/engineering_yellow/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
+/obj/structure/closet/wardrobe/engineering_yellow/PopulateContents()
+	new /obj/item/weapon/storage/backpack/duffelbag/engineering(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
@@ -217,10 +210,8 @@
 /obj/structure/closet/wardrobe/white/medical
 	name = "medical doctor's wardrobe"
 
-/obj/structure/closet/wardrobe/white/medical/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
+/obj/structure/closet/wardrobe/white/medical/PopulateContents()
+	new /obj/item/weapon/storage/backpack/duffelbag/med(src)
 	new /obj/item/weapon/storage/backpack/medic(src)
 	new /obj/item/weapon/storage/backpack/satchel/med(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
@@ -245,9 +236,7 @@
 	name = "robotics wardrobe"
 	icon_door = "black"
 
-/obj/structure/closet/wardrobe/robotics_black/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/robotics_black/PopulateContents()
 	new /obj/item/clothing/glasses/hud/diagnostic(src)
 	new /obj/item/clothing/glasses/hud/diagnostic(src)
 	new /obj/item/clothing/under/rank/roboticist(src)
@@ -271,9 +260,7 @@
 	name = "chemistry wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/chemistry_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/chemistry_white/PopulateContents()
 	new /obj/item/clothing/under/rank/chemist(src)
 	new /obj/item/clothing/under/rank/chemist(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -293,9 +280,7 @@
 	name = "genetics wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/genetics_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/genetics_white/PopulateContents()
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/under/rank/geneticist(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -313,9 +298,7 @@
 	name = "virology wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/virology_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/virology_white/PopulateContents()
 	new /obj/item/clothing/under/rank/virologist(src)
 	new /obj/item/clothing/under/rank/virologist(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
@@ -334,9 +317,7 @@
 	name = "science wardrobe"
 	icon_door = "white"
 
-/obj/structure/closet/wardrobe/science_white/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/science_white/PopulateContents()
 	new /obj/item/weapon/storage/backpack/science(src)
 	new /obj/item/weapon/storage/backpack/science(src)
 	new /obj/item/weapon/storage/backpack/satchel/tox(src)
@@ -358,9 +339,7 @@
 	name = "botanist wardrobe"
 	icon_door = "green"
 
-/obj/structure/closet/wardrobe/botanist/New()
-	..()
-	contents = list()
+/obj/structure/closet/wardrobe/botanist/PopulateContents()
 	new /obj/item/weapon/storage/backpack/botany(src)
 	new /obj/item/weapon/storage/backpack/botany(src)
 	new /obj/item/weapon/storage/backpack/satchel/hyd(src)
@@ -374,3 +353,16 @@
 		new /obj/item/clothing/under/rank/hydroponics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/bandana(src)
+
+
+/obj/structure/closet/wardrobe/curator
+	name = "treasure hunting wardrobe"
+	icon_door = "black"
+
+/obj/structure/closet/wardrobe/curator/PopulateContents()
+	new /obj/item/clothing/head/fedora/curator(src)
+	new /obj/item/clothing/suit/curator(src)
+	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
+

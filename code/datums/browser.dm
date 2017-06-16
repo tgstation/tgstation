@@ -92,6 +92,10 @@
 	"}
 
 /datum/browser/proc/open(use_onclose = 1)
+	if(isnull(window_id))	//null check because this can potentially nuke goonchat
+		WARNING("Browser [title] tried to open with a null ID")
+		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
+		return
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
@@ -111,7 +115,10 @@
 			break
 
 /datum/browser/proc/close()
-	user << browse(null, "window=[window_id]")
+	if(!isnull(window_id))//null check because this can potentially nuke goonchat
+		user << browse(null, "window=[window_id]")
+	else
+		WARNING("Browser [title] tried to close with a null ID")
 
 /datum/browser/alert
 	var/selectedbutton = 0
@@ -169,7 +176,7 @@
 	opentime = 0
 
 /datum/browser/alert/proc/wait()
-	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout >= world.time))
+	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
 		stoplag()
 
 /datum/browser/alert/Topic(href,href_list)
@@ -249,7 +256,7 @@
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 
-	//world << "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]"
+	//to_chat(world, "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]")
 
 
 // the on-close client verb
@@ -261,12 +268,12 @@
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	//world << "windowclose: [atomref]"
+	//to_chat(world, "windowclose: [atomref]")
 	if(atomref!="null")				// if passed a real atomref
 		var/hsrc = locate(atomref)	// find the reffed atom
 		var/href = "close=1"
 		if(hsrc)
-			//world << "[src] Topic [href] [hsrc]"
+			//to_chat(world, "[src] Topic [href] [hsrc]")
 			usr = src.mob
 			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
@@ -274,6 +281,6 @@
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
-		//world << "[src] was [src.mob.machine], setting to null"
+		//to_chat(world, "[src] was [src.mob.machine], setting to null")
 		src.mob.unset_machine()
 	return

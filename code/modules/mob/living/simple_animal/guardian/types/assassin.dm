@@ -16,7 +16,7 @@
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
-/mob/living/simple_animal/hostile/guardian/assassin/New()
+/mob/living/simple_animal/hostile/guardian/assassin/Initialize()
 	..()
 	stealthcooldown = 0
 
@@ -33,7 +33,8 @@
 			stat(null, "Stealth Cooldown Remaining: [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds")
 
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
-	if(..())
+	. = ..()
+	if(.)
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
 			ToggleMode(1)
 
@@ -55,7 +56,7 @@
 		environment_smash = initial(environment_smash)
 		alpha = initial(alpha)
 		if(!forced)
-			src << "<span class='danger'><B>You exit stealth.</span></B>"
+			to_chat(src, "<span class='danger'><B>You exit stealth.</span></B>")
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
@@ -64,21 +65,21 @@
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
 		if(src.loc == summoner)
-			src << "<span class='danger'><B>You have to be manifested to enter stealth!</span></B>"
+			to_chat(src, "<span class='danger'><B>You have to be manifested to enter stealth!</span></B>")
 			return
 		melee_damage_lower = 50
 		melee_damage_upper = 50
 		armour_penetration = 100
 		obj_damage = 0
-		environment_smash = 0
-		new /obj/effect/overlay/temp/guardian/phase/out(get_turf(src))
+		environment_smash = ENVIRONMENT_SMASH_NONE
+		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
 		alpha = 15
 		if(!forced)
-			src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
+			to_chat(src, "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>")
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		src << "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>"
+		to_chat(src, "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>")
 
 /mob/living/simple_animal/hostile/guardian/assassin/proc/updatestealthalert()
 	if(stealthcooldown <= world.time)

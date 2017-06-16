@@ -13,10 +13,10 @@
 
 	if(battery_module && battery_module.battery && battery_module.battery.charge)
 		var/obj/item/weapon/stock_parts/cell/cell = battery_module.battery
-		if(cell.use(amount * CELLRATE))
+		if(cell.use(amount * GLOB.CELLRATE))
 			return TRUE
 		else // Discharge the cell anyway.
-			cell.use(min(amount*CELLRATE, cell.charge))
+			cell.use(min(amount*GLOB.CELLRATE, cell.charge))
 			return FALSE
 	return FALSE
 
@@ -26,6 +26,10 @@
 		return battery_module.battery.give(amount)
 	return 0
 
+/obj/item/device/modular_computer/get_cell()
+	var/obj/item/weapon/computer_hardware/battery/battery_module = all_components[MC_CELL]
+	if(battery_module && battery_module.battery)
+		return battery_module.battery
 
 // Used in following function to reduce copypaste
 /obj/item/device/modular_computer/proc/power_failure()

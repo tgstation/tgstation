@@ -60,25 +60,25 @@
 		return 1
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/alien/larva/L)
-	if(..() && stat != DEAD) //successful larva bite
+	. = ..()
+	if(. && stat != DEAD) //successful larva bite
 		var/damage = rand(5, 10)
-		L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-		attack_threshold_check(damage)
-		return 1
+		. = attack_threshold_check(damage)
+		if(.)
+			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		attack_threshold_check(damage, M.melee_damage_type)
-		return 1
+		return attack_threshold_check(damage, M.melee_damage_type)
 
 /mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
 		if(M.is_adult)
 			damage = rand(20, 35)
-		attack_threshold_check(damage)
-		return 1
+		return attack_threshold_check(damage)
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "melee")
 	var/temp_damage = damage
@@ -89,8 +89,10 @@
 
 	if(temp_damage >= 0 && temp_damage <= force_threshold)
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
+		return FALSE
 	else
 		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
+		return TRUE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)

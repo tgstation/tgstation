@@ -33,9 +33,9 @@
 /obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
 
 /obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return 0
@@ -123,9 +123,7 @@
 	if(hasShocked)
 		return 0
 	hasShocked = 1
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, AM.loc)
-	s.start()
+	do_sparks(5, TRUE, AM.loc)
 	var/atom/target = get_edge_target_turf(AM, get_dir(src, get_step_away(AM, src)))
 	AM.throw_at(target, 200, 4)
 	addtimer(CALLBACK(src, .proc/clear_shock), 5)

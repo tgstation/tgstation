@@ -17,21 +17,18 @@
 	var/broadcasting = 0
 	var/listening = 1
 	var/translate_binary = 0
-	var/translate_hive = 0
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
 	var/subspace_switchable = 0
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/centcom = 0//Bleh, more dirty booleans
+	var/independent = FALSE // If true, bypasses any tcomms machinery.
 	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
 	slot_flags = SLOT_BELT
-	languages_spoken = HUMAN | ROBOT
-	languages_understood = HUMAN | ROBOT
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
@@ -48,19 +45,11 @@
 	remove_radio(src, frequency)
 	frequency = add_radio(src, new_frequency)
 
-/obj/item/device/radio/New()
-	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
-	secure_radio_connections = new
-	..()
-
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
 	translate_binary = 0
-	translate_hive = 0
 	syndie = 0
-	centcom = 0
+	independent = FALSE
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -72,17 +61,14 @@
 		if(keyslot.translate_binary)
 			translate_binary = 1
 
-		if(keyslot.translate_hive)
-			translate_hive = 1
-
 		if(keyslot.syndie)
 			syndie = 1
 
-		if(keyslot.centcom)
-			centcom = 1
+		if(keyslot.independent)
+			independent = TRUE
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/device/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -99,12 +85,16 @@
 	return ..()
 
 /obj/item/device/radio/Initialize()
-	..()
+	wires = new /datum/wires/radio(src)
+	if(prison_radio)
+		wires.cut(WIRE_TX) // OH GOD WHY
+	secure_radio_connections = new
+	. = ..()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
 	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
+		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/device/radio/interact(mob/user)
 	if (..())
@@ -115,7 +105,7 @@
 		ui_interact(user)
 
 /obj/item/device/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = inventory_state)
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
@@ -195,11 +185,15 @@
 					recalculateChannels()
 				. = TRUE
 
-/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
-	addtimer(CALLBACK(src, .proc/talk_into_impl, M, message, channel, spans), 0)
+/obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
+	if(!spans)
+		spans = M.get_spans()
+	if(!language)
+		language = M.get_default_language()
+	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans, language)
 	return ITALICS | REDUCE_RANGE
 
-/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
+/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -243,6 +237,12 @@
 	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
 	var/turf/position = get_turf(src)
 
+	var/jammed = FALSE
+	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
+		if(get_dist(position,get_turf(jammer)) < jammer.range)
+			jammed = TRUE
+			break
+
 	//#### Tagging the signal with all appropriate identity values ####//
 
 	// ||-- The mob's name identity --||
@@ -259,10 +259,12 @@
 
 	var/jobname // the mob's "job"
 
+	if(jammed)
+		message = Gibberish(message,100)
 
 	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
 	if(ishuman(M))
-		var/datum/data/record/findjob = find_record("name", voice, data_core.general)
+		var/datum/data/record/findjob = find_record("name", voice, GLOB.data_core.general)
 
 		if(voice != real_name)
 			voicemask = 1
@@ -296,9 +298,9 @@
 	else
 		jobname = "Unknown"
 
-	/* ###### Centcom channel bypasses all comms relays. ###### */
+	/* ###### `independent` radios bypass all comms relays. ###### */
 
-	if (freqnum == CENTCOM_FREQ && centcom)
+	if(independent)
 		var/datum/signal/signal = new
 		signal.transmission_method = 2
 		signal.data = list(
@@ -319,18 +321,18 @@
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
-			"languages" = languages_spoken,
+			"language" = language,
 			"spans" = spans,
 			"verb_say" = M.verb_say,
 			"verb_ask" = M.verb_ask,
 			"verb_exclaim" = M.verb_exclaim,
-			"verb_yell" = M.verb_yell
+			"verb_yell" = M.verb_yell,
 			)
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
 				  5, signal.data["compression"], list(position.z, 0), freq, spans,
-				  verb_say, verb_ask, verb_exclaim, verb_yell)
+				  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 		return
 
 	/* ###### Radio headsets can only broadcast through subspace ###### */
@@ -364,7 +366,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"languages" = M.languages_spoken, //The languages M is talking in.
+			"language" = language,
 			"spans" = spans, //the span classes of this message.
 			"verb_say" = M.verb_say, //the verb used when talking normally
 			"verb_ask" = M.verb_ask, //the verb used when asking
@@ -375,11 +377,11 @@
 
 		 //#### Sending the signal to all subspace receivers ####//
 
-		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+		for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 			R.receive_signal(signal)
 
 		// Allinone can act as receivers.
-		for(var/obj/machinery/telecomms/allinone/R in telecomms_list)
+		for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
@@ -414,7 +416,7 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-		"languages" = languages_spoken,
+		"language" = language,
 		"spans" = spans,
 		"verb_say" = M.verb_say,
 		"verb_ask" = M.verb_ask,
@@ -422,7 +424,7 @@
 		"verb_yell" = M.verb_yell
 		)
 	signal.frequency = freqnum // Quick frequency set
-	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
 
 
@@ -437,14 +439,14 @@
 		Broadcast_Message(M, voicemask,
 						  src, message, voice, jobname, real_name,
 						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell)
+						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
 
-/obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	if(radio_freq)
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
-			talk_into(speaker, raw_message, , spans)
+			talk_into(speaker, raw_message, , spans, language=message_language)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
 
@@ -471,11 +473,11 @@
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return -1
-	if(freq == SYND_FREQ)
+	if(freq == GLOB.SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
-	if(freq == CENTCOM_FREQ)
-		if (!(src.centcom))
+	if(freq == GLOB.CENTCOM_FREQ)
+		if(!independent)
 			return -1
 	if (!on)
 		return -1
@@ -487,7 +489,7 @@
 		if (!accept)
 			for(var/ch_name in channels)
 				if(channels[ch_name] & FREQ_LISTENING)
-					if(radiochannels[ch_name] == text2num(freq) || syndie) //the radiochannels list is located in communications.dm
+					if(GLOB.radiochannels[ch_name] == text2num(freq) || syndie) //the GLOB.radiochannels list is located in communications.dm
 						accept = 1
 						break
 		if (!accept)
@@ -504,18 +506,18 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		user << "<span class='notice'>[name] can be attached and modified.</span>"
+		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
 	else
-		user << "<span class='notice'>[name] can not be modified or attached.</span>"
+		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
-			user << "<span class='notice'>The radio can now be attached and modified!</span>"
+			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
 		else
-			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
+			to_chat(user, "<span class='notice'>The radio can no longer be modified or attached!</span>")
 	else
 		return ..()
 
@@ -523,7 +525,7 @@
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
-		loc << "<span class='warning'>\The [src] overloads.</span>"
+		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
 	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
@@ -546,20 +548,24 @@
 	subspace_switchable = 1
 	dog_fashion = null
 
+/obj/item/device/radio/borg/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, NO_EMP_WIRES)
+
 /obj/item/device/radio/borg/syndicate
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
-	set_frequency(SYND_FREQ)
+/obj/item/device/radio/borg/syndicate/Initialize()
+	. = ..()
+	set_frequency(GLOB.SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(keyslot)
 			for(var/ch_name in channels)
-				SSradio.remove_object(src, radiochannels[ch_name])
+				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
 
@@ -570,20 +576,19 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
+			to_chat(user, "<span class='notice'>You pop out the encryption key in the radio.</span>")
 
 		else
-			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
+			to_chat(user, "<span class='warning'>This radio doesn't have any encryption keys!</span>")
 
 	else if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "<span class='warning'>The radio can't hold another key!</span>"
+			to_chat(user, "<span class='warning'>The radio can't hold another key!</span>")
 			return
 
 		if(!keyslot)
-			if(!user.unEquip(W))
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			keyslot = W
 
 		recalculateChannels()

@@ -13,14 +13,14 @@
 	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
 	actions_types = list(/datum/action/item_action/clock/toggle_visor)
 
-/obj/item/clothing/glasses/judicial_visor/New()
-	..()
-	all_clockwork_objects += src
+/obj/item/clothing/glasses/judicial_visor/Initialize()
+	. = ..()
+	GLOB.all_clockwork_objects += src
 	blaster = new(src)
 	blaster.visor = src
 
 /obj/item/clothing/glasses/judicial_visor/Destroy()
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	if(blaster.ranged_ability_user)
 		blaster.remove_ranged_ability()
 	blaster.visor = null
@@ -44,8 +44,8 @@
 	else
 		update_status(FALSE)
 	if(iscultist(user)) //Cultists spontaneously combust
-		user << "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>"
-		user << "<span class='userdanger'>You suddenly catch fire!</span>"
+		to_chat(user, "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>")
+		to_chat(user, "<span class='userdanger'>You suddenly catch fire!</span>")
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
 	return 1
@@ -79,10 +79,10 @@
 		return 0
 	switch(active)
 		if(TRUE)
-			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
-			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>"
+			to_chat(L, "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
+			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>")
 		if(FALSE)
-			L << "<span class='notice'>As you take off [src], its lens darkens once more.</span>"
+			to_chat(L, "<span class='notice'>As you take off [src], its lens darkens once more.</span>")
 	return 1
 
 /obj/item/clothing/glasses/judicial_visor/proc/recharge_visor(mob/living/user)
@@ -90,7 +90,7 @@
 		return 0
 	recharging = FALSE
 	if(user && src == user.get_item_by_slot(slot_glasses))
-		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+		to_chat(user, "<span class='brass'>Your [name] hums. It is ready.</span>")
 	else
 		active = FALSE
 	icon_state = "judicial_visor_[active]"
@@ -109,7 +109,7 @@
 		message = "<span class='brass'>You dispel the power of [visor].</span>"
 		remove_ranged_ability(message)
 	else
-		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judical marker!</b></span>"
+		message = "<span class='brass'><i>You harness [visor]'s power.</i> <b>Left-click to place a judicial marker!</b></span>"
 		add_ranged_ability(user, message)
 
 /obj/effect/proc_holder/judicial_visor/InterceptClickOn(mob/living/caller, params, atom/target)
@@ -131,7 +131,7 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor), (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, ranged_ability_user)
+			addtimer(CALLBACK(V, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), (GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2)
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s judicial visor fires a stream of energy at [target], creating a strange mark!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/targetturf = get_turf(target)
@@ -139,7 +139,7 @@
 		add_logs(ranged_ability_user, targetturf, "created a judicial marker")
 		ranged_ability_user.update_action_buttons_icon()
 		ranged_ability_user.update_inv_glasses()
-		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor), ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, ranged_ability_user)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(CALLBACK(visor, /obj/item/clothing/glasses/judicial_visor.proc/recharge_visor, ranged_ability_user), GLOB.ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown)//Cooldown is reduced by 10x if Ratvar is up
 		remove_ranged_ability()
 
 		return TRUE
@@ -156,22 +156,23 @@
 	layer = BELOW_MOB_LAYER
 	var/mob/user
 
-/obj/effect/clockwork/judicial_marker/New(loc, caster)
-	..()
-	SetLuminosity(4, 3)
+/obj/effect/clockwork/judicial_marker/Initialize(mapload, caster)
+	. = ..()
+	set_light(1.4, 2, "#FE9C11")
 	user = caster
-	addtimer(CALLBACK(src, .proc/judicialblast), 0)
+	INVOKE_ASYNC(src, .proc/judicialblast)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
 	sleep(16)
 	layer = ABOVE_ALL_MOB_LAYER
 	flick("judicial_explosion", src)
+	set_light(1.4, 2, "#B451A1")
 	sleep(13)
 	var/targetsjudged = 0
 	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
-	SetLuminosity(0)
+	set_light(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
@@ -183,20 +184,20 @@
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8)
+			L.Weaken(8) //stun targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //half the stun, but sets cultists on fire
+			L.Weaken(4) //stun for 6-8 seconds, but set cultist targets on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.silent += 6
 		targetsjudged++
-		L.adjustBruteLoss(10)
+		L.adjustBruteLoss(10) //do a small amount of damage
 		add_logs(user, L, "struck with a judicial blast")
-	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
+	to_chat(user, "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged == 1 ? "":"s"].</b></span>")
 	sleep(3) //so the animation completes properly
 	qdel(src)
 

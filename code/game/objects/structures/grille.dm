@@ -18,6 +18,29 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
+/obj/structure/grille/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_DECONSTRUCT)
+			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
+		if(RCD_WINDOWGRILLE)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 10)
+	return FALSE
+
+/obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct the grille.</span>")
+			qdel(src)
+			return TRUE
+		if(RCD_WINDOWGRILLE)
+			if(locate(/obj/structure/window) in loc)
+				return FALSE
+			to_chat(user, "<span class='notice'>You construct the window.</span>")
+			var/obj/structure/window/WD = new the_rcd.window_type(loc)
+			WD.anchored = TRUE
+			return TRUE
+	return FALSE
+
 /obj/structure/grille/ratvar_act()
 	if(broken)
 		new /obj/structure/grille/ratvar/broken(src.loc)
@@ -27,7 +50,15 @@
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user))
-		shock(user, 70)
+		var/tile_density = FALSE
+		for(var/atom/movable/AM in get_turf(src))
+			if(AM == src)
+				continue
+			if(AM.density && AM.layer >= layer)
+				tile_density = TRUE
+				break
+		if(!tile_density)
+			shock(user, 70)
 
 
 /obj/structure/grille/attack_paw(mob/user)
@@ -102,16 +133,16 @@
 		if (!broken)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
+				to_chat(user, "<span class='warning'>You need at least two sheets of glass for that!</span>")
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
+				to_chat(user, "<span class='warning'>[src] needs to be fastened to the floor first!</span>")
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				user << "<span class='warning'>There is already a window there!</span>"
+				to_chat(user, "<span class='warning'>There is already a window there!</span>")
 				return
-			user << "<span class='notice'>You start placing the window...</span>"
+			to_chat(user, "<span class='notice'>You start placing the window...</span>")
 			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
 					return
@@ -127,7 +158,7 @@
 				WD.anchored = 0
 				WD.state = 0
 				ST.use(2)
-				user << "<span class='notice'>You place [WD] on [src].</span>"
+				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
 			return
 //window placing end
 
@@ -196,7 +227,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+				playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
@@ -217,21 +248,17 @@
 
 /obj/structure/grille/ratvar
 	icon_state = "ratvargrille"
+	name = "cog grille"
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 
 /obj/structure/grille/ratvar/New()
 	..()
-	change_construction_value(1)
 	if(broken)
-		new /obj/effect/overlay/temp/ratvar/grille/broken(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/grille/broken(get_turf(src))
 	else
-		new /obj/effect/overlay/temp/ratvar/grille(get_turf(src))
-		new /obj/effect/overlay/temp/ratvar/beam/grille(get_turf(src))
-
-/obj/structure/grille/ratvar/Destroy()
-	change_construction_value(-1)
-	return ..()
+		new /obj/effect/temp_visual/ratvar/grille(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
 
 /obj/structure/grille/ratvar/narsie_act()
 	take_damage(rand(1, 3), BRUTE)
@@ -253,4 +280,3 @@
 	rods_broken = 0
 	grille_type = /obj/structure/grille/ratvar
 	broken_type = null
-

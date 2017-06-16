@@ -35,11 +35,20 @@
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)
-	if(pixel_turf && !cameranet.checkTurfVis(pixel_turf))
-		log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
-		message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
-		send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
-		return
+	var/turf_visible
+	if(pixel_turf)
+		turf_visible = GLOB.cameranet.checkTurfVis(pixel_turf)
+		if(!turf_visible)
+			if(istype(loc, /obj/item/device/aicard) && (pixel_turf in view(client.view, loc)))
+				turf_visible = TRUE
+			else
+				if (pixel_turf.obscured)
+					log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
+					message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
+					if(REALTIMEOFDAY >= chnotify + 9000)
+						chnotify = REALTIMEOFDAY
+						send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
+				return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
@@ -64,9 +73,9 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode)
+	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(A, usr)
+		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)
 		waypoint_mode = 0
@@ -181,4 +190,4 @@
 //
 
 /mob/living/silicon/ai/TurfAdjacent(var/turf/T)
-	return (cameranet && cameranet.checkTurfVis(T))
+	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(T))

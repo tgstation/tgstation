@@ -267,3 +267,11 @@
 	req_tech = list("programming" = 1)
 	build_path = /obj/item/weapon/circuitboard/computer/libraryconsole
 	category = list("Computer Boards")
+
+/datum/design/board/apc_control
+	name = "Computer Design (APC Control)"
+	desc = "Allows for the construction of circuit boards used to build a new APC control console."
+	id = "apc_control"
+	req_tech = list("programming" = 4, "engineering" = 4, "powerstorage" = 5)
+	build_path = /obj/item/weapon/circuitboard/computer/apc_control
+	category = list("Computer Boards")

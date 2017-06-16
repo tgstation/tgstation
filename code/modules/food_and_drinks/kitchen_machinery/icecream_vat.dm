@@ -98,7 +98,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = O
 		if(!I.ice_creamed)
 			if(product_types[dispense_flavour] > 0)
-				src.visible_message("\icon[src] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
+				src.visible_message("[bicon(src)] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
 				I.add_ice_cream(flavour_name)
 			//	if(beaker)
@@ -106,9 +106,9 @@
 				if(I.reagents.total_volume < 10)
 					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
 			else
-				user << "<span class='warning'>There is not enough ice cream left!</span>"
+				to_chat(user, "<span class='warning'>There is not enough ice cream left!</span>")
 		else
-			user << "<span class='notice'>[O] already has ice cream in it.</span>"
+			to_chat(user, "<span class='notice'>[O] already has ice cream in it.</span>")
 		return 1
 	else if(O.is_open_container())
 		return
@@ -131,7 +131,7 @@
 		else
 			src.visible_message("<span class='info'>[user] whips up some [flavour] icecream.</span>")
 	else
-		user << "<span class='warning'>You don't have the ingredients to make this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the ingredients to make this!</span>")
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
 	if(..())
@@ -147,18 +147,10 @@
 		if(product_types[dispense_cone] >= 1)
 			product_types[dispense_cone] -= 1
 			var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = new(src.loc)
-			I.cone_type = cone_name
-			I.icon_state = "icecream_cone_[cone_name]"
-			switch (I.cone_type)
-				if ("waffle")
-					I.reagents.add_reagent("nutriment", 1)
-				if ("chocolate")
-					I.reagents.add_reagent("cocoa", 1) // chocolate ain't as nutritious kids
-
-			I.desc = "Delicious [cone_name] cone, but no ice cream."
+			I.set_cone_type(cone_name)
 			src.visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
 		else
-			usr << "<span class='warning'>There are no [cone_name] cones left!</span>"
+			to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
 
 	if(href_list["make"])
 		var/amount = (text2num(href_list["amount"]))
@@ -187,9 +179,22 @@
 	var/cone_type
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/New()
+/obj/item/weapon/reagent_containers/food/snacks/icecream/Initialize()
+	. = ..()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
+	cone_type = cone_name
+	icon_state = "icecream_cone_[cone_name]"
+	switch (cone_type)
+		if ("waffle")
+			reagents.add_reagent("nutriment", 1)
+		if ("chocolate")
+			reagents.add_reagent("cocoa", 1) // chocolate ain't as nutritious kids
+
+	desc = "Delicious [cone_name] cone, but no ice cream."
+
 
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name)
 	name = "[flavour_name] icecream"
@@ -206,7 +211,14 @@
 		if ("blue")
 			desc = "A delicious [cone_type] cone filled with blue ice cream. Made with real... blue?"
 			reagents.add_reagent("singulo", 2)
+		if ("mob")
+			desc = "A suspicious [cone_type] cone filled with bright red ice cream. That's probably not strawberry..."
+			reagents.add_reagent("liquidgibs", 2)
 	ice_creamed = 1
+
+/obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_mob_flavor(var/mob/M)
+	add_ice_cream("mob")
+	name = "[M.name] icecream"
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

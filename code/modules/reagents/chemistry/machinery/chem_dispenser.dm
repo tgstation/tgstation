@@ -9,12 +9,13 @@
 	idle_power_usage = 40
 	interact_offline = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/energy = 100
-	var/max_energy = 100
+	var/cell_type = /obj/item/weapon/stock_parts/cell/high
+	var/obj/item/weapon/stock_parts/cell/cell
+	var/powerefficiency = 0.01
 	var/amount = 30
 	var/recharged = 0
 	var/recharge_delay = 5
-	var/image/icon_beaker = null
+	var/mutable_appearance/beaker_overlay
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
@@ -52,8 +53,9 @@
 		"toxin"
 	)
 
-/obj/machinery/chem_dispenser/New()
-	..()
+/obj/machinery/chem_dispenser/Initialize()
+	. = ..()
+	cell = new cell_type
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
@@ -67,17 +69,15 @@
 
 /obj/machinery/chem_dispenser/proc/recharge()
 	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 1
-	var/oldenergy = energy
-	energy = min(energy + addenergy, max_energy)
-	if(energy != oldenergy)
+	var/usedpower = cell.give( 1 / powerefficiency) //Should always be a gain of one on the UI.
+	if(usedpower)
 		use_power(2500)
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
-		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
+		to_chat(user, "<span class='warning'>\The [src] has no functional safeties to emag.</span>")
 		return
-	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+	to_chat(user, "<span class='notice'>You short out \the [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	emagged = 1
 
@@ -97,7 +97,7 @@
 		cut_overlays()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
@@ -106,8 +106,8 @@
 /obj/machinery/chem_dispenser/ui_data()
 	var/data = list()
 	data["amount"] = amount
-	data["energy"] = energy
-	data["maxEnergy"] = max_energy
+	data["energy"] = cell.charge ? cell.charge * powerefficiency : "0" //To prevent NaN in the UI.
+	data["maxEnergy"] = cell.maxcharge * powerefficiency
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
 	var beakerContents[0]
@@ -129,7 +129,7 @@
 
 	var chemicals[0]
 	for(var/re in dispensable_reagents)
-		var/datum/reagent/temp = chemical_reagents_list[re]
+		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
 			chemicals.Add(list(list("title" = temp.name, "id" = temp.id)))
 	data["chemicals"] = chemicals
@@ -149,10 +149,10 @@
 			if(beaker && dispensable_reagents.Find(reagent))
 				var/datum/reagents/R = beaker.reagents
 				var/free = R.maximum_volume - R.total_volume
-				var/actual = min(amount, energy * 10, free)
+				var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
 
 				R.add_reagent(reagent, actual)
-				energy = max(energy - actual / 10, 0)
+				cell.use((actual / 10) / powerefficiency)
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
@@ -174,7 +174,7 @@
 		var/obj/item/weapon/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
-			user << "<span class='warning'>A container is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A container is already loaded into the machine!</span>")
 			return
 
 		if(!user.drop_item()) // Can't let go?
@@ -182,23 +182,42 @@
 
 		beaker = B
 		beaker.loc = src
-		user << "<span class='notice'>You add \the [B] to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
 
-		if(!icon_beaker)
-			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
-		icon_beaker.pixel_x = rand(-10,5)
-		add_overlay(icon_beaker)
+		beaker_overlay = beaker_overlay ||  mutable_appearance(icon, "disp_beaker")
+		beaker_overlay.pixel_x = rand(-10, 5)//randomize beaker overlay position.
+		add_overlay(beaker_overlay)
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
-		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
+		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
+		return ..()
 	else
 		return ..()
+
+/obj/machinery/chem_dispenser/get_cell()
+	return cell
+
+/obj/machinery/chem_dispenser/emp_act(severity)
+	var/list/datum/reagents/R = list()
+	var/total = min(rand(7,15), Floor(cell.charge*powerefficiency))
+	var/datum/reagents/Q = new(total*10)
+	if(beaker && beaker.reagents)
+		R += beaker.reagents
+	for(var/i in 1 to total)
+		Q.add_reagent(pick(dispensable_reagents), 10)
+	R += Q
+	chem_splash(get_turf(src), 3, R)
+	if(beaker && beaker.reagents)
+		beaker.reagents.remove_all()
+	cell.use(total/powerefficiency)
+	cell.emp_act()
+	visible_message("<span class='danger'> The [src] malfunctions, spraying chemicals everywhere!</span>")
+	..()
 
 /obj/machinery/chem_dispenser/constructable
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
-	energy = 10
-	max_energy = 10
+	powerefficiency = 0.001
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
@@ -245,8 +264,8 @@
 		)
 	)
 
-/obj/machinery/chem_dispenser/constructable/New()
-	..()
+/obj/machinery/chem_dispenser/constructable/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
 	B.apply_default_parts(src)
 
@@ -264,16 +283,13 @@
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
-	var/temp_energy = 0
 	var/i
+	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
+		cell = P
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		temp_energy += M.rating
-	temp_energy--
-	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
+		time += M.rating
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		time += C.rating
-	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
-		time += round(P.maxcharge, 10000) / 10000
 	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
@@ -317,6 +333,8 @@
 		"tonic",
 		"sodawater",
 		"lemon_lime",
+		"pwr_game",
+		"shamblers",
 		"sugar",
 		"orangejuice",
 		"limejuice",
@@ -366,3 +384,22 @@
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
 	emagged_reagents = list("plasma")
+
+
+/obj/machinery/chem_dispenser/mutagensaltpeter
+	name = "botanical chemical dispenser"
+	desc = "Creates and dispenses chemicals useful for botany."
+	dispensable_reagents = list(
+		"mutagen",
+		"saltpetre",
+		"eznutriment",
+		"left4zednutriment",
+		"robustharvestnutriment",
+		"water",
+		"plantbgone",
+		"weedkiller",
+		"pestkiller",
+		"cryoxadone",
+		"ammonia",
+		"ash",
+		"diethylamine")

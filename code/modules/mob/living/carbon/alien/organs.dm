@@ -87,6 +87,8 @@
 			owner.adjustFireLoss(-heal_amt)
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
+	else
+		owner.adjustPlasma(plasma_rate * 0.1)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -100,6 +102,7 @@
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
+#define QUEEN_DEATH_DEBUFF_DURATION 2400
 
 /obj/item/organ/alien/hivenode
 	name = "hive node"
@@ -124,13 +127,13 @@
 	if(!owner|| owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
-		owner << "<span class='userdanger'>Your Queen has been struck down!</span>"
-		owner << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."
+		to_chat(owner, "<span class='userdanger'>Your Queen has been struck down!</span>")
+		to_chat(owner, "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed.")
 		owner.emote("roar")
 		owner.Stun(10) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
-		owner << "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"
+		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!")
 		owner.emote("scream")
 		owner.Weaken(5)
 
@@ -140,15 +143,19 @@
 
 	recent_queen_death = 1
 	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
-	spawn(2400) //four minutes
-		if(qdeleted(src)) //In case the node is deleted
-			return
-		recent_queen_death = 0
-		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
-			return
-		owner << "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>"
-		owner.clear_alert("alien_noqueen")
+	addtimer(CALLBACK(src, .proc/clear_queen_death), QUEEN_DEATH_DEBUFF_DURATION)
 
+
+/obj/item/organ/alien/hivenode/proc/clear_queen_death()
+	if(QDELETED(src)) //In case the node is deleted
+		return
+	recent_queen_death = 0
+	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+		return
+	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
+	owner.clear_alert("alien_noqueen")
+
+#undef QUEEN_DEATH_DEBUFF_DURATION
 
 /obj/item/organ/alien/resinspinner
 	name = "resin spinner"

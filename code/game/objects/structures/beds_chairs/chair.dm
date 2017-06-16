@@ -15,6 +15,18 @@
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 
+/obj/structure/chair/Initialize()
+	..()
+	if(!anchored)	//why would you put these on the shuttle?
+		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
+
+/obj/structure/chair/Destroy()
+	RemoveFromLatejoin()
+	return ..()
+
+/obj/structure/chair/proc/RemoveFromLatejoin()
+	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
+
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(buildstacktype && (!(flags & NODECONSTRUCT)))
@@ -25,10 +37,9 @@
 	return attack_hand(user)
 
 /obj/structure/chair/narsie_act()
-	if(prob(20))
-		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -39,7 +50,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
@@ -49,7 +60,7 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(has_buckled_mobs())
+	if(!anchored || has_buckled_mobs())
 		..()
 	else
 		rotate()
@@ -63,7 +74,7 @@
 
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
-		layer = ABOVE_ALL_MOB_LAYER
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
@@ -95,7 +106,7 @@
 /obj/structure/chair/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -133,12 +144,16 @@
 	obj_integrity = 70
 	max_integrity = 70
 	buildstackamount = 2
-	var/image/armrest = null
+	var/mutable_appearance/armrest
 	item_chair = null
 
-/obj/structure/chair/comfy/New()
-	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
+/obj/structure/chair/comfy/Initialize()
+	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 	armrest.layer = ABOVE_MOB_LAYER
+	return ..()
+
+/obj/structure/chair/comfy/Destroy()
+	QDEL_NULL(armrest)
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
@@ -146,7 +161,7 @@
 	if(has_buckled_mobs())
 		add_overlay(armrest)
 	else
-		overlays -= armrest
+		cut_overlay(armrest)
 
 
 /obj/structure/chair/comfy/brown
@@ -194,7 +209,7 @@
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
-			usr << "<span class='warning'>You can't do that right now!</span>"
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -219,14 +234,14 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
+	materials = list(MAT_METAL = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/narsie_act()
-	if(prob(20))
-		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
 	plant(user)
@@ -234,10 +249,10 @@
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
 		if(istype(A,/obj/structure/chair))
-			user << "<span class='danger'>There is already a chair here.</span>"
+			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))
-			user << "<span class='danger'>There is already something here.</span>"
+			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
@@ -254,7 +269,6 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
 
 
@@ -304,6 +318,7 @@
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
+	materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()

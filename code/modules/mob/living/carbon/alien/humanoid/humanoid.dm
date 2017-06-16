@@ -1,8 +1,9 @@
 /mob/living/carbon/alien/humanoid
 	name = "alien"
-	icon_state = "alien_s"
+	icon_state = "alien"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -20,7 +21,7 @@
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/humanoid/New()
+/mob/living/carbon/alien/humanoid/Initialize()
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	..()
 
@@ -65,8 +66,8 @@
 			visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 							"<span class='userdanger'>[usr] tries to empty [src]'s pouches.</span>")
 			if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
-				unEquip(r_store)
-				unEquip(l_store)
+				dropItemToGround(r_store)
+				dropItemToGround(l_store)
 
 /mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
@@ -107,7 +108,7 @@
 
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
 /proc/get_alien_type(var/alienpath)
-	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
+	for(var/mob/living/carbon/alien/humanoid/A in GLOB.living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.

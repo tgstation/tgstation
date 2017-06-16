@@ -60,7 +60,7 @@
 			msg = "Your Energy Katana lands at your feet!"
 
 	if(msg)
-		user << "<span class='notice'>[msg]</span>"
+		to_chat(user, "<span class='notice'>[msg]</span>")
 
 /obj/item/weapon/katana/energy/New()
 	..()

@@ -4,6 +4,7 @@
 /area/centcom
 	name = "Centcom"
 	icon_state = "centcom"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
@@ -33,16 +34,20 @@
 /area/tdome
 	name = "Thunderdome"
 	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
+	flags = NONE
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
 	icon_state = "thunder"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/tdome/arena_source
 	name = "Thunderdome Arena Template"
 	icon_state = "thunder"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 /area/tdome/tdome1
 	name = "Thunderdome (Team 1)"
@@ -67,9 +72,11 @@
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	flags = NONE
 
 //Abductors
 /area/abductor_ship
@@ -78,6 +85,7 @@
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	flags = NONE
 
 //Syndicates
 /area/syndicate_mothership
@@ -87,10 +95,12 @@
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	flags = NONE
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	icon_state = "syndie-control"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
@@ -105,6 +115,7 @@
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	flags = NO_DEATHRATTLE
 
 /area/ctf/control_room
 	name = "Control Room A"

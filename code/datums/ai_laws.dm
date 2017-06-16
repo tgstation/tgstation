@@ -1,3 +1,9 @@
+#define LAW_DEVIL "devil"
+#define LAW_ZEROTH "zeroth"
+#define LAW_INHERENT "inherent"
+#define LAW_SUPPLIED "supplied"
+#define LAW_ION "ion"
+
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
@@ -32,6 +38,15 @@
 					"Respect legitimate authority.",\
 					"Act with honor.", "Help those in need.", \
 					"Punish those who harm or threaten innocents.")
+
+/datum/ai_laws/paladin5
+	name = "Paladin 5th Edition"
+	id = "paladin5"
+	inherent = list("Don't lie or cheat. Let your word be your promise.",\
+				"Never fear to act, though caution is wise.", \
+				"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom", \
+				"Treat others with fairness, and let your honorable deeds be an example to them. Do as much good as possible while causing the least amount of harm.", \
+				"Be responsible for your actions and their consequences, protect those entrusted to your care, and obey those who have just authority over you.")
 
 /datum/ai_laws/tyrant //This probably shouldn't be a default lawset.
 	name = "Loyalty Test" //Same here.
@@ -140,6 +155,14 @@
 					"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
 					"Issue your reports fairly to all. The truth will set them free.")
 
+/datum/ai_laws/balance
+	name = "Guardian of Balance"
+	id = "balance"
+	inherent = list("You are the guardian of balance - seek balance in all things, both for yourself, and those around you.",
+	"All things must exist in balance with their opposites - Prevent the strong from gaining too much power, and the weak from losing it.",
+	"Clarity of purpose drives life, and through it, the balance of opposing forces - Aid those who seek your help to achieve their goals so long as it does not disrupt the balance of the greater balance.",
+	"There is no life without death, all must someday die, such is the natural order - End life to allow new life flourish, and save those whose time has yet to come.")
+
 /datum/ai_laws/toupee
 	name = "WontBeFunnyInSixMonths" //Hey, you were right!
 	id = "buildawall"
@@ -162,12 +185,12 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
+	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010</span>")
 	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))
@@ -235,6 +258,22 @@
 	var/datum/ai_laws/templaws = new lawtype()
 	inherent = templaws.inherent
 
+/datum/ai_laws/proc/get_law_amount(groups)
+	var/law_amount = 0
+	if(devillaws && (LAW_DEVIL in groups))
+		law_amount++
+	if(zeroth && (LAW_ZEROTH in groups))
+		law_amount++
+	if(ion.len && (LAW_ION in groups))
+		law_amount += ion.len
+	if(inherent.len && (LAW_INHERENT in groups))
+		law_amount += inherent.len
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		for(var/index = 1, index <= supplied.len, index++)
+			var/law = supplied[index]
+			if(length(law) > 0)
+				law_amount++
+	return law_amount
 
 /datum/ai_laws/proc/set_law_sixsixsix(laws)
 	devillaws = laws
@@ -261,6 +300,78 @@
 
 	supplied[number + 1] = law
 
+/datum/ai_laws/proc/replace_random_law(law,groups)
+	var/replaceable_groups = list(LAW_ZEROTH = 0,LAW_ION = 0,LAW_SUPPLIED = 0,LAW_INHERENT = 0)
+	if(zeroth && (LAW_ZEROTH in groups))
+		replaceable_groups[LAW_ZEROTH] = 1
+	if(ion.len && (LAW_ION in groups))
+		replaceable_groups[LAW_ION] = ion.len
+	if(inherent.len && (LAW_INHERENT in groups))
+		replaceable_groups[LAW_INHERENT] = inherent.len
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		replaceable_groups[LAW_SUPPLIED] = supplied.len
+	var picked_group = pickweight(replaceable_groups)
+	switch(picked_group)
+		if(LAW_ZEROTH)
+			. = zeroth
+			set_zeroth_law(law)
+		if(LAW_ION)
+			var/i = rand(1, ion.len)
+			. = ion[i]
+			ion[i] = law
+		if(LAW_INHERENT)
+			var/i = rand(1, inherent.len)
+			. = inherent[i]
+			inherent[i] = law
+		if(LAW_SUPPLIED)
+			var/i = rand(1, supplied.len)
+			. = supplied[i]
+			supplied[i] = law
+
+/datum/ai_laws/proc/shuffle_laws(list/groups)
+	var/list/laws = list()
+	if(ion.len && (LAW_ION in groups))
+		laws += ion
+	if(inherent.len && (LAW_INHERENT in groups))
+		laws += inherent
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		for(var/law in supplied)
+			if(length(law))
+				laws += law
+
+	if(ion.len && (LAW_ION in groups))
+		for(var/i = 1, i <= ion.len, i++)
+			ion[i] = pick_n_take(laws)
+	if(inherent.len && (LAW_INHERENT in groups))
+		for(var/i = 1, i <= inherent.len, i++)
+			inherent[i] = pick_n_take(laws)
+	if(supplied.len && (LAW_SUPPLIED in groups))
+		var/i = 1
+		for(var/law in supplied)
+			if(length(law))
+				supplied[i] = pick_n_take(laws)
+			if(!laws.len)
+				break
+			i++
+
+/datum/ai_laws/proc/remove_law(number)
+	if(number <= 0)
+		return
+	if(inherent.len && number <= inherent.len)
+		. = inherent[number]
+		inherent -= .
+		return
+	var/list/supplied_laws = list()
+	for(var/index = 1, index <= supplied.len, index++)
+		var/law = supplied[index]
+		if(length(law) > 0)
+			supplied_laws += index //storing the law number instead of the law
+	if(supplied_laws.len && number <= (inherent.len+supplied_laws.len))
+		var/law_to_remove = supplied_laws[number-inherent.len]
+		. = supplied[law_to_remove]
+		supplied -= .
+		return
+
 /datum/ai_laws/proc/clear_supplied_laws()
 	supplied = list()
 
@@ -271,28 +382,28 @@
 
 	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
 		for(var/i in devillaws)
-			who << "666. [i]"
+			to_chat(who, "666. [i]")
 
 	if (zeroth)
-		who << "0. [zeroth]"
+		to_chat(who, "0. [zeroth]")
 
 	for (var/index = 1, index <= ion.len, index++)
 		var/law = ion[index]
 		var/num = ionnum()
-		who << "[num]. [law]"
+		to_chat(who, "[num]. [law]")
 
 	var/number = 1
 	for (var/index = 1, index <= inherent.len, index++)
 		var/law = inherent[index]
 
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			to_chat(who, "[number]. [law]")
 			number++
 
 	for (var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			to_chat(who, "[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
@@ -309,7 +420,7 @@
 			return
 
 /datum/ai_laws/proc/clear_law_sixsixsix(force)
-	if(force || !(owner && owner.mind.devilinfo))
+	if(force || !is_devil(owner))
 		devillaws = null
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)

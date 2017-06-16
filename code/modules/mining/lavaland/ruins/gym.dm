@@ -22,7 +22,7 @@
 
 /obj/structure/stacklifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
 		in_use = 1
@@ -48,7 +48,7 @@
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnesslifter"
-		user << finishmessage
+		to_chat(user, finishmessage)
 
 /obj/structure/weightlifter
 	name = "Weight Machine"
@@ -60,7 +60,7 @@
 
 /obj/structure/weightlifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		to_chat(user, "It's already in use - wait a bit.")
 		return
 	else
 		in_use = 1
@@ -68,9 +68,8 @@
 		user.setDir(SOUTH)
 		user.Stun(4)
 		user.loc = src.loc
-		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")
-		W.layer = WALL_OBJ_LAYER
-		add_overlay(W)
+		var/mutable_appearance/swole_overlay = mutable_appearance(icon, "fitnessweight-w", WALL_OBJ_LAYER)
+		add_overlay(swole_overlay)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/reps = 0
@@ -93,5 +92,5 @@
 		animate(user, pixel_y = 0, time = 3)
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
-		overlays -= W
-		user << "[finishmessage]"
+		cut_overlay(swole_overlay)
+		to_chat(user, "[finishmessage]")

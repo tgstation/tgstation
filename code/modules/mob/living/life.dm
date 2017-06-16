@@ -1,4 +1,4 @@
-/mob/living/Life()
+/mob/living/Life(seconds, times_fired)
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
@@ -9,7 +9,7 @@
 		return
 	if(!loc)
 		if(client)
-			for(var/obj/effect/landmark/error/E in landmarks_list)
+			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
 				loc = E.loc
 				break
 			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
@@ -20,7 +20,7 @@
 
 	if(stat != DEAD)
 		//Breathing, if applicable
-		handle_breathing()
+		handle_breathing(times_fired)
 	if(stat != DEAD)
 		//Mutations and radiation
 		handle_mutations_and_radiation()
@@ -53,7 +53,7 @@
 	if(stat != DEAD)
 		return 1
 
-/mob/living/proc/handle_breathing()
+/mob/living/proc/handle_breathing(times_fired)
 	return
 
 /mob/living/proc/handle_mutations_and_radiation()
@@ -67,7 +67,7 @@
 	if(!digitaldisguise)
 		src.digitaldisguise = image(loc = src)
 	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in player_list)
+	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		AI.client.images |= src.digitaldisguise
 
 
@@ -122,14 +122,6 @@
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
-
-	//Ears
-	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
-	else
-		// deafness heals slowly over time, unless ear_damage is over 100
-		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
 
 /mob/living/proc/update_damage_hud()
 	return

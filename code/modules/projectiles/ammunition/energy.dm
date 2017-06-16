@@ -5,8 +5,21 @@
 	projectile_type = /obj/item/projectile/energy
 	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
 	var/select_name = "energy"
-	fire_sound = 'sound/weapons/Laser.ogg'
-	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
+	fire_sound = 'sound/weapons/laser.ogg'
+	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
+
+/obj/item/ammo_casing/energy/chameleon
+	projectile_type = /obj/item/projectile/energy/chameleon
+	e_cost = 0
+	var/list/projectile_vars = list()
+
+/obj/item/ammo_casing/energy/chameleon/ready_proj()
+	. = ..()
+	if(!BB)
+		newshot()
+	for(var/V in projectile_vars)
+		if(BB.vars[V])
+			BB.vars[V] = projectile_vars[V]
 
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam/laser
@@ -65,6 +78,9 @@
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
 
+/obj/item/ammo_casing/energy/electrode/spec
+	e_cost = 100
+
 /obj/item/ammo_casing/energy/electrode/gun
 	fire_sound = 'sound/weapons/gunshot.ogg'
 	e_cost = 100
@@ -75,7 +91,7 @@
 /obj/item/ammo_casing/energy/ion
 	projectile_type = /obj/item/projectile/ion
 	select_name = "ion"
-	fire_sound = 'sound/weapons/IonRifle.ogg'
+	fire_sound = 'sound/weapons/ionrifle.ogg'
 
 /obj/item/ammo_casing/energy/declone
 	projectile_type = /obj/item/projectile/energy/declone
@@ -85,7 +101,7 @@
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/item/projectile/beam/mindflayer
 	select_name = "MINDFUCK"
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/laser.ogg'
 
 /obj/item/ammo_casing/energy/flora
 	fire_sound = 'sound/effects/stealthoff.ogg'
@@ -116,7 +132,7 @@
 	projectile_type = /obj/item/projectile/beam/disabler
 	select_name  = "disable"
 	e_cost = 50
-	fire_sound = "sound/weapons/taser2.ogg"
+	fire_sound = 'sound/weapons/taser2.ogg'
 
 /obj/item/ammo_casing/energy/plasma
 	projectile_type = /obj/item/projectile/plasma
@@ -133,7 +149,7 @@
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0
-	fire_sound = "sound/weapons/pulse3.ogg"
+	fire_sound = 'sound/weapons/pulse3.ogg'
 	var/obj/item/weapon/gun/energy/wormhole_projector/gun = null
 	select_name = "blue"
 
@@ -145,7 +161,7 @@
 	projectile_type = /obj/item/projectile/energy/bolt
 	select_name = "bolt"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Genhit.ogg'
+	fire_sound = 'sound/weapons/genhit.ogg'
 
 /obj/item/ammo_casing/energy/bolt/halloween
 	projectile_type = /obj/item/projectile/energy/bolt/halloween
@@ -179,12 +195,12 @@
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 	e_cost = 200
 	select_name = "stun"
-	projectile_type = /obj/item/projectile/energy/tesla_revolver
+	projectile_type = /obj/item/projectile/energy/tesla/revolver
 
 /obj/item/ammo_casing/energy/gravityrepulse
 	projectile_type = /obj/item/projectile/gravityrepulse
 	e_cost = 0
-	fire_sound = "sound/weapons/wave.ogg"
+	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "repulse"
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
@@ -195,7 +211,7 @@
 /obj/item/ammo_casing/energy/gravityattract
 	projectile_type = /obj/item/projectile/gravityattract
 	e_cost = 0
-	fire_sound = "sound/weapons/wave.ogg"
+	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "attract"
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
@@ -207,7 +223,7 @@
 /obj/item/ammo_casing/energy/gravitychaos
 	projectile_type = /obj/item/projectile/gravitychaos
 	e_cost = 0
-	fire_sound = "sound/weapons/wave.ogg"
+	fire_sound = 'sound/weapons/wave.ogg'
 	select_name = "chaos"
 	delay = 50
 	var/obj/item/weapon/gun/energy/gravity_gun/gun = null

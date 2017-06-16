@@ -6,7 +6,7 @@
 	nodamage = 0
 	flag = "bullet"
 	hitsound_wall = "ricochet"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect
+	impact_effect_type = /obj/effect/temp_visual/impact_effect
 
 /obj/item/projectile/bullet/weakbullet //beanbag, heavy stamina damage
 	damage = 5
@@ -28,37 +28,45 @@
 	damage = 10
 
 /obj/item/projectile/bullet/armourpiercing
-	damage = 17
-	armour_penetration = 10
+	damage = 15
+	armour_penetration = 40
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
+	damage = 12.5
+
+/obj/item/projectile/bullet/pellet/Range()
+	..()
+	damage += -0.75
+	if(damage < 0)
+		qdel(src)
+
+/obj/item/projectile/bullet/pellet/weak
+	damage = 6
 
 /obj/item/projectile/bullet/pellet/weak/New()
-	damage = 6
-	range = rand(8)
+	range = rand(1, 8)
+	..()
 
 /obj/item/projectile/bullet/pellet/weak/on_range()
- 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
- 	sparks.set_up(1, 1, src)
- 	sparks.start()
- 	..()
+	do_sparks(1, TRUE, src)
+	..()
+
+/obj/item/projectile/bullet/pellet/overload
+	damage = 3
 
 /obj/item/projectile/bullet/pellet/overload/New()
-	damage = 3
-	range = rand(10)
+	range = rand(1, 10)
+	..()
 
 /obj/item/projectile/bullet/pellet/overload/on_hit(atom/target, blocked = 0)
  	..()
  	explosion(target, 0, 0, 2)
 
 /obj/item/projectile/bullet/pellet/overload/on_range()
- 	explosion(src, 0, 0, 2)
- 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
- 	sparks.set_up(3, 3, src)
- 	sparks.start()
- 	..()
+	explosion(src, 0, 0, 2)
+	do_sparks(3, TRUE, src)
+	..()
 
 /obj/item/projectile/bullet/midbullet
 	damage = 20
@@ -182,7 +190,7 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
-	var/piercing = 0
+	var/piercing = FALSE
 
 /obj/item/projectile/bullet/dart/New()
 	..()
@@ -193,15 +201,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null, 0, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
-				return 1
+				return TRUE
 			else
 				blocked = 100
-				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
-									   "<span class='userdanger'>You were protected against the [name]!</span>")
+				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
+									   "<span class='userdanger'>You were protected against \the [src]!</span>")
 
 	..(target, blocked)
 	reagents.set_reacting(TRUE)
@@ -232,7 +240,28 @@
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
 
+/obj/item/projectile/bullet/dnainjector
+	name = "\improper DNA injector"
+	icon_state = "syringeproj"
+	var/obj/item/weapon/dnainjector/injector
 
+/obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(blocked != 100)
+			if(M.can_inject(null, FALSE, def_zone, FALSE))
+				if(injector.inject(M, firer))
+					QDEL_NULL(injector)
+					return TRUE
+			else
+				blocked = 100
+				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
+									   "<span class='userdanger'>You were protected against \the [src]!</span>")
+	return ..()
+
+/obj/item/projectile/bullet/dnainjector/Destroy()
+	QDEL_NULL(injector)
+	return ..()
 
 //// SNIPER BULLETS
 
@@ -250,6 +279,29 @@
 		target.ex_act(rand(1,2))
 	return ..()
 
+/obj/item/projectile/bullet/sniper/gang
+	damage = 55
+	stun = 1
+	weaken = 1
+	dismemberment = 15
+	armour_penetration = 25
+
+/obj/item/projectile/bullet/sniper/gang/sleeper
+	nodamage = 1
+	stun = 0
+	weaken = 0
+	dismemberment = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/gang/sleeper/on_hit(atom/target, blocked = 0)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.blur_eyes(8)
+		if(L.staminaloss >= 40)
+			L.Sleeping(20)
+		else
+			L.adjustStaminaLoss(55)
+	return 1
 
 /obj/item/projectile/bullet/sniper/soporific
 	armour_penetration = 0

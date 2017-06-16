@@ -11,30 +11,16 @@
 	chant_amount = 15
 	chant_interval = 20
 	channel_time = 20
-	required_components = list(BELLIGERENT_EYE = 1)
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 1
 	quickbind = TRUE
 	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
-	var/noncultist_damage = 2 //damage per chant to noncultists
-	var/cultist_damage = 8 //damage per chant to non-walking cultists
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
-		var/number_legs = C.get_num_legs()
-		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
-			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
-			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != MOVE_INTENT_WALK)
-				if(!iscultist(C))
-					C << "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>"
-				else //Cultists take extra burn damage
-					C << "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>"
-					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
-					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.toggle_move_intent()
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	return TRUE
 
 
@@ -42,11 +28,10 @@
 /datum/clockwork_scripture/create_object/judicial_visor
 	descname = "Delayed Area Stun Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging the nonfaithful. \
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging non-Servants. \
 	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
-	required_components = list(BELLIGERENT_EYE = 2)
 	consumed_components = list(BELLIGERENT_EYE = 1)
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
@@ -56,6 +41,8 @@
 	space_allowed = TRUE
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
+	quickbind = TRUE
+	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, stunning, muting, and damaging non-Servants after a delay."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
@@ -66,7 +53,6 @@
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
-	required_components = list(VANGUARD_COGWHEEL = 1)
 	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
 	primary_component = VANGUARD_COGWHEEL
@@ -75,13 +61,19 @@
 	quickbind_desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
-		invoker << "<span class='warning'>You are already shielded by a Vanguard!</span>"
+	if(!GLOB.ratvar_awakens && islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["end_time"] > world.time)
+		to_chat(invoker, "<span class='warning'>You are already shielded by a Vanguard!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
+	if(GLOB.ratvar_awakens)
+		for(var/mob/living/L in view(7, get_turf(invoker)))
+			if(L.stat != DEAD && is_servant_of_ratvar(L))
+				L.apply_status_effect(STATUS_EFFECT_VANGUARD)
+			CHECK_TICK
+	else
+		invoker.apply_status_effect(STATUS_EFFECT_VANGUARD)
 	return TRUE
 
 
@@ -92,7 +84,6 @@
 	desc = "Charges your slab with healing power, allowing you to convert all of a target Servant's brute, burn, and oxygen damage to half as much toxin damage."
 	invocations = list("Mend the wounds of...", "...my inferior flesh.")
 	channel_time = 30
-	required_components = list(VANGUARD_COGWHEEL = 2)
 	consumed_components = list(VANGUARD_COGWHEEL = 1)
 	usage_tip = "The Compromise is very fast to invoke, and will remove holy water from the target Servant."
 	tier = SCRIPTURE_DRIVER
@@ -115,7 +106,6 @@
 	invocations = list("Divinity, grant...", "...me strength...", "...to enlighten...", "...the heathen!")
 	whispered = TRUE
 	channel_time = 20
-	required_components = list(GEIS_CAPACITOR = 1)
 	usage_tip = "Is melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
@@ -131,9 +121,10 @@
 
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
+				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
 		servants -= SCRIPT_SERVANT_REQ
@@ -150,7 +141,7 @@
 	var/obj/structure/destructible/clockwork/geis_binding/binding
 
 /datum/clockwork_scripture/geis/Destroy()
-	if(binding && !qdeleted(binding))
+	if(binding && !QDELETED(binding))
 		qdel(binding)
 	return ..()
 
@@ -161,15 +152,17 @@
 
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
-			servants++
-	if(servants > SCRIPT_SERVANT_REQ)
-		servants -= SCRIPT_SERVANT_REQ
-		channel_time = min(channel_time + servants*7, 120)
+	if(!GLOB.ratvar_awakens)
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
+				servants++
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
 	binding = new(get_turf(target))
+	if(servants > SCRIPT_SERVANT_REQ)
+		servants -= SCRIPT_SERVANT_REQ
+		channel_time = min(channel_time + servants*7, 120)
+		binding.can_resist = TRUE
 	binding.setDir(target.dir)
 	binding.buckle_mob(target, TRUE)
 	return ..()
@@ -183,49 +176,42 @@
 
 //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each chant.
 /datum/clockwork_scripture/channeled/taunting_tirade
-	descname = "Channeled, Mobile Area Confusion"
+	descname = "Channeled, Mobile Confusion Trail"
 	name = "Taunting Tirade"
-	desc = "Weakens, confuses and dizzies all nearby non-servants with a short invocation, then allows movement for five seconds. Chanted every second for up to thirty seconds."
+	desc = "Allows movement for five seconds, leaving a confusing and weakening trail. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
-	required_components = list(GEIS_CAPACITOR = 2)
 	consumed_components = list(GEIS_CAPACITOR = 1)
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Weakens, confuses, and dizzies nearby non-servants, then allows some movement.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows movement for five seconds, leaving a confusing and weakening trail.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && !L.null_rod_check())
-			L.confused = min(L.confused + 20, 100)
-			L.dizziness = min(L.dizziness + 20, 100)
-			L.Weaken(1)
 	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of purple smoke!</span>")
 	var/invoker_old_color = invoker.color
 	invoker.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
 	animate(invoker, color = invoker_old_color, time = flee_time+grace_period)
 	addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), flee_time+grace_period)
-	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
-		var/endtime = world.time + flee_time
-		var/starttime = world.time
-		progbar = new(invoker, flee_time, invoker)
-		progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
-		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-		while(world.time < endtime && can_recite())
-			sleep(1)
-			progbar.update(world.time - starttime)
-		qdel(progbar)
-		if(can_recite())
-			sleep(grace_period)
-		else
-			return FALSE
+	var/endtime = world.time + flee_time
+	progbar = new(invoker, flee_time, invoker)
+	progbar.bar.color = list("#AF0AAF", "#AF0AAF", "#AF0AAF", rgb(0,0,0))
+	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
+	while(world.time < endtime && can_recite())
+		sleep(1)
+		new/obj/structure/destructible/clockwork/taunting_trail(invoker.loc)
+		progbar.update(endtime - world.time)
+	qdel(progbar)
+	if(can_recite() && chant_number != chant_amount)
+		sleep(grace_period)
+	else
+		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
@@ -239,7 +225,6 @@
 	desc = "Creates a new clockwork slab."
 	invocations = list("Metal, become greater!")
 	channel_time = 10
-	required_components = list(REPLICANT_ALLOY = 1)
 	whispered = TRUE
 	object_path = /obj/item/clockwork/slab
 	creator_message = "<span class='brass'>You copy a piece of replicant alloy and command it into a new slab.</span>"
@@ -256,68 +241,69 @@
 /datum/clockwork_scripture/create_object/tinkerers_cache
 	descname = "Necessary Structure, Shares Components"
 	name = "Tinkerer's Cache"
-	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
+	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs. \
+	Striking a cache with a slab will transfer that slab's components to the global cache."
 	invocations = list("Constructing...", "...a cache!")
 	channel_time = 50
-	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
 	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
 	object_path = /obj/structure/destructible/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
-	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches very efficient."
+	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches extremely useful."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
 	quickbind = TRUE
 	quickbind_desc = "Creates a Tinkerer's Cache, which stores components globally for slab access."
+	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(clockwork_caches*0.25), 5)
-	required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 0)
-	consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
-	for(var/i in required_components)
-		if(i != REPLICANT_ALLOY)
-			required_components[i] += cache_cost_increase
-	for(var/i in consumed_components)
-		if(i != REPLICANT_ALLOY)
-			consumed_components[i] += cache_cost_increase
+	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.4), 10)
+	if(cache_cost_increase != prev_cost)
+		prev_cost = cache_cost_increase
+		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)
+		for(var/i in consumed_components)
+			if(i != REPLICANT_ALLOY)
+				consumed_components[i] += cache_cost_increase
+		return TRUE
+	return FALSE
 
 
 //Wraith Spectacles: Creates a pair of wraith spectacles, which grant xray vision but damage vision slowly.
 /datum/clockwork_scripture/create_object/wraith_spectacles
-	descname = "Xray Vision Glasses"
+	descname = "Limited Xray Vision Glasses"
 	name = "Wraith Spectacles"
-	desc = "Fabricates a pair of glasses that provides true sight but quickly damage vision, eventually causing blindness if worn for too long."
+	desc = "Fabricates a pair of glasses which grant true sight but cause gradual vision loss."
 	invocations = list("Show the truth of this world to me!")
 	channel_time = 10
-	required_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/wraith_spectacles
-	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which will grant true sight when worn.</span>"
+	creator_message = "<span class='brass'>You form a pair of wraith spectacles, which grant true sight but cause gradual vision loss.</span>"
 	usage_tip = "\"True sight\" means that you are able to see through walls and in darkness."
 	tier = SCRIPTURE_DRIVER
 	space_allowed = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 9
+	quickbind = TRUE
+	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
 
 //Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.
 /datum/clockwork_scripture/create_object/sigil_of_transgression
 	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
-	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
-	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
+	desc = "Wards a tile with a sigil, which will stun the next non-Servant to cross it."
+	invocations = list("Divinity, smite...", "...those who tresspass here!")
 	channel_time = 50
-	required_components = list(HIEROPHANT_ANSIBLE = 2)
 	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
-	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-servant to cross it will be immobilized.</span>"
+	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be stunned.</span>"
 	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transgression, which will stun the first non-Servant to cross it."
+	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

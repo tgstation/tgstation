@@ -44,8 +44,8 @@
  	caliber = "laser"
  	icon_state = "s-casing-live"
  	projectile_type = /obj/item/projectile/beam
- 	fire_sound = 'sound/weapons/Laser.ogg'
- 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
+ 	fire_sound = 'sound/weapons/laser.ogg'
+ 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/caseless/laser/gatling
 	projectile_type = /obj/item/projectile/beam/weak
@@ -82,22 +82,21 @@
 		modified = 1
 		FD.modified = 1
 		FD.damage_type = BRUTE
-		user << "<span class='notice'>You pop the safety cap off of [src].</span>"
+		to_chat(user, "<span class='notice'>You pop the safety cap off of [src].</span>")
 		update_icon()
 	else if (istype(A, /obj/item/weapon/pen))
 		if(modified)
 			if(!FD.pen)
-				if(!user.unEquip(A))
+				if(!user.transferItemToLoc(A, FD))
 					return
-				A.forceMove(FD)
 				FD.pen = A
 				FD.damage = 5
 				FD.nodamage = 0
-				user << "<span class='notice'>You insert [A] into [src].</span>"
+				to_chat(user, "<span class='notice'>You insert [A] into [src].</span>")
 			else
-				user << "<span class='warning'>There's already something in [src].</span>"
+				to_chat(user, "<span class='warning'>There's already something in [src].</span>")
 		else
-			user << "<span class='warning'>The safety cap prevents you from inserting [A] into [src].</span>"
+			to_chat(user, "<span class='warning'>The safety cap prevents you from inserting [A] into [src].</span>")
 	else
 		return ..()
 
@@ -107,7 +106,7 @@
 		FD.damage = initial(FD.damage)
 		FD.nodamage = initial(FD.nodamage)
 		user.put_in_hands(FD.pen)
-		user << "<span class='notice'>You remove [FD.pen] from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove [FD.pen] from [src].</span>")
 		FD.pen = null
 
 /obj/item/ammo_casing/caseless/foam_dart/riot

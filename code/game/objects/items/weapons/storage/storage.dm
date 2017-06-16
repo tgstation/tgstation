@@ -38,14 +38,14 @@
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+		if(over_object == M && M.CanReach(src,view_only = TRUE))
 			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
 			show_to(M)
 			return
 
-		if(!M.restrained() && !M.stat)
+		if(!M.incapacitated())
 			if(!istype(over_object, /obj/screen))
 				return content_can_dump(over_object, M)
 
@@ -54,12 +54,9 @@
 
 			playsound(loc, "rustle", 50, 1, -5)
 
-
 			if(istype(over_object, /obj/screen/inventory/hand))
 				var/obj/screen/inventory/hand/H = over_object
-				if(!M.unEquip(src))
-					return
-				M.put_in_hand(src,H.held_index)
+				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 			add_fingerprint(usr)
 
@@ -84,18 +81,34 @@
 
 //Object behaviour on storage dump
 /obj/item/weapon/storage/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
-	for(var/obj/item/I in src_object)
-		if(user.s_active != src_object)
-			if(I.on_found(user))
-				return
-		if(can_be_inserted(I,0,user))
-			handle_item_insertion(I, TRUE, user)
+	var/list/things = src_object.contents.Copy()
+	var/datum/progressbar/progress = new(user, things.len, src)
+	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(src, .proc/handle_mass_item_insertion, things, src_object, user, progress)))
+		sleep(1)
+	qdel(progress)
 	orient2hud(user)
 	src_object.orient2hud(user)
 	if(user.s_active) //refresh the HUD to show the transfered contents
 		user.s_active.close(user)
 		user.s_active.show_to(user)
 	return 1
+
+/obj/item/weapon/storage/proc/handle_mass_item_insertion(list/things, obj/item/weapon/storage/src_object, mob/user, datum/progressbar/progress)
+	for(var/obj/item/I in things)
+		things -= I
+		if(I.loc != src_object)
+			continue
+		if(user.s_active != src_object)
+			if(I.on_found(user))
+				break
+		if(can_be_inserted(I,0,user))
+			handle_item_insertion(I, TRUE, user)
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list()
@@ -255,23 +268,23 @@
 		return 0 //Means the item is already in the storage item
 	if(contents.len >= storage_slots)
 		if(!stop_messages)
-			usr << "<span class='warning'>[src] is full, make some space!</span>"
+			to_chat(usr, "<span class='warning'>[src] is full, make some space!</span>")
 		return 0 //Storage item is full
 
 	if(can_hold.len)
 		if(!is_type_in_typecache(W, can_hold))
 			if(!stop_messages)
-				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
+				to_chat(usr, "<span class='warning'>[src] cannot hold [W]!</span>")
 			return 0
 
 	if(is_type_in_typecache(W, cant_hold)) //Check for specific items which this container can't hold.
 		if(!stop_messages)
-			usr << "<span class='warning'>[src] cannot hold [W]!</span>"
+			to_chat(usr, "<span class='warning'>[src] cannot hold [W]!</span>")
 		return 0
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
-			usr << "<span class='warning'>[W] is too big for [src]!</span>"
+			to_chat(usr, "<span class='warning'>[W] is too big for [src]!</span>")
 		return 0
 
 	var/sum_w_class = W.w_class
@@ -280,17 +293,17 @@
 
 	if(sum_w_class > max_combined_w_class)
 		if(!stop_messages)
-			usr << "<span class='warning'>[W] won't fit in [src], make some space!</span>"
+			to_chat(usr, "<span class='warning'>[W] won't fit in [src], make some space!</span>")
 		return 0
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				usr << "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>"
+				to_chat(usr, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
 			return 0 //To prevent the stacking of same sized storage items.
 
 	if(W.flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
-		usr << "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>"
+		to_chat(usr, "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>")
 		return 0
 
 	return 1
@@ -303,13 +316,14 @@
 	if(!istype(W))
 		return 0
 	if(usr)
-		if(!usr.unEquip(W))
+		if(!usr.transferItemToLoc(W, src))
 			return 0
+	else
+		W.forceMove(src)
 	if(silent)
 		prevent_warning = 1
 	if(W.pulledby)
 		W.pulledby.stop_pulling()
-	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
 		if(usr.client && usr.s_active != src)
@@ -327,7 +341,7 @@
 		if(!prevent_warning)
 			for(var/mob/M in viewers(usr, null))
 				if(M == usr)
-					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
+					to_chat(usr, "<span class='notice'>You put [W] [preposition]to [src].</span>")
 				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
 					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
@@ -359,7 +373,7 @@
 		W.dropped(M)
 	W.layer = initial(W.layer)
 	W.plane = initial(W.plane)
-	W.loc = new_location
+	W.forceMove(new_location)
 
 	for(var/mob/M in can_see_contents())
 		orient2hud(M)
@@ -392,6 +406,8 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
+		if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
+			return 1
 		return 0
 
 	handle_item_insertion(W, 0 , user)
@@ -442,11 +458,11 @@
 	collection_mode = (collection_mode+1)%3
 	switch (collection_mode)
 		if(2)
-			usr << "[src] now picks up all items of a single type at once."
+			to_chat(usr, "[src] now picks up all items of a single type at once.")
 		if(1)
-			usr << "[src] now picks up all items in a tile at once."
+			to_chat(usr, "[src] now picks up all items in a tile at once.")
 		if(0)
-			usr << "[src] now picks up one item at a time."
+			to_chat(usr, "[src] now picks up one item at a time.")
 
 // Empty all the contents onto the current turf
 /obj/item/weapon/storage/verb/quick_empty()
@@ -455,8 +471,25 @@
 
 	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained() ||!usr.canmove)
 		return
+	var/turf/T = get_turf(src)
+	var/list/things = contents.Copy()
+	var/datum/progressbar/progress = new(usr, things.len, T)
+	while (do_after(usr, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
+		sleep(1)
+	qdel(progress)
 
-	do_quick_empty()
+/obj/item/weapon/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress)
+	for(var/obj/item/I in things)
+		things -= I
+		if (I.loc != src)
+			continue
+		remove_from_storage(I, target)
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 // Empty all the contents onto the current turf, without checking the user's status.
 /obj/item/weapon/storage/proc/do_quick_empty()
@@ -467,8 +500,8 @@
 		remove_from_storage(I, T)
 
 
-/obj/item/weapon/storage/New()
-	..()
+/obj/item/weapon/storage/Initialize(mapload)
+	. = ..()
 
 	can_hold = typecacheof(can_hold)
 	cant_hold = typecacheof(cant_hold)
@@ -497,6 +530,8 @@
 	closer.plane = ABOVE_HUD_PLANE
 	orient2hud()
 
+	PopulateContents()
+
 
 /obj/item/weapon/storage/Destroy()
 	for(var/obj/O in contents)
@@ -524,9 +559,13 @@
 /obj/item/weapon/storage/handle_atom_del(atom/A)
 	if(A in contents)
 		usr = null
-		remove_from_storage(A, loc)
+		remove_from_storage(A, null)
 
 /obj/item/weapon/storage/contents_explosion(severity, target)
 	for(var/atom/A in contents)
 		A.ex_act(severity, target)
 		CHECK_TICK
+
+//Cyberboss says: "USE THIS TO FILL IT, NOT INITIALIZE OR NEW"
+
+/obj/item/weapon/storage/proc/PopulateContents()

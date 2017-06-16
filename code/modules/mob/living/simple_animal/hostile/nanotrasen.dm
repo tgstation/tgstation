@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/nanotrasen
 	name = "Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force, he seems rather unpleased to meet you."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "nanotrasen"
 	icon_living = "nanotrasen"
 	icon_dead = null
@@ -43,7 +44,7 @@
 	retreat_distance = 3
 	minimum_distance = 5
 	casingtype = /obj/item/ammo_casing/c45
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	loot = list(/obj/item/weapon/gun/ballistic/automatic/pistol/m1911,
 				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
 
@@ -53,6 +54,6 @@
 	icon_living = "nanotrasenrangedsmg"
 	rapid = 1
 	casingtype = /obj/item/ammo_casing/c46x30mm
-	projectilesound = 'sound/weapons/Gunshot_smg.ogg'
+	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 	loot = list(/obj/item/weapon/gun/ballistic/automatic/wt550,
 				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)

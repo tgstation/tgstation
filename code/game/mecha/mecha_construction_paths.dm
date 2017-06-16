@@ -6,7 +6,7 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
@@ -24,14 +24,14 @@
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if(C.use(4))
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
-			user << ("<span class='warning'>There's not enough cable to finish the task!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
-			user << ("<span class='warning'>There's not enough material in this stack!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
 			return 0
 		else
 			S.use(5)
@@ -41,7 +41,7 @@
 	if(istype(used_atom, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = used_atom
 		if (W.remove_fuel(0, user))
-			playsound(holder, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(holder, 'sound/items/welder2.ogg', 50, 1)
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
@@ -59,14 +59,14 @@
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
 		if (C.use(4))
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(holder, 'sound/items/deconstruct.ogg', 50, 1)
 		else
-			user << ("<span class='warning'>There's not enough cable to finish the task!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough cable to finish the task!</span>"))
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(S.get_amount() < 5)
-			user << ("<span class='warning'>There's not enough material in this stack!</span>")
+			to_chat(user, ("<span class='warning'>There's not enough material in this stack!</span>"))
 			return 0
 		else
 			S.use(5)
@@ -96,7 +96,7 @@
 	const_holder.icon = 'icons/mecha/mech_construction.dmi'
 	const_holder.icon_state = "ripley0"
 	const_holder.density = 1
-	const_holder.overlays.len = 0
+	const_holder.cut_overlays(TRUE)
 	qdel(src)
 	return
 
@@ -277,7 +277,7 @@
 
 /datum/construction/reversible/mecha/ripley/spawn_result()
 	..()
-	feedback_inc("mecha_ripley_created",1)
+	SSblackbox.inc("mecha_ripley_created",1)
 	return
 
 
@@ -481,8 +481,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -500,8 +499,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "gygax13"
 			else
 				user.visible_message("[user] unfastens the  scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -564,9 +562,9 @@
 
 /datum/construction/reversible/mecha/gygax/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
-	feedback_inc("mecha_gygax_created",1)
+	SSblackbox.inc("mecha_gygax_created",1)
 	return
 
 /datum/construction/mecha/firefighter_chassis
@@ -788,7 +786,7 @@
 
 /datum/construction/reversible/mecha/firefighter/spawn_result()
 	..()
-	feedback_inc("mecha_firefighter_created",1)
+	SSblackbox.inc("mecha_firefighter_created",1)
 	return
 
 
@@ -866,7 +864,7 @@
 
 /datum/construction/mecha/honker/spawn_result()
 	..()
-	feedback_inc("mecha_honker_created",1)
+	SSblackbox.inc("mecha_honker_created",1)
 	return
 
 /datum/construction/mecha/durand_chassis
@@ -1068,8 +1066,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs scanner module to the [holder].", "<span class='notice'>You install phasic scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -1087,8 +1084,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "durand13"
 			else
 				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -1151,9 +1147,9 @@
 
 /datum/construction/reversible/mecha/durand/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
-	feedback_inc("mecha_durand_created",1)
+	SSblackbox.inc("mecha_durand_created",1)
 	return
 
 //PHAZON
@@ -1375,8 +1371,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs phasic scanner module to the [holder].", "<span class='notice'>You install scanner module to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon11"
 			else
 				user.visible_message("[user] unfastens the weapon control module.", "<span class='notice'>You unfasten the weapon control module.</span>")
@@ -1394,8 +1389,7 @@
 			if(diff==FORWARD)
 				user.visible_message("[user] installs super capacitor to the [holder].", "<span class='notice'>You install capacitor to the [holder].</span>")
 				var/obj/item/I = used_atom
-				user.unEquip(I)
-				I.loc = holder
+				user.transferItemToLoc(I, holder, TRUE)
 				holder.icon_state = "phazon13"
 			else
 				user.visible_message("[user] unfastens the phasic scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
@@ -1485,9 +1479,9 @@
 
 /datum/construction/reversible/mecha/phazon/spawn_result()
 	var/obj/mecha/combat/gygax/M = new result(get_turf(holder))
-	M.CheckParts(holder)
+	M.CheckParts(holder.contents)
 	qdel(holder)
-	feedback_inc("mecha_phazon_created",1)
+	SSblackbox.inc("mecha_phazon_created",1)
 	return
 
 //ODYSSEUS
@@ -1698,5 +1692,5 @@
 
 /datum/construction/reversible/mecha/odysseus/spawn_result()
 	..()
-	feedback_inc("mecha_odysseus_created",1)
+	SSblackbox.inc("mecha_odysseus_created",1)
 	return

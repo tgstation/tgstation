@@ -68,7 +68,7 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
-		 
+
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"
@@ -121,10 +121,10 @@
 /datum/chemical_reaction/nitrous_oxide
 	name = "Nitrous Oxide"
 	id = "nitrous_oxide"
-	results = list("nitrous_oxide" = 2, "water" = 4)
-	required_reagents = list("ammonia" = 3, "nitrogen" = 1, "oxygen" = 2)
+	results = list("nitrous_oxide" = 5)
+	required_reagents = list("ammonia" = 2, "nitrogen" = 1, "oxygen" = 2)
 	required_temp = 525
-	
+
 ////////////////////////////////// Mutation Toxins ///////////////////////////////////
 
 /datum/chemical_reaction/stable_mutation_toxin
@@ -214,7 +214,7 @@
 	name = "Mulligan"
 	id = "mulligan"
 	results = list("mulligan" = 1)
-	required_reagents = list("humanmutationtoxin" = 1, "mutagen" = 1)
+	required_reagents = list("stablemutationtoxin" = 1, "mutagen" = 1)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
@@ -371,7 +371,7 @@
 
 	name = "Mix Virus 10"
 	id = "mixvirus10"
-	required_reagents = list("uraniumvirusfood" = 5)
+	required_reagents = list("uraniumvirusfood" = 1)
 	level_min = 6
 	level_max = 7
 
@@ -379,7 +379,7 @@
 
 	name = "Mix Virus 11"
 	id = "mixvirus11"
-	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 1)
 	level_min = 7
 	level_max = 7
 
@@ -387,7 +387,7 @@
 
 	name = "Mix Virus 12"
 	id = "mixvirus12"
-	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
+	required_reagents = list("uraniumplasmavirusfood_stable" = 1)
 	level_min = 8
 	level_max = 8
 
@@ -426,7 +426,7 @@
 /datum/chemical_reaction/foam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
-		M << "<span class='danger'>The solution spews out foam!</span>"
+		to_chat(M, "<span class='danger'>The solution spews out foam!</span>")
 	var/datum/effect_system/foam_spread/s = new()
 	s.set_up(created_volume*2, location, holder)
 	s.start()
@@ -444,7 +444,7 @@
 	var/location = get_turf(holder.my_atom)
 
 	for(var/mob/M in viewers(5, location))
-		M << "<span class='danger'>The solution spews out a metallic foam!</span>"
+		to_chat(M, "<span class='danger'>The solution spews out a metallic foam!</span>")
 
 	var/datum/effect_system/foam_spread/metal/s = new()
 	s.set_up(created_volume*5, location, holder, 1)
@@ -460,7 +460,7 @@
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/M in viewers(5, location))
-		M << "<span class='danger'>The solution spews out a metallic foam!</span>"
+		to_chat(M, "<span class='danger'>The solution spews out a metallic foam!</span>")
 	var/datum/effect_system/foam_spread/metal/s = new()
 	s.set_up(created_volume*5, location, holder, 2)
 	s.start()
@@ -624,3 +624,14 @@
 	id = "laughter"
 	results = list("laughter" = 10) // Fuck it. I'm not touching this one.
 	required_reagents = list("sugar" = 1, "banana" = 1)
+
+/datum/chemical_reaction/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
+
+/datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to 10)
+		new /obj/item/stack/sheet/plastic(location)

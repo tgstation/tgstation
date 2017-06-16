@@ -3,10 +3,10 @@
 	internal_damage_threshold = 50
 	armor = list(melee = 30, bullet = 30, laser = 15, energy = 20, bomb = 20, bio = 0, rad = 0, fire = 100, acid = 100)
 
-/obj/mecha/combat/CheckParts(atom/holder)
+/obj/mecha/combat/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/stock_parts/capacitor/C = locate() in holder
-	var/obj/item/weapon/stock_parts/scanning_module/SM = locate() in holder
+	var/obj/item/weapon/stock_parts/capacitor/C = locate() in contents
+	var/obj/item/weapon/stock_parts/scanning_module/SM = locate() in contents
 	step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
 	armor["energy"] += (C.rating * 10) //Each level of capacitor protects the mech against emp by 10%
 	qdel(C)

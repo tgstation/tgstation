@@ -19,22 +19,19 @@
 	var/mob/living/carbon/human/H = imp_in
 	if(!ishuman(H))
 		return
-	if(istype(H.martial_art, /datum/martial_art/krav_maga))
+	if(!H.mind)
+		return
+	if(istype(H.mind.martial_art, /datum/martial_art/krav_maga))
 		style.remove(H)
 	else
 		style.teach(H,1)
 
 /obj/item/weapon/implanter/krav_maga
 	name = "implanter (krav maga)"
-
-/obj/item/weapon/implanter/krav_maga/New()
-	imp = new /obj/item/weapon/implant/krav_maga(src)
-	..()
+	imp_type = /obj/item/weapon/implant/krav_maga
 
 /obj/item/weapon/implantcase/krav_maga
 	name = "implant case - 'Krav Maga'"
 	desc = "A glass case containing an implant that can teach the user the arts of Krav Maga."
+	imp_type = /obj/item/weapon/implant/krav_maga
 
-/obj/item/weapon/implantcase/krav_maga/New()
-	imp = new /obj/item/weapon/implant/krav_maga(src)
-	..()

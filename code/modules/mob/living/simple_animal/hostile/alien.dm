@@ -2,8 +2,8 @@
 	name = "alien hunter"
 	desc = "Hiss!"
 	icon = 'icons/mob/alien.dmi'
-	icon_state = "alienh_s"
-	icon_living = "alienh_s"
+	icon_state = "alienh"
+	icon_living = "alienh"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
@@ -30,7 +30,7 @@
 	status_flags = CANPUSH
 	minbodytemp = 0
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	unique_name = 1
 	gold_core_spawnable = 0
 	death_sound = 'sound/voice/hiss6.ogg'
@@ -38,8 +38,8 @@
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
-	icon_state = "aliend_s"
-	icon_living = "aliend_s"
+	icon_state = "aliend"
+	icon_living = "aliend"
 	icon_dead = "aliend_dead"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -57,8 +57,8 @@
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
-	icon_state = "aliens_s"
-	icon_living = "aliens_s"
+	icon_state = "aliens"
+	icon_living = "aliens"
 	icon_dead = "aliens_dead"
 	health = 150
 	maxHealth = 150
@@ -73,8 +73,8 @@
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"
-	icon_state = "alienq_s"
-	icon_living = "alienq_s"
+	icon_state = "alienq"
+	icon_living = "alienq"
 	icon_dead = "alienq_dead"
 	health = 250
 	maxHealth = 250
@@ -158,7 +158,7 @@
 	a_intent = INTENT_HELP
 	friendly = "caresses"
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = 1
 	icon_state = "maid"
 	icon_living = "maid"
@@ -169,7 +169,8 @@
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("[src] cleans up \the [target].")
 			qdel(target)
-			return
+			return TRUE
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
+		return TRUE

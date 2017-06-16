@@ -1,3 +1,8 @@
+
+#define GIBTONITE_QUALITY_HIGH 3
+#define GIBTONITE_QUALITY_MEDIUM 2
+#define GIBTONITE_QUALITY_LOW 1
+
 /**********************Mineral ores**************************/
 
 /obj/item/weapon/ore
@@ -14,7 +19,7 @@
 			new refined_type(get_turf(src.loc))
 			qdel(src)
 		else if(W.isOn())
-			user << "<span class='info'>Not enough fuel to smelt [src].</span>"
+			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
 	..()
 
 /obj/item/weapon/ore/Crossed(atom/movable/AM)
@@ -31,7 +36,7 @@
 				if(istype(thing, /obj/item/weapon/storage/bag/ore))
 					OB = thing
 					break
-		else if(issilicon(AM))
+		else if(iscyborg(AM))
 			var/mob/living/silicon/robot/R = AM
 			for(var/thing in R.module_active)
 				if(istype(thing, /obj/item/weapon/storage/bag/ore))
@@ -73,7 +78,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/weapon/ore/glass/attack_self(mob/living/user)
-	user << "<span class='notice'>You use the sand to make sandstone.</span>"
+	to_chat(user, "<span class='notice'>You use the sand to make sandstone.</span>")
 	var/sandAmt = 1
 	for(var/obj/item/weapon/ore/glass/G in user.loc) // The sand on the floor
 		sandAmt += 1
@@ -107,7 +112,7 @@
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
-	C << "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>"
+	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
 	qdel(src)
 
 /obj/item/weapon/ore/glass/basalt
@@ -126,7 +131,7 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding)
-			user << "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>"
+			to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
 	else
 		..()
 
@@ -184,10 +189,11 @@
 	item_state = "Gibtonite ore"
 	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 0
-	var/primed = 0
+	var/primed = FALSE
 	var/det_time = 100
-	var/quality = 1 //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
+	var/quality = GIBTONITE_QUALITY_LOW //How pure this gibtonite is, determines the explosion produced by it and is derived from the det_time of the rock wall it was taken from, higher value = better
 	var/attacher = "UNKNOWN"
+	var/det_timer
 
 /obj/item/weapon/twohanded/required/gibtonite/Destroy()
 	qdel(wires)
@@ -213,10 +219,12 @@
 		return
 	if(primed)
 		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
-			primed = 0
+			primed = FALSE
+			if(det_timer)
+				deltimer(det_timer)
 			user.visible_message("The chain reaction was stopped! ...The ore's quality looks diminished.", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
 			icon_state = "Gibtonite ore"
-			quality = 1
+			quality = GIBTONITE_QUALITY_LOW
 			return
 	..()
 
@@ -237,8 +245,8 @@
 
 /obj/item/weapon/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
+		primed = TRUE
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
-		primed = 1
 		icon_state = "Gibtonite active"
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
@@ -248,29 +256,32 @@
 
 		if(notify_admins)
 			if(triggered_by == 1)
-				message_admins("An explosion has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("An explosion has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)].")
 			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>. Igniter attacher: [key_name_admin(attacher)]<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)")
+				message_admins("A signal has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
 			else
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has triggered a [name] to detonate at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+				message_admins("[ADMIN_LOOKUPFLW(attacher)] has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)].")
 		if(triggered_by == 1)
-			log_game("An explosion has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			log_game("An explosion has primed a [name] for detonation at [A][COORD(bombturf)]")
 		else if(triggered_by == 2)
-			log_game("A signal has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z]). Igniter attacher: [key_name(attacher)].")
+			log_game("A signal has primed a [name] for detonation at [A][COORD(bombturf)]. Igniter attacher: [key_name(attacher)].")
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
-			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-		spawn(det_time)
-		if(primed)
-			if(quality == 3)
-				explosion(src.loc,2,4,9,adminlog = notify_admins)
-			if(quality == 2)
-				explosion(src.loc,1,2,5,adminlog = notify_admins)
-			if(quality == 1)
-				explosion(src.loc,-1,1,3,adminlog = notify_admins)
-			qdel(src)
+			log_game("[key_name(user)] has primed a [name] for detonation at [A][COORD(bombturf)]")
+		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
+	
+/obj/item/weapon/twohanded/required/gibtonite/proc/detonate(notify_admins)
+	if(primed)
+		switch(quality)
+			if(GIBTONITE_QUALITY_HIGH)
+				explosion(src,2,4,9,adminlog = notify_admins)
+			if(GIBTONITE_QUALITY_MEDIUM)
+				explosion(src,1,2,5,adminlog = notify_admins)
+			if(GIBTONITE_QUALITY_LOW)
+				explosion(src,0,1,3,adminlog = notify_admins)
+		qdel(src)
 
-/obj/item/weapon/ore/New()
+/obj/item/weapon/ore/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
@@ -297,68 +308,73 @@
 	var/cooldown = 0
 	var/value = 1
 
-/obj/item/weapon/coin/New()
+/obj/item/weapon/coin/Initialize()
 	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
-	icon_state = "coin_[cmineral]_heads"
-	if(cmineral)
-		name = "[cmineral] coin"
-
 /obj/item/weapon/coin/examine(mob/user)
 	..()
 	if(value)
-		user << "<span class='info'>It's worth [value] credit\s.</span>"
+		to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
 
 /obj/item/weapon/coin/gold
+	name = "gold coin"
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
 	value = 50
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/silver
+	name = "silver coin"
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
 	value = 20
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/diamond
+	name = "diamond coin"
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
 	value = 500
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/iron
+	name = "iron coin"
 	cmineral = "iron"
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/plasma
+	name = "plasma coin"
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
 	value = 100
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/uranium
+	name = "uranium coin"
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
 	value = 80
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/clown
+	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
 	value = 1000 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 
 /obj/item/weapon/coin/adamantine
+	name = "adamantine coin"
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
 	value = 1500
 
 /obj/item/weapon/coin/mythril
+	name = "mythril coin"
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
 	value = 3000
@@ -379,22 +395,19 @@
 	sideslist = list("valid", "salad")
 	value = 0
 
-/obj/item/weapon/coin/antagtoken/New()
-	return
-
 /obj/item/weapon/coin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			user << "<span class='warning'>There already is a string attached to this coin!</span>"
+			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
 			return
 
 		if (CC.use(1))
-			add_overlay(image('icons/obj/economy.dmi',"coin_string_overlay"))
+			add_overlay("coin_string_overlay")
 			string_attached = 1
-			user << "<span class='notice'>You attach a string to the coin.</span>"
+			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")
 		else
-			user << "<span class='warning'>You need one length of cable to attach a string to the coin!</span>"
+			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
 	else if(istype(W,/obj/item/weapon/wirecutters))
@@ -407,16 +420,16 @@
 		CC.update_icon()
 		overlays = list()
 		string_attached = null
-		user << "<span class='notice'>You detach the string from the coin.</span>"
+		to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
 	else ..()
 
 /obj/item/weapon/coin/attack_self(mob/user)
-	if(cooldown < world.time - 15)
+	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
-			user << "<span class='warning'>The coin won't flip very well with something attached!</span>" //Tell user it will not flip
+			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return //do not flip the coin
 		var/coinflip = pick(sideslist)
-		cooldown = world.time
+		cooldown = world.time + 15
 		flick("coin_[cmineral]_flip", src)
 		icon_state = "coin_[cmineral]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, 1)

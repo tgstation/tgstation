@@ -22,7 +22,7 @@
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(. > 0 && toggle)
-		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(cardinal))
+		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(GLOB.cardinal))
 		if(namedatum)
 			I.color = namedatum.colour
 		flick_overlay_view(I, src, 5)
@@ -37,18 +37,18 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
 		damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
-		src << "<span class='danger'><B>You switch to combat mode.</span></B>"
+		to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 		toggle = FALSE
 	else
-		var/image/I = new('icons/effects/effects.dmi', "shield-grey")
+		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
 		if(namedatum)
-			I.color = namedatum.colour
-		add_overlay(I)
+			shield_overlay.color = namedatum.colour
+		add_overlay(shield_overlay)
 		melee_damage_lower = 2
 		melee_damage_upper = 2
 		speed = 1
 		damage_coeff = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, CLONE = 0.05, STAMINA = 0, OXY = 0.05) //damage? what's damage?
-		src << "<span class='danger'><B>You switch to protection mode.</span></B>"
+		to_chat(src, "<span class='danger'><B>You switch to protection mode.</span></B>")
 		toggle = TRUE
 
 /mob/living/simple_animal/hostile/guardian/protector/snapback() //snap to what? snap to the guardian!
@@ -57,12 +57,12 @@
 			return
 		else
 			if(istype(summoner.loc, /obj/effect))
-				src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
+				to_chat(src, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
 				visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
 				Recall(TRUE)
 			else
-				summoner << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>"
+				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>")
 				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
-				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(summoner))
+				new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
 				summoner.forceMove(get_turf(src))
-				new /obj/effect/overlay/temp/guardian/phase(get_turf(summoner))
+				new /obj/effect/temp_visual/guardian/phase(get_turf(summoner))

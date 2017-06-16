@@ -17,7 +17,7 @@
 	melee_damage_upper = 3
 	attacktext = "claws"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
@@ -28,7 +28,7 @@
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 
-/mob/living/simple_animal/hostile/hivebot/New()
+/mob/living/simple_animal/hostile/hivebot/Initialize()
 	..()
 	deathmessage = "[src] blows apart!"
 
@@ -77,7 +77,5 @@
 			break
 
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	..(1)

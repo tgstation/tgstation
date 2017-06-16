@@ -32,10 +32,9 @@
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/documents))
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
-		W.loc = src
-		user << "<span class='notice'>You put [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
@@ -79,8 +78,8 @@
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of Nanotrasen Corporation. Unauthorized distribution is punishable by death.\""
 
-/obj/item/weapon/folder/documents/New()
-	..()
+/obj/item/weapon/folder/documents/Initialize()
+	. = ..()
 	new /obj/item/documents/nanotrasen(src)
 	update_icon()
 
@@ -92,20 +91,20 @@
 /obj/item/weapon/folder/syndicate/red
 	icon_state = "folder_sred"
 
-/obj/item/weapon/folder/syndicate/red/New()
-	..()
+/obj/item/weapon/folder/syndicate/red/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/red(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/blue
 	icon_state = "folder_sblue"
 
-/obj/item/weapon/folder/syndicate/blue/New()
-	..()
+/obj/item/weapon/folder/syndicate/blue/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/blue(src)
 	update_icon()
 
-/obj/item/weapon/folder/syndicate/mining/New()
-	..()
+/obj/item/weapon/folder/syndicate/mining/Initialize()
+	. = ..()
 	new /obj/item/documents/syndicate/mining(src)
 	update_icon()

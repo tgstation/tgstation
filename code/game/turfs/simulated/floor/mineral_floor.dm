@@ -16,7 +16,7 @@
 
 
 
-/turf/open/floor/mineral/New()
+/turf/open/floor/mineral/Initialize()
 	broken_states = list("[initial(icon_state)]_dam")
 	..()
 	if (!icons)
@@ -40,23 +40,23 @@
 
 /turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		PlasmaBurn()
+		PlasmaBurn(exposed_temperature)
 
 /turf/open/floor/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma flooring was ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma flooring was ignited by [key_name(user)] in ([x],[y],[z])")
+		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("Plasma flooring was ignited by [key_name(user)] in [COORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
 
-/turf/open/floor/mineral/plasma/proc/PlasmaBurn()
+/turf/open/floor/mineral/plasma/proc/PlasmaBurn(temperature)
 	make_plating()
-	atmos_spawn_air("plasma=20;TEMP=1000")
+	atmos_spawn_air("plasma=20;TEMP=[temperature]")
 
 /turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
-		PlasmaBurn()
+		PlasmaBurn(exposed_temperature)
 
 
 //GOLD
@@ -114,6 +114,9 @@
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	icons = list("shuttlefloor4","shuttlefloor4_dam")
 
+/turf/open/floor/mineral/plastitanium/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/mineral/plastitanium/brig
 	name = "Brig floor"
 
@@ -148,18 +151,14 @@
 		honk()
 
 /turf/open/floor/mineral/bananium/proc/honk()
-	if(!spam_flag)
-		spam_flag = 1
+	if(spam_flag < world.time)
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
-		spawn(20)
-			spam_flag = 0
+		spam_flag = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeek()
-	if(!spam_flag)
-		spam_flag = 1
+	if(spam_flag < world.time)
 		playsound(src, "clownstep", 50, 1)
-		spawn(10)
-			spam_flag = 0
+		spam_flag = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -221,7 +220,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 
-/turf/open/floor/mineral/abductor/New()
+/turf/open/floor/mineral/abductor/Initialize()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 

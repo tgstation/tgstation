@@ -1,13 +1,13 @@
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 
-var/const/E		= 2.71828183
-var/const/Sqrt2	= 1.41421356
+GLOBAL_VAR_INIT(E, 2.71828183)
+GLOBAL_VAR_INIT(Sqrt2, 1.41421356)
 
 // List of square roots for the numbers 1-100.
-var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
                           5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7,
                           7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
-                          8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10)
+                          8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10))
 
 /proc/sign(x)
 	return x!=0?x/abs(x):0
@@ -130,6 +130,22 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 	var/t = round((val - min) / d)
 	return val - (t * d)
 
+#define NORM_ROT(rot) ((((rot % 360) + (rot - round(rot, 1))) > 0) ? ((rot % 360) + (rot - round(rot, 1))) : (((rot % 360) + (rot - round(rot, 1))) + 360))
+
+/proc/get_angle_of_incidence(face_angle, angle_in, auto_normalize = TRUE)
+
+	var/angle_in_s = NORM_ROT(angle_in)
+	var/face_angle_s = NORM_ROT(face_angle)
+	var/incidence = face_angle_s - angle_in_s
+	var/incidence_s = incidence
+	while(incidence_s < -90)
+		incidence_s += 180
+	while(incidence_s > 90)
+		incidence_s -= 180
+	if(auto_normalize)
+		return incidence_s
+	else
+		return incidence
 
 //A logarithm that converts an integer to a number scaled between 0 and 1 (can be tweaked to be higher).
 //Currently, this is used for hydroponics-produce sprite transforming, but could be useful for other transform functions.
@@ -139,9 +155,7 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 		var/size_factor = ((-cos(inputToDegrees) +1) /2) //returns a value from 0 to 1
 
 		return size_factor + scaling_modifier //scale mod of 0 results in a number from 0 to 1. A scale modifier of +0.5 returns 0.5 to 1.5
-		//world<< "Transform multiplier of [src] is [size_factor + scaling_modifer]"
-
-
+		//to_chat(world, "Transform multiplier of [src] is [size_factor + scaling_modifer]")
 
 //converts a uniform distributed random number into a normal distributed one
 //since this method produces two random numbers, one is saved for subsequent calls
@@ -150,9 +164,9 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 //68% chance that the number is within 1stddev
 //95% chance that the number is within 2stddev
 //98% chance that the number is within 3stddev...etc
-var/gaussian_next
 #define ACCURACY 10000
 /proc/gaussian(mean, stddev)
+	var/static/gaussian_next
 	var/R1;var/R2;var/working
 	if(gaussian_next != null)
 		R1 = gaussian_next

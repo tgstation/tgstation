@@ -3,6 +3,7 @@
 
 	var/uniform = null
 	var/suit = null
+	var/toggle_helmet = TRUE
 	var/back = null
 	var/belt = null
 	var/gloves = null
@@ -19,7 +20,11 @@
 	var/r_hand = null
 	var/l_hand = null
 	var/internals_slot = null //ID of slot containing a gas tank
-	var/list/backpack_contents = list() // In the list(path=count,otherpath=count) format
+	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
+	var/list/implants = null
+	var/accessory = null
+
+	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	//to be overriden for customization depending on client prefs,species etc
@@ -60,6 +65,13 @@
 	if(suit_store)
 		H.equip_to_slot_or_del(new suit_store(H),slot_s_store)
 
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		if(U)
+			U.attach_accessory(new accessory(H))
+		else
+			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
+
 	if(l_hand)
 		H.put_in_l_hand(new l_hand(H))
 	if(r_hand)
@@ -70,13 +82,13 @@
 			H.equip_to_slot_or_del(new l_pocket(H),slot_l_store)
 		if(r_pocket)
 			H.equip_to_slot_or_del(new r_pocket(H),slot_r_store)
+		if(backpack_contents)
+			for(var/path in backpack_contents)
+				var/number = backpack_contents[path]
+				for(var/i=0,i<number,i++)
+					H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
-		for(var/path in backpack_contents)
-			var/number = backpack_contents[path]
-			for(var/i=0,i<number,i++)
-				H.equip_to_slot_or_del(new path(H),slot_in_backpack)
-
-	if(!H.head && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
+	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
 		HS.ToggleHelmet()
 
@@ -87,6 +99,10 @@
 		if(internals_slot)
 			H.internal = H.get_item_by_slot(internals_slot)
 			H.update_action_buttons_icon()
+		if(implants)
+			for(var/implant_type in implants)
+				var/obj/item/weapon/implant/I = new implant_type(H)
+				I.implant(H, null, silent=TRUE)
 
 	H.update_body()
 	return 1

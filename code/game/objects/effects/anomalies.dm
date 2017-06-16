@@ -6,7 +6,7 @@
 	icon_state = "bhole3"
 	density = 0
 	anchored = 1
-	luminosity = 3
+	light_range = 3
 	var/movechance = 70
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 	var/area/impact_area
@@ -17,13 +17,12 @@
 	var/countdown_colour
 	var/obj/effect/countdown/anomaly/countdown
 
-/obj/effect/anomaly/New()
+/obj/effect/anomaly/Initialize(mapload, new_lifespan)
 	..()
-	poi_list |= src
+	GLOB.poi_list |= src
 	START_PROCESSING(SSobj, src)
 	impact_area = get_area(src)
 
-	SetLuminosity(initial(luminosity))
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
@@ -32,6 +31,8 @@
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
+	if(new_lifespan)
+		lifespan = new_lifespan
 	death_time = world.time + lifespan
 	countdown = new(src)
 	if(countdown_colour)
@@ -46,14 +47,14 @@
 		qdel(src)
 
 /obj/effect/anomaly/Destroy()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	STOP_PROCESSING(SSobj, src)
 	qdel(countdown)
 	return ..()
 
 /obj/effect/anomaly/proc/anomalyEffect()
 	if(prob(movechance))
-		step(src,pick(alldirs))
+		step(src,pick(GLOB.alldirs))
 
 /obj/effect/anomaly/proc/detonate()
 	return
@@ -73,7 +74,7 @@
 
 /obj/effect/anomaly/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
-		user << "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>"
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [format_frequency(aSignal.frequency)], code [aSignal.code].</span>")
 
 ///////////////////////
 
@@ -127,6 +128,7 @@
 	density = 1
 	var/canshock = 0
 	var/shockdamage = 20
+	var/explosive = TRUE
 
 /obj/effect/anomaly/flux/New()
 	..()
@@ -163,7 +165,10 @@
 		"<span class='italics'>You hear a heavy electrical crack.</span>")
 
 /obj/effect/anomaly/flux/detonate()
-	explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+	if(explosive)
+		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+	else
+		new /obj/effect/particle_effect/sparks(loc)
 
 
 /////////////////////
@@ -193,7 +198,7 @@
 			// Calculate new position (searches through beacons in world)
 		var/obj/item/device/radio/beacon/chosen
 		var/list/possible = list()
-		for(var/obj/item/device/radio/beacon/W in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/W in GLOB.teleportbeacons)
 			possible += W
 
 		if(possible.len > 0)
@@ -262,13 +267,18 @@
 		T.atmos_spawn_air("o2=5;plasma=5;TEMP=1000")
 
 /obj/effect/anomaly/pyro/detonate()
+	INVOKE_ASYNC(src, .proc/makepyroslime)
+
+/obj/effect/anomaly/pyro/proc/makepyroslime()
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.atmos_spawn_air("o2=500;plasma=500;TEMP=1000") //Make it hot and burny for the new slime
-
 	var/new_colour = pick("red", "orange")
 	var/mob/living/simple_animal/slime/S = new(T, new_colour)
-	S.rabid = 1
+	S.rabid = TRUE
+	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
+	S.Evolve()
+	offer_control(S)
 
 /////////////////////
 

@@ -26,10 +26,10 @@
 
 /obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
 	if(lit)
-		user << "<span class='warning'>It's already lit!</span>"
+		to_chat(user, "<span class='warning'>It's already lit!</span>")
 		return FALSE
 	if(!fuel_added)
-		user << "<span class='warning'>[src] needs some fuel to burn!</span>"
+		to_chat(user, "<span class='warning'>[src] needs some fuel to burn!</span>")
 		return FALSE
 	var/msg = O.ignition_effect(src, user)
 	if(msg)
@@ -43,8 +43,7 @@
 		var/space_remaining = MAXIMUM_BURN_TIMER - burn_time_remaining()
 		var/space_for_logs = round(space_remaining / LOG_BURN_TIMER)
 		if(space_for_logs < 1)
-			user << "<span class='warning'>You can't fit any more of [T] in \
-				[src]!</span>"
+			to_chat(user, "<span class='warning'>You can't fit any more of [T] in [src]!</span>")
 			return
 		var/logs_used = min(space_for_logs, wood.amount)
 		wood.use(logs_used)
@@ -88,20 +87,20 @@
 
 /obj/structure/fireplace/proc/adjust_light()
 	if(!lit)
-		SetLuminosity(0)
+		set_light(0)
 		return
 
 	switch(burn_time_remaining())
 		if(0 to 500)
-			SetLuminosity(1)
+			set_light(1)
 		if(500 to 1000)
-			SetLuminosity(2)
+			set_light(2)
 		if(1000 to 1500)
-			SetLuminosity(3)
+			set_light(3)
 		if(1500 to 2000)
-			SetLuminosity(4)
+			set_light(4)
 		if(2000 to MAXIMUM_BURN_TIMER)
-			SetLuminosity(6)
+			set_light(6)
 
 /obj/structure/fireplace/process()
 	if(!lit)

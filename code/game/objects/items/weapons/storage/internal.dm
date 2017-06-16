@@ -5,10 +5,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	rustle_jimmies = FALSE
 
-/obj/item/weapon/storage/internal/ClickAccessible(mob/user, depth=1)
-	if(loc)
-		return loc.ClickAccessible(user, depth)
-
 /obj/item/weapon/storage/internal/Adjacent(A)
 	if(loc)
 		return loc.Adjacent(A)
@@ -29,9 +25,9 @@
 	. = ..()
 	if(. && silent && !prevent_warning)
 		if(quickdraw)
-			user << "<span class='notice'>You discreetly slip [W] into [src]. Alt-click [src] to remove it.</span>"
+			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src]. Alt-click [src] to remove it.</span>")
 		else
-			user << "<span class='notice'>You discreetly slip [W] into [src]."
+			to_chat(user, "<span class='notice'>You discreetly slip [W] into [src].")
 
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -53,7 +49,7 @@
 		/obj/item/weapon/implanter, /obj/item/weapon/screwdriver, /obj/item/weapon/weldingtool/mini,
 		/obj/item/device/firing_pin
 		)
-	//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
+	//can hold both regular pens and energy daggers. made for your every-day tactical curators/murderers.
 	priority = FALSE
 	quickdraw = TRUE
 	silent = TRUE
@@ -70,6 +66,5 @@
 /obj/item/weapon/storage/internal/pocket/small/detective
 	priority = TRUE // so the detectives would discover pockets in their hats
 
-/obj/item/weapon/storage/internal/pocket/small/detective/New()
-	..()
+/obj/item/weapon/storage/internal/pocket/small/detective/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)

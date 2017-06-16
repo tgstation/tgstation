@@ -14,6 +14,7 @@
 	cutting_sound = 'sound/items/poster_ripped.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
+	anchorable = FALSE
 	var/move_speed_multiplier = 1
 	var/move_delay = 0
 	var/egged = 0
@@ -66,6 +67,6 @@
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weapon/weldingtool
 	open_sound = 'sound/machines/click.ogg'
-	cutting_sound = 'sound/items/Welder.ogg'
+	cutting_sound = 'sound/items/welder.ogg'
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS

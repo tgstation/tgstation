@@ -11,7 +11,9 @@
 	var/health_scan
 	var/alarm_health = 0
 
-
+/obj/item/device/assembly/health/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Use a multitool to swap between \"detect death\" mode and \"detect critical state\" mode.</span>")
 
 /obj/item/device/assembly/health/activate()
 	if(!..())
@@ -57,7 +59,7 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+			audible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
 			toggle_scan()
 		return
 	return

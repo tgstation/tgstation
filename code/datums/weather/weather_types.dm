@@ -55,13 +55,13 @@
 		var/area/A = V
 		if(stage == MAIN_STAGE)
 			A.invisibility = 0
-			A.opacity = 1
+			A.set_opacity(TRUE)
 			A.layer = overlay_layer
 			A.icon = 'icons/effects/weather_effects.dmi'
 			A.icon_state = "darkness"
 		else
 			A.invisibility = INVISIBILITY_MAXIMUM
-			A.opacity = 0
+			A.set_opacity(FALSE)
 
 
 /datum/weather/ash_storm //Ash Storms: Common happenings on lavaland. Heavily obscures vision and deals heavy fire damage to anyone caught outside.
@@ -134,7 +134,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
-	/area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle)
+	/area/ai_monitored/turret_protected/ai, /area/storage/emergency/starboard, /area/storage/emergency/port, /area/shuttle)
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"
@@ -184,3 +184,33 @@
 		status_signal.data["picture_state"] = "radiation"
 
 	frequency.post_signal(src, status_signal)
+
+
+/datum/weather/acid_rain
+	name = "acid rain"
+	desc = "Some stay dry and others feel the pain"
+
+	telegraph_duration = 400
+	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
+	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
+
+	weather_message = "<span class='userdanger'><i>Your skin melts underneath the rain!</i></span>"
+	weather_overlay = "acid_rain"
+	weather_duration_lower = 600
+	weather_duration_upper = 1500
+	weather_sound = 'sound/ambience/acidrain_mid.ogg'
+
+	end_duration = 100
+	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
+	end_sound = 'sound/ambience/acidrain_end.ogg'
+
+	area_type = /area/lavaland/surface/outdoors
+	target_z = ZLEVEL_LAVALAND
+
+	immunity_type = "acid" // temp
+
+
+/datum/weather/acid_rain/impact(mob/living/L)
+	var/resist = L.getarmor(null, "acid")
+	if(prob(max(0,100-resist)))
+		L.acid_act(20,20)

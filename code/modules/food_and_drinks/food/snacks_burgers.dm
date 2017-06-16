@@ -1,10 +1,10 @@
-
 /obj/item/weapon/reagent_containers/food/snacks/burger
 	filling_color = "#CD853F"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
 	bitesize = 3
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	tastes = list("bun" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	name = "burger"
@@ -41,18 +41,21 @@
 	desc = "Tastes like appendicitis."
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
 	icon_state = "appendixburger"
+	tastes = list("bun" = 4, "grass" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fish
 	name = "fillet -o- carp sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
+	tastes = list("bun" = 4, "fish" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/tofu
 	name = "tofu burger"
 	desc = "What.. is that meat?"
 	icon_state = "tofuburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
+	tastes = list("bun" = 4, "tofu" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"
@@ -60,6 +63,7 @@
 	icon_state = "roburger"
 	bonus_reagents = list("nutriment" = 2, "nanomachines" = 2, "vitamin" = 5)
 	list_reagents = list("nutriment" = 6, "nanomachines" = 5, "vitamin" = 1)
+	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/roburgerbig
 	name = "roburger"
@@ -68,12 +72,14 @@
 	volume = 120
 	bonus_reagents = list("nutriment" = 5, "nanomachines" = 70, "vitamin" = 10)
 	list_reagents = list("nutriment" = 6, "nanomachines" = 70, "vitamin" = 5)
+	tastes = list("bun" = 4, "lettuce" = 2, "sludge" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
 	name = "xenoburger"
 	desc = "Smells caustic. Tastes like heresy."
 	icon_state = "xburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
+	tastes = list("bun" = 4, "acid" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/bearger
 	name = "bearger"
@@ -99,12 +105,14 @@
 	icon_state = "brainburger"
 	bonus_reagents = list("nutriment" = 6, "mannitol" = 6, "vitamin" = 5)
 	list_reagents = list("nutriment" = 6, "mannitol" = 5, "vitamin" = 1)
+	tastes = list("bun" = 4, "brains" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
 	alpha = 125
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 12)
+	tastes = list("bun" = 4, "ectoplasm" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/red
 	name = "red burger"
@@ -153,6 +161,7 @@
 	desc = "This is absolutely Ei Nath."
 	icon_state = "spellburger"
 	bonus_reagents = list("nutriment" = 6, "vitamin" = 10)
+	tastes = list("bun" = 4, "magic" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/bigbite
 	name = "big bite burger"
@@ -166,6 +175,7 @@
 	name = "jelly burger"
 	desc = "Culinary delight..?"
 	icon_state = "jellyburger"
+	tastes = list("bun" = 4, "jelly" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime
 	bonus_reagents = list("slimejelly" = 5, "vitamin" = 5)
@@ -184,6 +194,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 7
 	volume = 100
+	tastes = list("bun" = 4, "type two diabetes" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
 	name = "five alarm burger"
@@ -209,3 +220,4 @@
 	desc = "The perfect combination of all things American."
 	icon_state = "baconburger"
 	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
+	tastes = list("bun" = 4, "bacon" = 2)

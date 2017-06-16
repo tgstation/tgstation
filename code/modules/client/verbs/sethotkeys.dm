@@ -1,6 +1,7 @@
 /client/verb/sethotkeys(from_pref = 0 as num)
 	set name = "Set Hotkeys"
-	set hidden = 1
+	set hidden = TRUE
+	set waitfor = FALSE
 	set desc = "Used to set mob-specific hotkeys or load hoykey mode from preferences"
 
 	var/hotkey_default = "default"

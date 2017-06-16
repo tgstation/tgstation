@@ -20,12 +20,12 @@
 
 		var/userloc = H.loc
 
-		//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
+		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
-			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
+			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
 			if(userloc != H.loc)
 				return	//no tele-grooming
 			if(new_style)
@@ -34,7 +34,7 @@
 			H.facial_hair_style = "Shaved"
 
 		//handle normal hair
-		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
+		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
 		if(userloc != H.loc)
 			return	//no tele-grooming
 		if(new_style)
@@ -42,7 +42,7 @@
 
 		H.update_hair()
 
-/obj/structure/mirror/examine_status()
+/obj/structure/mirror/examine_status(mob/user)
 	if(broken)
 		return // no message spam
 	..()
@@ -66,12 +66,12 @@
 		if(broken)
 			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
-				playsound(src, 'sound/items/Welder.ogg', 100, 1)
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+				playsound(src, 'sound/items/welder.ogg', 100, 1)
 				if(do_after(user, 10*I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
-					user << "<span class='notice'>You repair [src].</span>"
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 					broken = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
@@ -90,7 +90,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombie")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -102,7 +102,7 @@
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = roundstart_species
+	choosable_races = GLOB.roundstart_species
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
@@ -140,7 +140,7 @@
 		if("race")
 			var/newrace
 			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
-			newrace = species_list[racechoice]
+			newrace = GLOB.species_list[racechoice]
 
 			if(!newrace)
 				return
@@ -149,7 +149,7 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in skin_tones
+				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone
@@ -164,7 +164,7 @@
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
-						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
+						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 
 			H.update_body()
 			H.update_hair()
@@ -179,14 +179,14 @@
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
-					H << "<span class='notice'>Man, you feel like a woman!</span>"
+					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "male"
-					H << "<span class='notice'>Whoa man, you feel like a man!</span>"
+					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return
 			H.dna.update_ui_block(DNA_GENDER_BLOCK)

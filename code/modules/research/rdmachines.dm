@@ -16,8 +16,8 @@
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 
-/obj/machinery/r_n_d/New()
-	..()
+/obj/machinery/r_n_d/Initialize()
+	. = ..()
 	wires = new /datum/wires/r_n_d(src)
 
 /obj/machinery/r_n_d/Destroy()
@@ -30,9 +30,7 @@
 		return 0
 	if(!prob(prb))
 		return 0
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start()
+	do_sparks(5, TRUE, src)
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
 		return 1
 	else
@@ -77,7 +75,7 @@
 //whether the machine can have an item inserted in its current state.
 /obj/machinery/r_n_d/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		user << "<span class='warning'>You can't load the [src.name] while it's opened!</span>"
+		to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened!</span>")
 		return
 	if (disabled)
 		return
@@ -87,19 +85,19 @@
 				console.SyncRDevices()
 
 		if(!linked_console)
-			user << "<span class='warning'>The [name] must be linked to an R&D console first!</span>"
+			to_chat(user, "<span class='warning'>The [name] must be linked to an R&D console first!</span>")
 			return
 	if (busy)
-		user << "<span class='warning'>The [src.name] is busy right now.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is busy right now.</span>")
 		return
 	if(stat & BROKEN)
-		user << "<span class='warning'>The [src.name] is broken.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] is broken.</span>")
 		return
 	if(stat & NOPOWER)
-		user << "<span class='warning'>The [src.name] has no power.</span>"
+		to_chat(user, "<span class='warning'>The [src.name] has no power.</span>")
 		return
 	if(loaded_item)
-		user << "<span class='warning'>The [src] is already loaded.</span>"
+		to_chat(user, "<span class='warning'>The [src] is already loaded.</span>")
 		return
 	return 1
 

@@ -5,8 +5,8 @@
 	weight = 20
 
 /datum/round_event/anomaly/anomaly_pyro
-	startWhen = 10
-	announceWhen = 3
+	startWhen = 3
+	announceWhen = 10
 
 /datum/round_event/anomaly/anomaly_pyro/announce()
 	priority_announce("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")

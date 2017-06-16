@@ -1,9 +1,9 @@
 /obj/structure/closet/secure_closet/quartermaster
 	name = "\proper quartermaster's locker"
-	req_access = list(access_qm)
+	req_access = list(GLOB.access_qm)
 	icon_state = "qm"
 
-/obj/structure/closet/secure_closet/quartermaster/New()
+/obj/structure/closet/secure_closet/quartermaster/PopulateContents()
 	..()
 	new /obj/item/clothing/neck/cloak/qm(src)
 	new /obj/item/clothing/under/rank/cargo(src)

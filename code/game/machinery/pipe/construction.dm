@@ -22,7 +22,7 @@ Buildable meters
 	var/flipped = 0
 	var/is_bent = 0
 
-	var/global/list/pipe_types = list(
+	var/static/list/pipe_types = list(
 		PIPE_SIMPLE, \
 		PIPE_MANIFOLD, \
 		PIPE_4WAYMANIFOLD, \
@@ -34,6 +34,7 @@ Buildable meters
 		PIPE_CONNECTOR, \
 		PIPE_UVENT, \
 		PIPE_SCRUBBER, \
+		PIPE_INJECTOR, \
 		PIPE_HEAT_EXCHANGE, \
 		\
 		PIPE_PUMP, \
@@ -48,7 +49,7 @@ Buildable meters
 
 /obj/item/pipe/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
@@ -73,7 +74,7 @@ Buildable meters
 		src.pipe_type = pipe_type
 		src.setDir(dir)
 
-	if(src.dir in diagonals)
+	if(src.dir in GLOB.diagonals)
 		is_bent = 1
 
 	update()
@@ -81,7 +82,7 @@ Buildable meters
 	src.pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
-var/global/list/pipeID2State = list(
+GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_SIMPLE]"			 = "simple", \
 	"[PIPE_MANIFOLD]"		 = "manifold", \
 	"[PIPE_4WAYMANIFOLD]"	 = "manifold4w", \
@@ -93,6 +94,7 @@ var/global/list/pipeID2State = list(
 	"[PIPE_CONNECTOR]"		 = "connector", \
 	"[PIPE_UVENT]"			 = "uvent", \
 	"[PIPE_SCRUBBER]"		 = "scrubber", \
+	"[PIPE_INJECTOR]"		 = "injector", \
 	"[PIPE_HEAT_EXCHANGE]"	 = "heunary", \
 	\
 	"[PIPE_PUMP]"			 = "pump", \
@@ -103,7 +105,7 @@ var/global/list/pipeID2State = list(
 	\
 	"[PIPE_GAS_FILTER]"		 = "filter", \
 	"[PIPE_GAS_MIXER]"		 = "mixer", \
-)
+))
 
 /obj/item/pipe/proc/update()
 	var/list/nlist = list(\
@@ -120,6 +122,7 @@ var/global/list/pipeID2State = list(
 		"[PIPE_CONNECTOR]" 		= "connector", \
 		"[PIPE_UVENT]" 			= "vent", \
 		"[PIPE_SCRUBBER]" 		= "scrubber", \
+		"[PIPE_INJECTOR]"		= "injector", \
 		"[PIPE_HEAT_EXCHANGE]" 	= "heat exchanger", \
 		\
 		"[PIPE_PUMP]" 			= "pump", \
@@ -133,7 +136,7 @@ var/global/list/pipeID2State = list(
 		)
 	//fix_pipe_type()
 	name = nlist["[pipe_type][is_bent ? "_b" : ""]"] + " fitting"
-	icon_state = pipeID2State["[pipe_type]"]
+	icon_state = GLOB.pipeID2State["[pipe_type]"]
 
 // rotate the pipe item clockwise
 
@@ -173,7 +176,7 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -186,7 +189,7 @@ var/global/list/pipeID2State = list(
 	setDir(old_dir )//pipes changing direction when moved is just annoying and buggy
 
 /obj/item/pipe/proc/unflip(direction)
-	if(direction in diagonals)
+	if(direction in GLOB.diagonals)
 		return turn(direction, 45)
 
 	return direction
@@ -220,7 +223,7 @@ var/global/list/pipeID2State = list(
 		if(M == A) //we don't want to check to see if it interferes with itself
 			continue
 		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
-			user << "<span class='warning'>There is already a pipe at that location!</span>"
+			to_chat(user, "<span class='warning'>There is already a pipe at that location!</span>")
 			qdel(A)
 			return 1
 	// no conflicts found
@@ -248,6 +251,8 @@ var/global/list/pipeID2State = list(
 			var/mob/living/carbon/C = user
 			for(var/i=1 to 20)
 				C.vomit(0,1,0,4,0)
+				if(prob(20))
+					C.spew_organ()
 				sleep(5)
 			C.blood_volume = 0
 		return(OXYLOSS|BRUTELOSS)
@@ -268,9 +273,9 @@ var/global/list/pipeID2State = list(
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
-		user << "<span class='warning'>You need to fasten it to a pipe!</span>"
+		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return 1
 	new/obj/machinery/meter( src.loc )
 	playsound(src.loc, W.usesound, 50, 1)
-	user << "<span class='notice'>You fasten the meter to the pipe.</span>"
+	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)

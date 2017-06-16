@@ -1,7 +1,7 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/closed/mineral,
 /area/ruin/unpowered/no_grav)
@@ -245,12 +245,10 @@
 /turf/closed/mineral/clown,
 /area/ruin/unpowered/no_grav)
 "L" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/unpowered/no_grav)
 "M" = (
-/turf/open/floor/plasteel/airless/circuit/gcircuit,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "N" = (
 /turf/closed/wall/r_wall,

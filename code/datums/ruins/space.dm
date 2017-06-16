@@ -143,13 +143,6 @@
 	description = "Based on the trace elements we've detected on the gutted asteroids, we suspect that a mining ship using a restricted engine is somewhere in the area. \
 	We'd like to request a patrol vessel to investigate."
 
-/datum/map_template/ruin/space/spacebar
-	id = "spacebar"
-	suffix = "spacebar.dmm"
-	name = "The Rampant Golem and Yellow Hound"
-	description = "No questions asked. No shoes/foot protection, no service. No tabs. No violence in the inside areas. That's it. Welcome to the Rampant Golem and Yellow Hound. \
-	Can I take your order?"
-
 /datum/map_template/ruin/space/spacehotel
 	id = "spacehotel"
 	suffix = "spacehotel.dmm"
@@ -249,9 +242,3 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
-
-/datum/map_template/ruin/space/dragoon
-	id = "dragoon"
-	suffix = "dragoontomb.dmm"
-	name = "Sky Bulge Tomb"
-	description = "A tomb of a dice-loving dragoon in space. Turns out he got too good and jumped too high. Contains the Sky Bulge, which when thrown, warps the thrower."

@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/wizard
 	name = "Space Wizard"
 	desc = "EI NATH?"
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
@@ -29,20 +30,20 @@
 	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
 				/obj/item/weapon/staff)
 
-	var/obj/effect/proc_holder/spell/fireball/fireball = null
+	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
 	var/next_cast = 0
 
-
-/mob/living/simple_animal/hostile/wizard/New()
+/mob/living/simple_animal/hostile/wizard/Initialize()
 	..()
-	fireball = new /obj/effect/proc_holder/spell/fireball
+	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
 	fireball.clothes_req = 0
 	fireball.human_req = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
+	implants += new /obj/item/weapon/implant/exile(src)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	mm.clothes_req = 0

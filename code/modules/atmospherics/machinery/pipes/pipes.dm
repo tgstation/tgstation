@@ -86,7 +86,7 @@
 			qdel(meter)
 	. = ..()
 
-	if(parent && !qdeleted(parent))
+	if(parent && !QDELETED(parent))
 		qdel(parent)
 	parent = null
 

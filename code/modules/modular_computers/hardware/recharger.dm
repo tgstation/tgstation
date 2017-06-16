@@ -20,7 +20,7 @@
 		return
 
 	if(use_power(charge_rate, charging=1))
-		holder.give_power(charge_rate * CELLRATE)
+		holder.give_power(charge_rate * GLOB.CELLRATE)
 
 
 /obj/item/weapon/computer_hardware/recharger/APC
@@ -39,11 +39,11 @@
 
 	else
 		var/area/A = get_area(src)
-		if(!A || !isarea(A) || !A.master)
+		if(!istype(A))
 			return 0
 
-		if(A.master.powered(EQUIP))
-			A.master.use_power(amount, EQUIP)
+		if(A.powered(EQUIP))
+			A.use_power(amount, EQUIP)
 			return 1
 	return 0
 
@@ -57,7 +57,7 @@
 /obj/item/weapon/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	if(istype(M.physical, /obj/machinery) && M.physical.anchored)
 		return ..()
-	user << "<span class='warning'>\The [src] is incompatible with portable computers!</span>"
+	to_chat(user, "<span class='warning'>\The [src] is incompatible with portable computers!</span>")
 	return 0
 
 /obj/item/weapon/computer_hardware/recharger/wired/use_power(amount, charging=0)

@@ -1,7 +1,7 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
@@ -15,8 +15,8 @@
 /area/djstation/solars)
 "ae" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "af" = (
 /turf/closed/wall,
 /area/djstation)
@@ -295,7 +295,7 @@
 "aZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/template_noop)
 "ba" = (
 /turf/open/floor/plasteel/freezer,
 /area/djstation)
@@ -373,7 +373,7 @@
 	},
 /obj/structure/disposaloutlet,
 /turf/open/floor/plating/airless,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 aa

@@ -13,7 +13,7 @@
 /obj/docking_port/mobile/assault_pod/dock(obj/docking_port/stationary/S1)
 	..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
-		playsound(get_turf(src.loc), 'sound/effects/Explosion1.ogg',50,1)
+		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
 
 
 
@@ -32,9 +32,9 @@
 
 /obj/item/device/assault_pod/attack_self(mob/living/user)
 	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) in teleportlocs
-	var/area/picked_area = teleportlocs[target_area]
-	if(!src || qdeleted(src))
+	target_area = input("Area to land", "Select a Landing Zone", target_area) in GLOB.teleportlocs
+	var/area/picked_area = GLOB.teleportlocs[target_area]
+	if(!src || QDELETED(src))
 		return
 
 	var/turf/T = safepick(get_area_turfs(picked_area))
@@ -49,10 +49,10 @@
 	landing_zone.height = height
 	landing_zone.setDir(lz_dir)
 
-	for(var/obj/machinery/computer/shuttle/S in machines)
+	for(var/obj/machinery/computer/shuttle/S in GLOB.machines)
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	user << "Landing zone set."
+	to_chat(user, "Landing zone set.")
 
 	qdel(src)

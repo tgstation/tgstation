@@ -117,7 +117,7 @@
 	desc = "A .50 bullet casing, specialised in sending the target to sleep, instead of hell."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet/sniper/soporific
-	icon_state = ".50"
+	icon_state = "sleeper"
 
 /obj/item/ammo_casing/haemorrhage
 	desc = "A .50 bullet casing, specialised in causing massive bloodloss"
@@ -131,31 +131,38 @@
 	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
 	icon_state = ".50"
 
+/obj/item/ammo_casing/point50/gang
+	desc = "A black market .50 bullet casing."
+	projectile_type = /obj/item/projectile/bullet/sniper/gang
 
+/obj/item/ammo_casing/point50/gang/sleeper
+	desc = "Am illegally modified tranquilizer round."
+	projectile_type = /obj/item/projectile/bullet/sniper/gang/sleeper
+	icon_state = "sleeper"
 
 /// SAW ROUNDS
 
-/obj/item/ammo_casing/mm556x45
-	desc = "A 556x45mm bullet casing."
+/obj/item/ammo_casing/mm195x129
+	desc = "A 1.95x129mm bullet casing."
 	icon_state = "762-casing"
-	caliber = "mm55645"
+	caliber = "mm195129"
 	projectile_type = /obj/item/projectile/bullet/saw
 
-/obj/item/ammo_casing/mm556x45/bleeding
-	desc = "A 556x45mm bullet casing with specialized inner-casing, that when it makes contact with a target, release tiny shrapnel to induce internal bleeding."
+/obj/item/ammo_casing/mm195x129/bleeding
+	desc = "A 1.95x129mm bullet casing with specialized inner-casing, that when it makes contact with a target, release tiny shrapnel to induce internal bleeding."
 	icon_state = "762-casing"
 	projectile_type = /obj/item/projectile/bullet/saw/bleeding
 
-/obj/item/ammo_casing/mm556x45/hollow
-	desc = "A 556x45mm bullet casing designed to cause more damage to unarmored targets."
+/obj/item/ammo_casing/mm195x129/hollow
+	desc = "A 1.95x129mm bullet casing designed to cause more damage to unarmored targets."
 	projectile_type = /obj/item/projectile/bullet/saw/hollow
 
-/obj/item/ammo_casing/mm556x45/ap
-	desc = "A 556x45mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
+/obj/item/ammo_casing/mm195x129/ap
+	desc = "A 1.95x129mm bullet casing designed with a hardened-tipped core to help penetrate armored targets."
 	projectile_type = /obj/item/projectile/bullet/saw/ap
 
-/obj/item/ammo_casing/mm556x45/incen
-	desc = "A 556x45mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames. "
+/obj/item/ammo_casing/mm195x129/incen
+	desc = "A 1.95x129mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames. "
 	projectile_type = /obj/item/projectile/bullet/saw/incen
 
 

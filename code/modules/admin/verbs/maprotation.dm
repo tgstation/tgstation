@@ -6,28 +6,28 @@
 		return
 	message_admins("[key_name_admin(usr)] is forcing a random map rotation.")
 	log_admin("[key_name(usr)] is forcing a random map rotation.")
-	ticker.maprotatechecked = 1
-	maprotate()
+	SSticker.maprotatechecked = 1
+	SSmapping.maprotate()
 
 /client/proc/adminchangemap()
 	set category = "Server"
 	set name = "Change Map"
 	var/list/maprotatechoices = list()
 	for (var/map in config.maplist)
-		var/datum/votablemap/VM = config.maplist[map]
-		var/mapname = VM.friendlyname
+		var/datum/map_config/VM = config.maplist[map]
+		var/mapname = VM.map_name
 		if (VM == config.defaultmap)
 			mapname += " (Default)"
 
-		if (VM.minusers > 0 || VM.maxusers > 0)
+		if (VM.config_min_users > 0 || VM.config_max_users > 0)
 			mapname += " \["
-			if (VM.minusers > 0)
-				mapname += "[VM.minusers]"
+			if (VM.config_min_users > 0)
+				mapname += "[VM.config_min_users]"
 			else
 				mapname += "0"
 			mapname += "-"
-			if (VM.maxusers > 0)
-				mapname += "[VM.maxusers]"
+			if (VM.config_max_users > 0)
+				mapname += "[VM.config_max_users]"
 			else
 				mapname += "inf"
 			mapname += "\]"
@@ -36,9 +36,9 @@
 	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
 	if (!chosenmap)
 		return
-	ticker.maprotatechecked = 1
-	var/datum/votablemap/VM = maprotatechoices[chosenmap]
-	message_admins("[key_name_admin(usr)] is changing the map to [VM.name]([VM.friendlyname])")
-	log_admin("[key_name(usr)] is changing the map to [VM.name]([VM.friendlyname])")
-	if (changemap(VM) == 0)
-		message_admins("[key_name_admin(usr)] has changed the map to [VM.name]([VM.friendlyname])")
+	SSticker.maprotatechecked = 1
+	var/datum/map_config/VM = maprotatechoices[chosenmap]
+	message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
+	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
+	if (SSmapping.changemap(VM) == 0)
+		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")

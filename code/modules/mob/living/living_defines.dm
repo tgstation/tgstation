@@ -1,7 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	sight = 0
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
@@ -26,7 +24,8 @@
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
-	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
+	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
+								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
 
 	var/list/surgeries = list()	//a list of surgery datums. generally empty, they're added when the player wants them.
 
@@ -44,7 +43,6 @@
 	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
-	var/floating = 0
 	var/mob_size = MOB_SIZE_HUMAN
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/list/image/staticOverlays = list()
@@ -54,8 +52,6 @@
 	var/last_played_vent
 
 	var/smoke_delay = 0 //used to prevent spam with smoke reagent reaction on mob.
-
-	var/list/say_log = list() //a log of what we've said, with a timestamp as the key for each message
 
 	var/bubble_icon = "default" //what icon the mob uses for speechbubbles
 
@@ -75,3 +71,7 @@
 	var/list/status_effects //a list of all status effects the mob has
 
 	var/list/implants = null
+
+	var/datum/riding/riding_datum
+
+	var/datum/language/selected_default_language

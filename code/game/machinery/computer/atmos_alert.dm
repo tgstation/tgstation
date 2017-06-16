@@ -9,6 +9,8 @@
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
 
+	light_color = LIGHT_COLOR_CYAN
+
 /obj/machinery/computer/atmos_alert/Initialize()
 	..()
 	set_frequency(receive_frequency)
@@ -19,7 +21,7 @@
 	return ..()
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
@@ -44,11 +46,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				usr << "Priority alarm for [zone] cleared."
+				to_chat(usr, "Priority alarm for [zone] cleared.")
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				usr << "Minor alarm for [zone] cleared."
+				to_chat(usr, "Minor alarm for [zone] cleared.")
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()
@@ -56,7 +58,7 @@
 /obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
-	radio_connection = SSradio.add_object(src, receive_frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, receive_frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return

@@ -1,5 +1,3 @@
-
-
 /obj/item/weapon/storage/lockbox
 	name = "lockbox"
 	desc = "A locked box."
@@ -9,9 +7,10 @@
 	max_w_class = WEIGHT_CLASS_NORMAL
 	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 4
-	req_access = list(access_armory)
-	var/locked = 1
-	var/broken = 0
+	req_access = list(GLOB.access_armory)
+	var/locked = TRUE
+	var/broken = FALSE
+	var/open = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
@@ -20,38 +19,38 @@
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.GetID())
 		if(broken)
-			user << "<span class='danger'>It appears to be broken.</span>"
+			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
 			locked = !locked
 			if(locked)
 				icon_state = icon_locked
-				user << "<span class='danger'>You lock the [src.name]!</span>"
+				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
 				close_all()
 				return
 			else
 				icon_state = icon_closed
-				user << "<span class='danger'>You unlock the [src.name]!</span>"
+				to_chat(user, "<span class='danger'>You unlock the [src.name]!</span>")
 				return
 		else
-			user << "<span class='danger'>Access Denied.</span>"
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
 	if(!locked)
 		return ..()
 	else
-		user << "<span class='danger'>It's locked!</span>"
+		to_chat(user, "<span class='danger'>It's locked!</span>")
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
 		src.add_fingerprint(usr)
-		usr << "<span class='warning'>It's locked!</span>"
+		to_chat(usr, "<span class='warning'>It's locked!</span>")
 		return 0
 	..()
 
 /obj/item/weapon/storage/lockbox/emag_act(mob/user)
 	if(!broken)
-		broken = 1
-		locked = 0
+		broken = TRUE
+		locked = FALSE
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
@@ -59,7 +58,7 @@
 			return
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
-		user << "<span class='warning'>It's locked!</span>"
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 	else
 		..()
 	return
@@ -67,8 +66,9 @@
 //Check the destination item type for contentto.
 /obj/item/weapon/storage/lockbox/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(locked)
-		user << "<span class='warning'>It's locked!</span>"
+		to_chat(user, "<span class='warning'>It's locked!</span>")
 		return 0
+	open = TRUE
 	return ..()
 
 /obj/item/weapon/storage/lockbox/can_be_inserted(obj/item/W, stop_messages = 0)
@@ -76,12 +76,20 @@
 		return 0
 	return ..()
 
+/obj/item/weapon/storage/lockbox/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+	open = TRUE
+	update_icon()
+	return ..()
+/obj/item/weapon/storage/lockbox/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
+	open = TRUE
+	update_icon()
+	return ..()
+
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 
-/obj/item/weapon/storage/lockbox/loyalty/New()
-	..()
+/obj/item/weapon/storage/lockbox/loyalty/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/mindshield(src)
 	new /obj/item/weapon/implanter/mindshield(src)
@@ -90,10 +98,9 @@
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
 	desc = "You have a bad feeling about opening this."
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)
 
-/obj/item/weapon/storage/lockbox/clusterbang/New()
-	..()
+/obj/item/weapon/storage/lockbox/clusterbang/PopulateContents()
 	new /obj/item/weapon/grenade/clusterbuster(src)
 
 /obj/item/weapon/storage/lockbox/medal
@@ -104,18 +111,67 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	max_w_class = WEIGHT_CLASS_SMALL
 	storage_slots = 10
-	req_access = list(access_captain)
+	max_combined_w_class = 20
+	req_access = list(GLOB.access_captain)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
+	can_hold = list(/obj/item/clothing/accessory/medal)
 
-/obj/item/weapon/storage/lockbox/medal/New()
+/obj/item/weapon/storage/lockbox/medal/AltClick()
+	if(!locked)
+		open = (open ? FALSE : TRUE)
+		update_icon()
 	..()
-	new /obj/item/clothing/tie/medal/silver/valor(src)
-	new /obj/item/clothing/tie/medal/bronze_heart(src)
+
+/obj/item/weapon/storage/lockbox/medal/PopulateContents()
+	new /obj/item/clothing/accessory/medal/gold/captain(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/silver/valor(src)
+	new /obj/item/clothing/accessory/medal/silver/security(src)
+	new /obj/item/clothing/accessory/medal/bronze_heart(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
+	new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/gold/captain(src)
-	new /obj/item/clothing/tie/medal/silver/security(src)
-	new /obj/item/clothing/tie/medal/nobel_science(src)
-	new /obj/item/clothing/tie/medal/gold/heroism(src)
+		new /obj/item/clothing/accessory/medal/conduct(src)
+
+/obj/item/weapon/storage/lockbox/medal/update_icon()
+	cut_overlays()
+	if(locked)
+		icon_state = "medalbox+l"
+		open = FALSE
+	else
+		icon_state = "medalbox"
+		if(open)
+			icon_state += "open"
+		if(broken)
+			icon_state += "+b"
+		if(contents && open)
+			for (var/i in 1 to contents.len)
+				var/obj/item/clothing/accessory/medal/M = contents[i]
+				var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
+				if(i > 1 && i <= 5)
+					medalicon.pixel_x += ((i-1)*3)
+				else if(i > 5)
+					medalicon.pixel_y -= 7
+					medalicon.pixel_x -= 2
+					medalicon.pixel_x += ((i-6)*3)
+				add_overlay(medalicon)
+
+/obj/item/weapon/storage/lockbox/medal/sec
+	name = "security medal box"
+	desc = "A locked box used to store medals to be given to members of the security department."
+	req_access = list(GLOB.access_hos)
+
+/obj/item/weapon/storage/lockbox/medal/sec/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/silver/security(src)
+
+/obj/item/weapon/storage/lockbox/medal/sci
+	name = "science medal box"
+	desc = "A locked box used to store medals to be given to members of the science department."
+	req_access = list(GLOB.access_rd)
+
+/obj/item/weapon/storage/lockbox/medal/sci/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/accessory/medal/plasma/nobel_science(src)

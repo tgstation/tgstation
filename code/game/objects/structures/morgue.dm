@@ -3,6 +3,7 @@
  *		Morgue
  *		Morgue tray
  *		Crematorium
+ *		Creamatorium
  *		Crematorium tray
  *		Crematorium button
  */
@@ -24,9 +25,6 @@
 	var/locked = 0
 	var/opendir = SOUTH
 
-/obj/structure/bodycontainer/New()
-	..()
-
 /obj/structure/bodycontainer/Destroy()
 	open()
 	if(connected)
@@ -34,7 +32,8 @@
 		connected = null
 	return ..()
 
-/obj/structure/bodycontainer/on_log()
+/obj/structure/bodycontainer/on_log(login)
+	..()
 	update_icon()
 
 /obj/structure/bodycontainer/update_icon()
@@ -50,10 +49,10 @@
 
 /obj/structure/bodycontainer/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='danger'>It's locked.</span>"
+		to_chat(user, "<span class='danger'>It's locked.</span>")
 		return
 	if(!connected)
-		user << "That doesn't appear to have a tray."
+		to_chat(user, "That doesn't appear to have a tray.")
 		return
 	if(connected.loc == src)
 		open()
@@ -89,18 +88,18 @@
 	open()
 
 /obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
-	user << "<span class='notice'>You slam yourself into the side of [O].</span>"
+	to_chat(user, "<span class='notice'>You slam yourself into the side of [O].</span>")
 	container_resist(user)
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			AM.forceMove(src)
@@ -147,7 +146,7 @@
 /*
  * Crematorium
  */
-var/global/list/crematoriums = new/list()
+GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
@@ -156,18 +155,18 @@ var/global/list/crematoriums = new/list()
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
-	user << "<span class='warning'>[src] is locked against you.</span>"
+	to_chat(user, "<span class='warning'>[src] is locked against you.</span>")
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	crematoriums.Remove(src)
+	GLOB.crematoriums.Remove(src)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
 	connected.connected = src
 
-	crematoriums.Add(src)
+	GLOB.crematoriums.Add(src)
 	..()
 
 /obj/structure/bodycontainer/crematorium/update_icon()
@@ -188,8 +187,10 @@ var/global/list/crematoriums = new/list()
 /obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
 	if(locked)
 		return //don't let you cremate something twice or w/e
+	// Make sure we don't delete the actual morgue and its tray
+	var/list/conts = GetAllContents() - src - connected
 
-	if(contents.len <= 1)
+	if(!conts.len)
 		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
 
@@ -199,11 +200,11 @@ var/global/list/crematoriums = new/list()
 		locked = 1
 		update_icon()
 
-		for(var/mob/living/M in contents)
+		for(var/mob/living/M in conts)
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+				user.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
 				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			else
 				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
@@ -212,17 +213,31 @@ var/global/list/crematoriums = new/list()
 				M.ghostize()
 				qdel(M)
 
-		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+		for(var/obj/O in conts) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
 				qdel(O)
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			locked = 0
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
+/obj/structure/bodycontainer/crematorium/creamatorium
+	name = "creamatorium"
+	desc = "A human incinerator. Works well during ice cream socials."
+
+/obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
+	var/list/icecreams = new()
+	for(var/mob/living/i_scream in GetAllContents())
+		var/obj/item/weapon/reagent_containers/food/snacks/icecream/IC = new()
+		IC.set_cone_type("waffle")
+		IC.add_mob_flavor(i_scream)
+		icecreams += IC
+	. = ..()
+	for(var/obj/IC in icecreams)
+		IC.forceMove(src)
 
 /*
  * Generic Tray
@@ -258,7 +273,7 @@ var/global/list/crematoriums = new/list()
 		connected.close()
 		add_fingerprint(user)
 	else
-		user << "<span class='warning'>That's not connected to anything!</span>"
+		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
 	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)

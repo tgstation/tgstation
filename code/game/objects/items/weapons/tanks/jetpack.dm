@@ -9,6 +9,7 @@
 	var/gas_type = "o2"
 	var/on = FALSE
 	var/stabilizers = FALSE
+	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
@@ -26,7 +27,7 @@
 	else if(istype(action, /datum/action/item_action/jetpack_stabilization))
 		if(on)
 			stabilizers = !stabilizers
-			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
+			to_chat(user, "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>")
 	else
 		toggle_internals(user)
 
@@ -37,10 +38,10 @@
 
 	if(!on)
 		turn_on()
-		user << "<span class='notice'>You turn the jetpack on.</span>"
+		to_chat(user, "<span class='notice'>You turn the jetpack on.</span>")
 	else
 		turn_off()
-		user << "<span class='notice'>You turn the jetpack off.</span>"
+		to_chat(user, "<span class='notice'>You turn the jetpack off.</span>")
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -113,6 +114,12 @@
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 
+/obj/item/weapon/tank/jetpack/oxygen/security
+	name = "security jetpack (oxygen)"
+	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas by security forces."
+	icon_state = "jetpack-sec"
+	item_state = "jetpack-sec"
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
@@ -126,13 +133,14 @@
 	name = "hardsuit jetpack upgrade"
 	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
 	origin_tech = "materials=4;magnets=4;engineering=5"
-	icon_state = "jetpack-upgrade"
-	item_state =  "jetpack-black"
+	icon_state = "jetpack-mining"
+	item_state = "jetpack-black"
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	volume = 1
 	slot_flags = null
 	gas_type = null
+	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
 
@@ -146,12 +154,12 @@
 
 /obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
-		user << "<span class='warning'>\The [src] must be connected to a hardsuit!</span>"
+		to_chat(user, "<span class='warning'>\The [src] must be connected to a hardsuit!</span>")
 		return
 
 	var/mob/living/carbon/human/H = user
 	if(!istype(H.s_store, /obj/item/weapon/tank/internals))
-		user << "<span class='warning'>You need a tank in your suit storage!</span>"
+		to_chat(user, "<span class='warning'>You need a tank in your suit storage!</span>")
 		return
 	..()
 
@@ -183,7 +191,7 @@
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack	
 
 /mob/proc/get_jetpack()
 	return

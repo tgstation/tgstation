@@ -51,23 +51,21 @@
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.intact)
-			user << "<span class='warning'>You must first expose the power terminal!</span>"
+			to_chat(user, "<span class='warning'>You must first expose the power terminal!</span>")
 			return
 
 		if(!master || master.can_terminal_dismantle())
 			user.visible_message("[user.name] dismantles the power terminal from [master].", \
 								"<span class='notice'>You begin to cut the cables...</span>")
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			if(do_after(user, 50*W.toolspeed, target = src))
 				if(!master || master.can_terminal_dismantle())
 					if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
-						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-						s.set_up(5, 1, master)
-						s.start()
+						do_sparks(5, TRUE, master)
 						return
 					new /obj/item/stack/cable_coil(loc, 10)
-					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
+					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 					qdel(src)
 
 

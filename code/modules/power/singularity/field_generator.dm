@@ -64,22 +64,23 @@ field_generator power level display
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
-				user << "<span class='warning'>You are unable to turn off the [name] once it is online!</span>"
+				to_chat(user, "<span class='warning'>You are unable to turn off the [name] once it is online!</span>")
 				return 1
 			else
 				user.visible_message("[user.name] turns on the [name].", \
 					"<span class='notice'>You turn on the [name].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				investigate_log("<font color='green'>activated</font> by [user.key].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
-		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
 
-/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user)
+/obj/machinery/field/generator/can_be_unfasten_wrench(mob/user, silent)
 	if(state == FG_WELDED)
-		user  << "<span class='warning'>[src] is welded to the floor!</span>"
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] is welded to the floor!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -93,7 +94,7 @@ field_generator power level display
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
-		user << "<span class='warning'>[src] needs to be off!</span>"
+		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 0)
@@ -102,7 +103,7 @@ field_generator power level display
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
-				user << "<span class='warning'>The [name] needs to be wrenched to the floor!</span>"
+				to_chat(user, "<span class='warning'>The [name] needs to be wrenched to the floor!</span>")
 
 			if(FG_SECURED)
 				if (WT.remove_fuel(0,user))
@@ -112,7 +113,7 @@ field_generator power level display
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,20*W.toolspeed, target = src) && state == FG_SECURED && WT.isOn())
 						state = FG_WELDED
-						user << "<span class='notice'>You weld the field generator to the floor.</span>"
+						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 
 			if(FG_WELDED)
 				if (WT.remove_fuel(0,user))
@@ -122,7 +123,7 @@ field_generator power level display
 						"<span class='italics'>You hear welding.</span>")
 					if(do_after(user,20*W.toolspeed, target = src) && state == FG_WELDED && WT.isOn())
 						state = FG_SECURED
-						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
+						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 
 	else
 		return ..()
@@ -196,7 +197,7 @@ field_generator power level display
 	else
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
 		check_power_level()
 		return 0
@@ -318,12 +319,12 @@ field_generator power level display
 	//I want to avoid using global variables.
 	spawn(1)
 		var/temp = 1 //stops spam
-		for(var/obj/singularity/O in world)
+		for(var/obj/singularity/O in GLOB.singularities)
 			if(O.last_warning && temp)
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

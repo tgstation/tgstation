@@ -1,17 +1,16 @@
-var/highlander = FALSE
+GLOBAL_VAR_INIT(highlander, FALSE)
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
-	if(!ticker || !ticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
-	highlander = TRUE
+	GLOB.highlander = TRUE
 
-	world << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
-	world << sound('sound/misc/highlander.ogg')
+	send_to_playing_players("<span class='boldannounce'><font size=6>THERE CAN BE ONLY ONE</font></span>")
 
-	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+	for(var/obj/item/weapon/disk/nuclear/N in GLOB.poi_list)
 		N.relocate() //Gets it out of bags and such
 
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == DEAD || !(H.client))
 			continue
 		H.make_scottish()
@@ -20,8 +19,14 @@ var/highlander = FALSE
 	log_admin("[key_name(usr)] used THERE CAN BE ONLY ONE.")
 	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
 
+/client/proc/only_one_delayed()
+	send_to_playing_players("<span class='userdanger'>Bagpipes begin to blare. You feel Scottish pride coming over you.</span>")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!</span>")
+	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
+	addtimer(CALLBACK(src, .proc/only_one), 420)
+
 /mob/living/carbon/human/proc/make_scottish()
-	ticker.mode.traitors += mind
+	SSticker.mode.traitors += mind
 	mind.special_role = "highlander"
 	dna.species.species_traits |= NOGUNS //nice try jackass
 
@@ -59,7 +64,7 @@ var/highlander = FALSE
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	var/obj/item/weapon/claymore/highlander/H1 = new(src)
-	if(!highlander)
+	if(!GLOB.highlander)
 		H1.admin_spawned = TRUE //To prevent announcing
 	put_in_hands(H1)
 	H1.pickup(src) //For the stun shielding
@@ -70,38 +75,38 @@ var/highlander = FALSE
 	antiwelder.icon_state = "bloodhand_right"
 	put_in_hands(antiwelder)
 
-	src << "<span class='boldannounce'>Your [H1.name] cries out for blood. Join in the slaughter, lest you be claimed yourself...\n\
-	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>"
+	to_chat(src, "<span class='boldannounce'>Your [H1.name] cries out for blood. Claim the lives of others, and your own will be restored!\n\
+	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
-	if(!ticker || !ticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
 
-	for(var/mob/living/carbon/human/H in player_list)
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == 2 || !(H.client)) continue
 		if(is_special_character(H)) continue
 
-		ticker.mode.traitors += H.mind
+		SSticker.mode.traitors += H.mind
 		H.mind.special_role = "[H.real_name] Prime"
 
 		var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective
 
-		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
+		to_chat(H, "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>")
 		H.mind.announce_objectives()
 
 		var/datum/gang/multiverse/G = new(src, "[H.real_name]")
-		ticker.mode.gangs += G
-		G.bosses += H.mind
+		SSticker.mode.gangs += G
+		G.bosses[H.mind] = 0	//No they don't use influence but this prevents runtimes.
 		G.add_gang_hud(H.mind)
 		H.mind.gang_datum = G
 
 		var/obj/item/slot_item_ID = H.get_item_by_slot(slot_wear_id)
 		qdel(slot_item_ID)
 		var/obj/item/slot_item_hand = H.get_item_for_held_index(2)
-		H.unEquip(slot_item_hand)
+		H.dropItemToGround(slot_item_hand)
 
 		var /obj/item/weapon/multisword/multi = new(H)
 		H.put_in_hands_or_del(multi)

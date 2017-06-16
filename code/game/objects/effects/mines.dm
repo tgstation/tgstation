@@ -8,20 +8,21 @@
 	var/triggered = 0
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
-	victim << "<span class='danger'>*click*</span>"
+	to_chat(victim, "<span class='danger'>*click*</span>")
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(ismob(AM))
-		var/mob/MM = AM
-		if(!(MM.movement_type & FLYING))
+	if(isturf(loc))
+		if(ismob(AM))
+			var/mob/MM = AM
+			if(!(MM.movement_type & FLYING))
+				triggermine(AM)
+		else
 			triggermine(AM)
-	else
-		triggermine(AM)
 
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
+	visible_message("<span class='danger'>[victim] sets off [bicon(src)] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -54,7 +55,7 @@
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
-		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
+		to_chat(victim, "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>")
 		qdel(victim.client)
 
 
@@ -119,15 +120,15 @@
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
+	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
 	victim << 'sound/misc/e1m1.ogg'
 	var/old_color = victim.client.color
 	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
-		new /obj/effect/hallucination/delusion(victim.loc,victim,force_kind="demon",duration=duration,skip_nearby=0)
-
+		new /obj/effect/hallucination/delusion(victim.loc,victim,"demon",duration,0)
+		
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
 	victim.drop_all_held_items()
@@ -141,7 +142,7 @@
 	sleep(10)
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)
-	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
+	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>")
 	qdel(chainsaw)
 	qdel(src)
 
@@ -153,7 +154,7 @@
 /obj/effect/mine/pickup/healing/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='notice'>You feel great!</span>"
+	to_chat(victim, "<span class='notice'>You feel great!</span>")
 	victim.revive(full_heal = 1, admin_revive = 1)
 
 /obj/effect/mine/pickup/speed
@@ -165,8 +166,8 @@
 /obj/effect/mine/pickup/speed/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
-	victim << "<span class='notice'>You feel fast!</span>"
+	to_chat(victim, "<span class='notice'>You feel fast!</span>")
 	victim.status_flags |= GOTTAGOREALLYFAST
 	sleep(duration)
 	victim.status_flags &= ~GOTTAGOREALLYFAST
-	victim << "<span class='notice'>You slow down.</span>"
+	to_chat(victim, "<span class='notice'>You slow down.</span>")

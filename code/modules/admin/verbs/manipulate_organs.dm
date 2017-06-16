@@ -47,7 +47,7 @@
 				I = organ
 				I.removed(C)
 
-			organ.loc = get_turf(C)
+			organ.forceMove(get_turf(C))
 
 			if(operation == "remove organ/implant")
 				qdel(organ)

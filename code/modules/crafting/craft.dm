@@ -1,24 +1,35 @@
 /datum/personal_crafting
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,
-				CAT_AMMO,
+	var/viewing_subcategory = 1
+	var/list/categories = list(
+				CAT_WEAPONRY,
 				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
-				CAT_BREAD,
-				CAT_BURGER,
-				CAT_CAKE,
-				CAT_EGG,
-				CAT_MEAT,
-				CAT_MISCFOOD,
-				CAT_PASTRY,
-				CAT_PIE,
-				CAT_PIZZA,
-				CAT_SALAD,
-				CAT_SANDWICH,
-				CAT_SOUP,
-				CAT_SPAGHETTI)
+				CAT_FOOD)
+	var/list/subcategories = list(
+						list(	//Weapon subcategories
+							CAT_WEAPON,
+							CAT_AMMO),
+						CAT_NONE, //Robot subcategories
+						CAT_NONE, //Misc subcategories
+						CAT_NONE, //Tribal subcategories
+						list(	//Food subcategories
+							CAT_BREAD,
+							CAT_BURGER,
+							CAT_CAKE,
+							CAT_EGG,
+							CAT_MEAT,
+							CAT_MISCFOOD,
+							CAT_PASTRY,
+							CAT_PIE,
+							CAT_PIZZA,
+							CAT_SALAD,
+							CAT_SANDWICH,
+							CAT_SOUP,
+							CAT_SPAGHETTI))
+
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
@@ -70,14 +81,14 @@
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B
-				if(AM.flags & HOLOGRAM)
+				if(HAS_SECONDARY_FLAG(AM, HOLOGRAM))
 					continue
 				. += AM
 
 /datum/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
 	for(var/obj/item/I in get_environment(user))
-		if(I.flags & HOLOGRAM)
+		if(HAS_SECONDARY_FLAG(I, HOLOGRAM))
 			continue
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
@@ -124,7 +135,7 @@
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
 				if(send_feedback)
-					feedback_add_details("object_crafted","[I.type]")
+					SSblackbox.add_details("object_crafted","[I.type]")
 				return 0
 			return "."
 		return ", missing tool."
@@ -253,7 +264,7 @@
 		qdel(DL)
 
 
-/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_turf_state)
+/datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
@@ -262,20 +273,28 @@
 
 /datum/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
+	var/list/subs = list()
+	var/cur_subcategory = CAT_NONE
 	var/cur_category = categories[viewing_category]
+	if (islist(subcategories[viewing_category]))
+		subs = subcategories[viewing_category]
+		cur_subcategory = subs[viewing_subcategory]
 	data["busy"] = busy
 	data["prev_cat"] = categories[prev_cat()]
+	data["prev_subcat"] = subs[prev_subcat()]
 	data["category"] = cur_category
+	data["subcategory"] = cur_subcategory
 	data["next_cat"] = categories[next_cat()]
+	data["next_subcat"] = subs[next_subcat()]
 	data["display_craftable_only"] = display_craftable_only
 	data["display_compact"] = display_compact
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/can_craft = list()
 	var/list/cant_craft = list()
-	for(var/rec in crafting_recipes)
+	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		if(R.category != cur_category)
+		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 		if(check_contents(R, surroundings))
 			can_craft += list(build_recipe_data(R))
@@ -296,41 +315,65 @@
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)
 			if(!fail_msg)
-				usr << "<span class='notice'>[TR.name] constructed.</span>"
+				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
 			else
-				usr << "<span class='warning'>Construction failed[fail_msg]</span>"
+				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
 			busy = 0
 			ui_interact(usr)
 		if("forwardCat") //Meow
-			viewing_category = next_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			viewing_category = next_cat(FALSE)
 			. = TRUE
 		if("backwardCat")
-			viewing_category = prev_cat()
-			usr << "<span class='notice'>Category is now [categories[viewing_category]].</span>"
+			viewing_category = prev_cat(FALSE)
+			. = TRUE
+		if("forwardSubCat")
+			viewing_subcategory = next_subcat()
+			. = TRUE
+		if("backwardSubCat")
+			viewing_subcategory = prev_subcat()
 			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
-			usr << "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>"
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
-			usr << "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>"
 			. = TRUE
 
 
 //Next works nicely with modular arithmetic
-/datum/personal_crafting/proc/next_cat()
+/datum/personal_crafting/proc/next_cat(readonly = TRUE)
+	if (!readonly)
+		viewing_subcategory = 1
 	. = viewing_category % categories.len + 1
 
+/datum/personal_crafting/proc/next_subcat()
+	if(islist(subcategories[viewing_category]))
+		var/list/subs = subcategories[viewing_category]
+		. = viewing_subcategory % subs.len + 1
+
+
 //Previous can go fuck itself
-/datum/personal_crafting/proc/prev_cat()
+/datum/personal_crafting/proc/prev_cat(readonly = TRUE)
+	if (!readonly)
+		viewing_subcategory = 1
 	if(viewing_category == categories.len)
 		. = viewing_category-1
 	else
 		. = viewing_category % categories.len - 1
 	if(. <= 0)
 		. = categories.len
+
+/datum/personal_crafting/proc/prev_subcat()
+	if(islist(subcategories[viewing_category]))
+		var/list/subs = subcategories[viewing_category]
+		if(viewing_subcategory == subs.len)
+			. = viewing_subcategory-1
+		else
+			. = viewing_subcategory % subs.len - 1
+		if(. <= 0)
+			. = subs.len
+	else
+		. = null
 
 
 /datum/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)

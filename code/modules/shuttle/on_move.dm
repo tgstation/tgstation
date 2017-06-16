@@ -1,4 +1,9 @@
-/atom/movable/proc/onShuttleMove(turf/T1, rotation)
+// Called before shuttle starts moving atoms.
+/atom/movable/proc/beforeShuttleMove(turf/T1, rotation)
+	return
+
+// Called when shuttle attempts to move an atom.
+/atom/movable/proc/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = T1
@@ -6,30 +11,29 @@
 		update_parallax_contents()
 	return 1
 
+// Called after all of the atoms on shuttle are moved.
+/atom/movable/proc/afterShuttleMove()
+	return
+
+
 /obj/onShuttleMove()
 	if(invisibility >= INVISIBILITY_ABSTRACT)
 		return 0
 	. = ..()
 
+
 /atom/movable/light/onShuttleMove()
 	return 0
 
-/obj/machinery/door/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
-	addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
-	// Close any attached airlocks as well
-	for(var/obj/machinery/door/D in orange(1, src))
-		addtimer(CALLBACK(src, .proc/close), 0, TIMER_UNIQUE)
-
 /obj/machinery/door/airlock/onShuttleMove()
 	shuttledocked = 0
-	for(var/obj/machinery/door/airlock/A in orange(1, src))
+	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 0
+		A.air_tight = TRUE
+		INVOKE_ASYNC(A, /obj/machinery/door/.proc/close)
 	. = ..()
 	shuttledocked =  1
-	for(var/obj/machinery/door/airlock/A in orange(1, src))
+	for(var/obj/machinery/door/airlock/A in range(1, src))
 		A.shuttledocked = 1
 /mob/onShuttleMove()
 	if(!move_on_shuttle)
@@ -43,12 +47,16 @@
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/carbon/onShuttleMove()
+/mob/living/carbon/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	. = ..()
 	if(!.)
 		return
-	if(!buckled)
+	if(!buckled && knockdown)
 		Weaken(3)
+
+/obj/effect/abstract/proximity_checker/onShuttleMove()
+	//timer so it only happens once
+	addtimer(CALLBACK(monitor, /datum/proximity_monitor/proc/SetRange, monitor.current_range, TRUE), 0, TIMER_UNIQUE)
 
 // Shuttle Rotation //
 

@@ -61,8 +61,8 @@
 	icon_state = "prisoner"
 	item_state = "o_suit"
 	item_color = "prisoner"
-	has_sensor = 2
-	sensor_mode = 3
+	has_sensor = LOCKED_SENSORS
+	sensor_mode = SENSOR_COORDS
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/mailman
@@ -210,6 +210,14 @@
 	icon_state = "black_suit_fem"
 	item_state = "black_suit_fem"
 	item_color = "black_suit_fem"
+
+/obj/item/clothing/under/suit_jacket/green
+	name = "green suit"
+	desc = "A green suit and yellow necktie. Baller."
+	icon_state = "green_suit"
+	item_state = "dg_suit"
+	item_color = "green_suit"
+	can_adjust = 0
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"
@@ -404,7 +412,7 @@
 
 /obj/item/clothing/under/gladiator/ash_walker
 	desc = "This gladiator uniform appears to be covered in ash and fairly dated."
-	has_sensor = 0
+	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -586,9 +594,17 @@
 	item_color = "villain"
 	can_adjust = 0
 
+/obj/item/clothing/under/sailor
+	name = "sailor suit"
+	desc = "Skipper's in the wardroom drinkin gin'."
+	icon_state = "sailor"
+	item_state = "b_suit"
+	item_color = "sailor"
+	can_adjust = 0
+
 /obj/item/clothing/under/plasmaman
-	name = "Plasma-man Jumpsuit"
-	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
+	name = "plasma envirosuit"
+	desc = "A special containment suit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy."
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	item_color = "plasmaman"
@@ -603,7 +619,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	to_chat(user, "<span class='notice'>There are [extinguishes_left] extinguisher charges left in this suit.</span>")
 
 
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -624,19 +640,19 @@
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	if (istype(E, /obj/item/device/extinguisher_refill))
 		if (extinguishes_left == 5)
-			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
 		else
 			extinguishes_left = 5
-			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			to_chat(user, "<span class='notice'>You refill the suit's built-in extinguisher, using up the cartridge.</span>")
 			qdel(E)
 			return
 		return
 	return
 
 /obj/item/device/extinguisher_refill
-	name = "Plasma-man jumpsuit refill pack"
-	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
+	name = "envirosuit extinguisher cartridge"
+	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	origin_tech = "materials=2;plasmatech=3;biotech=1"
 

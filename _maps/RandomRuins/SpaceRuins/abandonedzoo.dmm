@@ -1,7 +1,7 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -314,8 +314,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "aL" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -355,8 +355,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "aR" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -786,8 +786,8 @@
 /area/ruin/abandonedzoo)
 "bP" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bQ" = (
 /obj/machinery/shieldwallgen{
 	active = 2;
@@ -836,12 +836,12 @@
 /area/ruin/abandonedzoo)
 "bV" = (
 /obj/machinery/shieldwallgen,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bW" = (
 /obj/item/weapon/shard,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "bX" = (
 /turf/open/floor/plating/airless,
 /area/ruin/abandonedzoo)

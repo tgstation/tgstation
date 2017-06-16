@@ -28,7 +28,7 @@
 			continue
 		if(isliving(A))
 			var/mob/living/M = A
-			if(faction_check(M) && attack_same || !faction_check(M))
+			if(faction_check_mob(M) && attack_same || !faction_check_mob(M))
 				enemies |= M
 		else if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
@@ -37,7 +37,7 @@
 				enemies |= M.occupant
 
 	for(var/mob/living/simple_animal/hostile/retaliate/H in around)
-		if(faction_check(H) && !attack_same && !H.attack_same)
+		if(faction_check_mob(H) && !attack_same && !H.attack_same)
 			H.enemies |= enemies
 	return 0
 

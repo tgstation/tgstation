@@ -35,14 +35,14 @@ Bonus
 			return
 		switch(A.stage)
 			if(4, 5)
-				C << "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
+				to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
 				C.dna.remove_mutation_group(possible_mutations)
 				C.randmut(possible_mutations)
 	return
 
 // Archive their DNA before they were infected.
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
-	possible_mutations = (bad_mutations | not_good_mutations) - mutations_list[RACEMUT]
+	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT]
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
 		if(!M.has_dna())

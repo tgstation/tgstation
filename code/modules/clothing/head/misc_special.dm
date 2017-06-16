@@ -63,7 +63,7 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
-	hitsound = 'sound/items/Welder.ogg'
+	hitsound = 'sound/items/welder.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -96,12 +96,12 @@
 		src.icon_state = "ushankaup"
 		src.item_state = "ushankaup"
 		earflaps = 0
-		user << "<span class='notice'>You raise the ear flaps on the ushanka.</span>"
+		to_chat(user, "<span class='notice'>You raise the ear flaps on the ushanka.</span>")
 	else
 		src.icon_state = "ushankadown"
 		src.item_state = "ushankadown"
 		earflaps = 1
-		user << "<span class='notice'>You lower the ear flaps on the ushanka.</span>"
+		to_chat(user, "<span class='notice'>You lower the ear flaps on the ushanka.</span>")
 
 /*
  * Pumpkin head

@@ -40,13 +40,13 @@
 
 /obj/item/weapon/grenade/gluon/prime()
 	update_mob()
-	playsound(loc, 'sound/effects/EMPulse.ogg', 50, 1)
+	playsound(loc, 'sound/effects/empulse.ogg', 50, 1)
 	radiation_pulse(loc,freeze_range,freeze_range+1,rad_damage)
 	for(var/turf/T in view(freeze_range,loc))
 		if(isfloorturf(T))
 			var/turf/open/floor/F = T
 			F.wet = TURF_WET_PERMAFROST
-			addtimer(CALLBACK(F, /turf/open/floor.proc/MakeDry), rand(3000, 3100), TURF_WET_PERMAFROST)
+			addtimer(CALLBACK(F, /turf/open/floor.proc/MakeDry, TURF_WET_PERMAFROST), rand(3000, 3100))
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
 				L.bodytemperature -= 230

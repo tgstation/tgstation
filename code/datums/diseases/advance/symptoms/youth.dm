@@ -34,22 +34,22 @@ BONUS
 				if(1)
 					if(H.age > 41)
 						H.age = 41
-						H << "<span class='notice'>You haven't had this much energy in years!</span>"
+						to_chat(H, "<span class='notice'>You haven't had this much energy in years!</span>")
 				if(2)
 					if(H.age > 36)
 						H.age = 36
-						H << "<span class='notice'>You're suddenly in a good mood.</span>"
+						to_chat(H, "<span class='notice'>You're suddenly in a good mood.</span>")
 				if(3)
 					if(H.age > 31)
 						H.age = 31
-						H << "<span class='notice'>You begin to feel more lithe.</span>"
+						to_chat(H, "<span class='notice'>You begin to feel more lithe.</span>")
 				if(4)
 					if(H.age > 26)
 						H.age = 26
-						H << "<span class='notice'>You feel reinvigorated.</span>"
+						to_chat(H, "<span class='notice'>You feel reinvigorated.</span>")
 				if(5)
 					if(H.age > 21)
 						H.age = 21
-						H << "<span class='notice'>You feel like you can take on the world!</span>"
+						to_chat(H, "<span class='notice'>You feel like you can take on the world!</span>")
 
 	return

@@ -6,7 +6,7 @@
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
 	desc = "A little medical robot. He looks somewhat underwhelmed."
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/mob/aibots.dmi'
 	icon_state = "medibot0"
 	density = 0
 	anchored = 0
@@ -85,17 +85,17 @@
 	else
 		icon_state = "medibot1"
 
-/mob/living/simple_animal/bot/medbot/New()
+/mob/living/simple_animal/bot/medbot/Initialize()
 	..()
 	update_icon()
 
-	spawn(4)
-		if(skin)
-			add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
+	if(skin)
+		add_overlay("medskin_[skin]")
 
-		var/datum/job/doctor/J = new/datum/job/doctor
-		access_card.access += J.get_access()
-		prev_access = access_card.access
+	var/datum/job/doctor/J = new /datum/job/doctor
+	access_card.access += J.get_access()
+	prev_access = access_card.access
+	qdel(J)
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -209,17 +209,17 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(locked)
-			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
+			to_chat(user, "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>")
 			return
 		if(!isnull(reagent_glass))
-			user << "<span class='warning'>There is already a beaker loaded!</span>"
+			to_chat(user, "<span class='warning'>There is already a beaker loaded!</span>")
 			return
 		if(!user.drop_item())
 			return
 
 		W.loc = src
 		reagent_glass = W
-		user << "<span class='notice'>You insert [W].</span>"
+		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		show_controls(user)
 
 	else
@@ -233,7 +233,7 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
+			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		if(user)
@@ -338,7 +338,7 @@
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		return 0 //welp too late for them!
 
 	if(C.suiciding)
@@ -404,7 +404,7 @@
 		soft_reset()
 		return
 
-	if(C.stat == 2)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/mno.ogg',"Live, damnit! LIVE!" = 'sound/voice/mlive.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/mlost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -496,7 +496,7 @@
 	return
 
 /mob/living/simple_animal/bot/medbot/proc/check_overdose(mob/living/carbon/patient,reagent_id,injection_amount)
-	var/datum/reagent/R  = chemical_reagents_list[reagent_id]
+	var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
 	if(!R.overdose_threshold) //Some chems do not have an OD threshold
 		return 0
 	var/current_volume = patient.reagents.get_reagent_amount(reagent_id)
@@ -530,19 +530,15 @@
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
-	if(declare_cooldown)
+	if(declare_cooldown > world.time)
 		return
 	var/area/location = get_area(src)
 	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_channel)
-	declare_cooldown = 1
-	spawn(200) //Twenty seconds
-		declare_cooldown = 0
+	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(access_medical, access_robotics)
+	req_one_access =list(GLOB.access_medical, GLOB.access_robotics)

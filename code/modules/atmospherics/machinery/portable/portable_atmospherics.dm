@@ -22,7 +22,6 @@
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-	air_contents.holder = src
 
 	return 1
 
@@ -101,10 +100,10 @@
 			else
 				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 				if(!possible_port)
-					user << "<span class='notice'>Nothing happens.</span>"
+					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return
 				if(!connect(possible_port))
-					user << "<span class='notice'>[name] failed to connect to the port.</span>"
+					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
 				playsound(src.loc, W.usesound, 50, 1)
 				user.visible_message( \
@@ -121,6 +120,6 @@
 	if(I.force < 10 && !(stat & BROKEN))
 		take_damage(0)
 	else
-		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
+		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
 		..()

@@ -18,7 +18,7 @@
 		var/obj/item/weapon/storage/S = W
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-		user << "<span class='notice'>You empty the ore in [S] into \the [src].</span>"
+		to_chat(user, "<span class='notice'>You empty the ore in [S] into \the [src].</span>")
 	else if(istype(W, /obj/item/weapon/crowbar))
 		playsound(loc, W.usesound, 50, 1)
 		var/obj/item/weapon/crowbar/C = W
@@ -27,6 +27,11 @@
 			deconstruct(TRUE, user)
 	else
 		return ..()
+
+/obj/structure/ore_box/examine(mob/living/user)
+	if(Adjacent(user) && istype(user))
+		show_contents(user)
+	. = ..()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	if(Adjacent(user))
@@ -61,7 +66,7 @@
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
 		dump_box_contents()
-		usr << "<span class='notice'>You empty the box.</span>"
+		to_chat(usr, "<span class='notice'>You empty the box.</span>")
 	updateUsrDialog()
 
 

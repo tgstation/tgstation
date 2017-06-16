@@ -45,11 +45,14 @@
 	// register for radio system
 
 /obj/machinery/status_display/Initialize()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
 	SSradio.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
+	GLOB.ai_status_displays.Remove(src)
 	return ..()
 
 // timed process
@@ -122,7 +125,9 @@
 	. = ..()
 	switch(mode)
 		if(1,2,4,5)
-			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
+			to_chat(user, "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>")
+	if(mode == 1 && SSshuttle.emergency)
+		to_chat(user, "Current Shuttle: [SSshuttle.emergency.name]")
 
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
@@ -143,7 +148,7 @@
 /obj/machinery/status_display/proc/set_picture(state)
 	picture_state = state
 	remove_display()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	add_overlay(picture_state)
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
@@ -151,8 +156,7 @@
 		maptext = new_text
 
 /obj/machinery/status_display/proc/remove_display()
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
 	if(maptext)
 		maptext = ""
 
@@ -208,6 +212,14 @@
 	var/picture_state	// icon_state of ai picture
 
 	var/emotion = "Neutral"
+
+/obj/machinery/ai_status_display/Initialize()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
+
+/obj/machinery/ai_status_display/Destroy()
+	GLOB.ai_status_displays.Remove(src)
+	. = ..()
 
 /obj/machinery/ai_status_display/attack_ai(mob/living/silicon/ai/user)
 	if(isAI(user))
@@ -275,9 +287,8 @@
 
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
-	if(overlays.len)
-		cut_overlays()
-	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	cut_overlays()
+	add_overlay(picture_state)
 
 #undef CHARS_PER_LINE
 #undef FOND_SIZE

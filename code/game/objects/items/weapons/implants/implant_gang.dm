@@ -1,4 +1,3 @@
-
 /obj/item/weapon/implant/gang
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
@@ -32,8 +31,8 @@
 			return 0
 
 		var/success
-		if(target.mind in ticker.mode.get_gangsters())
-			if(ticker.mode.remove_gangster(target.mind,0,1))
+		if(target.mind in SSticker.mode.get_gangsters())
+			if(SSticker.mode.remove_gangster(target.mind,0,1))
 				success = 1	//Was not a gang boss, convert as usual
 		else
 			success = 1
@@ -43,7 +42,7 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 
 		qdel(src)
-		return -1
+		return 0
 
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"

@@ -14,10 +14,52 @@
 
 /datum/round_event/valentines/start()
 	..()
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		H.put_in_hands(new /obj/item/weapon/valentine)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(b)
+
+
+	var/list/valentines = list()
+	for(var/mob/living/M in GLOB.player_list)
+		if(!M.stat && M.client && M.mind)
+			valentines |= M
+
+
+	while(valentines.len)
+		var/mob/living/L = pick_n_take(valentines)
+		if(valentines.len)
+			var/mob/living/date = pick_n_take(valentines)
+
+
+			forge_valentines_objective(L, date)
+
+			forge_valentines_objective(date, L)
+
+			if(valentines.len && prob(4))
+				var/mob/living/notgoodenough = pick_n_take(valentines)
+				forge_valentines_objective(notgoodenough, date)
+
+
+		else
+			to_chat(L, "<span class='warning'><B>You didn't get a date! They're all having fun without you! you'll show them though...</B></span>")
+			var/datum/objective/martyr/normiesgetout = new
+			normiesgetout.owner = L.mind
+			SSticker.mode.traitors |= L.mind
+			L.mind.objectives += normiesgetout
+
+/proc/forge_valentines_objective(mob/living/lover,mob/living/date)
+
+	SSticker.mode.traitors |= lover.mind
+	lover.mind.special_role = "valentine"
+
+	var/datum/objective/protect/protect_objective = new /datum/objective/protect
+	protect_objective.owner = lover.mind
+	protect_objective.target = date.mind
+	protect_objective.explanation_text = "Protect [date.real_name], your date."
+	lover.mind.objectives += protect_objective
+	to_chat(lover, "<span class='warning'><B>You're on a date with [date]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
+
 
 /datum/round_event/valentines/announce()
 	priority_announce("It's Valentine's Day! Give a valentine to that special someone!")
@@ -44,7 +86,7 @@
 	               "You're hotter than a plasma fire in toxins.",
 	               "Are you a rogue atmos tech? Because you're taking my breath away.",
 	               "Could I have all access... to your heart?",
-	               "Call me the CMO, because I'm here to inspect your johnson.",
+	               "Call me the doctor, because I'm here to inspect your johnson.",
 	               "I'm not a changeling, but you make my proboscis extend.",
 	               "I just can't get EI NATH of you.",
 	               "You must be a nuke op, because you make my heart explode.",
@@ -74,7 +116,15 @@
 	               "Roses are red, text is green, I love you more than cleanbots clean.",
 	               "If you were a carp I'd fi-lay you.",
 	               "I'm a nuke op, and my pinpointer leads to your heart.",
-	               "Wanna slay my megafauna?" )
+	               "Wanna slay my megafauna?",
+	               "I'm a clockwork cultist. Or zl inyragvar.",
+	               "If you were a disposal bin I'd ride you all day.",
+	               "Put on your explorer's suit because I'm taking you to LOVEaland.",
+	               "I must be the CMO, 'cause I saw you on my CUTE sensors.",
+	               "You're the vomit to my flyperson.",
+	               "You must be liquid dark matter, because you're pulling me closer.",
+	               "Not even sorium can drive me away from you.",
+	               "Wanna make like a borg and do some heavy petting?" )
 
 /obj/item/weapon/valentine/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -93,7 +143,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[message]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		user << "<span class='notice'>It is too far away.</span>"
+		to_chat(user, "<span class='notice'>It is too far away.</span>")
 
 /obj/item/weapon/valentine/attack_self(mob/user)
 	user.examinate(src)
@@ -125,5 +175,7 @@
                 "A heart-shaped candy that reads: VALIDTINES",
                 "A heart-shaped candy that reads: FACEHUGGER",
                 "A heart-shaped candy that reads: DOMINATOR",
-                "A heart-shaped candy that reads: GET TESLA'D")
+                "A heart-shaped candy that reads: GET TESLA'D",
+                "A heart-shaped candy that reads: COCK CULT",
+                "A heart-shaped candy that reads: PET ME")
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

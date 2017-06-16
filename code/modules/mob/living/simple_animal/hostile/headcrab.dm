@@ -17,7 +17,7 @@
 	robust_searching = 1
 	stat_attack = 2
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
@@ -38,25 +38,17 @@
 	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
-	if(egg_lain)
-		target.attack_animal(src)
-		return
-	if(iscarbon(target) && !ismonkey(target))
+	. = ..()
+	if(. && !egg_lain && iscarbon(target) && !ismonkey(target))
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
 			if(C.status_flags & XENO_HOST)
-				src << "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>"
+				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
-			src << "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>"
-			spawn(100)
-				death()
-			return
-	target.attack_animal(src)
-
-
-
+			to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
+			addtimer(CALLBACK(src, .proc/death), 100)
 
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"

@@ -87,22 +87,17 @@
 /obj/item/device/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user = null, power = 15, targeted = 1)
 	add_logs(user, M, "flashed", src)
 	if(user && targeted)
-		if(M.weakeyes)
-			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
 		if(M.flash_act(1, 1))
 			M.confused += power
 			terrible_conversion_proc(M, user)
-			M.Stun(1)
+			M.Weaken(rand(4,6))
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			user << "<span class='danger'>You blind [M] with the flash!</span>"
-			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
-			if(M.weakeyes)
-				M.Stun(2)
-				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shield your eyes!</span>")
+			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
+			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
-			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
+			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
+			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
 	else
 		if(M.flash_act())
 			M.confused += power
@@ -119,7 +114,7 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(6)
+		M.Weaken(rand(4,6))
 		R.confused += 5
 		R.flash_act(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
@@ -149,14 +144,14 @@
 
 /obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/M, mob/user)
 	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+		if(user.mind && (user.mind in SSticker.mode.head_revolutionaries))
 			if(M.client)
 				if(M.stat == CONSCIOUS)
 					M.mind_initialize() //give them a mind datum if they don't have one.
 					var/resisted
 					if(!M.isloyal())
-						if(user.mind in ticker.mode.head_revolutionaries)
-							if(ticker.mode.add_revolutionary(M.mind))
+						if(user.mind in SSticker.mode.head_revolutionaries)
+							if(SSticker.mode.add_revolutionary(M.mind))
 								M.Stun(3)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
@@ -165,11 +160,11 @@
 						resisted = 1
 
 					if(resisted)
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
+						to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 				else
-					user << "<span class='warning'>They must be conscious before you can convert them!</span>"
+					to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
 			else
-				user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
+				to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
 
 
 /obj/item/device/assembly/flash/cyborg
@@ -177,11 +172,11 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return
@@ -204,7 +199,7 @@
 
 /obj/item/device/assembly/flash/armimplant/burn_out()
 	if(I && I.owner)
-		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
+		to_chat(I.owner, "<span class='warning'>Your photon projector implant overheats and deactivates!</span>")
 		I.Retract()
 	overheat = FALSE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
@@ -212,7 +207,7 @@
 /obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
 		if(I && I.owner)
-			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
+			to_chat(I.owner, "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>")
 		return FALSE
 	overheat = TRUE
 	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
@@ -252,16 +247,16 @@
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/flash = W
 		if(flash.crit_fail)
-			user << "No sense replacing it with a broken bulb."
+			to_chat(user, "No sense replacing it with a broken bulb.")
 			return
 		else
-			user << "You begin to replace the bulb."
+			to_chat(user, "You begin to replace the bulb.")
 			if(do_after(user, 20, target = src))
-				if(flash.crit_fail || !flash || qdeleted(flash))
+				if(flash.crit_fail || !flash || QDELETED(flash))
 					return
 				crit_fail = FALSE
 				times_used = 0
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				update_icon()
 				flash.crit_fail = TRUE
 				flash.update_icon()
@@ -282,3 +277,7 @@
 
 	if(holder)
 		holder.update_icon()
+
+/obj/item/device/assembly/flash/shield/hit_reaction(obj/item/weapon/W, mob/user, params)
+	activate()
+	return ..()

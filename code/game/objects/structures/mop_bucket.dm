@@ -15,10 +15,10 @@
 /obj/structure/mopbucket/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/mop))
 		if(reagents.total_volume < 1)
-			user << "[src] is out of water!</span>"
+			to_chat(user, "[src] is out of water!</span>")
 		else
 			reagents.trans_to(I, 5)
-			user << "<span class='notice'>You wet [I] in [src].</span>"
+			to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 	else
 		return ..()

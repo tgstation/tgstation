@@ -37,11 +37,11 @@
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
-			user << "<span class='notice'>Name protocols successfully updated.</span>"
+			to_chat(user, "<span class='notice'>Name protocols successfully updated.</span>")
 		else
 			name = "Food Processor (Machine Board)"
 			build_path = /obj/machinery/processor
-			user << "<span class='notice'>Defaulting name protocols.</span>"
+			to_chat(user, "<span class='notice'>Defaulting name protocols.</span>")
 	else
 		return ..()
 
@@ -142,7 +142,7 @@
 		return
 	for(var/i in 1 to (C+processor.rating_amount-1))
 		new S.coretype(loc)
-		feedback_add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
+		SSblackbox.add_details("slime_core_harvested","[replacetext(S.colour," ","_")]")
 	..()
 
 /datum/food_processor_process/mob/slime/input = /mob/living/simple_animal/slime
@@ -191,7 +191,7 @@
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
 	if(src.processing)
-		user << "<span class='warning'>The processor is in the process of processing!</span>"
+		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
 		return
@@ -208,6 +208,19 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
+	if(istype(O, /obj/item/weapon/storage/bag/tray))
+		var/obj/item/weapon/storage/T = O
+		var/loaded = 0
+		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
+			var/datum/food_processor_process/P = select_recipe(S)
+			if(P)
+				T.remove_from_storage(S, src)
+				loaded++
+
+		if(loaded)
+			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
+		return
+
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
 		user.visible_message("[user] put [O] into [src].", \
@@ -217,7 +230,7 @@
 		return 1
 	else
 		if(user.a_intent != INTENT_HARM)
-			user << "<span class='warning'>That probably won't blend!</span>"
+			to_chat(user, "<span class='warning'>That probably won't blend!</span>")
 			return 1
 		else
 			return ..()
@@ -226,11 +239,11 @@
 	if (src.stat != 0) //NOPOWER etc
 		return
 	if(src.processing)
-		user << "<span class='warning'>The processor is in the process of processing!</span>"
+		to_chat(user, "<span class='warning'>The processor is in the process of processing!</span>")
 		return 1
 	if(user.a_intent == INTENT_GRAB && user.pulling && (isslime(user.pulling) || ismonkey(user.pulling)))
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
+			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/pushed_mob = user.pulling
 		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
@@ -238,7 +251,7 @@
 		user.stop_pulling()
 		return
 	if(src.contents.len == 0)
-		user << "<span class='warning'>The processor is empty!</span>"
+		to_chat(user, "<span class='warning'>The processor is empty!</span>")
 		return 1
 	src.processing = 1
 	user.visible_message("[user] turns on [src].", \
@@ -286,7 +299,7 @@
 
 /obj/machinery/processor/slime
 	name = "Slime processor"
-	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder with a sSSticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
 /obj/machinery/processor/slime/New()
 	..()

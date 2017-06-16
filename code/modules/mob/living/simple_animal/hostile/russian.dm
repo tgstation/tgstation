@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/russian
 	name = "Russian"
 	desc = "For the Motherland!"
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "russianmelee"
 	icon_living = "russianmelee"
 	icon_dead = "russianmelee_dead"
@@ -36,7 +37,7 @@
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	projectilesound = 'sound/weapons/gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/n762
 
 

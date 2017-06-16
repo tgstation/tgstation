@@ -19,12 +19,6 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
-
-var/const/NO_SLIP_WHEN_WALKING = 1
-var/const/SLIDE = 2
-var/const/GALOSHES_DONT_HELP = 4
-var/const/SLIDE_ICE = 8
-
 /mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0
@@ -63,3 +57,13 @@ var/const/SLIDE_ICE = 8
 				nutrition -= HUNGER_FACTOR/10
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
+
+/mob/living/carbon/Moved(oldLoc, Dir)
+	. = ..()
+	for(var/obj/O in internal_organs)
+		O.on_mob_move(dir, src, oldLoc)
+
+/mob/living/carbon/setDir(newdir)
+	. = ..()
+	for(var/obj/O in internal_organs)
+		O.on_mob_turn(newdir, src)

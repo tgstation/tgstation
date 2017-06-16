@@ -72,8 +72,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/storage/wallet/random/New()
-	..()
+/obj/item/weapon/storage/wallet/random/PopulateContents()
 	var/item1_type = pick( /obj/item/stack/spacecash/c10,/obj/item/stack/spacecash/c100,/obj/item/stack/spacecash/c1000,/obj/item/stack/spacecash/c20,/obj/item/stack/spacecash/c200,/obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
 	var/item2_type
 	if(prob(50))

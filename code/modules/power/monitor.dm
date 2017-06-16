@@ -3,6 +3,7 @@
 	desc = "It monitors power levels across the station."
 	icon_screen = "power"
 	icon_keyboard = "power_key"
+	light_color = LIGHT_COLOR_YELLOW
 	use_power = 2
 	idle_power_usage = 20
 	active_power_usage = 100
@@ -50,7 +51,7 @@
 			demand.Cut(1, 2)
 
 /obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "power_monitor", name, 1200, 1000, master_ui, state)

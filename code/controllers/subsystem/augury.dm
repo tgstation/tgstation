@@ -1,29 +1,26 @@
-var/datum/subsystem/augury/SSaugury
-
-/datum/subsystem/augury
+SUBSYSTEM_DEF(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/watchers = list()
 	var/list/doombringers = list()
 
 	var/list/observers_given_action = list()
 
-/datum/subsystem/augury/New()
-	NEW_SS_GLOBAL(SSaugury)
-
-/datum/subsystem/augury/stat_entry(msg)
+/datum/controller/subsystem/augury/stat_entry(msg)
 	..("W:[watchers.len]|D:[doombringers.len]")
 
-/datum/subsystem/augury/proc/register_doom(atom/A, severity)
+/datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
 	doombringers[A] = severity
 
-/datum/subsystem/augury/fire()
+/datum/controller/subsystem/augury/fire()
 	var/biggest_doom = null
 	var/biggest_threat = null
 
-	for(var/d in doombringers)
-		if(!d || qdeleted(d))
+	for(var/db in doombringers)
+		var/datum/d = db
+		if(!d || QDELETED(d))
 			doombringers -= d
 			continue
 		var/threat = doombringers[d]
@@ -32,7 +29,7 @@ var/datum/subsystem/augury/SSaugury
 			biggest_threat = threat
 
 	if(doombringers.len)
-		for(var/i in player_list)
+		for(var/i in GLOB.player_list)
 			if(isobserver(i) && (!(observers_given_action[i])))
 				var/datum/action/innate/augury/A = new
 				A.Grant(i)
@@ -66,13 +63,13 @@ var/datum/subsystem/augury/SSaugury
 
 /datum/action/innate/augury/Activate()
 	SSaugury.watchers += owner
-	owner << "<span class='notice'>You are now auto-following debris.</span>"
+	to_chat(owner, "<span class='notice'>You are now auto-following debris.</span>")
 	active = TRUE
 	UpdateButtonIcon()
 
 /datum/action/innate/augury/Deactivate()
 	SSaugury.watchers -= owner
-	owner << "<span class='notice'>You are no longer auto-following debris.</span>"
+	to_chat(owner, "<span class='notice'>You are no longer auto-following debris.</span>")
 	active = FALSE
 	UpdateButtonIcon()
 

@@ -73,17 +73,17 @@
 			bulb = W
 			power_change()
 		else
-			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
+			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
 
 	else if (istype(W, /obj/item/weapon/wrench))
 		if(!bulb)
-			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
+			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
 			playsound(loc, W.usesound, 50, 1)
 			if(do_after(user, 40*W.toolspeed, target = src))
-				user << "<span class='notice'>You unsecure the flasher frame.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
 				deconstruct(TRUE)
 		else
-			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
+			to_chat(user, "<span class='warning'>Remove a flashbulb from [src] first!</span>")
 	else
 		return ..()
 
@@ -120,9 +120,6 @@
 
 		if(L.flash_act(affect_silicon = 1))
 			L.Weaken(strength)
-			if(L.weakeyes)
-				L.Weaken(strength * 1.5)
-				L.visible_message("<span class='disarm'><b>[L]</b> gasps and shields their eyes!</span>")
 
 	return 1
 
@@ -152,10 +149,14 @@
 			var/obj/item/wallframe/flasher/F = new(get_turf(src))
 			transfer_fingerprints_to(F)
 			F.id = id
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 		else
 			new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
+
+/obj/machinery/flasher/portable/Initialize()
+	. = ..()
+	proximity_monitor = new(src, 0)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if (last_flash && world.time < last_flash + 150)
@@ -171,28 +172,20 @@
 		playsound(src.loc, W.usesound, 100, 1)
 
 		if (!anchored && !isinspace())
-			user << "<span class='notice'>[src] is now secured.</span>"
+			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
 			anchored = 1
 			power_change()
-			add_to_proximity_list(src, range)
+			proximity_monitor.SetRange(range)
 		else
-			user << "<span class='notice'>[src] can now be moved.</span>"
+			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
 			anchored = 0
 			power_change()
-			remove_from_proximity_list(src, range)
+			proximity_monitor.SetRange(0)
 
 	else
 		return ..()
-
-/obj/machinery/flasher/portable/Destroy()
-	remove_from_proximity_list(src, range)
-	return ..()
-
-/obj/machinery/flasher/protable/Moved(oldloc)
-	remove_from_proximity_list(oldloc, range)
-	return ..()
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"
@@ -204,7 +197,7 @@
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	..()
-	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+	to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
 /obj/item/wallframe/flasher/after_attach(var/obj/O)
 	..()

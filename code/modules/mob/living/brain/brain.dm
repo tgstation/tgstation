@@ -1,22 +1,18 @@
-
-
 /mob/living/brain
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
 	var/obj/item/device/mmi/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_invisible = SEE_INVISIBLE_LIVING
 
-/mob/living/brain/New(loc)
+/mob/living/brain/Initialize()
 	..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
-		src.loc = OB
+		loc = OB
 		OB.brainmob = src
 
 
@@ -30,6 +26,8 @@
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
 		if(stat!=DEAD)	//If not dead.
 			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
+		if(mind)	//You aren't allowed to return to brains that don't exist
+			mind.current = null
 		ghostize()		//Ghostize checks for key so nothing else is necessary.
 	container = null
 	return ..()
@@ -65,3 +63,11 @@
 	..()
 	if(stored_dna)
 		stored_dna.real_name = real_name
+
+/mob/living/brain/ClickOn(atom/A, params)
+	..()
+	if(istype(loc,/obj/item/device/mmi))
+		var/obj/item/device/mmi/MMI = loc
+		var/obj/mecha/M = MMI.mecha
+		if((src == MMI.brainmob) && istype(M))
+			return M.click_action(A,src,params)

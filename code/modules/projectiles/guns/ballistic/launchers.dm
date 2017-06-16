@@ -72,7 +72,7 @@
 /obj/item/weapon/gun/ballistic/automatic/speargun/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>"
+		to_chat(user, "<span class='notice'>You load [num_loaded] spear\s into \the [src].</span>")
 		update_icon()
 		chamber_round()
 

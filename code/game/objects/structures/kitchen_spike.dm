@@ -19,7 +19,7 @@
 		var/obj/item/stack/rods/R = I
 		if(R.get_amount() >= 4)
 			R.use(4)
-			user << "<span class='notice'>You add spikes to the frame.</span>"
+			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
@@ -27,7 +27,7 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.remove_fuel(0, user))
 			return
-		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
+		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
 		playsound(src.loc, WT.usesound, 40, 1)
 		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(!WT.isOn())
@@ -64,10 +64,10 @@
 		if(!has_buckled_mobs())
 			playsound(loc, I.usesound, 100, 1)
 			if(do_after(user, 20*I.toolspeed, target = src))
-				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
+				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 				deconstruct(TRUE)
 		else
-			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
+			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 	else
 		return ..()
 
@@ -79,7 +79,9 @@
 				return
 			if(L.buckled)
 				return
-			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+			if(user.pulling != L)
+				return
+			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
 			L.emote("scream")
@@ -125,7 +127,7 @@
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
-					M << "<span class='warning'>You fail to free yourself!</span>"
+					to_chat(M, "<span class='warning'>You fail to free yourself!</span>")
 				return
 		if(!M.buckled)
 			return

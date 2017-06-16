@@ -8,9 +8,9 @@
 	maxHealth = 1000
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = 3
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
-	luminosity = 3
+	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
@@ -34,6 +34,7 @@
 	/obj/structure/barricade,
 	/obj/machinery/field,
 	/obj/machinery/power/emitter)
+	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
@@ -44,19 +45,30 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
 
+/mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
+	. = ..()
+	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+
 /mob/living/simple_animal/hostile/megafauna/Destroy()
-	qdel(internal)
+	QDEL_NULL(internal)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return
 	else
+		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+		if(C && crusher_loot)
+			if(C.total_damage >= maxHealth * 0.60) //if you do at least 60% of its health with the crusher, you'll get the item
+				spawn_crusher_loot()
 		if(!admin_spawned)
-			feedback_set_details("megafauna_kills","[initial(name)]")
+			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
+	loot = crusher_loot
 
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
@@ -71,8 +83,8 @@
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
-	..()
-	if(isliving(target))
+	. = ..()
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
@@ -86,10 +98,7 @@
 	if(!.)
 		return
 	var/turf/newloc = loc
-	message_admins("Megafauna [src] \
-		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
-		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
-		([newloc.x],[newloc.y],[newloc.z])")
+	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
@@ -115,12 +124,11 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
-
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
-		return
+		return FALSE
 
 	if(admin_spawned)
-		return
+		return FALSE
 
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 		for(var/mob/living/L in view(7,src))
@@ -133,6 +141,7 @@
 				UnlockMedal("[medaltype] [suffixm]",C)
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
+	return TRUE
 
 /proc/UnlockMedal(medal,client/player)
 
@@ -146,7 +155,7 @@
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)
-				player << "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>"
+				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
 /proc/SetScore(score,client/player,increment,force)
@@ -209,7 +218,7 @@
 			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
-			player << "[medal] is unlocked"
+			to_chat(player, "[medal] is unlocked")
 
 /proc/LockMedal(medal,client/player)
 

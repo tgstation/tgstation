@@ -1,13 +1,13 @@
 /obj/structure/closet/secure_closet/personal
 	desc = "It's a secure locker for personnel. The first card swiped gains control."
 	name = "personal closet"
-	req_access = list(access_all_personal_lockers)
+	req_access = list(GLOB.access_all_personal_lockers)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/New()
+/obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
 	if(prob(50))
-		new /obj/item/weapon/storage/backpack/dufflebag(src)
+		new /obj/item/weapon/storage/backpack/duffelbag(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else
@@ -17,9 +17,7 @@
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
-/obj/structure/closet/secure_closet/personal/patient/New()
-	..()
-	contents.Cut()
+/obj/structure/closet/secure_closet/personal/patient/PopulateContents()
 	new /obj/item/clothing/under/color/white( src )
 	new /obj/item/clothing/shoes/sneakers/white( src )
 
@@ -29,9 +27,7 @@
 	obj_integrity = 70
 	max_integrity = 70
 
-/obj/structure/closet/secure_closet/personal/cabinet/New()
-	..()
-	contents = list()
+/obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/device/radio/headset( src )
 
@@ -39,7 +35,7 @@
 	var/obj/item/weapon/card/id/I = W.GetID()
 	if(istype(I))
 		if(broken)
-			user << "<span class='danger'>It appears to be broken.</span>"
+			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
 			return
 		if(!I || !I.registered_name)
 			return
@@ -52,6 +48,6 @@
 				registered_name = I.registered_name
 				desc = "Owned by [I.registered_name]."
 		else
-			user << "<span class='danger'>Access Denied.</span>"
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
 	else
 		return ..()

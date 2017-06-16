@@ -30,7 +30,7 @@
 	uniform = /obj/item/clothing/under/rank/det
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
-	head = /obj/item/clothing/head/det_hat
+	head = /obj/item/clothing/head/fedora/det_hat
 	r_hand = /obj/item/weapon/gun/ballistic
 	l_hand = null
 	r_pocket = /obj/item/ammo_box/c10mm
@@ -154,7 +154,7 @@
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/obj/item/clothing/under/U = H.w_uniform
-	U.attachTie(new /obj/item/clothing/tie/waistcoat(H))
+	U.attach_accessory(new /obj/item/clothing/accessory/waistcoat(H))
 
 	if(visualsOnly)
 		return
@@ -239,8 +239,17 @@
 	W.update_label()
 
 	var/obj/item/device/radio/headset/R = H.ears
-	R.set_frequency(CENTCOM_FREQ)
+	R.set_frequency(GLOB.CENTCOM_FREQ)
 	R.freqlock = 1
+
+/datum/outfit/ghost_cultist
+	name = "Cultist Ghost"
+
+	uniform = /obj/item/clothing/under/color/black/ghost
+	suit = /obj/item/clothing/suit/cultrobes/alt/ghost
+	shoes = /obj/item/clothing/shoes/cult/alt/ghost
+	head = /obj/item/clothing/head/culthood/alt/ghost
+	r_hand = /obj/item/weapon/melee/cultblade/ghost
 
 /datum/outfit/wizard
 	name = "Blue Wizard"
@@ -355,7 +364,7 @@
 		return
 
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(CENTCOM_FREQ)
+	R.set_frequency(GLOB.CENTCOM_FREQ)
 	R.freqlock = 1
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn

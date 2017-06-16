@@ -49,7 +49,8 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
-	luminosity = 3
+	light_range = 3
+	light_color = LIGHT_COLOR_FIRE
 
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
@@ -60,9 +61,11 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
-	setDir(pick(cardinal))
+	setDir(pick(GLOB.cardinal))
 	air_update_turf()
 
+/obj/effect/hotspot/make_frozen_visual()
+	return	//you take my fun i take yours
 
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
@@ -78,14 +81,14 @@
 
 	if(bypassing)
 		if(!just_spawned)
-			volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
+			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
 			temperature = location.air.temperature
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
 		affected.temperature = temperature
 		affected.react()
 		temperature = affected.temperature
-		volume = affected.fuel_burnt*FIRE_GROWTH_RATE
+		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
 		location.assume_air(affected)
 
 	for(var/A in loc)
@@ -147,16 +150,14 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	SetLuminosity(0)
+	set_light(0)
 	SSair.hotspots -= src
-	if(isturf(loc))
-		var/turf/open/T = loc
-		if(T.active_hotspot == src)
-			T.active_hotspot = null
+	var/turf/open/T = loc
+	if(istype(T) && T.active_hotspot == src)
+		T.active_hotspot = null
 	DestroyTurf()
 	loc = null
 	. = ..()
-
 
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))

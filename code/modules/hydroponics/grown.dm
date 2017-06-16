@@ -18,6 +18,7 @@
 	origin_tech = "biotech=1"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
+	tastes = list(name = 1) // apples taste of apple, silly.
 	..()
 	if(new_seed)
 		seed = new_seed.Copy()
@@ -53,7 +54,7 @@
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				user << T.examine_line
+				to_chat(user, T.examine_line)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -61,25 +62,17 @@
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
 		if(seed)
 			msg += seed.get_analyzer_text()
-		msg += "\n- Nutritional value: [reagents.get_reagent_amount("nutriment")]\n"
-		msg += "- Other substances: [reagents.total_volume-reagents.get_reagent_amount("nutriment")]\n"
-		msg += "*---------*</span>"
-
-		var/list/scannable_reagents = list("charcoal" = "Anti-Toxin", "morphine" = "Morphine", "amatoxin" = "Amatoxins",
-			"toxin" = "Toxins", "mushroomhallucinogen" = "Mushroom Hallucinogen", "condensedcapsaicin" = "Condensed Capsaicin",
-			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "Mineral Content", "glycerol" = "Glycerol",
-			"radium" = "Highly Radioactive Material", "uranium" = "Radioactive Material")
 		var/reag_txt = ""
 		if(seed)
-			for(var/reagent_id in scannable_reagents)
-				if(reagent_id in seed.reagents_add)
-					var/amt = reagents.get_reagent_amount(reagent_id)
-					reag_txt += "\n<span class='info'>- [scannable_reagents[reagent_id]]: [amt*100/reagents.maximum_volume]%</span>"
+			for(var/reagent_id in seed.reagents_add)
+				var/datum/reagent/R  = GLOB.chemical_reagents_list[reagent_id]
+				var/amt = reagents.get_reagent_amount(reagent_id)
+				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
 
 		if(reag_txt)
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
-		user << msg
+		to_chat(user, msg)
 	else
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
@@ -118,6 +111,7 @@
 		for(var/datum/plant_gene/trait/trait in seed.genes)
 			trait.on_squash(src, target)
 
+	reagents.reaction(T)
 	for(var/A in T)
 		reagents.reaction(A)
 
@@ -137,30 +131,6 @@
 	..()
 
 
-// Glow gene procs
-/obj/item/weapon/reagent_containers/food/snacks/grown/Destroy()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G && ismob(loc))
-			loc.AddLuminosity(-G.get_lum(seed))
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/pickup(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			SetLuminosity(0)
-			user.AddLuminosity(G.get_lum(seed))
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/dropped(mob/user)
-	..()
-	if(seed)
-		var/datum/plant_gene/trait/glow/G = seed.get_gene(/datum/plant_gene/trait/glow)
-		if(G)
-			user.AddLuminosity(-G.get_lum(seed))
-			SetLuminosity(G.get_lum(seed))
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/generate_trash(atom/location)
 	if(trash && ispath(trash, /obj/item/weapon/grown))
 		. = new trash(location, seed)
@@ -170,9 +140,9 @@
 
 // For item-containing growns such as eggy or gatfruit
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user)
-	user.unEquip(src)
+	var/obj/item/T
 	if(trash)
-		var/obj/item/T = generate_trash()
-		user.put_in_hands(T)
-		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
-	qdel(src)
+		T = generate_trash()
+		qdel(src)
+		user.putItemFromInventoryInHandIfPossible(T, user.active_hand_index, TRUE)
+		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")

@@ -2,7 +2,7 @@
   "name": "tgui",
   "private": true,
   "dependencies": {
-    "autoprefixer": "6.3.3",
+    "autoprefixer": "6.7.7",
     "babel-core": "6.5.2",
     "babel-plugin-external-helpers": "6.5.0",
     "babel-polyfill": "6.5.0",
@@ -20,7 +20,7 @@
     "fontfaceobserver": "1.6.3",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-bytediff": "1.0.0",
-    "gulp-cssnano": "2.1.1",
+    "gulp-cssnano": "2.1.2",
     "gulp-if": "2.0.0",
     "gulp-load-plugins": "1.2.0",
     "gulp-postcss": "6.1.0",

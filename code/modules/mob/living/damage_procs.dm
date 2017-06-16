@@ -27,6 +27,21 @@
 			adjustStaminaLoss(damage * hit_percent)
 	return 1
 
+/mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
+	switch(damagetype)
+		if(BRUTE)
+			return adjustBruteLoss(damage)
+		if(BURN)
+			return adjustFireLoss(damage)
+		if(TOX)
+			return adjustToxLoss(damage)
+		if(OXY)
+			return adjustOxyLoss(damage)
+		if(CLONE)
+			return adjustCloneLoss(damage)
+		if(STAMINA)
+			return adjustStaminaLoss(damage)
+
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
 		if(BRUTE)
@@ -252,7 +267,7 @@
 	for(var/i in damage_types)
 		var/amount_to_heal = min(amount, get_damage_amount(i)) //heal only up to the amount of damage we have
 		if(amount_to_heal)
-			apply_damage(-amount_to_heal, i)
+			apply_damage_type(-amount_to_heal, i)
 			amount -= amount_to_heal //remove what we healed from our current amount
 		if(!amount)
 			break

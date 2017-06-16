@@ -12,6 +12,8 @@
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
+	light_color = LIGHT_COLOR_BLUE
+
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
 	..()
@@ -39,12 +41,11 @@
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
-			if(!user.unEquip(L))
-				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
+			if(!user.transferItemToLoc(L, src))
+				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return
-			L.loc = src
 			locked = L
-			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
+			to_chat(user, "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
 	else
 		return ..()
 
@@ -164,7 +165,7 @@
 	var/list/L = list()
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
-		for(var/obj/item/device/radio/beacon/R in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
 			var/turf/T = get_turf(R)
 			if(!T)
 				continue
@@ -172,7 +173,7 @@
 				continue
 			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
 
-		for(var/obj/item/weapon/implant/tracking/I in tracked_implants)
+		for(var/obj/item/weapon/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
 				continue
 			else
@@ -193,7 +194,7 @@
 	else
 		var/list/S = power_station.linked_stations
 		if(!S.len)
-			user << "<span class='alert'>No connected stations located.</span>"
+			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
@@ -273,7 +274,7 @@
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	if(z == ZLEVEL_CENTCOM)
-		M << "You can't use this here."
+		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
 		use_power(5000)
@@ -304,7 +305,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
@@ -399,15 +400,15 @@
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
 			M.buffer = src
-			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
 					M.buffer = null
-					user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+					to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 				else
-					user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
+					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
@@ -422,7 +423,7 @@
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
-			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
+			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")
 			return
 	else
 		return ..()

@@ -5,7 +5,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/ion
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -62,6 +62,20 @@
 	if(istype(target, /mob/living/silicon))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
+	return 1
+
+/obj/item/projectile/bullet/srmrocket
+	name ="SRM-8 Rocket"
+	desc = "Boom"
+	icon_state = "missile"
+	damage = 30
+
+/obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
+	..()
+	if(!isliving(target)) //if the target isn't alive, so is a wall or something
+		explosion(target, 0, 1, 2, 4)
+	else
+		explosion(target, 0, 0, 2, 4)
 	return 1
 
 /obj/item/projectile/temp
@@ -186,11 +200,13 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3.5 //works as 4, but doubles to 7
+	range = 4
 	dismemberment = 20
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	var/mine_range = 3 //mines this many additional tiles
 
-/obj/item/projectile/plasma/New()
+/obj/item/projectile/plasma/Initialize()
+	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!isturf(proj_turf))
 		return
@@ -200,106 +216,124 @@
 		if(pressure < 60)
 			name = "full strength [name]"
 			damage *= 4
-			range *= 2
-	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-		Range()
+		if(mine_range)
+			mine_range--
+			range++
 		if(range > 0)
 			return -1
 
 /obj/item/projectile/plasma/adv
 	damage = 7
 	range = 5
+	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 6
+	range = 9
+	mine_range = 3
+
+/obj/item/projectile/plasma/turret
+	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
+	name = "plasma beam"
+	damage = 6
+	range = 7
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 
 /obj/item/projectile/gravityrepulse
 	name = "repulsion bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
-/obj/item/projectile/gravityrepulse/New(var/obj/item/ammo_casing/energy/gravityrepulse/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+/obj/item/projectile/gravityrepulse/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/gravityrepulse/C = loc
+	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravityrepulse/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.throw_at(throwtarget,power+1,1)
+		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravityattract
 	name = "attraction bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	color = "#FF6600"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
-/obj/item/projectile/gravityattract/New(var/obj/item/ammo_casing/energy/gravityattract/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+/obj/item/projectile/gravityattract/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/gravityattract/C = loc
+	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravityattract/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(T, power+1, 1)
+		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(F)
+		new /obj/effect/temp_visual/gravpush(F)
 
 /obj/item/projectile/gravitychaos
 	name = "gravitational blast"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+	hitsound = 'sound/weapons/wave.ogg'
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	color = "#101010"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
-/obj/item/projectile/gravitychaos/New(var/obj/item/ammo_casing/energy/gravitychaos/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+/obj/item/projectile/gravitychaos/Initialize()
+	. = ..()
+	var/obj/item/ammo_casing/energy/gravitychaos/C = loc
+	if(istype(C)) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravitychaos/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored)
+		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
-		A.throw_at(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
+		A.throw_at(get_edge_target_turf(A, pick(GLOB.cardinal)), power+1, 1)
+		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
-		new /obj/effect/overlay/temp/gravpush(Z)
+		new /obj/effect/temp_visual/gravpush(Z)
 

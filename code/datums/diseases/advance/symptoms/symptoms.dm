@@ -1,10 +1,5 @@
 // Symptoms are the effects that engineered advanced diseases do.
 
-var/list/list_symptoms = subtypesof(/datum/symptom)
-var/list/dictionary_symptoms = list()
-
-var/global/const/SYMPTOM_ACTIVATION_PROB = 5
-
 /datum/symptom
 	// Buffs/Debuffs the symptom has to the overall engineered disease.
 	var/name = ""
@@ -18,9 +13,10 @@ var/global/const/SYMPTOM_ACTIVATION_PROB = 5
 	var/severity = 0
 	// The hash tag for our diseases, we will add it up with our other symptoms to get a unique id! ID MUST BE UNIQUE!!!
 	var/id = ""
+	var/static/SYMPTOM_ACTIVATION_PROB = 5
 
 /datum/symptom/New()
-	var/list/S = list_symptoms
+	var/list/S = SSdisease.list_symptoms
 	for(var/i = 1; i <= S.len; i++)
 		if(src.type == S[i])
 			id = "[i]"

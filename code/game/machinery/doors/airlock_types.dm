@@ -25,6 +25,12 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
 
+/obj/machinery/door/airlock/maintenance/external
+	name = "external airlock access"
+	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_mai
+	normal_integrity = 250
+
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
@@ -246,6 +252,7 @@
 	name = "external airlock"
 	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
 	explosion_block = 1
 
@@ -265,6 +272,7 @@
 /obj/machinery/door/airlock/centcom
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
 	normal_integrity = 1000
@@ -280,6 +288,7 @@
 	name = "vault door"
 	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
@@ -295,6 +304,7 @@
 	name = "airtight hatch"
 	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
 
@@ -302,6 +312,7 @@
 	name = "maintenance hatch"
 	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	opacity = 1
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
 
@@ -336,6 +347,7 @@
 	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give a screwdriver a try?"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_abductor
 	damage_deflection = 30
 	opacity = 1
@@ -357,7 +369,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = 1
 	aiControlDisabled = 1
-	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
+	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 
 /obj/machinery/door/airlock/cult/New()
@@ -374,7 +386,7 @@
 		new openingoverlaytype(loc)
 		return 1
 	else
-		new /obj/effect/overlay/temp/cult/sac(loc)
+		new /obj/effect/temp_visual/cult/sac(loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
@@ -401,7 +413,7 @@
 	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult/unruned
-	openingoverlaytype = /obj/effect/overlay/temp/cult/door/unruned
+	openingoverlaytype = /obj/effect/temp_visual/cult/door/unruned
 
 /obj/machinery/door/airlock/cult/unruned/friendly
 	friendly = TRUE
@@ -426,14 +438,14 @@
 	use_power = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	damage_deflection = 30
-	normal_integrity = 400
+	normal_integrity = 240
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
 /obj/machinery/door/airlock/clockwork/New()
 	..()
 	var/turf/T = get_turf(src)
-	new /obj/effect/overlay/temp/ratvar/door(T)
-	new /obj/effect/overlay/temp/ratvar/beam/door(T)
+	new /obj/effect/temp_visual/ratvar/door(T)
+	new /obj/effect/temp_visual/ratvar/beam/door(T)
 	change_construction_value(5)
 
 /obj/machinery/door/airlock/clockwork/Destroy()
@@ -445,12 +457,14 @@
 	var/gear_text = "The cogwheel is flickering and twisting wildly. Report this to a coder."
 	switch(construction_state)
 		if(GEAR_SECURE)
-			gear_text = "<span class='brass'>The cogwheel is solidly <b>screwed</b> to the brass around it.</span>"
-		if(GEAR_UNFASTENED)
-			gear_text = "<span class='brass'>The cogwheel is <i>unscrewed</i>, but is still <b>wrenched</b> to the brass.</span>"
+			gear_text = "<span class='brass'>The cogwheel is solidly <b>wrenched</b> to the brass around it.</span>"
 		if(GEAR_LOOSE)
 			gear_text = "<span class='alloy'>The cogwheel has been <i>loosened</i>, but remains <b>connected loosely</b> to the door!</span>"
-	user << gear_text
+	to_chat(user, gear_text)
+
+/obj/machinery/door/airlock/clockwork/emp_act(severity)
+	if(prob(80/severity))
+		open()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
@@ -482,50 +496,27 @@
 	return
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
-	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
 		if(disassembled)
 			new/obj/item/stack/tile/brass(T, 4)
 		else
 			new/obj/item/clockwork/alloy_shards(T)
-		new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(T)
+		new/obj/item/clockwork/alloy_shards/pinion_lock(T)
 	qdel(src)
 
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(construction_state == GEAR_SECURE)
-			user.visible_message("<span class='notice'>[user] begins unfastening [src]'s cogwheel...</span>", "<span class='notice'>You begin unfastening [src]'s cogwheel...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
-				return 1 //Returns 1 so as not to have extra interactions with the tools used (i.e. prying open)
-			user.visible_message("<span class='notice'>[user] unfastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts slightly with a pop.</span>")
-			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
-			construction_state = GEAR_UNFASTENED
-		else if(construction_state == GEAR_UNFASTENED)
-			user.visible_message("<span class='notice'>[user] begins fastening [src]'s cogwheel...</span>", "<span class='notice'>You begin fastening [src]'s cogwheel...</span>")
-			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_UNFASTENED)
-				return 1
-			user.visible_message("<span class='notice'>[user] fastens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel shifts back into place.</span>")
-			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
-			construction_state = GEAR_SECURE
-		else if(construction_state == GEAR_LOOSE)
-			user << "<span class='warning'>The gear isn't secure enough to fasten!</span>"
-		return 1
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(construction_state == GEAR_SECURE)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't get a solid grip!</span>"
-			return 0
-		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s cogwheel...</span>", "<span class='notice'>You begin loosening [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_UNFASTENED)
+			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
@@ -533,17 +524,17 @@
 			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			construction_state = GEAR_UNFASTENED
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			construction_state = GEAR_SECURE
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
-		if(construction_state == GEAR_SECURE || construction_state == GEAR_UNFASTENED)
-			user << "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>"
+		if(construction_state == GEAR_SECURE)
+			to_chat(user, "<span class='warning'>[src]'s cogwheel is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s cogwheel...</span>", "<span class='notice'>You slowly begin lifting off [src]'s cogwheel...</span>")
 			playsound(src, I.usesound, 50, 1)
-			if(!do_after(user, 100*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
+			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s cogwheel, causing it to fall apart!</span>", \
 			"<span class='notice'>You lift off [src]'s cogwheel, causing it to fall apart!</span>")
@@ -564,6 +555,7 @@
 	name = "large glass airlock"
 	icon = 'icons/obj/doors/airlocks/glass_large/glass_large.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/glass_large/overlays.dmi'
 	opacity = 0
 	assemblytype = null
 	glass = 1

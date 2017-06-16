@@ -42,8 +42,7 @@
 	icon_state = "utilitybelt_ce"
 	item_state = "utility_ce"
 
-/obj/item/weapon/storage/belt/utility/chief/full/New()
-	..()
+/obj/item/weapon/storage/belt/utility/chief/full/PopulateContents()
 	new /obj/item/weapon/screwdriver/power(src)
 	new /obj/item/weapon/crowbar/power(src)
 	new /obj/item/weapon/weldingtool/experimental(src)//This can be changed if this is too much
@@ -54,8 +53,7 @@
 	//much roomier now that we've managed to remove two tools
 
 
-/obj/item/weapon/storage/belt/utility/full/New()
-	..()
+/obj/item/weapon/storage/belt/utility/full/PopulateContents()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -65,8 +63,7 @@
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
-/obj/item/weapon/storage/belt/utility/atmostech/New()
-	..()
+/obj/item/weapon/storage/belt/utility/atmostech/PopulateContents()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -153,8 +150,7 @@
 		/obj/item/weapon/restraints/legcuffs/bola
 		)
 
-/obj/item/weapon/storage/belt/security/full/New()
-	..()
+/obj/item/weapon/storage/belt/security/full/PopulateContents()
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/restraints/handcuffs(src)
 	new /obj/item/weapon/grenade/flashbang(src)
@@ -204,10 +200,10 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
-		/obj/item/organ/hivelord_core,
+		/obj/item/organ/regenerative_core,
 		/obj/item/device/wormhole_jaunter,
 		/obj/item/weapon/storage/bag/plants,
-
+		/obj/item/stack/marker_beacon
 		)
 
 
@@ -235,8 +231,7 @@
 		/obj/item/device/soulstone
 		)
 
-/obj/item/weapon/storage/belt/soulstone/full/New()
-	..()
+/obj/item/weapon/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/device/soulstone(src)
 
@@ -252,10 +247,10 @@
 		)
 
 /obj/item/weapon/storage/belt/military
-	name = "military belt"
-	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
-	icon_state = "militarybelt"
-	item_state = "military"
+	name = "chest rig"
+	desc = "A set of tactical webbing worn by Syndicate boarding parties."
+	icon_state = "militarywebbing"
+	item_state = "militarywebbing"
 	max_w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/storage/belt/military/abductor
@@ -265,8 +260,7 @@
 	icon_state = "belt"
 	item_state = "security"
 
-/obj/item/weapon/storage/belt/military/abductor/full/New()
-	..()
+/obj/item/weapon/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/weapon/screwdriver/abductor(src)
 	new /obj/item/weapon/wrench/abductor(src)
 	new /obj/item/weapon/weldingtool/abductor(src)
@@ -302,10 +296,9 @@
 		/obj/item/weapon/lighter,
 		/obj/item/device/multitool,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
-		/obj/item/weapon/c4,
+		/obj/item/weapon/grenade/plastic/c4,
 		)
-/obj/item/weapon/storage/belt/grenade/full/New()
-	..()
+/obj/item/weapon/storage/belt/grenade/full/PopulateContents()
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/grenade/smokebomb(src)
 	new /obj/item/weapon/grenade/smokebomb(src)
@@ -345,8 +338,7 @@
 		/obj/item/weapon/gun/magic/wand
 		)
 
-/obj/item/weapon/storage/belt/wands/full/New()
-	..()
+/obj/item/weapon/storage/belt/wands/full/PopulateContents()
 	new /obj/item/weapon/gun/magic/wand/death(src)
 	new /obj/item/weapon/gun/magic/wand/resurrection(src)
 	new /obj/item/weapon/gun/magic/wand/polymorph(src)
@@ -399,6 +391,11 @@
 		/obj/item/ammo_box,
 		)
 	alternate_worn_layer = UNDER_SUIT_LAYER
+
+/obj/item/weapon/storage/belt/holster/full/PopulateContents()
+	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
+	new /obj/item/ammo_box/c38(src)
+	new /obj/item/ammo_box/c38(src)
 
 /obj/item/weapon/storage/belt/fannypack
 	name = "fannypack"
@@ -473,7 +470,7 @@
 /obj/item/weapon/storage/belt/sabre/examine(mob/user)
 	..()
 	if(contents.len)
-		user << "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+		to_chat(user, "<span class='notice'>Alt-click it to quickly draw the blade.</span>")
 
 /obj/item/weapon/storage/belt/sabre/AltClick(mob/user)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close=TRUE))
@@ -485,7 +482,7 @@
 		user.put_in_hands(I)
 		update_icon()
 	else
-		user << "[src] is empty."
+		to_chat(user, "[src] is empty.")
 
 /obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "sheath"
@@ -499,7 +496,6 @@
 	..()
 
 
-/obj/item/weapon/storage/belt/sabre/New()
-	..()
+/obj/item/weapon/storage/belt/sabre/PopulateContents()
 	new /obj/item/weapon/melee/sabre(src)
 	update_icon()

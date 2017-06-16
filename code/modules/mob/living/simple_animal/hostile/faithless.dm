@@ -36,10 +36,9 @@
 	return 1
 
 /mob/living/simple_animal/hostile/faithless/AttackingTarget()
-	..()
-	if(iscarbon(target))
+	. = ..()
+	if(. && prob(12) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(prob(12))
-			C.Weaken(3)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
+		C.Weaken(3)
+		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
+				"<span class='userdanger'>\The [src] knocks you down!</span>")

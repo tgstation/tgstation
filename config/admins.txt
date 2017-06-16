@@ -8,6 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Optimumtact = Host
+Expletives = Game Master
 kingofkosmos = Game Master
 MrStonedOne = Game Master
 microscopics = Game Master
@@ -94,7 +95,7 @@ MMMiracles = Game Master
 bear1ake = Game Master
 CoreOverload = Game Master
 Jalleo = Game Master
-Anonus Tanir = Game Master
+ChangelingRain = Game Master
 FoxPMcCloud = Game Master
 Xhuis = Game Master
 Astralenigma = Game Master
@@ -122,3 +123,10 @@ kevinz000 = Game Master
 Tacolizard = Game Master
 TrustyGun = Game Master
 Cyberboss = Game Master
+PJB3005 = Game Master
+Sweaterkittens = Game Master
+Feemjmeem = Game Master
+JStheguy = Game Master
+excessiveuseofcobby = Game Master
+Plizzard = Game Master
+octareenroon91 = Game Master

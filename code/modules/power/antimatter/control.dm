@@ -174,17 +174,16 @@
 			src.anchored = 0
 			disconnect_from_network()
 		else
-			user << "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>"
+			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
 
 	else if(istype(W, /obj/item/weapon/am_containment))
 		if(fueljar)
-			user << "<span class='warning'>There is already a [fueljar] inside!</span>"
+			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
 			return
 
-		if(!user.unEquip(W))
+		if(!user.transferItemToLoc(W, src))
 			return
 		fueljar = W
-		W.forceMove(src)
 		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
 				"<span class='notice'>You load an [W.name].</span>", \
 				"<span class='italics'>You hear a thunk.</span>")
@@ -202,7 +201,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 20)

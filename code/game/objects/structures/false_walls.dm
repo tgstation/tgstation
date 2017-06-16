@@ -51,9 +51,9 @@
 	if(density)
 		do_the_flick()
 		sleep(5)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			density = 0
-			SetOpacity(0)
+			set_opacity(0)
 			update_icon()
 	else
 		var/srcturf = get_turf(src)
@@ -63,8 +63,8 @@
 		do_the_flick()
 		density = 1
 		sleep(5)
-		if(!qdeleted(src))
-			SetOpacity(1)
+		if(!QDELETED(src))
+			set_opacity(1)
 			update_icon()
 	air_update_turf(1)
 	opening = 0
@@ -94,22 +94,22 @@
 
 /obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user, params)
 	if(opening)
-		user << "<span class='warning'>You must wait until the door has stopped moving!</span>"
+		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
-				user << "<span class='warning'>[src] is blocked!</span>"
+				to_chat(user, "<span class='warning'>[src] is blocked!</span>")
 				return
 			if(!isfloorturf(T))
-				user << "<span class='warning'>[src] bolts must be tightened on the floor!</span>"
+				to_chat(user, "<span class='warning'>[src] bolts must be tightened on the floor!</span>")
 				return
 			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
 			ChangeToWall()
 		else
-			user << "<span class='warning'>You can't reach, close it first!</span>"
+			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -126,7 +126,7 @@
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
@@ -141,7 +141,7 @@
 /obj/structure/falsewall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
-/obj/structure/falsewall/examine_status() //So you can't detect falsewalls by examine.
+/obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
 	return null
 
 /*
@@ -234,14 +234,15 @@
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)
-		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma falsewall ignited by [key_name(user)] in [COORD(T)]")
 		burnbabyburn()
 	else
 		return ..()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, 1)
 	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)
@@ -330,8 +331,8 @@
 /obj/structure/falsewall/brass/New(loc)
 	..()
 	var/turf/T = get_turf(src)
-	new /obj/effect/overlay/temp/ratvar/wall/false(T)
-	new /obj/effect/overlay/temp/ratvar/beam/falsewall(T)
+	new /obj/effect/temp_visual/ratvar/wall/false(T)
+	new /obj/effect/temp_visual/ratvar/beam/falsewall(T)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()
@@ -339,5 +340,5 @@
 	return ..()
 
 /obj/structure/falsewall/brass/ratvar_act()
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		obj_integrity = max_integrity

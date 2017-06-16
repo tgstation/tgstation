@@ -1,0 +1,2222 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space/basic,
+/area/space)
+"ab" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"ac" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ad" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"ae" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/weapon/crowbar,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/shuttle/escape)
+"af" = (
+/obj/machinery/computer/aifixer,
+/turf/open/floor/plasteel/darkpurple,
+/area/shuttle/escape)
+"ag" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel/darkpurple,
+/area/shuttle/escape)
+"ah" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"ai" = (
+/obj/machinery/computer/card,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aj" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"ak" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"al" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/darkyellow,
+/area/shuttle/escape)
+"am" = (
+/obj/machinery/computer/cargo/request,
+/turf/open/floor/plasteel/darkyellow,
+/area/shuttle/escape)
+"an" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/firstaid/o2,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkyellow,
+/area/shuttle/escape)
+"ao" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/darkblue,
+/area/shuttle/escape)
+"ap" = (
+/turf/open/floor/plasteel/darkblue,
+/area/shuttle/escape)
+"aq" = (
+/obj/structure/chair/comfy/beige{
+	tag = "icon-comfychair (NORTH)";
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkpurple,
+/area/shuttle/escape)
+"ar" = (
+/turf/open/floor/plasteel/darkpurple,
+/area/shuttle/escape)
+"as" = (
+/obj/machinery/computer/station_alert,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"at" = (
+/obj/structure/chair/office/light{
+	tag = "icon-officechair_white (NORTH)";
+	icon_state = "officechair_white";
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"au" = (
+/obj/machinery/computer/communications,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"av" = (
+/turf/open/floor/plasteel/darkyellow,
+/area/shuttle/escape)
+"aw" = (
+/obj/structure/chair/comfy/beige{
+	tag = "icon-comfychair (NORTH)";
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkyellow,
+/area/shuttle/escape)
+"ax" = (
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/escape)
+"ay" = (
+/obj/structure/table,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/escape)
+"az" = (
+/obj/machinery/computer/med_data,
+/turf/open/floor/plasteel/darkblue,
+/area/shuttle/escape)
+"aA" = (
+/turf/open/floor/plasteel/darkpurple/side{
+	dir = 1
+	},
+/area/shuttle/escape)
+"aB" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aC" = (
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aD" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aE" = (
+/turf/open/floor/plasteel/darkyellow/side{
+	tag = "icon-darkyellow (NORTH)";
+	icon_state = "darkyellow";
+	dir = 1
+	},
+/area/shuttle/escape)
+"aF" = (
+/obj/machinery/computer/security,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/escape)
+"aG" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/darkblue,
+/area/shuttle/escape)
+"aH" = (
+/obj/structure/chair/comfy/beige{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkblue,
+/area/shuttle/escape)
+"aI" = (
+/turf/open/floor/plasteel/darkblue/side{
+	tag = "icon-darkblue (NORTH)";
+	dir = 1
+	},
+/area/shuttle/escape)
+"aJ" = (
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1
+	},
+/area/shuttle/escape)
+"aK" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/escape)
+"aL" = (
+/obj/machinery/computer/secure_data,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/escape)
+"aM" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/darkblue/side{
+	tag = "icon-darkblue (NORTH)";
+	dir = 1
+	},
+/area/shuttle/escape)
+"aN" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aO" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aP" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-22"
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1
+	},
+/area/shuttle/escape)
+"aQ" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/darkred,
+/area/shuttle/escape)
+"aR" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Cockpit";
+	req_access_txt = "19"
+	},
+/turf/open/floor/plasteel/black,
+/area/shuttle/escape)
+"aS" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"aT" = (
+/obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"aU" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 9;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"aV" = (
+/obj/structure/table,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"aW" = (
+/obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"aX" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"aY" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred (NORTHEAST)";
+	icon_state = "darkred";
+	dir = 5;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"aZ" = (
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (WEST)";
+	icon_state = "neutral";
+	dir = 8
+	},
+/area/shuttle/escape)
+"ba" = (
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (EAST)";
+	icon_state = "neutral";
+	dir = 4
+	},
+/area/shuttle/escape)
+"bb" = (
+/obj/machinery/mech_bay_recharge_port{
+	tag = "icon-recharge_port";
+	icon_state = "recharge_port";
+	dir = 2
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bc" = (
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bd" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"be" = (
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bf" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "shuttle_flasher";
+	pixel_x = 24;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bg" = (
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 8;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"bh" = (
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"bi" = (
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 4;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"bj" = (
+/turf/open/floor/mech_bay_recharge_floor,
+/area/shuttle/escape)
+"bk" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bl" = (
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 8;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"bm" = (
+/turf/open/floor/mineral/plastitanium/brig{
+	icon_state = "darkredfull"
+	},
+/area/shuttle/escape)
+"bn" = (
+/obj/machinery/door/airlock/glass_security{
+	name = "Emergency Shuttle Brig";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	icon_state = "darkredfull"
+	},
+/area/shuttle/escape)
+"bo" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bp" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/plastitanium/brig,
+/area/shuttle/escape)
+"bq" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Brig";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	icon_state = "darkredfull"
+	},
+/area/shuttle/escape)
+"br" = (
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred";
+	icon_state = "darkred";
+	dir = 2;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"bs" = (
+/obj/effect/turf_decal/stripes/line{
+	tag = "icon-warningline (NORTH)";
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (WEST)";
+	icon_state = "brown";
+	dir = 8
+	},
+/area/shuttle/escape)
+"bt" = (
+/obj/effect/turf_decal/stripes/line{
+	tag = "icon-warningline (NORTH)";
+	icon_state = "warningline";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bu" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/stripes/line{
+	tag = "icon-warningline (NORTH)";
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/structure/closet,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (EAST)";
+	icon_state = "brown";
+	dir = 4
+	},
+/area/shuttle/escape)
+"bv" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bw" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred (SOUTHWEST)";
+	icon_state = "darkred";
+	dir = 10;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"bx" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred";
+	icon_state = "darkred";
+	dir = 2;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"by" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/teargas,
+/obj/item/weapon/storage/box/zipties,
+/turf/open/floor/mineral/plastitanium/brig{
+	tag = "icon-darkred";
+	icon_state = "darkred";
+	dir = 2;
+	floor_tile = /obj/item/stack/tile/plasteel
+	},
+/area/shuttle/escape)
+"bz" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 6;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"bA" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Cargo"
+	},
+/turf/open/floor/plasteel/darkyellow,
+/area/shuttle/escape)
+"bB" = (
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (WEST)";
+	icon_state = "brown";
+	dir = 8
+	},
+/area/shuttle/escape)
+"bC" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bD" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (EAST)";
+	icon_state = "brown";
+	dir = 4
+	},
+/area/shuttle/escape)
+"bE" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	dheight = 0;
+	dwidth = 15;
+	height = 20;
+	name = "Cere emergency shuttle";
+	port_angle = 90;
+	preferred_direction = 2;
+	width = 42
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bF" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bG" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/cups,
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bH" = (
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bI" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bJ" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/storage/box/donkpockets,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bK" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bL" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bM" = (
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (SOUTHWEST)";
+	icon_state = "brown";
+	dir = 10
+	},
+/area/shuttle/escape)
+"bN" = (
+/turf/open/floor/plasteel/brown,
+/area/shuttle/escape)
+"bO" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/brown,
+/area/shuttle/escape)
+"bP" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet,
+/turf/open/floor/plasteel/brown{
+	tag = "icon-brown (SOUTHEAST)";
+	icon_state = "brown";
+	dir = 6
+	},
+/area/shuttle/escape)
+"bQ" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bR" = (
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTH)";
+	icon_state = "neutral";
+	dir = 1
+	},
+/area/shuttle/escape)
+"bS" = (
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4
+	},
+/area/shuttle/escape)
+"bT" = (
+/turf/open/floor/plasteel/neutral/side,
+/area/shuttle/escape)
+"bU" = (
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = 27
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bV" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"bW" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bX" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"bY" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"bZ" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"ca" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"cb" = (
+/obj/structure/sign/bluecross_2{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"cc" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTH)";
+	icon_state = "neutral";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cd" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/weapon/twohanded/required/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"ce" = (
+/obj/machinery/door/airlock/glass_medical{
+	name = "Emergency Shuttle Medbay"
+	},
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cf" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (WEST)";
+	icon_state = "neutralcorner";
+	dir = 8
+	},
+/area/shuttle/escape)
+"cg" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/escape)
+"ch" = (
+/mob/living/simple_animal/bot/medbot{
+	name = "Speedy* Recovery"
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTHWEST)";
+	icon_state = "whiteblue";
+	dir = 9
+	},
+/area/shuttle/escape)
+"ci" = (
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTH)";
+	icon_state = "whiteblue";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cj" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTH)";
+	icon_state = "whiteblue";
+	dir = 1
+	},
+/area/shuttle/escape)
+"ck" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTH)";
+	icon_state = "whiteblue";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cl" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTH)";
+	icon_state = "whiteblue";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cm" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/weapon/wrench,
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTHEAST)";
+	icon_state = "whiteblue";
+	dir = 5
+	},
+/area/shuttle/escape)
+"cn" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"co" = (
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (WEST)";
+	icon_state = "whiteblue";
+	dir = 8
+	},
+/area/shuttle/escape)
+"cp" = (
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"cq" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	tag = "icon-intact (NORTHEAST)";
+	icon_state = "intact";
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"cr" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"cs" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	tag = "icon-intact (NORTHWEST)";
+	icon_state = "intact";
+	dir = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/escape)
+"ct" = (
+/turf/open/floor/plasteel/whiteblue/corner{
+	tag = "icon-whitebluecorner (EAST)";
+	icon_state = "whitebluecorner";
+	dir = 4
+	},
+/area/shuttle/escape)
+"cu" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (NORTHEAST)";
+	icon_state = "whiteblue";
+	dir = 5
+	},
+/area/shuttle/escape)
+"cv" = (
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (SOUTHWEST)";
+	icon_state = "whiteblue";
+	dir = 10
+	},
+/area/shuttle/escape)
+"cw" = (
+/turf/open/floor/plasteel/whiteblue/side,
+/area/shuttle/escape)
+"cx" = (
+/turf/open/floor/plasteel/whiteblue/corner{
+	tag = "icon-whitebluecorner (WEST)";
+	icon_state = "whitebluecorner";
+	dir = 8
+	},
+/area/shuttle/escape)
+"cy" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (EAST)";
+	icon_state = "whiteblue";
+	dir = 4
+	},
+/area/shuttle/escape)
+"cz" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/neutral,
+/area/shuttle/escape)
+"cA" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cB" = (
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cC" = (
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cD" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (EAST)";
+	icon_state = "whiteblue";
+	dir = 4
+	},
+/area/shuttle/escape)
+"cE" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/weapon/reagent_containers/blood/AMinus,
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/item/weapon/reagent_containers/blood/random,
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cF" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/item/weapon/circular_saw,
+/obj/item/weapon/scalpel{
+	pixel_y = 12
+	},
+/obj/item/weapon/hemostat,
+/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/cautery{
+	pixel_x = 4
+	},
+/obj/item/weapon/retractor,
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cG" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/crowbar,
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (EAST)";
+	icon_state = "whiteblue";
+	dir = 4
+	},
+/area/shuttle/escape)
+"cH" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cI" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cJ" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4;
+	pixel_x = 0
+	},
+/obj/item/clothing/suit/apron/surgical,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/obj/item/weapon/surgical_drapes,
+/obj/item/weapon/razor,
+/turf/open/floor/plasteel/whiteblue,
+/area/shuttle/escape)
+"cK" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/toxin,
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (SOUTHWEST)";
+	icon_state = "whiteblue";
+	dir = 10
+	},
+/area/shuttle/escape)
+"cL" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 1
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/shuttle/escape)
+"cM" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/shuttle/escape)
+"cN" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	tag = "icon-whiteblue (SOUTHEAST)";
+	icon_state = "whiteblue";
+	dir = 6
+	},
+/area/shuttle/escape)
+"cO" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTH)";
+	icon_state = "neutral";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cP" = (
+/obj/machinery/door/airlock/glass_engineering{
+	name = "Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/turf/open/floor/plasteel/yellow,
+/area/shuttle/escape)
+"cQ" = (
+/obj/machinery/door/airlock{
+	name = "Bathroom"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"cR" = (
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"cS" = (
+/obj/structure/toilet{
+	icon_state = "toilet00";
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"cT" = (
+/obj/structure/closet/secure_closet/engineering_personal,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTHWEST)";
+	icon_state = "yellow";
+	dir = 9
+	},
+/area/shuttle/escape)
+"cU" = (
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTH)";
+	icon_state = "yellow";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cV" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/computer/monitor,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTH)";
+	icon_state = "yellow";
+	dir = 1
+	},
+/area/shuttle/escape)
+"cW" = (
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTHEAST)";
+	icon_state = "yellow";
+	dir = 5
+	},
+/area/shuttle/escape)
+"cX" = (
+/obj/structure/sink{
+	icon_state = "sink";
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"cY" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"cZ" = (
+/obj/structure/closet/secure_closet/engineering_personal,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (SOUTHWEST)";
+	icon_state = "yellow";
+	dir = 10
+	},
+/area/shuttle/escape)
+"da" = (
+/turf/open/floor/plasteel/yellow/corner{
+	tag = "icon-yellowcorner (WEST)";
+	icon_state = "yellowcorner";
+	dir = 8
+	},
+/area/shuttle/escape)
+"db" = (
+/turf/open/floor/plasteel/yellow/corner{
+	tag = "icon-yellowcorner (EAST)";
+	icon_state = "yellowcorner";
+	dir = 4
+	},
+/area/shuttle/escape)
+"dc" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/metalfoam,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTH)";
+	icon_state = "yellow";
+	dir = 1
+	},
+/area/shuttle/escape)
+"dd" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTH)";
+	icon_state = "yellow";
+	dir = 1
+	},
+/area/shuttle/escape)
+"de" = (
+/obj/structure/table,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (NORTHEAST)";
+	icon_state = "yellow";
+	dir = 5
+	},
+/area/shuttle/escape)
+"df" = (
+/obj/structure/urinal{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"dg" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"dh" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (SOUTHWEST)";
+	icon_state = "yellow";
+	dir = 10
+	},
+/area/shuttle/escape)
+"di" = (
+/obj/structure/sign/electricshock{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (EAST)";
+	icon_state = "yellow";
+	dir = 4
+	},
+/area/shuttle/escape)
+"dj" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (SOUTHWEST)";
+	icon_state = "yellow";
+	dir = 10
+	},
+/area/shuttle/escape)
+"dk" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/weapon/storage/toolbox/electrical,
+/turf/open/floor/plasteel/yellow/side,
+/area/shuttle/escape)
+"dl" = (
+/obj/structure/table,
+/obj/structure/sign/enginesafety{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/yellow/side,
+/area/shuttle/escape)
+"dm" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/yellow/side,
+/area/shuttle/escape)
+"dn" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plasteel/yellow/side,
+/area/shuttle/escape)
+"do" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/yellow/side,
+/area/shuttle/escape)
+"dp" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/yellow/side{
+	tag = "icon-yellow (SOUTHEAST)";
+	icon_state = "yellow";
+	dir = 6
+	},
+/area/shuttle/escape)
+"dq" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dr" = (
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ds" = (
+/obj/machinery/light/small{
+	tag = "icon-bulb1 (NORTH)";
+	icon_state = "bulb1";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dt" = (
+/obj/machinery/power/terminal{
+	tag = "icon-term (EAST)";
+	icon_state = "term";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"du" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dv" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dw" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dx" = (
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"dy" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"dz" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+bv
+ab
+bE
+ab
+aa
+aa
+aa
+ab
+bY
+ab
+bY
+ab
+aa
+aa
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aS
+bd
+bd
+bp
+be
+ab
+bc
+ad
+ac
+ac
+ac
+ad
+bc
+bZ
+bc
+ad
+ab
+ab
+ad
+cn
+cn
+cz
+cz
+cn
+cn
+ab
+cT
+cZ
+ad
+ab
+ab
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aT
+be
+be
+be
+be
+ab
+bc
+bQ
+bc
+bc
+bc
+bQ
+bc
+bc
+bc
+bQ
+ca
+ca
+cf
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+ac
+cU
+da
+dh
+ad
+ab
+ab
+ab
+"}
+(4,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aS
+bf
+bk
+be
+bk
+ab
+ba
+bc
+bc
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+bc
+bc
+ba
+ba
+ba
+ba
+ba
+ba
+bc
+ac
+cU
+bc
+da
+dj
+ab
+dy
+dz
+"}
+(5,1,1) = {"
+ab
+ab
+ab
+ad
+ao
+az
+aG
+ao
+ab
+ab
+ab
+ac
+bq
+ac
+ab
+bF
+bR
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bR
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+cc
+ab
+cV
+bc
+bc
+dk
+ab
+dy
+dz
+"}
+(6,1,1) = {"
+aa
+aa
+ab
+ae
+ap
+ap
+aH
+aM
+ab
+aU
+bg
+bl
+bl
+bw
+ab
+bG
+bR
+bT
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bR
+bT
+bX
+bX
+bX
+bX
+bX
+bX
+bR
+ac
+cU
+bc
+bc
+dl
+ab
+dy
+dz
+"}
+(7,1,1) = {"
+aa
+aa
+ac
+af
+aq
+ap
+aI
+aN
+ab
+aV
+bh
+bl
+br
+bx
+ac
+bH
+bR
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bR
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bR
+cP
+cU
+bc
+bc
+dm
+ab
+dy
+dz
+"}
+(8,1,1) = {"
+aa
+aa
+ac
+ag
+ar
+aA
+aC
+aC
+ab
+aW
+bh
+bm
+br
+by
+ac
+bI
+bR
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bR
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+bR
+ac
+cW
+db
+bc
+dn
+ab
+dy
+dz
+"}
+(9,1,1) = {"
+aa
+aa
+ac
+ah
+as
+aB
+aC
+aC
+ab
+aX
+bh
+bi
+br
+bx
+ac
+bJ
+bR
+bT
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bR
+bT
+bX
+bX
+bX
+bX
+bX
+bX
+cO
+ad
+ad
+dc
+bc
+dn
+ab
+dy
+dz
+"}
+(10,1,1) = {"
+aa
+aa
+ac
+ai
+at
+aC
+aC
+aC
+ab
+aY
+bi
+bi
+bi
+bz
+ab
+bK
+bR
+bc
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+bc
+bc
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+bc
+ca
+ab
+dd
+bc
+do
+ab
+ad
+ad
+"}
+(11,1,1) = {"
+aa
+aa
+ac
+aj
+at
+aC
+aC
+aO
+ab
+ab
+ac
+bn
+bn
+ac
+ad
+aZ
+bc
+bc
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+cb
+bc
+cg
+bc
+bc
+bc
+bc
+bc
+cg
+bc
+ab
+de
+di
+dp
+ab
+ad
+ad
+"}
+(12,1,1) = {"
+aa
+aa
+ac
+ak
+au
+aD
+aC
+aC
+aR
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+bL
+bc
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bR
+ad
+ab
+ce
+ab
+ab
+ab
+ab
+ab
+cQ
+ab
+ab
+ab
+dq
+ad
+dy
+dz
+"}
+(13,1,1) = {"
+aa
+aa
+ac
+al
+av
+aE
+aC
+aC
+aR
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+bS
+bT
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+cc
+ab
+ch
+co
+cv
+cA
+cE
+cH
+ab
+cR
+cX
+cX
+ab
+dr
+dv
+dy
+dz
+"}
+(14,1,1) = {"
+aa
+aa
+ac
+am
+aw
+ax
+aJ
+aN
+ab
+ab
+ab
+ab
+ab
+bA
+bA
+ab
+ad
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bT
+bR
+ce
+ci
+cp
+cw
+cB
+cB
+cI
+ab
+cR
+cR
+df
+ab
+dr
+dw
+dy
+dz
+"}
+(15,1,1) = {"
+aa
+aa
+ab
+an
+ax
+ax
+aK
+aP
+ab
+bb
+bj
+bo
+bs
+bB
+bB
+bM
+ab
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bR
+ac
+cj
+cq
+cw
+cC
+cF
+cJ
+ab
+cR
+cR
+df
+ab
+ds
+dx
+dy
+dz
+"}
+(16,1,1) = {"
+ab
+ab
+ab
+ad
+ay
+aF
+aL
+aQ
+ab
+bc
+bc
+bc
+bt
+bc
+bc
+bN
+ab
+bT
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bR
+ab
+ck
+cr
+cx
+co
+co
+cK
+ab
+cR
+cR
+df
+ab
+dt
+dt
+dy
+dz
+"}
+(17,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bb
+bj
+bo
+bt
+bC
+bC
+bO
+ab
+bU
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+bc
+ac
+cl
+cs
+cp
+cp
+cp
+cL
+ab
+cR
+cY
+cR
+ab
+du
+du
+dy
+dz
+"}
+(18,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+bc
+bc
+bc
+bt
+bc
+bc
+bN
+ab
+bV
+bc
+bc
+bc
+bc
+bc
+bc
+bc
+cd
+ab
+cm
+ct
+cp
+cp
+cp
+cM
+ab
+cQ
+ab
+cQ
+ab
+ab
+ab
+ab
+ab
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+bb
+bj
+bo
+bu
+bD
+bD
+bP
+ab
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ad
+cu
+cy
+cD
+cG
+cN
+ab
+cS
+ab
+dg
+ab
+ab
+ab
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}

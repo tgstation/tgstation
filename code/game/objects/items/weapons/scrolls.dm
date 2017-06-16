@@ -50,10 +50,10 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
-	if(!src || qdeleted(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
+	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
 		return
-	var/area/thearea = teleportlocs[A]
+	var/area/thearea = GLOB.teleportlocs[A]
 
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, user.loc)
@@ -65,7 +65,7 @@
 			L += T
 
 	if(!L.len)
-		user << "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."
+		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
 	user.forceMove(pick(L))

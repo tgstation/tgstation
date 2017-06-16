@@ -12,7 +12,7 @@
 	punchdamagehigh = 30//they are inhumanly strong
 	punchstunthreshold = 25
 	attack_verb = "smash"
-	attack_sound = "sound/weapons/resonator_blast.ogg"
+	attack_sound = 'sound/weapons/resonator_blast.ogg'
 	blacklisted = 1
 	use_skintones = 0
 	species_traits = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)

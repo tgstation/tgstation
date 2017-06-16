@@ -24,7 +24,7 @@
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin removing rods...</span>"
+		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
 		playsound(src, C.usesound, 80, 1)
 		if(do_after(user, 30*C.toolspeed, target = src))
 			if(!istype(src, /turf/open/floor/engine))
@@ -106,9 +106,9 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearence
 
-/turf/open/floor/engine/cult/New()
+/turf/open/floor/engine/cult/Initialize()
 	..()
-	new /obj/effect/overlay/temp/cult/turf/floor(src)
+	new /obj/effect/temp_visual/cult/turf/floor(src)
 	realappearence = new /obj/effect/clockwork/overlay/floor/bloodcult(src)
 	realappearence.linked = src
 
@@ -124,9 +124,6 @@
 /turf/open/floor/engine/cult/proc/be_removed()
 	qdel(realappearence)
 	realappearence = null
-
-/turf/open/floor/engine/cult/narsie_act()
-	return
 
 /turf/open/floor/engine/cult/ratvar_act()
 	. = ..()

@@ -1,6 +1,3 @@
-// Global var to track modular computers
-var/list/global_modular_computers = list()
-
 // Modular Computer - device that runs various programs and operates with hardware
 // DO NOT SPAWN THIS TYPE. Use /laptop/ or /console/ instead.
 /obj/machinery/modular_computer
@@ -30,16 +27,13 @@ var/list/global_modular_computers = list()
 
 	var/obj/item/device/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
-/obj/machinery/modular_computer/New()
-	..()
+/obj/machinery/modular_computer/Initialize()
+	. = ..()
 	cpu = new(src)
 	cpu.physical = src
-	global_modular_computers.Add(src)
 
 /obj/machinery/modular_computer/Destroy()
-	if(cpu)
-		qdel(cpu)
-		cpu = null
+	QDEL_NULL(cpu)
 	return ..()
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
@@ -58,13 +52,13 @@ var/list/global_modular_computers = list()
 			add_overlay(screen_icon_screensaver)
 		else
 			icon_state = icon_state_unpowered
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(light_strength)
+		set_light(light_strength)
 		if(cpu.active_program)
 			add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 		else
-			overlays.Add(screen_icon_state_menu)
+			add_overlay(screen_icon_state_menu)
 
 	if(cpu && cpu.obj_integrity <= cpu.integrity_failure)
 		add_overlay("bsod")
@@ -131,7 +125,7 @@ var/list/global_modular_computers = list()
 	update_icon()
 
 /obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, mob/user)
-	if(cpu)
+	if(cpu && !(flags & NODECONSTRUCT))
 		return cpu.attackby(W, user)
 	return ..()
 
@@ -141,6 +135,7 @@ var/list/global_modular_computers = list()
 /obj/machinery/modular_computer/ex_act(severity)
 	if(cpu)
 		cpu.ex_act(severity)
+	..()
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
 /obj/machinery/modular_computer/emp_act(severity)

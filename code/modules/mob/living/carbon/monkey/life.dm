@@ -16,7 +16,7 @@
 			if(stat == CONSCIOUS)
 				if(!handle_combat())
 					if(prob(33) && canmove && isturf(loc) && !pulledby)
-						step(src, pick(cardinal))
+						step(src, pick(GLOB.cardinal))
 					if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))
 			else
@@ -29,7 +29,7 @@
 			if(!weakened)
 				emote("collapse")
 			Weaken(10)
-			src << "<span class='danger'>You feel weak.</span>"
+			to_chat(src, "<span class='danger'>You feel weak.</span>")
 
 		switch(radiation)
 
@@ -38,11 +38,11 @@
 					if(!weakened)
 						emote("collapse")
 					Weaken(3)
-					src << "<span class='danger'>You feel weak.</span>"
+					to_chat(src, "<span class='danger'>You feel weak.</span>")
 
 			if(75 to 100)
 				if(prob(1))
-					src << "<span class='danger'>You mutate!</span>"
+					to_chat(src, "<span class='danger'>You mutate!</span>")
 					randmutb()
 					emote("gasp")
 					domutcheck()

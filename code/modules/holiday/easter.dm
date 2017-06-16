@@ -22,11 +22,11 @@
 	max_occurrences = 10
 
 /datum/round_event/rabbitrelease/announce()
-	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", 'sound/AI/aliens.ogg')
+	priority_announce("Unidentified furry objects detected coming aboard [station_name()]. Beware of Adorable-ness.", "Fluffy Alert", 'sound/ai/aliens.ogg')
 
 
 /datum/round_event/rabbitrelease/start()
-	for(var/obj/effect/landmark/R in landmarks_list)
+	for(var/obj/effect/landmark/R in GLOB.landmarks_list)
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
@@ -37,7 +37,7 @@
 /mob/living/simple_animal/chicken/rabbit
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
-	icon = 'icons/mob/Easter.dmi'
+	icon = 'icons/mob/easter.dmi'
 	icon_state = "rabbit_white"
 	icon_living = "rabbit_white"
 	icon_dead = "rabbit_white_dead"
@@ -67,14 +67,14 @@
 //Easter Baskets
 /obj/item/weapon/storage/bag/easterbasket
 	name = "Easter Basket"
-	icon = 'icons/mob/Easter.dmi'
+	icon = 'icons/mob/easter.dmi'
 	icon_state = "basket"
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,/obj/item/weapon/reagent_containers/food/snacks/boiledegg)
 
 /obj/item/weapon/storage/bag/easterbasket/proc/countEggs()
 	cut_overlays()
-	add_overlay(image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1))
-	add_overlay(image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1))
+	add_overlay("basket-grass")
+	add_overlay("basket-egg[min(contents.len, 5)]")
 
 /obj/item/weapon/storage/bag/easterbasket/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
@@ -135,14 +135,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
-		user << "<span class='notice'>You unwrap the [src] and find a prize inside!</span>"
+		to_chat(user, "<span class='notice'>You unwrap the [src] and find a prize inside!</span>")
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)
-
-/obj/effect/spawner/lootdrop/maintenance/New()
-	..()
-	loot += list(/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15, /obj/item/weapon/storage/bag/easterbasket = 15)
 
 //Easter Recipes + food
 /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun

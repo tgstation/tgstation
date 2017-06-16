@@ -44,9 +44,10 @@ Difficulty: Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
+	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
-	var/charging = 0
+	var/charging = FALSE
 	medal_type = MEDAL_PREFIX
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -63,9 +64,9 @@ Difficulty: Hard
 	if(. > 0 && prob(25))
 		var/obj/effect/decal/cleanable/blood/gibs/bubblegum/B = new /obj/effect/decal/cleanable/blood/gibs/bubblegum(loc)
 		if(prob(40))
-			step(B, pick(cardinal))
+			step(B, pick(GLOB.cardinal))
 		else
-			B.setDir(pick(cardinal))
+			B.setDir(pick(GLOB.cardinal))
 
 /obj/effect/decal/cleanable/blood/gibs/bubblegum
 	name = "thick blood"
@@ -88,32 +89,37 @@ Difficulty: Hard
 
 	var/warped = FALSE
 	if(!try_bloodattack())
-		addtimer(CALLBACK(src, .proc/blood_spray), 0)
+		INVOKE_ASYNC(src, .proc/blood_spray)
 		warped = blood_warp()
 		if(warped && prob(100 - anger_modifier))
 			return
 
 	if(prob(90 - anger_modifier) || slaughterlings())
 		if(health > maxHealth * 0.5)
-			addtimer(CALLBACK(src, .proc/charge), 0)
+			INVOKE_ASYNC(src, .proc/charge)
 		else
 			if(prob(70) || warped)
-				addtimer(CALLBACK(src, .proc/triple_charge), 0)
+				INVOKE_ASYNC(src, .proc/charge, 2)
 			else
-				addtimer(CALLBACK(src, .proc/warp_charge), 0)
+				INVOKE_ASYNC(src, .proc/warp_charge)
 
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/New()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	..()
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
 		if(B != src)
 			qdel(src) //There can be only one
-			break
+			return
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
 	internal = new/obj/item/device/gps/internal/bubblegum(src)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
+	. = ..()
+	if(.)
+		SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
 	if(!charging)
@@ -121,7 +127,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
 	if(!charging)
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(!charging)
@@ -129,7 +135,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(charging)
-		new /obj/effect/overlay/temp/decoy/fading(loc,src)
+		new /obj/effect/temp_visual/decoy/fading(loc,src)
 		DestroySurroundings()
 	. = ..()
 	if(!stat && .)
@@ -141,29 +147,29 @@ Difficulty: Hard
 	blood_warp()
 	charge()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
-	charge()
-	charge()
-	charge()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(bonus_charges)
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
-	new /obj/effect/overlay/temp/dragon_swoop(T)
-	charging = 1
+	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
+	charging = TRUE
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
-	var/obj/effect/overlay/temp/decoy/D = new /obj/effect/overlay/temp/decoy(loc,src)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 5)
-	sleep(5)
-	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end))
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end()
-	charging = 0
+	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
+	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
+	sleep(3)
+	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end(bonus_charges, list/effects_to_destroy)
+	charging = FALSE
 	try_bloodattack()
 	if(target)
-		Goto(target, move_to_delay, minimum_distance)
+		if(bonus_charges)
+			bonus_charges--
+			charge(bonus_charges)
+		else
+			Goto(target, move_to_delay, minimum_distance)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -187,7 +193,7 @@ Difficulty: Hard
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 		L.throw_at(throwtarget, 3)
 
-	charging = 0
+	charging = FALSE
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
@@ -195,13 +201,13 @@ Difficulty: Hard
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_pools(get_turf(L), 0)
-		if(bloodpool.len && (!faction_check(L) || L.stat == DEAD))
+		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
 			. += L
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		addtimer(CALLBACK(src, .proc/bloodattack, targets, prob(50)), 0)
+		INVOKE_ASYNC(src, .proc/bloodattack, targets, prob(50))
 
 		return TRUE
 	return FALSE
@@ -240,13 +246,13 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodsmack(turf/T, handedness)
 	if(handedness)
-		new /obj/effect/overlay/temp/bubblegum_hands/rightsmack(T)
+		new /obj/effect/temp_visual/bubblegum_hands/rightsmack(T)
 	else
-		new /obj/effect/overlay/temp/bubblegum_hands/leftsmack(T)
+		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
 	sleep(2.5)
 	for(var/mob/living/L in T)
-		if(!faction_check(L))
-			L << "<span class='userdanger'>[src] rends you!</span>"
+		if(!faction_check_mob(L))
+			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg"))
 			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
@@ -254,15 +260,15 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
 	if(handedness)
-		new /obj/effect/overlay/temp/bubblegum_hands/rightpaw(T)
-		new /obj/effect/overlay/temp/bubblegum_hands/rightthumb(T)
+		new /obj/effect/temp_visual/bubblegum_hands/rightpaw(T)
+		new /obj/effect/temp_visual/bubblegum_hands/rightthumb(T)
 	else
-		new /obj/effect/overlay/temp/bubblegum_hands/leftpaw(T)
-		new /obj/effect/overlay/temp/bubblegum_hands/leftthumb(T)
+		new /obj/effect/temp_visual/bubblegum_hands/leftpaw(T)
+		new /obj/effect/temp_visual/bubblegum_hands/leftthumb(T)
 	sleep(6)
 	for(var/mob/living/L in T)
-		if(!faction_check(L))
-			L << "<span class='userdanger'>[src] drags you through the blood!</span>"
+		if(!faction_check_mob(L))
+			to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
 			playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
 			var/turf/targetturf = get_step(src, dir)
 			L.forceMove(targetturf)
@@ -271,28 +277,31 @@ Difficulty: Hard
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
 
-/obj/effect/overlay/temp/bubblegum_hands
+/obj/effect/temp_visual/dragon_swoop/bubblegum
+	duration = 10
+
+/obj/effect/temp_visual/bubblegum_hands
 	icon = 'icons/effects/bubblegum.dmi'
 	duration = 9
 
-/obj/effect/overlay/temp/bubblegum_hands/rightthumb
+/obj/effect/temp_visual/bubblegum_hands/rightthumb
 	icon_state = "rightthumbgrab"
 
-/obj/effect/overlay/temp/bubblegum_hands/leftthumb
+/obj/effect/temp_visual/bubblegum_hands/leftthumb
 	icon_state = "leftthumbgrab"
 
-/obj/effect/overlay/temp/bubblegum_hands/rightpaw
+/obj/effect/temp_visual/bubblegum_hands/rightpaw
 	icon_state = "rightpawgrab"
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/bubblegum_hands/leftpaw
+/obj/effect/temp_visual/bubblegum_hands/leftpaw
 	icon_state = "leftpawgrab"
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/bubblegum_hands/rightsmack
+/obj/effect/temp_visual/bubblegum_hands/rightsmack
 	icon_state = "rightsmack"
 
-/obj/effect/overlay/temp/bubblegum_hands/leftsmack
+/obj/effect/temp_visual/bubblegum_hands/leftsmack
 	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
@@ -308,12 +317,12 @@ Difficulty: Hard
 	if(!pools.len)
 		return FALSE
 
-	var/obj/effect/overlay/temp/decoy/DA = new /obj/effect/overlay/temp/decoy(loc,src)
+	var/obj/effect/temp_visual/decoy/DA = new /obj/effect/temp_visual/decoy(loc,src)
 	DA.color = "#FF0000"
 	var/oldtransform = DA.transform
 	DA.transform = matrix()*2
-	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 5)
-	sleep(5)
+	animate(DA, alpha = 255, color = initial(DA.color), transform = oldtransform, time = 3)
+	sleep(3)
 	qdel(DA)
 
 	var/obj/effect/decal/cleanable/blood/found_bloodpool
@@ -321,7 +330,7 @@ Difficulty: Hard
 	pools_to_remove = get_pools(get_turf(target), 1)
 	pools -= pools_to_remove
 	if(pools.len)
-		shuffle(pools)
+		shuffle_inplace(pools)
 		found_bloodpool = pick(pools)
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
@@ -350,7 +359,7 @@ Difficulty: Hard
 	new /obj/effect/decal/cleanable/blood/bubblegum(J)
 	for(var/i in 1 to range)
 		J = get_step(previousturf, targetdir)
-		new /obj/effect/overlay/temp/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
 		playsound(previousturf,'sound/effects/splat.ogg', 100, 1, -1)
 		if(!J || !previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])
 			break
@@ -372,17 +381,22 @@ Difficulty: Hard
 			break
 		max_amount--
 		var/obj/effect/decal/cleanable/blood/B = H
-		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(B.loc)
+		new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter(B.loc)
 	return max_amount
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter
 	name = "slaughterling"
 	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
+	icon_state = "bloodbrood"
+	icon_living = "bloodbrood"
+	icon_aggro = "bloodbrood"
+	attacktext = "pierces"
+	color = "#C80000"
 	density = 0
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/slaughter/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		return 1
 	return 0

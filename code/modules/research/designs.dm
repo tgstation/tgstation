@@ -47,22 +47,22 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 
 /obj/item/weapon/disk/design_disk
-	name = "component design disk"
+	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
 	materials = list(MAT_METAL=300, MAT_GLASS=100)
 	var/list/blueprints = list()
 	var/max_blueprints = 1
 
-/obj/item/weapon/disk/design_disk/New()
-	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+/obj/item/weapon/disk/design_disk/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 	for(var/i in 1 to max_blueprints)
 		blueprints += null
 
 /obj/item/weapon/disk/design_disk/adv
-	name = "advanced component design disk"
+	name = "Advanced Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
 	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER = 50)
 	max_blueprints = 5
@@ -141,7 +141,7 @@ other types of metals and chemistry for reagents).
 	id = "tech_disk_super_adv"
 	req_tech = list("programming" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100, MAT_BLUESPACE = 100)
 	build_path = /obj/item/weapon/disk/tech_disk/super_adv
 	category = list("Electronics")
 
@@ -249,16 +249,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/borg/upgrade/modkit/range
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 
-/datum/design/superaccelerator
-	name = "Kinetic Accelerator Pressure Mod"
-	desc = "A modification kit which allows Kinetic Accelerators to do more damage while indoors."
-	id = "indoormod"
-	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
-	build_type = PROTOLATHE | MECHFAB
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
-	build_path = /obj/item/borg/upgrade/modkit/indoors
-	category = list("Mining Designs", "Cyborg Upgrade Modules")
-
 /datum/design/hyperaccelerator
 	name = "Kinetic Accelerator Mining AoE Mod"
 	desc = "A modification kit for Kinetic Accelerators which causes it to fire AoE blasts that destroy rock."
@@ -290,7 +280,7 @@ other types of metals and chemistry for reagents).
 	id = "bag_holding"
 	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 5, "plasmatech" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
+	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000)
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
@@ -480,7 +470,7 @@ other types of metals and chemistry for reagents).
 	name = "Night Vision Goggles"
 	desc = "Goggles that let you see through darkness unhindered."
 	id = "night_visision_goggles"
-	req_tech = list("materials" = 4, "magnets" = 5, "plasmatech" = 5, "engineering" = 5)
+	req_tech = list("materials" = 4, "magnets" = 5, "plasmatech" = 4, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
 	build_path = /obj/item/clothing/glasses/night
@@ -587,7 +577,7 @@ other types of metals and chemistry for reagents).
 	category = list("Equipment")
 
 /datum/design/diskplantgene
-	name = "Plant data disk"
+	name = "Plant Data Disk"
 	desc = "A disk for storing plant genetic data."
 	id = "diskplantgene"
 	req_tech = list("programming" = 4, "biotech" = 3)
@@ -653,14 +643,3 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
-
-
-/datum/design/alienalloy
-	name = "Alien Alloy"
-	desc = "A sheet of reverse-engineered alien alloy."
-	id = "alienalloy"
-	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
-	build_path = /obj/item/stack/sheet/mineral/abductor
-	category = list("Stock Parts")

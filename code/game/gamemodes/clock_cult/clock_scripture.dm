@@ -15,7 +15,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
 	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
-	var/list/required_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components required
 	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
@@ -50,15 +49,16 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	creation_update()
 
 /datum/clockwork_scripture/proc/creation_update() //updates any on-creation effects
+	return FALSE //return TRUE if updated
 
 /datum/clockwork_scripture/proc/run_scripture()
 	var/successful = FALSE
 	if(can_recite() && has_requirements())
 		if(slab.busy)
-			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
+			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
 		slab.busy = "Invocation ([name]) in progress"
-		if(ratvar_awakens)
+		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
 		else if(!slab.no_cost)
 			for(var/i in consumed_components)
@@ -68,7 +68,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 							slab.stored_components[i]--
 							used_slab_components[i]++
 						else
-							clockwork_component_cache[i]--
+							GLOB.clockwork_component_cache[i]--
 							used_cache_components[i]++
 			update_slab_info()
 		channel_time *= slab.speed_multiplier
@@ -78,15 +78,15 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 					if(slab)
 						slab.stored_components[i] += consumed_components[i]
 					else //if we can't find a slab add to the global cache
-						clockwork_component_cache[i] += consumed_components[i]
+						GLOB.clockwork_component_cache[i] += consumed_components[i]
 			for(var/i in used_cache_components)
 				if(used_cache_components[i])
-					clockwork_component_cache[i] += consumed_components[i]
+					GLOB.clockwork_component_cache[i] += consumed_components[i]
 			update_slab_info()
 		else
 			successful = TRUE
-			if(slab && !slab.no_cost && !ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				feedback_add_details("clockcult_scripture_recited", name)
+			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
+				SSblackbox.add_details("clockcult_scripture_recited", name)
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -96,34 +96,34 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!invoker || !slab || invoker.get_active_held_item() != slab)
 		return FALSE
 	if(!invoker.can_speak_vocal())
-		invoker << "<span class='warning'>You are unable to speak the words of the scripture!</span>"
+		to_chat(invoker, "<span class='warning'>You are unable to speak the words of the scripture!</span>")
 		return FALSE
 	return TRUE
 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	var/checked_penalty = FALSE
-	if(!ratvar_awakens && !slab.no_cost)
+	if(!GLOB.ratvar_awakens && !slab.no_cost)
 		checked_penalty = check_offstation_penalty()
 		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
 		var/failed = FALSE
-		for(var/i in required_components)
-			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
+		for(var/i in consumed_components)
+			var/cache_components = GLOB.clockwork_caches ? GLOB.clockwork_component_cache[i] : 0
 			var/total_components = slab.stored_components[i] + cache_components
-			if(required_components[i] && total_components < required_components[i])
-				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[required_components[i]]</b> \
+			if(consumed_components[i] && total_components < consumed_components[i])
+				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[consumed_components[i]]</b> \
 				[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""].</span>"
 				failed = TRUE
 		if(failed)
 			component_printout += "</span>"
-			invoker << component_printout
+			to_chat(invoker, component_printout)
 			return FALSE
-	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
+	if(multiple_invokers_used && !multiple_invokers_optional && !GLOB.ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, get_turf(invoker)))
-			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+			if(can_recite_scripture(L))
 				nearby_servants++
 		if(nearby_servants < invokers_required)
-			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
+			to_chat(invoker, "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>")
 			return FALSE
 	if(!check_special_requirements())
 		return FALSE
@@ -149,7 +149,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		if(message)
 			if(prob(ratvarian_prob))
 				message = text2ratvar(message)
-			invoker << "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>"
+			to_chat(invoker, "<span class='[get_component_span(primary_component)]_large'>\"[message]\"</span>")
 			invoker << 'sound/magic/clockwork/invoke_general.ogg'
 	return TRUE
 
@@ -160,8 +160,6 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		for(var/i in consumed_components)
 			if(consumed_components[i])
 				consumed_components[i] *= 2
-				if(required_components[i])
-					required_components[i] = max(consumed_components[i], required_components[i])
 		return TRUE
 	return FALSE
 
@@ -172,22 +170,22 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+				if(can_recite_scripture(L))
 					for(var/invocation in invocations)
 						clockwork_say(L, text2ratvar(invocation), whispered)
 		else
 			for(var/invocation in invocations)
 				clockwork_say(invoker, text2ratvar(invocation), whispered)
-	invoker << "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>"
+	to_chat(invoker, "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>")
 	if(!channel_time)
 		return TRUE
 	for(var/invocation in invocations)
-		if(!check_special_requirements() || !do_after(invoker, channel_time / invocations.len, target = invoker) || !check_special_requirements())
+		if(!do_after(invoker, channel_time / invocations.len, target = invoker, extra_checks = CALLBACK(src, .proc/check_special_requirements)))
 			slab.busy = null
 			return FALSE
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, get_turf(invoker)))
-				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
+				if(can_recite_scripture(L))
 					clockwork_say(L, text2ratvar(invocation), whispered)
 		else
 			clockwork_say(invoker, text2ratvar(invocation), whispered)
@@ -209,9 +207,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 
 /datum/clockwork_scripture/channeled/scripture_effects()
 	for(var/i in 1 to chant_amount)
-		if(!can_recite())
-			break
-		if(!do_after(invoker, chant_interval, target = invoker))
+		if(!do_after(invoker, chant_interval, target = invoker, extra_checks = CALLBACK(src, .proc/can_recite)))
 			break
 		clockwork_say(invoker, text2ratvar(pick(chant_invocations)), whispered)
 		if(!chant_effects(i))
@@ -223,7 +219,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/channeled/proc/chant_effects(chant_number) //The chant's periodic effects
 
 /datum/clockwork_scripture/channeled/proc/chant_end_effects() //The chant's effect upon ending
-	invoker << "<span class='brass'>You cease your chant.</span>"
+	to_chat(invoker, "<span class='brass'>You cease your chant.</span>")
 
 
 //Creates an object at the invoker's feet
@@ -243,10 +239,10 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture/create_object/check_special_requirements()
 	var/turf/T = get_turf(invoker)
 	if(!space_allowed && isspaceturf(T))
-		invoker << "<span class='warning'>You need solid ground to place this object!</span>"
+		to_chat(invoker, "<span class='warning'>You need solid ground to place this object!</span>")
 		return FALSE
 	if(one_per_tile && (locate(prevent_path) in T))
-		invoker << "<span class='warning'>You can only place one of this object on each tile!</span>"
+		to_chat(invoker, "<span class='warning'>You can only place one of this object on each tile!</span>")
 		return FALSE
 	return TRUE
 
@@ -254,7 +250,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 	if(creator_message && observer_message)
 		invoker.visible_message(observer_message, creator_message)
 	else if(creator_message)
-		invoker << creator_message
+		to_chat(invoker, creator_message)
 	var/obj/O = new object_path (get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
 	if(istype(O, /obj/item))

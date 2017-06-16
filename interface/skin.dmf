@@ -104,10 +104,6 @@ macro "default"
 		command = "a-intent right"
 		is-disabled = false
 	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
@@ -167,6 +163,14 @@ macro "default"
 		name = "CTRL+NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -206,6 +210,14 @@ macro "default"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "hotkeys"
@@ -354,14 +366,6 @@ macro "hotkeys"
 		command = "a-intent right"
 		is-disabled = false
 	elem 
-		name = "H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
 		name = "M"
 		command = "me"
 		is-disabled = false
@@ -461,6 +465,14 @@ macro "hotkeys"
 		name = "NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -500,6 +512,14 @@ macro "hotkeys"
 	elem 
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "robot-default"
@@ -586,10 +606,6 @@ macro "robot-default"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
 		is-disabled = false
 	elem 
 		name = "CTRL+O"
@@ -810,14 +826,6 @@ macro "robot-hotkeys"
 		command = "resist"
 		is-disabled = false	
 	elem 
-		name = "H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
-		name = "CTRL+H"
-		command = "talk-wheel"
-		is-disabled = false
-	elem 
 		name = "M"
 		command = "me"
 		is-disabled = false
@@ -1028,60 +1036,6 @@ menu "menu"
 		is-checked = false
 		can-check = false
 		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem 
-		name = "&Icons"
-		command = ""
-		category = ""
-		is-checked = false
-		can-check = false
-		group = ""
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "auto"
-		name = "&Auto (stretch-to-fit)"
-		command = ".winset \"mapwindow.map.icon-size=0\""
-		category = "&Icons"
-		is-checked = true
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon96"
-		name = "&96x96 (3x)"
-		command = ".winset \"mapwindow.map.icon-size=96\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon64"
-		name = "&64x64 (2x)"
-		command = ".winset \"mapwindow.map.icon-size=64\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon48"
-		name = "&48x48 (1.5x)"
-		command = ".winset \"mapwindow.map.icon-size=48\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
-		is-disabled = false
-		saved-params = "is-checked"
-	elem "icon32"
-		name = "&32x32"
-		command = ".winset \"mapwindow.map.icon-size=32\""
-		category = "&Icons"
-		is-checked = false
-		can-check = true
-		group = "size"
 		is-disabled = false
 		saved-params = "is-checked"
 	elem 
@@ -1351,6 +1305,7 @@ window "mapwindow"
 		on-show = ""
 		on-hide = ""
 		style = ""
+		zoom-mode = "distort"
 
 window "infowindow"
 	elem "infowindow"
@@ -1627,8 +1582,8 @@ window "outputwindow"
 		macro = ""
 		menu = ""
 		on-close = ""
-	elem "output"
-		type = OUTPUT
+	elem "browseroutput"
+		type = BROWSER
 		pos = 0,0
 		size = 640x480
 		anchor1 = 0,0
@@ -1639,20 +1594,20 @@ window "outputwindow"
 		text-color = #000000
 		background-color = #ffffff
 		is-visible = true
-		is-disabled = false
+		is-disabled = true
 		is-transparent = false
-		is-default = true
+		is-default = false
 		border = none
 		drop-zone = false
 		right-click = false
-		saved-params = "max-lines"
+		saved-params = ""
 		on-size = ""
-		link-color = #0000ff
-		visited-color = #ff00ff
-		style = ""
-		enable-http-images = false
-		max-lines = 1000
-		image = ""
+		show-history = false
+		show-url = false
+		auto-format = false
+		use-title = false
+		on_show = ""
+		on_hide = ""
 
 window "statwindow"
 	elem "statwindow"
@@ -1727,4 +1682,3 @@ window "statwindow"
 		on-tab = ""
 		prefix-color = none
 		suffix-color = none
-

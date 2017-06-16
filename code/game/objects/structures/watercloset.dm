@@ -11,10 +11,10 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 
-/obj/structure/toilet/New()
+/obj/structure/toilet/Initialize()
+	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
-	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -29,7 +29,7 @@
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
-				user << "<span class='warning'>[GM] needs to be on [src]!</span>"
+				to_chat(user, "<span class='warning'>[GM] needs to be on [src]!</span>")
 				return
 			if(!swirlie)
 				if(open)
@@ -49,18 +49,18 @@
 					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
 					GM.adjustBruteLoss(5)
 		else
-			user << "<span class='warning'>You need a tighter grip!</span>"
+			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 
 	else if(cistern && !open)
 		if(!contents.len)
-			user << "<span class='notice'>The cistern is empty.</span>"
+			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 		else
 			var/obj/item/I = pick(contents)
 			if(ishuman(user))
 				user.put_in_hands(I)
 			else
 				I.loc = get_turf(src)
-			user << "<span class='notice'>You find [I] in the cistern.</span>"
+			to_chat(user, "<span class='notice'>You find [I] in the cistern.</span>")
 			w_items -= I.w_class
 	else
 		open = !open
@@ -73,7 +73,7 @@
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
+		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
@@ -83,26 +83,41 @@
 	else if(cistern)
 		if(user.a_intent != INTENT_HARM)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
-				user << "<span class='warning'>[I] does not fit!</span>"
+				to_chat(user, "<span class='warning'>[I] does not fit!</span>")
 				return
 			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
-				user << "<span class='warning'>The cistern is full!</span>"
+				to_chat(user, "<span class='warning'>The cistern is full!</span>")
 				return
 			if(!user.drop_item())
-				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
+				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>")
 				return
 			I.loc = src
 			w_items += I.w_class
-			user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
+			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
 
 	else if(istype(I, /obj/item/weapon/reagent_containers))
 		if (!open)
 			return
 		var/obj/item/weapon/reagent_containers/RG = I
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
+		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
 		return ..()
+
+/obj/structure/toilet/secret
+	var/obj/item/secret
+	var/secret_type = null
+
+/obj/structure/toilet/secret/Initialize(mapload)
+	. = ..()
+	if (secret_type)
+		secret = new secret_type(src)
+		secret.desc += " It's a secret!"
+		w_items += secret.w_class
+		contents += secret
+
+
+
 
 /obj/structure/urinal
 	name = "urinal"
@@ -123,47 +138,47 @@
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
-				user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
+				to_chat(user, "<span class='notice'>[GM.name] needs to be on [src].</span>")
 				return
 			user.changeNext_move(CLICK_CD_MELEE)
 			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
 			GM.adjustBruteLoss(8)
 		else
-			user << "<span class='warning'>You need a tighter grip!</span>"
+			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 
 	else if(exposed)
 		if(!hiddenitem)
-			user << "<span class='notice'>There is nothing in the drain holder.</span>"
+			to_chat(user, "<span class='notice'>There is nothing in the drain holder.</span>")
 		else
 			if(ishuman(user))
 				user.put_in_hands(hiddenitem)
 			else
 				hiddenitem.forceMove(get_turf(src))
-			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
+			to_chat(user, "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>")
 			hiddenitem = null
 	else
 		..()
 
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>"
+		to_chat(user, "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 20*I.toolspeed, target = src))
 			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = !exposed
 	else if(exposed)
 		if (hiddenitem)
-			user << "<span class='warning'>There is already something in the drain enclosure.</span>"
+			to_chat(user, "<span class='warning'>There is already something in the drain enclosure.</span>")
 			return
 		if(I.w_class > 1)
-			user << "<span class='warning'>[I] is too large for the drain enclosure.</span>"
+			to_chat(user, "<span class='warning'>[I] is too large for the drain enclosure.</span>")
 			return
 		if(!user.drop_item())
-			user << "<span class='warning'>\[I] is stuck to your hand, you cannot put it in the drain enclosure!</span>"
+			to_chat(user, "<span class='warning'>\[I] is stuck to your hand, you cannot put it in the drain enclosure!</span>")
 			return
 		I.forceMove(src)
 		hiddenitem = I
-		user << "<span class='notice'>You place [I] into the drain enclosure.</span>"
+		to_chat(user, "<span class='notice'>You place [I] into the drain enclosure.</span>")
 
 
 /obj/item/weapon/reagent_containers/food/urinalcake
@@ -217,9 +232,9 @@
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.type == /obj/item/device/analyzer)
-		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
+		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
 	if(istype(I, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
+		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 		if(do_after(user, 50*I.toolspeed, target = src))
 			switch(watertemp)
 				if("normal")
@@ -239,7 +254,7 @@
 		qdel(mymist)
 
 	if(on)
-		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
+		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
@@ -381,11 +396,11 @@
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
 		C.bodytemperature = max(80, C.bodytemperature - 80)
-		C << "<span class='warning'>The water is freezing!</span>"
+		to_chat(C, "<span class='warning'>The water is freezing!</span>")
 	else if(watertemp == "boiling")
 		C.bodytemperature = min(500, C.bodytemperature + 35)
 		C.adjustFireLoss(5)
-		C << "<span class='danger'>The water is searing!</span>"
+		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
 
 
@@ -406,6 +421,7 @@
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
+	var/dispensedreagent = "water" // for whenever plumbing happens
 
 
 /obj/structure/sink/attack_hand(mob/living/user)
@@ -417,7 +433,7 @@
 		return
 
 	if(busy)
-		user << "<span class='notice'>Someone's already washing here.</span>"
+		to_chat(user, "<span class='notice'>Someone's already washing here.</span>")
 		return
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
@@ -449,20 +465,23 @@
 
 /obj/structure/sink/attackby(obj/item/O, mob/user, params)
 	if(busy)
-		user << "<span class='warning'>Someone's already washing here!</span>"
+		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
 		if(RG.container_type & OPENCONTAINER)
-			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-			user << "<span class='notice'>You fill [RG] from [src].</span>"
-			return 1
+			if(!RG.reagents.holder_full())
+				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+				return TRUE
+			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
+			return FALSE
 
 	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if(B.bcell)
-			if(B.bcell.charge > 0 && B.status == 1)
+		if(B.cell)
+			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
 				user.Stun(stunforce)
@@ -475,16 +494,16 @@
 				return
 
 	if(istype(O, /obj/item/weapon/mop))
-		O.reagents.add_reagent("water", 5)
-		user << "<span class='notice'>You wet [O] in [src].</span>"
+		O.reagents.add_reagent("[dispensedreagent]", 5)
+		to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
-		user << "<span class='notice'>You place [src] under a stream of water...</span>"
-		user.drop_item()
-		M.loc = get_turf(src)
-		M.Expand()
+	if(istype(O, /obj/item/stack/medical/gauze))
+		var/obj/item/stack/medical/gauze/G = O
+		new /obj/item/weapon/reagent_containers/glass/rag(src.loc)
+		to_chat(user, "<span class='notice'>You tear off a strip of gauze and make a rag.</span>")
+		G.use(1)
 		return
 
 	if(!istype(O))
@@ -493,7 +512,7 @@
 		return
 
 	if(user.a_intent != INTENT_HARM)
-		user << "<span class='notice'>You start washing [O]...</span>"
+		to_chat(user, "<span class='notice'>You start washing [O]...</span>")
 		busy = 1
 		if(!do_after(user, 40, target = src))
 			busy = 0
@@ -501,6 +520,9 @@
 		busy = 0
 		O.clean_blood()
 		O.acid_level = 0
+		create_reagents(5)
+		reagents.add_reagent("[dispensedreagent]", 5)
+		reagents.reaction(O, TOUCH)
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
@@ -520,6 +542,7 @@
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
+	desc = "A puddle used for washing one's hands and face."
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attack_hand(mob/M)
@@ -544,7 +567,7 @@
 	icon_state = "open"
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
-	layer = WALL_OBJ_LAYER
+	layer = SIGN_LAYER
 	anchored = 1
 	opacity = 0
 	density = 0
@@ -567,13 +590,48 @@
 		density = 0
 		open = TRUE
 
+/obj/structure/curtain/attackby(obj/item/W, mob/user)
+	if (istype(W, /obj/item/toy/crayon))
+		color = input(user,"Choose Color") as color
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(anchored)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(!anchored)
+					return
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
+		else
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(anchored)
+					return
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You screw [src] to the floor.</span>")
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(!anchored)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(anchored)
+					return
+				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
+				deconstruct()
+	else
+		. = ..()
+
+
 /obj/structure/curtain/attack_hand(mob/user)
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
 	..()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 3)
+	new /obj/item/stack/sheet/cloth (loc, 2)
+	new /obj/item/stack/sheet/plastic (loc, 2)
+	new /obj/item/stack/rods (loc, 1)
 	qdel(src)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

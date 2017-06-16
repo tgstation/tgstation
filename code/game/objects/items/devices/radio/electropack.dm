@@ -19,7 +19,7 @@
 
 /obj/item/device/electropack/Initialize()
 	..()
-	SSradio.add_object(src, frequency, RADIO_CHAT)
+	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
 	if(SSradio)
@@ -30,7 +30,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.back)
-			user << "<span class='warning'>You need help taking this off!</span>"
+			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
 
@@ -39,15 +39,13 @@
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		A.icon = 'icons/obj/assemblies.dmi'
 
-		if(!user.unEquip(W))
-			user << "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>"
+		if(!user.transferItemToLoc(W, A))
+			to_chat(user, "<span class='warning'>[W] is stuck to your hand, you cannot attach it to [src]!</span>")
 			return
-		W.loc = A
 		W.master = A
 		A.part1 = W
 
-		user.unEquip(src)
-		loc = A
+		user.transferItemToLoc(src, A, TRUE)
 		master = A
 		A.part2 = src
 
@@ -68,7 +66,7 @@
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)
 			frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
-			SSradio.add_object(src, frequency, RADIO_CHAT)
+			SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])
@@ -109,9 +107,9 @@
 		spawn(100)
 			shock_cooldown = 0
 		var/mob/M = loc
-		step(M, pick(cardinal))
+		step(M, pick(GLOB.cardinal))
 
-		M << "<span class='danger'>You feel a sharp shock!</span>"
+		to_chat(M, "<span class='danger'>You feel a sharp shock!</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, M)
 		s.start()

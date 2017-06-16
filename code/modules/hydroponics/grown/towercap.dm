@@ -63,7 +63,7 @@
 			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
 				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
 		if(plank.amount > old_plank_amount)
-			user << "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>"
+			to_chat(user, "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>")
 		qdel(src)
 
 	if(is_type_in_list(W,accepted))
@@ -71,13 +71,13 @@
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
 			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
-			usr.unEquip(W)
+			usr.dropItemToGround(W)
 			usr.put_in_active_hand(T)
 			qdel(leaf)
 			qdel(src)
 			return
 		else
-			usr << "<span class ='warning'>You must dry this first!</span>"
+			to_chat(usr, "<span class ='warning'>You must dry this first!</span>")
 	else
 		return ..()
 
@@ -107,24 +107,50 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
+	var/grill = FALSE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/rods) && !can_buckle)
+	if(istype(W, /obj/item/stack/rods) && !can_buckle && !grill)
 		var/obj/item/stack/rods/R = W
-		R.use(1)
-		can_buckle = 1
-		buckle_requires_restraints = 1
-		user << "<span class='italics'>You add a rod to [src]."
-		var/image/U = image(icon='icons/obj/hydroponics/equipment.dmi',icon_state="bonfire_rod",pixel_y=16)
-		underlays += U
+		var/choice = input(user, "What would you like to construct?", "Bonfire") as null|anything in list("Stake","Grill")
+		switch(choice)
+			if("Stake")
+				R.use(1)
+				can_buckle = TRUE
+				buckle_requires_restraints = TRUE
+				to_chat(user, "<span class='italics'>You add a rod to \the [src].")
+				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+				rod_underlay.pixel_y = 16
+				underlays += rod_underlay
+			if("Grill")
+				R.use(1)
+				grill = TRUE
+				to_chat(user, "<span class='italics'>You add a grill to \the [src].")
+				var/mutable_appearance/grill_overlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_grill")
+				overlays += grill_overlay
+			else
+				return ..()
 	if(W.is_hot())
 		StartBurning()
+	if(grill)
+		if(user.a_intent != INTENT_HARM && !(W.flags & ABSTRACT))
+			if(user.temporarilyRemoveItemFromInventory(W))
+				W.forceMove(get_turf(src))
+				var/list/click_params = params2list(params)
+				//Center the icon where the user clicked.
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return
+				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+				W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		else
+			return ..()
 
 
 /obj/structure/bonfire/attack_hand(mob/user)
 	if(burning)
-		user << "<span class='warning'>You need to extinguish [src] before removing the logs!"
+		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing the logs!")
 		return
 	if(!has_buckled_mobs() && do_after(user, 50, target = src))
 		for(var/I in 1 to 5)
@@ -149,7 +175,7 @@
 	if(!burning && CheckOxygen())
 		icon_state = "bonfire_on_fire"
 		burning = 1
-		SetLuminosity(6)
+		set_light(6)
 		Burn()
 		START_PROCESSING(SSobj, src)
 
@@ -157,7 +183,7 @@
 	StartBurning()
 
 /obj/structure/bonfire/Crossed(atom/movable/AM)
-	if(burning)
+	if(burning & !grill)
 		Burn()
 
 /obj/structure/bonfire/proc/Burn()
@@ -174,23 +200,39 @@
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
 
+/obj/structure/bonfire/proc/Cook()
+	var/turf/current_location = get_turf(src)
+	for(var/A in current_location)
+		if(A == src)
+			continue
+		else if(isliving(A)) //It's still a fire, idiot.
+			var/mob/living/L = A
+			L.adjust_fire_stacks(fire_stack_strength)
+			L.IgniteMob()
+		else if(istype(A, /obj/item) && prob(20))
+			var/obj/item/O = A
+			O.microwave_act()
+
 /obj/structure/bonfire/process()
 	if(!CheckOxygen())
 		extinguish()
 		return
-	Burn()
+	if(!grill)
+		Burn()
+	else
+		Cook()
 
 /obj/structure/bonfire/extinguish()
 	if(burning)
 		icon_state = "bonfire"
 		burning = 0
-		SetLuminosity(0)
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
-/obj/structure/bonfire/buckle_mob(mob/living/M, force = 0)
+/obj/structure/bonfire/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(..())
 		M.pixel_y += 13
 
-/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=0)
+/obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
 	if(..())
 		buckled_mob.pixel_y -= 13

@@ -27,7 +27,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
  then the player gets the profit from selling his own wasted time.
 */
 /proc/export_item_and_contents(atom/movable/AM, contraband, emagged, dry_run=FALSE)
-	if(!exports_list.len)
+	if(!GLOB.exports_list.len)
 		setupExports()
 
 	var/sold_str = ""
@@ -38,7 +38,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	// We go backwards, so it'll be innermost objects sold first
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
 			if(E.applies_to(thing, contraband, emagged))
@@ -60,6 +60,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/unit_name = ""				// Unit name. Only used in "Received [total_amount] [name]s [message]." message
 	var/message = ""
 	var/cost = 100					// Cost of item, in cargo credits. Must not alow for infinite price dupes, see above.
+	var/k_elasticity = 1/30			//coefficient used in marginal price calculation that roughly corresponds to the inverse of price elasticity, or "quantity elasticity"
 	var/contraband = FALSE			// Export must be unlocked with multitool.
 	var/emagged = FALSE				// Export must be unlocked with emag.
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
@@ -69,10 +70,30 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	// Used by print-out
 	var/total_cost = 0
 	var/total_amount = 0
+	var/init_cost
+	
+/datum/export/New()
+	..()
+	SSprocessing.processing += src
+	init_cost = cost
+
+/datum/export/Destroy()
+	SSprocessing.processing -= src
+	return ..()
+
+/datum/export/process()
+	..()
+	cost *= GLOB.E**(k_elasticity * (1/30))
+	if(cost > init_cost)
+		cost = init_cost
 
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
-	return cost * get_amount(O, contr, emag)
+	var/amount = get_amount(O, contr, emag)
+	if(k_elasticity!=0)
+		return round((cost/k_elasticity) * (1 - GLOB.E**(-1 * k_elasticity * amount)))	//anti-derivative of the marginal cost function
+	else
+		return round(cost * amount)	//alternative form derived from L'Hopital to avoid division by 0
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
@@ -91,18 +112,25 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
+	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
+		return FALSE
 	return TRUE
 
 // Called only once, when the object is actually sold by the datum.
 // Adds item's cost and amount to the current export cycle.
 // get_cost, get_amount and applies_to do not neccesary mean a successful sale.
 /datum/export/proc/sell_object(obj/O, contr = 0, emag = 0)
-	var/cost = get_cost(O)
+	var/the_cost = get_cost(O)
 	var/amount = get_amount(O)
-	total_cost += cost
-	total_amount += amount
-	feedback_add_details("export_sold_amount","[O.type]|[amount]")
-	feedback_add_details("export_sold_cost","[O.type]|[cost]")
+	total_cost += the_cost
+	if(istype(O,/datum/export/material))
+		total_amount += amount*MINERAL_MATERIAL_AMOUNT
+	else
+		total_amount += amount
+	
+	cost *= GLOB.E**(-1*k_elasticity*amount)		//marginal cost modifier
+	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
+	SSblackbox.add_details("export_sold_cost","[O.type]|[the_cost]")
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.
@@ -132,10 +160,10 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_cost = 0
 	total_amount = 0
 
-var/list/exports_list = list()
+GLOBAL_LIST_EMPTY(exports_list)
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
 		var/datum/export/E = new subtype
 		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-			exports_list += E
+			GLOB.exports_list += E

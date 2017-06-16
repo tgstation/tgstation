@@ -5,9 +5,12 @@
 
 /obj/item/clothing/glasses/visor_toggling()
 	..()
-	vision_flags ^= initial(vision_flags)
-	darkness_view ^= initial(darkness_view)
-	invis_view ^= initial(invis_view)
+	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
+		vision_flags ^= initial(vision_flags)
+	if(visor_vars_to_toggle & VISOR_DARKNESSVIEW)
+		darkness_view ^= initial(darkness_view)
+	if(visor_vars_to_toggle & VISOR_INVISVIEW)
+		invis_view ^= initial(invis_view)
 
 /obj/item/clothing/glasses/weldingvisortoggle(mob/user)
 	. = ..()
@@ -20,7 +23,7 @@
 		var/mob/living/carbon/human/H = src.loc
 		if(!(H.disabilities & BLIND))
 			if(H.glasses == src)
-				H << "<span class='danger'>The [src] overloads and blinds you!</span>"
+				to_chat(H, "<span class='danger'>The [src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)
 				H.blind_eyes(3)
 				H.blur_eyes(5)
@@ -28,14 +31,55 @@
 
 /obj/item/clothing/glasses/meson
 	name = "Optical Meson Scanner"
-	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	item_state = "meson"
 	origin_tech = "magnets=1;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	var/static/list/meson_mining_failure_excuses = list("badly understood science", "damaged meson generators", "electromagnetic storms", "bluespace disruption", "ancient structures", \
+	"ambient radiation", "seismic activity", "extreme weather", "strange signals", "excessive lava", "giant monsters", "a loose wire", "lens warping", "radiant heat", "volcanic ash", \
+	"budget cuts","alien life","dense rock", "gravity", "dust")
+	var/picked_excuse
+	var/mesons_on = TRUE
+
+/obj/item/clothing/glasses/meson/Initialize()
+	. = ..()
+	picked_excuse = pick(meson_mining_failure_excuses)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/meson/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/glasses/meson/examine(mob/user)
+	..()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING && !mesons_on && picked_excuse)
+		to_chat(user, "<span class='warning'>Due to [picked_excuse], these Meson Scanners will not be able to display terrain layouts in this area.</span>")
+
+/obj/item/clothing/glasses/meson/proc/toggle_mode(mob/user)
+	vision_flags ^= SEE_TURFS
+	mesons_on = (vision_flags & SEE_TURFS)? TRUE : FALSE
+
+	if(iscarbon(user)) //only carbons can wear glasses
+		var/mob/living/carbon/C = user
+		if(mesons_on)
+			to_chat(C, "<span class='notice'>Your Meson Scanners have reactivated.</span>")
+		else if(picked_excuse)
+			to_chat(C, "<span class='warning'>Due to [picked_excuse], your Meson Scanners will not be able to display terrain layouts in this area.</span>")
+		if(C.glasses == src)
+			C.update_sight()
+
+/obj/item/clothing/glasses/meson/process()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING)
+		if(mesons_on) //if we're on mining, turn mesons OFF
+			toggle_mode(loc)
+	else if(!mesons_on) //otherwise, if we're not on mining, turn mesons back ON
+		toggle_mode(loc)
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"
@@ -44,6 +88,7 @@
 	item_state = "nvgmeson"
 	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/meson/gar
@@ -81,7 +126,7 @@
 	item_state = "glasses"
 	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/eyepatch
@@ -132,6 +177,12 @@
 	icon_state = "glasses"
 	item_state = "glasses"
 	vision_correction = 1 //corrects nearsightedness
+
+/obj/item/clothing/glasses/regular/jamjar
+	name = "Jamjar Glasses"
+	desc = "Also known as Virginity Protectors."
+	icon_state = "jamjar_glasses"
+	item_state = "jamjar_glasses"
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
@@ -209,6 +260,7 @@
 	materials = list(MAT_METAL = 250)
 	flash_protect = 2
 	tint = 2
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	flags_cover = GLASSESCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	glass_colour_type = /datum/client_colour/glass_colour/gray
@@ -222,7 +274,6 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-//	vision_flags = BLIND
 	flash_protect = 2
 	tint = 3			// to make them blind
 
@@ -248,12 +299,23 @@
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "Chameleon Thermals"
-	desc = "A pair of thermal optic goggles with an onboard chameleon generator. Toggle to disguise."
+	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
 	origin_tech = "magnets=3;syndicate=4"
 	flash_protect = -1
 
-/obj/item/clothing/glasses/thermal/syndi/attack_self(mob/user)
-	chameleon(user)
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/clothing/glasses/thermal/syndi/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/glasses
+	chameleon_action.chameleon_name = "Glasses"
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
+	..()
+	chameleon_action.emp_randomise()
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "Thermoncle"
@@ -302,7 +364,7 @@
 	darkness_view = 8
 	scan_reagents = 1
 	flags = NODROP
-	invis_view = SEE_INVISIBLE_MINIMUM
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, src) && W != src && W.loc == user)
@@ -314,61 +376,9 @@
 				var/mob/living/carbon/C = user
 				C.update_inv_wear_mask()
 		else
-			user << "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>"
+			to_chat(user, "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>")
 		qdel(src)
 	..()
-
-/obj/item/clothing/glasses/proc/chameleon(var/mob/user)
-	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")
-
-	if(user && src in user.contents)
-		switch(input_glasses)
-			if("Sunglasses")
-				desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
-				name = "sunglasses"
-				icon_state = "sun"
-				item_state = "sunglasses"
-			if("Medical HUD")
-				name = "Health Scanner HUD"
-				desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
-				icon_state = "healthhud"
-				item_state = "healthhud"
-			if("Mesons")
-				name = "Optical Meson Scanner"
-				desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
-				icon_state = "meson"
-				item_state = "meson"
-			if("Science Goggles")
-				name = "Science Goggles"
-				desc = "A pair of snazzy goggles used to protect against chemical spills."
-				icon_state = "purple"
-				item_state = "glasses"
-			if("Glasses")
-				name = "Prescription Glasses"
-				desc = "Made by Nerd. Co."
-				icon_state = "glasses"
-				item_state = "glasses"
-			if("Security Sunglasses")
-				name = "HUDSunglasses"
-				desc = "Sunglasses with a HUD."
-				icon_state = "sunhud"
-				item_state = "sunglasses"
-			if("Eyepatch")
-				name = "eyepatch"
-				desc = "Yarr."
-				icon_state = "eyepatch"
-				item_state = "eyepatch"
-			if("Welding")
-				name = "welding goggles"
-				desc = "Protects the eyes from welders; approved by the mad scientist association."
-				icon_state = "welding-g"
-				item_state = "welding-g"
-			if("Gar")
-				desc = "Just who the hell do you think I am?!"
-				name = "gar glasses"
-				icon_state = "gar"
-				item_state = "gar"
-
 
 /obj/item/clothing/glasses/AltClick(mob/user)
 	if(glass_colour_type && ishuman(user))
@@ -378,9 +388,9 @@
 				if(src == H.glasses)
 					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
 					if(H.client.prefs.uses_glasses_colour)
-						H << "You will now see glasses colors."
+						to_chat(H, "You will now see glasses colors.")
 					else
-						H << "You will no longer see glasses colors."
+						to_chat(H, "You will no longer see glasses colors.")
 					H.update_glasses_color(src, 1)
 	else
 		return ..()

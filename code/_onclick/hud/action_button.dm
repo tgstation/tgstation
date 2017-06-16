@@ -14,8 +14,9 @@
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return 1
-	if(usr.next_move >= world.time) // Is this needed ?
+	if(usr.next_click > world.time)
 		return
+	usr.next_click = world.time + 1
 	linked_action.Trigger()
 	return 1
 
@@ -56,8 +57,7 @@
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
 	cut_overlays()
-	var/image/img = image(hide_icon, src, hidden ? show_state : hide_state)
-	add_overlay(img)
+	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
@@ -71,7 +71,7 @@
 	. = list()
 	.["bg_icon"] = ui_style_icon
 	.["bg_state"] = "template"
-	
+
 	//TODO : Make these fit theme
 	.["toggle_icon"] = 'icons/mob/actions.dmi'
 	.["toggle_hide"] = "hide"

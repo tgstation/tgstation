@@ -4,8 +4,7 @@
 /area/shuttle
 	name = "Shuttle"
 	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
 	always_unpowered = 0
 	valid_territory = 0
@@ -59,4 +58,24 @@
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_starfury
+	name = "SBC Starfury"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_fighter1
+	name = "SBC Fighter 1"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_fighter2
+	name = "SBC Fighter 2"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_corvette
+	name = "SBC corvette"
+	blob_allowed = FALSE
+
+/area/shuttle/syndicate_scout
+	name = "Syndicate Scout"
 	blob_allowed = FALSE

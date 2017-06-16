@@ -27,9 +27,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Computer Parts"
 								)
 
-/obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
-	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL))
+/obj/machinery/r_n_d/circuit_imprinter/Initialize()
+	. = ..()
+	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
 	B.apply_default_parts(src)
@@ -98,7 +98,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return
 
 		if(!materials.has_space(sheet_material))
-			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
 			return 1
 
 		var/obj/item/stack/sheet/stack = O
@@ -110,11 +110,29 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return 1
 		else
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
-			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
+			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>")
+		updateUsrDialog()
+
+	else if(istype(O, /obj/item/weapon/ore/bluespace_crystal)) //Bluespace crystals can be either a stack or an item
+		. = 1
+		if(!is_insertion_ready(user))
+			return
+		var/bs_material = materials.get_item_material_amount(O)
+		if(!bs_material)
+			return
+
+		if(!materials.has_space(bs_material))
+			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
+			return 1
+
+		materials.insert_item(O)
+		use_power(MINERAL_MATERIAL_AMOUNT/10)
+		to_chat(user, "<span class='notice'>You add [O] to the [src.name].</span>")
+		qdel(O)
 		updateUsrDialog()
 
 	else if(user.a_intent != INTENT_HARM)
-		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
+		to_chat(user, "<span class='warning'>You cannot insert this item into the [name]!</span>")
 		return 1
 	else
 		return 0

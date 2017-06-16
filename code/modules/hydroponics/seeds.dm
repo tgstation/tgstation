@@ -150,7 +150,7 @@
 		t_amount++
 		product_name = t_prod.name
 	if(getYield() >= 1)
-		feedback_add_details("food_harvested","[product_name]|[getYield()]")
+		SSblackbox.add_details("food_harvested","[product_name]|[getYield()]")
 	parent.update_tray()
 
 	return result
@@ -163,7 +163,7 @@
 				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
 				continue
 
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), 1)
+			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id],1))
 		return 1
 
 
@@ -242,7 +242,7 @@
 
 /obj/item/seeds/proc/set_production(adjustamt)
 	if(yield != -1)
-		production = Clamp(adjustamt, 2, 10)
+		production = Clamp(adjustamt, 1, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
@@ -255,13 +255,13 @@
 			C.value = potency
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
-	weed_rate = Clamp(adjustamt, 0, 100)
+	weed_rate = Clamp(adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
-	weed_chance = Clamp(adjustamt, 0, 100)
+	weed_chance = Clamp(adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -290,6 +290,12 @@
 	text += "- Weed Vulnerability: [weed_chance]\n"
 	if(rarity)
 		text += "- Species Discovery Value: [rarity]\n"
+	var/all_traits = ""
+	for(var/datum/plant_gene/trait/traits in genes)
+		if(istype(traits, /datum/plant_gene/trait/plant_type))
+			continue
+		all_traits += " [traits.get_name()]"
+	text += "- Plant Traits:[all_traits]\n"
 
 	text += "*---------*"
 
@@ -300,10 +306,10 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/device/plant_analyzer))
-		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
+		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
 		var/text = get_analyzer_text()
 		if(text)
-			user << "<span class='notice'>[text]</span>"
+			to_chat(user, "<span class='notice'>[text]</span>")
 
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
@@ -330,14 +336,14 @@
 		for(var/i in 1 to seed.growthstages)
 			if("[seed.icon_grow][i]" in states)
 				continue
-			world << "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!"
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
 
 		if(!(seed.icon_dead in states))
-			world << "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!"
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
 
 		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
 			if(!(seed.icon_harvest in states))
-				world << "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!"
+				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
 
 /obj/item/seeds/proc/randomize_stats()
 	set_lifespan(rand(25, 60))

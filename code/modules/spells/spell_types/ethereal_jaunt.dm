@@ -13,20 +13,20 @@
 	nonabstract_req = 1
 	var/jaunt_duration = 50 //in deciseconds
 	var/jaunt_in_time = 5
-	var/jaunt_in_type = /obj/effect/overlay/temp/wizard
-	var/jaunt_out_type = /obj/effect/overlay/temp/wizard/out
+	var/jaunt_in_type = /obj/effect/temp_visual/wizard
+	var/jaunt_out_type = /obj/effect/temp_visual/wizard/out
 	action_icon_state = "jaunt"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/cast(list/targets,mob/user = usr) //magnets, so mostly hardcoded
-	playsound(get_turf(user), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
+	playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
 	for(var/mob/living/target in targets)
-		addtimer(CALLBACK(src, .proc/do_jaunt, target), 0)
+		INVOKE_ASYNC(src, .proc/do_jaunt, target)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/do_jaunt(mob/living/target)
 	target.notransform = 1
 	var/turf/mobloc = get_turf(target)
 	var/obj/effect/dummy/spell_jaunt/holder = new /obj/effect/dummy/spell_jaunt(mobloc)
-	new jaunt_out_type(mobloc, holder.dir)
+	new jaunt_out_type(mobloc, target.dir)
 	target.ExtinguishMob()
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target,force=1)
@@ -49,14 +49,14 @@
 	jaunt_steam(mobloc)
 	target.canmove = 0
 	holder.reappearing = 1
-	playsound(get_turf(target), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
+	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
-	new jaunt_in_type(mobloc, holder.dir)
+	new jaunt_in_type(mobloc, target.dir)
 	sleep(jaunt_in_time)
 	qdel(holder)
-	if(!qdeleted(target))
+	if(!QDELETED(target))
 		if(mobloc.density)
-			for(var/direction in alldirs)
+			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_step(mobloc, direction)
 				if(T)
 					if(target.Move(T))
@@ -92,7 +92,7 @@
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
-		user << "<span class='warning'>Some strange aura is blocking the way!</span>"
+		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
 	src.canmove = 0
 	spawn(2) src.canmove = 1
 

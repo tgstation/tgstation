@@ -1,7 +1,4 @@
-
 #define SEE_INVISIBLE_MINIMUM 5
-
-#define SEE_INVISIBLE_NOLIGHTING 15 //to not see the lighting objects. Used for nightvision and observer with darkness toggled.
 
 #define INVISIBILITY_LIGHTING 20
 
@@ -20,8 +17,14 @@
 
 #define INVISIBILITY_ABSTRACT 101 //only used for abstract objects (e.g. spacevine_controller), things that are not really there.
 
-
 #define BORGMESON 1
 #define BORGTHERM 2
 #define BORGXRAY  4
 #define BORGMATERIAL 8
+
+//for clothing visor toggles, these determine which vars to toggle
+#define VISOR_FLASHPROTECT 1
+#define VISOR_TINT 2
+#define VISOR_VISIONFLAGS 4 //all following flags only matter for glasses
+#define VISOR_DARKNESSVIEW 8
+#define VISOR_INVISVIEW 16

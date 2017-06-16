@@ -2,14 +2,14 @@
 
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
-var/time_last_changed_position = 0
+GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to manage jobs and ID access."
 	icon_screen = "id"
 	icon_keyboard = "id_key"
-	req_one_access = list(access_heads, access_change_ids)
+	req_one_access = list(GLOB.access_heads, GLOB.access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/computer/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
@@ -19,11 +19,12 @@ var/time_last_changed_position = 0
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
+	var/prioritycount = 0 // we don't want 500 prioritized jobs
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
 	//if set to 0: Not able to close "original" positions. You can only close positions that you have opened before
-	var/change_position_cooldown = 60
+	var/change_position_cooldown = 30
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
 		"AI",
@@ -42,6 +43,12 @@ var/time_last_changed_position = 0
 	//This is used to keep track of opened positions for jobs to allow instant closing
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
+
+	light_color = LIGHT_COLOR_BLUE
+
+/obj/machinery/computer/card/Initialize()
+	. = ..()
+	change_position_cooldown = config.id_console_jobslot_delay
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -104,8 +111,8 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/proc/can_open_job(datum/job/job)
 	if(job)
 		if(!job_blacklisted(job.title))
-			if((job.total_positions <= player_list.len * (max_relative_positions / 100)))
-				var/delta = (world.time / 10) - time_last_changed_position
+			if((job.total_positions <= GLOB.player_list.len * (max_relative_positions / 100)))
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
 					return 1
 				return -2
@@ -117,7 +124,7 @@ var/time_last_changed_position = 0
 	if(job)
 		if(!job_blacklisted(job.title))
 			if(job.total_positions > job.current_positions)
-				var/delta = (world.time / 10) - time_last_changed_position
+				var/delta = (world.time / 10) - GLOB.time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
 					return 1
 				return -2
@@ -130,11 +137,11 @@ var/time_last_changed_position = 0
 
 	user.set_machine(src)
 	var/dat
-	if(!ticker)
+	if(!SSticker)
 		return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
-		for(var/datum/data/record/t in sortRecord(data_core.general))
+		for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
@@ -149,9 +156,9 @@ var/time_last_changed_position = 0
 			S = "--------"
 		dat += "<a href='?src=\ref[src];choice=scan'>[S]</a>"
 		dat += "<table>"
-		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>"
+		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b><td style='width:25%'><b>Prioritize</b></td></td></tr>"
 		var/ID
-		if(scan && (access_change_ids in scan.access) && !target_dept)
+		if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 			ID = 1
 		else
 			ID = 0
@@ -171,7 +178,7 @@ var/time_last_changed_position = 0
 				if(-1)
 					dat += "Denied"
 				if(-2)
-					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 					var/mins = round(time_to_wait / 60)
 					var/seconds = time_to_wait - (60*mins)
 					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
@@ -187,12 +194,28 @@ var/time_last_changed_position = 0
 				if(-1)
 					dat += "Denied"
 				if(-2)
-					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
 					var/mins = round(time_to_wait / 60)
 					var/seconds = time_to_wait - (60*mins)
 					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
 				if(0)
 					dat += "Denied"
+			dat += "</td><td>"
+			switch(job.total_positions)
+				if(0)
+					dat += "Denied"
+				else
+					if(ID)
+						if(job in SSjob.prioritized_jobs)
+							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
+						else
+							if(prioritycount < 5)
+								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
+							else
+								dat += "Denied"
+					else
+						dat += "Prioritize"
+
 			dat += "</td></tr>"
 		dat += "</table>"
 	else
@@ -228,7 +251,7 @@ var/time_last_changed_position = 0
 			header += "<div align='center'><br>"
 			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
 			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
+			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
 			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
 
 		header += "<hr>"
@@ -331,7 +354,7 @@ var/time_last_changed_position = 0
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
-				data_core.manifest_modify(modify.registered_name, modify.assignment)
+				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
@@ -369,7 +392,7 @@ var/time_last_changed_position = 0
 				if (check_access(scan))
 					region_access = list()
 					head_subordinates = list()
-					if(access_change_ids in scan.access)
+					if(GLOB.access_change_ids in scan.access)
 						if(target_dept)
 							head_subordinates = get_all_jobs()
 							region_access |= target_dept
@@ -379,31 +402,32 @@ var/time_last_changed_position = 0
 						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 
 					else
-						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
+						if((GLOB.access_hop in scan.access) && ((target_dept==1) || !target_dept))
 							region_access |= 1
 							region_access |= 6
 							get_subordinates("Head of Personnel")
-						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
+						if((GLOB.access_hos in scan.access) && ((target_dept==2) || !target_dept))
 							region_access |= 2
 							get_subordinates("Head of Security")
-						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
+						if((GLOB.access_cmo in scan.access) && ((target_dept==3) || !target_dept))
 							region_access |= 3
 							get_subordinates("Chief Medical Officer")
-						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
+						if((GLOB.access_rd in scan.access) && ((target_dept==4) || !target_dept))
 							region_access |= 4
 							get_subordinates("Research Director")
-						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
+						if((GLOB.access_ce in scan.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Chief Engineer")
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && issilicon(usr)) && (!modify))
-				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
+				to_chat(usr, "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>")
 		if ("logout")
 			region_access = null
 			head_subordinates = null
 			authenticated = 0
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
+
 		if("access")
 			if(href_list["allowed"])
 				if(authenticated)
@@ -433,7 +457,7 @@ var/time_last_changed_position = 0
 							jobdatum = J
 							break
 					if(!jobdatum)
-						usr << "<span class='error'>No log exists for this job.</span>"
+						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
 						return
 
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
@@ -445,7 +469,7 @@ var/time_last_changed_position = 0
 				modify.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			else
-				usr << "<span class='error'>You are not authorized to demote this position.</span>"
+				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
@@ -456,7 +480,7 @@ var/time_last_changed_position = 0
 						modify.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					else
-						usr << "<span class='error'>Invalid name entered.</span>"
+						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
@@ -468,7 +492,7 @@ var/time_last_changed_position = 0
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -476,14 +500,14 @@ var/time_last_changed_position = 0
 				if(can_open_job(j) != 1)
 					return 0
 				if(opened_positions[edit_job_target] >= 0)
-					time_last_changed_position = world.time / 10
+					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions++
 				opened_positions[edit_job_target]++
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
@@ -492,10 +516,28 @@ var/time_last_changed_position = 0
 					return 0
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
-					time_last_changed_position = world.time / 10
+					GLOB.time_last_changed_position = world.time / 10
 				j.total_positions--
 				opened_positions[edit_job_target]--
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+
+		if ("prioritize_job")
+			// TOGGLE WHETHER JOB APPEARS AS PRIORITIZED IN THE LOBBY
+			if(scan && (GLOB.access_change_ids in scan.access) && !target_dept)
+				var/priority_target = href_list["job"]
+				var/datum/job/j = SSjob.GetJob(priority_target)
+				if(!j)
+					return 0
+				var/priority = TRUE
+				if(j in SSjob.prioritized_jobs)
+					SSjob.prioritized_jobs -= j
+					prioritycount--
+					priority = FALSE
+				else
+					SSjob.prioritized_jobs += j
+					prioritycount++
+				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
 		if ("print")
 			if (!( printing ))
@@ -503,7 +545,7 @@ var/time_last_changed_position = 0
 				sleep(50)
 				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in sortRecord(data_core.general))
+				for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
@@ -522,7 +564,7 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/centcom
 	name = "\improper Centcom identification console"
 	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
-	req_access = list(access_cent_captain)
+	req_access = list(GLOB.access_cent_captain)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"
@@ -544,6 +586,8 @@ var/time_last_changed_position = 0
 	target_dept = 2
 	icon_screen = "idhos"
 
+	light_color = LIGHT_COLOR_RED
+
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3
 	icon_screen = "idcmo"
@@ -552,6 +596,10 @@ var/time_last_changed_position = 0
 	target_dept = 4
 	icon_screen = "idrd"
 
+	light_color = LIGHT_COLOR_PINK
+
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
 	icon_screen = "idce"
+
+	light_color = LIGHT_COLOR_YELLOW

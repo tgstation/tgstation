@@ -29,7 +29,7 @@
 		wormholes += new /obj/effect/portal/wormhole(T, null, null, -1)
 
 /datum/round_event/wormholes/announce()
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/AI/spanomalies.ogg')
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/ai/spanomalies.ogg')
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
@@ -39,7 +39,7 @@
 				O.loc = T
 
 /datum/round_event/wormholes/end()
-	portals.Remove(wormholes)
+	GLOB.portals.Remove(wormholes)
 	for(var/obj/effect/portal/wormhole/O in wormholes)
 		O.loc = null
 	wormholes.Cut()
@@ -67,8 +67,8 @@
 
 	if(istype(M, /atom/movable))
 		var/turf/target
-		if(portals.len)
-			var/obj/effect/portal/P = pick(portals)
+		if(GLOB.portals.len)
+			var/obj/effect/portal/P = pick(GLOB.portals)
 			if(P && isturf(P.loc))
 				target = P.loc
 		if(!target)

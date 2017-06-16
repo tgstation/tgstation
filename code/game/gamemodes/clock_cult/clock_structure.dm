@@ -9,27 +9,28 @@
 	anchored = 1
 	density = 1
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/repair_amount = 4 //how much a proselytizer can repair each cycle
-	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
+	var/can_be_repaired = TRUE //if a fabricator can repair it
 	break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
 	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
 	/obj/item/clockwork/alloy_shards/medium = 2, \
 	/obj/item/clockwork/alloy_shards/small = 3) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
+	var/immune_to_servant_attacks = FALSE //if we ignore attacks from servants of ratvar instead of taking damage
 
-/obj/structure/destructible/clockwork/New()
-	..()
+/obj/structure/destructible/clockwork/Initialize()
+	. = ..()
 	change_construction_value(construction_value)
-	all_clockwork_objects += src
+	GLOB.all_clockwork_objects += src
 
 /obj/structure/destructible/clockwork/Destroy()
 	change_construction_value(-construction_value)
-	all_clockwork_objects -= src
+	GLOB.all_clockwork_objects -= src
 	return ..()
 
 /obj/structure/destructible/clockwork/ratvar_act()
-	obj_integrity = max_integrity
+	if(GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated)
+		obj_integrity = max_integrity
 
 /obj/structure/destructible/clockwork/narsie_act()
 	if(take_damage(rand(25, 50), BRUTE) && src) //if we still exist
@@ -44,24 +45,40 @@
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
-	if(!(resistance_flags & INDESTRUCTIBLE))
+	if(unanchored_icon)
+		to_chat(user, "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>")
+
+/obj/structure/destructible/clockwork/examine_status(mob/user)
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/t_It = p_they(TRUE)
 		var/t_is = p_are()
-		var/servant_message = "[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity"
 		var/heavily_damaged = FALSE
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		if(healthpercent < 50)
 			heavily_damaged = TRUE
-		if(can_see_clockwork)
-			user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[servant_message][heavily_damaged ? "!":"."]</span>"
-	if(unanchored_icon)
-		user << "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
+		return "<span class='[heavily_damaged ? "alloy":"brass"]'>[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity[heavily_damaged ? "!":"."]</span>"
+	return ..()
+
+/obj/structure/destructible/clockwork/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
 
 /obj/structure/destructible/clockwork/hulk_damage()
 	return 20
 
+/obj/structure/destructible/clockwork/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
+
+/obj/structure/destructible/clockwork/mech_melee_attack(obj/mecha/M)
+	if(M.occupant && is_servant_of_ratvar(M.occupant) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
+
 /obj/structure/destructible/clockwork/proc/get_efficiency_mod(increasing)
-	if(ratvar_awakens)
+	if(GLOB.ratvar_awakens)
 		if(increasing)
 			return 0.5
 		return 2
@@ -70,11 +87,16 @@
 		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
-/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user, silent)
 	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
-		user << "<span class='warning'>[src] is too damaged to unsecure!</span>"
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
 		return FAILED_UNFASTEN
 	return ..()
+
+/obj/structure/destructible/clockwork/attack_ai(mob/user)
+	if(is_servant_of_ratvar(user))
+		attack_hand(user)
 
 /obj/structure/destructible/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(is_servant_of_ratvar(M))
@@ -90,6 +112,11 @@
 		return 1
 	return ..()
 
+/obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
+	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
+		return FALSE
+	return ..()
+
 /obj/structure/destructible/clockwork/proc/update_anchored(mob/user, do_damage)
 	if(anchored)
 		icon_state = initial(icon_state)
@@ -98,13 +125,13 @@
 		if(do_damage)
 			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
-		user << "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>"
+		to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
 /obj/structure/destructible/clockwork/emp_act(severity)
 	if(anchored && unanchored_icon)
 		anchored = FALSE
 		update_anchored(null, obj_integrity > max_integrity * 0.25)
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 
 
 //for the ark and Ratvar
@@ -115,12 +142,12 @@
 	density = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
-/obj/structure/destructible/clockwork/massive/New()
-	..()
-	poi_list += src
+/obj/structure/destructible/clockwork/massive/Initialize()
+	. = ..()
+	GLOB.poi_list += src
 
 /obj/structure/destructible/clockwork/massive/Destroy()
-	poi_list -= src
+	GLOB.poi_list -= src
 	return ..()
 
 /obj/structure/destructible/clockwork/massive/singularity_pull(S, current_size)
@@ -140,8 +167,8 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
 		var/sigil_number = LAZYLEN(check_apc_and_sigils())
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
-		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "s":""] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>"
+		to_chat(user, "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power, \
+		and <b>[sigil_number]</b> Sigil[sigil_number == 1 ? "":"s"] of Transmission [sigil_number == 1 ? "is":"are"] in range.</span>")
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -152,22 +179,19 @@
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
-/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user)
+/obj/structure/destructible/clockwork/powered/can_be_unfasten_wrench(mob/user, silent)
 	if(active)
-		user << "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>"
+		if(!silent)
+			to_chat(user, "<span class='warning'>[src] needs to be disabled before it can be unsecured!</span>")
 		return FAILED_UNFASTEN
 	return ..()
-
-/obj/structure/destructible/clockwork/powered/attack_ai(mob/user)
-	if(is_servant_of_ratvar(user))
-		attack_hand(user)
 
 /obj/structure/destructible/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)
 		if(!is_servant_of_ratvar(user))
 			return FALSE
 		if(!anchored && !active)
-			user << "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>"
+			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor before it can be activated!</span>")
 			return FALSE
 		visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active
@@ -191,10 +215,10 @@
 
 /obj/structure/destructible/clockwork/powered/emp_act(severity)
 	if(forced_disable(TRUE))
-		new /obj/effect/overlay/temp/emp(loc)
+		new /obj/effect/temp_visual/emp(loc)
 
 /obj/structure/destructible/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
-	if(!needs_power || ratvar_awakens)
+	if(!needs_power || GLOB.ratvar_awakens)
 		return INFINITY //oh yeah we've got power why'd you ask
 
 	var/power = 0
@@ -206,7 +230,7 @@
 	var/power = 0
 	var/area/A = get_area(src)
 	var/area/targetAPCA
-	for(var/obj/machinery/power/apc/APC in apcs_list)
+	for(var/obj/machinery/power/apc/APC in GLOB.apcs_list)
 		var/area/APCA = get_area(APC)
 		if(APCA == A)
 			target_apc = APC
@@ -228,7 +252,7 @@
 
 
 /obj/structure/destructible/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
-	if(!needs_power || ratvar_awakens)
+	if(!needs_power || GLOB.ratvar_awakens)
 		return 1
 	if(amount <= 0)
 		return FALSE

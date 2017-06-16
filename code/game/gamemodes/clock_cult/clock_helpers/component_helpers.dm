@@ -2,7 +2,7 @@
 /proc/generate_cache_component(specific_component_id, atom/A)
 	if(!specific_component_id)
 		specific_component_id = get_weighted_component_id()
-	clockwork_component_cache[specific_component_id]++
+	GLOB.clockwork_component_cache[specific_component_id]++
 	if(A)
 		var/component_animation_type = get_component_animation_type(specific_component_id)
 		new component_animation_type(get_turf(A))
@@ -13,15 +13,21 @@
 /proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab)
 	. = list()
 	if(storage_slab)
-		if(clockwork_caches)
-			for(var/i in clockwork_component_cache)
-				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache[i] + storage_slab.stored_components[i]), 1)
+		if(GLOB.clockwork_caches)
+			for(var/i in GLOB.clockwork_component_cache)
+				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(GLOB.clockwork_component_cache[i] + storage_slab.stored_components[i]), 1)
 		else
-			for(var/i in clockwork_component_cache)
+			for(var/i in GLOB.clockwork_component_cache)
 				.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*storage_slab.stored_components[i], 1)
 	else
-		for(var/i in clockwork_component_cache)
-			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache[i], 1)
+		for(var/i in GLOB.clockwork_component_cache)
+			.[i] = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*GLOB.clockwork_component_cache[i], 1)
+	for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in GLOB.all_clockwork_objects)
+		if(G.still_needs_components())
+			for(var/i in G.required_components)
+				if(!G.required_components[i])
+					. -= i
+		break
 	. = pickweight(.)
 
 //returns a component name from a component id
@@ -118,15 +124,15 @@
 /proc/get_component_animation_type(id)
 	switch(id)
 		if(BELLIGERENT_EYE)
-			return /obj/effect/overlay/temp/ratvar/component
+			return /obj/effect/temp_visual/ratvar/component
 		if(VANGUARD_COGWHEEL)
-			return /obj/effect/overlay/temp/ratvar/component/cogwheel
+			return /obj/effect/temp_visual/ratvar/component/cogwheel
 		if(GEIS_CAPACITOR)
-			return /obj/effect/overlay/temp/ratvar/component/capacitor
+			return /obj/effect/temp_visual/ratvar/component/capacitor
 		if(REPLICANT_ALLOY)
-			return /obj/effect/overlay/temp/ratvar/component/alloy
+			return /obj/effect/temp_visual/ratvar/component/alloy
 		if(HIEROPHANT_ANSIBLE)
-			return /obj/effect/overlay/temp/ratvar/component/ansible
+			return /obj/effect/temp_visual/ratvar/component/ansible
 		else
 			return null
 

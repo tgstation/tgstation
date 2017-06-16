@@ -28,7 +28,8 @@
 	status_flags = CANPUSH
 	movement_type = FLYING
 	loot = list(/obj/item/weapon/ectoplasm)
-	del_on_death = 1
+	del_on_death = TRUE
+	initial_language_holder = /datum/language_holder/construct
 
 /mob/living/simple_animal/shade/death()
 	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
@@ -43,16 +44,19 @@
 	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(isconstruct(M))
+		var/mob/living/simple_animal/hostile/construct/C = M
+		if(!C.can_repair_constructs)
+			return
 		if(health < maxHealth)
 			adjustHealth(-25)
 			Beam(M,icon_state="sendbeam",time=4)
 			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
 					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else
-			M << "<span class='cult'>You cannot heal <b>[src]</b>, as [p_they()] [p_are()] unharmed!</span>"
+			to_chat(M, "<span class='cult'>You cannot heal <b>[src]</b>, as [p_they()] [p_are()] unharmed!</span>")
 	else if(src != M)
-		..()
+		return ..()
 
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))

@@ -89,7 +89,7 @@
 				return
 			held_mob.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(prob(10))
-				held_mob << "<span class='warning'>Your hand holding [src] burns!</span>"
+				to_chat(held_mob, "<span class='warning'>Your hand holding [src] burns!</span>")
 	else
 		held_mob = null
 		..()

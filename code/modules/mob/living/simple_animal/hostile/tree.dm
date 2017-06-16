@@ -52,7 +52,7 @@
 					T.atmos_spawn_air("o2=[amt]")
 
 /mob/living/simple_animal/hostile/tree/AttackingTarget()
-	..()
+	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(prob(15))

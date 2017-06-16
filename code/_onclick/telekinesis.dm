@@ -3,17 +3,33 @@
 
 	This needs more thinking out, but I might as well.
 */
-var/const/tk_maxrange = 15
 
 /*
 	Telekinetic attack:
 
 	By default, emulate the user's unarmed attack
 */
+
 /atom/proc/attack_tk(mob/user)
 	if(user.stat)
 		return
+	new /obj/effect/temp_visual/telekinesis(loc)
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
+	return
+
+/obj/attack_tk(mob/user)
+	if(user.stat)
+		return
+
+	var/obj/item/tk_grab/O = new(src)
+	O.tk_user = user
+	if(O.focus_object(src))
+		user.put_in_active_hand(O)
+	else
+		qdel(O)
+		..()
+
+/mob/attack_tk(mob/user)
 	return
 
 /*
@@ -23,37 +39,13 @@ var/const/tk_maxrange = 15
 	It is used for manipulating things at range, for example, opening and closing closets.
 	There are not a lot of defaults at this time, add more where appropriate.
 */
+
 /atom/proc/attack_self_tk(mob/user)
 	return
 
 /obj/item/attack_self_tk(mob/user)
 	attack_self(user)
 
-/obj/attack_tk(mob/user)
-	if(user.stat)
-		return
-	if(anchored)
-		..()
-		return
-
-	var/obj/item/tk_grab/O = new(src)
-	user.put_in_active_hand(O)
-	O.host = user
-	O.focus_object(src)
-	return
-
-/obj/item/attack_tk(mob/user)
-	if(user.stat)
-		return
-	var/obj/item/tk_grab/O = new(src)
-	user.put_in_active_hand(O)
-	O.host = user
-	O.focus_object(src)
-	return
-
-
-/mob/attack_tk(mob/user)
-	return // needs more thinking about
 
 /*
 	TK Grab Item (the workhorse of old TK)
@@ -74,10 +66,20 @@ var/const/tk_maxrange = 15
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
-	var/last_throw = 0
 	var/atom/movable/focus = null
-	var/mob/living/host = null
+	var/mob/living/carbon/tk_user = null
 
+/obj/item/tk_grab/Initialize()
+	..()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/tk_grab/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/tk_grab/process()
+	if(check_if_focusable(focus)) //if somebody grabs your thing, no waiting for them to put it down and hitting them again.
+		update_icon()
 
 /obj/item/tk_grab/dropped(mob/user)
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
@@ -98,7 +100,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
 		return
-	if(qdeleted(focus))
+	if(QDELETED(focus))
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
@@ -107,111 +109,74 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	if(!target || !user)
 		return
-	if(last_throw+3 > world.time)
-		return
-	if(!host || host != user)
-		qdel(src)
-		return
-	if(!(user.dna.check_mutation(TK)))
-		qdel(src)
-		return
-	if(isobj(target) && !isturf(target.loc))
-		return
-
-	if(!tkMaxRangeCheck(user, target, focus))
-		return
 
 	if(!focus)
-		focus_object(target, user)
+		focus_object(target)
 		return
-
-	if(focus.anchored || !isturf(focus.loc))
-		qdel(src)
+	else if(!check_if_focusable(focus))
 		return
 
 	if(target == focus)
 		target.attack_self_tk(user)
-		return // todo: something like attack_self not laden with assumptions inherent to attack_self
+		update_icon()
+		return
 
 
 	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
+		apply_focus_overlay()
 		var/obj/item/I = focus
-		var/resolved = target.attackby(I, user, params)
-		if(!resolved && target && I)
-			I.afterattack(target,user,1) // for splashing with beakers
-			update_icon()
+		I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.
+		if(check_if_focusable(focus))
+			focus.do_attack_animation(target, null, focus)
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
-		last_throw = world.time
-		user.changeNext_move(CLICK_CD_MELEE)
-		update_icon()
+	user.changeNext_move(CLICK_CD_MELEE)
+	update_icon()
 
-/proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
+/proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
-	if(focus)
-		d = max(d,get_dist(user,focus)) // whichever is further
-	if(d > tk_maxrange)
-		user << "<span class ='warning'>Your mind won't reach that far.</span>"
-		return 0
-	return 1
+	if(d > TK_MAXRANGE)
+		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
+		return
+	return TRUE
 
 /obj/item/tk_grab/attack(mob/living/M, mob/living/user, def_zone)
 	return
 
-
-/obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!isobj(target))
-		return//Cant throw non objects atm might let it do mobs later
-	if(target.anchored || !isturf(target.loc))
-		qdel(src)
+/obj/item/tk_grab/proc/focus_object(obj/target)
+	if(!check_if_focusable(target))
 		return
 	focus = target
 	update_icon()
 	apply_focus_overlay()
-	return
+	return TRUE
 
+/obj/item/tk_grab/proc/check_if_focusable(obj/target)
+	if(!tk_user || !istype(tk_user) || QDELETED(target) || !istype(target) || !tk_user.dna.check_mutation(TK))
+		qdel(src)
+		return
+	if(!tkMaxRangeCheck(tk_user, target) || target.anchored || !isturf(target.loc))
+		qdel(src)
+		return
+	return TRUE
 
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
-
+	new /obj/effect/temp_visual/telekinesis(get_turf(focus))
 
 /obj/item/tk_grab/update_icon()
 	cut_overlays()
-	if(focus && focus.icon && focus.icon_state)
-		add_overlay(icon(focus.icon,focus.icon_state))
-	return
+	if(focus)
+		var/old_layer = focus.layer
+		var/old_plane = focus.plane
+		focus.layer = layer+0.01
+		focus.plane = ABOVE_HUD_PLANE
+		add_overlay(focus) //this is kind of ick, but it's better than using icon()
+		focus.layer = old_layer
+		focus.plane = old_plane
 
 /obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
-
-/*Not quite done likely needs to use something thats not get_step_to
-/obj/item/tk_grab/proc/check_path()
-	var/turf/ref = get_turf(src.loc)
-	var/turf/target = get_turf(focus.loc)
-	if(!ref || !target)
-		return 0
-	var/distance = get_dist(ref, target)
-	if(distance >= 10)
-		return 0
-	for(var/i = 1 to distance)
-		ref = get_step_to(ref, target, 0)
-	if(ref != target)
-		return 0
-	return 1
-*/
-
-//equip_to_slot_or_del(obj/item/W, slot, qdel_on_fail = 1)
-/*
-		if(istype(user, /mob/living/carbon))
-			if(user:mutations & TK && get_dist(source, user) <= 7)
-				if(user:get_active_hand())
-					return 0
-				var/X = source:x
-				var/Y = source:y
-				var/Z = source:z
-
-*/

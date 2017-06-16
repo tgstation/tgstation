@@ -14,8 +14,9 @@
 #define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
-#define META_GAS_OVERLAY		4
 #define META_GAS_MOLES_VISIBLE	3
+#define META_GAS_OVERLAY		4
+#define META_GAS_DANGER			5
 
 //stuff you should probably leave well alone!
 //ATMOS

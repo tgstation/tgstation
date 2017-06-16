@@ -1,5 +1,5 @@
 
-var/global/list/rad_collectors = list()
+GLOBAL_LIST_EMPTY(rad_collectors)
 
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
@@ -8,7 +8,7 @@ var/global/list/rad_collectors = list()
 	icon_state = "ca"
 	anchored = 0
 	density = 1
-	req_access = list(access_engine_equip)
+	req_access = list(GLOB.access_engine_equip)
 //	use_power = 0
 	obj_integrity = 350
 	max_integrity = 350
@@ -21,16 +21,16 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/New()
 	..()
-	rad_collectors += src
+	GLOB.rad_collectors += src
 
 /obj/machinery/power/rad_collector/Destroy()
-	rad_collectors -= src
+	GLOB.rad_collectors -= src
 	return ..()
 
 /obj/machinery/power/rad_collector/process()
 	if(loaded_tank)
 		if(!loaded_tank.air_contents.gases["plasma"])
-			investigate_log("<font color='red'>out of fuel</font>.","singulo")
+			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
 			eject()
 		else
 			loaded_tank.air_contents.gases["plasma"][MOLES] -= 0.001*drainratio
@@ -46,16 +46,21 @@ var/global/list/rad_collectors = list()
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			var/fuel
+			if(loaded_tank)
+				fuel = loaded_tank.air_contents.gases["plasma"]
+			fuel = fuel ? fuel[MOLES] : 0
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(fuel/0.29)]%":"<font color='red'>It is empty</font>"].", INVESTIGATE_SINGULO)
 			return
 		else
-			user << "<span class='warning'>The controls are locked!</span>"
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return
 ..()
 
-/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user)
+/obj/machinery/power/rad_collector/can_be_unfasten_wrench(mob/user, silent)
 	if(loaded_tank)
-		user << "<span class='warning'>Remove the plasma tank first!</span>"
+		if(!silent)
+			to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
 		return FAILED_UNFASTEN
 	return ..()
 
@@ -69,39 +74,45 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		user << "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>"
-		return 1
+		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
+		return TRUE
 	else if(istype(W, /obj/item/device/analyzer) && loaded_tank)
 		atmosanalyzer_scan(loaded_tank.air_contents, user)
 	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(!anchored)
-			user << "<span class='warning'>The [src] needs to be secured to the floor first!</span>"
-			return 1
+			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first!</span>")
+			return TRUE
 		if(loaded_tank)
-			user << "<span class='warning'>There's already a plasma tank loaded!</span>"
-			return 1
+			to_chat(user, "<span class='warning'>There's already a plasma tank loaded!</span>")
+			return TRUE
 		if(!user.drop_item())
-			return 1
+			return TRUE
 		loaded_tank = W
 		W.forceMove(src)
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
-		if(loaded_tank && !locked)
+		if(loaded_tank)
+			if(locked)
+				to_chat(user, "<span class='warning'>The controls are locked!</span>")
+				return TRUE
 			eject()
-			return 1
+			return TRUE
+		else
+			to_chat(user, "<span class='warning'>There isn't a tank loaded!</span>")
+			return TRUE
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 0)
-		return 1
+		return TRUE
 	else if(W.GetID())
 		if(allowed(user))
 			if(active)
 				locked = !locked
-				user << "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>"
+				to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 			else
-				user << "<span class='warning'>The controls can only be locked when \the [src] is active!</span>"
+				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is active!</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
-			return 1
+			to_chat(user, "<span class='danger'>Access denied.</span>")
+			return TRUE
 	else
 		return ..()
 
@@ -128,7 +139,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
 	if(loaded_tank && active)
 		var/power_produced = loaded_tank.air_contents.gases["plasma"] ? loaded_tank.air_contents.gases["plasma"][MOLES] : 0
-		power_produced *= pulse_strength*20
+		power_produced *= pulse_strength*10
 		add_avail(power_produced)
 		last_power = power_produced
 		return
@@ -138,11 +149,11 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
 	if(loaded_tank)
-		add_overlay(image('icons/obj/singularity.dmi', "ptank"))
+		add_overlay("ptank")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		add_overlay(image('icons/obj/singularity.dmi', "on"))
+		add_overlay("on")
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

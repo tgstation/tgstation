@@ -115,7 +115,7 @@
 		var/final = target_type
 		target_type = text2path(final)
 		if(!target_type)
-			usr << "Didn't work, contact Sayu with this: [final]"
+			to_chat(usr, "Didn't work, contact Sayu with this: [final]")
 			usr << browse(null,"window=airlockmaker")
 			return
 

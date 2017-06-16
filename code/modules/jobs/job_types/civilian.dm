@@ -14,8 +14,11 @@ Clown
 
 	outfit = /datum/outfit/job/clown
 
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
+	access = list(GLOB.access_theatre)
+	minimal_access = list(GLOB.access_theatre)
+
+/datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
+	H.rename_self("clown", M.client)
 
 /datum/outfit/job/clown
 	name = "Clown"
@@ -31,22 +34,23 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
 		)
+
+	implants = list(/obj/item/weapon/implant/sad_trombone)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
 
-	implants = list(/obj/item/weapon/implant/sad_trombone)
+	box = /obj/item/weapon/storage/box/hug/survival
+
 
 /datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
 
-	H.fully_replace_character_name(H.real_name, pick(clown_names))
+	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names))
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -54,7 +58,6 @@ Clown
 		return
 
 	H.dna.add_mutation(CLOWNMUT)
-	H.rename_self("clown")
 
 /*
 Mime
@@ -72,8 +75,11 @@ Mime
 
 	outfit = /datum/outfit/job/mime
 
-	access = list(access_theatre)
-	minimal_access = list(access_theatre)
+	access = list(GLOB.access_theatre)
+	minimal_access = list(GLOB.access_theatre)
+
+/datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
+	H.rename_self("mime", M.client)
 
 /datum/outfit/job/mime
 	name = "Mime"
@@ -103,14 +109,12 @@ Mime
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
 
-	H.rename_self("mime")
-
 /*
-Librarian
+Curator
 */
-/datum/job/librarian
-	title = "Librarian"
-	flag = LIBRARIAN
+/datum/job/curator
+	title = "Curator"
+	flag = CURATOR
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -119,20 +123,34 @@ Librarian
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	outfit = /datum/outfit/job/librarian
+	outfit = /datum/outfit/job/curator
 
-	access = list(access_library)
-	minimal_access = list(access_library)
+	access = list(GLOB.access_library)
+	minimal_access = list(GLOB.access_library, GLOB.access_construction,GLOB.access_mining_station)
 
-/datum/outfit/job/librarian
-	name = "Librarian"
-	jobtype = /datum/job/librarian
+/datum/outfit/job/curator
+	name = "Curator"
+	jobtype = /datum/job/curator
 
-	belt = /obj/item/device/pda/librarian
-	uniform = /obj/item/clothing/under/rank/librarian
+	belt = /obj/item/device/pda/curator
+	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/weapon/storage/bag/books
-	r_pocket = /obj/item/weapon/barcodescanner
+	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
+	backpack_contents = list(
+		/obj/item/weapon/melee/curator_whip = 1,
+		/obj/item/soapstone = 1,
+		/obj/item/weapon/barcodescanner = 1
+	)
+
+
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	H.grant_all_languages(omnitongue=TRUE)
 
 /*
 Lawyer
@@ -151,8 +169,8 @@ Lawyer
 
 	outfit = /datum/outfit/job/lawyer
 
-	access = list(access_lawyer, access_court, access_sec_doors)
-	minimal_access = list(access_lawyer, access_court, access_sec_doors)
+	access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
+	minimal_access = list(GLOB.access_lawyer, GLOB.access_court, GLOB.access_sec_doors)
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
@@ -165,7 +183,7 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
-	r_pocket = /obj/item/clothing/tie/lawyers_badge
+	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

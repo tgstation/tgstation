@@ -4,7 +4,7 @@
 	icon_state = "frog"
 	icon_living = "frog"
 	icon_dead = "frog_dead"
-	speak = list("ribbits","croaks")
+	speak = list("ribbit","croak")
 	emote_see = list("hops in a circle.", "shakes.")
 	speak_chance = 1
 	turns_per_move = 5
@@ -19,14 +19,14 @@
 	density = 0
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("hostile")
-	attack_sound = 'sound/effects/Reee.ogg'
+	attack_sound = 'sound/effects/reee.ogg'
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 1
 
-/mob/living/simple_animal/hostile/retaliate/frog/New()
-	..()
+/mob/living/simple_animal/hostile/retaliate/frog/Initialize()
+	. = ..()
 	if(prob(1))
 		name = "rare frog"
 		desc = "It seems a little smug."
@@ -39,4 +39,4 @@
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
 		if(L.mob_size > MOB_SIZE_TINY)
-			playsound(src, 'sound/effects/Huuu.ogg', 50, 1)
+			playsound(src, 'sound/effects/huuu.ogg', 50, 1)
