@@ -561,7 +561,7 @@
 	item_state = "anc_hardsuit"
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 0, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 75)
 	slowdown = 3
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancien	t
 	resistance_flags = FIRE_PROOF
 	var/footstep = 1
 
