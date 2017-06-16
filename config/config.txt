@@ -32,6 +32,20 @@ BAN_LEGACY_SYSTEM
 ## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
 #USE_ACCOUNT_AGE_FOR_JOBS
 
+##Unhash this to track player playtime in the database. Requires database to be enabled.
+#USE_EXP_TRACKING
+##Unhash this to enable playtime requirements for head jobs.
+#USE_EXP_RESTRICTIONS_HEADS
+##Unhash this to override head jobs' playtime requirements with this number of hours.
+#USE_EXP_RESTRICTIONS_HEADS_HOURS 15
+##Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
+#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT 
+##Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
+#USE_EXP_RESTRICTIONS_OTHER
+##Allows admins to bypass job playtime requirements.
+#USE_EXP_RESTRICTIONS_ADMIN_BYPASS
+
+
 ## log OOC channel
 LOG_OOC
 

@@ -1,4 +1,6 @@
 /mob/dead/new_player/Login()
+	if(config.use_exp_tracking)
+		client.set_exp_from_db()
 	if(!mind)
 		mind = new /datum/mind(key)
 		mind.active = 1
