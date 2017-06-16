@@ -95,10 +95,10 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/AM, attack_text, final_block_chance)
 	if(active)
 		return ..()
-	return 0
+	return FALSE
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
 	if(user.disabilities & CLUMSY && prob(50))

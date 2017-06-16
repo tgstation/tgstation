@@ -317,10 +317,10 @@
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/weapon/twohanded/dualsaber/toy/hit_reaction()
-	return 0
+	return FALSE
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
-	return 0
+	return FALSE
 
 /obj/item/toy/katana
 	name = "replica katana"

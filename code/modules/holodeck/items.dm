@@ -32,10 +32,10 @@
 	..()
 	item_color = "red"
 
-/obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/AM, attack_text, final_block_chance)
 	if(active)
 		return ..()
-	return 0
+	return FALSE
 
 /obj/item/weapon/holo/esword/attack(target as mob, mob/user as mob)
 	..()
