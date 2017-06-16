@@ -36,6 +36,7 @@
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
+	LoadDonators()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 

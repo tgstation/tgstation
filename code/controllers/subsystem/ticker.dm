@@ -219,6 +219,8 @@ SUBSYSTEM_DEF(ticker)
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
+	GLOB.donations = new()
+
 	if(SSevents.holidays)
 		to_chat(world, "<font color='blue'>and...</font>")
 		for(var/holidayname in SSevents.holidays)
@@ -817,7 +819,7 @@ SUBSYSTEM_DEF(ticker)
 	if(delay_end)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
-	
+
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 
 	var/start_wait = world.time
@@ -827,7 +829,7 @@ SUBSYSTEM_DEF(ticker)
 	if(delay_end)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
-	
+
 	SSblackbox.set_details("[feedback_c]","[feedback_r]")
 
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
