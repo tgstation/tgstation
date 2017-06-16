@@ -418,3 +418,46 @@
 
 /datum/holiday/mothering_sunday/greet()
 	return "It's Mothering Sunday! the -REAL- Mother's Day, you did remember to get her a gift right?"
+
+
+/datum/holiday/ashwednesday
+	name = "Ash Wednesday"
+
+/datum/holiday/ashwednesday/shouldCelebrate(dd, mm, yy)
+	if(!begin_month)
+		var/year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/ashWednesdayResults = AshWednesdayDate(year)
+		end_day = begin_day = ashWednesdayResults["day"]
+		end_month = begin_month = ashWednesdayResults["month"]
+
+	return ..()
+
+
+/datum/holiday/goodfriday
+	name = "Good Friday"
+
+/datum/holiday/goodfriday/shouldCelebrate(dd, mm, yy)
+	if(!begin_month)
+		var/year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/goodFridayResults = GoodFridayDate(year)
+		end_day = begin_day = goodFridayResults["day"]
+		end_month = begin_month = goodFridayResults["month"]
+
+	return ..()
+
+
+/datum/holiday/pancakeday
+	name = "Pancake Day / Mardi Gras / Shrove Tuesday"
+
+/datum/holiday/pancakeday/shouldCelebrate(dd, mm, yy)
+	if(!begin_month)
+		var/year = text2num(time2text(world.timeofday, "YYYY"))
+		var/list/shroveTuesdayResults = ShroveTuesdayDate(year)
+		end_day = begin_day = shroveTuesdayResults["day"]
+		end_month = begin_month = shroveTuesdayResults["month"]
+
+	return ..()
+
+
+/datum/holiday/pancakeday/greet()
+	return "Today is Pancake day! also known as Mardi Gras and Shrove Tuesday, but who cares about that, PANCAAAAAKES!!!1!!"

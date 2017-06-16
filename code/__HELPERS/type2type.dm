@@ -313,12 +313,12 @@
 
 	while(tmpDays > daysInYear) //Start adding years to 1970
 		year++
-		if(isLeap(year))
+		if(IsLeapYear(year))
 			tmpDays -= daysInLYear
 		else
 			tmpDays -= daysInYear
 
-	if(isLeap(year)) //The year is a leap year
+	if(IsLeapYear(year)) //The year is a leap year
 		monthsInDays = list(-1,30,59,90,120,151,181,212,243,273,304,334)
 	else
 		monthsInDays = list(0,31,59,90,120,151,181,212,243,273,304,334)
@@ -335,10 +335,6 @@
 	day = tmpDays - mDays //Setup the date
 
 	return "[year][seperator][((month < 10) ? "0[month]" : month)][seperator][((day < 10) ? "0[day]" : day)]"
-
-/proc/isLeap(y)
-	return ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
-
 
 
 //Turns a Body_parts_covered bitfield into a list of organ/limb names.
