@@ -1,3 +1,5 @@
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -27,8 +29,6 @@
 	var/radio_channel = "Medical"
 
 	var/running_bob_anim = FALSE
-
-	var/static/list/cryo_overlays = list()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -96,8 +96,34 @@
 	if(state_open)
 		icon_state = "pod-open"
 	else if(occupant)
-		var/mutable_appearance/occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
-		occupant_overlay.copy_overlays(occupant)
+		var/mutable_appearance/occupant_overlay
+
+		if(istype(occupant, /mob/living/carbon/human) || istype(occupant, /mob/living/carbon/alien/larva) || istype(occupant, /mob/living/simple_animal/slime) || istype(occupant, /mob/living/simple_animal/parrot) || istype(occupant, /mob/living/simple_animal/pet))
+			// Mobs that are smaller than cryotube
+			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
+
+		else if(istype(occupant, /mob/living/carbon/monkey)) // Monkey
+			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
+			occupant_overlay.copy_overlays(occupant)
+
+		else if(istype(occupant, /mob/living/carbon/alien))
+
+			if(istype(occupant, /mob/living/carbon/alien/humanoid/royal)) // Queen and prae
+				occupant_overlay = mutable_appearance(CRYOMOBS, "alienq")
+
+			else if(istype(occupant, /mob/living/carbon/alien/humanoid/hunter)) // Hunter
+				occupant_overlay = mutable_appearance(CRYOMOBS, "alienh")
+
+			else if(istype(occupant, /mob/living/carbon/alien/humanoid/sentinel)) // Sentinel
+				occupant_overlay = mutable_appearance(CRYOMOBS, "aliens")
+
+			else // Drone (or any other alien that isn't any of the above)
+				occupant_overlay = mutable_appearance(CRYOMOBS, "aliend")
+
+		else // Anything else
+			occupant_overlay = mutable_appearance(CRYOMOBS, "generic")
+
 		occupant_overlay.pixel_y = 22
 		if(on && is_operational() && !running_bob_anim)
 			icon_state = "pod-on"
@@ -352,3 +378,5 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+#undef CRYOMOBS
