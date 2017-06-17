@@ -2214,6 +2214,7 @@
 #include "hippiestation\code\modules\clothing\head.dm"
 #include "hippiestation\code\modules\clothing\mask.dm"
 #include "hippiestation\code\modules\clothing\shoe.dm"
+#include "hippiestation\code\modules\clothing\shoes\magboots.dm"
 #include "hippiestation\code\modules\clothing\suit.dm"
 #include "hippiestation\code\modules\clothing\under.dm"
 #include "hippiestation\code\modules\clothing\masks\hailer.dm"
