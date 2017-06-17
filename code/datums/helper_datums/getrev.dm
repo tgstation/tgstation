@@ -93,7 +93,7 @@
 			to_chat(src, GLOB.revdata.GetTestMergeInfo())
 			prefix = "Based off origin/master commit: "
 		var/pc = GLOB.revdata.originmastercommit
-		to_chat(src, "[prefix]<a href='[config.githuburl]/commit/[pc]'>[copytext(pc, 1, min(length(pc), 7))]</a>")
+		to_chat(src, "[prefix]<a href=\"[config.githuburl]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
 	to_chat(src, "<b>Current Infomational Settings:</b>")
