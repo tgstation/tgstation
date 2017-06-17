@@ -354,7 +354,7 @@
 
 /obj/item/seeds/inocybe
 	name = "pack of inocybe mycelium"
-	desc = "This mycelium grows into an inocybe mushroom, with hallucinatory and toxic effects."
+	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
 	icon_state = "mycelium-inocybe"
 	species = "inocybe"
 	plantname = "Inocybe Mushrooms"
@@ -372,7 +372,7 @@
 
 // Embershroom (Mushroom stem)
 
-/obj/item/seeds/inocybe
+/obj/item/seeds/ember
 	name = "pack of embershroom mycelium"
 	desc = "This mycelium grows into embershrooms, a species of bioluminescent mushrooms native to Lavaland."
 	icon_state = "mycelium-ember"

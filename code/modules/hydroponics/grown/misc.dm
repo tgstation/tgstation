@@ -157,7 +157,7 @@
 
 // Lavaland cactus
 
-/obj/item/seeds/cabbage
+/obj/item/seeds/cactus
 	name = "pack of fruiting cactus seeds"
 	desc = "These seeds grow into fruiting cactus."
 	icon_state = "seed-cactus"
