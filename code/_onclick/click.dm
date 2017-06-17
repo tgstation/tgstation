@@ -448,7 +448,6 @@
 	return ret
 
 /obj/screen/click_catcher/Click(location, control, params)
-	to_chat(world, "DEBUG: ClickCatcher Click location [location] control [control] params [params]")
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr

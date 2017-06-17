@@ -4,8 +4,8 @@
 #define ZOOM_LOCK_CENTER_VIEW 2
 #define ZOOM_LOCK_OFF 3
 
-#define ZOOM_SPEED_STEP 1
-#define ZOOM_SPEED_INSTANT 0
+#define ZOOM_SPEED_STEP 0
+#define ZOOM_SPEED_INSTANT 1
 
 #define AUTOZOOM_PIXEL_STEP_FACTOR 48
 
@@ -45,7 +45,8 @@
 	var/lastangle = 0
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
-	var/obj/effect/projectile_beam/current_tracer
+	var/list/obj/effect/projectile_beam/current_tracers = list()
+	var/tracer_position = 1
 
 	var/structure_piercing = 4				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled.
 	var/structure_bleed_coeff = 0.7
@@ -78,8 +79,8 @@
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
-	var/datum/action/item_action/zoom_speed_action
-	var/datum/action/item_action/zoom_lock_action
+	var/datum/action/item_action/zoom_speed_action/zoom_speed_action
+	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 
 /obj/item/weapon/gun/energy/beam_rifle/debug
 	delay = 0
@@ -195,7 +196,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
-	clear_tracer(TRUE)
+	clear_tracers(TRUE)
 	..()
 
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
@@ -225,15 +226,21 @@
 		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
 		P.color = rgb(0, 255, 0)
-	clear_tracer()
 	P.fire()
+	clear_tracers()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracer()
-	qdel(current_tracer)
+/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracers(delete_everything = FALSE)
+	if(delete_everything)
+		QDEL_LIST(current_tracers)
+	else
+		for(var/I in tracer_position to current_tracers.len)
+			var/atom/movable/AM = I
+			AM.forceMove(src)
+	tracer_position = 1
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
-	clear_tracer()
+	clear_tracers()
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -314,6 +321,8 @@
 			smooth_zooming(2)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
+	if(istype(object, /obj/screen))
+		return
 	set_user(mob)
 	start_aiming()
 
@@ -323,7 +332,7 @@
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
-	clear_tracer()
+	clear_tracers()
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
 	. = ..()
@@ -614,6 +623,7 @@
 	spawn_tracer_effect()
 	if(!QDELETED(src) && loc)
 		cached = get_turf(src)
+	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
 	var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
@@ -626,65 +636,28 @@
 	hitsound_wall = null
 	nodamage = TRUE
 	damage = 0
-	var/starting_x		//i can't be assed to port trajectory datums from baystation today so have this
-	var/starting_y
-	var/proj_z
-	var/starting_p_x
-	var/starting_p_y
-	var/dest_x
-	var/dest_y
-	var/dest_p_x
-	var/dest_p_y
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/proc/spawn_tracer()
-	if(!dest_x || !dest_y)
-		dest_x = cached.x
-		dest_y = cached.y
-	var/x_offset = dest_x - starting_x
-	var/y_offset = dest_y - starting_y
-	var/turf/midpoint = locate(round((starting_x + x_offset) / 2, 1), round((starting_y + y_offset) / 2, 1), proj_z)
-	var/obj/effect/projectile_beam/tracer/aiming = new
-	if(istype(gun))
-		gun.current_tracer = aiming
-	var/pixels_between_points = round(sqrt((abs(x_offset) ** 2) + (abs(y_offset) ** 2)), 1)
-	var/scaling = round(pixels_between_points/32, 1)
-	aiming.apply_vars(Angle, pixel_x, pixel_y, color, scaling, midpoint)
-	to_chat(world, "DEBUG: x_offset [x_offset] y_offset [y_offset] pixels [pixels_between_points] scaling [scaling]")
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/fire()
-	var/turf/T = get_turf(src)
-	starting_x = T.x
-	starting_y = T.y
-	proj_z = T.z
-	starting_p_x = pixel_x
-	starting_p_y = pixel_y
-	. = ..()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Bump(atom/target, yes)
-	paused = TRUE
-	if(!QDELETED(src))
-		var/turf/T = get_turf(src)
-		dest_x = T.x
-		dest_y = T.y
-		dest_p_x = pixel_x
-		dest_p_y = pixel_y
-	else
-		to_chat(world, "DEBUG: Beam already deleted.")
-	paused = FALSE
-	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
-	to_chat(world, "ON_HIT CALLED")
-	spawn_tracer()
 	qdel(src)
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/spawn_tracer_effect()
-	return
+	var/turf/C = src.loc
+	if(!istype(gun))
+		var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
+		QDEL_IN(T, 5)
+		return
+	var/current_position = gun.tracer_position
+	if(gun.current_tracers.len < current_position)
+		gun.current_tracers += new tracer_type(loc, Angle, pixel_x, pixel_y, color)
+	else
+		var/obj/effect/projectile_beam/PB = gun.current_tracers[current_position]
+		PB.apply_vars(Angle, pixel_x, pixel_y, color, loc)
+	gun.tracer_position++
 
 /obj/effect/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
@@ -700,7 +673,7 @@
 	apply_vars(angle_override, p_x, p_y, color_override)
 	return ..()
 
-/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, scaling = 1, new_loc)
+/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, new_loc)
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
@@ -708,7 +681,6 @@
 		look.color = color_override
 	var/matrix/M = new
 	M.Turn(angle_override)
-	M.Scale(1,scaling)
 	look.transform = M
 	appearance = look
 	if(!isnull(new_loc))	//If you want to null it just delete it...
