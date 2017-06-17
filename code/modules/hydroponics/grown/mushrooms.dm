@@ -367,6 +367,6 @@
 	icon_state = "mycelium-ember"
 	species = "ember"
 	plantname = "Embershroom Mushrooms"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem)
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
