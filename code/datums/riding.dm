@@ -86,6 +86,7 @@
 		if(!Process_Spacemove(direction) || !isturf(ridden.loc))
 			return
 		step(ridden, direction)
+		user.dir = ridden.dir //Why this isnt checked somewhere else is byond me
 
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
