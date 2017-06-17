@@ -21,7 +21,7 @@
 	icon_state = "penguin"
 	icon_living = "penguin"
 	icon_dead = "penguin_dead"
-	butcher_results = list("")
+	butcher_results = list()
 	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/penguin/baby
@@ -32,6 +32,6 @@
 	icon_state = "penguin_baby"
 	icon_living = "penguin_baby"
 	icon_dead = "penguin_baby_dead"
-	density = 0
+	density = false
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
