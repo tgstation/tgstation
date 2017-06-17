@@ -401,7 +401,6 @@ obj/item/weapon/construction
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	origin_tech = "materials=3"
-	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
