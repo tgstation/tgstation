@@ -87,7 +87,7 @@
 		var/mob/living/carbon/C = A
 		if(C.stat != DEAD && C.lying)
 			return C
-	else if(is_type_in_list(A, target_types))
+	else if(is_type_in_typecache(A, target_types))
 		return A
 
 /mob/living/simple_animal/bot/cleanbot/handle_automated_action()

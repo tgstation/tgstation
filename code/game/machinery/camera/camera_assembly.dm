@@ -15,7 +15,7 @@
 	obj_integrity = 150
 	max_integrity = 150
 	//	Motion, EMP-Proof, X-Ray
-	var/static/list/possible_upgrades
+	var/static/list/possible_upgrades = typecacheof(list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer))
 	var/list/upgrades
 	var/state = 1
 
@@ -30,7 +30,6 @@
 	. = ..()
 	if(building)
 		setDir(ndir)
-	possible_upgrades = typecacheof(list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/plasma, /obj/item/device/analyzer))
 	upgrades = list()
 
 /obj/structure/camera_assembly/Destroy()
