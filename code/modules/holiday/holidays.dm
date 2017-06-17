@@ -353,14 +353,20 @@
 /datum/holiday/ramadan
 	name = "Start of Ramadan"
 
-/datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/list/acceptible_values = list(0,1)
-	if(world.realtime < 4265568000)
-		return FALSE //This doesn't work before 2013, you filthy casual
-	//Days since July 9, 2013, when Ramadan started then. 
-	var/days_strt_ramadan_2013 = round((world.realtime - 4265568000) / 864000)
+/*
 
-	if(round(days_strt_ramadan_2013 % (357.03 - 0.0013 * days_strt_ramadan_2013)) in acceptible_values)
+For anyone who stumbles on this some time in the future: this was calibrated to 2017
+Calculated based on the start and end of Ramadan in 2000 (First year of the Gregorian Calendar supported by BYOND)
+This is going to be accurate for at least a decade, likely a lot longer
+Since the date fluctuates, it may be inaccurate one year and then accurate for several after
+Inaccuracies will never be by more than one day for at least a hundred years
+Finds the number of days since the day in 2000 and gets the modulo of that and the average length of a Muslim year since the first one (622 AD, Gregorian)
+Since Ramadan is an entire month that lasts 29.5 days on average, the start and end are holidays and are calculated from the two dates in 2000
+
+*/
+
+/datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
+	if (round(((world.realtime - 285984000) / 864000) % 354.373435326843) == 0)
 		return TRUE
 	return FALSE
 
@@ -371,11 +377,7 @@
 	name = "End of Ramadan"
 
 /datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/list/acceptible_values = list(0,1)
-	if(world.realtime < 4291488000)
-		return FALSE //This doesn't work before 2013, you filthy casual
-	var/days_end_ramadan_2013 = round((world.realtime - 4291488000) / 864000) //Days since August 8, 2013, when Ramadan ended then.
-	if(round(days_end_ramadan_2013 % (357.03 - 0.0013 * days_end_ramadan_2013)) in acceptible_values)
+	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == 0)
 		return TRUE
 	return FALSE
 
