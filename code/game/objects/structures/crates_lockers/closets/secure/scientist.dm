@@ -25,3 +25,4 @@
 	new /obj/item/device/laser_pointer(src)
 	new /obj/item/weapon/door_remote/research_director(src)
 	new /obj/item/weapon/storage/box/firingpins(src)
+	new /obj/item/clothing/under/jabroni(src)
