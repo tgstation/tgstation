@@ -160,7 +160,7 @@
 	resistance_flags = FLAMMABLE
 	obj_integrity = 100
 	max_integrity = 100
-	seed = /obj/item/seeds/polypore
+	seed = /obj/item/seeds/lavaland/polypore
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/New()
 	..()
@@ -175,7 +175,7 @@
 	desc = "A leaf, from a mushroom."
 	list_reagents = list("nutriment" = 3, "vitfro" = 2, "nicotine" = 2)
 	icon_state = "mushroom_leaf"
-	seed = /obj/item/seeds/porcini
+	seed = /obj/item/seeds/lavaland/porcini
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap
@@ -183,7 +183,7 @@
 	desc = "The cap of a large mushroom."
 	list_reagents = list("mindbreaker" = 2, "entpoly" = 4, "mushroomhallucinogen" = 2)
 	icon_state = "mushroom_cap"
-	seed = /obj/item/seeds/inocybe
+	seed = /obj/item/seeds/lavaland/inocybe
 
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/mushroom_stem
@@ -192,14 +192,14 @@
 	list_reagents = list("tinlux" = 2, "vitamin" = 1, "space_drugs" = 1)
 	icon_state = "mushroom_stem"
 	luminosity = 1
-	seed = /obj/item/seeds/ember
+	seed = /obj/item/seeds/lavaland/ember
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	name = "cactus fruit"
 	list_reagents = list("vitamin" = 2, "nutriment" = 2, "vitfro" = 4)
 	desc = "A cactus fruit covered in a thick, reddish skin. And some ash."
 	icon_state = "cactus_fruit"
-	seed = /obj/item/seeds/cactus
+	seed = /obj/item/seeds/lavaland/cactus
 
 
 /obj/item/mushroom_bowl

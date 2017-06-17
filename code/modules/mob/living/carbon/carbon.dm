@@ -379,10 +379,6 @@
 			return
 		return TRUE
 
-/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
-		return 1
-
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
 		return -6
@@ -450,7 +446,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
@@ -476,6 +472,9 @@
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
+	if(!blood)
+		nutrition -= lost_nutrition
+		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
@@ -485,8 +484,6 @@
 		else
 			if(T)
 				T.add_vomit_floor(src, toxic)//toxic barf looks different
-			nutrition -= lost_nutrition
-			adjustToxLoss(-3)
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break

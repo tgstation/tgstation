@@ -4,7 +4,8 @@
 	density = 1
 
 	name = "generator input"
-	desc = "Placeholder"
+	desc = "An input for a generator."
+	layer = LOW_OBJ_LAYER
 
 	var/update_cycle
 
