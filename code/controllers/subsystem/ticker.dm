@@ -1,4 +1,5 @@
 #define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+#define ROUND_END_SOUND_LIST "strings/round_end_sounds.txt"
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
@@ -831,14 +832,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Shutdown()
 	if(!round_end_sound)
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
-		)
+		var/list/sound = world.file2list(ROUND_END_SOUND_LIST, "\n")
+		round_end_sound = pick(sound)
 
 	world << sound(round_end_sound)
