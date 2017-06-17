@@ -7,7 +7,8 @@
 
 	var/start_effect_type = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 	var/end_effect_type = /obj/effect/temp_visual/dir_setting/ninja/phase
-	var/beam_icon = "blur"
+	var/beam_icon_state = "blur"
+	var/dash_beam_type = /obj/effect/ebeam
 
 /obj/item/weapon/dash/proc/charge()
 	current_charges = Clamp(current_charges + 1, 0, max_charges)
@@ -43,7 +44,7 @@
 		playsound(T, 'sound/magic/blink.ogg', 25, 1)
 		playsound(T, "sparks", 50, 1)
 		var/obj/spot2 = new end_effect_type(get_turf(user), user.dir)
-		spot1.Beam(spot2, beam_icon,time=2)
+		spot1.Beam(spot2, beam_icon_state,time = 2, maxdistance = 20, beam_type = dash_beam_type)
 		current_charges--
 		addtimer(CALLBACK(src, .proc/charge), charge_rate)
 
