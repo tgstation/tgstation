@@ -507,7 +507,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-	M.Paralyse(30)
+	M.Stun(30)
 
 	used_dominate = world.time
 
@@ -609,7 +609,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		victim.setOxyLoss(0)
 		victim.setCloneLoss(0)
 		victim.SetUnconscious(0)
-		victim.SetParalysis(0)
+		victim.SetStun(0)
 		victim.SetKnockdown(0)
 		victim.radiation = 0
 		victim.heal_overall_damage(victim.getBruteLoss(), victim.getFireLoss())

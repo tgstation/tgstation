@@ -134,7 +134,7 @@
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
 
-	D.Paralyse(40)
+	D.Stun(40)
 	A.visible_message("<span class = 'danger'><B>[A] starts spinning around with [D]!</B></span>")
 	A.emote("scream")
 
@@ -435,7 +435,7 @@
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
 								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
-	D.Paralyse(rand(30,50))
+	D.Stun(rand(30,50))
 	add_logs(A, D, "cinched")
 	return 1
 

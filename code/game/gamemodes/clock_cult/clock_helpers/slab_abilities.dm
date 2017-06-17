@@ -56,7 +56,7 @@
 				to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>")
 				return TRUE
 
-			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just paralyse them
+			if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding)) //if they're already bound, just stun them
 				var/obj/structure/destructible/clockwork/geis_binding/GB = L.buckled
 				GB.repair_and_interrupt()
 				add_logs(ranged_ability_user, L, "rebound with Geis")

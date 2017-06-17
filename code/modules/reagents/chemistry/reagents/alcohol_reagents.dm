@@ -529,7 +529,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	M.Paralyse(20, 0)
+	M.Stun(20, 0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irish_cream

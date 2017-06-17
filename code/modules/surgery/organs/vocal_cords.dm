@@ -209,7 +209,7 @@
 		power_multiplier *= (1 + (1/specific_listeners.len)) //2x on a single guy, 1.5x on two and so on
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
-	var/static/regex/paralyse_words = regex("stop|wait|stand still|hold on|halt")
+	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up")
@@ -253,12 +253,12 @@
 	var/static/regex/honk_words = regex("ho+nk") //hooooooonk
 	var/static/regex/multispin_words = regex("like a record baby|right round")
 
-	//PARALYSE
-	if(findtext(message, paralyse_words))
+	//STUN
+	if(findtext(message, stun_words))
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Paralyse(30 * power_multiplier)
+			L.Stun(30 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
@@ -481,12 +481,12 @@
 
 	//GET UP
 	else if((findtext(message, getup_words)))
-		cooldown = COOLDOWN_DAMAGE //because paralyse removal
+		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.resting)
 				L.lay_down() //aka get up
-			L.SetParalysis(0)
+			L.SetStun(0)
 			L.SetKnockdown(0)
 			L.SetUnconscious(0) //i said get up i don't care if you're being tazed
 

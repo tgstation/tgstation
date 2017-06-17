@@ -70,7 +70,7 @@
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/unconscious = 0
-	var/paralysis = 0
+	var/stun = 0
 	var/knockdown = 0
 	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living
@@ -124,7 +124,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 
-	var/status_flags = CANPARALYSE|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canparalyse, etc)
+	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?

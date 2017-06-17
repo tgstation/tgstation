@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	var/status = CANPARALYSE | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
+	var/status = CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.status_flags &= ~status
 	owner.update_body_parts()
 
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.status_flags |= CANPARALYSE | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
+	owner.status_flags |= CANSTUN | CANKNOCKDOWN | CANUNCONSCIOUS | CANPUSH
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
@@ -318,7 +318,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
 	if((prob(10) && owner.unconscious <= 1))
-		owner.Paralyse(100)
+		owner.Stun(100)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")

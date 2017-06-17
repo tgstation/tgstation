@@ -426,7 +426,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 //This proc is executed when someone clicks the on-screen UI button.
 //The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralysed, asleep, resting, laying, item is on the mob.
+//Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
 

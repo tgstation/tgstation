@@ -69,6 +69,6 @@
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	var/mob/living/M = target
-	M.Paralyse(20)
+	M.Stun(20)
 	M.petrify()
 	..()

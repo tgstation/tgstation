@@ -122,12 +122,12 @@
 		if(hacked)
 			return
 		if(clockwork)
-			Paralyse(20)
+			Stun(20)
 			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
-			Paralyse(20)
+			Stun(20)
 			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
@@ -146,7 +146,7 @@
 	else
 		if(!hacked)
 			return
-		Paralyse(20)
+		Stun(20)
 		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
 		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")

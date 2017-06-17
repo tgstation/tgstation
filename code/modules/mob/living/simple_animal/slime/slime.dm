@@ -36,7 +36,7 @@
 	verb_exclaim = "loudly blorbles"
 	verb_yell = "loudly blorbles"
 
-	// canparalyse and canknockdown don't affect slimes because they ignore paralyse and knockdown variables
+	// canstun and canknockdown don't affect slimes because they ignore stun and knockdown variables
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANUNCONSCIOUS|CANPUSH
 

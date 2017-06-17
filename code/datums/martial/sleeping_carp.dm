@@ -35,7 +35,7 @@
 	return 0
 
 /datum/martial_art/the_sleeping_carp/proc/wristWrench(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	if(!D.stat && !D.paralysis && !D.knockdown)
+	if(!D.stat && !D.stun && !D.knockdown)
 		A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 		D.visible_message("<span class='warning'>[A] grabs [D]'s wrist and wrenches it sideways!</span>", \
 						  "<span class='userdanger'>[A] grabs your wrist and violently wrenches it to the side!</span>")
@@ -43,7 +43,7 @@
 		D.emote("scream")
 		D.drop_item()
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
-		D.Paralyse(30)
+		D.Stun(30)
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
 	return basic_hit(A,D)
@@ -67,7 +67,7 @@
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
-		D.Paralyse(20)
+		D.Stun(20)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
 	add_logs(A, D, "stomach kneed (Sleeping Carp)")
@@ -81,7 +81,7 @@
 		D.apply_damage(20, BRUTE, "head")
 		D.drop_item()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
-		D.Paralyse(40)
+		D.Stun(40)
 		return 1
 	add_logs(A, D, "head kicked (Sleeping Carp)")
 	return basic_hit(A,D)
@@ -150,7 +150,7 @@
 
 	to_chat(usr, "<span class='notice'>Wrist Wrench</span>: Disarm Disarm. Forces opponent to drop item in hand.")
 	to_chat(usr, "<span class='notice'>Back Kick</span>: Harm Grab. Opponent must be facing away. Knocks down.")
-	to_chat(usr, "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and paralyses.")
+	to_chat(usr, "<span class='notice'>Stomach Knee</span>: Grab Harm. Knocks the wind out of opponent and stuns.")
 	to_chat(usr, "<span class='notice'>Head Kick</span>: Disarm Harm Harm. Decent damage, forces opponent to drop item in hand.")
 	to_chat(usr, "<span class='notice'>Elbow Drop</span>: Harm Disarm Harm Disarm Harm. Opponent must be on the ground. Deals huge damage, instantly kills anyone in critical condition.")
 

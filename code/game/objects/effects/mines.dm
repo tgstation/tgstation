@@ -43,7 +43,7 @@
 
 
 /obj/effect/mine/stun
-	name = "paralyse mine"
+	name = "stun mine"
 	var/stun_time = 80
 
 /obj/effect/mine/stun/mineEffect(mob/victim)

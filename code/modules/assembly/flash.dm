@@ -152,7 +152,7 @@
 					if(!M.isloyal())
 						if(user.mind in SSticker.mode.head_revolutionaries)
 							if(SSticker.mode.add_revolutionary(M.mind))
-								M.Paralyse(30)
+								M.Stun(30)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
 								resisted = 1

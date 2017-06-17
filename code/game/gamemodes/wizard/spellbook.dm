@@ -841,7 +841,7 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Paralyse(20)
+	user.Stun(20)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock

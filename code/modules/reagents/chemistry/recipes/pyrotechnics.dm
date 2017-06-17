@@ -223,7 +223,7 @@
 			if(get_dist(C, location) < 4)
 				C.Knockdown(50)
 			else
-				C.Paralyse(50)
+				C.Stun(50)
 	holder.remove_reagent("flash_powder", created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
@@ -240,7 +240,7 @@
 			if(get_dist(C, location) < 4)
 				C.Knockdown(50)
 			else
-				C.Paralyse(50)
+				C.Stun(50)
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"

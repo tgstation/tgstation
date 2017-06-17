@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, list(/obj/machinery/atmospherics/component
 		to_chat(src, "You must be conscious to do this!")
 		return
 	if(lying)
-		to_chat(src, "You can't vent crawl while you're paralysis!")
+		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
 		to_chat(src, "You can't vent crawl while you're restrained!")

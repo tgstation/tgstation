@@ -48,7 +48,7 @@
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, 0)
-	M.SetParalysis(0, 0)
+	M.SetStun(0, 0)
 	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
@@ -83,7 +83,7 @@
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
 	M.AdjustUnconscious(-10, 0)
-	M.AdjustParalysis(-10, 0)
+	M.AdjustStun(-10, 0)
 	M.AdjustKnockdown(-10, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
@@ -547,7 +547,7 @@
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
 	M.AdjustUnconscious(-10, 0)
-	M.AdjustParalysis(-10, 0)
+	M.AdjustStun(-10, 0)
 	M.AdjustKnockdown(-10, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
@@ -758,7 +758,7 @@
 	. = 1
 	if(prob(20))
 		M.AdjustUnconscious(-10, 0)
-		M.AdjustParalysis(-10, 0)
+		M.AdjustStun(-10, 0)
 		M.AdjustKnockdown(-10, 0)
 	..()
 
@@ -865,7 +865,7 @@
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 	M.AdjustUnconscious(-30, 0)
-	M.AdjustParalysis(-30, 0)
+	M.AdjustStun(-30, 0)
 	M.AdjustKnockdown(-30, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
@@ -1103,7 +1103,7 @@
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
 	M.AdjustUnconscious(-10, 0)
-	M.AdjustParalysis(-10, 0)
+	M.AdjustStun(-10, 0)
 	M.AdjustKnockdown(-10, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1

@@ -179,7 +179,7 @@
 	// N2O
 
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
-		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+		if(SA_pp > SA_para_min) // Enough to make us stund for a bit
 			H.Unconscious(30) // 30 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 				H.Sleeping(max(H.sleeping+20, 100))

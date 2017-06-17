@@ -77,13 +77,13 @@
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = PARALYSE, blocked = 0)
+/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
 		return 0
 	switch(effecttype)
-		if(PARALYSE)
-			Paralyse(effect * hit_percent)
+		if(STUN)
+			Stun(effect * hit_percent)
 		if(KNOCKDOWN)
 			Knockdown(effect * hit_percent)
 		if(UNCONSCIOUS)
@@ -93,23 +93,23 @@
 		if(SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(STUTTER)
-			if(status_flags & CANPARALYSE) // paralyse is usually associated with stutter
+			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * hit_percent))
 		if(EYE_BLUR)
 			blur_eyes(effect * hit_percent)
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * hit_percent))
 		if(JITTER)
-			if(status_flags & CANPARALYSE)
+			if(status_flags & CANSTUN)
 				jitteriness = max(jitteriness,(effect * hit_percent))
 	return 1
 
 
-/mob/living/proc/apply_effects(paralyse = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
 	if(blocked >= 100)
 		return 0
-	if(paralyse)
-		apply_effect(paralyse, PARALYSE, blocked)
+	if(stun)
+		apply_effect(stun, STUN, blocked)
 	if(knockdown)
 		apply_effect(knockdown, KNOCKDOWN, blocked)
 	if(unconscious)

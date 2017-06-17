@@ -259,7 +259,7 @@
 	addtimer(CALLBACK(src, .proc/reset_hallucinate_shock_animation, user, shock_image, electrocution_skeleton_anim), 40)
 	user.playsound_local(get_turf(src), "sparks", 100, 1)
 	user.staminaloss += 50
-	user.Paralyse(20)
+	user.Stun(20)
 	user.jitteriness += 1000
 	user.do_jitter_animation(user.jitteriness)
 	addtimer(CALLBACK(src, .proc/hallucinate_shock_drop, user), 20)

@@ -107,7 +107,7 @@
 	if(mind)
 		if(mind.martial_art && mind.martial_art.block_chance \
 		&& prob(mind.martial_art.block_chance) && in_throw_mode \
-		&& !stat && !knockdown && !paralysis)
+		&& !stat && !knockdown && !stun)
 			return TRUE
 	return FALSE
 
@@ -255,7 +255,7 @@
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
-		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get paralysis instead.
+		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
 			if(get_active_held_item() && drop_item())
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
@@ -425,7 +425,7 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, paralyse = TRUE)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -453,7 +453,7 @@
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, paralyse)
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
 
@@ -468,10 +468,10 @@
 			switch(severity)
 				if(1)
 					L.receive_damage(0,10)
-					Paralyse(100)
+					Stun(100)
 				if(2)
 					L.receive_damage(0,5)
-					Paralyse(50)
+					Stun(50)
 	..()
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)

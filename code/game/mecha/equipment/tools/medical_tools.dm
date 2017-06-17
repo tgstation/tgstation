@@ -229,7 +229,7 @@
 		return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
-	M.AdjustParalysis(-40)
+	M.AdjustStun(-40)
 	M.AdjustKnockdown(-40)
 	M.AdjustUnconscious(-40)
 	if(M.reagents.get_reagent_amount("epinephrine") < 5)

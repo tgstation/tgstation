@@ -450,7 +450,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, paralyse = TRUE, distance = 1, message = TRUE, toxic = FALSE)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
@@ -458,7 +458,7 @@
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
-		if(paralyse)
+		if(stun)
 			Knockdown(100)
 		return 1
 
@@ -471,8 +471,8 @@
 		if(message)
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 
-	if(paralyse)
-		Paralyse(40)
+	if(stun)
+		Stun(40)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
@@ -483,7 +483,7 @@
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
-			if(paralyse)
+			if(stun)
 				adjustBruteLoss(3)
 		else
 			if(T)

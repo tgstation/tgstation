@@ -672,7 +672,7 @@
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || paralysis || chokehold)
+	if(ko || resting || stun || chokehold)
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
@@ -687,7 +687,7 @@
 			fall()
 		else if(ko || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || paralysis || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || stun || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -958,8 +958,8 @@
 	switch(var_name)
 		if("knockdown")
 			SetKnockdown(var_value)
-		if("paralysis")
-			SetParalysis(var_value)
+		if("stun")
+			SetStun(var_value)
 		if("unconscious")
 			SetUnconscious(var_value)
 		if("sleeping")

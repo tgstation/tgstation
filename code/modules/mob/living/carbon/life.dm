@@ -297,7 +297,7 @@
 					M.adjustBruteLoss(5)
 				nutrition += 10
 
-//this updates all special effects: paralysis, sleeping, knockdown, druggy, stuttering, etc..
+//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
 

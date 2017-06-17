@@ -594,7 +594,7 @@
 	var/usage = 0
 	for(var/I in tracked)
 		var/obj/item/projectile/P = I
-		if(!P.paralyse && P.nodamage)	//No damage
+		if(!P.stun && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
 		usage += (tracked[I] * projectile_damage_tick_ecost_coefficient)

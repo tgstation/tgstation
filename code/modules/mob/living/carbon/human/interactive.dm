@@ -452,7 +452,7 @@
 		return 1
 	if(unconscious)
 		return 1
-	if(paralysis)
+	if(stun)
 		return 1
 	if(stat)
 		return 1
@@ -1531,13 +1531,13 @@
 										P.afterattack(TARGET, src)
 								else if(istype(main_hand,/obj/item/weapon/gun/energy))
 									var/obj/item/weapon/gun/energy/P = main_hand
-									var/paralysening = 0
+									var/stunning = 0
 									for(var/A in P.ammo_type)
 										if(ispath(A,/obj/item/ammo_casing/energy/electrode))
-											paralysening = 1
+											stunning = 1
 									var/shouldFire = 1
-									var/mob/paralyseCheck = TARGET
-									if(paralysening && paralyseCheck.paralysis)
+									var/mob/stunCheck = TARGET
+									if(stunning && stunCheck.stun)
 										shouldFire = 0
 									if(shouldFire)
 										if(P.cell.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead

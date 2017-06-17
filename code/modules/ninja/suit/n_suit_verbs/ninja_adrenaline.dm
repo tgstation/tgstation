@@ -5,7 +5,7 @@
 	if(!ninjacost(0,N_ADRENALINE))//Have to make sure stat is not counted for this ability.
 		var/mob/living/carbon/human/H = affecting
 		H.SetUnconscious(0)
-		H.SetParalysis(0)
+		H.SetStun(0)
 		H.SetKnockdown(0)
 
 		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.

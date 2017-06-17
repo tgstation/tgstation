@@ -59,7 +59,7 @@
 			if("l_hand", "r_hand")
 				if(!H.gloves)
 					affecting = H.get_bodypart(type)
-					H.Paralyse(30)
+					H.Stun(30)
 		if(affecting)
 			if(affecting.receive_damage(1, 0))
 				H.update_damage_overlays()

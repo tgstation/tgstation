@@ -109,7 +109,7 @@
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetUnconscious(0)
-		M.SetParalysis(0)
+		M.SetStun(0)
 		M.SetKnockdown(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
@@ -428,7 +428,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	add_logs(user, L, "stunned")
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	if(L.paralysis || L.sleeping)
+	if(L.stun || L.sleeping)
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)

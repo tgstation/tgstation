@@ -17,7 +17,7 @@
 #define OXYLOSS 8
 #define SHAME 16
 
-#define PARALYSE		"paralyse"
+#define STUN		"stun"
 #define KNOCKDOWN		"knockdown"
 #define UNCONSCIOUS	"unconscious"
 #define IRRADIATE	"irradiate"
@@ -28,7 +28,7 @@
 #define JITTER		"jitter"
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANPARALYSE		1
+#define CANSTUN		1
 #define CANKNOCKDOWN	2
 #define CANUNCONSCIOUS	4
 #define CANPUSH		8

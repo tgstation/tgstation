@@ -55,7 +55,7 @@
 	var/aoe_mob_damage = 30
 	var/impact_structure_damage = 60
 	var/projectile_damage = 30
-	var/projectile_paralyse = 0
+	var/projectile_stun = 0
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
 	var/lastfire = 0
@@ -250,7 +250,7 @@
 	var/aoe_mob_damage = 20
 	var/impact_structure_damage = 50
 	var/projectile_damage = 40
-	var/projectile_paralyse = 0
+	var/projectile_stun = 0
 	var/structure_piercing = 2
 	var/structure_bleed_coeff = 0.7
 	var/do_pierce = TRUE
@@ -272,7 +272,7 @@
 	aoe_mob_damage = BR.aoe_mob_damage
 	impact_structure_damage = BR.impact_structure_damage
 	projectile_damage = BR.projectile_damage
-	projectile_paralyse = BR.projectile_paralyse
+	projectile_stun = BR.projectile_stun
 	delay = BR.delay
 	structure_piercing = BR.structure_piercing
 	structure_bleed_coeff = BR.structure_bleed_coeff
@@ -283,7 +283,7 @@
 	if(!istype(HS_BB))
 		return
 	HS_BB.impact_direct_damage = projectile_damage
-	HS_BB.paralyse = projectile_paralyse
+	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
 	HS_BB.aoe_mob_range = Clamp(aoe_mob_range, 0, 15)				//Badmin safety lock

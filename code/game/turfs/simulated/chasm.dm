@@ -128,7 +128,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.notransform = TRUE
-		L.Paralyse(100)
+		L.Stun(100)
 		L.resting = TRUE
 	var/oldtransform = AM.transform
 	var/oldcolor = AM.color

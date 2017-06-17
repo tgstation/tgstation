@@ -28,8 +28,7 @@
 /datum/clockwork_scripture/create_object/judicial_visor
 	descname = "Delayed Area Knockdown Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, knocking down, muting, and damaging non-Servants. \
-	Cultists of Nar-Sie will be set on fire, though they will be paralysis for half the time."
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, knocking down, muting, and damaging non-Servants."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
 	consumed_components = list(BELLIGERENT_EYE = 1)
@@ -289,21 +288,21 @@
 	quickbind_desc = "Creates a pair of Wraith Spectacles, which grant true sight but cause gradual vision loss."
 
 
-//Sigil of Transgression: Creates a sigil of transgression, which paralyses the first nonservant to cross it.
+//Sigil of Transgression: Creates a sigil of transgression, which stuns the first nonservant to cross it.
 /datum/clockwork_scripture/create_object/sigil_of_transgression
-	descname = "Trap, Paralysis"
+	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
-	desc = "Wards a tile with a sigil, which will paralyse the next non-Servant to cross it."
+	desc = "Wards a tile with a sigil, which will stun the next non-Servant to cross it."
 	invocations = list("Divinity, smite...", "...those who tresspass here!")
 	channel_time = 50
 	consumed_components = list(HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/transgression
-	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be paralysis.</span>"
-	usage_tip = "The sigil, while fairly powerful in its paralyse, does not induce muteness in its victim."
+	creator_message = "<span class='brass'>A sigil silently appears below you. The next non-Servant to cross it will be stunned.</span>"
+	usage_tip = "The sigil, while fairly powerful in its stun, does not induce muteness in its victim."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 	primary_component = HIEROPHANT_ANSIBLE
 	sort_priority = 10
 	quickbind = TRUE
-	quickbind_desc = "Creates a Sigil of Transgression, which will paralyse the next non-Servant to cross it."
+	quickbind_desc = "Creates a Sigil of Transgression, which will stun the next non-Servant to cross it."

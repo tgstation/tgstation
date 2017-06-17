@@ -1,27 +1,27 @@
 
 //Here are the procs used to modify status effects of a mob.
-//The effects include: paralysis, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
 
-/////////////////////////////////// PARALYSIS ////////////////////////////////////
+/////////////////////////////////// STUN ////////////////////////////////////
 
-/mob/proc/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		paralysis = max(max(paralysis,amount * 0.1),0) //can't go below 0, getting a low amount of paralyse doesn't lower your current paralyse
+/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0)
+	if(status_flags & CANSTUN || ignore_canstun)
+		stun = max(max(stun,amount * 0.1),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
 		return TRUE
 
-/mob/proc/SetParalysis(amount, updating = 1, ignore_canparalyse = 0) //if you REALLY need to set paralyse to a set amount without the whole "can't go below current paralysis"
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		paralysis = max(amount * 0.1,0)
+/mob/proc/SetStun(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stun"
+	if(status_flags & CANSTUN || ignore_canstun)
+		stun = max(amount * 0.1,0)
 		if(updating)
 			update_canmove()
 		return TRUE
 
-/mob/proc/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		paralysis = max(paralysis + (amount * 0.1),0)
+/mob/proc/AdjustStun(amount, updating = 1, ignore_canstun = 0)
+	if(status_flags & CANSTUN || ignore_canstun)
+		stun = max(stun + (amount * 0.1),0)
 		if(updating)
 			update_canmove()
 		return TRUE

@@ -474,7 +474,7 @@
 		M.losebreath += 1
 	if(prob(8))
 		to_chat(M, "You feel horrendously weak!")
-		M.Paralyse(20, 0)
+		M.Stun(20, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
@@ -565,7 +565,7 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Paralyse(20, 0)
+		M.Stun(20, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4

@@ -106,7 +106,7 @@
 
 	else if(issilicon(user))
 		if(prob(20))
-			user.Paralyse(20)
+			user.Stun(20)
 		user.take_overall_damage(0, shock_damage)
 		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \

@@ -208,17 +208,17 @@
 	else
 		icon_state = "[visualAppearence]_dead"
 
-/mob/living/simple_animal/drone/cogscarab/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
+/mob/living/simple_animal/drone/cogscarab/Stun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/SetParalysis(amount, updating = 1, ignore_canparalyse = 0)
+/mob/living/simple_animal/drone/cogscarab/SetStun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(.)
 		update_icons()
 
-/mob/living/simple_animal/drone/cogscarab/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
+/mob/living/simple_animal/drone/cogscarab/AdjustStun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(.)
 		update_icons()

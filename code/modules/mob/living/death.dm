@@ -61,7 +61,7 @@
 	if(!gibbed)
 		GLOB.dead_mob_list += src
 	unconscious = 0
-	paralysis = 0
+	stun = 0
 	knockdown = 0
 	set_drugginess(0)
 	SetSleeping(0, 0)

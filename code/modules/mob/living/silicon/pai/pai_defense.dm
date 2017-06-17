@@ -42,7 +42,7 @@
 				take_holo_damage(2)
 
 /mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
-	if(Proj.paralyse)
+	if(Proj.stun)
 		fold_in(force = TRUE)
 		src.visible_message("<span class='warning'>The electrically-charged projectile disrupts [src]'s holomatrix, forcing [src] to fold in!</span>")
 	. = ..(Proj)

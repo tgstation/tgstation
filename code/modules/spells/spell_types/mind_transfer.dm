@@ -10,8 +10,8 @@
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
 	var/list/protected_roles = list("Wizard","Changeling","Cultist") //which roles are immune to the spell
-	var/unconscious_amount_caster = 200 //how much the caster is paralysed for after the spell
-	var/unconscious_amount_victim = 200 //how much the victim is paralysed for after the spell
+	var/unconscious_amount_caster = 200 //how much the caster is stund for after the spell
+	var/unconscious_amount_victim = 200 //how much the victim is stund for after the spell
 
 	action_icon_state = "mindswap"
 

@@ -23,7 +23,7 @@
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
 				add_logs(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
-				Paralyse(20)
+				Stun(20)
 				step(src,get_dir(M,src))
 				add_logs(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
@@ -36,8 +36,8 @@
 /mob/living/silicon/robot/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime shock
 		flash_act()
-		var/paralyseprob = M.powerlevel * 7 + 10
-		if(prob(paralyseprob) && M.powerlevel >= 8)
+		var/stunprob = M.powerlevel * 7 + 10
+		if(prob(stunprob) && M.powerlevel >= 8)
 			adjustBruteLoss(M.powerlevel * rand(6,10))
 
 	var/damage = rand(1, 3)
@@ -80,9 +80,9 @@
 /mob/living/silicon/robot/emp_act(severity)
 	switch(severity)
 		if(1)
-			Paralyse(80)
+			Stun(80)
 		if(2)
-			Paralyse(30)
+			Stun(30)
 	..()
 
 
@@ -135,7 +135,7 @@
 		return
 
 	SetEmagged(1)
-	SetParalysis(30) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetStun(30) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
 	message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")

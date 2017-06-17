@@ -85,7 +85,7 @@
 	if(istype(user))
 		if(to_turf)
 			user.forceMove(to_turf)
-		user.SetParalysis(0)
+		user.SetStun(0)
 		user.next_move = 1
 		user.alpha = 255
 		user.update_atom_colour()
@@ -137,7 +137,7 @@
 		user.changeNext_move(8 + phase_in_ds)
 		user.notransform = 1
 		user.anchored = 1
-		user.Paralyse(INFINITY)
+		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
 		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_2, user, to_turf, phase_in_ds), 3, TIMER_STOPPABLE)

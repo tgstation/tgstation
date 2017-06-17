@@ -30,7 +30,7 @@
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
 	timer--
-	petrified_mob.Paralyse(20) //So they can't do anything while petrified
+	petrified_mob.Stun(20) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)

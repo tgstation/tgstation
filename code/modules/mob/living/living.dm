@@ -237,7 +237,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || unconscious || paralysis || knockdown || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || unconscious || stun || knockdown || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 /mob/living/proc/InCritical()
@@ -369,7 +369,7 @@
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
 	SetUnconscious(0, 0)
-	SetParalysis(0, 0)
+	SetStun(0, 0)
 	SetKnockdown(0, 0)
 	SetSleeping(0, 0)
 	radiation = 0

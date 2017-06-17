@@ -17,7 +17,7 @@
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	for(var/mob/living/carbon/human/H in range(2,user))
 		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
-		H.Paralyse(10)
+		H.Stun(10)
 		H.blur_eyes(20)
 		H.adjust_eye_damage(5)
 		H.confused += 3

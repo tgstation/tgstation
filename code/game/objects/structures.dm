@@ -4,7 +4,7 @@
 	obj_integrity = 300
 	max_integrity = 300
 	var/climb_time = 20
-	var/climb_paralyse = 20
+	var/climb_stun = 20
 	var/climbable = FALSE
 	var/mob/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
@@ -84,8 +84,8 @@
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
 				add_logs(user, src, "climbed onto")
-				if(climb_paralyse)
-					user.Paralyse(climb_paralyse)
+				if(climb_stun)
+					user.Stun(climb_stun)
 				. = 1
 			else
 				to_chat(user, "<span class='warning'>You fail to climb onto [src].</span>")

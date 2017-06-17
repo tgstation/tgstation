@@ -1,4 +1,4 @@
-//A slow but strong beast that tries to paralyse using its tentacles
+//A slow but strong beast that tries to stun using its tentacles
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
@@ -125,7 +125,7 @@
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
-		M.Paralyse(50)
+		M.Stun(50)
 		M.adjustBruteLoss(rand(10,15))
 		latched = TRUE
 	if(!latched)

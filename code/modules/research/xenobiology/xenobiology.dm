@@ -577,7 +577,7 @@
 				var/mob/living/M = A
 				if(M in immune)
 					continue
-				M.Paralyse(100, 1, 1)
+				M.Stun(100, 1, 1)
 				M.anchored = 1
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
@@ -607,7 +607,7 @@
 
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.AdjustParalysis(-100, 1, 1)
+	M.AdjustStun(-100, 1, 1)
 	M.anchored = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M

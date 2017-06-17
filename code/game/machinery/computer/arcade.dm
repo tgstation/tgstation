@@ -518,10 +518,10 @@
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" )
 						if(severity == 2)
 							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>")
-							M.Paralyse(30)
+							M.Stun(30)
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
-							M.Paralyse(50)
+							M.Stun(50)
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
@@ -618,7 +618,7 @@
 				if(emagged) //has to be here because otherwise it doesn't work
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-					usr.Paralyse(100) //you can't run :^)
+					usr.Stun(100) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)

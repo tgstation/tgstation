@@ -751,7 +751,7 @@
 		if(!issilicon(user) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
 		t += "Turrets [enabled?"activated":"deactivated"] - <A href='?src=\ref[src];toggleOn=1'>[enabled?"Disable":"Enable"]?</a><br>"
-		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=\ref[src];toggleLethal=1'>Change to [lethal?"Paralyse repeatedly":"Lethal"]?</a><br>"
+		t += "Currently set for [lethal?"lethal":"stun repeatedly"] - <A href='?src=\ref[src];toggleLethal=1'>Change to [lethal?"Stun repeatedly":"Lethal"]?</a><br>"
 
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
