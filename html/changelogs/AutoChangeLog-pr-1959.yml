@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Cultists must be human to run for Cult Master status."

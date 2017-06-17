@@ -277,7 +277,7 @@
 	else if((findtext(message, vomit_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier)
+			C.vomit(10 * power_multiplier, distance = power_multiplier)
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
