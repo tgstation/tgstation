@@ -1,0 +1,6 @@
+author: "Expletive"
+delete-after: True
+changes: 
+  - rscadd: "The Captain now starts with a deluxe fountain pen in their PDA."
+  - rscadd: "The quartermaster, curator, research director, lawyer, and bartender start with normal fountain pens in their PDAs."
+  - rscadd: "Cargo can order fountain pens via the Calligraphy Crate."
