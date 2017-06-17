@@ -3,7 +3,9 @@
 	var/max_charges = 3
 	var/current_charges = 3
 	var/charge_rate = 30 //In deciseconds
-	var/dash_toggled = FALSE
+	var/dash_toggled = TRUE
+
+	var/bypass_density = FALSE //Can we beam past windows/airlocks/etc
 
 	var/start_effect_type = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 	var/end_effect_type = /obj/effect/temp_visual/dir_setting/ninja/phase
@@ -38,6 +40,13 @@
 		return
 
 	var/turf/T = get_turf(target)
+
+	if(!bypass_density)
+		for(var/turf/turf in getline(get_turf(user),T))
+			for(var/atom/A in turf)
+				if(A.density)
+					return
+
 	if(target in view(user.client.view, get_turf(user)))
 		var/obj/spot1 = new start_effect_type(T, user.dir)
 		user.forceMove(T)
@@ -65,6 +74,7 @@
 	obj_integrity = 200
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	bypass_density = TRUE
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/item/weapon/dash/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
