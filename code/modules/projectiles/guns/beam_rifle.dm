@@ -180,6 +180,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
+	aiming_beam()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
 	if(aiming)
@@ -234,7 +235,7 @@
 		QDEL_LIST(current_tracers)
 	else
 		for(var/I in tracer_position to current_tracers.len)
-			var/atom/movable/AM = I
+			var/atom/movable/AM = current_tracers[I]
 			AM.forceMove(src)
 	tracer_position = 1
 
@@ -646,17 +647,17 @@
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/spawn_tracer_effect()
-	var/turf/C = src.loc
+	var/turf/C = loc
 	if(!istype(gun))
 		var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
 		QDEL_IN(T, 5)
 		return
 	var/current_position = gun.tracer_position
-	if(gun.current_tracers.len < current_position)
-		gun.current_tracers += new tracer_type(loc, Angle, pixel_x, pixel_y, color)
-	else
+	if(gun.current_tracers.len < current_position)	//Make a new one
+		gun.current_tracers += new tracer_type(C, Angle, pixel_x, pixel_y, color)
+	else				//Reuse because I didn't learn a lesson from pooling.
 		var/obj/effect/projectile_beam/PB = gun.current_tracers[current_position]
-		PB.apply_vars(Angle, pixel_x, pixel_y, color, loc)
+		PB.apply_vars(Angle, pixel_x, pixel_y, color, C)
 	gun.tracer_position++
 
 /obj/effect/projectile_beam
