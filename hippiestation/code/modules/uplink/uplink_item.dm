@@ -102,4 +102,11 @@
 	item = /obj/item/weapon/twohanded/fireaxe/fireyaxe
 	restricted_roles = list("Atmospheric Technician")
 
-
+/datum/uplink_item/role_restricted/retardhorn
+	name = "Extra Annoying Bike Horn."
+	desc = "This bike horn has been carefully tuned by the clown federation to subtly affect the brains of those who\
+	 hear it using advanced sonic techniques. To the untrained eye, a golden bike horn but each honk will cause small\
+	  amounts of brain damage, most targets will be reduced to a gibbering wreck before they catch on."
+	cost = 5
+	item = /obj/item/weapon/bikehorn/golden/retardhorn
+	restricted_roles = list("Clown")
