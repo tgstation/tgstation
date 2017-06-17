@@ -45,8 +45,7 @@
 	var/lastangle = 0
 	var/aiming_lastangle = 0
 	var/mob/current_user = null
-	var/list/obj/effect/projectile_beam/current_tracers = list()
-	var/tracer_position = 1
+	var/obj/effect/projectile_beam/current_tracer
 
 	var/structure_piercing = 4				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled.
 	var/structure_bleed_coeff = 0.7
@@ -133,7 +132,6 @@
 		return
 	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
 	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
-	to_chat(world, "Debug: Autozoom setting to x [current_zoom_x] y [current_zoom_y]")
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
@@ -197,7 +195,7 @@
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
-	clear_tracers(TRUE)
+	clear_tracer()
 	..()
 
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
@@ -210,38 +208,32 @@
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
-	var/atom/A = current_user.client.mouseObject
-	if(!istype(A) || !A.loc)
-		return
-	var/turf/T = get_turf(current_user.client.mouseObject)
-	if(!istype(T))
-		return
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
 	P.gun = src
 	P.wall_pierce_amount = wall_pierce_amount
 	P.structure_pierce_amount = structure_piercing
 	P.do_pierce = projectile_setting_pierce
-	P.preparePixelProjectile(current_user.client.mouseObject, T, current_user, current_user.client.mouseParams, 0)
 	if(aiming_time)
 		var/percent = ((100/aiming_time)*aiming_time_left)
 		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
 		P.color = rgb(0, 255, 0)
-	P.fire()
-	clear_tracers()
+	var/turf/curloc = get_turf(src)
+	var/turf/targloc = get_turf(current_user.client.mouseObject)
+	if(!istype(targloc))
+		if(!istype(curloc))
+			return
+		targloc = get_turf_in_angle(lastangle, curloc, 10)
+	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
+	clear_tracer()
+	P.fire(lastangle)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracers(delete_everything = FALSE)
-	if(delete_everything)
-		QDEL_LIST(current_tracers)
-	else
-		for(var/I in tracer_position to current_tracers.len)
-			var/atom/movable/AM = current_tracers[I]
-			AM.forceMove(src)
-	tracer_position = 1
+/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracer()
+	qdel(current_tracer)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
-	clear_tracers()
+	clear_tracer()
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -328,12 +320,14 @@
 	start_aiming()
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
+	if(istype(object, /obj/screen))
+		return
 	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
-	clear_tracers()
+	clear_tracer()
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
 	. = ..()
@@ -557,6 +551,39 @@
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
 	var/tracer_type = /obj/effect/projectile_beam/tracer
+	var/starting_z
+	var/starting_p_x
+	var/starting_p_y
+	var/constant_tracer = FALSE
+	var/travelled_p_x = 0
+	var/travelled_p_y = 0
+
+/obj/item/projectile/beam/beam_rifle/hitscan/Destroy()
+	paused = TRUE	//STOP HITTING WHEN YOU'RE ALREADY BEING DELETED!
+	spawn_tracer(constant_tracer)
+	return ..()
+
+/obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer(put_in_rifle = FALSE)
+	to_chat(world, "<span class='notice'>DEBUG: Starting absolute pixel locations [starting_p_x]/[starting_p_y] travelled [travelled_p_x]/[travelled_p_y]</span>")
+	//Remind me to port baystation trajectories so this shit isn't needed...
+	var/pixels_travelled = round(sqrt(travelled_p_x**2 + travelled_p_y**2),1)
+	var/scaling = pixels_travelled/world.icon_size
+	var/midpoint_p_x = round(starting_p_x + (travelled_p_x / 2))
+	var/midpoint_p_y = round(starting_p_y + (travelled_p_y / 2))
+	to_chat(world, "<span class='warning'>DEBUG: Travelled [pixels_travelled] pixels, midpoint pixels at [midpoint_p_x]/[midpoint_p_y]</span>")
+	var/tracer_px = midpoint_p_x % world.icon_size
+	var/tracer_py = midpoint_p_y % world.icon_size
+	var/tracer_lx = (midpoint_p_x - tracer_px) / world.icon_size
+	var/tracer_ly = (midpoint_p_y - tracer_py) / world.icon_size
+	to_chat(world, "<span class='notice'>DEBUG: Calculated tracer position at x/y [tracer_lx]/[tracer_ly] with pixel shifting x/y [tracer_px]/[tracer_py]</span>")
+	var/obj/effect/projectile_beam/PB = new tracer_type(src)
+	PB.apply_vars(Angle, tracer_px, tracer_py, color, scaling, locate(tracer_lx,tracer_ly,starting_z))
+	if(put_in_rifle && istype(gun))
+		gun.current_tracer = PB
+		to_chat(world, "<span class='boldnotice'>Putting tracer in rifle.</span>")
+	else
+		QDEL_IN(PB, 5)
+		to_chat(world, "<span class='boldnotice'>Deleting tracer in 0.5 seconds</span>")
 
 /obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
 	set waitfor = 0
@@ -568,6 +595,12 @@
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
 	var/safety = 0	//The code works fine, but... just in case...
+	var/turf/c2
+	var/starting_x = loc.x
+	var/starting_y = loc.y
+	starting_z = loc.z
+	starting_p_x = starting_x * world.icon_size + pixel_x
+	starting_p_y = starting_y * world.icon_size + pixel_y
 	while(loc)
 		if(++safety > (range * 3))	//If it's looping for way, way too long...
 			return	//Kill!
@@ -582,6 +615,8 @@
 		transform = M
 		var/Pixel_x=sin(Angle)+16*sin(Angle)*2
 		var/Pixel_y=cos(Angle)+16*cos(Angle)*2
+		travelled_p_x += Pixel_x
+		travelled_p_y += Pixel_y
 		var/pixel_x_offset = old_pixel_x + Pixel_x
 		var/pixel_y_offset = old_pixel_y + Pixel_y
 		var/new_x = x
@@ -618,17 +653,10 @@
 			if(loc == get_turf(original))
 				if(!(original in permutated))
 					Bump(original, 1)
+		c2 = loc
 		Range()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/Range()
-	spawn_tracer_effect()
-	if(!QDELETED(src) && loc)
-		cached = get_turf(src)
-	. = ..()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
-	var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-	QDEL_IN(T, 5)
+	if(istype(c2))
+		cached = c2
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/projectile_beam/tracer/aiming
@@ -637,6 +665,7 @@
 	hitsound_wall = null
 	nodamage = TRUE
 	damage = 0
+	constant_tracer = TRUE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
@@ -645,20 +674,6 @@
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
 	return FALSE
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/spawn_tracer_effect()
-	var/turf/C = loc
-	if(!istype(gun))
-		var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-		QDEL_IN(T, 5)
-		return
-	var/current_position = gun.tracer_position
-	if(gun.current_tracers.len < current_position)	//Make a new one
-		gun.current_tracers += new tracer_type(C, Angle, pixel_x, pixel_y, color)
-	else				//Reuse because I didn't learn a lesson from pooling.
-		var/obj/effect/projectile_beam/PB = gun.current_tracers[current_position]
-		PB.apply_vars(Angle, pixel_x, pixel_y, color, C)
-	gun.tracer_position++
 
 /obj/effect/projectile_beam
 	icon = 'icons/obj/projectiles.dmi'
@@ -669,23 +684,46 @@
 	light_color = "#00ffff"
 	mouse_opacity = 0
 	flags = ABSTRACT
+	appearance_flags = 0
 
-/obj/effect/projectile_beam/New(angle_override, p_x, p_y, color_override)
-	apply_vars(angle_override, p_x, p_y, color_override)
+/obj/effect/projectile_beam/proc/scale_to(nx,ny,override=TRUE)
+	var/matrix/M
+	if(!override)
+		M = transform
+	else
+		M = new
+	M.Scale(nx,ny)
+	transform = M
+
+/obj/effect/projectile_beam/proc/turn_to(angle,override=TRUE)
+	var/matrix/M
+	if(!override)
+		M = transform
+	else
+		M = new
+	M.Turn(angle)
+	transform = M
+
+/obj/effect/projectile_beam/New(angle_override, p_x, p_y, color_override, scaling = 1)
+	if(angle_override && p_x && p_y && color_override && scaling)
+		apply_vars(angle_override, p_x, p_y, color_override, scaling)
 	return ..()
 
-/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, new_loc)
+/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, scaling = 1, new_loc, increment = 0)
+	to_chat(world, "<span class='boldwarning'>Applying variables angle [angle_override] x [p_x] y [p_y] color [color_override] scaling [scaling] loc [new_loc]</span>")
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
 	if(color_override)
 		look.color = color_override
-	var/matrix/M = new
-	M.Turn(angle_override)
-	look.transform = M
 	appearance = look
+	scale_to(1,scaling, FALSE)
+	turn_to(angle_override, FALSE)
 	if(!isnull(new_loc))	//If you want to null it just delete it...
 		forceMove(new_loc)
+	for(var/i in 1 to increment)
+		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)
+		pixel_y += round((cos(angle_override)+16*cos(angle_override)*2), 1)
 
 /obj/effect/projectile_beam/tracer
 	icon_state = "tracer_beam"
