@@ -94,7 +94,7 @@
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	beaker.desc = "[desc] May contain blended dust. Don't breathe this in!"
+	beaker.desc = "[beaker.desc] May contain blended dust. Don't breathe this in!"
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
