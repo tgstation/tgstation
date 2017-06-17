@@ -308,3 +308,84 @@
 	if(.)
 		investigate_log("was planted by [key_name(user)] at [COORD(user)]", INVESTIGATE_BOTANY)
 
+//// LAVALAND MUSHROOMS ////
+
+// Bracket (Shaving mushroom)
+
+/obj/item/seeds/polypore
+	name = "pack of polypore mycelium"
+	desc = "This mycelium grows into bracket mushrooms, also known as polypores. Woody and firm, shaft miners often use them for makeshift crafts."
+	icon_state = "mycelium-polypore"
+	species = "polypore"
+	plantname = "Polypore Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/shavings
+	lifespan = 50
+	endurance = 35
+	maturation = 7
+	production = 2
+	yield = 4
+	potency = 15
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list("nutriment" = 0.1)
+
+// Porcini (Leafy mushroom)
+
+/obj/item/seeds/porcini
+	name = "pack of porcini mycelium"
+	desc = "This mycelium grows into Boletus edulus, also known as porcini. Native to the late Earth, but discovered on Lavaland. Has culinary, medicinal and relaxant effects."
+	icon_state = "mycelium-porcini"
+	species = "porcini"
+	plantname = "Porcini Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_leaf
+	lifespan = 50
+	endurance = 35
+	maturation = 7
+	production = 3
+	yield = 2
+	potency = 15
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list("nutriment" = 0.1)
+
+// Inocybe (Mushroom caps)
+
+/obj/item/seeds/inocybe
+	name = "pack of inocybe mycelium"
+	desc = "This mycelium grows into an inocybe mushroom, with hallucinatory and toxic effects."
+	icon_state = "mycelium-inocybe"
+	species = "inocybe"
+	plantname = "Inocybe Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_cap
+	lifespan = 50
+	endurance = 35
+	maturation = 7
+	production = 3
+	yield = 3
+	potency = 15
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list("nutriment" = 0.1)
+
+// Embershroom (Mushroom stem)
+
+/obj/item/seeds/inocybe
+	name = "pack of embershroom mycelium"
+	desc = "This mycelium grows into embershrooms, a species of bioluminescent mushrooms native to Lavaland."
+	icon_state = "mycelium-ember"
+	species = "embershroom"
+	plantname = "Embershroom Mushrooms"
+	product = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/mushroom_stem
+	lifespan = 50
+	endurance = 35
+	maturation = 7
+	production = 3
+	yield = 3
+	potency = 15
+	growthstages = 3
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	reagents_add = list("nutriment" = 0.1)
