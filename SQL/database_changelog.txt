@@ -1,3 +1,14 @@
+
+16th June 2017, by Shadowlight213
+
+Added role_time table to track time spent playing departments.
+CREATE TABLE `SS13_role_time` ( `ckey` VARCHAR(32) NOT NULL , `job` VARCHAR(128) NOT NULL , `minutes` INT UNSIGNED NOT NULL, PRIMARY KEY (`ckey`, `job`) ) ENGINE = InnoDB;
+
+Also, added flags column to the player table.
+ALTER TABLE `ss13_player` ADD `flags` INT NOT NULL AFTER `accountjoindate`;
+
+----------------------------------------------------
+
 30 May 2017, by MrStonedOne
 
 Z levels changed, this query allows you to convert old ss13 death records:
@@ -6,12 +17,6 @@ UPDATE death SET coord = CONCAT(SUBSTRING_INDEX(coord, ',', 2), ', ', CASE TRIM(
 
 ---------------------------------------------------
 
-23rd April 2017, by Shadowlight213
-
-Added role_time table to track time spent playing departments.
-CREATE TABLE `SS13_role_time` ( `ckey` VARCHAR(32) NOT NULL , `job` VARCHAR(128) NOT NULL , `minutes` INT UNSIGNED NOT NULL, PRIMARY KEY (`ckey`, `job`) ) ENGINE = InnoDB;
-
-----------------------------------------------------
 26 May 2017, by Jordie0608
 
 Modified table 'ban', adding the column 'round_id'.

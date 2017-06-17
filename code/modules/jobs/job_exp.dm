@@ -34,13 +34,17 @@ GLOBAL_PROTECT(exp_to_update)
 		return
 	if(!check_rights(R_ADMIN))
 		return
-	var/list/exp = C.prefs.exp
-	if(exp[EXP_TYPE_EXEMPT] == 0)
-		exp[EXP_TYPE_EXEMPT] = 1
+
+	set_db_player_flags(C)
+	var/dbflags = C.prefs.db_flags
+	var/newstate = FALSE
+	if(dbflags & DB_FLAG_EXEMPT)
+		newstate = FALSE
 	else
-		exp[EXP_TYPE_EXEMPT] = 0
-	message_admins("[key_name_admin(usr)] has [exp[EXP_TYPE_EXEMPT] ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
-	update_exempt_db(C,exp[EXP_TYPE_EXEMPT])
+		newstate = TRUE
+
+	message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
+	update_flag_db(C,DB_FLAG_EXEMPT, newstate)
 
 // Procs
 
@@ -56,7 +60,7 @@ GLOBAL_PROTECT(exp_to_update)
 		return 0
 	if(config.use_exp_restrictions_admin_bypass && check_rights(R_ADMIN, 0, C.mob))
 		return 0
-	var/isexempt = C.prefs.exp[EXP_TYPE_EXEMPT]
+	var/isexempt = C.prefs.db_flags & DB_FLAG_EXEMPT
 	if(isexempt)
 		return 0
 	var/my_exp = calc_exp_type(C,get_exp_req_type())
@@ -118,11 +122,12 @@ GLOBAL_PROTECT(exp_to_update)
 			exp_data[category] = text2num(play_records[category])
 		else
 			exp_data[category] = 0
+	if(prefs.db_flags & DB_FLAG_EXEMPT)
+		return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
+
 	for(var/dep in exp_data)
 		if(exp_data[dep] > 0)
-			if(dep == EXP_TYPE_EXEMPT)
-				return_text += "<LI>Exempt (all jobs auto-unlocked)</LI>"
-			else if(exp_data[EXP_TYPE_LIVING] > 0)
+			if(exp_data[EXP_TYPE_LIVING] > 0)
 				var/percentage = num2text(round(exp_data[dep]/exp_data[EXP_TYPE_LIVING]*100))
 				return_text += "<LI>[dep] [get_exp_format(exp_data[dep])] ([percentage]%)</LI>"
 			else
@@ -153,6 +158,8 @@ GLOBAL_PROTECT(exp_to_update)
 
 
 /client/proc/get_exp_living()
+	if(!prefs.exp)
+		return "No data"
 	var/exp_living = text2num(prefs.exp[EXP_TYPE_LIVING])
 	return get_exp_format(exp_living)
 
@@ -259,18 +266,39 @@ GLOBAL_PROTECT(exp_to_update)
 	prefs.exp = play_records
 
 
-//toggles exempt status in the db
-/proc/update_exempt_db(client/C, exempt = 0)
-	if(!config.use_exp_tracking)
-		return
+//updates player db flags
+/proc/update_flag_db(client/C, newflag, state = FALSE)
+
 	if(!SSdbcore.Connect())
 		return -1
 
-	var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(C.ckey)]', '[EXP_TYPE_EXEMPT]', '[sanitizeSQL(exempt)]') ON DUPLICATE KEY UPDATE minutes = VALUES(minutes)")
-	if(!update_query.Execute())
-		var/err = update_query.ErrorMsg()
+	if(!set_db_player_flags(C))
+		return -1
+
+	var/datum/DBQuery/flag_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[sanitizeSQL(C.ckey)]'")
+
+	if(!flag_read.Execute())
+		var/err = flag_read.ErrorMsg()
+		log_game("SQL ERROR during player flags read. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
+		return
+
+	var/playerflags = null
+	while(flag_read.NextRow())
+		playerflags = text2num(flag_read.item[1])
+
+	if((playerflags & newflag) && !state)
+		C.prefs.db_flags &= ~newflag
+	else
+		C.prefs.db_flags |= newflag
+
+	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[C.prefs.db_flags]' WHERE ckey='[sanitizeSQL(C.ckey)]'")
+
+
+	if(!flag_update.Execute())
+		var/err = flag_update.ErrorMsg()
 		log_game("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_exempt. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during exp_exempt update. Error : \[[err]\]\n")
 		return
 
 /client/proc/update_exp_list(minutes, announce_changes = FALSE)
@@ -330,3 +358,21 @@ GLOBAL_PROTECT(exp_to_update)
 				"ckey" = "'[sanitizeSQL(ckey)]'",
 				"minutes" = play_records[jtype])))
 	addtimer(CALLBACK(GLOBAL_PROC,.proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
+
+
+//ALWAYS call this at beginning to any proc touching player flags, or your database admin will probably be mad
+/proc/set_db_player_flags(client/C)
+	if(!SSdbcore.Connect())
+		return FALSE
+
+	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[C.ckey]'")
+
+	if(!flags_read.Execute())
+		var/err = flags_read.ErrorMsg()
+		log_game("SQL ERROR during player flags read. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during player flags read. Error : \[[err]\]\n")
+		return FALSE
+
+	while(flags_read.NextRow())
+		C.prefs.db_flags = text2num(flags_read.item[1])
+	return TRUE

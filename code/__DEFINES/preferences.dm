@@ -62,3 +62,7 @@
 #define EXP_TYPE_SPECIAL		"Special"
 #define EXP_TYPE_GHOST			"Ghost"
 #define EXP_TYPE_EXEMPT			"Exempt"
+
+
+//Flags in the players table in the db
+#define DB_FLAG_EXEMPT 1
