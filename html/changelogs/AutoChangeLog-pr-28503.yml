@@ -1,0 +1,4 @@
+author: "Expletive"
+delete-after: True
+changes: 
+  - bugfix: "Cryo cells work properly on mobs with varying max health values."
