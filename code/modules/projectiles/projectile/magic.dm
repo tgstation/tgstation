@@ -277,6 +277,10 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
+	var/static/poly_policy = trim(file2text('config/polymorph_rules.txt'))
+	if(poly_policy)
+		to_chat(new_mob, poly_policy)
+
 	qdel(M)
 	return new_mob
 
