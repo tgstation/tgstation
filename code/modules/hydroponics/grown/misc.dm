@@ -163,7 +163,7 @@
 	icon_state = "seed-cactus"
 	species = "cactus"
 	plantname = "Fruiting Cactus"
-	product = /obj/item/weapon/reagent_containers/food/snacks/ash_flora/cactus_fruit
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	lifespan = 50
 	endurance = 25
 	maturation = 3
