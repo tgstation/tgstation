@@ -1,10 +1,12 @@
 
-/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0)
+/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, type = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new(source, _creator, _lifespan, null, FALSE)
-	var/obj/effect/portal/P2 = new(actual_destination, _creator, _lifespan, P1, TRUE)
+	var/obj/effect/portal/P1 = new type(source, _creator, _lifespan, null, FALSE)
+	var/obj/effect/portal/P2 = new type(actual_destination, _creator, _lifespan, P1, TRUE)
+	if(!istype(P1)||!istype(P2))
+		return
 	P1.link_portal(P2)
 	P1.hardlinked = TRUE
 	return list(P1, P2)
@@ -23,6 +25,12 @@
 	var/atmos_link = FALSE			//Link source/destination atmos.
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
+
+/obj/effect/portal/anom
+	name = "wormhole"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	mech_sized = TRUE
 
 /obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
 	if(user && Adjacent(user))
