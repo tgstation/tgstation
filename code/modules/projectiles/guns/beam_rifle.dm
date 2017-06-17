@@ -121,7 +121,7 @@
 	var/total_time = SSfastprocess.wait
 	if(delay_override)
 		total_time = delay_override
-	if(zoom_speed = ZOOM_SPEED_INSTANT)
+	if(zoom_speed == ZOOM_SPEED_INSTANT)
 		total_time = 0
 	zoom_animating = total_time
 	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
@@ -208,6 +208,7 @@
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
+	CHECK_TICK
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
 	P.gun = src
 	P.wall_pierce_amount = wall_pierce_amount
@@ -564,26 +565,21 @@
 	return ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer(put_in_rifle = FALSE)
-	to_chat(world, "<span class='notice'>DEBUG: Starting absolute pixel locations [starting_p_x]/[starting_p_y] travelled [travelled_p_x]/[travelled_p_y]</span>")
 	//Remind me to port baystation trajectories so this shit isn't needed...
 	var/pixels_travelled = round(sqrt(travelled_p_x**2 + travelled_p_y**2),1)
 	var/scaling = pixels_travelled/world.icon_size
 	var/midpoint_p_x = round(starting_p_x + (travelled_p_x / 2))
 	var/midpoint_p_y = round(starting_p_y + (travelled_p_y / 2))
-	to_chat(world, "<span class='warning'>DEBUG: Travelled [pixels_travelled] pixels, midpoint pixels at [midpoint_p_x]/[midpoint_p_y]</span>")
 	var/tracer_px = midpoint_p_x % world.icon_size
 	var/tracer_py = midpoint_p_y % world.icon_size
 	var/tracer_lx = (midpoint_p_x - tracer_px) / world.icon_size
 	var/tracer_ly = (midpoint_p_y - tracer_py) / world.icon_size
-	to_chat(world, "<span class='notice'>DEBUG: Calculated tracer position at x/y [tracer_lx]/[tracer_ly] with pixel shifting x/y [tracer_px]/[tracer_py]</span>")
 	var/obj/effect/projectile_beam/PB = new tracer_type(src)
 	PB.apply_vars(Angle, tracer_px, tracer_py, color, scaling, locate(tracer_lx,tracer_ly,starting_z))
 	if(put_in_rifle && istype(gun))
 		gun.current_tracer = PB
-		to_chat(world, "<span class='boldnotice'>Putting tracer in rifle.</span>")
 	else
 		QDEL_IN(PB, 5)
-		to_chat(world, "<span class='boldnotice'>Deleting tracer in 0.5 seconds</span>")
 
 /obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
 	set waitfor = 0
