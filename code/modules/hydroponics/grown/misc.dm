@@ -165,3 +165,4 @@
 	plantname = "Fruiting Cactus"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	growthstages = 2
