@@ -106,7 +106,7 @@ Chemist
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
-
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack = /obj/item/weapon/storage/backpack/chemistry
 	satchel = /obj/item/weapon/storage/backpack/satchel/chem
 	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/med
