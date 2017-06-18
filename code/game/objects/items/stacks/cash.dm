@@ -27,7 +27,7 @@
 	update_desc()
 
 /obj/item/stack/spacecash/use()
-	..()
+	. = ..()
 	update_desc()
 
 /obj/item/stack/spacecash/c1
