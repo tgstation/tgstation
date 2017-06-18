@@ -1,6 +1,6 @@
 /datum/game_mode/extended
 	name = "secret extended"
-	config_tag = "secret extended"
+	config_tag = "secret_extended"
 	required_players = 0
 
 	announce_span = "notice"

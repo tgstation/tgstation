@@ -247,13 +247,14 @@
 /datum/antagonist/traitor/AI/finalize_traitor()
 	..()
 	add_law_zero()
-	owner.current.playsound_local('sound/ambience/antag/malf.ogg',100,0)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
 	owner.current.grant_language(/datum/language/codespeak)
 
 /datum/antagonist/traitor/human/finalize_traitor()
 	..()
-	if(should_equip) equip(silent)
-	owner.current.playsound_local('sound/ambience/antag/tatoralert.ogg',100,0)
+	if(should_equip)
+		equip(silent)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/traitor/proc/give_codewords()
 	if(!owner.current)

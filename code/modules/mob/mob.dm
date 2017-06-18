@@ -306,17 +306,11 @@
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
-		return
-	if(AM == src || !isturf(AM.loc))
-		return
-	if(AM.anchored || AM.throwing)
-		return
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.buckled && L.buckled.buckle_prevents_pull)
-			return
+		return FALSE
+	if(!(AM.can_be_pulled(src)))
+		return FALSE
 	if(throwing || incapacitated())
-		return
+		return FALSE
 
 	AM.add_fingerprint(src)
 
@@ -580,7 +574,8 @@
 
 	if(client && client.holder)
 		if(statpanel("MC"))
-			stat("Location:", "([x], [y], [z])")
+			var/turf/T = get_turf(client.eye)
+			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
 			GLOB.stat_entry()

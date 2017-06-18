@@ -561,13 +561,15 @@
 
 /obj/effect/timestop/Initialize()
 	. = ..()
-	for(var/mob/living/M in GLOB.player_list)
-		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
-			immune |= M
+	for(var/M in GLOB.living_mob_list)
+		var/mob/living/L = M
+		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in L.mind.spell_list) //People who can stop time are immune to timestop
+			immune |= L
 	timestop()
 
 
 /obj/effect/timestop/proc/timestop()
+	set waitfor = FALSE
 	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
