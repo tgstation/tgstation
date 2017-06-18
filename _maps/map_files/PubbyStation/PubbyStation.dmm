@@ -24590,7 +24590,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aZa" = (
 /obj/machinery/camera{
@@ -25051,7 +25051,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aZY" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -25380,7 +25380,7 @@
 	dir = 4;
 	icon_state = "propulsion"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "baH" = (
 /obj/structure/grille,
@@ -26036,7 +26036,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bbS" = (
 /obj/structure/chair/comfy/beige{
@@ -29877,7 +29877,7 @@
 	dir = 8;
 	icon_state = "propulsion_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "bjZ" = (
 /turf/closed/wall/mineral/titanium,
@@ -30666,7 +30666,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "blt" = (
 /turf/open/floor/pod/light,
@@ -31314,7 +31314,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "bmN" = (
 /obj/machinery/door/airlock/titanium,
@@ -53572,7 +53572,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cig" = (
 /obj/machinery/door/airlock/external,
@@ -53630,7 +53630,7 @@
 	name = "pubby arrivals";
 	width = 6
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "cin" = (
 /obj/machinery/door/airlock/external{

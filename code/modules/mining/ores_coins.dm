@@ -36,7 +36,7 @@
 				if(istype(thing, /obj/item/weapon/storage/bag/ore))
 					OB = thing
 					break
-		else if(issilicon(AM))
+		else if(iscyborg(AM))
 			var/mob/living/silicon/robot/R = AM
 			for(var/thing in R.module_active)
 				if(istype(thing, /obj/item/weapon/storage/bag/ore))
