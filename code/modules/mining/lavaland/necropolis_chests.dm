@@ -581,7 +581,8 @@
 		user.take_bodypart_damage(10)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))	var/beast_bonus_active = FALSE
+	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
+		var/beast_bonus_active = FALSE
 		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
 			force += beast_force_bonus //we do bonus damage against beastly creatures
 			beast_bonus_active = TRUE
