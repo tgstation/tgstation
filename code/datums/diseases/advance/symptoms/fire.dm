@@ -100,19 +100,18 @@ Bonus
 	transmittable = -2
 	level = 7
 	severity = 6
-	base_message_chance = 50
-	symptom_delay_min = 10
-	symptom_delay_max = 25
+	base_message_chance = 100
+	symptom_delay_min = 30
+	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
 	..()
-	if(A.properties["resistance"] >= 6) //intense but sporadic effect
+	if(A.properties["resistance"] >= 9) //intense but sporadic effect
 		power = 2
-		symptom_delay_min = 20
-		symptom_delay_max = 35
-		base_message_chance = 80
+		symptom_delay_min = 50
+		symptom_delay_max = 140
 	if(A.properties["stage_rate"] >= 8) //serious boom when wet
 		explosion_power = 2
 	if(A.properties["transmission"] >= 8) //extra chemicals
