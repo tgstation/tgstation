@@ -99,7 +99,7 @@ Bonus
 	..()
 	if(A.properties["stage_rate"] >= 8)
 		paralysis = TRUE
-	if(A.properties["infectivity"] >= 8)
+	if(A.properties["transmission"] >= 8)
 		power = 2
 
 /datum/symptom/asphyxiation/Activate(datum/disease/advance/A)
