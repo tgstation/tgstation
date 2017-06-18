@@ -98,10 +98,6 @@ Bonus
 		suppress_warning = TRUE
 	if(A.properties["stage_rate"] >= 7) //bleeding and hunger
 		chems = TRUE
-	/* --need approval for this
-	if(A.properties["transmittable"] >= 13) //zombify victims
-		zombie = TRUE
-	*/
 
 /datum/symptom/flesh_death/Activate(datum/disease/advance/A)
 	if(!..())
