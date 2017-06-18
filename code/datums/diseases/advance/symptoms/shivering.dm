@@ -24,17 +24,33 @@ Bonus
 	transmittable = 2
 	level = 2
 	severity = 2
+	symptom_delay_min = 10
+	symptom_delay_max = 30
+	var/unsafe = FALSE //over the cold threshold
+
+/datum/symptom/fever/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["stage_speed"] >= 5) //dangerous cold
+		power = 1.5
+		unsafe = TRUE
+	if(A.properties["stage_speed"] >= 10)
+		power = 2.5
 
 /datum/symptom/shivering/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/carbon/M = A.affected_mob
-		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You start shivering.")]</span>")
-		if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-			Chill(M, A)
-	return
+	if(!..())
+		return
+	var/mob/living/carbon/M = A.affected_mob
+	if(!unsafe || A.stage < 4)
+		to_chat(M, "<span class='warning'>[pick("You feel cold.", "You shiver.")]</span>")
+	else
+		to_chat(M, "<span class='userdanger'>[pick("You feel your blood run cold.", "You feel ice in your veins.", "You feel like you can't heat up.", "You shiver violently." )]</span>")
+	if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT || unsafe)
+		Chill(M, A)
 
 /datum/symptom/shivering/proc/Chill(mob/living/M, datum/disease/advance/A)
-	var/get_cold = (sqrt(16+A.totalStealth()*2))+(sqrt(21+A.totalResistance()*2))
-	M.bodytemperature = min(M.bodytemperature - (get_cold * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
+	var/get_cold = 6 * power
+	if(!unsafe)
+		M.bodytemperature = min(M.bodytemperature - (get_cold * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
+	else
+		M.bodytemperature -= (get_cold * A.stage)
 	return 1

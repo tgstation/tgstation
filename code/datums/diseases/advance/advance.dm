@@ -7,7 +7,7 @@
 
 */
 
-#define SYMPTOM_LIMIT 8
+#define SYMPTOM_LIMIT 6
 
 
 
@@ -18,7 +18,6 @@
  */
 
 /datum/disease/advance
-
 	name = "Unknown" // We will always let our Virologist name our disease.
 	desc = "An engineered disease which can contain a multitude of symptoms."
 	form = "Advance Disease" // Will let med-scanners know that this disease was engineered.
@@ -58,7 +57,10 @@
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				symptoms += new S.type
+				var/datum/symptom/new_symp = new S.type
+				new_symp.name = S.name
+				new_symp.neutered = S.neutered
+				symptoms += new_symp
 
 	Refresh()
 	..(process, D)
@@ -155,7 +157,7 @@
 
 	return generated
 
-/datum/disease/advance/proc/Refresh(new_name = 0)
+/datum/disease/advance/proc/Refresh(new_name = FALSE)
 	//to_chat(world, "[src.name] \ref[src] - REFRESH!")
 	GenerateProperties()
 	AssignProperties()
@@ -263,7 +265,7 @@
 	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
 	if(s)
 		AddSymptom(s)
-		Refresh(1)
+		Refresh(TRUE)
 	return
 
 // Randomly remove a symptom.
@@ -272,7 +274,16 @@
 		var/s = safepick(symptoms)
 		if(s)
 			RemoveSymptom(s)
-			Refresh(1)
+			Refresh(TRUE)
+	return
+
+// Randomly neuter a symptom.
+/datum/disease/advance/proc/Neuter()
+	if(symptoms.len)
+		var/s = safepick(symptoms)
+		if(s)
+			NeuterSymptom(s)
+			Refresh(TRUE)
 	return
 
 // Name the disease.
@@ -310,6 +321,13 @@
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
 	return
+
+// Neuter a symptom, so it will only affect stats
+/datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
+	if(!S.neutered)
+		S.neutered = TRUE
+		S.name += " (neutered)"
+		S.id += "N" //new disease is unique
 
 /*
 

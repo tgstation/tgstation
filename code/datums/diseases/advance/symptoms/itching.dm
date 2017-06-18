@@ -25,10 +25,23 @@ BONUS
 	transmittable = 1
 	level = 1
 	severity = 1
+	symptom_delay_min = 5
+	symptom_delay_max = 25
+	var/scratch = FALSE
+
+/datum/symptom/itching/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["transmittable"] >= 6) //itch more often
+		symptom_delay_min = 1
+		symptom_delay_max = 4
+	if(A.properties["stage_rate"] >= 7) //scratch
+		scratch = TRUE
 
 /datum/symptom/itching/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		to_chat(M, "<span class='warning'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>")
-	return
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	var/can_scratch = scratch && !M.incapacitated()
+	to_chat(M, "<span class='warning'>Your [pick("back", "arm", "leg", "elbow", "head")] itches. [can_scratch ? " You scratch it." : ""]</span>")
+	if(can_scratch)
+		M.adjustBruteLoss(0.5)

@@ -24,20 +24,26 @@ Bonus
 	transmittable = -2
 	level = 4
 	severity = 1
+	base_message_chance = 100
+	symptom_delay_min = 15
+	symptom_delay_max = 45
+
+/datum/symptom/weight_gain/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["stealth"] >= 4) //warn less often
+		base_message_chance = 25
 
 /datum/symptom/weight_gain/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1, 2, 3, 4)
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(1, 2, 3, 4)
+			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("You feel blubbery.", "Your stomach hurts.")]</span>")
-			else
-				M.overeatduration = min(M.overeatduration + 100, 600)
-				M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
-
-	return
-
+		else
+			M.overeatduration = min(M.overeatduration + 100, 600)
+			M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
 
 /*
 //////////////////////////////////////
@@ -66,20 +72,27 @@ Bonus
 	transmittable = -2
 	level = 3
 	severity = 1
+	base_message_chance = 100
+	symptom_delay_min = 15
+	symptom_delay_max = 45
+
+/datum/symptom/weight_loss/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["stealth"] >= 4) //warn less often
+		base_message_chance = 25
 
 /datum/symptom/weight_loss/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(1, 2, 3, 4)
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(1, 2, 3, 4)
+			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("You feel hungry.", "You crave for food.")]</span>")
-			else
-				to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
-				M.overeatduration = max(M.overeatduration - 100, 0)
-				M.nutrition = max(M.nutrition - 100, 0)
-
-	return
+		else
+			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
+			M.overeatduration = max(M.overeatduration - 100, 0)
+			M.nutrition = max(M.nutrition - 100, 0)
 
 /*
 //////////////////////////////////////
@@ -108,14 +121,14 @@ Bonus
 	stage_speed = -2
 	transmittable = -2
 	level = 4
+	symptom_delay_min = 5
+	symptom_delay_max = 5
 
 /datum/symptom/weight_even/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/M = A.affected_mob
-		switch(A.stage)
-			if(4, 5)
-				M.overeatduration = 0
-				M.nutrition = NUTRITION_LEVEL_WELL_FED + 50
-
-	return
+	if(!..())
+		return
+	var/mob/living/M = A.affected_mob
+	switch(A.stage)
+		if(4, 5)
+			M.overeatduration = 0
+			M.nutrition = NUTRITION_LEVEL_WELL_FED + 50

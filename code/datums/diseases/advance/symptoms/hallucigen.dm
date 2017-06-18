@@ -24,18 +24,39 @@ Bonus
 	transmittable = -1
 	level = 5
 	severity = 3
+	base_message_chance = 25
+	symptom_delay_min = 25
+	symptom_delay_max = 90
+	var/fake_healthy = FALSE
+
+/datum/symptom/hallucigen/Start(datum/disease/advance/A)
+	..()
+	if(A.properties["stealth"] >= 4) //fake good symptom messages
+		fake_healthy = TRUE
+		base_message_chance = 50
+	if(A.properties["stage_rate"] >= 7) //stronger hallucinations
+		power = 2
 
 /datum/symptom/hallucigen/Activate(datum/disease/advance/A)
-	..()
-	if(prob(SYMPTOM_ACTIVATION_PROB))
-		var/mob/living/carbon/M = A.affected_mob
-		switch(A.stage)
-			if(1, 2)
-				to_chat(M, "<span class='warning'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whispher with no source.", "Your head aches.")]</span>")
-			if(3, 4)
-				to_chat(M, "<span class='danger'>[pick("Something is following you.", "You are being watched.", "You hear a whisper in your ear.", "Thumping footsteps slam toward you from nowhere.")]</span>")
-			else
+	if(!..())
+		return
+	var/mob/living/carbon/M = A.affected_mob
+	var/list/healthy_messages = list("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.",\
+					"Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")
+	switch(A.stage)
+		if(1, 2)
+			if(prob(base_message_chance))
+				if(!fake_healthy)
+					to_chat(M, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whispher with no source.", "Your head aches.")]</span>")
+				else
+					to_chat(M, "<span class='notice'>[pick(healthy_messages)]</span>")
+		if(3, 4)
+			if(prob(base_message_chance))
+				if(!fake_healthy)
+					to_chat(M, "<span class='danger'>[pick("Something is following you.", "You are being watched.", "You hear a whisper in your ear.", "Thumping footsteps slam toward you from nowhere.")]</span>")
+				else
+					to_chat(M, "<span class='notice'>[pick(healthy_messages)]</span>")
+		else
+			if(prob(base_message_chance))
 				to_chat(M, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
-				M.hallucination += 25
-
-	return
+			M.hallucination += (15 * power)

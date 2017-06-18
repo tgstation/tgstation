@@ -406,6 +406,21 @@
 		if(D)
 			D.Devolve()
 
+/datum/chemical_reaction/mix_virus/neuter_virus
+
+	name = "Neuter Virus"
+	id = "neutervirus"
+	required_reagents = list("formaldehyde" = 1)
+	required_catalysts = list("blood" = 1)
+
+/datum/chemical_reaction/mix_virus/neuter_virus/on_reaction(datum/reagents/holder, created_volume)
+
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+	if(B && B.data)
+		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
+		if(D)
+			D.Neuter()
+
 
 
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////
