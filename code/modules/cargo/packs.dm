@@ -286,7 +286,7 @@
 	                /obj/item/device/camera,
 	                /obj/item/device/taperecorder,
 	                /obj/item/toy/crayon/white,
-	                /obj/item/clothing/head/det_hat)
+	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/armory
@@ -998,7 +998,7 @@
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
-	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
+	contains = list(/obj/item/weapon/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
 	contraband = TRUE
 	access = GLOB.access_theatre
@@ -1249,13 +1249,13 @@
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
-	cost = 3000
+	cost = 7500
 	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/plasteel50
 	name = "50 Plasteel Sheets"
-	cost = 5000
+	cost = 16500
 	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	crate_name = "plasteel sheets crate"
 
@@ -1423,6 +1423,7 @@
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
+					/obj/item/weapon/pen/fountain,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/folder/blue,
@@ -1433,6 +1434,12 @@
 					/obj/item/weapon/stamp,
 					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
+
+/datum/supply_pack/misc/fountainpens
+	name = "Calligraphy Crate"
+	cost = 700
+	contains = list(/obj/item/weapon/storage/box/fountainpens)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
@@ -1637,7 +1644,7 @@
 					/obj/item/clothing/suit/toggle/lawyer/purple,
 					/obj/item/clothing/under/lawyer/blacksuit,
 					/obj/item/clothing/suit/toggle/lawyer/black,
-					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/accessory/waistcoat,
 					/obj/item/clothing/neck/tie/blue,
 					/obj/item/clothing/neck/tie/red,
 					/obj/item/clothing/neck/tie/black,

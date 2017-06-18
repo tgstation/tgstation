@@ -197,7 +197,7 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open

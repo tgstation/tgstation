@@ -67,10 +67,10 @@
 	var/mob/living/carbon/current = target
 	if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
-		playsound(get_turf(current), 'sound/magic/LightningShock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 	else
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
-		playsound(get_turf(current), 'sound/magic/LightningShock.ogg', 50, 1, -1)
+		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 		var/list/possible_targets = new
 		for(var/mob/living/M in view_or_range(range,target,"view"))
 			if(user == M || target == M && los_check(current,M)) // || origin == M ? Not sure double shockings is good or not

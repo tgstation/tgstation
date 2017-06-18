@@ -6,7 +6,7 @@
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
 
 /datum/export/large/crate/total_printout() // That's why a goddamn metal crate costs that much.
 	. = ..()
@@ -15,13 +15,20 @@
 
 /datum/export/large/crate/wooden
 	cost = 100
-	unit_name = "wooden crate"
+	unit_name = "large wooden crate"
 	export_types = list(/obj/structure/closet/crate/large)
 	exclude_types = list()
 
 /datum/export/large/crate/wooden/ore
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
+
+/datum/export/large/crate/wood
+	cost = 240
+	unit_name = "wooden crate"
+	export_types = list(/obj/structure/closet/crate/wooden)
+	exclude_types = list()
+
 
 
 // Reagent dispensers.

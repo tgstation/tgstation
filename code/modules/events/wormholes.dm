@@ -29,7 +29,7 @@
 		wormholes += new /obj/effect/portal/wormhole(T, null, null, -1)
 
 /datum/round_event/wormholes/announce()
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/AI/spanomalies.ogg')
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/ai/spanomalies.ogg')
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)

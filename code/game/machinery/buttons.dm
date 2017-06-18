@@ -91,7 +91,7 @@
 			if(do_after(user, 40*W.toolspeed, target = src))
 				to_chat(user, "<span class='notice'>You unsecure the button frame.</span>")
 				transfer_fingerprints_to(new /obj/item/wallframe/button(get_turf(src)))
-				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 				qdel(src)
 
 		update_icon()

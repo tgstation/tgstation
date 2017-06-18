@@ -111,6 +111,15 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/catwhip
+	name = "Cat O' Nine Tails"
+	result = /obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	reqs = list(/obj/item/organ/tail/cat = 1,
+	            /obj/item/stack/cable_coil = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
@@ -338,6 +347,14 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/kittyears
+	name = "Kitty Ears"
+	result = /obj/item/clothing/head/kitty/genuine
+	time = 10
+	reqs = list(/obj/item/organ/tail/cat = 1,
+				/obj/item/organ/ears/cat = 1)
+	category = CAT_MISC
+
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
 	result = /obj/vehicle/scooter/skateboard
@@ -426,7 +443,7 @@
 
 /datum/crafting_recipe/bonetalisman
 	name = "Bone Talisman"
-	result = /obj/item/clothing/neck/talisman
+	result = /obj/item/clothing/accessory/talisman
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)

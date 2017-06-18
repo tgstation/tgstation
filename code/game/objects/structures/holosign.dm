@@ -30,9 +30,9 @@
 /obj/structure/holosign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 		if(BURN)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"

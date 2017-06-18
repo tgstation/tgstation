@@ -52,7 +52,7 @@ Head of Security
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/sec
 	box = /obj/item/weapon/storage/box/security
 
 	implants = list(/obj/item/weapon/implant/mindshield)
@@ -101,7 +101,7 @@ Warden
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/sec
 	box = /obj/item/weapon/storage/box/security
 
 	implants = list(/obj/item/weapon/implant/mindshield)
@@ -137,7 +137,7 @@ Detective
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/det_suit
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/det_hat
+	head = /obj/item/clothing/head/fedora/det_hat
 	l_pocket = /obj/item/toy/crayon/white
 	r_pocket = /obj/item/weapon/lighter
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
@@ -195,7 +195,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 		else
 			department = pick_n_take(GLOB.available_depts)
 	var/ears = null
-	var/tie = null
+	var/accessory = null
 	var/list/dep_access = null
 	var/destination = null
 	var/spawn_point = null
@@ -205,29 +205,29 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			dep_access = list(GLOB.access_mailsorting, GLOB.access_mining, GLOB.access_mining_station)
 			destination = /area/security/checkpoint/supply
 			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
-			tie = /obj/item/clothing/tie/armband/cargo
+			accessory = /obj/item/clothing/accessory/armband/cargo
 		if(SEC_DEPT_ENGINEERING)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
 			dep_access = list(GLOB.access_construction, GLOB.access_engine)
 			destination = /area/security/checkpoint/engineering
 			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
-			tie = /obj/item/clothing/tie/armband/engine
+			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
 			dep_access = list(GLOB.access_medical)
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
-			tie =  /obj/item/clothing/tie/armband/medblue
+			accessory =  /obj/item/clothing/accessory/armband/medblue
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
 			dep_access = list(GLOB.access_research)
 			destination = /area/security/checkpoint/science
 			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
-			tie = /obj/item/clothing/tie/armband/science
+			accessory = /obj/item/clothing/accessory/armband/science
 
-	if(tie)
+	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
-		U.attachTie(new tie)
+		U.attach_accessory(new accessory)
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)
@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/sec
 	box = /obj/item/weapon/storage/box/security
 
 	implants = list(/obj/item/weapon/implant/mindshield)

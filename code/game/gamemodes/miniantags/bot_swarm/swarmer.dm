@@ -85,7 +85,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "shocks"
-	attack_sound = 'sound/effects/EMPulse.ogg'
+	attack_sound = 'sound/effects/empulse.ogg'
 	friendly = "pinches"
 	speed = 0
 	faction = list("swarmer")
@@ -560,9 +560,9 @@
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
 	qdel(src)

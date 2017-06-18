@@ -38,11 +38,12 @@ Chief Engineer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/device/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel/eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
 
@@ -90,10 +91,11 @@ Station Engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/device/t_scanner
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel/eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
@@ -141,10 +143,11 @@ Atmospheric Technician
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	r_pocket = /obj/item/device/analyzer
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel/eng
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
 	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)

@@ -185,7 +185,7 @@
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
-	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 
 /obj/item/weapon/katana
 	name = "katana"
@@ -280,7 +280,7 @@
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	origin_tech = "engineering=3;combat=2"
-	hitsound = 'sound/weapons/Genhit.ogg'
+	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
 	var/extended = 0
@@ -302,7 +302,7 @@
 		throwforce = 5
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
-		hitsound = 'sound/weapons/Genhit.ogg'
+		hitsound = 'sound/weapons/genhit.ogg'
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
@@ -440,6 +440,11 @@
 	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
+/obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	name = "cat o' nine tails"
+	desc = "A whip fashioned from the severed tails of cats."
+	icon_state = "catwhip"
+
 /obj/item/weapon/melee/skateboard
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
@@ -494,7 +499,7 @@
 		user.visible_message("<span class='userdanger'>It's a home run!</span>")
 		target.throw_at(throw_target, rand(8,10), 14, user)
 		target.ex_act(2)
-		playsound(get_turf(src), 'sound/weapons/HOMERUN.ogg', 100, 1)
+		playsound(get_turf(src), 'sound/weapons/homerun.ogg', 100, 1)
 		homerun_ready = 0
 		return
 	else if(!target.anchored)

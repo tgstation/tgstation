@@ -57,9 +57,9 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim, and the process will damage our genomes."
+	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
 	sting_icon = "sting_transform"
-	chemical_cost = 40
+	chemical_cost = 50
 	dna_cost = 3
 	var/datum/changelingprofile/selected_dna = null
 
@@ -86,26 +86,19 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
-	set waitfor = FALSE
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
 	var/mob/living/carbon/C = target
-	if(istype(C))
-		if(C.status_flags & CANWEAKEN)
-			C.do_jitter_animation(500)
-			C.take_bodypart_damage(20, 0) //The process is extremely painful
-
-		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 	. = TRUE
-	sleep(10)
 	if(istype(C))
 		C.real_name = NewDNA.real_name
-		NewDNA.transfer_identity(C, transfer_SE=1)
+		NewDNA.transfer_identity(C)
+		if(ismonkey(C))
+			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
 		C.updateappearance(mutcolor_update=1)
-		C.domutcheck()
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade

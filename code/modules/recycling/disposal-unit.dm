@@ -86,7 +86,7 @@
 		else if(istype(I,/obj/item/weapon/weldingtool) && panel_open)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
 					if(!W.isOn())

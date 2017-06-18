@@ -2,7 +2,6 @@
 	name = "Human Observation Console"
 	var/team = 0
 	networks = list("SS13","Abductor")
-	off_action = new/datum/action/innate/camera_off/abductor //specific datum
 	var/datum/action/innate/teleport_in/tele_in_action = new
 	var/datum/action/innate/teleport_out/tele_out_action = new
 	var/datum/action/innate/teleport_self/tele_self_action = new
@@ -23,29 +22,37 @@
 	eyeobj.icon_state = "camera_target"
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
-	off_action.target = user
-	off_action.Grant(user)
+	..()
 
-	jump_action.target = user
-	jump_action.Grant(user)
-	//TODO : add null checks
-	tele_in_action.target = console.pad
-	tele_in_action.Grant(user)
+	if(tele_in_action)
+		tele_in_action.target = console.pad
+		tele_in_action.Grant(user)
+		actions += tele_in_action
 
-	tele_out_action.target = console
-	tele_out_action.Grant(user)
+	if(tele_out_action)
+		tele_out_action.target = console
+		tele_out_action.Grant(user)
+		actions += tele_out_action
 
-	tele_self_action.target = console.pad
-	tele_self_action.Grant(user)
+	if(tele_self_action)
+		tele_self_action.target = console.pad
+		tele_self_action.Grant(user)
+		actions += tele_self_action
 
-	vest_mode_action.target = console
-	vest_mode_action.Grant(user)
+	if(vest_mode_action)
+		vest_mode_action.target = console
+		vest_mode_action.Grant(user)
+		actions += vest_mode_action
 
-	vest_disguise_action.target = console
-	vest_disguise_action.Grant(user)
+	if(vest_disguise_action)
+		vest_disguise_action.target = console
+		vest_disguise_action.Grant(user)
+		actions += vest_disguise_action
 
-	set_droppoint_action.target = console
-	set_droppoint_action.Grant(user)
+	if(set_droppoint_action)
+		set_droppoint_action.target = console
+		set_droppoint_action.Grant(user)
+		actions += set_droppoint_action
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	var/datum/species/abductor/S = H.dna.species
@@ -55,30 +62,6 @@
 	if(!isabductor(user))
 		return
 	return ..()
-
-/datum/action/innate/camera_off/abductor/Activate()
-	if(!target || !iscarbon(target))
-		return
-	var/mob/living/carbon/C = target
-	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/abductor/origin = remote_eye.origin
-	origin.current_user = null
-	origin.jump_action.Remove(C)
-	origin.tele_in_action.Remove(C)
-	origin.tele_out_action.Remove(C)
-	origin.tele_self_action.Remove(C)
-	origin.vest_mode_action.Remove(C)
-	origin.vest_disguise_action.Remove(C)
-	origin.set_droppoint_action.Remove(C)
-	C.reset_perspective(null)
-	if(C.client)
-		C.client.images -= remote_eye.user_image
-		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			chunk.remove(remote_eye)
-	remote_eye.eye_user = null
-	C.remote_control = null
-	C.unset_machine()
-	Remove(C)
 
 /datum/action/innate/teleport_in
 	name = "Send To"

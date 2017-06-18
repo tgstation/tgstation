@@ -5,15 +5,16 @@
 	for(var/mob/living/M in GLOB.living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
+	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
 	//Drivers: always unlocked
-	.[SCRIPTURE_SCRIPT] = (servants >= SCRIPT_SERVANT_REQ && GLOB.clockwork_caches >= SCRIPT_CACHE_REQ)
+	.[SCRIPTURE_SCRIPT] = (SSticker.scripture_states[SCRIPTURE_SCRIPT] || \
+	(servants >= SCRIPT_SERVANT_REQ && GLOB.clockwork_caches >= SCRIPT_CACHE_REQ))
 	//Script: SCRIPT_SERVANT_REQ or more non-brain servants and SCRIPT_CACHE_REQ or more clockwork caches
-	.[SCRIPTURE_APPLICATION] = (servants >= APPLICATION_SERVANT_REQ && GLOB.clockwork_caches >= APPLICATION_CACHE_REQ && GLOB.clockwork_construction_value >= APPLICATION_CV_REQ)
+	.[SCRIPTURE_APPLICATION] = (SSticker.scripture_states[SCRIPTURE_APPLICATION] || \
+	(servants >= APPLICATION_SERVANT_REQ && GLOB.clockwork_caches >= APPLICATION_CACHE_REQ && GLOB.clockwork_construction_value >= APPLICATION_CV_REQ))
 	//Application: APPLICATION_SERVANT_REQ or more non-brain servants, APPLICATION_CACHE_REQ or more clockwork caches, and at least APPLICATION_CV_REQ CV
-	.[SCRIPTURE_REVENANT] = (servants >= REVENANT_SERVANT_REQ && GLOB.clockwork_caches >= REVENANT_CACHE_REQ && GLOB.clockwork_construction_value >= REVENANT_CV_REQ)
-	//Revenant: REVENANT_SERVANT_REQ or more non-brain servants, REVENANT_CACHE_REQ or more clockwork caches, and at least REVENANT_CV_REQ CV
-	.[SCRIPTURE_JUDGEMENT] = (servants >= JUDGEMENT_SERVANT_REQ && GLOB.clockwork_caches >= JUDGEMENT_CACHE_REQ && GLOB.clockwork_construction_value >= JUDGEMENT_CV_REQ && !unconverted_ai_exists)
+	.[SCRIPTURE_JUDGEMENT] = (SSticker.scripture_states[SCRIPTURE_JUDGEMENT] || \
+	(servants >= JUDGEMENT_SERVANT_REQ && GLOB.clockwork_caches >= JUDGEMENT_CACHE_REQ && GLOB.clockwork_construction_value >= JUDGEMENT_CV_REQ && !unconverted_ai_exists))
 	//Judgement: JUDGEMENT_SERVANT_REQ or more non-brain servants, JUDGEMENT_CACHE_REQ or more clockwork caches, at least JUDGEMENT_CV_REQ CV, and there are no living, non-servant ais
 
 //reports to servants when scripture is locked or unlocked
@@ -21,7 +22,7 @@
 	. = scripture_unlock_check()
 	for(var/i in .)
 		if(.[i] != previous_states[i])
-			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>")
+			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>") //maybe admins fucked with scripture states?
 			update_slab_info()
 
 /proc/get_unconverted_ais()
@@ -59,3 +60,6 @@
 //changes construction value
 /proc/change_construction_value(amount)
 	GLOB.clockwork_construction_value += amount
+
+/proc/can_recite_scripture(mob/living/L, can_potentially)
+	return (is_servant_of_ratvar(L) && (can_potentially || (L.stat == CONSCIOUS && L.can_speak_vocal())) && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L))))

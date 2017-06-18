@@ -14,7 +14,6 @@
 	var/target_component_id //the target component ID to create, if any
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
-	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
 	var/selected_scripture = SCRIPTURE_DRIVER
 	var/recollecting = FALSE //if we're looking at fancy recollection
@@ -33,29 +32,24 @@
 	no_cost = TRUE
 	produces_components = FALSE
 
-/obj/item/clockwork/slab/scarab
-	nonhuman_usable = TRUE
-
 /obj/item/clockwork/slab/debug
 	speed_multiplier = 0
 	no_cost = TRUE
-	nonhuman_usable = TRUE
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
 	if(!is_servant_of_ratvar(user))
 		add_servant_of_ratvar(user)
 
-/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and proselytizer
+/obj/item/clockwork/slab/cyborg //three scriptures, plus a spear and fabricator
 	clockwork_desc = "A divine link to the Celestial Derelict, allowing for limited recital of scripture.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
-	nonhuman_usable = TRUE
 	quickbound = list(/datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/ranged_ability/linked_vanguard, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache)
 	maximum_quickbound = 6 //we usually have one or two unique scriptures, so if ratvar is up let us bind one more
 	actions_types = list()
 
-/obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a proselytizer
+/obj/item/clockwork/slab/cyborg/engineer //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/cogscarab, \
 	/datum/clockwork_scripture/create_object/soul_vessel, /datum/clockwork_scripture/create_object/sigil_of_transmission, /datum/clockwork_scripture/create_object/interdiction_lens)
 
@@ -65,13 +59,13 @@
 
 /obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/channeled/volt_void/cyborg)
+	/datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/channeled/volt_void/cyborg)
+	/datum/clockwork_scripture/channeled/volt_blaster)
 
-/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a proselytizer
+/obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a fabricator
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
 	/datum/clockwork_scripture/create_object/ocular_warden, /datum/clockwork_scripture/create_object/mania_motor, /datum/clockwork_scripture/create_object/tinkerers_daemon)
 
@@ -80,7 +74,7 @@
 	/datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/fellowship_armory, /datum/clockwork_scripture/create_object/clockwork_obelisk)
 
 /obj/item/clockwork/slab/cyborg/miner //three scriptures, plus a spear and xray vision
-	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_void/cyborg)
+	quickbound = list(/datum/clockwork_scripture/ranged_ability/linked_vanguard, /datum/clockwork_scripture/spatial_gateway, /datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/access_display(mob/living/user)
 	if(!GLOB.ratvar_awakens)
@@ -105,12 +99,6 @@
 		slab_ability.remove_ranged_ability()
 	slab_ability = null
 	return ..()
-
-/obj/item/clockwork/slab/ratvar_act()
-	if(GLOB.ratvar_awakens)
-		nonhuman_usable = TRUE
-	else
-		nonhuman_usable = initial(nonhuman_usable)
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
@@ -138,7 +126,7 @@
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
-	if(istype(L) && is_servant_of_ratvar(L) && (nonhuman_usable || ishuman(L)))
+	if(istype(L) && can_recite_scripture(L))
 		var/component_to_generate = target_component_id
 		if(!component_to_generate)
 			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
@@ -268,7 +256,7 @@
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
 		return 0
-	if(!nonhuman_usable && !ishuman(user))
+	if(!can_recite_scripture(user))
 		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0
 	access_display(user)
@@ -288,15 +276,14 @@
 		ui.open()
 
 /obj/item/clockwork/slab/proc/recite_scripture(datum/clockwork_scripture/scripture, mob/living/user)
-	if(!scripture || !user || !user.canUseTopic(src) || (!nonhuman_usable && !ishuman(user)))
+	if(!scripture || !user || !user.canUseTopic(src) || !can_recite_scripture(user))
 		return FALSE
 	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 		return FALSE
 	var/initial_tier = initial(scripture.tier)
 	if(initial_tier != SCRIPTURE_PERIPHERAL)
-		var/list/tiers_of_scripture = scripture_unlock_check()
-		if(!GLOB.ratvar_awakens && !no_cost && !tiers_of_scripture[initial_tier])
+		if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
@@ -356,7 +343,8 @@
 		repairing, <font color=#AF0AAF>Geis Capacitors</font> are for conversion and control, <font color=#5A6068>Replicant Alloy</font> is for construction and fuel, and \
 		<font color=#DAAA18>Hierophant Ansibles</font> are for transmission and power, though in combination their effects become more nuanced.<br><br>\
 		\
-		There are also five tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, <font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, <font color=#BE8700>[SCRIPTURE_REVENANT]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
+		There are also four tiers of <font color=#BE8700>Scripture</font>; <font color=#BE8700>[SCRIPTURE_DRIVER]</font>, <font color=#BE8700>[SCRIPTURE_SCRIPT]</font>, \
+		<font color=#BE8700>[SCRIPTURE_APPLICATION]</font>, and <font color=#BE8700>[SCRIPTURE_JUDGEMENT]</font>.<br>\
 		Each tier has additional requirements, including Servants, Tinkerer's Caches, and <b>Construction Value</b>(<b>CV</b>). Construction Value is gained by creating structures or converting the \
 		station, and everything too large to hold will grant some amount of it.<br><br>\
 		\
@@ -369,8 +357,8 @@
 		However, weak is relative when it comes to scripture; even the 'weakest' could be enough to dominate a station in the hands of cunning Servants, and higher tiers of scripture are even \
 		stronger in the right hands.<br><br>\
 		\
-		Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, binding a powerful guardian \
-		to the invoker, or even, at one of the highest tiers, granting all nearby Servants temporary invulnerability.<br>\
+		Some effects of scripture include granting the invoker a temporary complete immunity to stuns, summoning a turret that can attack anything that sets eyes on it, or even binding a powerful \
+		guardian to the invoker.<br>\
 		However, the most important scripture is <font color=#AF0AAF>Geis</font>, which allows you to convert heathens with relative ease.<br><br>\
 		\
 		The second function of the clockwork slab is <b><font color=#BE8700>Recollection</font></b>, which will display this guide.<br><br>\
@@ -413,15 +401,22 @@
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
-			data["tier_info"] = "<font color=#B18B25><i>These scriptures are always unlocked.</i></font>"
+			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
 		if(SCRIPTURE_SCRIPT)
-			data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and <b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i></font>"
+			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+			else
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[SCRIPT_SERVANT_REQ]</b> Servants and <b>[SCRIPT_CACHE_REQ]</b> Tinkerer's Cache.</i></font>"
 		if(SCRIPTURE_APPLICATION)
-			data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
-		if(SCRIPTURE_REVENANT)
-			data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[REVENANT_SERVANT_REQ]</b> Servants, <b>[REVENANT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[REVENANT_CV_REQ]CV</b>.</i></font>"
+			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+			else
+				data["tier_info"] = "<font color=#B18B25><i>These scriptures require at least <b>[APPLICATION_SERVANT_REQ]</b> Servants, <b>[APPLICATION_CACHE_REQ]</b> Tinkerer's Caches, and <b>[APPLICATION_CV_REQ]CV</b>.</i></font>"
 		if(SCRIPTURE_JUDGEMENT)
-			data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
+			if(SSticker.scripture_states[SCRIPTURE_JUDGEMENT])
+				data["tier_info"] = "<font color=#B18B25><b>This scripture is permenantly unlocked.</b></font>"
+			else
+				data["tier_info"] = "<font color=#B18B25><i>This scripture requires at least <b>[JUDGEMENT_SERVANT_REQ]</b> Servants, <b>[JUDGEMENT_CACHE_REQ]</b> Tinkerer's Caches, and <b>[JUDGEMENT_CV_REQ]CV</b>.<br>In addition, there may not be any active non-Servant AIs.</i></font>"
 
 	data["selected"] = selected_scripture
 
