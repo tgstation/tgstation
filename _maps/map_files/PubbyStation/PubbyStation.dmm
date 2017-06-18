@@ -1516,9 +1516,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "adr" = (
@@ -3302,7 +3299,6 @@
 	name = "Prison Wing";
 	req_access_txt = "1"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -3323,7 +3319,6 @@
 /area/security/prison)
 "ahf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/glass_security{
 	name = "Prison Wing";
 	req_access_txt = "1"
@@ -12770,9 +12765,6 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
@@ -26838,7 +26830,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Diner"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -26854,7 +26845,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Diner"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -45831,7 +45821,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -48886,7 +48875,7 @@
 /area/hallway/primary/central)
 "bWU" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -53218,7 +53207,6 @@
 "cho" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -69741,7 +69729,7 @@ cdi
 cdz
 cdi
 ceb
-cex
+cdi
 ceO
 cdi
 ccZ
@@ -74293,7 +74281,7 @@ aEz
 aEz
 aEz
 aEz
-cht
+chu
 chA
 chG
 chI
@@ -74554,7 +74542,7 @@ chu
 chB
 chH
 chJ
-chO
+aNF
 chy
 chF
 aMT
@@ -74796,10 +74784,10 @@ atX
 awA
 agv
 ayy
-azF
-azF
-azF
-azF
+aCZ
+aCZ
+aCZ
+aCZ
 aCZ
 aDB
 aEw
@@ -85918,7 +85906,7 @@ bKT
 bLz
 bKT
 bMG
-bNn
+bNg
 bNI
 bOc
 bMb
@@ -93103,7 +93091,7 @@ bLR
 bZp
 bBF
 bCP
-bDI
+bJl
 bCP
 bHI
 bCP

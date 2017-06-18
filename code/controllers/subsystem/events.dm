@@ -70,7 +70,10 @@ SUBSYSTEM_DEF(events)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
 		if(E.weight < 0)						//for round-start events etc.
-			if(TriggerEvent(E))
+			var/res = TriggerEvent(E)
+			if(res == EVENT_INTERRUPTED)
+				continue	//like it never happened
+			if(res == EVENT_CANT_RUN)
 				return
 		sum_of_weights += E.weight
 
@@ -89,7 +92,7 @@ SUBSYSTEM_DEF(events)
 	. = E.preRunEvent()
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
-	else if(. != EVENT_CANCELLED)
+	else if(. == EVENT_READY)
 		E.runEvent(TRUE)
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!

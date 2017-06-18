@@ -144,6 +144,8 @@
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "ay" = (
+/obj/effect/holodeck_effect/mobspawner/penguin,
+/obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/item/toy/snowball{
 	pixel_x = 0;
 	pixel_y = 6
@@ -302,6 +304,7 @@
 	},
 /area/holodeck/rec_center/lounge)
 "aT" = (
+/obj/effect/holodeck_effect/mobspawner/penguin_baby,
 /obj/structure/flora/tree/pine,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
