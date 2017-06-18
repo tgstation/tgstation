@@ -1051,7 +1051,7 @@
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
 	loot = list()
-	del_on_death = true
+	del_on_death = TRUE
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"
