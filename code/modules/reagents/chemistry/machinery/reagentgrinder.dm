@@ -1,6 +1,6 @@
 /obj/machinery/reagentgrinder
 		name = "All-In-One Grinder"
-		desc = "Used to grind things up into raw materials."
+		desc = "From BlenderTech. Will It Blend? Let's test it out!"
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
 		layer = BELOW_OBJ_LAYER
@@ -85,6 +85,7 @@
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	beaker.desc += " May contain blended dust. Don't breathe this in!"
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)
