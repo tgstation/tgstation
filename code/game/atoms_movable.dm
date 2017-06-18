@@ -211,7 +211,7 @@
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
-/atom/movable/Crossed(atom/movable/AM)
+/atom/movable/Crossed(atom/movable/O, oldloc)
 	return
 
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
@@ -222,9 +222,6 @@
 			if(!A || QDELETED(A))
 				return
 		A.Bumped(src)
-
-/atom/movable/Crossed(atom/movable/O, oldloc)
-	. = ..()
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
