@@ -1,0 +1,1 @@
+<span class='danger'>Note that you are allowed to act as an antagonist while transformed into a hostile mob, unless you volunteered for or seeked out transformation.</span>
