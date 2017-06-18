@@ -92,9 +92,8 @@ Mime
 	suit = /obj/item/clothing/suit/suspenders
 	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
-  accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
-
-  backpack = /obj/item/weapon/storage/backpack/mime
+	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
+	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
 
 
