@@ -65,7 +65,7 @@
 		return ..()
 
 /obj/structure/shuttle/engine/Destroy()
-	if(state = ENGINE_WELDED)
+	if(state == ENGINE_WELDED)
 		alter_engine_power(-engine_power)
 	. = ..()
 
@@ -95,6 +95,10 @@
 
 /obj/structure/shuttle/engine/propulsion/burst
 	name = "burst"
+
+/obj/structure/shuttle/engine/propulsion/burst/cargo
+	state = ENGINE_UNWRENCHED
+	anchored = 0
 
 /obj/structure/shuttle/engine/propulsion/burst/left
 	name = "left"
