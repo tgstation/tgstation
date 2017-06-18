@@ -66,12 +66,8 @@
 		charges--
 		var/difficulty = 0
 		if(target.cartridge)
-			difficulty += target.cartridge.access_medical
-			difficulty += target.cartridge.access_security
-			difficulty += target.cartridge.access_engine
-			difficulty += target.cartridge.access_clown
-			difficulty += target.cartridge.access_janitor
-			difficulty += target.cartridge.access_manifest * 2
+			difficulty += BitCount(target.cartridge.access&(CART_MEDICAL|CART_SECURITY|CART_ENGINE|CART_CLOWN|CART_JANITOR|CART_MANIFEST))
+			if(target.cartridge.access&CART_MANIFEST) difficulty++ //if cartridge has manifest access it has extra snowflake difficulty
 		else
 			difficulty += 2
 		if(prob(difficulty * 15) || (target.hidden_uplink))
