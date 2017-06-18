@@ -21,7 +21,7 @@
 	name = "\improper Honkworks 5.0 cartridge"
 	icon_state = "cart-clown"
 	desc = "A data cartridge for portable microcomputers. It smells vaguely of banannas"
-	access_clown = 1
+	access = CART_CLOWN
 
 /obj/item/weapon/cartridge/virus/clown/send_virus(obj/item/device/pda/target, mob/living/U)
 	if(charges <= 0)
@@ -37,7 +37,7 @@
 /obj/item/weapon/cartridge/virus/mime
 	name = "\improper Gestur-O 1000 cartridge"
 	icon_state = "cart-mi"
-	access_mime = 1
+	access = CART_MIME
 
 /obj/item/weapon/cartridge/virus/mime/send_virus(obj/item/device/pda/target, mob/living/U)
 	if(charges <= 0)
@@ -54,7 +54,7 @@
 /obj/item/weapon/cartridge/virus/syndicate
 	name = "\improper Detomatix cartridge"
 	icon_state = "cart"
-	access_remote_door = 1
+	access = CART_REMOTE_DOOR
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	charges = 4
 
