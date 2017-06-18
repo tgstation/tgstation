@@ -539,8 +539,10 @@
 	throwforce_on = 20
 	icon_state = "axe0"
 	icon_state_on = "axe1" //todo good sprites
-	attack_verb = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
+	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound_on = 'sound/weapons/slice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
 	var/transform_cooldown
