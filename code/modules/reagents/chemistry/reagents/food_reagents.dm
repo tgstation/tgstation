@@ -532,6 +532,44 @@
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
 
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	id = "tearjuice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+
+/datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	var/unprotected = FALSE
+	switch(method)
+		if(INGEST)
+			unprotected = TRUE
+		if(INJECT)
+			unprotected = FALSE
+		else	//Touch or vapor
+			if(!M.is_mouth_covered() && !M.is_eyes_covered())
+				unprotected = TRUE
+	if(unprotected)
+		if(!M.getorganslot("eye_sight"))	//can't blind somebody with no eyes
+			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
+		else
+			if(!M.eye_blurry)
+				to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+			M.blind_eyes(2)
+			M.blur_eyes(5)
+	..()
+
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/M)
+	..()
+	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
+		M.blur_eyes(4)
+		if(prob(10))
+			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
+			M.blind_eyes(2)
+
+
 ////Lavaland Flora Reagents////
 
 

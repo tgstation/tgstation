@@ -607,7 +607,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(3 to 6)
 			playsound(E, 'sound/magic/disable_tech.ogg', 50, 1)
 			for(var/M in invokers)
-				to_chat(M, "<span class='danger'>Your hair stands on end as a shockwave eminates from the rune!</span>")
+				to_chat(M, "<span class='danger'>Your hair stands on end as a shockwave emanates from the rune!</span>")
 		if(7 to INFINITY)
 			playsound(E, 'sound/magic/disable_tech.ogg', 100, 1)
 			for(var/M in invokers)

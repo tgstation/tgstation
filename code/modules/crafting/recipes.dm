@@ -112,6 +112,15 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/catwhip
+	name = "Cat O' Nine Tails"
+	result = /obj/item/weapon/melee/chainofcommand/tailwhip/kitty
+	reqs = list(/obj/item/organ/tail/cat = 1,
+	            /obj/item/stack/cable_coil = 1)
+	time = 40
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
@@ -339,6 +348,14 @@
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/kittyears
+	name = "Kitty Ears"
+	result = /obj/item/clothing/head/kitty/genuine
+	time = 10
+	reqs = list(/obj/item/organ/tail/cat = 1,
+				/obj/item/organ/ears/cat = 1)
+	category = CAT_MISC
+
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
 	result = /obj/vehicle/scooter/skateboard
@@ -371,6 +388,21 @@
 		/obj/item/device/flashlight = 2,
 		/obj/item/weapon/restraints/handcuffs/cable = 1
 	)
+	category = CAT_MISC
+
+/datum/crafting_recipe/paperframes
+	name = "Paper Frames"
+	result = /obj/item/stack/sheet/paperframes/five
+	time = 10
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 5,/obj/item/weapon/paper = 20)
+	category = CAT_MISC
+
+/datum/crafting_recipe/naturalpaper
+	name = "Hand-Pressed Paper"
+	time = 30
+	reqs = list(/datum/reagent/water = 50, /obj/item/stack/sheet/mineral/wood = 1)
+	tools = list(/obj/item/weapon/hatchet)
+	result = /obj/item/weapon/paper_bin/bundlenatural
 	category = CAT_MISC
 
 /datum/crafting_recipe/toysword

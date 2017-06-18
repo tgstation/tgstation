@@ -232,19 +232,20 @@
 /datum/status_effect/cult_master
 	id = "The Cult Master"
 	duration = -1
-	tick_interval = 100
 	alert_type = null
+	on_remove_on_mob_delete = TRUE
 	var/alive = TRUE
 
 /datum/status_effect/cult_master/proc/deathrattle()
+	if(!QDELETED(GLOB.cult_narsie))
+		return //if nar-sie is alive, don't even worry about it
 	var/area/A = get_area(owner)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
 			var/mob/living/M = B.current
 			M << 'sound/hallucinations/veryfar_noise.ogg'
-			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in the [A]!")
-			
-			
+			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in \the [A]!</span>")
+
 /datum/status_effect/cult_master/tick()
 	if(owner.stat != DEAD && !alive)
 		alive = TRUE

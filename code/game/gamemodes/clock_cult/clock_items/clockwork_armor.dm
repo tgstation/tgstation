@@ -37,7 +37,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(20, 1, 1, 0, 1)
+				C.vomit(20)
 		else
 			to_chat(user, "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>")
 			to_chat(user, "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>")
@@ -98,7 +98,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(20, 1, 1, 0, 1)
+				C.vomit(20)
 		else
 			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
 			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
@@ -159,7 +159,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(10, 1, 1, 0, 1)
+				C.vomit()
 		else
 			to_chat(user, "<span class='heavy_brass'>\"Did you like having arms?\"</span>")
 			to_chat(user, "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>")
@@ -209,7 +209,7 @@
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
-				C.vomit(10, 1, 1, 0, 1)
+				C.vomit()
 		else
 			to_chat(user, "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>")
 			to_chat(user, "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>")

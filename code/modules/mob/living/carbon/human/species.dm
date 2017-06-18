@@ -1334,19 +1334,24 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in species_traits))
 		//Body temperature is too hot.
+		var/burn_damage
 		switch(H.bodytemperature)
 			if(360 to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+				burn_damage = HEAT_DAMAGE_LEVEL_1
 			if(400 to 460)
 				H.throw_alert("temp", /obj/screen/alert/hot, 2)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+				burn_damage = HEAT_DAMAGE_LEVEL_2
 			if(460 to INFINITY)
 				H.throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(H.on_fire)
-					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+					burn_damage = HEAT_DAMAGE_LEVEL_3
 				else
-					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+					burn_damage = HEAT_DAMAGE_LEVEL_2
+		burn_damage *= heatmod
+		if((prob(burn_damage) * 10) / 4)	//40% for level 3 damage on humans
+			H.emote("scream")
+		H.apply_damage(burn_damage, BURN)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
 			if(200 to 260)

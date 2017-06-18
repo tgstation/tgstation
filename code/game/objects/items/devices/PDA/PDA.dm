@@ -57,15 +57,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
-/obj/item/device/pda/New()
-	..()
+/obj/item/device/pda/Initialize()
+	. = ..()
 	if(fon)
 		set_light(f_lum)
 
 	GLOB.PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	inserted_item =	new /obj/item/weapon/pen(src)
+	if(inserted_item)
+		inserted_item = new inserted_item(src)
+	else
+		inserted_item =	new /obj/item/weapon/pen(src)
 	update_icon()
 
 /obj/item/device/pda/proc/update_label()
