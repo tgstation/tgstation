@@ -47,7 +47,7 @@
 	var/mob/current_user = null
 	var/obj/effect/projectile_beam/current_tracer
 
-	var/structure_piercing = 4				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled.
+	var/structure_piercing = 4				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
