@@ -235,6 +235,6 @@
 	. = ..()
 	queue_smooth_neighbors(src)
 
-/obj/structure/mineral_door/paperframe/deconstruct(disassembled = TRUE)
-	..()
+/obj/structure/mineral_door/paperframe/Destroy()
 	queue_smooth_neighbors(src)
+	return ..()
