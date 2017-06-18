@@ -91,7 +91,7 @@
 	item_state = "c20r"
 	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
 	pin = /obj/item/device/firing_pin/implant/pindicate
@@ -142,7 +142,7 @@
 	item_state = "m90"
 	origin_tech = "combat=5;materials=2;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	var/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
@@ -216,7 +216,7 @@
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 4
 	fire_delay = 1
@@ -229,7 +229,7 @@
 	slot_flags = 0
 	origin_tech = "combat=6;engineering=4"
 	mag_type = /obj/item/ammo_box/magazine/m556
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 1
@@ -245,7 +245,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_sound = 'sound/weapons/gunshot.ogg'
 	can_suppress = 0
 	burst_size = 1
 	fire_delay = 0
@@ -284,7 +284,7 @@
 	origin_tech = "combat=6;engineering=3;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mm195x129
 	weapon_weight = WEAPON_HEAVY
-	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	var/cover_open = 0
 	can_suppress = 0
 	burst_size = 3
@@ -420,7 +420,7 @@
 	can_suppress = 0
 	burst_size = 0
 	actions_types = list()
-	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = 0
 
 /obj/item/weapon/gun/ballistic/automatic/laser/update_icon()

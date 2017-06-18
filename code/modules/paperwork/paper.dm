@@ -214,7 +214,7 @@
 		t = replacetext(t, "\[list\]", "<ul>")
 		t = replacetext(t, "\[/list\]", "</ul>")
 
-		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
+		t = "<font face=\"[P.font]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
 		var/obj/item/toy/crayon/C = P
 		t = replacetext(t, "\[*\]", "")
@@ -379,9 +379,18 @@
 
 /obj/item/weapon/paper/construction
 
-/obj/item/weapon/paper/construction/New()
-	..()
+/obj/item/weapon/paper/construction/Initialize()
+	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
+
+/*
+ * Natural paper
+ */
+
+/obj/item/weapon/paper/natural/Initialize()
+	. = ..()
+	color = "#FFF5ED"
+
 
 /*
  * Premade paper

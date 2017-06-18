@@ -34,7 +34,7 @@
 /obj/structure/destructible/clockwork/shell/cogscarab
 	name = "cogscarab shell"
 	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt fabricator."
 	icon_state = "clockdrone_shell"
 	mobtype = /mob/living/simple_animal/drone/cogscarab
 	spawn_message = "'s eyes blink open, glowing bright red."

@@ -23,7 +23,9 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 10)
+			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
+			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd, passed_mode)
@@ -227,7 +229,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+				playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.01) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 				C.powernet.load += C.powernet.avail * 0.0375 // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
@@ -248,6 +250,7 @@
 
 /obj/structure/grille/ratvar
 	icon_state = "ratvargrille"
+	name = "cog grille"
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 

@@ -50,7 +50,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
@@ -234,6 +234,7 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
+	materials = list(MAT_METAL = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
@@ -317,6 +318,7 @@
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
+	materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()

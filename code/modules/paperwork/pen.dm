@@ -26,6 +26,7 @@
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
+	var/font = PEN_FONT
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -64,6 +65,42 @@
 	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
 
+/obj/item/weapon/pen/fountain
+	name = "fountain pen"
+	desc = "It's a common fountain pen, with a faux wood body."
+	icon_state = "pen-fountain"
+	font = FOUNTAIN_PEN_FONT
+
+/obj/item/weapon/pen/fountain/captain
+	name = "captain's fountain pen"
+	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
+	icon_state = "pen-fountain-o"
+	force = 5
+	throwforce = 5
+	throw_speed = 4
+	colour = "crimson"
+	materials = list(MAT_GOLD = 750)
+	sharpness = IS_SHARP
+	resistance_flags = FIRE_PROOF
+	var/unique_reskin = TRUE
+	var/list/skins = list("Oak" = "pen-fountain-o", "Gold" = "pen-fountain-g", "Rosewood" = "pen-fountain-r", "Black and Silver" = "pen-fountain-b","Command Blue" = "pen-fountain-cb")
+
+/obj/item/weapon/pen/fountain/captain/AltClick()
+	var/mob/living/carbon/user = usr
+	if(!istype(user))
+		return
+	if(unique_reskin)
+		var/choice = input(user,"Choose the finish for your pen.","Reskin Pen") as null|anything in skins
+		if(!QDELETED(src) && choice && !user.incapacitated() && in_range(user,src))
+			icon_state = skins[choice]
+			unique_reskin = FALSE
+			to_chat(user, "Your pen now has a [choice] finish.")
+			desc = "It's an expensive [choice] fountain pen. The nib is quite sharp."
+
+/obj/item/weapon/pen/fountain/captain/examine(mob/user)
+	..()
+	if(unique_reskin)
+		to_chat(user, "<span class='notice'>This item can be reskinned. Alt-click to select a skin.</span>")
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num

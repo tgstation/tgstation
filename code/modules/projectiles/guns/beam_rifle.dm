@@ -169,12 +169,15 @@
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
-	if(!isturf(current_user.loc) || !(src in current_user.held_items))	//Doesn't work if you're not holding it!
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
 		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
+	process_aim()
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
 	if(current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
 		if(isturf(current_user.client.mouseLocation))
@@ -212,6 +215,7 @@
 	current_user = mob
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
+	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold)
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)

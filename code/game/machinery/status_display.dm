@@ -213,6 +213,14 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/Initialize()
+	. = ..()
+	GLOB.ai_status_displays.Add(src)
+
+/obj/machinery/ai_status_display/Destroy()
+	GLOB.ai_status_displays.Remove(src)
+	. = ..()
+
 /obj/machinery/ai_status_display/attack_ai(mob/living/silicon/ai/user)
 	if(isAI(user))
 		user.ai_statuschange()

@@ -204,7 +204,7 @@
 		else if(!GLOB.ratvar_awakens)
 			to_chat(user, "<span class='brass'>Hitting the [sigil_name] with brass sheets will convert them to power at a rate of <b>1</b> brass sheet to <b>[POWER_FLOOR]W</b> power.</span>")
 		if(!GLOB.ratvar_awakens)
-			to_chat(user, "<span class='brass'>You can recharge Clockwork Proselytizers from the [sigil_name].</span>")
+			to_chat(user, "<span class='brass'>You can recharge Replica Fabricators from the [sigil_name].</span>")
 
 /obj/effect/clockwork/sigil/transmission/attackby(obj/item/I, mob/living/user, params)
 	if(is_servant_of_ratvar(user) && istype(I, /obj/item/stack/tile/brass) && !GLOB.ratvar_awakens)
@@ -330,7 +330,7 @@
 				vitality_drained = L.maxHealth
 				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
-				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
+				playsound(L, 'sound/magic/wandodeath.ogg', 50, 1)
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				to_chat(L, "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
 				for(var/obj/item/W in L)
@@ -358,7 +358,7 @@
 					L.revive(1, 1)
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
-					playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
+					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
 					L.visible_message("<span class='warning'>[L] suddenly gets back up, [GLOB.ratvar_awakens ? "[L.p_their()] body dripping blue ichor":"even as [src] scatters into blue sparks around [L.p_them()]"]!</span>", \
 					"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 					vitality -= revival_cost

@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	icon_state = "swarmer_ranged"
 	icon_living = "swarmer_ranged"
 	projectiletype = /obj/item/projectile/beam/laser
-	projectilesound = 'sound/weapons/Laser.ogg'
+	projectilesound = 'sound/weapons/laser.ogg'
 	check_friendly_fire = TRUE //you're supposed to protect the resource swarmers, you poop
 	retreat_distance = 3
 	minimum_distance = 3

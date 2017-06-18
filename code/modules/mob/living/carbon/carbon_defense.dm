@@ -35,6 +35,18 @@
 		number += E.bang_protect
 	return number
 
+/mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
+	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
+		return TRUE
+
+/mob/living/carbon/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return TRUE
+	if(check_head && head && (head.flags_cover & HEADCOVERSEYES))
+		return TRUE
+	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
+		return TRUE
+
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
@@ -232,9 +244,6 @@
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
-		else if(check_zone(M.zone_selected) == "head")
-			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
@@ -303,8 +312,9 @@
 			Weaken(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
-			ears.ear_damage += damage_pwr * effect_amount
-			ears.deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			var/ear_damage = damage_pwr * effect_amount
+			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			adjustEarDamage(ear_damage,deaf)
 
 			if(ears.ear_damage >= 15)
 				to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")

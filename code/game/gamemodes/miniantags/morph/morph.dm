@@ -224,7 +224,7 @@
 	player_mind.special_role = "Morph"
 	SSticker.mode.traitors |= player_mind
 	to_chat(S, S.playstyle_string)
-	S << 'sound/magic/Mutate.ogg'
+	S << 'sound/magic/mutate.ogg'
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
 	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S
