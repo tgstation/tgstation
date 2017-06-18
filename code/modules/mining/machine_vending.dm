@@ -55,8 +55,8 @@
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,								600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/sentience/mining,									1000),
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
-		new /datum/data/mining_equipment("Anti-Walker injector",	/obj/item/weapon/reagent_containers/hypospray/medipen/scalerot,		2000),
-		new /datum/data/mining_equipment("Anti-Walker disease",	/obj/item/weapon/reagent_containers/glass/bottle/scalerot,				1000),
+		new /datum/data/mining_equipment("Anti-Ash Walker injector",	/obj/item/weapon/storage/box/scalerot/pen,						2000),
+		new /datum/data/mining_equipment("Anti-Ash Walker disease",	/obj/item/weapon/storage/box/scalerot/bottle,						1000),
 		)
 
 /datum/data/mining_equipment

@@ -153,3 +153,11 @@
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list("scale_rot_baceria" = 15)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/scalerot_cure
+	name = "Scale rot anti-biotic autoinjector"
+	desc = "For effective, singular, and isolated inocoulation and curing of scale rot infections. Just stab and squeeze!"
+	icon_state = "stimpen"
+	volume = 30
+	amount_per_transfer_from_this = 30
+	list_reagents = list("ethanol" = 15, "sterilizine" = 15)

@@ -887,3 +887,21 @@
 /obj/item/weapon/storage/box/fountainpens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/pen/fountain(src)
+
+/obj/item/weapon/storage/box/scalerot/pen
+	name = "Scale rot injectors"
+	desc = "Contains a virulent bioweapon in a sealed injector, and several pens containing the cure."
+
+/obj/item/weapon/storage/box/scalerot/pen/PopulateContents()
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/scalerot(src)
+	for(var/i in 1 to 6)
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/scalerot_cure(src)
+
+/obj/item/weapon/storage/box/scalerot/bottle
+	name = "Scale rot bacterium sample"
+	desc = "Contains a virulent bioweapon in a synthblood medium, and several pens containing the cure."
+
+/obj/item/weapon/storage/box/scalerot/bottle/PopulateContents()
+	new /obj/item/weapon/reagent_containers/glass/bottle/scalerot(src)
+	for(var/i in 1 to 6)
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/scalerot_cure(src)
