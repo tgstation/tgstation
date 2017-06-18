@@ -211,6 +211,7 @@
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
+//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/O, oldloc)
 	return
 
