@@ -32,6 +32,12 @@
 	icon_state = "anom"
 	mech_sized = TRUE
 
+/obj/effect/portal/Move(newloc)
+	for(var/T in newloc)
+		if(istype(T, /obj/effect/portal))
+			return FALSE
+	return ..()
+
 /obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
 	if(user && Adjacent(user))
 		user.forceMove(get_turf(src))
