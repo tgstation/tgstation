@@ -144,7 +144,8 @@
 	return //hivebot don give a fuck about bombs
 
 /obj/machinery/droneDispenser/hivebot/invasion/process()
-	dispense_type = pick(/mob/living/simple_animal/hostile/hivebot, /mob/living/simple_animal/hostile/hivebot/range, /mob/living/simple_animal/hostile/hivebot/rapid)
+	var/static/list/hivebot_dispensable_types = list(/mob/living/simple_animal/hostile/hivebot, /mob/living/simple_animal/hostile/hivebot/range, /mob/living/simple_animal/hostile/hivebot/rapid)
+	dispense_type = pick(hivebot_dispensable_types)
 	..()
 
 /obj/machinery/droneDispenser/swarmer
