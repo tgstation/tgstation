@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/notehtml = ""
 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
 	var/cart = "" //A place to stick cartridge menu information
-	var/detonate = 1 // Can the PDA be blown up?
+	var/detonatable = 1 // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
 
@@ -826,7 +826,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
-	if(!detonate) return
+	if(!detonatable) return
 	var/turf/T = get_turf(src)
 
 	if (ismob(loc))
