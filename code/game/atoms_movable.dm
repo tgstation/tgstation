@@ -212,7 +212,7 @@
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
-/atom/movable/Crossed(atom/movable/O, oldloc)
+/atom/movable/Crossed(atom/movable/AM, oldloc)
 	return
 
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
