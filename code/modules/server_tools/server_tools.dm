@@ -5,7 +5,7 @@ GLOBAL_PROTECT(reboot_mode)
 	return params[SERVICE_WORLD_PARAM]
 
 /world/proc/ExportService(command)
-	return shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
+	return RunningService() && shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
 
 /world/proc/IRCBroadcast(msg)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
@@ -24,6 +24,8 @@ GLOBAL_PROTECT(reboot_mode)
 		if(REBOOT_MODE_SHUTDOWN)
 			to_chat(src, "<span class='boldannounce'>The server is shutting down...</span>")
 			ServiceEndProcess()
+		else
+			ExportService(SERVICE_REQUEST_WORLD_REBOOT)	//just let em know
 
 /world/proc/ServiceCommand(list/params)
 	var/sCK = RunningService()

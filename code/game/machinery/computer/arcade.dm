@@ -523,7 +523,7 @@
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
 							M.Stun(5)
 							sleep(30)
-							M.vomit(50)
+							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
 							M.Weaken(3)

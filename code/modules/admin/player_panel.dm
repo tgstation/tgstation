@@ -506,7 +506,7 @@
 			for(var/datum/mind/N in SSticker.mode.cult)
 				var/mob/M = N.current
 				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[N.has_antag_datum(ANTAG_DATUM_CULT_MASTER) ? "<i><font color=red> \[Master\]</font></i>" : ""][M.client ? "" : " <i>(No Client)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
 			dat += "</table>"

@@ -182,7 +182,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
-		return 0
+		return FALSE
 
 	if ( \
 			!isturf(src.loc) || \
@@ -191,7 +191,7 @@
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
-		return 1
+		return FALSE
 
 	var/slices_lost = 0
 	if (accuracy >= IS_SHARP_ACCURATE)
@@ -211,6 +211,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
