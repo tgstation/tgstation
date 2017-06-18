@@ -41,31 +41,31 @@ Bonus
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	var/obj/item/organ/eyes = M.getorganslot("eye_sight")
-		if(istype(eyes))
-			switch(A.stage)
-				if(1, 2)
-					if(prob(base_message_chance) && !suppress_warning)
-						to_chat(M, "<span class='warning'>Your eyes itch.</span>")
-				if(3, 4)
-					to_chat(M, "<span class='warning'><b>Your eyes burn!</b></span>")
-					M.blur_eyes(10)
-					M.adjust_eye_damage(1)
-				else
-					M.blur_eyes(20)
-					M.adjust_eye_damage(5)
-					if(M.eye_damage >= 10)
-						M.become_nearsighted()
+	if(istype(eyes))
+		switch(A.stage)
+			if(1, 2)
+				if(prob(base_message_chance) && !suppress_warning)
+					to_chat(M, "<span class='warning'>Your eyes itch.</span>")
+			if(3, 4)
+				to_chat(M, "<span class='warning'><b>Your eyes burn!</b></span>")
+				M.blur_eyes(10)
+				M.adjust_eye_damage(1)
+			else
+				M.blur_eyes(20)
+				M.adjust_eye_damage(5)
+				if(M.eye_damage >= 10)
+					M.become_nearsighted()
 
-					if(prob(M.eye_damage - 10 + 1))
-						if(!remove_eyes)
-							if(M.become_blind())
-								to_chat(M, "<span class='userdanger'>You go blind!</span>")
-						else
-							M.visible_message("<span class='warning'>[M]'s eyes fall off their sockets!</span>", "<span class='userdanger'>Your eyes fall off their sockets!</span>")
-							eyes.Remove(M)
-							eyes.forceMove(get_turf(M))
+				if(prob(M.eye_damage - 10 + 1))
+					if(!remove_eyes)
+						if(M.become_blind())
+							to_chat(M, "<span class='userdanger'>You go blind!</span>")
 					else
-						to_chat(M, "<span class='userdanger'>Your eyes burn horrifically!</span>")
+						M.visible_message("<span class='warning'>[M]'s eyes fall off their sockets!</span>", "<span class='userdanger'>Your eyes fall off their sockets!</span>")
+						eyes.Remove(M)
+						eyes.forceMove(get_turf(M))
+				else
+					to_chat(M, "<span class='userdanger'>Your eyes burn horrifically!</span>")
 
 
 

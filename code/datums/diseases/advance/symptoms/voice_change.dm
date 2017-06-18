@@ -61,7 +61,8 @@ Bonus
 					H.remove_language(current_language)
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.grant_language(current_language)
-					H.only_speaks_language = current_language
+					var/datum/language_holder/mob_language = H.get_language_holder()
+					mob_language.only_speaks_language = current_language
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
