@@ -585,8 +585,8 @@
 		QDEL_IN(PB, 5)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge(turf/T)
-	if(!istype(T))
-		return TRUE
+	if(!istype(T))	//If we're already deleted don't bother.
+		return FALSE
 	var/tx = T.x
 	var/ty = T.y
 	if(tx < 10 || tx > (world.maxx - 10) || ty < 10 || ty > (world.maxy-10))
