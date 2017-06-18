@@ -43908,8 +43908,7 @@
 "bSK" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6;
-	initialize_directions = 6
+	dir = 6
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -44432,8 +44431,7 @@
 /area/engine/atmos)
 "bTO" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6;
-	initialize_directions = 6
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -55033,31 +55031,30 @@
 /area/engine/engineering)
 "cqd" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqe" = (
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
-	dir = 6
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/green/visible{
+	dir = 6
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqf" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/light,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqg" = (
@@ -55071,9 +55068,6 @@
 /area/engine/engineering)
 "cqh" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_x = 0;
@@ -55085,28 +55079,31 @@
 	network = list("SS13","Engine");
 	pixel_x = 23
 	},
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqi" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/machinery/light,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqj" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
 /obj/machinery/button/door{
 	id = "engsm";
 	name = "Radiation Shutters Control";
 	pixel_x = 0;
 	pixel_y = -24;
 	req_access_txt = "10"
+	},
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -55126,7 +55123,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -55258,12 +55255,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cqC" = (
@@ -55291,7 +55288,7 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cqF" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
 "cqG" = (
@@ -56121,15 +56118,19 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csH" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "csI" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -56186,9 +56187,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
-	initialize_directions = 11
+/obj/machinery/atmospherics/pipe/manifold/green/visible{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -56200,7 +56200,6 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "csR" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -59274,6 +59273,10 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "czE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	icon_state = "intact";
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "czF" = (
@@ -59580,7 +59583,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable/yellow{
 	icon_state = "1-4";
 	d1 = 1;
@@ -59591,6 +59593,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAm" = (
@@ -59638,9 +59641,8 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
-	initialize_directions = 11
+/obj/machinery/atmospherics/pipe/manifold/orange/visible{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -59664,14 +59666,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8
 	},
-/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cAt" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
@@ -61018,7 +61019,7 @@
 /area/engine/engineering)
 "cDw" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -61105,12 +61106,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cDH" = (
@@ -61293,7 +61294,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -61303,6 +61303,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cEf" = (
@@ -61317,7 +61318,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -61326,6 +61326,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cEi" = (
@@ -61522,10 +61523,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8
 	},
-/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cEC" = (
@@ -61715,7 +61716,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cEV" = (
@@ -62005,18 +62006,12 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62024,9 +62019,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/trinary/filter/critical{
-	dir = 4;
-	filter_type = "co2"
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 6
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62034,11 +62028,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62046,18 +62040,14 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/trinary/filter/critical{
-	dir = 4;
-	filter_type = "o2"
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFO" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "Engineering Supermatter Aft";
@@ -62066,15 +62056,17 @@
 	pixel_x = 23
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "cFP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/components/trinary/filter/critical{
-	dir = 4;
-	filter_type = "plasma"
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62094,17 +62086,17 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/trinary/filter/critical{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cFS" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62112,7 +62104,8 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/engine,
@@ -62175,10 +62168,16 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGf" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8;
+	filter_type = "n2"
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGg" = (
@@ -62186,6 +62185,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	icon_state = "intact";
+	dir = 8
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -62281,10 +62284,10 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGx" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 5
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGy" = (
@@ -62319,28 +62322,30 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGC" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	icon_state = "intact";
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	icon_state = "intact";
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -62405,7 +62410,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cGM" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cGN" = (
@@ -66182,6 +66187,51 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
+"cSG" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/closed/wall/r_wall,
+/area/engine/supermatter)
+"cSH" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cSI" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	icon_state = "intact";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/engine/engineering)
+"cSJ" = (
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8;
+	filter_type = "freon";
+	name = "gas filter (freon)"
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
+"cSK" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -93876,7 +93926,7 @@ cAl
 cFc
 cAq
 cFJ
-cDq
+cSH
 cGu
 cGH
 cGR
@@ -94391,7 +94441,7 @@ cMI
 cMD
 cFL
 cGf
-cGw
+cGu
 cMm
 ciZ
 cHc
@@ -94648,7 +94698,7 @@ cFe
 cMD
 cFM
 czE
-cGx
+cGu
 ccw
 cGT
 cEj
@@ -95161,8 +95211,8 @@ cAm
 cMH
 cMN
 cFO
+cSI
 csC
-csQ
 cMm
 cGV
 cEj
@@ -95410,7 +95460,7 @@ cgL
 chX
 cDq
 cqj
-cqF
+cSG
 crb
 cru
 cEx
@@ -95674,9 +95724,9 @@ cEy
 cEy
 cFh
 cMD
-cFQ
+cFM
 czE
-cGx
+cGu
 ccw
 cGT
 cEj
@@ -95932,8 +95982,8 @@ cEz
 cEz
 cMD
 cFR
-cGf
-cGz
+cSJ
+cGu
 cMm
 ciZ
 cHd
@@ -96190,7 +96240,7 @@ cFj
 cEf
 cFS
 cGg
-cGA
+cGv
 cGI
 cGS
 cHe
@@ -96446,7 +96496,7 @@ cEU
 cFk
 cAs
 cFT
-cDq
+cSK
 cGx
 cGK
 cGY
