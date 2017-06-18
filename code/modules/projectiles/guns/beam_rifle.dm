@@ -142,8 +142,9 @@
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming()
 		return
-	if(++zoom_current_view_increase > zoom_target_view_increase)
+	if(zoom_current_view_increase > zoom_target_view_increase)
 		return
+	zoom_current_view_increase++
 	current_user.client.change_view(zoom_current_view_increase + world.view)
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
 	smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
@@ -668,7 +669,7 @@
 		c2 = loc
 		Range()
 		if(check_for_turf_edge(loc))
-			spawn_tracer()
+			spawn_tracer(constant_tracer)
 	if(istype(c2))
 		cached = c2
 
