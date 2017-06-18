@@ -505,7 +505,7 @@
 
 /obj/item/clothing/under/maid/Initialize()
 	. = ..()
-	var/obj/item/clothing/accessory/maidapron/A = new /obj/item/clothing/accessory/maidapron(src)
+	var/obj/item/clothing/accessory/maidapron/A = new (src)
 	A.attach(src,null)
 
 
