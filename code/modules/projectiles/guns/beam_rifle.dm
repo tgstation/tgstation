@@ -720,7 +720,6 @@
 	return ..()
 
 /obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, scaling = 1, new_loc, increment = 0)
-	to_chat(world, "<span class='boldwarning'>Applying variables angle [angle_override] x [p_x] y [p_y] color [color_override] scaling [scaling] loc [new_loc]</span>")
 	var/mutable_appearance/look = new(src)
 	look.pixel_x = p_x
 	look.pixel_y = p_y
