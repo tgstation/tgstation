@@ -559,6 +559,7 @@
 	var/constant_tracer = FALSE
 	var/travelled_p_x = 0
 	var/travelled_p_y = 0
+	var/tracer_spawned = FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/Destroy()
 	paused = TRUE	//STOP HITTING WHEN YOU'RE ALREADY BEING DELETED!
@@ -566,6 +567,9 @@
 	return ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer(put_in_rifle = FALSE)
+	if(tracer_spawned)
+		return
+	tracer_spawned = TRUE
 	//Remind me to port baystation trajectories so this shit isn't needed...
 	var/pixels_travelled = round(sqrt(travelled_p_x**2 + travelled_p_y**2),1)
 	var/scaling = pixels_travelled/world.icon_size
@@ -585,8 +589,8 @@
 		QDEL_IN(PB, 5)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge(turf/T)
-	if(!istype(T))	//If we're already deleted don't bother.
-		return FALSE
+	if(!istype(T))
+		return TRUE
 	var/tx = T.x
 	var/ty = T.y
 	if(tx < 10 || tx > (world.maxx - 10) || ty < 10 || ty > (world.maxy-10))
