@@ -727,7 +727,6 @@
 #include "code\game\objects\items\religion.dm"
 #include "code\game\objects\items\shooting_range.dm"
 #include "code\game\objects\items\taster.dm"
-#include "code\game\objects\items\theft_tools.dm"
 #include "code\game\objects\items\toys.dm"
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\devices\aicard.dm"
