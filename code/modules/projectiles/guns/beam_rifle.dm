@@ -9,7 +9,7 @@
 
 #define AUTOZOOM_PIXEL_STEP_FACTOR 48
 
-#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 1
+#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 0.5
 
 /obj/item/weapon/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
@@ -243,6 +243,7 @@
 	handle_zooming()
 	if(aiming_time_left > 0)
 		aiming_time_left--
+		aiming_beam(TRUE)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
@@ -315,13 +316,13 @@
 			smooth_zooming(2)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
-	if(istype(object, /obj/screen))
+	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	set_user(mob)
 	start_aiming()
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
-	if(istype(object, /obj/screen))
+	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
 		return
 	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
@@ -581,6 +582,14 @@
 	else
 		QDEL_IN(PB, 5)
 
+/obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge()
+	var/turf/T = src.loc
+	var/tx = T.x
+	var/ty = T.y
+	if(tx < 10 || tx > (world.maxx - 10) || ty < 10 || ty > (world.maxy-10))
+		return TRUE
+	return FALSE
+
 /obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
 	set waitfor = 0
 	if(!log_override && firer && original)
@@ -651,6 +660,8 @@
 					Bump(original, 1)
 		c2 = loc
 		Range()
+		if(check_for_turf_edge())
+			spawn_tracer()
 	if(istype(c2))
 		cached = c2
 
