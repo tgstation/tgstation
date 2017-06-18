@@ -31,7 +31,7 @@ BONUS
 
 /datum/symptom/headache/Start(datum/disease/advance/A)
 	..()
-	if(A.properties["stealth"] >= 4) //fake good symptom messages
+	if(A.properties["stealth"] >= 4)
 		base_message_chance = 50
 	if(A.properties["stage_rate"] >= 6) //severe pain
 		power = 2

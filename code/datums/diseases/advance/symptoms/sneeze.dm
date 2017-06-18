@@ -30,7 +30,7 @@ Bonus
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
 	..()
 	if(A.properties["transmittable"] >= 9) //longer spread range
-		power = 3
+		power = 2
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 
@@ -44,4 +44,4 @@ Bonus
 				M.emote("sniff")
 		else
 			M.emote("sneeze")
-			A.spread(A.holder, 5 + power)
+			A.spread(A.holder, 4 + power)

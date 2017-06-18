@@ -58,9 +58,10 @@ Bonus
 				var/mob/living/carbon/human/H = M
 				H.SetSpecialVoice(H.dna.species.random_name(H.gender))
 				if(scramble_language)
-					H.remove_all_languages()
-					current_language = pick(subtypesof(/datum/language))
+					H.remove_language(current_language)
+					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.grant_language(current_language)
+					H.only_speaks_language = current_language
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
