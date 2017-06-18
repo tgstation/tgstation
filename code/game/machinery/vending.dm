@@ -119,12 +119,9 @@
 	..()
 
 /obj/machinery/vending/Destroy()
-	qdel(wires)
-	wires = null
-	qdel(coin)
-	coin = null
-	qdel(bill)
-	bill = null
+	QDEL_NULL(wires)
+	QDEL_NULL(coin)
+	QDEL_NULL(bill)
 	return ..()
 
 /obj/machinery/vending/snack/Destroy()
@@ -471,17 +468,20 @@
 			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
 			return
 		if(coin)
-			coin.loc = loc
 			if(!usr.get_active_held_item())
 				usr.put_in_hands(coin)
-				to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-				coin = null
+			else
+				coin.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
+			coin = null
 		if(bill)
-			bill.loc = loc
 			if(!usr.get_active_held_item())
 				usr.put_in_hands(bill)
-				to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
-				bill = null
+			else
+				bill.forceMove(get_turf(src))
+			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
+			bill = null
+
 
 	usr.set_machine(src)
 
