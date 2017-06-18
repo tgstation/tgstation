@@ -261,6 +261,7 @@
 #include "code\datums\diseases\pierrot_throat.dm"
 #include "code\datums\diseases\retrovirus.dm"
 #include "code\datums\diseases\rhumba_beat.dm"
+#include "code\datums\diseases\scalerot.dm"
 #include "code\datums\diseases\transformation.dm"
 #include "code\datums\diseases\tuberculosis.dm"
 #include "code\datums\diseases\wizarditis.dm"

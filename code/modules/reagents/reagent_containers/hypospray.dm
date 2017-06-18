@@ -146,3 +146,10 @@
 	volume = 1
 	amount_per_transfer_from_this = 1
 	list_reagents = list("unstablemutationtoxin" = 1)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/scalerot
+	name = "Scale rot autoinjector"
+	desc = "For effective, systematic, and widespread genocide of scaled races. Just stab and squeeze!"
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list("scale_rot_baceria" = 15)
