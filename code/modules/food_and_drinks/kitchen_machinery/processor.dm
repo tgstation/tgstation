@@ -126,8 +126,6 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	output = /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
 
-
-
 /* mobs */
 /datum/food_processor_process/mob/process_food(loc, what, processor)
 	..()
