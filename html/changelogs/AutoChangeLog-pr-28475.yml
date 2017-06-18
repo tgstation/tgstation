@@ -1,4 +1,0 @@
-author: "MrStonedOne and Lummox JR"
-delete-after: True
-changes: 
-  - bugfix: "Fixed icon scaling and size preferences not loading (Technically size preferences were loading because byond saves that locally, but that's not reliable because ss13 shares a hub)"
