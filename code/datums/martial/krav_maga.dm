@@ -174,6 +174,13 @@
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 
+/obj/item/clothing/gloves/krav_maga/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(slot_gloves) == src)
+		style.remove(H)
+
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."

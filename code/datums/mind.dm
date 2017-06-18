@@ -88,6 +88,20 @@
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	if(martial_art)
+		var/mob/living/carbon/human/H = current //Martial arts can only be taught to humans, so it's safe to typecast here without worrying
+		if(!martial_art.required_object)
+			martial_art.martial_art_owner = new_character
+		else
+			var/obj/O = locate(martial_art.required_object) in new_character
+			if(!O)
+				martial_art.remove(H) //The player can always just re-equip the object, assuming they have access to their old corpse
+			else
+				if(!martial_art.required_slot && H.get_item_by_slot(martial_art.required_slot) != O)
+					martial_art.remove(H)
+				else
+					martial_art.martial_art_owner = new_character
+
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
@@ -1443,7 +1457,7 @@
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
-		
+
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))

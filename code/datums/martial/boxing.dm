@@ -57,5 +57,13 @@
 		return
 	if(slot == slot_gloves)
 		var/mob/living/carbon/human/H = user
-		style.teach(H,1) //Style removal is handled by the martial art itself!
+		style.teach(H,1)
 	return
+
+/obj/item/clothing/gloves/boxing/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(slot_gloves) == src)
+		style.remove(H)
+ 	return

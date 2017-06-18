@@ -454,3 +454,11 @@
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 	return
+
+/obj/item/weapon/storage/belt/champion/wrestling/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(slot_belt) == src)
+		style.remove(H)
+	return
