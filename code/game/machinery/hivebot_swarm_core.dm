@@ -12,7 +12,7 @@
 	density = TRUE
 	var/recharge_period = 0 //The number of ticks the core is waiting for and cannot do anything
 	var/mob/living/threat_to_swarm //The core's "target" for its attacks
-	var/hivebot_limit = 50 //Stop making hivebots if there are this many in a 7x7 square around us
+	var/hivebot_limit = 40 //Stop making hivebots if there are this many in a 7x7 square around us
 
 /obj/machinery/hivebot_swarm_core/Destroy()
 	visible_message("<span class='warning'>[src] falls apart, its red eyes sputtering out.</span>")
