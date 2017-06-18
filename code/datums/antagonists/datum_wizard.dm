@@ -12,16 +12,12 @@
 /datum/antagonist/wizard/can_be_owned()
 	if(!ishuman(owner.current))
 		return FALSE
-	..()
+	return ..()
 
 /datum/antagonist/wizard/on_gain()
 	SSticker.mode.wizards += owner
 	owner.special_role = special_role
-	name_wizard()
-	forge_wizard_objectives()
-	greet()
-	finalize_wizard()
-	return
+	return ..()
 
 /datum/antagonist/wizard/proc/forge_wizard_objectives()
 	switch(rand(1,100))
@@ -67,12 +63,14 @@
 		add_objective(escape_objective)
 
 /datum/antagonist/wizard/apply_innate_effects()
+	name_wizard()
+	forge_wizard_objectives()
 	var/mob/living/carbon/human/H = owner.current
 	H.equipOutfit(/datum/outfit/wizard)
+	finalize_wizard()
 	return
 
 /datum/antagonist/wizard/proc/finalize_wizard()
-	apply_innate_effects()
 	to_chat(owner, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
 	to_chat(owner, "The spellbook is bound to you, and others cannot use it.")
 	to_chat(owner, "In your pockets you will find a teleport scroll. Use it as needed.")
@@ -100,19 +98,13 @@
 	H.dna.update_dna_identity()
 	return
 
-/datum/antagonist/wizard/apprentice/on_gain()
-	SSticker.mode.apprentices += owner
-	owner.special_role = special_role
-	name_wizard()
-	greet()
-	forge_wizard_objectives()
-	finalize_wizard()
-	return
-
 /datum/antagonist/wizard/apprentice/apply_innate_effects()
+	name_wizard()
+	forge_wizard_objectives()
 	var/mob/living/carbon/human/H = owner.current
 	var/outfit = pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb)
 	H.equipOutfit(outfit, TRUE)
+	finalize_wizard()
 	return
 
 /datum/antagonist/wizard/apprentice/name_wizard()
