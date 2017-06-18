@@ -1,0 +1,8 @@
+author: "RandomMarine"
+delete-after: True
+changes: 
+  - tweak: "RCDs now always use matter consistent with the material needed when building."
+  - tweak: "Floors now cost 3 or 1 matter to build, based on if a lattice exists on the tile."
+  - tweak: "Reinforced windows cost 12 matter. Normal windows cost 8 matter. (Both up/down from 10)"
+  - tweak: "Glass airlocks cost 20 matter."
+  - tweak: "RCDs are faster at building grilles and plain glass windows."
