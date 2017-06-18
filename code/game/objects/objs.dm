@@ -212,7 +212,7 @@
 	if(!unique_reskin || !islist(unique_reskin))
 		return
 	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
-	if(!QDELETED(src) && && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(unique_reskin[choice] == null)
 			return
 		current_skin = choice
