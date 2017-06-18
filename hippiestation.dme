@@ -2288,6 +2288,8 @@
 #include "hippiestation\code\modules\sports\hockey.dm"
 #include "hippiestation\code\modules\sports\wrestling.dm"
 #include "hippiestation\code\modules\surgery\gender_reassignment.dm"
+#include "hippiestation\code\modules\surgery\organs\ears.dm"
+#include "hippiestation\code\modules\surgery\organs\tails.dm"
 #include "hippiestation\code\modules\teeth\misc.dm"
 #include "hippiestation\code\modules\teeth\teeth.dm"
 #include "hippiestation\code\modules\uplink\uplink_item.dm"

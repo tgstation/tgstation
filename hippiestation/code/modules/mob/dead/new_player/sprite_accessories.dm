@@ -2,6 +2,11 @@
 /////SPRITE ACC/////
 ////////////////////
 
+/datum/sprite_accessory/ears/tcat
+	name = "TCat"
+	icon = 'hippiestation/icons/mob/mutant_bodyparts.dmi'
+	icon_state = "tcat"
+
 /datum/sprite_accessory/tails/human/tcat
 	name = "TCat"
 	icon = 'hippiestation/icons/mob/mutant_bodyparts.dmi'
