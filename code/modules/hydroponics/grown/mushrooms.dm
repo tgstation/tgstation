@@ -324,6 +324,7 @@
 	growthstages = 3
 	rarity = 20
 	reagents_add = list("nutriment" = 0.1)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"
