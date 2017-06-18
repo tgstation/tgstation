@@ -25,4 +25,4 @@
 	if(do_after(user, 150, TRUE, src))
 		var/area/A = get_area(user)
 		master.gang_broadcast("A new dominator has been placed at [A.map_name]! This is your primary base and where you acquire equipment with your influence!")
-		//Spawn dominator
+		new /obj/machinery/dominator(get_turf(user),master)

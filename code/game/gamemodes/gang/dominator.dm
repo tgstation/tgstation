@@ -71,8 +71,9 @@
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/Initialize()
+/obj/machinery/dominator/Initialize(datum/gang/newgang)
 	. = ..()
+	gang = newgang
 	set_light(2)
 	GLOB.poi_list |= src
 	spark_system = new
