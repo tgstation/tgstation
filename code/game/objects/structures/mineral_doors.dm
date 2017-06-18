@@ -5,7 +5,7 @@
 	name = "metal door"
 	density = 1
 	anchored = 1
-	opacity = 1
+	opacity = TRUE
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
@@ -86,8 +86,8 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
-	playsound(loc, openSound, 100, 1)
-	set_opacity(0)
+	playsound(src, openSound, 100, 1)
+	set_opacity(FALSE)
 	flick("[initial_state]opening",src)
 	sleep(10)
 	density = 0
@@ -110,7 +110,7 @@
 	flick("[initial_state]closing",src)
 	sleep(10)
 	density = 1
-	set_opacity(1)
+	set_opacity(TRUE)
 	state = 0
 	air_update_turf(1)
 	update_icon()
@@ -175,11 +175,11 @@
 	max_integrity = 100
 
 /obj/structure/mineral_door/transparent
-	opacity = 0
+	opacity = FALSE
 
 /obj/structure/mineral_door/transparent/Close()
 	..()
-	set_opacity(0)
+	set_opacity(FALSE)
 
 /obj/structure/mineral_door/transparent/plasma
 	name = "plasma door"
