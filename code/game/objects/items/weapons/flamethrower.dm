@@ -135,8 +135,17 @@
 
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
+	if(ptank)
+		user.put_in_hands(ptank)
+		ptank = null
+		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+
+/obj/item/weapon/flamethrower/AltClick(mob/user)
 	toggle_igniter(user)
 
+/obj/item/weapon/flamethrower/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>\The [src] is [(lit?"lit":"unlit")]. Alt-click to toggle.</span>")
 
 /obj/item/weapon/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
