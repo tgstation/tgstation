@@ -1415,7 +1415,9 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 
 	return mob_occupant
 
+//counts the number of bits in Byond's 16-bit width field
+//in constant time and memory!
 /proc/BitCount(bitfield)
-	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449);
-	temp = ((temp + (temp>>3))&29127) % 63;
+	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449); //0133333 and 0111111 respectively
+	temp = ((temp + (temp>>3))&29127) % 63;	//070707
 	return temp;
