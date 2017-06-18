@@ -1,10 +1,10 @@
 
-/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, type = /obj/effect/portal)
+/proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new type(source, _creator, _lifespan, null, FALSE)
-	var/obj/effect/portal/P2 = new type(actual_destination, _creator, _lifespan, P1, TRUE)
+	var/obj/effect/portal/P1 = new newtype(source, _creator, _lifespan, null, FALSE)
+	var/obj/effect/portal/P2 = new newtype(actual_destination, _creator, _lifespan, P1, TRUE)
 	if(!istype(P1)||!istype(P2))
 		return
 	P1.link_portal(P2)
@@ -35,7 +35,6 @@
 /obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
 	if(user && Adjacent(user))
 		user.forceMove(get_turf(src))
-		teleport(user)
 
 /obj/effect/portal/make_frozen_visual()
 	return
@@ -52,7 +51,6 @@
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
 		user.forceMove(get_turf(src))
-		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked, automatic_link = TRUE, hard_target_override, atmos_link_override)
 	. = ..()

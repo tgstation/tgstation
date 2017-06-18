@@ -187,7 +187,7 @@
 /obj/item/weapon/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
 	if(P == p_blue)
 		p_blue = null
-	if(P == p_orange)
+	else if(P == p_orange)
 		p_orange = null
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/has_blue_portal()
