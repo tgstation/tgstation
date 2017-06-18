@@ -276,6 +276,7 @@
 	M.wabbajack_act(new_mob)
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
+	to_chat(new_mob, "<span class='danger'>Note that you are allowed to act as an antagonist while transformed into a hostile mob, unless you volunteered for or seeked out transformation.</span>")
 
 	qdel(M)
 	return new_mob
