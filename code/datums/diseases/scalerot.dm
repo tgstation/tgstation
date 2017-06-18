@@ -65,7 +65,7 @@
 						affected_mob.adjustBruteLoss(25)
 						affected_mob.adjustStaminaLoss(100)
 						affected_mob.bleed(35)
-		if(affected_mob.reagents.get_reagent_amount(("ethanol") > 15)||("sterilizine"<1))
+		if(affected_mob.reagents.get_reagent_amount(("ethanol") > 15)||("sterilizine">1))
 			cure()
 	else
 		stage = 1
