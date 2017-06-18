@@ -94,4 +94,4 @@ Bonus
 	A.stage = 5
 	if(A.properties["stealth"] >= 4) //more time before it's cured
 		power = 2
-	time_to_cure = max(A.properties["resistance"], A.properties["stage_rate"]) * power
+	time_to_cure = max(A.properties["resistance"], A.properties["stage_rate"]) * 10 * power
