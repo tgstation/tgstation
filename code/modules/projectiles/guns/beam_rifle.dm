@@ -40,7 +40,7 @@
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
-	var/aiming_time_increase_angle_multiplier = 0.3	//More reasonable.
+	var/aiming_time_increase_angle_multiplier = 0.5
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
@@ -130,14 +130,15 @@
 /obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
 		return
-	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
-	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_target_view_increase
+	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_current_view_increase
+	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_current_view_increase
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
 	if(zoom_speed == ZOOM_SPEED_INSTANT)
 		current_user.client.change_view(world.view + zoom_target_view_increase)
+		zoom_current_view_increase = zoom_target_view_increase
 		set_autozoom_pixel_offsets_immediate(zooming_angle)
 		smooth_zooming()
 		return
@@ -226,11 +227,10 @@
 			return
 		targloc = get_turf_in_angle(lastangle, curloc, 10)
 	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
-	clear_tracer()
 	P.fire(lastangle)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracer()
-	qdel(current_tracer)
+	QDEL_NULL(current_tracer)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
@@ -578,12 +578,15 @@
 	var/obj/effect/projectile_beam/PB = new tracer_type(src)
 	PB.apply_vars(Angle, tracer_px, tracer_py, color, scaling, locate(tracer_lx,tracer_ly,starting_z))
 	if(put_in_rifle && istype(gun))
+		if(gun.current_tracer)
+			QDEL_NULL(gun.current_tracer)
 		gun.current_tracer = PB
 	else
 		QDEL_IN(PB, 5)
 
-/obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge()
-	var/turf/T = src.loc
+/obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge(turf/T)
+	if(!istype(T))
+		return TRUE
 	var/tx = T.x
 	var/ty = T.y
 	if(tx < 10 || tx > (world.maxx - 10) || ty < 10 || ty > (world.maxy-10))
@@ -660,7 +663,7 @@
 					Bump(original, 1)
 		c2 = loc
 		Range()
-		if(check_for_turf_edge())
+		if(check_for_turf_edge(loc))
 			spawn_tracer()
 	if(istype(c2))
 		cached = c2
