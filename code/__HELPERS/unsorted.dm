@@ -1414,3 +1414,8 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
+
+/proc/BitCount(bitfield)
+	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449);
+	temp = ((temp + (temp>>3))&29127) % 63;
+	return temp;
