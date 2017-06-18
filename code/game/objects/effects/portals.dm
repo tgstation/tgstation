@@ -40,7 +40,7 @@
 
 /obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
 	if(user && Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
 
 /obj/effect/portal/make_frozen_visual()
 	return
@@ -56,7 +56,7 @@
 
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
 
 /obj/effect/portal/Initialize(mapload, _creator, _lifespan = 300, obj/effect/portal/_linked, automatic_link = TRUE, hard_target_override, atmos_link_override)
 	. = ..()
