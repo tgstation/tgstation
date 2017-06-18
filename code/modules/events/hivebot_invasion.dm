@@ -1,7 +1,7 @@
 /datum/round_event_control/hivebot_invasion //A hivebot swarm core impacts the station and warps in hivebots.
 	name = "Hivebot Invasion"
 	typepath = /datum/round_event/hivebot_invasion
-	weight = 2
+	weight = 5
 	max_occurrences = 1
 	min_players = 25
 	earliest_start = 18000
