@@ -197,7 +197,7 @@
 
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
-	
+
 	unbuckle_all_mobs(force=1)
 
 	. = ..()
@@ -692,8 +692,4 @@
 		return FALSE
 	if(anchored || throwing)
 		return FALSE
-	if(isliving(src))
-		var/mob/living/L = src
-		if(L.buckled && L.buckled.buckle_prevents_pull)
-			return FALSE
 	return TRUE
