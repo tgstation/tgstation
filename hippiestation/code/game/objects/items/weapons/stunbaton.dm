@@ -1,10 +1,11 @@
+#define MAKESHIFT_BATON_CD 1.5
 
 /obj/item/weapon/melee/baton
 	var/stamforce = 80
 
 /obj/item/weapon/melee/baton/cattleprod/hippie_cattleprod
 	w_class = WEIGHT_CLASS_NORMAL
-	stunforce = 0.1
+	stunforce = 0
 
 
 /obj/item/weapon/melee/baton/proc/baton_stun_hippie_makeshift(mob/living/L, mob/user)
@@ -24,6 +25,7 @@
 	L.Stun(stunforce)
 	L.staminaloss += stamforce //Not reduced by armour to give it an edge over a taser.
 	L.apply_effect(STUTTER, 7) //Duration of sec baton
+	user.changeNext_move(CLICK_CD_MELEE * MAKESHIFT_BATON_CD)
 	if(user)
 		user.lastattacked = L
 		L.lastattacker = user
@@ -38,3 +40,5 @@
 		H.forcesay(GLOB.hit_appends)
 
 	return 1
+
+#undef MAKESHIFT_BATON_CD
