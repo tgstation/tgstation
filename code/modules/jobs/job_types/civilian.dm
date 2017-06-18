@@ -92,7 +92,9 @@ Mime
 	suit = /obj/item/clothing/suit/suspenders
 	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
-	backpack = /obj/item/weapon/storage/backpack/mime
+  accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
+
+  backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
 
 
@@ -135,6 +137,7 @@ Curator
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
 		/obj/item/weapon/melee/curator_whip = 1,
 		/obj/item/soapstone = 1,
