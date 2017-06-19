@@ -31,9 +31,9 @@ Bonus
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
 	..()
-	if(A.properties["stage_rate"] >= 5)
+	if(A.properties["stage_rate"] >= 4)
 		power = 1.5
-	if(A.properties["stage_rate"] >= 10)
+	if(A.properties["stage_rate"] >= 8)
 		power = 2
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE

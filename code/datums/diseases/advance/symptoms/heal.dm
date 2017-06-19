@@ -14,9 +14,9 @@
 	..()
 	if(A.properties["stealth"] >= 4) //invisible healing
 		hide_healing = TRUE
-	if(A.properties["stage_rate"] >= 7) //stronger healing
+	if(A.properties["stage_rate"] >= 6) //stronger healing
 		power = 2
-	if(A.properties["stage_rate"] >= 15) //even stronger healing
+	if(A.properties["stage_rate"] >= 11) //even stronger healing
 		power = 3
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)

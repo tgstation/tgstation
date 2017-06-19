@@ -33,7 +33,7 @@ Bonus
 	..()
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
-	if(A.properties["resistance"] >= 13) //goodbye eyes
+	if(A.properties["resistance"] >= 12) //goodbye eyes
 		remove_eyes = TRUE
 
 /datum/symptom/visionloss/Activate(datum/disease/advance/A)
