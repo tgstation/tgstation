@@ -271,7 +271,7 @@
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping420 * power_multiplier)
+			C.Sleeping(40 * power_multiplier)
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
