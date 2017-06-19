@@ -21,7 +21,7 @@
 				<b>Integrity:</b> Implant's EMP function will destroy itself in the process."}
 	return dat
 
-/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = 1)
+/obj/item/weapon/implant/gang/implant(mob/living/target, mob/user, silent = TRUE)
 	if(..())
 		for(var/obj/item/weapon/implant/I in target.implants)
 			if(I != src)
@@ -43,7 +43,6 @@
 				return TRUE
 			else
 				SSticker.mode.add_gangster(target.mind,gang)
-				target.Paralyse(3)
 				return TRUE
 
 /obj/item/weapon/implanter/gang
