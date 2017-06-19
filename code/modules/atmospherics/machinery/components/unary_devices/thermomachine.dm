@@ -36,7 +36,7 @@
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
-	..()
+	. = ..()
 	if(!build_path)
 		if(prob(50))
 			name = "Freezer (Machine Board)"
