@@ -80,11 +80,11 @@
 
 		//Occlusion
 		if(hearer_location != source_location)//Area-based occlusion
-			S.echo = gen_occlusion(1, S)
+			S.echo = gen_occlusion(1)
 		//no need for an else because the default echo we set takes care of non-occluded sounds
 
 		//distance based occlusion
-		S.echo = gen_occlusion(2, S, turf_source, T)
+		S.echo = gen_occlusion(2, turf_source, T)
 
 
 		// 3D sounds, the technology is here!
@@ -103,10 +103,10 @@
 	src << S
 
 
-/proc/gen_occlusion(type, sin, sourceatom, listeneratom)
+/proc/gen_occlusion(type, sourceatom, listeneratom)
 	//type 1 = area-based
 	//type 2 = distance-based
-	var/sound/ME = sin
+	var/ME[18]
 	var/modlist = list(0,0,0,0,0,0,0,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 	if(type == 1)
 		modlist = list(0,0,0,0,0,0,-5000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
@@ -123,8 +123,8 @@
 		modlist[7] += (distance*occlude_amount) //each tile of distance = 100 more occlusion
 
 	for(var/i=1, i<=18, i++)
-		ME.echo[i] += modlist[i]
-	return ME.echo
+		ME[i] += modlist[i]
+	return ME
 
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
