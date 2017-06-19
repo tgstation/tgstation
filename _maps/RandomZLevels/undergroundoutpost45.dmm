@@ -11753,7 +11753,7 @@
 	})
 "qM" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10;
+	dir = 10
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot{
@@ -13549,7 +13549,7 @@
 	})
 "sZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 6;
+	dir = 6
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -14767,7 +14767,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 1;
+	dir = 1
 	},
 /obj/machinery/meter{
 	layer = 3.3

@@ -294,8 +294,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -32;
-	tag = "icon-alarm0 (EAST)"
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (EAST)";
@@ -850,8 +849,7 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -32;
-	tag = "icon-alarm0 (EAST)"
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/gateway)
@@ -1754,8 +1752,7 @@
 "eT" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -32;
-	tag = "icon-alarm0 (EAST)"
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
@@ -3299,8 +3296,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	pixel_y = -32;
-	tag = "icon-alarm0 (NORTH)"
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/darkpurple,
 /area/awaymission/research/interior/genetics)

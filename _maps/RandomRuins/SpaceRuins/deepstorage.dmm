@@ -3054,8 +3054,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -24;
-	tag = "icon-alarm0 (EAST)"
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless

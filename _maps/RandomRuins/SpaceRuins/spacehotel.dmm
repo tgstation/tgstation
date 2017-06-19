@@ -2029,16 +2029,14 @@
 "eL" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	pixel_y = -24;
-	tag = "icon-alarm0 (NORTH)"
+	pixel_y = -24
 	},
 /turf/open/floor/plating,
 /area/ruin/hotel/bar)
 "eM" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	pixel_y = -24;
-	tag = "icon-alarm0 (NORTH)"
+	pixel_y = -24
 	},
 /turf/open/floor/plating,
 /area/ruin/hotel)
@@ -3661,8 +3659,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	pixel_y = -24;
-	tag = "icon-alarm0 (NORTH)"
+	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4

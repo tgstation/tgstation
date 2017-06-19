@@ -229,7 +229,7 @@
 /area/ruin/gasthelizard)
 "A" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/ruin/gasthelizard)
