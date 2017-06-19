@@ -537,8 +537,9 @@
 	force_on = 20 //force when active
 	throwforce = 20
 	throwforce_on = 20
-	icon_state = "axe0"
-	icon_state_on = "axe1" //todo good sprites
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "cleaving_saw"
+	slot_flags = SLOT_BELT
 	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -564,6 +565,10 @@
 		return FALSE
 	. = ..()
 	if(.)
+		if(active)
+			add_overlay("cleaving_saw_open")
+		else
+			cut_overlays()
 		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5)
 
@@ -580,14 +585,17 @@
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 
+/obj/item/weapon/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+	if(!active)
+		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
+	..()
+
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		var/beast_bonus_active = FALSE
 		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
 			force += beast_force_bonus //we do bonus damage against beastly creatures
 			beast_bonus_active = TRUE
-		if(!active)
-			user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 		..()
 		if(beast_bonus_active)
 			force -= beast_force_bonus
