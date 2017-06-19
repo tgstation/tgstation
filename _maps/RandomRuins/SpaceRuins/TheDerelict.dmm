@@ -4082,7 +4082,6 @@
 /area/derelict/atmospherics)
 "lO" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating/airless,
@@ -4134,7 +4133,6 @@
 /area/derelict/atmospherics)
 "lV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating/airless,

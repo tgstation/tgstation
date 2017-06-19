@@ -52199,7 +52199,6 @@
 /area/maintenance/solars/port/aft)
 "bTq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
@@ -85943,7 +85942,6 @@
 /area/engine/engineering)
 "dfj" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
@@ -85993,7 +85991,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/engine,

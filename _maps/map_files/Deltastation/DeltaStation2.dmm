@@ -601,7 +601,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -743,7 +742,6 @@
 	icon_state = "tube1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/camera{
@@ -1168,7 +1166,6 @@
 /area/construction/mining/aux_base)
 "acq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1359,7 +1356,6 @@
 "acM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -1368,7 +1364,6 @@
 /area/construction/mining/aux_base)
 "acN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/cable/white{
@@ -1745,7 +1740,6 @@
 "adH" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1773,7 +1767,6 @@
 /area/hallway/secondary/entry)
 "adK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2117,7 +2110,6 @@
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -2130,7 +2122,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -3006,7 +2997,6 @@
 /area/hallway/secondary/entry)
 "agx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/arrival{
@@ -3112,7 +3102,6 @@
 /area/hallway/secondary/entry)
 "agL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/arrival,
@@ -3253,7 +3242,6 @@
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/arrival,
@@ -3537,7 +3525,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
@@ -3551,7 +3538,6 @@
 	},
 /obj/structure/barricade/wooden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3565,7 +3551,6 @@
 "ahR" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/red,
@@ -3573,7 +3558,6 @@
 "ahS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -3584,7 +3568,6 @@
 /area/maintenance/starboard/fore)
 "ahU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
@@ -3595,7 +3578,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
@@ -3604,7 +3586,6 @@
 "ahW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -3808,7 +3789,6 @@
 /area/security/checkpoint/checkpoint2)
 "aiy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -3850,7 +3830,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -4118,7 +4097,6 @@
 /area/security/vacantoffice)
 "ajg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/wood,
@@ -4857,7 +4835,6 @@
 /obj/structure/frame/computer,
 /obj/item/stack/cable_coil/white,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/wood,
@@ -6988,7 +6965,6 @@
 /obj/item/clothing/glasses/meson/engine,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/bot,
@@ -7764,8 +7740,6 @@
 /area/engine/atmospherics_engine)
 "ara" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -7981,7 +7955,6 @@
 /area/crew_quarters/toilet/auxiliary)
 "arw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -8076,7 +8049,6 @@
 "arG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -8095,7 +8067,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
@@ -8364,7 +8335,6 @@
 /area/space)
 "asb" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
@@ -8372,7 +8342,6 @@
 /area/space)
 "asc" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -8381,7 +8350,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -8413,7 +8381,6 @@
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -8870,7 +8837,6 @@
 /area/quartermaster/storage)
 "atb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/closed/wall,
@@ -8911,7 +8877,6 @@
 /area/space)
 "atg" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/lattice,
@@ -9140,7 +9105,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/item/weapon/grenade/chem_grenade/cleaner,
@@ -9467,7 +9431,6 @@
 /area/solar/port/fore)
 "auv" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/space,
@@ -9548,7 +9511,6 @@
 "auD" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -9880,7 +9842,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -11018,7 +10979,6 @@
 /area/engine/atmospherics_engine)
 "axP" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
@@ -11041,7 +11001,6 @@
 /area/engine/supermatter)
 "axS" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/machinery/meter,
@@ -11091,7 +11050,6 @@
 /area/engine/atmospherics_engine)
 "axX" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -11105,7 +11063,6 @@
 "axY" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -11114,7 +11071,6 @@
 "axZ" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/space,
@@ -11213,7 +11169,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -11721,7 +11676,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment,
@@ -11868,7 +11822,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
@@ -11946,7 +11899,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
@@ -12348,7 +12300,6 @@
 "aAD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/brown,
@@ -12356,7 +12307,6 @@
 "aAE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
@@ -12533,7 +12483,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -12548,7 +12497,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -12700,7 +12648,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/yellow,
@@ -13119,7 +13066,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel,
@@ -13141,7 +13087,6 @@
 	pixel_y = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -13158,7 +13103,6 @@
 /area/engine/atmospherics_engine)
 "aCg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/yellow,
@@ -13207,7 +13151,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/yellow,
@@ -14714,7 +14657,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -15155,7 +15097,6 @@
 "aFI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/loadingarea,
@@ -15165,7 +15106,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -15388,7 +15328,6 @@
 /area/maintenance/disposal/incinerator)
 "aGl" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -15824,7 +15763,6 @@
 "aHh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/machinery/conveyor_switch/oneway{
@@ -15855,7 +15793,6 @@
 	},
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -16820,7 +16757,6 @@
 "aJf" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/space,
@@ -16828,7 +16764,6 @@
 "aJg" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/space,
@@ -16836,7 +16771,6 @@
 "aJh" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/space,
@@ -16844,7 +16778,6 @@
 "aJi" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/space,
@@ -17090,7 +17023,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating{
@@ -17406,7 +17338,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault,
@@ -17423,7 +17354,6 @@
 /area/engine/atmos)
 "aKu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -17432,7 +17362,6 @@
 /area/engine/atmos)
 "aKv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -17440,7 +17369,6 @@
 /area/engine/atmos)
 "aKw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -17455,21 +17383,18 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "aKy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault,
 /area/engine/atmos)
 "aKz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -17482,7 +17407,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -17490,7 +17414,6 @@
 /area/engine/atmos)
 "aKB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -17784,7 +17707,6 @@
 /area/quartermaster/storage)
 "aLn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -17792,7 +17714,6 @@
 /area/quartermaster/storage)
 "aLo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -17899,7 +17820,6 @@
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -18045,7 +17965,6 @@
 /area/maintenance/disposal/incinerator)
 "aLT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -18183,7 +18102,6 @@
 /obj/item/weapon/electronics/firealarm,
 /obj/item/weapon/electronics/firealarm,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/caution{
@@ -18211,7 +18129,6 @@
 "aMf" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -19324,7 +19241,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/carpet,
@@ -19764,7 +19680,6 @@
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/device/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -19807,7 +19722,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -19834,7 +19748,6 @@
 "aPf" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
@@ -20248,7 +20161,6 @@
 /area/crew_quarters/bar/atrium)
 "aPV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/carpet,
@@ -20273,7 +20185,6 @@
 "aPZ" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/redyellow,
@@ -20328,7 +20239,6 @@
 /obj/item/device/multitool,
 /obj/item/weapon/pen/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/brown{
@@ -20351,7 +20261,6 @@
 /area/quartermaster/office)
 "aQg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/brown{
@@ -20504,7 +20413,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -20895,7 +20803,6 @@
 "aRb" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -20905,14 +20812,12 @@
 /area/engine/atmos)
 "aRc" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "aRd" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -20920,7 +20825,6 @@
 /area/engine/atmos)
 "aRe" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -20928,7 +20832,6 @@
 /area/engine/atmos)
 "aRf" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/airalarm{
@@ -20944,14 +20847,12 @@
 /area/engine/atmos)
 "aRg" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)
 "aRh" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -20960,7 +20861,6 @@
 /area/engine/atmos)
 "aRi" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -20968,7 +20868,6 @@
 /area/engine/atmos)
 "aRj" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -21654,7 +21553,6 @@
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/side{
@@ -21704,7 +21602,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/darkred/side,
@@ -21717,7 +21614,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -22227,7 +22123,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -22640,7 +22535,6 @@
 /area/engine/atmos)
 "aUC" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -22673,7 +22567,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -23035,7 +22928,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -23406,7 +23298,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/side{
@@ -24046,7 +23937,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -24428,7 +24318,6 @@
 /area/engine/atmos)
 "aXW" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
@@ -25840,14 +25729,12 @@
 "baS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "baT" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -25873,7 +25760,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -26448,7 +26334,6 @@
 /area/engine/atmos)
 "bck" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -27009,7 +26894,6 @@
 "bdt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment,
@@ -28024,7 +27908,6 @@
 /area/engine/atmos)
 "bfu" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
@@ -28036,7 +27919,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -28044,7 +27926,6 @@
 "bfw" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/space,
@@ -28871,7 +28752,6 @@
 /area/engine/atmos)
 "bgZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -28904,7 +28784,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -28927,7 +28806,6 @@
 "bhf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -28936,7 +28814,6 @@
 /area/engine/atmos)
 "bhg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -28946,7 +28823,6 @@
 /area/engine/atmos)
 "bhh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -29204,7 +29080,6 @@
 /obj/item/clothing/suit/apron/chef,
 /obj/item/weapon/kitchen/rollingpin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
@@ -29764,7 +29639,6 @@
 /area/engine/atmos)
 "biU" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/bot,
@@ -29780,7 +29654,6 @@
 /area/engine/atmos)
 "biW" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
@@ -29847,7 +29720,6 @@
 /area/engine/atmos)
 "bje" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -29885,7 +29757,6 @@
 	amount = 50
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/bot,
@@ -29905,7 +29776,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
@@ -29922,7 +29792,6 @@
 /area/engine/atmos)
 "bjl" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -29933,7 +29802,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -29941,7 +29809,6 @@
 "bjn" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/space,
@@ -30562,7 +30429,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -30577,7 +30443,6 @@
 /area/engine/atmos)
 "bkA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
@@ -30588,7 +30453,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/figure/atmos,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -30596,7 +30460,6 @@
 /area/engine/atmos)
 "bkC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -30610,7 +30473,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -30676,7 +30538,6 @@
 /area/hydroponics)
 "bkM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -30688,7 +30549,6 @@
 /area/hallway/primary/central)
 "bkN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/cable/white{
@@ -30922,7 +30782,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery,
@@ -31347,7 +31206,6 @@
 /area/engine/atmos)
 "bma" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -31376,7 +31234,6 @@
 /area/engine/atmos)
 "bmd" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/caution{
@@ -31412,7 +31269,6 @@
 /area/engine/atmos)
 "bmh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/landmark/start/atmospheric_technician,
@@ -31424,7 +31280,6 @@
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -31435,7 +31290,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment,
@@ -31495,7 +31349,6 @@
 /area/engine/atmos)
 "bmr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
@@ -31907,7 +31760,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -32258,7 +32110,6 @@
 	req_access_txt = "58"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/grimy,
@@ -32405,7 +32256,6 @@
 /area/engine/atmos)
 "boa" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -32470,7 +32320,6 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/device/t_scanner,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -32491,7 +32340,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -32517,7 +32365,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -32582,7 +32429,6 @@
 /area/hallway/primary/port)
 "bos" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/cable/white{
@@ -32649,7 +32495,6 @@
 /area/hydroponics)
 "boB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -33367,7 +33212,6 @@
 "bpP" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/space,
@@ -33375,7 +33219,6 @@
 "bpQ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/green/side{
@@ -33384,7 +33227,6 @@
 /area/engine/atmos)
 "bpR" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/binary/pump{
@@ -33398,7 +33240,6 @@
 "bpS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -33412,7 +33253,6 @@
 /area/engine/atmos)
 "bpU" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -33448,7 +33288,6 @@
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -33457,14 +33296,12 @@
 "bpY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
 "bpZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -33522,7 +33359,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -33539,7 +33375,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -33551,7 +33386,6 @@
 	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -33563,7 +33397,6 @@
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -33572,7 +33405,6 @@
 "bqh" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/bot,
@@ -34104,7 +33936,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34134,7 +33965,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -34157,7 +33987,6 @@
 /area/engine/atmos)
 "brp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -34170,7 +33999,6 @@
 /area/engine/atmos)
 "brq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -34645,7 +34473,6 @@
 "bst" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34842,7 +34669,6 @@
 /area/hallway/primary/port)
 "bsJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/cable/white{
@@ -35123,7 +34949,6 @@
 /area/security/nuke_storage)
 "bth" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/circuit/green,
@@ -35353,14 +35178,12 @@
 /area/engine/break_room)
 "btG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
 /area/engine/break_room)
 "btH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -35375,7 +35198,6 @@
 /area/engine/break_room)
 "btJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/closed/wall/r_wall,
@@ -35476,7 +35298,6 @@
 /area/engine/atmos)
 "btV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/yellow/corner{
@@ -35748,7 +35569,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -35973,7 +35793,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/circuit/green,
@@ -36042,7 +35861,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/circuit/green,
@@ -36296,7 +36114,6 @@
 /area/hallway/primary/port)
 "bvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/cable/white{
@@ -36989,7 +36806,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/circuit/green,
@@ -37021,7 +36837,6 @@
 /area/engine/gravity_generator)
 "bwI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
@@ -37039,7 +36854,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -37053,7 +36867,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -37069,7 +36882,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -37091,7 +36903,6 @@
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/cable/white{
@@ -37288,7 +37099,6 @@
 	name = "Atmospherics Lockdown Blast door"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -37984,7 +37794,6 @@
 "byC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -37998,7 +37807,6 @@
 "byD" = (
 /obj/structure/sign/radiation,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -38024,7 +37832,6 @@
 /area/engine/gravity_generator)
 "byF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -38039,7 +37846,6 @@
 	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -38049,7 +37855,6 @@
 /area/engine/gravity_generator)
 "byH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall,
@@ -38061,7 +37866,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -38105,7 +37909,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -38124,7 +37927,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -38146,7 +37948,6 @@
 /area/engine/break_room)
 "byN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -38163,7 +37964,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -38171,7 +37971,6 @@
 /area/engine/break_room)
 "byP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -38190,7 +37989,6 @@
 /area/engine/break_room)
 "byR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -38212,7 +38010,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -38224,7 +38021,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -38240,7 +38036,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/caution{
@@ -38808,7 +38603,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -39256,7 +39050,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/delivery,
@@ -39273,7 +39066,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -39289,7 +39081,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -39306,7 +39097,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -39322,7 +39112,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -39357,7 +39146,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -39376,7 +39164,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -39405,7 +39192,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -39430,7 +39216,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -39440,7 +39225,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -39472,7 +39256,6 @@
 /area/engine/break_room)
 "bAJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/closed/wall/r_wall,
@@ -39495,7 +39278,6 @@
 /area/hallway/primary/port)
 "bAM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/yellow/corner{
@@ -40148,7 +39930,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/port_gen/pacman,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -40157,7 +39938,6 @@
 "bBW" = (
 /obj/structure/sign/radiation,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -40167,7 +39947,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -40192,7 +39971,6 @@
 /obj/structure/closet/radiation,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/machinery/light/small,
@@ -40295,7 +40073,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -40318,7 +40095,6 @@
 /area/engine/break_room)
 "bCm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -40340,7 +40116,6 @@
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -40352,7 +40127,6 @@
 /area/engine/break_room)
 "bCo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -40654,7 +40428,6 @@
 /obj/structure/table/wood,
 /obj/item/device/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/grimy,
@@ -40692,7 +40465,6 @@
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/grimy,
@@ -40995,7 +40767,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bDE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -41010,7 +40781,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -41021,7 +40791,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -41041,7 +40810,6 @@
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -41052,7 +40820,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -41325,7 +41092,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral,
@@ -41785,7 +41551,6 @@
 "bFf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment,
@@ -41986,7 +41751,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/machinery/power/apc{
@@ -42106,7 +41870,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -42129,7 +41892,6 @@
 	req_access_txt = "56"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -42146,7 +41908,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -42160,7 +41921,6 @@
 	name = "Chief's Lockdown Shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -42176,7 +41936,6 @@
 /area/engine/break_room)
 "bFO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -42187,7 +41946,6 @@
 /area/engine/break_room)
 "bFP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/sortjunction{
@@ -42218,7 +41976,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -42228,7 +41985,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -42236,7 +41992,6 @@
 /area/engine/break_room)
 "bFV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -42247,7 +42002,6 @@
 	icon_state = "tube1"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -42257,7 +42011,6 @@
 "bFX" = (
 /obj/structure/sign/securearea,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall,
@@ -42767,7 +42520,6 @@
 /area/security/brig)
 "bHc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/bed,
@@ -42837,7 +42589,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
@@ -42863,7 +42614,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -42936,7 +42686,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -42952,7 +42701,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -43029,21 +42777,18 @@
 /area/crew_quarters/heads/chief)
 "bHC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/crew_quarters/heads/chief)
 "bHD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/heads/chief)
 "bHE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -43080,7 +42825,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -43100,7 +42844,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -43116,7 +42859,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -43127,7 +42869,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -43143,7 +42884,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
@@ -43169,7 +42909,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -43224,7 +42963,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -43486,14 +43224,12 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/grimy,
 /area/tcommsat/computer)
 "bIr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/camera{
@@ -43516,7 +43252,6 @@
 /area/tcommsat/computer)
 "bIt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/grimy,
@@ -43527,7 +43262,6 @@
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/grimy,
@@ -43702,7 +43436,6 @@
 "bIP" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/grimy,
@@ -43772,7 +43505,6 @@
 /area/security/detectives_office)
 "bIW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/light/small{
@@ -43963,7 +43695,6 @@
 "bJl" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -43984,7 +43715,6 @@
 /area/ai_monitored/turret_protected/ai)
 "bJn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/camera/motion{
@@ -44074,7 +43804,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/space,
@@ -44085,7 +43814,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/space,
@@ -44130,7 +43858,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -44553,7 +44280,6 @@
 /area/tcommsat/computer)
 "bKz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -44724,7 +44450,6 @@
 /area/security/detectives_office)
 "bKS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
@@ -45484,7 +45209,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/wood,
@@ -45516,7 +45240,6 @@
 /area/crew_quarters/heads/captain)
 "bMH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/wood,
@@ -46005,7 +45728,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/space,
@@ -46016,7 +45738,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/space,
@@ -46797,7 +46518,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -46859,7 +46579,6 @@
 	pixel_y = 2
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
@@ -47028,7 +46747,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/transit_tube/curved,
@@ -47163,7 +46881,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -47186,7 +46903,6 @@
 	req_access_txt = "56"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -47202,7 +46918,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -47214,7 +46929,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -47228,7 +46942,6 @@
 	},
 /obj/effect/landmark/start/chief_engineer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -47295,7 +47008,6 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -47306,7 +47018,6 @@
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
@@ -47320,7 +47031,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/button/door{
@@ -47340,7 +47050,6 @@
 /area/security/checkpoint/engineering)
 "bPT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
@@ -47935,7 +47644,6 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/light{
@@ -48168,7 +47876,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -48455,7 +48162,6 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -49129,7 +48835,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/sortjunction{
@@ -49353,7 +49058,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
@@ -49405,7 +49109,6 @@
 "bTz" = (
 /obj/structure/sign/nosmoking_2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
@@ -49831,7 +49534,6 @@
 /area/security/checkpoint/engineering)
 "bUn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/yellow/corner{
@@ -50407,7 +50109,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel,
@@ -50763,7 +50464,6 @@
 /area/hallway/primary/port)
 "bWe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/cable/white{
@@ -50773,7 +50473,6 @@
 /area/hallway/primary/port)
 "bWf" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/closet/emcloset,
@@ -51272,7 +50971,6 @@
 "bXk" = (
 /obj/structure/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -51427,7 +51125,6 @@
 "bXz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -51440,7 +51137,6 @@
 /area/engine/engineering)
 "bXA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -51458,7 +51154,6 @@
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -51525,7 +51220,6 @@
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -51926,7 +51620,6 @@
 "bYu" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/grimy,
@@ -52373,7 +52066,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/cable/white{
@@ -52397,7 +52089,6 @@
 	req_access_txt = "32"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -52414,7 +52105,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -52432,7 +52122,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -52458,7 +52147,6 @@
 	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/cable{
@@ -52675,7 +52363,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/circuit{
@@ -52689,7 +52376,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -52719,7 +52405,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -52740,7 +52425,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/circuit/green{
@@ -52770,7 +52454,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/circuit{
@@ -53237,7 +52920,6 @@
 /area/security/brig)
 "caS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/red/side{
@@ -53287,7 +52969,6 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "caY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/circuit/green,
@@ -53312,7 +52993,6 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "cbb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/circuit/green,
@@ -53375,7 +53055,6 @@
 /area/engine/engineering)
 "cbi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -53385,7 +53064,6 @@
 /area/engine/engineering)
 "cbj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -53402,7 +53080,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -53426,7 +53103,6 @@
 /area/engine/engineering)
 "cbm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -53439,7 +53115,6 @@
 /area/engine/engineering)
 "cbn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -53463,7 +53138,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -53732,7 +53406,6 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/flask/gold,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/item/weapon/razor,
@@ -53774,7 +53447,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/camera{
@@ -53877,7 +53549,6 @@
 /area/security/courtroom)
 "ccf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -53996,7 +53667,6 @@
 /area/security/brig)
 "ccp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -54240,7 +53910,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/circuit/green,
@@ -54279,7 +53948,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -54757,7 +54425,6 @@
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/blue/side{
@@ -55424,7 +55091,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -55589,7 +55255,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -55610,7 +55275,6 @@
 	req_access_txt = "63"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -56946,7 +56610,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/junction{
@@ -57592,7 +57255,6 @@
 /area/teleporter)
 "cjI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -57640,7 +57302,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/junction{
@@ -57732,7 +57393,6 @@
 /area/security/courtroom)
 "cjV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -57770,7 +57430,6 @@
 /obj/structure/girder,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -58167,7 +57826,6 @@
 	},
 /obj/effect/landmark/start/librarian,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/carpet,
@@ -58656,7 +58314,6 @@
 /area/engine/engineering)
 "clX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -58670,7 +58327,6 @@
 	name = "Engineering Secure Storage Lockdown"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -58684,7 +58340,6 @@
 "clZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -58696,7 +58351,6 @@
 /obj/machinery/shieldgen,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -58705,7 +58359,6 @@
 "cmb" = (
 /obj/machinery/field/generator,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -58715,7 +58368,6 @@
 /obj/machinery/field/generator,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/bot,
@@ -59428,7 +59080,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -59783,7 +59434,6 @@
 /area/crew_quarters/locker)
 "cos" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -59801,7 +59451,6 @@
 /area/crew_quarters/locker)
 "cou" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/item/weapon/storage/pod{
@@ -59997,7 +59646,6 @@
 /area/engine/engineering)
 "coS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -60014,7 +59662,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -60023,7 +59670,6 @@
 "coU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -60038,7 +59684,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -61874,7 +61519,6 @@
 /obj/structure/table,
 /obj/item/toy/cards/deck,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -61898,7 +61542,6 @@
 	icon_state = "tube1"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/closet/wardrobe/black,
@@ -61918,7 +61561,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
@@ -61984,7 +61626,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -62227,7 +61868,6 @@
 /obj/structure/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -62235,14 +61875,12 @@
 "cts" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "ctt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -62289,7 +61927,6 @@
 /obj/structure/chair/comfy/black,
 /obj/effect/landmark/start/librarian,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -62354,7 +61991,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -62365,7 +62001,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -62386,7 +62021,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -62398,7 +62032,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -62494,7 +62127,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -62505,7 +62137,6 @@
 "ctV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -62748,7 +62379,6 @@
 /area/crew_quarters/locker)
 "cuq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/junction,
@@ -62765,7 +62395,6 @@
 "cus" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -62884,7 +62513,6 @@
 /area/crew_quarters/fitness/recreation)
 "cuG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -63513,7 +63141,6 @@
 /area/crew_quarters/fitness/recreation)
 "cvW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral,
@@ -63621,14 +63248,12 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "cwi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/power/port_gen/pacman,
@@ -63637,14 +63262,12 @@
 /area/engine/storage)
 "cwj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/storage)
 "cwk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/yellow,
@@ -64592,7 +64215,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -64603,28 +64225,24 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cyb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
 "cyc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
 "cyd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -64638,14 +64256,12 @@
 /area/library)
 "cye" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall,
 /area/library)
 "cyf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -64653,7 +64269,6 @@
 "cyg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -65168,7 +64783,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -65192,7 +64806,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -65250,7 +64863,6 @@
 "czp" = (
 /obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -65262,7 +64874,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -65279,7 +64890,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -65290,7 +64900,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -65301,7 +64910,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -65311,7 +64919,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/yellow,
@@ -65429,7 +65036,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -65507,7 +65113,6 @@
 /area/library)
 "czM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -66497,7 +66102,6 @@
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/bot,
@@ -66511,7 +66115,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
@@ -66806,7 +66409,6 @@
 /area/engine/engineering)
 "cCu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -66814,7 +66416,6 @@
 /area/engine/engineering)
 "cCv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -66839,7 +66440,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -66852,7 +66452,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/item/clothing/head/cone,
@@ -66866,7 +66465,6 @@
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -67417,7 +67015,6 @@
 "cDE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -67746,7 +67343,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -67966,7 +67562,6 @@
 	name = "Holodeck Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -67982,7 +67577,6 @@
 	name = "Holodeck Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -68055,7 +67649,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -68069,7 +67662,6 @@
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68082,7 +67674,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68093,7 +67684,6 @@
 "cER" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68103,7 +67693,6 @@
 /area/maintenance/port)
 "cES" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68117,7 +67706,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68142,7 +67730,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -68152,7 +67739,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -68163,7 +67749,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68176,7 +67761,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68193,7 +67777,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -68476,7 +68059,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
@@ -68838,7 +68420,6 @@
 "cFV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/table,
@@ -68978,7 +68559,6 @@
 "cGp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -68987,14 +68567,12 @@
 /area/maintenance/port)
 "cGq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cGr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -69002,7 +68580,6 @@
 "cGs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -69019,7 +68596,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -69028,7 +68604,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -69036,7 +68611,6 @@
 "cGw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -69057,7 +68631,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -69067,7 +68640,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -69080,7 +68652,6 @@
 	name = "2maintenance loot spawner"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -69091,7 +68662,6 @@
 /obj/item/clothing/gloves/color/fyellow,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -69111,7 +68681,6 @@
 "cGD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -69129,7 +68698,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -69419,7 +68987,6 @@
 /area/maintenance/starboard/aft)
 "cHl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -69443,7 +69010,6 @@
 /area/crew_quarters/dorms)
 "cHo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -69731,7 +69297,6 @@
 /area/maintenance/department/electrical)
 "cHP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /mob/living/simple_animal/cockroach,
@@ -70200,7 +69765,6 @@
 	name = "Holodeck Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -70216,7 +69780,6 @@
 	name = "Holodeck Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -70467,7 +70030,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery,
@@ -70516,7 +70078,6 @@
 "cJF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -70942,7 +70503,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -71015,7 +70575,6 @@
 "cKJ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -71326,7 +70885,6 @@
 /area/science/xenobiology)
 "cLp" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -71337,7 +70895,6 @@
 /area/science/xenobiology)
 "cLq" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/vault{
@@ -71577,7 +71134,6 @@
 /area/medical/storage)
 "cLZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/cmo,
@@ -71609,7 +71165,6 @@
 "cMc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery,
@@ -71651,7 +71206,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment,
@@ -71727,7 +71281,6 @@
 /area/maintenance/port)
 "cMr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/machinery/light/small{
@@ -71798,14 +71351,12 @@
 "cMA" = (
 /obj/effect/decal/cleanable/oil,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/department/electrical)
 "cMB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/cable/white{
@@ -71815,7 +71366,6 @@
 /area/maintenance/department/electrical)
 "cMC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -72169,7 +71719,6 @@
 /area/science/research)
 "cNj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -72339,7 +71888,6 @@
 /area/medical/medbay/central)
 "cND" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -72773,7 +72321,6 @@
 "cOx" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/bot,
@@ -72993,7 +72540,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/side{
@@ -73039,7 +72585,6 @@
 /area/science/research)
 "cOX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment,
@@ -73264,7 +72809,6 @@
 /area/medical/medbay/central)
 "cPu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -73338,7 +72882,6 @@
 /area/security/checkpoint/medical)
 "cPC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -73585,7 +73128,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -73609,7 +73151,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -73990,7 +73531,6 @@
 /area/security/checkpoint/science/research)
 "cQN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/red/side{
@@ -74871,7 +74411,6 @@
 	},
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral,
@@ -74908,7 +74447,6 @@
 	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -75112,7 +74650,6 @@
 /area/crew_quarters/fitness/recreation)
 "cTh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -75348,7 +74885,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/purple,
@@ -75668,7 +75204,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/side,
@@ -75999,7 +75534,6 @@
 /area/crew_quarters/fitness/recreation)
 "cUT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -76094,7 +75628,6 @@
 /area/science/xenobiology)
 "cVe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -76289,7 +75822,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -76303,7 +75835,6 @@
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
@@ -76617,7 +76148,6 @@
 /obj/machinery/holopad,
 /obj/effect/landmark/start/medical_doctor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/redblue,
@@ -76744,7 +76274,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/purple/side{
@@ -76761,7 +76290,6 @@
 /area/maintenance/port)
 "cWB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -76772,7 +76300,6 @@
 "cWC" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -76783,7 +76310,6 @@
 "cWD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -76799,7 +76325,6 @@
 "cWF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -76810,7 +76335,6 @@
 /area/maintenance/port)
 "cWG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -76823,7 +76347,6 @@
 /area/maintenance/port)
 "cWH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/power/apc{
@@ -76838,7 +76361,6 @@
 /area/maintenance/port)
 "cWI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -76849,7 +76371,6 @@
 "cWJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -76862,7 +76383,6 @@
 /area/maintenance/port)
 "cWK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -76877,7 +76397,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -76889,7 +76408,6 @@
 "cWM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -77111,7 +76629,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitepurple/side,
@@ -77688,7 +77205,6 @@
 /area/maintenance/port)
 "cYs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -78248,7 +77764,6 @@
 "cZK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -78256,7 +77771,6 @@
 "cZL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -78270,7 +77784,6 @@
 	name = "3maintenance loot spawner"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -78282,7 +77795,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -78295,14 +77807,12 @@
 	name = "2maintenance loot spawner"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cZP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -78892,7 +78402,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -78902,7 +78411,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -78914,7 +78422,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -78925,7 +78432,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -78935,7 +78441,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -78946,7 +78451,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -78956,7 +78460,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -79021,7 +78524,6 @@
 /area/science/research)
 "dbl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -79183,7 +78685,6 @@
 /area/science/lab)
 "dbA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -79295,7 +78796,6 @@
 /area/medical/chemistry)
 "dbN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -79563,7 +79063,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/vault{
@@ -79572,14 +79071,12 @@
 /area/crew_quarters/abandoned_gambling_den)
 "dcv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dcw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -79594,7 +79091,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -79604,7 +79100,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -79617,7 +79112,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -79632,7 +79126,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /mob/living/simple_animal/cockroach,
@@ -79649,7 +79142,6 @@
 "dcC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/vault{
@@ -80217,7 +79709,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -80319,7 +79810,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -80327,7 +79817,6 @@
 "deh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -80335,7 +79824,6 @@
 "dei" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -80425,7 +79913,6 @@
 /area/science/explab)
 "deu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -80434,14 +79921,12 @@
 /area/science/research)
 "dev" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/research)
 "dew" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -80449,7 +79934,6 @@
 /area/science/research)
 "dex" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
@@ -80584,7 +80068,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
@@ -81173,7 +80656,6 @@
 "dfU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -82819,7 +82301,6 @@
 /area/science/misc_lab/range)
 "djq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment{
@@ -82896,7 +82377,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -82915,7 +82395,6 @@
 	name = "Research Director's Shutters"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -83425,7 +82904,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -83436,7 +82914,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -83449,7 +82926,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -83461,7 +82937,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/barricade/wooden,
@@ -83487,7 +82962,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/girder,
@@ -83530,7 +83004,6 @@
 /area/maintenance/port)
 "dkN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -83768,7 +83241,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -85150,7 +84622,6 @@
 	name = "medbay camera"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -85172,7 +84643,6 @@
 "dot" = (
 /obj/effect/landmark/start/medical_doctor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -85439,7 +84909,6 @@
 /area/maintenance/port)
 "doW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -85483,7 +84952,6 @@
 /area/science/explab)
 "dpc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/vault{
@@ -85626,7 +85094,6 @@
 /area/science/research)
 "dpr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
@@ -85637,7 +85104,6 @@
 /area/science/research)
 "dps" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -85648,7 +85114,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -85657,7 +85122,6 @@
 /obj/machinery/recharge_station,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -86289,7 +85753,6 @@
 /area/science/mixing)
 "dqF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -86302,7 +85765,6 @@
 /area/science/mixing)
 "dqH" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -86791,7 +86253,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/cmo,
@@ -86807,7 +86268,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/cmo,
@@ -87456,7 +86916,6 @@
 /obj/machinery/holopad,
 /obj/effect/landmark/start/geneticist,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
@@ -87792,14 +87251,12 @@
 /area/science/research/abandoned)
 "dtC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
 /area/science/research/abandoned)
 "dtD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -87809,7 +87266,6 @@
 /area/science/research/abandoned)
 "dtE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -87817,7 +87273,6 @@
 /area/science/research/abandoned)
 "dtF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/barricade/wooden,
@@ -87839,7 +87294,6 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -87849,7 +87303,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -87862,7 +87315,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -87874,7 +87326,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -87884,7 +87335,6 @@
 "dtK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -88388,7 +87838,6 @@
 /area/science/research/abandoned)
 "duJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -88433,7 +87882,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral,
@@ -88533,7 +87981,6 @@
 	},
 /obj/effect/landmark/start/research_director,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/purple,
@@ -88799,7 +88246,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -88946,7 +88392,6 @@
 "dvN" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -89081,7 +88526,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -89556,7 +89000,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -89634,7 +89077,6 @@
 /area/maintenance/starboard/aft)
 "dxj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -89808,7 +89250,6 @@
 /area/science/mixing)
 "dxA" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
@@ -89882,7 +89323,6 @@
 /area/science/research)
 "dxH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -89899,7 +89339,6 @@
 	req_access_txt = "29"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -89915,7 +89354,6 @@
 /area/science/robotics/lab)
 "dxJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -89931,7 +89369,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -89942,7 +89379,6 @@
 /area/science/robotics/lab)
 "dxL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -89957,7 +89393,6 @@
 "dxN" = (
 /obj/effect/landmark/start/roboticist,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral,
@@ -90908,7 +90343,6 @@
 	pixel_x = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -91635,7 +91069,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -91677,7 +91110,6 @@
 "dBt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/machinery/door/airlock/glass_command{
@@ -91701,7 +91133,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -91827,7 +91258,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral,
@@ -91948,7 +91378,6 @@
 /area/crew_quarters/heads/cmo)
 "dBU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -92103,7 +91532,6 @@
 /area/science/mixing)
 "dCn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92297,7 +91725,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -92310,7 +91737,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/cable/white{
@@ -92952,7 +92378,6 @@
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/mask/gas,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/bot,
@@ -92979,7 +92404,6 @@
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
@@ -92988,7 +92412,6 @@
 "dDY" = (
 /obj/structure/sign/securearea,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
@@ -92998,7 +92421,6 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -93012,7 +92434,6 @@
 /area/science/storage)
 "dEa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
@@ -93045,7 +92466,6 @@
 "dEe" = (
 /obj/machinery/r_n_d/server/core,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/circuit/green{
@@ -93064,7 +92484,6 @@
 "dEg" = (
 /obj/machinery/r_n_d/server/robotics,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/circuit/green{
@@ -93357,7 +92776,6 @@
 "dEJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -93713,7 +93131,6 @@
 "dFq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -94494,7 +93911,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -94656,7 +94072,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -94708,7 +94123,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -94984,7 +94398,6 @@
 /area/maintenance/port/aft)
 "dIc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/cable/white{
@@ -95139,7 +94552,6 @@
 "dIt" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -96222,7 +95634,6 @@
 /area/hallway/primary/aft)
 "dKQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment,
@@ -96280,7 +95691,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -96382,7 +95792,6 @@
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -96466,7 +95875,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/vault,
@@ -96571,7 +95979,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -97519,7 +96926,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral,
@@ -98359,7 +97765,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dPv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
@@ -98817,7 +98222,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -99177,7 +98581,6 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/disposalpipe/segment{
@@ -99334,7 +98737,6 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/wood,
@@ -99383,7 +98785,6 @@
 /area/library/abandoned)
 "dRJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/black,
@@ -99662,7 +99063,6 @@
 /area/medical/virology)
 "dSp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -99681,7 +99081,6 @@
 	pixel_x = 26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -99868,7 +99267,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dSQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -100044,7 +99442,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitegreen/corner,
@@ -100116,7 +99513,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/green,
@@ -100381,7 +99777,6 @@
 "dTK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -100431,7 +99826,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -100586,7 +99980,6 @@
 	},
 /obj/item/weapon/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
@@ -100602,7 +99995,6 @@
 /obj/item/weapon/wrench,
 /obj/item/weapon/restraints/handcuffs,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/disposalpipe/segment,
@@ -100713,7 +100105,6 @@
 /area/maintenance/port/aft)
 "dUv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/machinery/button/crematorium{
@@ -100750,7 +100141,6 @@
 /area/chapel/main)
 "dUy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel{
@@ -101120,7 +100510,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dVm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -101130,7 +100519,6 @@
 /area/medical/virology)
 "dVn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/structure/disposalpipe/segment{
@@ -101316,7 +100704,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -101454,7 +100841,6 @@
 /area/chapel/main)
 "dVT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/delivery,
@@ -101648,7 +101034,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -101722,7 +101107,6 @@
 /obj/machinery/holopad,
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/machinery/camera{
@@ -101749,7 +101133,6 @@
 /area/chapel/main)
 "dWA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -101809,7 +101192,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "dWG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -102362,7 +101744,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
@@ -102846,7 +102227,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral,
@@ -103417,7 +102797,6 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -103428,7 +102807,6 @@
 	},
 /obj/effect/landmark/start/chaplain,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/carpet,
@@ -104167,7 +103545,6 @@
 /area/maintenance/starboard/fore)
 "ebX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/red,
@@ -104175,7 +103552,6 @@
 "ebY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
@@ -104413,7 +103789,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -105706,7 +105081,6 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -108847,7 +108221,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -108905,7 +108278,6 @@
 /area/engine/atmospherics_engine)
 "epA" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
