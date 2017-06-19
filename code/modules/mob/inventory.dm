@@ -363,7 +363,7 @@
 		M.update_inv_hands()
 		return TRUE
 	else
-		if(equip_delay)
+		if(equip_delay_self)
 			return
 
 	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there

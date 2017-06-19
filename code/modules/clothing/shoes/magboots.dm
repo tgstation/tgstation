@@ -7,7 +7,7 @@
 	var/slowdown_active = 2
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
-	put_on_delay = 70
+	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
 	origin_tech = "materials=3;magnets=4;engineering=4"
 
