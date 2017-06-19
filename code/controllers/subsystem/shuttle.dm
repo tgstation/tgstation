@@ -73,12 +73,9 @@ SUBSYSTEM_DEF(shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(GLOB.transit_markers.len == 0)
-		WARNING("No /obj/effect/landmark/transit placed on the map!")
-		return
 	// transit zone
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
