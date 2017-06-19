@@ -124,7 +124,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	..()
 
 /obj/machinery/telecomms/proc/is_freq_listening(datum/signal/signal)
-	// return TRUE if found, 0 if not found
+	// return TRUE if found, FALSE if not found
 	if(!signal)
 		return FALSE
 	if((signal.frequency in freq_listening) || (!freq_listening.len))
