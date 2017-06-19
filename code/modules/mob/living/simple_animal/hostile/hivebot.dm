@@ -53,9 +53,9 @@
 
 /mob/living/simple_animal/hostile/hivebot/strong
 	name = "strong hivebot"
-	icon_state = "EngBot"
-	icon_living = "EngBot"
-	icon_dead = "EngBot"
+	icon_state = "strong"
+	icon_living = "strong"
+	icon_dead = "strong"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
 	maxHealth = 80
