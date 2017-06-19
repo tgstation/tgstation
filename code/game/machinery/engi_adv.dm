@@ -13,7 +13,7 @@
 	var/range = 160
 
 	var/timing = FALSE
-	var/detonation_timer = null
+	var/detonation_timer
 	var/cooldown = 0
 	var/safety = TRUE
 
@@ -38,6 +38,20 @@
 	if(timing)
 		to_chat(user, "There are [get_time_left()] seconds until detonation.")
 
+/obj/machinery/construction_nuke/update_icon()
+	. = ..()
+	if(safety)
+		icon_state = "nuclearbomb1"
+	else
+		icon_state = "nuclearbomb2"
+	if(timing())
+		if(get_time_left() <= 14)
+			icon_state = "nuclearbomb3"
+		else
+			icon_state = "nuclearbombc"
+	
+		
+
 /obj/machinery/construction_nuke/process()
 	if(timing)
 		bomb_set = TRUE
@@ -50,7 +64,7 @@
 				if (15 to 29)
 					playsound(src, 'sound/items/timer.ogg', 30, 0)
 				if (0 to 14)
-					icon_state = "nuclearbomb3"
+					update_icon()
 					quiet  = !quiet
 					if(!quiet)
 						return
@@ -67,7 +81,7 @@
 	dat += "<A href='?src=\ref[src];action=set'>Set Timer</A><br>"
 	dat += "<A href='?src=\ref[src];action=anchor'>[anchored ? "Anchored" : "Not Anchored"]</A><br>"
 	dat += "<A href='?src=\ref[src];action=safety'>[safety ? "Safety On" : "Safety Off"]</A><br><br>"
-	dat += "<b><A href='?src=\ref[src];action=activate'>[bomb_set ? "DEACTIVATE" : "ACTIVATE"]</A><b><br>"
+	dat += "<b><A href='?src=\ref[src];action=activate'>[bomb_set ? "DEACTIVATE" : "ACTIVATE"]</A></b><br>"
 	var/datum/browser/popup = new(user, "vending", "Construction Nuke", 300, 275)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -97,7 +111,7 @@
 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)
 		return
 	payload = input(usr, "Choose your Payload", "Payload:") as null|anything in possible_payloads
-	if (QDELETED(src))
+	if (QDELETED(src) && Adjacent(usr))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	switch(payload)
@@ -136,7 +150,7 @@
 /obj/machinery/construction_nuke/proc/set_timer()
 	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	timer_set = input("Set timer in seconds:", name, timer_set)
-	if (QDELETED(src))
+	if (QDELETED(src) && Adjacent(usr))
 		return
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 75, 1)
 	if(timer_set < 90)
@@ -151,7 +165,7 @@
 	if(!isinspace())
 		anchored = !anchored
 		playsound(src, 'sound/items/Deconstruct.ogg', 75, 1)
-		icon_state = "nuclearbomb2"
+		update_icon()
 	else
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
 /obj/machinery/construction_nuke/proc/set_safety()
@@ -166,11 +180,9 @@
 		timing = FALSE
 		bomb_set = FALSE
 		detonation_timer = null
-		icon_state = "nuclearbomb2"
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
 	else
 		playsound(src, 'sound/machines/engine_alert1.ogg', 50, 1)
-		icon_state = "nuclearbomb1"
 	update_icon()
 
 /obj/machinery/construction_nuke/proc/set_active()
@@ -194,12 +206,10 @@
 		priority_announce("We are detecting a massive spike of radioactive energy from \a [payload] payload originating from [A.map_name]. If this is not a scheduled occurrence, please investigate immediately.","Nanotrasen Nuclear Safety Division", 'sound/misc/airraid.ogg')
 		cooldown = world.time + 1200
 		detonation_timer = world.time + (timer_set * 10)
-		icon_state = "nuclearbombc"
 	else
 		bomb_set = FALSE
 		priority_announce("Radioactive energy levels are normalizing, please submit an incident report as soon as possible.","Central Command Nuclear Safety Division", 'sound/AI/attention.ogg')
 		detonation_timer = null
-		icon_state = "nuclearbomb1"
 		playsound(src, 'sound/machines/terminal_off.ogg', 75, 1)
 	update_icon()
 
@@ -223,7 +233,7 @@
 	var/turf/startpoint = get_turf(src)
 	new /obj/effect/temp_visual/explosion(startpoint)
 	qdel(src)
-	for(var/I in spiral_range_turfs(range, startpoint))
+	for(var/I in spiral_range_turfs(range, startpoint, tick_checked = TRUE))
 		var/turf/T = I
 		if(!T)
 			continue
@@ -237,4 +247,4 @@
 	if((payload == "uranium" || payload == "plasma") && (SSshuttle.emergency.mode == SHUTTLE_RECALL || SSshuttle.emergency.mode == SHUTTLE_IDLE || (SSshuttle.emergency.timeLeft(1) > (SSshuttle.emergencyCallTime * 0.4))))
 		SSshuttle.emergencyNoRecall = TRUE
 		SSshuttle.emergency.request(null, set_coefficient = 0.4)
-		priority_announce("Catastrophic event detected: crisis shuttle protocols activated - jamming recall signals across all frequencies")
+		priority_announce("Catastrophic event detected: crisis shuttle protocols activated")
