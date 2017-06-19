@@ -44,7 +44,7 @@
 		icon_state = "nuclearbomb1"
 	else
 		icon_state = "nuclearbomb2"
-	if(timing())
+	if(timing)
 		if(get_time_left() <= 14)
 			icon_state = "nuclearbomb3"
 		else
