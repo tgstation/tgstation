@@ -205,11 +205,6 @@
 				temp = "<font color = #666633>-% [src] has been [toggled ? "activated" : "deactivated"].</font color>"
 				update_power()
 
-			/*
-			if("hide")
-				hide = !hide
-				temp = "<font color = #666633>-% Shadow Link has been [hide ? "activated" : "deactivated"].</font color>"
-			*/
 
 			if("id")
 				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
@@ -260,7 +255,7 @@
 			if(T)
 				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
 
-				// Remove link entries from both T and
+				// Remove link entries from both T and src.
 
 				if(T.links)
 					T.links.Remove(src)
