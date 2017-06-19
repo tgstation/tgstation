@@ -21434,8 +21434,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
@@ -21447,8 +21446,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
@@ -21460,8 +21458,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -21479,8 +21476,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -21517,8 +21513,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -21535,8 +21530,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -21553,8 +21547,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
@@ -21566,8 +21559,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/effect/landmark/start/station_engineer,
 /obj/effect/turf_decal/stripes/line,
@@ -26681,7 +26673,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -27123,7 +27114,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -27147,7 +27137,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -27161,7 +27150,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -27787,7 +27775,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -28396,7 +28383,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -28412,7 +28398,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -28427,7 +28412,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -28815,7 +28799,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41070,7 +41053,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41095,7 +41077,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41114,7 +41095,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41133,7 +41113,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41181,7 +41160,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41190,7 +41168,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41201,7 +41178,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)
@@ -41214,7 +41190,6 @@
 /turf/open/floor/plasteel/vault{
 	dir = 5;
 	initial_gas_mix = "n2=100;TEMP=80";
-	tag = "";
 	temperature = 80
 	},
 /area/tcommsat/server)

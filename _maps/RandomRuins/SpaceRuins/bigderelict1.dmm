@@ -780,8 +780,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -936,8 +935,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -946,8 +944,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -960,8 +957,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/powerstorage)
@@ -969,8 +965,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1029,8 +1024,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1043,8 +1037,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
@@ -1053,8 +1046,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost)
@@ -1067,8 +1059,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost)
@@ -1159,8 +1150,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1168,8 +1158,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/structure/janitorialcart,
 /turf/open/floor/plasteel,
@@ -1183,8 +1172,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /obj/item/weapon/mop,
 /turf/open/floor/plasteel,
@@ -1204,8 +1192,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1224,8 +1211,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1239,8 +1225,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1425,8 +1410,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1445,8 +1429,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargobay)
@@ -1470,8 +1453,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/cargobay)
@@ -2284,8 +2266,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/derelictoutpost/cargostorage)
@@ -2304,8 +2285,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	tag = ""
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/cargostorage)

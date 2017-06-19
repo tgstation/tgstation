@@ -36211,7 +36211,6 @@
 /area/medical/surgery)
 "bom" = (
 /obj/machinery/door/airlock/glass_medical{
-	id_tag = "";
 	name = "Surgery Observation";
 	req_access_txt = "0"
 	},

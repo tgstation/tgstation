@@ -3888,8 +3888,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
+	icon_state = "1-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating{

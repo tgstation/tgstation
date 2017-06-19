@@ -51641,7 +51641,6 @@
 	name = "Service Shutter"
 	},
 /obj/machinery/door/airlock/glass_medical{
-	id_tag = "";
 	name = "Service Door";
 	req_access_txt = "0";
 	req_one_access_txt = "35;28"
@@ -55713,7 +55712,6 @@
 "caJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_medical{
-	id_tag = "";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -62021,7 +62019,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/glass_medical{
 	glass = 0;
-	id_tag = "";
 	name = "Research Break Room";
 	opacity = 1;
 	req_access_txt = "0";
@@ -63856,7 +63853,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_medical{
-	id_tag = "";
 	name = "Surgery Observation";
 	req_access_txt = "0"
 	},
