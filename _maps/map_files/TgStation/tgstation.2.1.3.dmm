@@ -6527,9 +6527,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "anJ" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anK" = (
@@ -14317,9 +14315,7 @@
 	},
 /area/security/checkpoint/checkpoint2)
 "aFJ" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -33699,7 +33695,7 @@
 /area/medical/sleeper)
 "bxU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10;
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -34277,7 +34273,7 @@
 /area/medical/sleeper)
 "bzi" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -40829,7 +40825,7 @@
 /area/engine/atmos)
 "bMW" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10;
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41333,7 +41329,7 @@
 /area/engine/atmos)
 "bOe" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 8;
+	dir = 8
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -41341,7 +41337,7 @@
 "bOf" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
-	dir = 10;
+	dir = 10
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -42854,13 +42850,13 @@
 	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRH" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
-	dir = 5;
+	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -43087,7 +43083,7 @@
 /area/science/misc_lab)
 "bSg" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -43394,7 +43390,7 @@
 "bSP" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -43880,7 +43876,7 @@
 /area/engine/atmos)
 "bTR" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
-	dir = 4;
+	dir = 4
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -44070,7 +44066,7 @@
 /area/science/misc_lab)
 "bUk" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10;
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -44575,7 +44571,7 @@
 /area/engine/break_room)
 "bVn" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -44862,7 +44858,7 @@
 /area/engine/atmos)
 "bWa" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -46024,7 +46020,7 @@
 /area/maintenance/port/aft)
 "bYx" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
@@ -46159,7 +46155,7 @@
 /area/engine/atmos)
 "bYS" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -46518,7 +46514,7 @@
 /area/engine/atmos)
 "bZH" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /obj/item/weapon/wrench,
 /turf/open/floor/plasteel,
@@ -49462,6 +49458,7 @@
 "cfS" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4;
+	
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -50776,7 +50773,7 @@
 /area/maintenance/disposal/incinerator)
 "ciz" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
@@ -55270,7 +55267,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
+	dir = 4
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -58464,7 +58461,7 @@
 /area/space/nearstation)
 "czE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -59802,7 +59799,7 @@
 /area/space)
 "cCB" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10;
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -61332,7 +61329,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -61471,7 +61468,7 @@
 	},
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -61480,7 +61477,7 @@
 /obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -65324,7 +65321,7 @@
 "cSI" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -78558,9 +78555,9 @@ ase
 avq
 aum
 avq
-axJ
+avq
 cwH
-axJ
+avq
 aAj
 aBK
 aCL
@@ -79589,7 +79586,7 @@ bsU
 axf
 amC
 alU
-auT
+aAM
 aBI
 aDf
 aEK
@@ -81129,7 +81126,7 @@ avb
 aaH
 bOi
 atO
-asK
+aud
 azF
 aAT
 aBw
@@ -81386,7 +81383,7 @@ aaH
 bNb
 apQ
 atO
-asK
+aud
 azF
 aAS
 aFP
@@ -81643,7 +81640,7 @@ avU
 avb
 bOi
 atO
-asK
+aud
 azF
 aAU
 aBG
@@ -81900,7 +81897,7 @@ alU
 ali
 alU
 atO
-asK
+aud
 azF
 aAP
 aAP
@@ -82157,7 +82154,7 @@ amC
 amC
 amC
 axi
-asK
+aud
 azF
 azF
 azF
@@ -82425,7 +82422,7 @@ aHe
 aIN
 aKp
 aLE
-aNm
+aNn
 aOl
 aPA
 aQN
@@ -85010,7 +85007,7 @@ aYU
 bbr
 bcu
 bfe
-bgx
+aYb
 aZE
 bjm
 bjr
@@ -85267,7 +85264,7 @@ aPA
 aPA
 aPA
 aWv
-bgx
+aYb
 aZE
 bjp
 bjr
@@ -85569,7 +85566,7 @@ cdW
 ceW
 bCq
 cgD
-cgH
+bUs
 bHE
 cjI
 bCq
@@ -85822,11 +85819,11 @@ bYy
 bHE
 bTz
 bHE
-cdY
+bUs
 ceY
 bCq
 bHE
-cgH
+bUs
 bHE
 bLu
 bCq
@@ -86853,7 +86850,7 @@ bCq
 bCq
 bCq
 bLv
-cgH
+bUs
 bLv
 aaa
 bCq
@@ -87110,7 +87107,7 @@ aoV
 aoV
 aoV
 bLv
-cgH
+bUs
 bLv
 aaa
 bLv
@@ -87367,7 +87364,7 @@ aoV
 aoV
 apQ
 bLv
-cgH
+bUs
 bLv
 aaf
 cAj
@@ -87566,7 +87563,7 @@ ayE
 ayE
 aLl
 aMT
-aOu
+aOi
 aPL
 aPK
 aSm
@@ -87624,7 +87621,7 @@ aoV
 aoV
 aoV
 bLv
-cgH
+bUs
 bLv
 aaa
 cjJ
@@ -87881,7 +87878,7 @@ aoV
 aoV
 aoV
 bLv
-cgH
+bUs
 bLv
 aaa
 cjJ
@@ -88138,7 +88135,7 @@ apQ
 apQ
 apQ
 bLv
-cgH
+bUs
 bLv
 aaf
 cjJ
@@ -88395,7 +88392,7 @@ aoV
 aoV
 aoV
 bLv
-cgH
+bUs
 bLv
 aaa
 cjJ
@@ -88652,7 +88649,7 @@ aoV
 aoV
 aoV
 bLv
-cgH
+bUs
 bLv
 aaa
 cjJ
@@ -88909,7 +88906,7 @@ aoV
 apQ
 apQ
 bLv
-cgH
+bUs
 bLv
 aaf
 cjJ
@@ -89166,7 +89163,7 @@ aoV
 aoV
 aoV
 bCq
-cgH
+bUs
 bCq
 aaa
 aaf
@@ -89423,7 +89420,7 @@ bES
 bES
 bES
 car
-cgH
+bUs
 bCq
 bCq
 bCq
@@ -89668,17 +89665,17 @@ bLv
 bLv
 bTA
 bUu
-bVH
-bVH
-bVH
-bVH
-bVH
-bVH
-bVH
-bVH
-bVH
-bVH
-bVH
+bLw
+bLw
+bLw
+bLw
+bLw
+bLw
+bLw
+bLw
+bLw
+bLw
+bLw
 caq
 cbw
 ccu
@@ -90120,8 +90117,8 @@ apS
 aqT
 apS
 apS
-atX
-atX
+apS
+apS
 awe
 axw
 ayI
@@ -90158,12 +90155,12 @@ bmm
 bnM
 boV
 bnM
-brT
-brT
-brT
-brT
-brT
-brT
+bnM
+bnM
+bnM
+bnM
+bnM
+bnM
 bAe
 bBg
 bCq
@@ -90181,7 +90178,7 @@ bGp
 bGp
 bES
 bTC
-bUw
+bAx
 bVI
 bWB
 bWB
@@ -90438,7 +90435,7 @@ aaa
 aaa
 bCq
 bTF
-bUw
+bAx
 bVI
 bWD
 bXA
@@ -90695,7 +90692,7 @@ aaf
 aaf
 bCq
 bTE
-bUw
+bAx
 bVI
 bWC
 bXz
@@ -90952,7 +90949,7 @@ bKv
 bLB
 bES
 bMj
-bUw
+bAx
 bVI
 bWF
 bXC
@@ -91667,7 +91664,7 @@ cCi
 awg
 axy
 ayv
-azE
+azP
 aBn
 aCb
 aDD
@@ -91924,7 +91921,7 @@ cCi
 awg
 axy
 ayQ
-azE
+azP
 aBq
 aBr
 aDE
@@ -92181,7 +92178,7 @@ avh
 awh
 axz
 ayO
-azE
+azP
 aBp
 aCc
 aDF
@@ -92477,7 +92474,7 @@ bnS
 bwl
 bxG
 byR
-brT
+bnM
 bBl
 bCs
 bDz
@@ -93020,7 +93017,7 @@ bVb
 bWv
 cei
 bVJ
-caB
+cay
 ccw
 cif
 cgR
@@ -93277,7 +93274,7 @@ bUC
 bWu
 bVJ
 bVJ
-caB
+cay
 ccw
 cie
 cdT
@@ -94214,7 +94211,7 @@ cqG
 aeX
 ago
 agS
-ahw
+agQ
 ahR
 aiJ
 ajc
@@ -95083,7 +95080,7 @@ cgO
 ceo
 ceq
 cfa
-cmQ
+cje
 cgR
 ccw
 cDi
@@ -95340,7 +95337,7 @@ cdU
 ceo
 ceq
 clQ
-cmQ
+cje
 cgR
 cMm
 chX
@@ -95845,7 +95842,7 @@ bTg
 bUm
 bVp
 bXH
-bZf
+bUm
 bZC
 cbp
 cck
@@ -99445,7 +99442,7 @@ bTU
 cdz
 cez
 bUL
-cfS
+cfP
 bOd
 bMQ
 apQ
@@ -99878,7 +99875,7 @@ aif
 aif
 aif
 alK
-alM
+aif
 bkV
 anc
 anD
@@ -101952,7 +101949,7 @@ aro
 aCv
 aaf
 alP
-aGJ
+aGK
 aIe
 aJE
 aKQ
@@ -102766,14 +102763,14 @@ bDR
 bIn
 bJC
 bKL
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
 bUY
 bWe
 bWe
@@ -103031,7 +103028,7 @@ bNc
 bNc
 bNc
 bTY
-bUX
+bKH
 bzs
 bWV
 bzs
@@ -103039,7 +103036,7 @@ bzs
 bZM
 cbJ
 ceC
-cfV
+ceC
 cfW
 cfX
 chk
@@ -103288,7 +103285,7 @@ bQE
 bRM
 bOr
 bTZ
-bUX
+bKH
 bzs
 bAw
 bBR
@@ -103545,7 +103542,7 @@ bQD
 bLY
 bMa
 bTZ
-bUX
+bKH
 bzs
 bAw
 bXZ
@@ -104322,7 +104319,7 @@ bWX
 bOP
 bNd
 bTZ
-bUX
+bKH
 bzs
 bzs
 bzs
@@ -104779,7 +104776,7 @@ aBE
 alP
 aDX
 alP
-aGR
+aGK
 avI
 aJL
 aKX
@@ -105095,7 +105092,7 @@ bNd
 bNd
 bzs
 bzs
-ccH
+bMb
 cdK
 ceH
 cfn
@@ -106123,7 +106120,7 @@ bNd
 bzs
 bzs
 bzs
-ccH
+bMb
 bFr
 ceK
 ceJ
@@ -106557,7 +106554,7 @@ adU
 adU
 adU
 alg
-alN
+acx
 amv
 ane
 cxN
@@ -107139,16 +107136,16 @@ bMe
 bIg
 bIM
 bPv
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
-bLT
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
+bPv
 caT
 cbP
 ccO
@@ -107862,7 +107859,7 @@ anf
 anf
 alP
 aCG
-aFt
+aDZ
 aFu
 aFu
 aFu
