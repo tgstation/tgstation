@@ -6378,7 +6378,6 @@
 /area/maintenance/solars/port/fore)
 "anj" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -52624,7 +52623,6 @@
 "clm" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
@@ -61016,8 +61014,6 @@
 /area/engine/engineering)
 "cDD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	name = "scrubbers pipe";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/machinery/meter,
@@ -61418,7 +61414,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -61610,7 +61605,6 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plating,

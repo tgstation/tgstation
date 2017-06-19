@@ -589,8 +589,6 @@
 /area/ruin/deepstorage)
 "bf" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -728,8 +726,6 @@
 /area/ruin/deepstorage/kitchen)
 "bt" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -1583,8 +1579,6 @@
 /area/ruin/deepstorage)
 "cV" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -2219,8 +2213,6 @@
 /area/ruin/deepstorage)
 "dY" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -2594,8 +2586,6 @@
 /area/ruin/deepstorage/dorm)
 "eC" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -3042,7 +3032,6 @@
 /area/ruin/deepstorage/power)
 "fm" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3219,7 +3208,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "o2_out_bunker";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -3521,8 +3509,6 @@
 /area/ruin/deepstorage/dorm)
 "gf" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3716,7 +3702,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2_out_bunker";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -4108,8 +4093,6 @@
 /area/ruin/deepstorage)
 "hh" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -4136,8 +4119,6 @@
 /area/ruin/deepstorage)
 "hj" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/structure/cable/yellow{

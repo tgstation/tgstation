@@ -14805,7 +14805,6 @@
 	})
 "ut" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	icon_state = "manifold";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

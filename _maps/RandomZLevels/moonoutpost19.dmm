@@ -3442,7 +3442,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/open/floor/plasteel/white,

@@ -64033,7 +64033,6 @@
 	req_one_access_txt = "24;10"
 	},
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/engine,

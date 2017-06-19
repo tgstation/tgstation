@@ -2421,8 +2421,6 @@
 /area/security/prison)
 "afv" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/closed/wall,
@@ -2768,8 +2766,6 @@
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -2836,8 +2832,6 @@
 	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -3067,8 +3061,6 @@
 /area/security/prison)
 "agG" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel/red/side{
@@ -3962,8 +3954,6 @@
 /area/security/brig)
 "ais" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
@@ -4289,8 +4279,6 @@
 /area/maintenance/department/security/brig)
 "aiY" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /obj/item/weapon/wrench,
@@ -4341,8 +4329,6 @@
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -4387,8 +4373,6 @@
 /area/security/brig)
 "ajh" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -4410,8 +4394,6 @@
 /area/security/brig)
 "ajj" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -4624,8 +4606,6 @@
 /area/maintenance/department/security/brig)
 "ajN" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/machinery/meter,
@@ -4852,8 +4832,6 @@
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
@@ -4884,8 +4862,6 @@
 "akh" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -5810,8 +5786,6 @@
 /area/security/warden)
 "alY" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -7438,8 +7412,6 @@
 /area/shuttle/labor)
 "apo" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
@@ -7480,8 +7452,6 @@
 /area/security/brig)
 "aps" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
@@ -23983,8 +23953,6 @@
 /area/maintenance/solars/starboard)
 "aYc" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -26170,8 +26138,6 @@
 /area/shuttle/arrival)
 "bcu" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -27939,8 +27905,6 @@
 "bgC" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plating{
@@ -27975,8 +27939,6 @@
 /area/hallway/secondary/entry)
 "bgG" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner,
@@ -28887,8 +28849,6 @@
 /area/maintenance/department/chapel/monastery)
 "biE" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/machinery/meter,
@@ -28896,8 +28856,6 @@
 /area/maintenance/department/chapel/monastery)
 "biF" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -38551,8 +38509,6 @@
 /area/medical/virology)
 "bBd" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /obj/machinery/computer/pandemic,
@@ -39211,8 +39167,6 @@
 /area/engine/atmos)
 "bCG" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -40382,8 +40336,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -41216,8 +41168,6 @@
 /area/maintenance/department/engine)
 "bHf" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/machinery/meter,
@@ -49112,8 +49062,6 @@
 /area/space)
 "bYr" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plating,

@@ -232,7 +232,6 @@
 "A" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/ruin/gasthelizard)
