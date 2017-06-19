@@ -1,0 +1,6 @@
+author: "Tacolizard"
+delete-after: True
+changes: 
+  - rscadd: "Repurposed the action button tooltip code to add tooltips with the examine details of all held and equipped items. Hover your mouse over any item equipped, held or in your inventory to examine it."
+  - rscadd: "Examine tooltips can be toggled with the 'toggle-examine-tooltips' verb, which can be typed or accessed from the OOC menu."
+  - rscadd: "You can change the delay before a tooltip appears with the 'set-examine-tooltip-delay' verb, also accessible via the OOC menu. The default delay is 500ms."
