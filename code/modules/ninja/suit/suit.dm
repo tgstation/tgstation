@@ -31,7 +31,7 @@ Contents:
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
 	var/list/stored_research = list()//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
-	var/obj/item/weapon/katana/energy/energyKatana //For teleporting the katana back to the ninja (It's an ability)
+	var/obj/item/weapon/dash/energy_katana/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.
 	var/obj/item/clothing/head/helmet/space/space_ninja/n_hood
@@ -182,9 +182,6 @@ Contents:
 	if(!s_initialized)
 		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline.  Please activate suit.</span>")
 		return FALSE
-	if(istype(action, /datum/action/item_action/ninjajaunt))
-		ninjajaunt()
-		return TRUE
 	if(istype(action, /datum/action/item_action/ninjasmoke))
 		ninjasmoke()
 		return TRUE
