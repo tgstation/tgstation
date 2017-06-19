@@ -48,7 +48,7 @@
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
 						continue
-				H.apply_effect(1, WEAKEN, 0)
+				H.apply_effect(20, KNOCKDOWN, 0)
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
@@ -78,14 +78,14 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	//var/charged = 5
 	origin_tech = "combat=4;powerstorage=7"
 
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
+	target.Stun(60)
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
-	target.visible_message("<span class='danger'>[target.name] was shocked by the [src.name]!</span>", \
+	target.visible_message("<span class='danger'>[target.name] was shocked by [src]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack!</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
@@ -95,18 +95,13 @@
 /obj/item/weapon/twohanded/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(wielded)
-		//if(charged == 5)
-		//charged = 0
 		playsound(src.loc, "sparks", 50, 1)
-		M.Stun(3)
 		shock(M)
 
 /obj/item/weapon/twohanded/mjollnir/throw_impact(atom/target)
 	. = ..()
 	if(isliving(target))
-		var/mob/living/L = target
-		L.Stun(3)
-		shock(L)
+		shock(target)
 
 /obj/item/weapon/twohanded/mjollnir/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"

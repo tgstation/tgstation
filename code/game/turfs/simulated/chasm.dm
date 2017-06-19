@@ -99,7 +99,7 @@
 		AM.forceMove(T)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L.Weaken(5)
+			L.Knockdown(100)
 			L.adjustBruteLoss(30)
 
 
@@ -128,7 +128,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.notransform = TRUE
-		L.Stun(10)
+		L.Stun(200)
 		L.resting = TRUE
 	var/oldtransform = AM.transform
 	var/oldcolor = AM.color

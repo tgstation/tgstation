@@ -70,7 +70,7 @@
 		return
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(slippyness, slippyness, src)
+		M.slip(slippyness, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))

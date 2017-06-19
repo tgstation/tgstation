@@ -557,7 +557,7 @@ GLOBAL_LIST(external_rsc_urls)
 	var/url = winget(src, null, "url")
 	//special javascript to make them reconnect under a new window.
 	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
+	src << browse("<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>", "window=browseroutput")
 
 /client/proc/note_randomizer_user()
 	var/const/adminckey = "CID-Error"

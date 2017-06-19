@@ -97,11 +97,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(30, 0)
+	M.AdjustSleeping(600, 0)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(3, 0)
+	M.AdjustSleeping(40, 0)
 	..()
 	. = 1
 
@@ -255,7 +255,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Weaken(3)
+			victim.Knockdown(60)
 			victim.drop_item()
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
@@ -269,7 +269,7 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Weaken(5)
+			victim.Knockdown(100)
 			victim.drop_item()
 		victim.update_damage_hud()
 
@@ -582,7 +582,7 @@
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Paralyse(2, 0)
+		M.Unconscious(40, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
