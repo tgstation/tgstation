@@ -393,7 +393,7 @@
 		/obj/item/weapon/storage/bag/easterbasket = 15)
 
 /datum/holiday/easter/greet()
-	return "Greetings! in the far flung past of [current_year], today would be easter, Be sure to have a happy one and keep an eye out for Bunnies!"
+	return "Greetings! In the far flung past of [current_year], today would be Easter, be sure to have a happy one and keep an eye out for bunnies!"
 
 
 /datum/holiday/easter/spess
@@ -401,7 +401,7 @@
 	year_offset = 540 //Canonicially the year is CURRENT YEAR + 540, so this is Easter as it would be IN SS13 itself
 
 /datum/holiday/easter/spess/greet()
-	return "Greetings! the year is [current_year+year_offset], and it's easter! be sure to have a happy one and keep an eye out for Easter Bunnies!"
+	return "Greetings! The year is [current_year+year_offset], and it's Easter! Be sure to have a happy one and keep an eye out for Easter Bunnies!"
 
 
 /datum/holiday/mothering_sunday
@@ -417,7 +417,7 @@
 	return ..()
 
 /datum/holiday/mothering_sunday/greet()
-	return "It's Mothering Sunday! the -REAL- Mother's Day, you did remember to get her a gift right?"
+	return "It's Mothering Sunday! You did remember to get her a gift right?"
 
 
 /datum/holiday/ashwednesday
@@ -460,4 +460,4 @@
 
 
 /datum/holiday/pancakeday/greet()
-	return "Today is Pancake day! also known as Mardi Gras and Shrove Tuesday, but who cares about that, PANCAAAAAKES!!!1!!"
+	return "Today is Pancake Day! Also known as Mardi Gras and Shrove Tuesday, but who cares about that, PANCAAAAAKES!!!1!!"
