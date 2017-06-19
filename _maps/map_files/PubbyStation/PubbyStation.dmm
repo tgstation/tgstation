@@ -1090,7 +1090,7 @@
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
-	icon_state = "2-8
+	icon_state = "2-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
