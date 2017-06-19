@@ -228,7 +228,6 @@ The following different coding styles are not only not enforced, but it is gener
 	* Argument separator operators like , (and ; when used in a forloop)
 	* Assignment operators like = or += or the like
 * Operators that should not be separated by spaces
-	* Bitwise operators like & or |
 	* Access operators like . and :
 	* Parentheses ()
 	* logical not !
