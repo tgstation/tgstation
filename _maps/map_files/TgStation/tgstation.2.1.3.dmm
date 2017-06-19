@@ -26321,6 +26321,7 @@
 	dir = 2
 	},
 /obj/structure/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -27692,6 +27693,7 @@
 "blu" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/structure/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel,

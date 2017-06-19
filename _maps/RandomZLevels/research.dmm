@@ -2167,7 +2167,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	tag = "icon-0-4";
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/black,
@@ -2193,7 +2193,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	tag = "icon-0-4";
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel/black,
