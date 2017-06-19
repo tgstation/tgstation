@@ -1,12 +1,12 @@
 //Reverb preset defines
-#define ECHO_GENERIC 		list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)//done
-#define ECHO_ROOM 			list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_BATHROOM		list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_LIVINGROOM 	list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_AUDITORIUM		list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_CONCERT_HALL	list(0,   0,   1000,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_CAVE 			list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_HANGAR			list(0,   0,   0,  -300,   0,  0,  0.59, 1.0,  0, 0,  0,   0, 0,  0.00,  0, 0.000, 0,  7)//done
-#define ECHO_HALLWAY 		list(0,   0,   -200,  -500,   0,  0,  0.59, 1.0,  0, 0,  0,   0, 0,  0.00,  0, 0.000, 0,  7)//done
-#define ECHO_SEWER_PIPE 	list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
-#define ECHO_CARPETTED_HALLWAY 		list(0,   0,   0,  0,   0,  0.0,  0, 0.25,  1.5, 1.0,  0,   1.0, 0,  0.00,  0.0, 0.000, 1.0,  7)
+#define ECHO_GENERIC 		0
+#define ECHO_ROOM 			2
+#define ECHO_BATHROOM		3
+#define ECHO_LIVINGROOM 	4
+#define ECHO_AUDITORIUM		6
+#define ECHO_CONCERT_HALL	7
+#define ECHO_CAVE 			8
+#define ECHO_HANGAR			10
+#define ECHO_HALLWAY 		12
+#define ECHO_SEWER_PIPE 	21
+#define ECHO_CARPETTED_HALLWAY	11

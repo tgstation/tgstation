@@ -33,8 +33,6 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
-	S.environment = 10 //apparently you need to set an env for echo to work. dumb.
-	S.echo = ECHO_GENERIC //default echo, pretty much does nothing
 
 
 
@@ -52,7 +50,7 @@
 		if(source_location != null && isarea(source_location))
 			var/area/A = source_location
 			if(A.sound_environment)
-				S.echo = A.sound_environment
+				S.environment = A.sound_environment
 
 
 
@@ -108,7 +106,7 @@
 	//type 1 = area-based
 	//type 2 = distance-based
 	var/sound/ME = sin
-	var/modlist = ECHO_GENERIC
+	var/modlist = list(0,0,0,0,0,0,0,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 	if(type == 1)
 		modlist = list(0,0,0,0,0,0,-5000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 	if(type == 2)
