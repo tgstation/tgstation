@@ -103,7 +103,7 @@
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
 		to_chat(user, "<span class='bold brass'>Available Potential:</span> <span class='brass'>[GLOB.clockwork_potential]</span>")
-		to_chat(user, "<span class='bold brass'>Available Wisdom:</span> <span class='brass'>[GLOB.clockwork_wisdom]</span>")
+		to_chat(user, "<span class='bold brass'>Available Wisdom:</span> <span class='brass'>[GLOB.clockwork_wisdom]/[GLOB.max_clockwork_wisdom]</span>")
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
