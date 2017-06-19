@@ -270,10 +270,10 @@
 			var/obj/machinery/telecomms/T = P.buffer
 			if(istype(T) && T != src)
 				if(!(src in T.links))
-					T.links.Add(src)
+					T.links += src
 
 				if(!(T in links))
-					links.Add(T)
+					links += T
 
 				temp = "<font color = #666633>-% Successfully linked with \ref[T] [T.name] %-</font color>"
 
