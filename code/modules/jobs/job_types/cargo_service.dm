@@ -150,7 +150,7 @@ Bartender
 
 	outfit = /datum/outfit/job/bartender
 
-	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue, GLOB.access_weapons)
+	access = list(GLOB.access_hydroponics, GLOB.access_bar, GLOB.access_kitchen, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_theatre)
 	minimal_access = list(GLOB.access_bar)
 
 
