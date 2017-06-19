@@ -2145,6 +2145,7 @@
 #include "hippiestation\code\_onclick\hud\stamina.dm"
 #include "hippiestation\code\controllers\configuration.dm"
 #include "hippiestation\code\controllers\subsystem\throwing.dm"
+#include "hippiestation\code\controllers\subsystem\ticker.dm"
 #include "hippiestation\code\datums\mutations.dm"
 #include "hippiestation\code\datums\progressbar.dm"
 #include "hippiestation\code\datums\riding.dm"
