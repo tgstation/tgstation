@@ -1,0 +1,22 @@
+"a" = (/turf/closed/wall,/area/awaymission)
+"b" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"c" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"d" = (/turf/open/floor/plating/ashplanet/wateryrock,/area/awaymission)
+"e" = (/turf/open/floor/plating/ashplanet/rocky,/area/awaymission)
+"f" = (/obj/structure/sink/puddle{name = "magic puddle"},/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/ashplanet/wateryrock,/area/awaymission)
+"g" = (/obj/structure/table/wood,/obj/item/weapon/cultivator,/obj/item/weapon/hatchet,/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"h" = (/turf/open/floor/plating/ashplanet/ash,/area/awaymission)
+"i" = (/obj/structure/mineral_door/iron,/turf/open/floor/wood,/area/awaymission)
+
+(1,1,1) = {"
+aaaaa
+abcba
+acbca
+abbba
+acbca
+abcda
+aedfa
+aeeda
+aghea
+aaiaa
+"}

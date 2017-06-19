@@ -79,13 +79,18 @@
 	name = "Soapification"
 	id = "soapification"
 	required_reagents = list("liquidgibs" = 10, "lye"  = 10) // requires two scooped gib tiles
-	required_temp = 374
 	mob_react = 1
 
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/weapon/soap/homemade(location)
+
+/datum/chemical_reaction/soapification/two
+	name = "Soapification2"
+	id = "soapification2"
+	required_reagents = list("ash" = 10, "water"  = 10)
+	mob_react = 1
 
 /datum/chemical_reaction/candlefication
 	name = "Candlefication"

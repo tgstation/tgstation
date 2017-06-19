@@ -312,6 +312,68 @@
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
 
+/obj/item/weapon/reagent_containers/glass/mold
+	name = "mold"
+	desc = "A clay mold."
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "mold1"
+	volume = 25
+	amount_per_transfer_from_this = 25
+	flags = OPENCONTAINER
+	var/obj/produce_type = null
+
+/obj/item/weapon/reagent_containers/glass/mold/sword
+	name = "sword mold"
+	desc = "A clay mold of a sword blade."
+	icon_state = "mold_blade"
+	produce_type = /obj/item/weapon/mold_result/blade
+
+/obj/item/weapon/reagent_containers/glass/mold/hammer
+	name = "hammer head mold"
+	desc = "A clay mold of a hammer head."
+	icon_state = "mold_blade"
+	produce_type = /obj/item/weapon/mold_result/hammer_head
+
+/obj/item/weapon/reagent_containers/glass/mold/pickaxe
+	name = "pickaxe mold"
+	desc = "A clay mold of a pickaxe head."
+	icon_state = "mold_pickaxe"
+	produce_type = /obj/item/weapon/mold_result/pickaxe_head
+
+/obj/item/weapon/reagent_containers/glass/mold/shovel
+	name = "shovel mold"
+	desc = "A clay mold of a shovel head."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/shovel_head
+
+/obj/item/weapon/reagent_containers/glass/mold/helmet
+	name = "helmet mold"
+	desc = "A clay mold of a helmet."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/helmet_plating
+
+/obj/item/weapon/reagent_containers/glass/mold/armor
+	name = "armor mold"
+	desc = "A clay mold of armor plating."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/armor_plating
+
+/obj/item/weapon/reagent_containers/glass/mold/shield
+	name = "shield mold"
+	desc = "A clay mold of a shield backing."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/shield_backing
+
+/obj/item/weapon/reagent_containers/glass/mold/crossbow
+	name = "crossbow mold"
+	desc = "A clay mold of a crossbow base."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/crossbow_base
+
+/obj/item/weapon/reagent_containers/glass/mold/bar
+	name = "bar mold"
+	desc = "A clay mold of a bar."
+
 
 
 

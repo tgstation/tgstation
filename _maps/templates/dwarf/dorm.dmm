@@ -1,0 +1,13 @@
+"a" = (/turf/closed/wall,/area/awaymission)
+"b" = (/obj/structure/bed,/turf/open/floor/wood,/area/awaymission)
+"c" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/awaymission)
+"d" = (/turf/open/floor/wood,/area/awaymission)
+"e" = (/obj/structure/mineral_door/iron,/turf/open/floor/wood,/area/awaymission)
+
+(1,1,1) = {"
+aaaaa
+abcba
+abdba
+abdba
+aaeaa
+"}

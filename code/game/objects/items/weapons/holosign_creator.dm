@@ -16,6 +16,7 @@
 	var/creation_time = 0 //time to create a holosign in deciseconds.
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = 0 //to prevent placing multiple holo barriers at once
+	var/sign_message
 
 /obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
 	if(flag)
@@ -27,6 +28,9 @@
 			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
 			qdel(H)
 		else
+			sign_message = name_sign(user)
+			if(!sign_message)
+				return
 			if(!is_blocked_turf(T, TRUE)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
 					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
@@ -43,10 +47,13 @@
 							return
 						if(is_blocked_turf(T, TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 							return
-					H = new holosign_type(get_turf(target), src)
+					make_sign(get_turf(target), user)
 					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 				else
 					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+			else
+				to_chat(user, "<span class='notice'>[src] can't place a hologram there.</span>")
+				return
 
 /obj/item/weapon/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -56,6 +63,14 @@
 		for(var/H in signs)
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+
+/obj/item/weapon/holosign_creator/proc/make_sign(target, mob/user)
+	var/obj/item/H = new holosign_type(target, src)
+	sign_message = null
+	return H
+
+/obj/item/weapon/holosign_creator/proc/name_sign(mob/user)
+	return TRUE
 
 
 /obj/item/weapon/holosign_creator/security
@@ -114,3 +129,31 @@
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
+
+
+/obj/item/weapon/holosign_creator/mandate
+	name = "royal scepter"
+	desc = "Allows you to mandate orders to your dwarves."
+	icon_state = "mandate"
+	holosign_type = /obj/structure/holosign/mandate
+	creation_time = 30
+	max_signs = 1
+
+/obj/item/weapon/holosign_creator/mandate/name_sign(mob/user)
+	var/mandate
+	if(istype(src, /obj/item/weapon/holosign_creator/mandate))
+		mandate = stripped_input(user, "What Mandate do you wish to declare?", "Mandate")
+		if(!mandate)
+			to_chat(user,"You decide against a mandate.")
+			return FALSE
+	return mandate
+
+/obj/item/weapon/holosign_creator/mandate/make_sign(target, mob/user)
+	var/obj/structure/holosign/mandate/M = new holosign_type(target, src)
+	M.mandate = sign_message
+	for(var/D in GLOB.dwarves_list)
+		var/mob/living/carbon/human/HM = D
+		if(HM != user)
+			to_chat(HM, "<span class = 'userdanger'>A new mandate has been issued! You take the time to read it and contemplate it:</span>")
+			to_chat(HM, "<span class = 'danger'>[sign_message]</span>")
+	sign_message = null

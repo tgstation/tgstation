@@ -16,6 +16,13 @@
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
 	origin_tech = "biotech=1"
+	var/booze_power = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/on_brew()
+	var/list/my_reagents = list()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		my_reagents += R.id
+	return list("reagents" = my_reagents, "booze_power" = booze_power, "prefix" = name)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
 	tastes = list(name = 1) // apples taste of apple, silly.

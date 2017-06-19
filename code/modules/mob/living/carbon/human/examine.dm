@@ -8,7 +8,8 @@
 	var/t_is = p_are()
 
 	var/msg = "<span class='info'>*---------*\nThis is <EM>[src.name]</EM>!\n"
-
+	if(isdwarf(src))
+		msg += "A short, sturdy creature fond of drink and industry.\n"
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 

@@ -108,3 +108,15 @@
 			M.electrocute_act(15,"Energy Barrier", safety=1)
 			shockcd = TRUE
 			addtimer(CALLBACK(src, .proc/cooldown), 5)
+
+/obj/structure/holosign/mandate
+	name = "Royal Mandate"
+	desc = "The mandate reads:."
+	icon_state = "mandate"
+	var/mandate = "eat shit and die"
+	obj_integrity = INFINITY // Remove with the scepter itself
+	max_integrity = INFINITY
+
+/obj/structure/holosign/mandate/examine(mob/user)
+	..()
+	to_chat(user, mandate)

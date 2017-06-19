@@ -23,6 +23,7 @@
 	icon_state = "pumpkin"
 	filling_color = "#FFA500"
 	bitesize_mod = 2
+	booze_power = 45
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(W.is_sharp())

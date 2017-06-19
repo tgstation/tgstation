@@ -137,6 +137,12 @@
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
 	sharpness = IS_SHARP
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/ale
+	name = "Ale"
+	desc = "A bottle of ale."
+	icon_state = "alebottle"
+	list_reagents = list()
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."

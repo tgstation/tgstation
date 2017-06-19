@@ -25,6 +25,8 @@
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/list/species_clothing_blacklist //If you're in this list, you can't wear it
+	var/list/species_clothing_whitelist //If you're not in this list, you can't wear it
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
@@ -131,13 +133,11 @@
 
 /obj/item/clothing/equipped(mob/user, slot)
 	..()
-
 	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
 		for(var/variable in user_vars_to_edit)
 			if(variable in user.vars)
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
-
 
 /obj/item/clothing/examine(mob/user)
 	..()
@@ -250,7 +250,7 @@ BLIND     // can't see anything
 
 
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
@@ -285,7 +285,7 @@ BLIND     // can't see anything
 		H.update_hair()
 
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
@@ -319,7 +319,7 @@ BLIND     // can't see anything
 	put_on_delay = 40
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
@@ -341,7 +341,7 @@ BLIND     // can't see anything
 
 
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
@@ -410,7 +410,7 @@ BLIND     // can't see anything
 	var/equipped_before_drop = FALSE
 
 /obj/item/clothing/shoes/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		var/bloody = 0
 		if(blood_DNA)
@@ -469,9 +469,8 @@ BLIND     // can't see anything
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 
-
 /obj/item/clothing/suit/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
@@ -546,9 +545,8 @@ BLIND     // can't see anything
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
-
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
-	. = list()
+	. = ..()
 
 	if(!isinhands)
 
