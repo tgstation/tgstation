@@ -389,8 +389,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -585,7 +584,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "br" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/computer/pandemic,
@@ -1186,8 +1184,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 30
@@ -1222,8 +1219,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 1;
-	name = "Pirate Radio Listening Channel";
-	pixel_x = 0
+	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -1293,8 +1289,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 0;
-	name = "Pirate Radio Broadcast Channel";
-	pixel_x = 0
+	name = "Pirate Radio Broadcast Channel"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8

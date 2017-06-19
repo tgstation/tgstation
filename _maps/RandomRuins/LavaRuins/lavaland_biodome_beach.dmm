@@ -494,8 +494,7 @@
 /area/ruin/powered/beach)
 "bB" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -538,8 +537,7 @@
 /area/ruin/powered/beach)
 "bH" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/mob_spawn/human/beach/alive{
 	flavour_text = "You're a spunky lifeguard! It's up to you to make sure nobody drowns or gets eaten by sharks and stuff.";

@@ -53756,8 +53756,7 @@
 "bSX" = (
 /obj/machinery/meter,
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	color = "purple";
+/obj/machinery/atmospherics/pipe/simple/purple/visible{
 	dir = 4
 	},
 /turf/closed/wall/r_wall{
