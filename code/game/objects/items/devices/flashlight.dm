@@ -11,7 +11,7 @@
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
 	var/brightness_on = 4 //range of light when on
-	var/flashlight_power //strength of the light when on. optional
+	var/flashlight_power = 1 //strength of the light when on. optional
 
 /obj/item/device/flashlight/Initialize()
 	..()
