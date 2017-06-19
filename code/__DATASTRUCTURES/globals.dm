@@ -22,18 +22,18 @@
 
 #define GLOBAL_RAW(X) /datum/controller/global_vars/var/global##X
 
-#define GLOBAL_VAR_INIT(X, InitValue)  GLOBAL_REAL(/##X); GLOBAL_RAW(/##X); GLOBAL_MANAGED(X, InitValue)
+#define GLOBAL_VAR_INIT(X, InitValue)  GLOBAL_REAL_VAR(/##X); GLOBAL_RAW(/##X); GLOBAL_MANAGED(X, InitValue)
 
-#define GLOBAL_VAR_CONST(X, InitValue)  GLOBAL_REAL(/const/##X) = InitValue; GLOBAL_RAW(/const/##X) = InitValue; GLOBAL_UNMANAGED(X, InitValue)
+#define GLOBAL_VAR_CONST(X, InitValue)  GLOBAL_REAL_VAR(/const/##X) = InitValue; GLOBAL_RAW(/const/##X) = InitValue; GLOBAL_UNMANAGED(X, InitValue)
 
-#define GLOBAL_LIST_INIT(X, InitValue) GLOBAL_REAL(/list/##X); GLOBAL_RAW(/list/##X); GLOBAL_MANAGED(X, InitValue)
+#define GLOBAL_LIST_INIT(X, InitValue) GLOBAL_REAL_VAR(/list/##X); GLOBAL_RAW(/list/##X); GLOBAL_MANAGED(X, InitValue)
 
 #define GLOBAL_LIST_EMPTY(X) GLOBAL_LIST_INIT(X, list())
 
-#define GLOBAL_DATUM_INIT(X, Typepath, InitValue) GLOBAL_REAL(Typepath/##X); GLOBAL_RAW(Typepath/##X); GLOBAL_MANAGED(X, InitValue)
+#define GLOBAL_DATUM_INIT(X, Typepath, InitValue) GLOBAL_REAL_VAR(Typepath/##X); GLOBAL_RAW(Typepath/##X); GLOBAL_MANAGED(X, InitValue)
 
-#define GLOBAL_VAR(X) GLOBAL_REAL(/##X); GLOBAL_RAW(/##X); GLOBAL_MANAGED(X, null)
+#define GLOBAL_VAR(X) GLOBAL_REAL_VAR(/##X); GLOBAL_RAW(/##X); GLOBAL_MANAGED(X, null)
 
-#define GLOBAL_LIST(X) GLOBAL_REAL(/list/##X); GLOBAL_RAW(/list/##X); GLOBAL_MANAGED(X, null)
+#define GLOBAL_LIST(X) GLOBAL_REAL_VAR(/list/##X); GLOBAL_RAW(/list/##X); GLOBAL_MANAGED(X, null)
 
-#define GLOBAL_DATUM(X, Typepath) GLOBAL_REAL(Typepath/##X); GLOBAL_RAW(Typepath/##X); GLOBAL_MANAGED(X, null)
+#define GLOBAL_DATUM(X, Typepath) GLOBAL_REAL_VAR(Typepath/##X); GLOBAL_RAW(Typepath/##X); GLOBAL_MANAGED(X, null)
