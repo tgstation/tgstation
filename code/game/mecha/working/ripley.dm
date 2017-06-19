@@ -99,26 +99,26 @@
 		cell.charge = Floor(cell.charge * 0.25) //Starts at very low charge
 	if(prob(70)) //Maybe add a drill
 		if(prob(15)) //Possible diamond drill... Feeling lucky?
-			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
+			var/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/D = new
 			D.attach(src)
 		else
-			var/obj/item/mecha_parts/mecha_equipment/drill/D = new /obj/item/mecha_parts/mecha_equipment/drill
+			var/obj/item/mecha_parts/mecha_equipment/drill/D = new
 			D.attach(src)
 
 	else //Add possible plasma cutter if no drill
-		var/obj/item/mecha_parts/mecha_equipment/M = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
+		var/obj/item/mecha_parts/mecha_equipment/M = new
 		M.attach(src)
 
 	//Add ore box to cargo
 	cargo.Add(new /obj/structure/ore_box(src))
 
 	//Attach hydraulic clamp
-	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
+	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
 	HC.attach(src)
 	for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)//Deletes the beacon so it can't be found easily
 		qdel(B)
 
-	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/mining_scanner
+	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new
 	scanner.attach(src)
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
