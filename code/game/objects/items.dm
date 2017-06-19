@@ -108,10 +108,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//Tooltip vars
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
-	var/force_string = ""//string form of an item's force
+	var/force_string //string form of an item's force. Edit this var only to set a custom force string
 	var/last_force_string_check = 0
 	var/tip_timer
-	var/list/default_strings
+	var/force_string_override
 
 /obj/item/Initialize()
 	if (!materials)
@@ -124,15 +124,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
 
-	LAZYINITLIST(default_strings)
-	//populate default_strings
-	default_strings += "very low"
-	default_strings += "low"
-	default_strings += "medium"
-	default_strings += "high"
-	default_strings += "robust"
-	default_strings += "very robust"
-	default_strings += "exceptionally robust"
+	if(force_string)
+		force_string_override = TRUE
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -658,35 +651,24 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/set_force_string()
 	switch(force)
 		if(0 to 4)
-			force_string = default_strings[1]
+			force_string = "very low"
 		if(4 to 7)
-			force_string = default_strings[2]
+			force_string = "low"
 		if(7 to 10)
-			force_string = default_strings[3]
+			force_string = "medium"
 		if(10 to 11)
-			force_string = default_strings[4]
+			force_string = "high"
 		if(11 to 20) //12 is the force of a toolbox
-			force_string = default_strings[5]
+			force_string = "robust"
 		if(20 to 25)
-			force_string = default_strings[6]
+			force_string = "very robust"
 		else
-			force_string = default_strings[7]
-
-/obj/item/proc/update_force_string()
-	if(force)
-		if(force_string)//is there already a force string?
-			for(var/S in default_strings)//if the force string is one of the deafults, update it
-				if(force_string == S)//if it isn't default, leave it alone
-					set_force_string()
-					return
-		else//if there is no force string, make one
-			set_force_string()
-		last_force_string_check = force
-
+			force_string = "exceptionally robust"
+	last_force_string_check = force
 
 /obj/item/proc/openTip(location, control, params, user)
-	if(last_force_string_check != force)
-		update_force_string()
+	if(last_force_string_check != force && !force_string_override)
+		set_force_string()
 	openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
 
 /obj/item/MouseEntered(location, control, params)
