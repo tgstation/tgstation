@@ -897,6 +897,7 @@
 #include "code\game\objects\structures\girders.dm"
 #include "code\game\objects\structures\grille.dm"
 #include "code\game\objects\structures\guncase.dm"
+#include "code\game\objects\structures\headpike.dm"
 #include "code\game\objects\structures\hivebot.dm"
 #include "code\game\objects\structures\holosign.dm"
 #include "code\game\objects\structures\janicart.dm"
