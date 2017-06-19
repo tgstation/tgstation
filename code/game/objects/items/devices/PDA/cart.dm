@@ -30,7 +30,7 @@
 //	var/access_flora = 0
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/mode = null
@@ -51,13 +51,13 @@
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
-	access = CART_ENGINE|CART_DRONEPHONE
+	access = CART_ENGINE | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
-	access = CART_ATMOS|CART_DRONEPHONE
+	access = CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
@@ -81,14 +81,14 @@
 /obj/item/weapon/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
-	access = CART_SECURITY|CART_MEDICAL|CART_MANIFEST
+	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
-	access = CART_JANITOR|CART_DRONEPHONE
+	access = CART_JANITOR | CART_DRONEPHONE
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
@@ -112,7 +112,7 @@
 /obj/item/weapon/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
-	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 	access = CART_DRONEPHONE
 
 /obj/item/weapon/cartridge/signal
@@ -123,7 +123,7 @@
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
 	icon_state = "cart-tox"
-	access = CART_REAGENT_SCANNER|CART_ATMOS
+	access = CART_REAGENT_SCANNER | CART_ATMOS
 
 /obj/item/weapon/cartridge/signal/New()
 	..()
@@ -141,38 +141,38 @@
 /obj/item/weapon/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
 	icon_state = "cart-h"
-	access = CART_MANIFEST|CART_STATUS_DISPLAY
+	access = CART_MANIFEST | CART_STATUS_DISPLAY
 
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	access = CART_MANIFEST|CART_STATUS_DISPLAY|CART_JANITOR|CART_SECURITY|CART_NEWSCASTER|CART_QUARTERMASTER|CART_DRONEPHONE
-	bot_access_flags = MULE_BOT|CLEAN_BOT
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_JANITOR | CART_SECURITY | CART_NEWSCASTER | CART_QUARTERMASTER | CART_DRONEPHONE
+	bot_access_flags = MULE_BOT | CLEAN_BOT
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
-	access = CART_MANIFEST|CART_STATUS_DISPLAY|CART_SECURITY
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_SECURITY
 	bot_access_flags = SEC_BOT
 
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access = CART_MANIFEST|CART_STATUS_DISPLAY|CART_ENGINE|CART_ATMOS|CART_DRONEPHONE
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_ENGINE | CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
-	access = CART_MANIFEST|CART_STATUS_DISPLAY|CART_REAGENT_SCANNER|CART_MEDICAL
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_MEDICAL
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
-	access = CART_MANIFEST|CART_STATUS_DISPLAY|CART_REAGENT_SCANNER|CART_ATMOS|CART_DRONEPHONE
-	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
+	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
 /obj/item/weapon/cartridge/rd/New()
 	..()
@@ -182,8 +182,8 @@
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
-	access = ~(CART_CLOWN|CART_MIME)
-	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access = ~(CART_CLOWN | CART_MIME)
+	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	spam_enabled = 1
 
 /obj/item/weapon/cartridge/captain/New()
@@ -284,7 +284,7 @@ Code:
 
 
 			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
-				if(!(pMon.stat & (NOPOWER|BROKEN)) )
+				if(!(pMon.stat & (NOPOWER | BROKEN)) )
 					powercount++
 					powermonitors += pMon
 
