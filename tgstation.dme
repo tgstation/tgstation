@@ -1383,6 +1383,7 @@
 #include "code\modules\hydroponics\grown\misc.dm"
 #include "code\modules\hydroponics\grown\mushrooms.dm"
 #include "code\modules\hydroponics\grown\nettle.dm"
+#include "code\modules\hydroponics\grown\onion.dm"
 #include "code\modules\hydroponics\grown\potato.dm"
 #include "code\modules\hydroponics\grown\pumpkin.dm"
 #include "code\modules\hydroponics\grown\random.dm"
