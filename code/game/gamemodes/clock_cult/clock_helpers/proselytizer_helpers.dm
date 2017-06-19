@@ -286,6 +286,28 @@
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 
+//Hitting a sigil of transmission will try to charge from it.
+/obj/effect/clockwork/sigil/transmission/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	. = TRUE
+	var/list/charge_values = list()
+	if(!proselytizer.sigil_charge_checks(charge_values, src, user))
+		return
+	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts draining glowing orange energy from [src]...</span>", \
+	"<span class='alloy'>You start recharging your [proselytizer.name]...</span>")
+	proselytizer.recharging = src
+	while(proselytizer && user && src)
+		if(!do_after(user, 10, target = src, extra_checks = CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/sigil_charge_checks, charge_values, src, user, TRUE)))
+			break
+		modify_charge(charge_values["power_gain"])
+		proselytizer.modify_stored_power(charge_values["power_gain"])
+		playsound(src, 'sound/effects/light_flicker.ogg', charge_values["power_gain"] * 0.1, 1)
+
+	if(proselytizer)
+		proselytizer.recharging = null
+		if(user)
+			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops draining glowing orange energy from [src].</span>", \
+			"<span class='alloy'>You finish recharging your [proselytizer.name]. It now contains <b>[proselytizer.get_power()]W/[proselytizer.get_max_power()]W</b> power.</span>")
+
 //Proselytizer mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/proselytizer_heal(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/list/repair_values = list()

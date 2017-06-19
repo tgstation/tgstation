@@ -13,16 +13,16 @@
 
 
 /datum/wires/explosive/c4
-	holder_type = /obj/item/weapon/c4
+	holder_type = /obj/item/weapon/grenade/plastic/c4
 	randomize = TRUE	//Same behaviour since no wire actually disarms it
 
 /datum/wires/explosive/c4/interactable(mob/user)
-	var/obj/item/weapon/c4/P = holder
+	var/obj/item/weapon/grenade/plastic/c4/P = holder
 	if(P.open_panel)
 		return TRUE
 
 /datum/wires/explosive/c4/explode()
-	var/obj/item/weapon/c4/P = holder
+	var/obj/item/weapon/grenade/plastic/c4/P = holder
 	P.explode()
 
 

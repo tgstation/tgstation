@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Gaining Vanguard, such as from the Linked Vanguard scripture, will remove existing stuns."

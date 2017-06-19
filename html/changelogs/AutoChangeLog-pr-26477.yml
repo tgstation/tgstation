@@ -1,0 +1,7 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - tweak: "TEG displays power in kw or MW now"
+  - tweak: "TEG power bar only maxes over 1MW now"
+  - experiment: "Moves TEG to SSair"
+  - experiment: "Moves SM to SSair"

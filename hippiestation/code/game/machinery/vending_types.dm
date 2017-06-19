@@ -186,7 +186,7 @@ ENGI VEND
 		/obj/item/weapon/electronics/apc = 10,
 		/obj/item/weapon/electronics/airalarm = 10,
 		/obj/item/weapon/stock_parts/cell/high = 10,
-		/obj/item/weapon/rcd/loaded = 3,
+		/obj/item/weapon/construction/rcd/loaded = 3,
 		/obj/item/device/geiger_counter = 5
 		)
 
@@ -640,6 +640,7 @@ NANOMED
 	premium = list(/obj/item/weapon/storage/box/hug/medical = 1,/obj/item/weapon/reagent_containers/hypospray/medipen = 3, /obj/item/weapon/storage/belt/medical = 3, /obj/item/weapon/wrench/medical = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
 	products = list(
 		/obj/item/weapon/reagent_containers/syringe = 12,
 		/obj/item/weapon/reagent_containers/dropper = 3,
@@ -673,12 +674,15 @@ WALLMED
 /obj/machinery/vending/wallmed
 	name = "\improper NanoMed"
 	desc = "Wall-mounted Medical Equipment dispenser."
+	icon = 'icons/obj/vending.dmi'
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
 	density = 0
 	height = 300
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
+	refill_count = 1
 	products = list(
 		/obj/item/weapon/reagent_containers/syringe = 3,
 		/obj/item/weapon/reagent_containers/pill/patch/styptic = 5,
@@ -720,7 +724,7 @@ CHOCOLATE
 	name = "\improper Random Snackies"
 	desc = "Uh oh!"
 
-/obj/machinery/vending/snack/random/New()
+/obj/machinery/vending/snack/random/Initialize()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
     new T(get_turf(src))
@@ -838,7 +842,7 @@ SODA
 	name = "\improper Random Drinkies"
 	desc = "Uh oh!"
 
-/obj/machinery/vending/cola/random/New()
+/obj/machinery/vending/cola/random/Initialize()
     ..()
     var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
     new T(get_turf(src))
@@ -932,6 +936,7 @@ PDA TECH
 
 /obj/machinery/vending/cart
 	name = "\improper PTech"
+	icon = 'icons/obj/vending.dmi'
 	desc = "Cartridges for PDAs"
 	product_slogans = "Carts to go!"
 	icon_state = "cart"

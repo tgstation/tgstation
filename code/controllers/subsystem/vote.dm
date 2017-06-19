@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(vote)
 			if("gamemode")
 				if(GLOB.master_mode != .)
 					world.save_mode(.)
-					if(SSticker && SSticker.mode)
+					if(SSticker.HasRoundStarted())
 						restart = 1
 					else
 						GLOB.master_mode = .
@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
-		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
+		if(config.vote_no_dead && usr.stat == DEAD && !check_rights_for(usr.client, R_ADMIN))
 			return 0
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
@@ -202,10 +202,8 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
-	var/admin = 0
 	var/trialmin = 0
 	if(C.holder)
-		admin = 1
 		if(check_rights_for(C, R_ADMIN))
 			trialmin = 1
 	voting |= C
@@ -222,7 +220,7 @@ SUBSYSTEM_DEF(vote)
 				votes = 0
 			. += "<li><a href='?src=\ref[src];vote=[i]'>[choices[i]]</a> ([votes] votes)</li>"
 		. += "</ul><hr>"
-		if(admin)
+		if(trialmin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
@@ -260,22 +258,22 @@ SUBSYSTEM_DEF(vote)
 			usr << browse(null, "window=vote")
 			return
 		if("cancel")
-			if(usr.client.holder)
+			if(check_rights_for(usr.client, R_ADMIN))
 				reset()
 		if("toggle_restart")
-			if(usr.client.holder)
+			if(check_rights_for(usr.client, R_ADMIN))
 				config.allow_vote_restart = !config.allow_vote_restart
 		if("toggle_gamemode")
-			if(usr.client.holder)
+			if(check_rights_for(usr.client, R_ADMIN))
 				config.allow_vote_mode = !config.allow_vote_mode
 		if("restart")
-			if(config.allow_vote_restart || usr.client.holder)
+			if(config.allow_vote_restart || check_rights_for(usr.client, R_ADMIN))
 				initiate_vote("restart",usr.key)
 		if("gamemode")
-			if(config.allow_vote_mode || usr.client.holder)
+			if(config.allow_vote_mode || check_rights_for(usr.client, R_ADMIN))
 				initiate_vote("gamemode",usr.key)
 		if("custom")
-			if(usr.client.holder)
+			if(check_rights_for(usr.client, R_ADMIN))
 				initiate_vote("custom",usr.key)
 		else
 			submit_vote(round(text2num(href_list["vote"])))

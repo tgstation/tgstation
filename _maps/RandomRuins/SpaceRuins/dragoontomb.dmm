@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
@@ -18,8 +18,8 @@
 /area/ruin/unpowered/no_grav)
 "f" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "g" = (
 /obj/item/weapon/bikehorn,
 /turf/open/floor/plating/asteroid/airless,
@@ -139,23 +139,23 @@
 /turf/open/floor/mineral/silver,
 /area/ruin/unpowered/no_grav)
 "C" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
+	},
 /turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (WEST)"
 	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
 /area/ruin/unpowered/no_grav)
 "D" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
 /turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (EAST)"
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
 	},
 /area/ruin/unpowered/no_grav)
 "E" = (
@@ -164,30 +164,30 @@
 /area/ruin/unpowered/no_grav)
 "F" = (
 /obj/structure/grille,
-/turf/open/space,
+/turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/item/weapon/dice/d100,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "H" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
 /turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (SOUTHWEST)"
 	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 10
-	},
 /area/ruin/unpowered/no_grav)
 "I" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
 /turf/open/floor/plating/astplate{
 	icon_state = "astplate_warn";
 	initial_gas_mix = "TEMP=2.7";
 	tag = "icon-astplate_warn (SOUTHEAST)"
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 6
 	},
 /area/ruin/unpowered/no_grav)
 "J" = (

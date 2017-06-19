@@ -39,7 +39,7 @@
 	max_w_class = 3
 	storage_slots = 4
 
-/obj/item/organ/butt/New()
+/obj/item/organ/butt/Initialize()
 	..()
 	inv = new(src)
 	inv.max_w_class = max_w_class

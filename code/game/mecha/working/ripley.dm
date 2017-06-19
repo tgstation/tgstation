@@ -48,9 +48,9 @@
 	if (hides)
 		cut_overlays()
 		if(hides < 3)
-			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g" : "ripley-g-open"))
+			add_overlay(occupant ? "ripley-g" : "ripley-g-open")
 		else
-			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open"))
+			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
 
 
 /obj/mecha/working/ripley/firefighter

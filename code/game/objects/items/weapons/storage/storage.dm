@@ -405,6 +405,9 @@
 	if(iscyborg(user))
 		return	//Robots can't interact with storage items.
 
+	if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
+		return 1
+
 	if(!can_be_inserted(W, 0 , user))
 		return 0
 

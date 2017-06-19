@@ -73,15 +73,16 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 
 
 /datum/game_mode/gang/post_setup()
-	spawn(rand(10,100))
-		for(var/datum/gang/G in gangs)
-			for(var/datum/mind/boss_mind in G.bosses)
-				G.add_gang_hud(boss_mind)
-				forge_gang_objectives(boss_mind)
-				greet_gang(boss_mind)
-				equip_gang(boss_mind.current,G)
-				modePlayer += boss_mind
+	set waitfor = FALSE
 	..()
+	sleep(rand(10,100))
+	for(var/datum/gang/G in gangs)
+		for(var/datum/mind/boss_mind in G.bosses)
+			G.add_gang_hud(boss_mind)
+			forge_gang_objectives(boss_mind)
+			greet_gang(boss_mind)
+			equip_gang(boss_mind.current,G)
+			modePlayer += boss_mind
 
 
 /datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
@@ -178,7 +179,7 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	gangster_mind.special_role = "[G.name] Gangster"
 
 	G.add_gang_hud(gangster_mind)
-	if(jobban_isbanned(gangster_mind.current, ROLE_GANG))
+	if(jobban_isbanned(gangster_mind.current, ROLE_GANG) || jobban_isbanned(gangster_mind.current, CATBAN) || jobban_isbanned(gangster_mind.current, CLUWNEBAN))
 		INVOKE_ASYNC(src, /datum/game_mode.proc/replace_jobbaned_player, gangster_mind.current, ROLE_GANG, ROLE_GANG)
 	return 2
 ////////////////////////////////////////////////////////////////////
@@ -248,7 +249,8 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 	return gang_bosses
 
 /proc/determine_domination_time(var/datum/gang/G)
-	return max(180,900 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 12))
+	return max(180,480 - (round((G.territory.len/GLOB.start_state.num_territories)*100, 1) * 9))
+
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
@@ -259,12 +261,12 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		return
 	if(!winner)
 		to_chat(world, "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>")
-		feedback_set_details("round_end_result","loss - gangs failed takeover")
+		SSblackbox.set_details("round_end_result","loss - gangs failed takeover")
 
 		SSticker.news_report = GANG_LOSS
 	else
 		to_chat(world, "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>")
-		feedback_set_details("round_end_result","win - gang domination complete")
+		SSblackbox.set_details("round_end_result","win - gang domination complete")
 
 		SSticker.news_report = GANG_TAKEOVER
 

@@ -581,7 +581,7 @@
 	id = "rcd"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/weapon/rcd
+	build_path = /obj/item/weapon/construction/rcd
 	category = list("hacked", "Construction")
 
 /datum/design/rpd

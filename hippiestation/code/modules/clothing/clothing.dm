@@ -38,7 +38,7 @@
 	alternate_worn_icon = 'hippiestation/icons/mob/back.dmi'
 	icon = 'hippiestation/icons/obj/clothing/back.dmi'
 
-/obj/item/clothing/belt/hippie
+/obj/item/weapon/storage/belt/hippie
 	alternate_worn_icon = 'hippiestation/icons/mob/belt.dmi'
 	icon = 'hippiestation/icons/obj/clothing/belts.dmi'
 

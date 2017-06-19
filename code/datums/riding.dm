@@ -335,11 +335,11 @@
 /datum/riding/human/ride_check(mob/living/M)
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
 	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
+		M.visible_message("<span class='warning'>[M] falls off [ridden]!</span>")
 		Unbuckle(M)
 		return FALSE
 	if(M.restrained(TRUE))
-		M.visible_message("<span class='boldwarning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
+		M.visible_message("<span class='warning'>[M] can't hang onto [ridden] with their hands cuffed!</span>")	//Honestly this should put the ridden mob in a chokehold.
 		Unbuckle(M)
 		return FALSE
 	if(H.pulling == M)
@@ -375,7 +375,7 @@
 	ridden.unbuckle_mob(user)
 	user.Weaken(3)
 	user.Stun(3)
-	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
+	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
 	keytype = null
@@ -436,7 +436,7 @@
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)
-	M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden]!</span>")
+	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
 	M.Weaken(3)
 

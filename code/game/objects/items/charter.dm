@@ -54,13 +54,13 @@
 
 	if(standard_station_regex.Find(new_name))
 		to_chat(user, "Your name has been automatically approved.")
-		rename_station(new_name, user)
+		rename_station(new_name, user.name, user.real_name, key_name(user))
 		return
 
 	to_chat(user, "Your name has been sent to your employers for approval.")
 	// Autoapproves after a certain time
 	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>")
+	to_chat(GLOB.admins, "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]</span>")
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
@@ -79,14 +79,14 @@
 	response_timer_id = null
 
 /obj/item/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
-	change_station_name(designation)
+	set_station_name(designation)
 	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
 	log_game("[ukey] has renamed the station as [station_name()].")
 
 	name = "station charter for [station_name()]"
 	desc = "An official document entrusting the governance of \
 		[station_name()] and surrounding space to Captain [uname]."
-
+	SSblackbox.set_details("station_renames","[station_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 

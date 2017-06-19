@@ -5,9 +5,6 @@
 	chemical_cost = 30 //High cost to prevent spam
 	dna_cost = 2
 	req_human = 1
-	genetic_damage = 10
-	max_genetic_damage = 0
-
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use

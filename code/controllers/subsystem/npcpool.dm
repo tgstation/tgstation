@@ -1,6 +1,7 @@
-#define PROCESSING_NPCS 0
-#define PROCESSING_DELEGATES 1
-#define PROCESSING_ASSISTANTS 2
+#define PROCESSING_SIMPLES 0
+#define PROCESSING_NPCS 1
+#define PROCESSING_DELEGATES 2
+#define PROCESSING_ASSISTANTS 3
 
 SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
@@ -10,7 +11,7 @@ SUBSYSTEM_DEF(npcpool)
 	var/list/canBeUsed = list()
 	var/list/needsDelegate = list()
 	var/list/needsAssistant = list()
-	
+
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/stage
@@ -18,7 +19,7 @@ SUBSYSTEM_DEF(npcpool)
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("NPCS:[processing.len]|D:[needsDelegate.len]|A:[needsAssistant.len]|U:[canBeUsed.len]")
 
-/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/carbon/human/interactive/I)
+/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/I)
 	processing -= I
 	currentrun -= I
 	needsDelegate -= I
@@ -35,10 +36,29 @@ SUBSYSTEM_DEF(npcpool)
 	// 5. Do all assignments: goes through the delegated/coordianted bots and assigns the right variables/tasks to them.
 
 	if (!resumed)
-		src.currentrun = processing.Copy()
-		stage = PROCESSING_NPCS
+		src.currentrun = GLOB.simple_animals.Copy()
+		stage = PROCESSING_SIMPLES
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
+
+	if(stage == PROCESSING_SIMPLES)
+		while(currentrun.len)
+			var/mob/living/simple_animal/SA = currentrun[currentrun.len]
+			--currentrun.len
+
+			if(!SA.ckey)
+				if(SA.stat != DEAD)
+					SA.handle_automated_movement()
+				if(SA.stat != DEAD)
+					SA.handle_automated_action()
+				if(SA.stat != DEAD)
+					SA.handle_automated_speech()
+			if (MC_TICK_CHECK)
+				return
+
+		stage = PROCESSING_NPCS
+		currentrun = processing.Copy()
+		src.currentrun = currentrun
 	var/list/canBeUsed = src.canBeUsed
 
 	if(stage == PROCESSING_NPCS)

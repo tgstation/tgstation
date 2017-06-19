@@ -38,7 +38,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/rice = list("rice" = -5),
-				/obj/item/weapon/reagent_containers/food/snacks/donut/New = list("sprinkles" = -2, "sugar" = 1),
+				/obj/item/weapon/reagent_containers/food/snacks/donut = list("sprinkles" = -2, "sugar" = 1),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
@@ -54,7 +54,9 @@
 				/obj/item/slime_extract = list(),
 				/obj/item/weapon/reagent_containers/pill = list(),
 				/obj/item/weapon/reagent_containers/food = list(),
-				/obj/item/weapon/reagent_containers/honeycomb = list()
+				/obj/item/weapon/reagent_containers/honeycomb = list(),
+				/obj/item/toy/crayon = list()
+
 		)
 
 		var/list/juice_items = list (
@@ -89,10 +91,9 @@
 
 		var/list/holdingitems = list()
 
-/obj/machinery/reagentgrinder/New()
-	..()
+/obj/machinery/reagentgrinder/Initialize()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
@@ -455,4 +456,14 @@
 				var/amount = O.reagents.total_volume
 				O.reagents.trans_to(beaker, amount)
 				if(!O.reagents.total_volume)
+						remove_object(O)
+
+		for (var/obj/item/toy/crayon/O in holdingitems)
+				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+						break
+				for (var/r_id in O.reagent_contents)
+						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+						if (space == 0)
+								break
+						beaker.reagents.add_reagent(r_id, min(O.reagent_contents[r_id], space))
 						remove_object(O)

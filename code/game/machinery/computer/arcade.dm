@@ -60,6 +60,11 @@
 		new CB.build_path(loc, CB)
 		qdel(src)
 
+/obj/machinery/computer/arcade/Initialize()
+	. = ..()
+	Reset()
+
+
 #define PULSE_MEDAL "Jackpot"
 
 /obj/machinery/computer/arcade/proc/prizevend()
@@ -229,7 +234,7 @@
 			playsound(loc, 'sound/arcade/Win.ogg', 50, 1, extrarange = -3, falloff = 10)
 
 			if(emagged)
-				feedback_inc("arcade_win_emagged")
+				SSblackbox.inc("arcade_win_emagged")
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
@@ -237,7 +242,7 @@
 				Reset()
 				emagged = 0
 			else
-				feedback_inc("arcade_win_normal")
+				SSblackbox.inc("arcade_win_normal")
 				prizevend()
 
 	else if (emagged && (turtle >= 4))
@@ -259,10 +264,10 @@
 			temp = "You have been drained! GAME OVER"
 			playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 			if(emagged)
-				feedback_inc("arcade_loss_mana_emagged")
+				SSblackbox.inc("arcade_loss_mana_emagged")
 				usr.gib()
 			else
-				feedback_inc("arcade_loss_mana_normal")
+				SSblackbox.inc("arcade_loss_mana_normal")
 
 	else if ((enemy_hp <= 10) && (enemy_mp > 4))
 		temp = "[enemy_name] heals for 4 health!"
@@ -281,10 +286,10 @@
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/Lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
-			feedback_inc("arcade_loss_hp_emagged")
+			SSblackbox.inc("arcade_loss_hp_emagged")
 			usr.gib()
 		else
-			feedback_inc("arcade_loss_hp_normal")
+			SSblackbox.inc("arcade_loss_hp_normal")
 
 	blocked = FALSE
 	return

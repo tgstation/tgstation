@@ -28,6 +28,8 @@
 	var/list/our_overlays	//our local copy of (non-priority) overlays without byond magic. Use procs in SSoverlays to manipulate
 	var/list/priority_overlays	//overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
 
+	var/datum/proximity_monitor/proximity_monitor
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -37,20 +39,21 @@
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize > INITIALIZATION_INSSATOMS)
-		if(QDELETED(src))
-			CRASH("Found new qdeletion in type [type]!")
-		var/mapload = do_initialize == INITIALIZATION_INNEW_MAPLOAD
-		args[1] = mapload
-		if(Initialize(arglist(args)) && mapload)
-			LAZYADD(SSatoms.late_loaders, src)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		if(SSatoms.InitAtom(src, args))
+			//we were deleted
+			return
+
+	var/list/created = SSatoms.created_atoms
+	if(created)
+		created += src
 
 //Called after New if the map is being loaded. mapload = TRUE
 //Called from base of New if the map is being loaded. mapload = FALSE
-//This base must be called or derivatives must set initialized to TRUE to prevent repeat calls
-//Derivatives must not sleep
-//Returning TRUE while mapload is TRUE will cause the object to be initialized again with mapload = FALSE when everything else is done
-//(Useful for things that requires turfs to have air). This base may only be called once, however
+//This base must be called or derivatives must set initialized to TRUE
+//must not sleep
 //Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+//Must return an Initialize hint. Defined in __DEFINES/subsystems.dm
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/Initialize
@@ -73,25 +76,31 @@
 	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+	return INITIALIZE_HINT_NORMAL
 
+//called if Initialize returns INITIALIZE_HINT_LATELOAD
+//This version shouldn't be called
+/atom/proc/LateInitialize()
+	var/static/list/warned_types = list()
+	if(!warned_types[type])
+		WARNING("Old style LateInitialize behaviour detected in [type]!")
+		warned_types[type] = TRUE
+	Initialize(FALSE)
 
 /atom/Destroy()
 	if(alternate_appearances)
-		for(var/aakey in alternate_appearances)
-			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
-			qdel(AA)
-		alternate_appearances = null
-	if(viewing_alternate_appearances)
-		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
-				AA.hide(list(src))
+		for(var/K in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		qdel(reagents)
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
+
+	QDEL_NULL(light)
 
 	return ..()
 
@@ -445,10 +454,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/ratvar_act()
 	return
 
-/atom/proc/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/atom/proc/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	return FALSE
 
-/atom/proc/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/atom/proc/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
@@ -462,15 +471,6 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	for(var/a in src)
 		var/atom/A = a
 		A.HandleTurfChange(T)
-
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/atom/Stat()
-	. = ..()
-	sleep(1)
-	stoplag()
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
 /atom/proc/get_remote_view_fullscreens(mob/user)
@@ -505,6 +505,10 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 /atom/proc/mech_melee_attack(obj/mecha/M)
 	return
 
+//If a mob logouts/logins in side of an object you can use this proc
+/atom/proc/on_log(login)
+	if(loc)
+		loc.on_log(login)
 
 
 /*

@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(choice=="Confirm")
 					scan_user(usr)
 					GLOB.news_network.CreateFeedChannel(channel_name, scanned_user, c_locked)
-					feedback_inc("newscaster_channels",1)
+					SSblackbox.inc("newscaster_channels",1)
 					screen=5
 			updateUsrDialog()
 		else if(href_list["set_channel_receiving"])
@@ -558,7 +558,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				screen=6
 			else
 				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, 0, allow_comments)
-				feedback_inc("newscaster_stories",1)
+				SSblackbox.inc("newscaster_stories",1)
 				screen=4
 				msg = ""
 			updateUsrDialog()
@@ -850,7 +850,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		return
 
 /obj/machinery/newscaster/proc/print_paper()
-	feedback_inc("newscaster_newspapers_printed",1)
+	SSblackbox.inc("newscaster_newspapers_printed",1)
 	var/obj/item/weapon/newspaper/NEWSPAPER = new /obj/item/weapon/newspaper
 	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 		NEWSPAPER.news_content += FC

@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Added organ storage bags for medical cyborgs. They can hold an organic body part. Use the bag on a carbon during organ manipulation or prosthetic replacement to add the held body part."

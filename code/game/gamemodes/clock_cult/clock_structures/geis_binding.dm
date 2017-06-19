@@ -5,6 +5,8 @@
 	clockwork_desc = "A binding ring around a target, preventing them from taking action while they're being converted."
 	max_integrity = 25
 	obj_integrity = 25
+	light_range = 2
+	light_power = 0.5
 	light_color = "#AF0AAF"
 	density = FALSE
 	immune_to_servant_attacks = TRUE
@@ -19,10 +21,6 @@
 	var/resisting = FALSE
 	var/can_resist = FALSE
 	var/mob_layer = MOB_LAYER
-
-/obj/structure/destructible/clockwork/geis_binding/New()
-	..()
-	set_light(2, 0.5)
 
 /obj/structure/destructible/clockwork/geis_binding/examine(mob/user)
 	icon_state = "geisbinding_full"
@@ -44,8 +42,7 @@
 		icon_state = "geisbinding"
 		mob_layer = M.layer
 		layer = M.layer - 0.01
-		var/image/GB = new('icons/effects/clockwork_effects.dmi', src, "geisbinding_top", M.layer + 0.01)
-		add_overlay(GB)
+		add_overlay(mutable_appearance('icons/effects/clockwork_effects.dmi', "geisbinding_top", M.layer + 0.01))
 		for(var/obj/item/I in M.held_items)
 			M.dropItemToGround(I)
 		for(var/i in M.get_empty_held_indexes())

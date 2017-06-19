@@ -20,8 +20,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/purchase_log = ""
 	var/list/uplink_items
 
-/obj/item/device/uplink/New()
-	..()
+/obj/item/device/uplink/Initialize()
+	. = ..()
 	GLOB.uplinks += src
 	uplink_items = get_uplink_items(gamemode)
 
@@ -133,24 +133,24 @@ GLOBAL_LIST_EMPTY(uplinks)
 	return hidden_uplink.attackby(I, user, params)
 
 // A collection of pre-set uplinks, for admin spawns.
-/obj/item/device/radio/uplink/New()
-	..()
+/obj/item/device/radio/uplink/Initialize()
+	. = ..()
 	icon_state = "radio"
 	hidden_uplink = new(src)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
 
-/obj/item/device/radio/uplink/nuclear/New()
-	..()
+/obj/item/device/radio/uplink/nuclear/Initialize()
+	. = ..()
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 
-/obj/item/device/multitool/uplink/New()
-	..()
+/obj/item/device/multitool/uplink/Initialize()
+	. = ..()
 	hidden_uplink = new(src)
 	hidden_uplink.active = TRUE
 	hidden_uplink.lockable = FALSE
 
-/obj/item/weapon/pen/uplink/New()
-	..()
+/obj/item/weapon/pen/uplink/Initialize()
+	. = ..()
 	hidden_uplink = new(src)
 	traitor_unlock_degrees = 360

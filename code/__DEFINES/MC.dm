@@ -1,4 +1,14 @@
 #define MC_TICK_CHECK ( ( world.tick_usage > GLOB.CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
+
+#define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = GLOB.CURRENT_TICKLIMIT; var/split_tick_phases = ##phase_count
+#define MC_SPLIT_TICK \
+    if(split_tick_phases > 1){\
+        GLOB.CURRENT_TICKLIMIT = ((original_tick_limit - world.tick_usage) / split_tick_phases) + world.tick_usage;\
+        --split_tick_phases;\
+    } else {\
+        GLOB.CURRENT_TICKLIMIT = original_tick_limit;\
+    }
+
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))

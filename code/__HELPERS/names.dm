@@ -55,20 +55,25 @@ GLOBAL_VAR(command_name)
 	return capitalize(name)
 
 /proc/station_name()
-	if(GLOB.station_name)
-		return GLOB.station_name
+	if(!GLOB.station_name)
+		var/newname
+		if(config && config.station_name)
+			newname = config.station_name
+		else
+			newname = new_station_name()
 
-	if(config && config.station_name)
-		GLOB.station_name = config.station_name
-	else
-		GLOB.station_name = new_station_name()
+		set_station_name(newname)
+
+	return GLOB.station_name
+
+/proc/set_station_name(newname)
+	GLOB.station_name = newname
 
 	if(config && config.server_name)
 		world.name = "[config.server_name][config.server_name==GLOB.station_name ? "" : ": [GLOB.station_name]"]"
 	else
 		world.name = GLOB.station_name
 
-	return GLOB.station_name
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -235,10 +240,3 @@ GLOBAL_VAR(syndicate_code_response) //Code response for traitors.
 			code_phrase += ", "
 
 	return code_phrase
-
-/proc/change_station_name(designation)
-	if(config && config.server_name)
-		world.name = "[config.server_name]: [designation]"
-	else
-		world.name = designation
-	GLOB.station_name = designation

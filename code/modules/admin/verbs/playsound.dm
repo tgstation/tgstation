@@ -4,9 +4,6 @@
 	if(!check_rights(R_SOUNDS))
 		return
 
-	log_admin("[key_name(src)] played sound [S]")
-	message_admins("[key_name_admin(src)] played sound [S]")
-
 	var/freq = 1
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		freq = pick(0.5, 0.7, 0.8, 0.85, 0.9, 0.95, 1.1, 1.2, 1.4, 1.6, 2.0, 2.5)
@@ -20,12 +17,22 @@
 	admin_sound.wait = 1
 	admin_sound.repeat = 0
 	admin_sound.status = SOUND_STREAM
+		
+	var/res = alert(usr, "Show the title of this song to the players?",, "No", "Yes", "Cancel")
+	switch(res)
+		if("Yes")
+			to_chat(world, "<span class='boldannounce'>An admin played: [S]</span>")
+		if("Cancel")
+			return
+
+	log_admin("[key_name(src)] played sound [S]")
+	message_admins("[key_name_admin(src)] played sound [S]")
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
 			M << admin_sound
 
-	feedback_add_details("admin_verb","Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/play_local_sound(S as sound)
@@ -37,7 +44,7 @@
 	log_admin("[key_name(src)] played a local sound [S]")
 	message_admins("[key_name_admin(src)] played a local sound [S]")
 	playsound(get_turf(src.mob), S, 50, 0, 0)
-	feedback_add_details("admin_verb","Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/set_round_end_sound(S as sound)
 	set category = "Fun"
@@ -52,7 +59,7 @@
 
 	log_admin("[key_name(src)] set the round end sound to [S]")
 	message_admins("[key_name_admin(src)] set the round end sound to [S]")
-	feedback_add_details("admin_verb","Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Set Round End Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/stop_sounds()
 	set category = "Debug"
@@ -65,4 +72,4 @@
 	for(var/mob/M in GLOB.player_list)
 		if(M.client)
 			M << sound(null)
-	feedback_add_details("admin_verb","Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

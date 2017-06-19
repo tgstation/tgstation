@@ -16,8 +16,8 @@
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 
-/obj/machinery/r_n_d/New()
-	..()
+/obj/machinery/r_n_d/Initialize()
+	. = ..()
 	wires = new /datum/wires/r_n_d(src)
 
 /obj/machinery/r_n_d/Destroy()

@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/singularity,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn,
@@ -90,7 +89,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
-		feedback_add_details("cargo_imports",
+		SSblackbox.add_details("cargo_imports",
 			"[SO.pack.type]|[SO.pack.name]|[SO.pack.cost]")
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", "cargo")
 		if(SO.pack.dangerous)

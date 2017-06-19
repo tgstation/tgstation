@@ -116,8 +116,9 @@
 		can_buckle = 1
 		buckle_requires_restraints = 1
 		to_chat(user, "<span class='italics'>You add a rod to [src].")
-		var/image/U = image(icon='icons/obj/hydroponics/equipment.dmi',icon_state="bonfire_rod",pixel_y=16)
-		underlays += U
+		var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+		rod_underlay.pixel_y = 16
+		underlays += rod_underlay
 	if(W.is_hot())
 		StartBurning()
 

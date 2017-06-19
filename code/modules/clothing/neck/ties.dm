@@ -38,35 +38,26 @@
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == INTENT_HELP)
 			var/body_part = parse_zone(user.zone_selected)
-			if(body_part)
-				var/their = "their"
-				switch(M.gender)
-					if(MALE)
-						their = "his"
-					if(FEMALE)
-						their = "her"
 
-				var/sound = "pulse"
-				var/sound_strength
+			var/heart_strength = "<span class='danger'>no</span>"
+			var/lung_strength = "<span class='danger'>no</span>"
 
-				if(M.stat == DEAD || (M.status_flags&FAKEDEATH))
-					sound_strength = "cannot hear"
-					sound = "anything"
-				else
-					sound_strength = "hear a weak"
-					switch(body_part)
-						if("chest")
-							if(M.oxyloss < 50)
-								sound_strength = "hear a healthy"
-							sound = "pulse and respiration"
-						if("eyes","mouth")
-							sound_strength = "cannot hear"
-							sound = "anything"
-						else
-							sound_strength = "hear a weak"
+			var/obj/item/organ/heart/heart = M.getorganslot("heart")
+			var/obj/item/organ/lungs/lungs = M.getorganslot("lungs")
 
-				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
-				return
+			if(!(M.stat == DEAD || (M.status_flags&FAKEDEATH)))
+				if(heart && istype(heart))
+					heart_strength = "<span class='danger'>an unstable</span>"
+					if(heart.beating)
+						heart_strength = "a healthy"
+				if(lungs && istype(lungs))
+					lung_strength = "<span class='danger'>strained</span>"
+					if(!(M.failed_last_breath || M.losebreath))
+						lung_strength = "healthy"
+
+			var/diagnosis = (body_part == "chest" ? "You hear [heart_strength] pulse and [lung_strength] respiration." : "You faintly hear [heart_strength] pulse.")
+			user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "<span class='notice'>You place [src] against [M]'s [body_part]. [diagnosis]</span>")
+			return
 	return ..(M,user)
 
 ///////////

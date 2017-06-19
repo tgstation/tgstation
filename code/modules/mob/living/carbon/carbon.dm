@@ -169,7 +169,20 @@
 		dropItemToGround(I)
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		var/obj/item/B = get_inactive_held_item()
+		var/action = "thrown"
+		if(istype(thrown_thing, /obj/item) && B)
+			var/obj/item/E = thrown_thing
+			if(E.w_class <= B.specthrow_maxwclass)
+				LAZYINITLIST(B.specthrow_msg)
+				if(LAZYLEN(B.specthrow_msg))
+					action = pick(B.specthrow_msg)
+				if(B.specthrow_sound)
+					playsound(B.loc, B.specthrow_sound, 50, 1)
+				if(B.specthrow_forcemult != 1)
+					E.prev_throwforce = E.throwforce
+					E.throwforce = round(E.throwforce * B.specthrow_forcemult)
+		visible_message("<span class='danger'>[src] has [action] [thrown_thing].</span>")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
@@ -219,8 +232,8 @@
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
 			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
-				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>", \
-								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM].</span>")
+				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
+								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
@@ -230,8 +243,8 @@
 							internal = ITEM
 							update_internals_hud_icon(1)
 
-					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
-									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
+					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
+									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
 
 
 /mob/living/carbon/fall(forced)
@@ -326,6 +339,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
+		changeNext_move(0)
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -338,6 +352,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
+		changeNext_move(0)
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -482,13 +497,23 @@
 				adjustBruteLoss(3)
 		else
 			if(T)
-				T.add_vomit_floor(src, 0)//toxic barf looks different
+				T.add_vomit_floor(src, toxic)//toxic barf looks different
 			nutrition -= lost_nutrition
 			adjustToxLoss(-3)
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
 	return 1
+
+/mob/living/carbon/proc/spew_organ(power = 5)
+	if(!internal_organs.len)
+		return //Guess we're out of organs
+	var/obj/item/organ/guts = pick(internal_organs)
+	var/turf/T = get_turf(src)
+	guts.Remove(src)
+	guts.forceMove(T)
+	var/atom/throw_target = get_edge_target_turf(guts, dir)
+	guts.throw_at(throw_target, power, 4, src)
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
@@ -671,14 +696,16 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= HEALTH_THRESHOLD_DEAD || !getorgan(/obj/item/organ/brain))
+		if(health<= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_DEEPCRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()
+		else if(health <= HEALTH_THRESHOLD_CRIT)
+			update_nearcrit_stat()
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
@@ -720,10 +747,13 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+	// heal ears after healing disabilities, since ears check DEAF disability
+	// when healing.
+	restoreEars()
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/brain))
+	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.changeling))
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
@@ -749,7 +779,7 @@
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR
 	overlays_standing[FIRE_LAYER] = new_fire_overlay
 	apply_overlay(FIRE_LAYER)

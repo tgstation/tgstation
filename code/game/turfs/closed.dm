@@ -71,10 +71,8 @@
 /turf/closed/indestructible/fakeglass/Initialize()
 	..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
-	var/image/I = image('icons/obj/structures.dmi', loc = src, icon_state = "grille")
-	underlays += I //add a grille underlay
-	I = image('icons/turf/floors.dmi', loc = src, icon_state = "plating")
-	underlays += I //add the plating underlay, below the grille
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
 /turf/closed/indestructible/fakedoor
 	name = "Centcom Access"

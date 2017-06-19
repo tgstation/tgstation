@@ -1,0 +1,5 @@
+author: "coiax, WJohnston"
+delete-after: True
+changes: 
+  - rscdel: "Languages no longer colour their text."
+  - rscadd: "Languages now have icons to identify them. Galatic Common does not have an icon if understood."

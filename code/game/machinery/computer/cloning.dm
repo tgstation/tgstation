@@ -186,21 +186,23 @@
 			// Scanner
 			if (!isnull(src.scanner))
 
+				var/mob/living/scanner_occupant = scanner.occupant
+
 				dat += "<h3>Scanner Functions</h3>"
 
 				dat += "<div class='statusDisplay'>"
-				if (!src.scanner.occupant)
+				if(!scanner_occupant)
 					dat += "Scanner Unoccupied"
 				else if(loading)
-					dat += "[src.scanner.occupant] => Scanning..."
+					dat += "[scanner_occupant] => Scanning..."
 				else
-					if (src.scanner.occupant.ckey != scantemp_ckey)
+					if(scanner_occupant.ckey != scantemp_ckey)
 						scantemp = "Ready to Scan"
-						scantemp_ckey = src.scanner.occupant.ckey
-					dat += "[src.scanner.occupant] => [scantemp]"
+						scantemp_ckey = scanner_occupant.ckey
+					dat += "[scanner_occupant] => [scantemp]"
 				dat += "</div>"
 
-				if (src.scanner.occupant)
+				if(scanner_occupant)
 					dat += "<a href='byond://?src=\ref[src];scan=1'>Start Scan</a>"
 					dat += "<br><a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
 				else

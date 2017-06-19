@@ -2122,7 +2122,7 @@
 /area/awaymission/wwrefine)
 "gL" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gM" = (
 /turf/closed/wall/shuttle{
@@ -2141,10 +2141,10 @@
 /area/awaymission/wwrefine)
 "gP" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gQ" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gR" = (
 /turf/closed/wall/shuttle{
@@ -2176,7 +2176,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/black/orange,
 /obj/item/clothing/mask/gas/syndicate,
 /obj/item/weapon/tank/internals/oxygen,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gX" = (
 /obj/structure/grille,
@@ -2192,7 +2192,7 @@
 /obj/structure/window/reinforced{
 	icon_state = "fwindow"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaymission/wwrefine)
 "gY" = (
 /obj/item/weapon/paper{

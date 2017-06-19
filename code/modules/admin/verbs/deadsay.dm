@@ -19,7 +19,7 @@
 
 	if (!msg)
 		return
-	var/nicknames = file2list("config/admin_nicknames.txt")
+	var/static/nicknames = world.file2list("config/admin_nicknames.txt")
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([src.holder.fakekey ? pick(nicknames) : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
@@ -29,4 +29,4 @@
 		if (M.stat == DEAD || (M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 			M.show_message(rendered, 2)
 
-	feedback_add_details("admin_verb","Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

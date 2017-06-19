@@ -322,10 +322,10 @@
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
-		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/space))
+		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/immutable/space))
 			space_in_group = 1
 			qdel(A)
-			A = new/datum/gas_mixture/space()
+			A = new/datum/gas_mixture/immutable/space()
 		A.merge(T.air)
 
 	for(var/id in A_gases)

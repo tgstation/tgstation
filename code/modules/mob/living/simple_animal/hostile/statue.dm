@@ -220,7 +220,7 @@
 			else
 				target.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 				name = "Toggle Nightvision \[ON]"
-			target.update_sight()
+		target.update_sight()
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"

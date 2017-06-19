@@ -145,8 +145,8 @@
 	var/area_type = /area/space
 	var/last_dock_time
 
-/obj/docking_port/stationary/New()
-	..()
+/obj/docking_port/stationary/Initialize()
+	. = ..()
 	SSshuttle.stationary += src
 	if(!id)
 		id = "[SSshuttle.stationary.len]"
@@ -168,8 +168,8 @@
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
-/obj/docking_port/stationary/transit/New()
-	..()
+/obj/docking_port/stationary/transit/Initialize()
+	. = ..()
 	SSshuttle.transit += src
 
 /obj/docking_port/stationary/transit/proc/dezone()
@@ -217,14 +217,16 @@
 
 	var/launch_status = NOLAUNCH
 
+	var/knockdown = TRUE //Will it knock down mobs when it docks?
+
 	// A timid shuttle will not register itself with the shuttle subsystem
 	// All shuttle templates are timid
 	var/timid = FALSE
 
 	var/list/ripples = list()
 
-/obj/docking_port/mobile/New()
-	..()
+/obj/docking_port/mobile/Initialize()
+	. = ..()
 	if(!timid)
 		register()
 
@@ -241,7 +243,7 @@
 	. = ..()
 
 /obj/docking_port/mobile/Initialize(mapload)
-	..()
+	. = ..()
 
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
@@ -316,7 +318,7 @@
 	if(!check_dock(S))
 		testing("check_dock failed on request for [src]")
 		return
-	
+
 	if(mode == SHUTTLE_IGNITING && destination == S)
 		return
 
@@ -481,6 +483,21 @@
 	//move or squish anything in the way ship at destination
 	roadkill(L0, L1, S1.dir)
 
+
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		if(!T0)
+			continue
+		var/turf/T1 = L1[i]
+		if(!T1)
+			continue
+		if(T0.type == T0.baseturf)
+			continue
+		for(var/atom/movable/AM in T0)
+			AM.beforeShuttleMove(T1, rotation)
+
+	var/list/moved_atoms = list()
+
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		if(!T0)
@@ -502,7 +519,8 @@
 
 			//move mobile to new location
 			for(var/atom/movable/AM in T0)
-				AM.onShuttleMove(T1, rotation)
+				if(AM.onShuttleMove(T1, rotation, knockdown))
+					moved_atoms += AM
 
 		if(rotation)
 			T1.shuttleRotate(rotation)
@@ -516,6 +534,10 @@
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
+
+	for(var/am in moved_atoms)
+		var/atom/movable/AM = am
+		AM.afterShuttleMove()
 
 	check_poddoors()
 	S1.last_dock_time = world.time
@@ -558,14 +580,11 @@
 					if(M.pulledby)
 						M.pulledby.stop_pulling()
 					M.stop_pulling()
-					M.visible_message("<span class='warning'>[M] is hit by \
-							a hyperspace ripple!</span>",
-							"<span class='userdanger'>You feel an immense \
-							crushing pressure as the space around you ripples.</span>")
+					M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
 					if(M.key || M.get_ghost(TRUE))
-						feedback_add_details("shuttle_gib", "[type]")
+						SSblackbox.add_details("shuttle_gib", "[type]")
 					else
-						feedback_add_details("shuttle_gib_unintelligent", "[type]")
+						SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
 					M.gib()
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else

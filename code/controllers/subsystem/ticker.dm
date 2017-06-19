@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
-	init_order = 13
+	init_order = INIT_ORDER_TICKER
 
 	priority = 200
 	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_start_events
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
-	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -238,7 +238,7 @@ SUBSYSTEM_DEF(ticker)
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
-	if(current_state < GAME_STATE_PLAYING)
+	if(!HasRoundStarted())
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()
@@ -590,22 +590,6 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
-	if(SSgarbage.didntgc.len || SSgarbage.sleptDestroy.len)
-		var/dellog = ""
-		for(var/path in SSgarbage.didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-			if(path in SSgarbage.sleptDestroy)
-				dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-				SSgarbage.sleptDestroy -= path
-		for(var/path in SSgarbage.sleptDestroy)
-			dellog += "Path : [path] \n"
-			dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-		log_world(dellog)
-
-	CHECK_TICK
-
 	//Collects persistence features
 	SSpersistence.CollectData()
 
@@ -620,8 +604,8 @@ SUBSYSTEM_DEF(ticker)
 	if(selected_tip)
 		m = selected_tip
 	else
-		var/list/randomtips = file2list("config/tips.txt")
-		var/list/memetips = file2list("config/sillytips.txt")
+		var/list/randomtips = world.file2list("strings/tips.txt")
+		var/list/memetips = world.file2list("strings/sillytips.txt")
 		if(randomtips.len && prob(95))
 			m = pick(randomtips)
 		else if(memetips.len)
@@ -667,11 +651,11 @@ SUBSYSTEM_DEF(ticker)
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
+/datum/controller/subsystem/ticker/proc/HasRoundStarted()
+	return current_state >= GAME_STATE_PLAYING
 
-/world/proc/has_round_started()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
+/datum/controller/subsystem/ticker/proc/IsRoundInProgress()
+	return current_state == GAME_STATE_PLAYING
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state

@@ -123,8 +123,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
 	var/area/A = get_area(user)
 	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
-	message_admins("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x], [user.y], [user.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>(JMP)</a>")
-	log_game("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x],[user.y],[user.z]).")
+	message_admins("[ADMIN_LOOKUPFLW(user)] primed a cherry bomb for detonation at [A] [ADMIN_COORDJMP(user)]")
+	log_game("[key_name(user)] primed a cherry bomb for detonation at [A] [COORD(user)].")
 	prime()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)

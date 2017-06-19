@@ -24,7 +24,7 @@
 	if(!istype(H)) return 0
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U)) return 0
-	if(U.sensor_mode <= 2) return 0
+	if(U.sensor_mode <= SENSOR_VITALS) return 0
 	return 1
 
 /datum/atom_hud/data/human/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)

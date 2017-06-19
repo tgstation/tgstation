@@ -15,6 +15,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -26,16 +27,26 @@
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/weapon/ectoplasm)
-	del_on_death = 1
+	del_on_death = TRUE
+	initial_language_holder = /datum/language_holder/construct
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/master = null
+	var/seeking = FALSE
 
 
 /mob/living/simple_animal/hostile/construct/Initialize()
-	..()
+	. = ..()
+	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+
+/mob/living/simple_animal/hostile/construct/Destroy()
+	for(var/X in actions)
+		var/datum/action/A = X
+		qdel(A)
+	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -85,6 +96,10 @@
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0
 
+/mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(updating_health)
+		update_health_hud()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/armored
@@ -269,3 +284,53 @@
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+
+///////////////////////Master-Tracker///////////////////////
+
+/datum/action/innate/seek_master
+	name = "Seek your Master"
+	desc = "You and your master share a soul-link that informs you of their location"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/mob/living/simple_animal/hostile/construct/the_construct
+
+/datum/action/innate/seek_master/Grant(var/mob/living/C)
+	the_construct = C
+	..()
+
+/datum/action/innate/seek_master/Activate()
+	if(!the_construct.master)
+		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
+		the_construct.seeking = FALSE
+		return
+	if(tracking)
+		tracking = FALSE
+		the_construct.seeking = FALSE
+		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
+		return
+	else
+		tracking = TRUE
+		the_construct.seeking = TRUE
+		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
+
+
+/////////////////////////////ui stuff/////////////////////////////
+
+/mob/living/simple_animal/hostile/construct/update_health_hud()
+	if(hud_used)
+		if(health >= maxHealth)
+			hud_used.healths.icon_state = "[icon_state]_health0"
+		else if(health > maxHealth*0.8)
+			hud_used.healths.icon_state = "[icon_state]_health2"
+		else if(health > maxHealth*0.6)
+			hud_used.healths.icon_state = "[icon_state]_health3"
+		else if(health > maxHealth*0.4)
+			hud_used.healths.icon_state = "[icon_state]_health4"
+		else if(health > maxHealth*0.2)
+			hud_used.healths.icon_state = "[icon_state]_health5"
+		else
+			hud_used.healths.icon_state = "[icon_state]_health6"
+

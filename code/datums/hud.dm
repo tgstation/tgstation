@@ -38,10 +38,11 @@ GLOBAL_LIST_INIT(huds, list(
 
 /datum/atom_hud/proc/remove_from_hud(atom/A)
 	if(!A)
-		return
+		return FALSE
 	for(var/mob/M in hudusers)
 		remove_from_single_hud(M, A)
 	hudatoms -= A
+	return TRUE
 
 /datum/atom_hud/proc/remove_from_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
 	if(!M || !M.client || !A)
@@ -52,16 +53,17 @@ GLOBAL_LIST_INIT(huds, list(
 /datum/atom_hud/proc/add_hud_to(mob/M)
 	if(!M)
 		return
-	hudusers |= M
+	hudusers[M] = TRUE
 	for(var/atom/A in hudatoms)
 		add_to_single_hud(M, A)
 
 /datum/atom_hud/proc/add_to_hud(atom/A)
 	if(!A)
-		return
+		return FALSE
 	hudatoms |= A
 	for(var/mob/M in hudusers)
 		add_to_single_hud(M, A)
+	return TRUE
 
 /datum/atom_hud/proc/add_to_single_hud(mob/M, atom/A) //unsafe, no sanity apart from client
 	if(!M || !M.client || !A)
@@ -77,8 +79,8 @@ GLOBAL_LIST_INIT(huds, list(
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			gang_huds += G.ganghud
 
-	for(var/datum/atom_hud/hud in (GLOB.huds|gang_huds))
-		if(src in hud.hudusers)
+	for(var/datum/atom_hud/hud in (GLOB.huds|gang_huds|GLOB.active_alternate_appearances))
+		if(hud && hud.hudusers[src])
 			hud.add_hud_to(src)
 
 /mob/dead/new_player/reload_huds()

@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - tweak: "Tweaked how things were deleted to cut down on lag from consecutive deletes and provide better logging for things that cause lag when hard-deleted."

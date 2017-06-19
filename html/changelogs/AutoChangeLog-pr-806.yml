@@ -1,0 +1,9 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Anomalous crystals can be examined by ghosts to determine their
+function and activation method."
+  - rscdel: "Lightbringers can understand Slime and Galactic Common, and can
+only speak Slime, as before."
+  - rscadd: "The helper anomalous crystal is in the orbit list after it has been
+activated."

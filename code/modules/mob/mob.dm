@@ -3,6 +3,7 @@
 	GLOB.dead_mob_list -= src
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
+	GLOB.mob_directory -= tag
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -22,12 +23,18 @@
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
 	..()
 
 /atom/proc/prepare_huds()
@@ -69,7 +76,7 @@
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && ear_deaf)//Hearing related
+		if(type & 2 && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -343,6 +350,8 @@
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
+	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+		return
 	while(spintime >= speed)
 		sleep(speed)
 		switch(D)
@@ -558,6 +567,7 @@
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
+		stat("Round ID:", "[GLOB.round_id ? GLOB.round_id : "NULL"]")
 		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
 		stat(null, "Station Time: [worldtime2text()]")
 		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
@@ -566,8 +576,7 @@
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
-
-	if(client && client.holder)
+	if(client && check_rights_for(client, R_ADMIN))
 		if(statpanel("MC"))
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")
@@ -588,6 +597,8 @@
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			GLOB.cameranet.stat_entry()
+		if(statpanel("Tickets"))
+			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -673,7 +684,7 @@
 			fall()
 		else if(ko || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || stunned || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !((is_nearcrit() ? 0 : ko) || resting || stunned || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -731,7 +742,6 @@
 	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
-
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
@@ -957,10 +967,6 @@
 			set_eye_damage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
-		if("ear_deaf")
-			setEarDamage(-1, var_value)
-		if("ear_damage")
-			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
@@ -999,3 +1005,10 @@
 		if("logging")
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
+
+/mob/verb/open_language_menu()
+	set name = "Open Language Menu"
+	set category = "IC"
+
+	var/datum/language_holder/H = get_language_holder()
+	H.open_language_menu(usr)

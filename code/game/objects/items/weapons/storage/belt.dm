@@ -296,7 +296,7 @@
 		/obj/item/weapon/lighter,
 		/obj/item/device/multitool,
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov,
-		/obj/item/weapon/c4,
+		/obj/item/weapon/grenade/plastic/c4,
 		)
 /obj/item/weapon/storage/belt/grenade/full/PopulateContents()
 	new /obj/item/weapon/grenade/flashbang(src)

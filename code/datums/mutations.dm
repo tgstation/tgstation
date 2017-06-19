@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/lowest_value = 256 * 8
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
-	var/list/visual_indicators = list()
+	var/list/mutable_appearance/visual_indicators = list()
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/telekinesis/New()
 	..()
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="telekinesishead", "layer"=-MUTATIONS_LAYER)
+	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)
 
 /datum/mutation/human/telekinesis/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/cold_resistance/New()
 	..()
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="fire", "layer"=-MUTATIONS_LAYER)
+	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER)
 
 /datum/mutation/human/cold_resistance/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		else
 			new_mob = owner.randmuti()
 	else
-		new_mob = owner.randmutg()
+		new_mob = owner.randmutvg()
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner
@@ -618,7 +618,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human/laser_eyes/New()
 	..()
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes", "layer"=-FRONT_MUTATIONS_LAYER)
+	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER)
 
 /datum/mutation/human/laser_eyes/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
@@ -640,11 +640,11 @@ GLOBAL_LIST_EMPTY(mutations_list)
 			var/list/mut_overlay = list()
 			if(overlays_standing[CM.layer_used])
 				mut_overlay = overlays_standing[CM.layer_used]
-			var/image/V = CM.get_visual_indicator(src)
+			var/mutable_appearance/V = CM.get_visual_indicator(src)
 			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
 				remove_overlay(CM.layer_used)
-				for(var/image/I in CM.visual_indicators)
-					mut_overlay.Remove(I)
+				for(var/mutable_appearance/MA in CM.visual_indicators)
+					mut_overlay.Remove(MA)
 				mut_overlay |= V
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)

@@ -85,7 +85,7 @@
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
 	if(!has_cover)
-		popUp()
+		INVOKE_ASYNC(src, .proc/popUp)
 
 /obj/machinery/porta_turret/update_icon()
 	cut_overlays()
@@ -364,6 +364,10 @@
 	var/list/targets = list()
 	var/turretview = view(scan_range, base)
 	for(var/A in turretview)
+		var/atom/AA = A
+		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+			continue
+
 		if(check_anomalies)//if it's set to check for simple animals
 			if(istype(A, /mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = A
@@ -784,8 +788,7 @@
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
 	desc = "Used for building turret control panels"
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "apc_frame"
+	icon_state = "apc"
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 

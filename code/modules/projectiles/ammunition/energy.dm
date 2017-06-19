@@ -191,7 +191,7 @@
 	fire_sound = 'sound/magic/lightningbolt.ogg'
 	e_cost = 200
 	select_name = "stun"
-	projectile_type = /obj/item/projectile/energy/tesla_revolver
+	projectile_type = /obj/item/projectile/energy/tesla/revolver
 
 /obj/item/ammo_casing/energy/gravityrepulse
 	projectile_type = /obj/item/projectile/gravityrepulse

@@ -179,12 +179,12 @@
 
 /proc/SDQL_callproc_global(procname,args_list)
 	set waitfor = FALSE
-	call(procname)(arglist(args_list))
+	WrapAdminProcCall(GLOBAL_PROC, procname, args_list)
 
 /proc/SDQL_callproc(thing, procname, args_list)
 	set waitfor = FALSE
 	if(hascall(thing, procname))
-		call(thing, procname)(arglist(args_list))
+		WrapAdminProcCall(thing, procname, args_list)
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
@@ -251,6 +251,11 @@
 
 /proc/SDQL_from_objs(list/tree)
 	if("world" in tree)
+		if(IsAdminAdvancedProcCall())
+			var/msg = "WARNING: Attempt to retrieve world reference made by [usr]!"
+			log_admin(msg)
+			message_admins(msg)
+			return
 		return world
 	return SDQL_expression(world, tree)
 
@@ -451,12 +456,17 @@
 				else
 					return null
 			if("world")
+				if(IsAdminAdvancedProcCall())
+					var/msg = "WARNING: Attempt to retrieve world reference made by [usr]!"
+					log_admin(msg)
+					message_admins(msg)
+					return
 				v = world
 			if("global")
 				v = GLOB
 			else
 				return null
-	else if(object == world) // Shitty ass hack kill me.
+	else if(object == GLOB) // Shitty ass hack kill me.
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
@@ -477,10 +487,10 @@
 	var/list/new_args = list()
 	for(var/arg in arguments)
 		new_args += SDQL_expression(source, arg)
-	if(object == world) // Global proc.
+	if(object == GLOB) // Global proc.
 		procname = "/proc/[procname]"
-		return call(procname)(arglist(new_args))
-	return call(object, procname)(arglist(new_args)) // Spawn in case the function sleeps.
+		return WrapAdminProcCall(GLOBAL_PROC, procname, new_args)
+	return WrapAdminProcCall(object, procname, new_args)
 
 /proc/SDQL2_tokenize(query_text)
 

@@ -18,7 +18,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/mob/triggerer = null
 	var/waiting = 0
 
-/obj/machinery/keycard_auth/New()
+/obj/machinery/keycard_auth/Initialize()
 	. = ..()
 	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 
@@ -95,10 +95,10 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	switch(event)
 		if("Red Alert")
 			set_security_level(SEC_LEVEL_RED)
-			feedback_inc("alert_keycard_auth_red",1)
+			SSblackbox.inc("alert_keycard_auth_red",1)
 		if("Emergency Maintenance Access")
 			make_maint_all_access()
-			feedback_inc("alert_keycard_auth_maint",1)
+			SSblackbox.inc("alert_keycard_auth_maint",1)
 
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)

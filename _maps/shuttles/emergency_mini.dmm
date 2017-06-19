@@ -222,10 +222,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "H" = (
@@ -263,10 +260,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "N" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /obj/machinery/computer/security,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

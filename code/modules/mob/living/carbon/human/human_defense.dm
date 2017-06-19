@@ -153,7 +153,7 @@
 					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
 					L.receive_damage(I.w_class*I.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")
+					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
 					hitpush = 0
 					skipcatch = 1 //can't catch the now embedded item
 
@@ -179,8 +179,8 @@
 
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected)) //what we're actually ending up trying to hit.
 	var/target_area = parse_zone(check_zone(user.zone_selected)) //our intended target
-	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
-	feedback_add_details("zone_targeted","[target_area]")
+	SSblackbox.add_details("item_used_for_combat","[I.type]|[I.force]")
+	SSblackbox.add_details("zone_targeted","[target_area]")
 
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, src)
@@ -458,7 +458,7 @@
 			else if(S.siemens_coefficient == (-1))
 				total_coeff -= 1
 		siemens_coeff = total_coeff
-		if(tesla_ignore)
+		if(HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 			siemens_coeff = 0
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
@@ -687,7 +687,7 @@
 				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

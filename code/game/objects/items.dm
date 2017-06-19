@@ -1,4 +1,8 @@
-GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire"))
+GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
+
+GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
+// if true, everyone item when created will have its name changed to be
+// more... RPG-like.
 
 /obj/item
 	name = "item"
@@ -99,13 +103,18 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
+	var/datum/rpg_loot/rpg_loot = null
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
-	..()
+	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
+
+	if(GLOB.rpg_loot_items)
+		rpg_loot = new(src)
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -114,6 +123,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
+	QDEL_NULL(rpg_loot)
 	return ..()
 
 /obj/item/device

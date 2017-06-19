@@ -239,6 +239,12 @@
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
 
+/obj/machinery/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
+	name = "xenobiology shield wall generator"
+	desc = "A shield generator meant for use in xenobiology."
+	icon_state = "Shield_Gen"
+	req_access = list(GLOB.access_xenobiology)
+
 /obj/machinery/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinal)
 		cleanup_field(d)

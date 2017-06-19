@@ -89,6 +89,10 @@
 							c.fields = copy.fields
 							c.update_icon()
 							c.updateinfolinks()
+							c.stamps = copy.stamps
+							if(copy.stamped)
+								c.stamped = copy.stamped.Copy()
+							c.copy_overlays(copy, TRUE)
 							toner--
 					busy = 1
 					sleep(15)
@@ -305,6 +309,8 @@
 				return
 			to_chat(user, "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>")
 			anchored = !anchored
+	else if(istype(O, /obj/item/areaeditor/blueprints))
+		to_chat(user, "<span class='warning'>The Blueprint is too large to put into the copier. You need to find something else to record the document</span>")
 	else
 		return ..()
 

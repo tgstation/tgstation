@@ -287,7 +287,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, action=NOTIFY_ATTACK)
 	sleep(50)
 	if(!SSticker.mode.devil_ascended)
-		SSshuttle.emergency.request(null, 0.3)
+		SSshuttle.emergency.request(null, set_coefficient = 0.3)
 	SSticker.mode.devil_ascended++
 	form = ARCH_DEVIL
 
@@ -449,7 +449,7 @@ GLOBAL_LIST_INIT(lawlorify, list (
 					A.convert_to_archdevil()
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
-	
+
 
 /datum/devilinfo/proc/update_hud()
 	if(istype(owner.current, /mob/living/carbon))

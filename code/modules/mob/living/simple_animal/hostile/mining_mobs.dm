@@ -48,7 +48,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	feedback_add_details("mobs_killed_mining","[src.type]")
+	SSblackbox.add_details("mobs_killed_mining","[src.type]")
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
@@ -266,15 +266,15 @@
 	update_icon()
 
 	if(implanted)
-		feedback_add_details("hivelord_core", "[type]|implanted")
+		SSblackbox.add_details("hivelord_core", "[type]|implanted")
 	else
-		feedback_add_details("hivelord_core", "[type]|stabilizer")
+		SSblackbox.add_details("hivelord_core", "[type]|stabilizer")
 
 
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-	feedback_add_details("hivelord_core", "[src.type]|inert")
+	SSblackbox.add_details("hivelord_core", "[src.type]|inert")
 	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
@@ -298,10 +298,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
-				feedback_add_details("hivelord_core","[src.type]|used|other")
+				SSblackbox.add_details("hivelord_core","[src.type]|used|other")
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				feedback_add_details("hivelord_core","[src.type]|used|self")
+				SSblackbox.add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
@@ -1014,7 +1014,7 @@
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
 					continue

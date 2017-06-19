@@ -63,7 +63,7 @@
 			if(istype(src, /turf/open/floor/plating/asteroid))
 				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
-				feedback_add_details("pick_used_mining","[W.type]")
+				SSblackbox.add_details("pick_used_mining","[W.type]")
 
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W

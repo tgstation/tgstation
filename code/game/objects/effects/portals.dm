@@ -63,7 +63,7 @@
 		return
 	if (istype(M, /atom/movable))
 		if(ismegafauna(M))
-			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src].")
+			message_admins("[M] [ADMIN_FLW(M)] has teleported through [src].")
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 
 

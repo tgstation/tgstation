@@ -3,10 +3,10 @@
 	var/optiontext
 
 /mob/dead/new_player/proc/handle_player_polling()
-	if(!GLOB.dbcon.IsConnected())
+	if(!SSdbcore.IsConnected())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/DBQuery/query_poll_get = GLOB.dbcon.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
+	var/datum/DBQuery/query_poll_get = SSdbcore.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
 	if(!query_poll_get.warn_execute())
 		return
 	var/output = "<div align='center'><B>Player polls</B><hr><table>"
@@ -22,10 +22,10 @@
 /mob/dead/new_player/proc/poll_player(pollid)
 	if(!pollid)
 		return
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/DBQuery/query_poll_get_details = GLOB.dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
+	var/datum/DBQuery/query_poll_get_details = SSdbcore.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!query_poll_get_details.warn_execute())
 		return
 	var/pollstarttime = ""
@@ -41,14 +41,14 @@
 		multiplechoiceoptions = text2num(query_poll_get_details.item[5])
 	switch(polltype)
 		if(POLLTYPE_OPTION)
-			var/DBQuery/query_option_get_votes = GLOB.dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
+			var/datum/DBQuery/query_option_get_votes = SSdbcore.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 			if(!query_option_get_votes.warn_execute())
 				return
 			var/votedoptionid = 0
 			if(query_option_get_votes.NextRow())
 				votedoptionid = text2num(query_option_get_votes.item[1])
 			var/list/datum/polloption/options = list()
-			var/DBQuery/query_option_options = GLOB.dbcon.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
+			var/datum/DBQuery/query_option_options = SSdbcore.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
 			if(!query_option_options.warn_execute())
 				return
 			while(query_option_options.NextRow())
@@ -82,7 +82,7 @@
 			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x250")
 		if(POLLTYPE_TEXT)
-			var/DBQuery/query_text_get_votes = GLOB.dbcon.NewQuery("SELECT replytext FROM [format_table_name("poll_textreply")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
+			var/datum/DBQuery/query_text_get_votes = SSdbcore.NewQuery("SELECT replytext FROM [format_table_name("poll_textreply")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 			if(!query_text_get_votes.warn_execute())
 				return
 			var/vote_text = ""
@@ -111,7 +111,7 @@
 			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_RATING)
-			var/DBQuery/query_rating_get_votes = GLOB.dbcon.NewQuery("SELECT o.text, v.rating FROM [format_table_name("poll_option")] o, [format_table_name("poll_vote")] v WHERE o.pollid = [pollid] AND v.ckey = '[ckey]' AND o.id = v.optionid")
+			var/datum/DBQuery/query_rating_get_votes = SSdbcore.NewQuery("SELECT o.text, v.rating FROM [format_table_name("poll_option")] o, [format_table_name("poll_vote")] v WHERE o.pollid = [pollid] AND v.ckey = '[ckey]' AND o.id = v.optionid")
 			if(!query_rating_get_votes.warn_execute())
 				return
 			var/output = "<div align='center'><B>Player poll</B><hr>"
@@ -129,7 +129,7 @@
 				output += "<input type='hidden' name='votetype' value=[POLLTYPE_RATING]>"
 				var/minid = 999999
 				var/maxid = 0
-				var/DBQuery/query_rating_options = GLOB.dbcon.NewQuery("SELECT id, text, minval, maxval, descmin, descmid, descmax FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
+				var/datum/DBQuery/query_rating_options = SSdbcore.NewQuery("SELECT id, text, minval, maxval, descmin, descmid, descmax FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
 				if(!query_rating_options.warn_execute())
 					return
 				while(query_rating_options.NextRow())
@@ -163,7 +163,7 @@
 			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_MULTI)
-			var/DBQuery/query_multi_get_votes = GLOB.dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
+			var/datum/DBQuery/query_multi_get_votes = SSdbcore.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 			if(!query_multi_get_votes.warn_execute())
 				return
 			var/list/votedfor = list()
@@ -172,7 +172,7 @@
 			var/list/datum/polloption/options = list()
 			var/maxoptionid = 0
 			var/minoptionid = 0
-			var/DBQuery/query_multi_options = GLOB.dbcon.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
+			var/datum/DBQuery/query_multi_options = SSdbcore.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
 			if(!query_multi_options.warn_execute())
 				return
 			while(query_multi_options.NextRow())
@@ -214,7 +214,7 @@
 			var/datum/asset/irv_assets = get_asset_datum(/datum/asset/simple/IRV)
 			irv_assets.send(src)
 
-			var/DBQuery/query_irv_get_votes = GLOB.dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
+			var/datum/DBQuery/query_irv_get_votes = SSdbcore.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 			if(!query_irv_get_votes.warn_execute())
 				return
 
@@ -224,7 +224,7 @@
 
 			var/list/datum/polloption/options = list()
 
-			var/DBQuery/query_irv_options = GLOB.dbcon.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
+			var/datum/DBQuery/query_irv_options = SSdbcore.NewQuery("SELECT id, text FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
 			if(!query_irv_options.warn_execute())
 				return
 			while(query_irv_options.NextRow())
@@ -327,10 +327,10 @@
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/DBQuery/query_hasvoted = GLOB.dbcon.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
+	var/datum/DBQuery/query_hasvoted = SSdbcore.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_hasvoted.warn_execute())
 		return
 	if(query_hasvoted.NextRow())
@@ -355,14 +355,14 @@
 	return 1
 
 /mob/dead/new_player/proc/vote_valid_check(pollid, holder, type)
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	pollid = text2num(pollid)
 	if (!pollid || pollid < 0)
 		return 0
 	//validate the poll is actually the right type of poll and its still active
-	var/DBQuery/query_validate_poll = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime AND polltype = '[type]' [(holder ? "" : "AND adminonly = false")]")
+	var/datum/DBQuery/query_validate_poll = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE id = [pollid] AND Now() BETWEEN starttime AND endtime AND polltype = '[type]' [(holder ? "" : "AND adminonly = false")]")
 	if(!query_validate_poll.warn_execute())
 		return 0
 	if (!query_validate_poll.NextRow())
@@ -370,7 +370,7 @@
 	return 1
 
 /mob/dead/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
@@ -395,7 +395,7 @@
 		return 0
 
 	//lets collect the options
-	var/DBQuery/query_irv_id = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
+	var/datum/DBQuery/query_irv_id = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_option")] WHERE pollid = [pollid]")
 	if(!query_irv_id.warn_execute())
 		return 0
 	var/list/optionlist = list()
@@ -426,12 +426,12 @@
 		sqlrowlist += "(Now(), [pollid], [vote], '[sanitizeSQL(ckey)]', INET_ATON('[sanitizeSQL(address)]'), '[sanitizeSQL(rank)]')"
 
 	//now lets delete their old votes (if any)
-	var/DBQuery/query_irv_del_old = GLOB.dbcon.NewQuery("DELETE FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
+	var/datum/DBQuery/query_irv_del_old = SSdbcore.NewQuery("DELETE FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_irv_del_old.warn_execute())
 		return 0
 
 	//now to add the new ones.
-	var/DBQuery/query_irv_vote = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES [sqlrowlist]")
+	var/datum/DBQuery/query_irv_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES [sqlrowlist]")
 	if(!query_irv_vote.warn_execute())
 		return 0
 	src << browse(null,"window=playerpoll")
@@ -439,7 +439,7 @@
 
 
 /mob/dead/new_player/proc/vote_on_poll(pollid, optionid)
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
@@ -452,14 +452,14 @@
 	var/adminrank = sanitizeSQL(poll_check_voted(pollid))
 	if(!adminrank)
 		return
-	var/DBQuery/query_option_vote = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
+	var/datum/DBQuery/query_option_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
 	if(!query_option_vote.warn_execute())
 		return
 	usr << browse(null,"window=playerpoll")
 	return 1
 
 /mob/dead/new_player/proc/log_text_poll_reply(pollid, replytext)
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
@@ -479,14 +479,14 @@
 	if(!(length(replytext) > 0) || !(length(replytext) <= 8000))
 		to_chat(usr, "The text you entered was invalid or too long. Please correct the text and submit again.")
 		return
-	var/DBQuery/query_text_vote = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
+	var/datum/DBQuery/query_text_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
 	if(!query_text_vote.warn_execute())
 		return
 	usr << browse(null,"window=playerpoll")
 	return 1
 
 /mob/dead/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
@@ -496,7 +496,7 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_RATING))
 		return 0
-	var/DBQuery/query_numval_hasvoted = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE optionid = [optionid] AND ckey = '[ckey]'")
+	var/datum/DBQuery/query_numval_hasvoted = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE optionid = [optionid] AND ckey = '[ckey]'")
 	if(!query_numval_hasvoted.warn_execute())
 		return
 	if(query_numval_hasvoted.NextRow())
@@ -506,14 +506,14 @@
 	if(client.holder)
 		adminrank = client.holder.rank.name
 	adminrank = sanitizeSQL(adminrank)
-	var/DBQuery/query_numval_vote = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]', [(isnull(rating)) ? "null" : rating])")
+	var/datum/DBQuery/query_numval_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]', [(isnull(rating)) ? "null" : rating])")
 	if(!query_numval_vote.warn_execute())
 		return
 	usr << browse(null,"window=playerpoll")
 	return 1
 
 /mob/dead/new_player/proc/vote_on_multi_poll(pollid, optionid)
-	if (!GLOB.dbcon.Connect())
+	if (!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return 0
 	if (!vote_rig_check())
@@ -523,13 +523,13 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_MULTI))
 		return 0
-	var/DBQuery/query_multi_choicelen = GLOB.dbcon.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
+	var/datum/DBQuery/query_multi_choicelen = SSdbcore.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!query_multi_choicelen.warn_execute())
 		return 1
 	var/i
 	if(query_multi_choicelen.NextRow())
 		i = text2num(query_multi_choicelen.item[1])
-	var/DBQuery/query_multi_hasvoted = GLOB.dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
+	var/datum/DBQuery/query_multi_hasvoted = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 	if(!query_multi_hasvoted.warn_execute())
 		return 1
 	while(i)
@@ -543,7 +543,7 @@
 	if(client.holder)
 		adminrank = client.holder.rank.name
 	adminrank = sanitizeSQL(adminrank)
-	var/DBQuery/query_multi_vote = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
+	var/datum/DBQuery/query_multi_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
 	if(!query_multi_vote.warn_execute())
 		return 1
 	usr << browse(null,"window=playerpoll")

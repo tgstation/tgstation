@@ -95,9 +95,8 @@
 	var/obj/item/weapon/implant/req_implant = null
 
 /obj/item/device/firing_pin/implant/pin_auth(mob/living/user)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		for(var/obj/item/weapon/implant/I in C.implants)
+	if(istype(user))
+		for(var/obj/item/weapon/implant/I in user.implants)
 			if(req_implant && I.type == req_implant)
 				return 1
 	return 0

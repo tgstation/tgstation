@@ -85,7 +85,7 @@
 	var/static/active_phylacteries = 0
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
-	..()
+	. = ..()
 	mind = newmind
 	name = "phylactery of [mind.name]"
 

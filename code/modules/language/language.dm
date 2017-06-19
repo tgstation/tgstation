@@ -1,4 +1,4 @@
-#define SCRAMBLE_CACHE_LEN 20
+#define SCRAMBLE_CACHE_LEN 50 //maximum of 50 specific scrambled lines per language
 
 /*
 	Datum based languages. Easily editable and modular.
@@ -12,14 +12,30 @@
 	var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
 	var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
 	var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
-	var/key = "x"                     // Character used to speak in language
+	var/key                           // Character used to speak in language
+	// If key is null, then the language isn't real or learnable.
 	var/flags                         // Various language flags.
 	var/list/syllables                // Used when scrambling text for a non-speaker.
-	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
-	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
+	var/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
+	var/space_chance = 55        // Likelihood of getting a space in the random scramble string
 	var/list/spans = list()
-	var/static/list/scramble_cache = list()
+	var/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
+
+	// if you are seeing someone speak popcorn language, then something is wrong.
+	var/icon = 'icons/misc/language.dmi'
+	var/icon_state = "popcorn"
+
+/datum/language/proc/display_icon(atom/movable/hearer)
+	var/understands = hearer.has_language(src.type)
+	if(flags & LANGUAGE_HIDE_ICON_IF_UNDERSTOOD && understands)
+		return FALSE
+	if(flags & LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD && !understands)
+		return FALSE
+	return TRUE
+
+/datum/language/proc/get_icon()
+	return "<img class=icon src=\ref[icon] iconstate='[icon_state]'>"
 
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)

@@ -110,8 +110,7 @@
 //CIG PACK//
 ////////////
 /obj/item/weapon/storage/fancy/cigarettes
-	name = "cigarettes packet"
-	var/brand = "Space Cigarettes"
+	name = "\improper Space Cigarettes packet"
 	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
@@ -122,16 +121,7 @@
 	storage_slots = 6
 	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
 	icon_type = "cigarette"
-	spawn_type = /obj/item/clothing/mask/cigarette
-
-/obj/item/weapon/storage/fancy/cigarettes/PopulateContents()
-	..()
-	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
-	reagents.set_reacting(FALSE)
-	if(brand)
-		for(var/obj/item/clothing/mask/cigarette/cig in src)
-			cig.desc = "\An [brand] brand [cig.name]."
-		name = "\improper [brand] packet"
+	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 
 /obj/item/weapon/storage/fancy/cigarettes/AltClick(mob/user)
 	if(user.get_active_held_item())
@@ -151,22 +141,18 @@
 			add_overlay("[icon_state]_open")
 			var/i = contents.len
 			for(var/C in contents)
+				var/mutable_appearance/inserted_overlay = mutable_appearance(icon)
+				inserted_overlay.pixel_x = 1 * (i - 1)
 				if(istype(C, /obj/item/weapon/lighter/greyscale))
-					add_overlay(image(icon = src.icon, icon_state = "lighter_in", pixel_x = 1 * (i -1)))
+					inserted_overlay.icon_state = "lighter_in"
 				else if(istype(C, /obj/item/weapon/lighter))
-					add_overlay(image(icon = src.icon, icon_state = "zippo_in", pixel_x = 1 * (i -1)))
+					inserted_overlay.icon_state = "zippo_in"
 				else
-					add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (i -1)))
+					inserted_overlay.icon_state = "cigarette"
+				add_overlay(inserted_overlay)
 				i--
 	else
 		cut_overlays()
-
-/obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
-	if(istype(W,/obj/item/clothing/mask/cigarette))
-		if(reagents)
-			reagents.trans_to(W,(reagents.total_volume/contents.len))
-	fancy_open = TRUE
-	..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M, /mob))
@@ -185,65 +171,52 @@
 		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	brand = "DromedaryCo"
+	name = "\improper DromedaryCo packet"
 	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
 	icon_state = "dromedary"
+	spawn_type = /obj/item/clothing/mask/cigarette/dromedary
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift
-	brand = "Uplift Smooth"
+	name = "\improper Uplift Smooth packet"
 	desc = "Your favorite brand, now menthol flavored."
 	icon_state = "uplift"
+	spawn_type = /obj/item/clothing/mask/cigarette/uplift
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust
-	brand = "Robust"
+	name = "\improper Robust packet"
 	desc = "Smoked by the robust."
 	icon_state = "robust"
+	spawn_type = /obj/item/clothing/mask/cigarette/robust
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold
-	brand = "Robust Gold"
+	name = "\improper Robust Gold packet"
 	desc = "Smoked by the truly robust."
 	icon_state = "robustg"
-
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_robustgold/PopulateContents()
-	..()
-	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("gold",1)
+	spawn_type = /obj/item/clothing/mask/cigarette/robustgold
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_carp
-	brand = "Carp Classic"
+	name = "\improper Carp Classic packet"
 	desc = "Since 2313."
 	icon_state = "carp"
+	spawn_type = /obj/item/clothing/mask/cigarette/carp
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	brand = "unknown"
+	name = "cigarette packet"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
-
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/PopulateContents()
-	..()
-	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("omnizine",15)
-	name = "cigarette packet"
-
+	spawn_type = /obj/item/clothing/mask/cigarette/syndicate
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_midori
-	brand = "Midori Tabako"
+	name = "\improper Midori Tabako packet"
 	desc = "You can't understand the runes, but the packet smells funny."
 	icon_state = "midori"
 	spawn_type = /obj/item/clothing/mask/cigarette/rollie
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims
-	brand = "Shady Jim's Super Slims"
+	name = "\improper Shady Jim's Super Slims packet"
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
 	icon_state = "shadyjim"
-
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims/PopulateContents()
-	..()
-	for(var/i = 1 to storage_slots)
-		reagents.add_reagent("lipolicide",4)
-		reagents.add_reagent("ammonia",2)
-		reagents.add_reagent("plantbgone",1)
-		reagents.add_reagent("toxin",1.5)
+	spawn_type = /obj/item/clothing/mask/cigarette/shadyjims
 
 /obj/item/weapon/storage/fancy/rollingpapers
 	name = "rolling paper pack"
@@ -267,7 +240,6 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars
 	name = "\improper premium cigar case"
-	brand = null
 	desc = "A case of premium cigars. Very expensive."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"
@@ -278,13 +250,14 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/update_icon()
+	cut_overlays()
 	if(fancy_open)
-		cut_overlays()
 		add_overlay("[icon_state]_open")
+		var/mutable_appearance/cigar_overlay = mutable_appearance(icon, icon_type)
 		for(var/c = contents.len, c >= 1, c--)
-			add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
+			cigar_overlay.pixel_x = 4 * (c - 1)
+			add_overlay(cigar_overlay)
 	else
-		cut_overlays()
 		icon_state = "cigarcase"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba

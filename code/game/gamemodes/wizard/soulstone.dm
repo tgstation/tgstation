@@ -54,7 +54,7 @@
 	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
-		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>")
+		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
@@ -132,11 +132,11 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(SSticker.mode.name == "cult" && T.mind == SSticker.mode:sacrifice_target)
+			if(is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
-					to_chat(user, "<span class='danger'>The soulstone doesn't work for no apparent reason.</span>")
+					to_chat(user, "<span class='danger'>The soulstone seems to reject this soul.</span>")
 				return 0
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
@@ -188,7 +188,10 @@
 
 						else
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
-
+				for(var/datum/mind/B in SSticker.mode.cult)
+					if(B == A.mind)
+						SSticker.mode.cult -= A.mind
+						SSticker.mode.update_cult_icons_removed(A.mind)
 				qdel(T)
 				user.drop_item()
 				qdel(src)
@@ -200,6 +203,9 @@
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	if(stoner)
 		newstruct.faction |= "\ref[stoner]"
+		newstruct.master = stoner
+		var/datum/action/innate/seek_master/SM = new()
+		SM.Grant(newstruct)
 	newstruct.key = target.key
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
@@ -207,6 +213,9 @@
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
+		newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	var/obj/screen/alert/bloodsense/BS = newstruct.alerts["bloodsense"]
+	BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
 
@@ -244,7 +253,7 @@
 			break
 
 	if(!chosen_ghost)	//Failing that, we grab a ghost
-		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
+		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)

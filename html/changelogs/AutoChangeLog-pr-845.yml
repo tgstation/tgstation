@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Removed Mending Motor."
+  - rscadd: "Added Mending Mantra, which is a script that causes you to repair nearby constructs and structures as long as you continue chanting it."
+  - tweak: "Mending Mantra will also heal Servants as long as they're wearing clockwork armor."

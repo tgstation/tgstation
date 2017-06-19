@@ -19,15 +19,12 @@
 /obj/item/weapon/gun/energy/pulse/prize/New()
 	. = ..()
 	GLOB.poi_list |= src
-	var/msg = "A pulse rifle prize has been created at ([x],[y],[z] - (\
-	<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>\
-	JMP</a>)"
+	var/msg = "A pulse rifle prize has been created at [ADMIN_COORDJMP(src)]"
 
 	message_admins(msg)
 	log_game(msg)
 
-	notify_ghosts("Someone won a pulse rifle as a prize!", source = src,
-		action = NOTIFY_ORBIT)
+	notify_ghosts("Someone won a pulse rifle as a prize!", source = src, action = NOTIFY_ORBIT)
 
 /obj/item/weapon/gun/energy/pulse/prize/Destroy()
 	GLOB.poi_list -= src

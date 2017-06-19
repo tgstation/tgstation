@@ -32,4 +32,4 @@
 
 	unbuckle_all_mobs(TRUE)
 
-	sql_report_death(src)
+	SSblackbox.ReportDeath(src)

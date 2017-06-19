@@ -5,7 +5,7 @@
 	slot = "zombie_infection"
 	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
-	var/datum/species/old_species
+	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 3
 	var/converts_living = FALSE
 
@@ -13,7 +13,7 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/zombie_infection/New(loc)
+/obj/item/organ/zombie_infection/Initialize()
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
@@ -63,6 +63,7 @@
 
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
+		owner.set_species(/datum/species/zombie/infectious)
 
 	if(!converts_living && owner.stat != DEAD)
 		return
@@ -70,7 +71,6 @@
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
 	owner.grab_ghost()
-	owner.set_species(/datum/species/zombie/infectious)
 	owner.revive(full_heal = TRUE)
 	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)

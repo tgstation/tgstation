@@ -162,5 +162,5 @@
 	src.cut_overlays()
 	if(!tank)
 		return
-	src.add_overlay(image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]"))
+	add_overlay(tank.icon_state)
 	src.update_icon()

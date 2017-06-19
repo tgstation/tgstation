@@ -25,7 +25,7 @@
 	var/lightswitch = 1
 
 	var/requires_power = 1
-	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/Initialize().
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
@@ -42,6 +42,7 @@
 
 	var/has_gravity = 0
 	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
@@ -116,6 +117,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			luminosity = 0
 		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
 			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
 
 	..()
 

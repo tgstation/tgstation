@@ -13,7 +13,7 @@
 	var/list/speech_buffer = list()
 	var/list/speech_list = list("butt.", "butts.", "ass.", "fart.", "assblast usa", "woop get an ass inspection", "woop") //Hilarious.
 
-/mob/living/simple_animal/bot/buttbot/New()
+/mob/living/simple_animal/bot/buttbot/Initialize()
 	..()
 	if(xeno)
 		icon_state = "buttbot_xeno"

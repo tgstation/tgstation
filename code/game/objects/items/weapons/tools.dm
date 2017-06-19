@@ -231,8 +231,10 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/Wirecutter.ogg'
 	usesound = 'sound/items/Wirecutter.ogg'
+	origin_tech = "materials=1;engineering=1"
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
+
 
 /obj/item/weapon/wirecutters/New(loc, var/param_color = null)
 	..()

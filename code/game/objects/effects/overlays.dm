@@ -31,11 +31,10 @@
 	. = ..()
 	deltimer(timerid)
 
-/obj/effect/overlay/temp/New()
-	..()
+/obj/effect/overlay/temp/Initialize()
+	. = ..()
 	if(randomdir)
 		setDir(pick(GLOB.cardinal))
-	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 
 	timerid = QDEL_IN(src, duration)
 
@@ -45,10 +44,10 @@
 /obj/effect/overlay/temp/dir_setting
 	randomdir = FALSE
 
-/obj/effect/overlay/temp/dir_setting/New(loc, set_dir)
+/obj/effect/overlay/temp/dir_setting/Initialize(mapload, set_dir)
 	if(set_dir)
 		setDir(set_dir)
-	..()
+	. = ..()
 
 /obj/effect/overlay/temp/dir_setting/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
@@ -57,12 +56,12 @@
 	layer = BELOW_MOB_LAYER
 	var/splatter_type = "splatter"
 
-/obj/effect/overlay/temp/dir_setting/bloodsplatter/New(loc, set_dir)
+/obj/effect/overlay/temp/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
 	if(set_dir in GLOB.diagonals)
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
 		icon_state = "[splatter_type][pick(3, 4, 5)]"
-	..()
+	. = ..()
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
 	switch(set_dir)
@@ -93,6 +92,13 @@
 
 /obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter
 	splatter_type = "xsplatter"
+
+/obj/effect/overlay/temp/dir_setting/speedbike_trail
+	name = "speedbike trails"
+	icon_state = "ion_fade"
+	layer = BELOW_MOB_LAYER
+	duration = 10
+	randomdir = 0
 
 /obj/effect/overlay/temp/dir_setting/firing_effect
 	icon = 'icons/effects/effects.dmi'
@@ -190,8 +196,8 @@
 	desc = "It's a decoy!"
 	duration = 15
 
-/obj/effect/overlay/temp/decoy/New(loc, atom/mimiced_atom)
-	..()
+/obj/effect/overlay/temp/decoy/Initialize(mapload, atom/mimiced_atom)
+	. = ..()
 	alpha = initial(alpha)
 	if(mimiced_atom)
 		name = mimiced_atom.name
@@ -199,8 +205,8 @@
 		setDir(mimiced_atom.dir)
 		mouse_opacity = 0
 
-/obj/effect/overlay/temp/decoy/fading/New(loc, atom/mimiced_atom)
-	..()
+/obj/effect/overlay/temp/decoy/fading/Initialize(mapload, atom/mimiced_atom)
+	. = ..()
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/decoy/fading/fivesecond
@@ -209,6 +215,11 @@
 /obj/effect/overlay/temp/small_smoke
 	icon_state = "smoke"
 	duration = 50
+
+/obj/effect/overlay/temp/fire
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "3"
+	duration = 20
 
 /obj/effect/overlay/temp/cult
 	randomdir = 0
@@ -219,7 +230,15 @@
 	name = "blood sparks"
 	icon_state = "bloodsparkles"
 
-/obj/effect/overlay/temp/dir_setting/cult/phase
+/obj/effect/overlay/temp/cult/blood  // The traditional teleport
+	name = "blood jaunt"
+	duration = 12
+	icon_state = "bloodin"
+
+/obj/effect/overlay/temp/cult/blood/out
+	icon_state = "bloodout"
+
+/obj/effect/overlay/temp/dir_setting/cult/phase  // The veil shifter teleport
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"
@@ -312,23 +331,41 @@
 /obj/effect/overlay/temp/ratvar/grille/broken
 	icon_state = "ratvarbrokengrilleglow"
 
+/obj/effect/overlay/temp/ratvar/mending_mantra
+	layer = ABOVE_MOB_LAYER
+	duration = 20
+	alpha = 200
+	icon_state = "mending_mantra"
+	light_range = 1.5
+	light_color = "#1E8CE1"
+
+/obj/effect/overlay/temp/ratvar/mending_mantra/Initialize(mapload)
+	. = ..()
+	transform = matrix()*2
+	var/matrix/M = transform
+	M.Turn(90)
+	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = M, time = duration, flags = ANIMATION_PARALLEL)
+
 /obj/effect/overlay/temp/ratvar/volt_hit
 	name = "volt blast"
 	layer = ABOVE_MOB_LAYER
 	duration = 5
 	icon_state = "volt_hit"
+	light_range = 1.5
+	light_power = 2
+	light_color = LIGHT_COLOR_ORANGE
 	var/mob/user
 	var/damage = 20
 
-/obj/effect/overlay/temp/ratvar/volt_hit/New(loc, caster, multiplier)
+/obj/effect/overlay/temp/ratvar/volt_hit/Initialize(mapload, caster, multiplier)
 	if(multiplier)
 		damage *= multiplier
 	duration = max(round(damage * 0.2), 1)
-	..()
-	set_light(1.5, 2, LIGHT_COLOR_ORANGE)
+	. = ..()
 
-/obj/effect/overlay/temp/ratvar/volt_hit/true/New(loc, caster, multiplier)
-	..()
+/obj/effect/overlay/temp/ratvar/volt_hit/true/Initialize(mapload, caster, multiplier)
+	. = ..()
 	user = caster
 	if(user)
 		var/matrix/M = new
@@ -372,8 +409,8 @@
 	icon_state = "warden_gaze"
 	duration = 3
 
-/obj/effect/overlay/temp/ratvar/ocular_warden/New()
-	..()
+/obj/effect/overlay/temp/ratvar/ocular_warden/Initialize()
+	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-10, 10)
 	animate(src, alpha = 0, time = 3, easing = EASE_OUT)
@@ -397,8 +434,8 @@
 	layer = ABOVE_MOB_LAYER
 	duration = 10
 
-/obj/effect/overlay/temp/ratvar/component/New()
-	..()
+/obj/effect/overlay/temp/ratvar/component/Initialize()
+	. = ..()
 	transform = matrix()*0.75
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, -2)
@@ -428,9 +465,8 @@
 	light_power = 2
 	light_color = "#FAE48C"
 
-/obj/effect/overlay/temp/ratvar/sigil/transgression/New()
-	..()
-	update_light()
+/obj/effect/overlay/temp/ratvar/sigil/transgression/Initialize()
+	. = ..()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
@@ -442,10 +478,6 @@
 	light_range = 1.4
 	light_power = 0.5
 	light_color = "#1E8CE1"
-
-/obj/effect/overlay/temp/ratvar/sigil/vitality/New()
-	..()
-	update_light()
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"
@@ -489,9 +521,9 @@
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
 
-/obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
+/obj/effect/overlay/temp/gib_animation/Initialize(mapload, gib_icon)
 	icon_state = gib_icon // Needs to be before ..() so icon is correct
-	..()
+	. = ..()
 
 /obj/effect/overlay/temp/gib_animation/ex_act(severity)
 	return //so the overlay isn't deleted by the explosion that gibbed the mob.
@@ -503,9 +535,9 @@
 	icon = 'icons/mob/mob.dmi'
 	duration = 15
 
-/obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
+/obj/effect/overlay/temp/dust_animation/Initialize(mapload, dust_icon)
 	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	..()
+	. = ..()
 
 /obj/effect/overlay/temp/mummy_animation
 	icon = 'icons/mob/mob.dmi'
@@ -517,12 +549,12 @@
 	icon_state = "heal"
 	duration = 15
 
-/obj/effect/overlay/temp/heal/New(loc, colour)
-	..()
-	pixel_x = rand(-12, 12)
-	pixel_y = rand(-9, 0)
+/obj/effect/overlay/temp/heal/Initialize(mapload, colour)
 	if(colour)
 		color = colour
+	. = ..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
 
 /obj/effect/overlay/temp/kinetic_blast
 	name = "kinetic explosion"
@@ -554,14 +586,14 @@
 	icon_state = "impact_bullet"
 	duration = 5
 
-/obj/effect/overlay/temp/impact_effect/New(loc, atom/target, obj/item/projectile/P)
+/obj/effect/overlay/temp/impact_effect/Initialize(mapload, atom/target, obj/item/projectile/P)
 	if(target == P.original) //the projectile hit the target originally clicked
 		pixel_x = P.p_x + target.pixel_x - 16 + rand(-4,4)
 		pixel_y = P.p_y + target.pixel_y - 16 + rand(-4,4)
 	else
 		pixel_x = target.pixel_x + rand(-4,4)
 		pixel_y = target.pixel_y + rand(-4,4)
-	..()
+	. = ..()
 
 /obj/effect/overlay/temp/impact_effect/red_laser
 	icon_state = "impact_laser"
@@ -608,3 +640,8 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+
+/obj/effect/overlay/sparkles
+	name = "sparkles"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"

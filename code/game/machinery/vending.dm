@@ -56,6 +56,7 @@
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/refill_count = 3		//The number of canisters the vending machine uses
 
 /obj/machinery/vending/Initialize()
 	..()
@@ -88,7 +89,9 @@
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
 							/obj/machinery/vending/autodrobe = "AutoDrobe",
-							/obj/machinery/vending/clothing = "ClothesMate")
+							/obj/machinery/vending/clothing = "ClothesMate",
+							/obj/machinery/vending/medical = "NanoMed Plus",
+							/obj/machinery/vending/wallmed = "NanoMed")
 
 /obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -104,7 +107,7 @@
 /obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[names_paths[build_path]] Vendor (Machine Board)"
-	req_components = list(initial(typepath.refill_canister) = 3)
+	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
 
 /obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
 	for(var/typepath in names_paths)
@@ -112,7 +115,6 @@
 			set_type(typepath)
 			break
 	..()
-
 
 /obj/machinery/vending/Destroy()
 	qdel(wires)
@@ -297,7 +299,7 @@
 			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 			cut_overlays()
 			if(panel_open)
-				add_overlay(image(icon, "[initial(icon_state)]-panel"))
+				add_overlay("[initial(icon_state)]-panel")
 			playsound(src.loc, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
@@ -307,7 +309,10 @@
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
+	else if(istype(W, /obj/item/weapon/coin))
+		if(!premium.len)
+			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
+			return
 		if(!user.drop_item())
 			return
 		W.loc = src
@@ -528,7 +533,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		feedback_add_details("vending_machine_usage","[R.product_path]|[src.type]")
+		SSblackbox.add_details("vending_machine_usage","[src.type]|[R.product_path]")
 		vend_ready = 1
 		return
 
@@ -732,7 +737,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "sustenance"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 24,
 					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
-					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6)
+					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
+					/obj/item/weapon/reagent_containers/glass/beaker/waterbottle = 10)
 	contraband = list(/obj/item/weapon/kitchen/knife = 6,
 					/obj/item/weapon/reagent_containers/food/drinks/coffee = 12,
 					/obj/item/weapon/tank/internals/emergency_oxygen = 6,
@@ -749,7 +755,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,/obj/item/weapon/reagent_containers/glass/beaker/waterbottle = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/air = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
@@ -873,6 +879,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/weapon/storage/box/hug/medical = 1,/obj/item/weapon/reagent_containers/hypospray/medipen = 3, /obj/item/weapon/storage/belt/medical = 3, /obj/item/weapon/wrench/medical = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
 
 //This one's from bay12
 /obj/machinery/vending/plasmaresearch
@@ -895,6 +902,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 2,/obj/item/weapon/reagent_containers/pill/morphine = 2)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/weapon/vending_refill/medical
+	refill_count = 1
 
 /obj/machinery/vending/security
 	name = "\improper SecTech"
@@ -1052,7 +1061,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "engivend"
 	icon_deny = "engivend-deny"
 	req_access_txt = "11" //Engineering Equipment access
-	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/electronics/airlock = 10,/obj/item/weapon/electronics/apc = 10,/obj/item/weapon/electronics/airalarm = 10,/obj/item/weapon/stock_parts/cell/high = 10, /obj/item/weapon/rcd/loaded = 3, /obj/item/device/geiger_counter = 5)
+	products = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/electronics/airlock = 10,/obj/item/weapon/electronics/apc = 10,/obj/item/weapon/electronics/airalarm = 10,/obj/item/weapon/stock_parts/cell/high = 10, /obj/item/weapon/construction/rcd/loaded = 3, /obj/item/device/geiger_counter = 5)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)

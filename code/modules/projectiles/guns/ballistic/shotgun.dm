@@ -35,12 +35,10 @@
 	return (chambered.BB ? 1 : 0)
 
 /obj/item/weapon/gun/ballistic/shotgun/attack_self(mob/living/user)
-	if(recentpump)
+	if(recentpump > world.time)
 		return
 	pump(user)
-	recentpump = 1
-	spawn(10)
-		recentpump = 0
+	recentpump = world.time + 10
 	return
 
 /obj/item/weapon/gun/ballistic/shotgun/blow_up(mob/user)

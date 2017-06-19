@@ -4,6 +4,7 @@
 	name = "\improper Unexplored Location"
 	icon_state = "away"
 	has_gravity = 1
+	hidden = TRUE
 
 
 /area/ruin/unpowered

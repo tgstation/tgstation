@@ -83,7 +83,7 @@
 		C.use(1)
 		update_clothes_damaged_state(FALSE)
 		obj_integrity = max_integrity
-		to_chat(user, "<span class='notice'>You fix the damages on [src] with [C].</span>")
+		to_chat(user, "<span class='notice'>You fix the damage on [src] with [C].</span>")
 		return 1
 	if(pockets)
 		var/i = pockets.attackby(W, user, params)
@@ -162,7 +162,9 @@
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
-
+	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
+		var/mob/M = loc
+		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
@@ -202,6 +204,7 @@
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
 	..()
 	SET_SECONDARY_FLAG(src, BANG_PROTECT)
+	SET_SECONDARY_FLAG(src, HEALS_EARS)
 
 //Glasses
 /obj/item/clothing/glasses
@@ -251,9 +254,9 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedgloves")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -279,9 +282,9 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedhelmet")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "helmetblood")
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -304,9 +307,9 @@ BLIND     // can't see anything
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
-				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)
-				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 
 //Mask
@@ -326,9 +329,9 @@ BLIND     // can't see anything
 	if(!isinhands)
 		if(body_parts_covered & HEAD)
 			if(damaged_clothes)
-				. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedmask")
+				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
 			if(blood_DNA)
-				. += image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
 
 /obj/item/clothing/mask/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -400,9 +403,9 @@ BLIND     // can't see anything
 			bloody = bloody_shoes[BLOOD_STATE_HUMAN]
 
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damagedshoe")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedshoe")
 		if(bloody)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
@@ -455,9 +458,9 @@ BLIND     // can't see anything
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damaged[blood_overlay_type]")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
+			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
 
 /obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -519,9 +522,9 @@ BLIND     // can't see anything
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
-	var/has_sensor = 1//For the crew computer 2 = unable to change mode
+	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = 1
-	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
+	var/sensor_mode = NO_SENSORS
 	var/can_adjust = 1
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
@@ -534,28 +537,38 @@ BLIND     // can't see anything
 	if(!isinhands)
 
 		if(damaged_clothes)
-			. += image("icon"='icons/effects/item_damage.dmi', "icon_state"="damageduniform")
+			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
-			. += image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
+			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 		if(hastie)
 			var/tie_color = hastie.item_color
 			if(!tie_color)
 				tie_color = hastie.icon_state
-			var/image/tI = image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
-			tI.alpha = hastie.alpha
-			tI.color = hastie.color
-			. += tI
+			var/mutable_appearance/tie = mutable_appearance('icons/mob/ties.dmi', "[tie_color]")
+			tie.alpha = hastie.alpha
+			tie.color = hastie.color
+			. += tie
+
+/obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
+	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
+		C.use(1)
+		has_sensor = HAS_SENSORS
+		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
+		return 1
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_w_uniform()
+	if(has_sensor > NO_SENSORS)
+		has_sensor = BROKEN_SENSORS
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
+		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 	adjusted = NORMAL_STYLE
 	..()
 
@@ -633,15 +646,18 @@ BLIND     // can't see anything
 			to_chat(user, "Alt-click on [src] to wear it normally.")
 		else
 			to_chat(user, "Alt-click on [src] to wear it casually.")
-	switch(sensor_mode)
-		if(0)
-			to_chat(user, "Its sensors appear to be disabled.")
-		if(1)
-			to_chat(user, "Its binary life sensors appear to be enabled.")
-		if(2)
-			to_chat(user, "Its vital tracker appears to be enabled.")
-		if(3)
-			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
+	if (has_sensor == BROKEN_SENSORS)
+		to_chat(user, "Its sensors appear to be shorted out.")
+	else if(has_sensor > NO_SENSORS)
+		switch(sensor_mode)
+			if(SENSOR_OFF)
+				to_chat(user, "Its sensors appear to be disabled.")
+			if(SENSOR_LIVING)
+				to_chat(user, "Its binary life sensors appear to be enabled.")
+			if(SENSOR_VITALS)
+				to_chat(user, "Its vital tracker appears to be enabled.")
+			if(SENSOR_COORDS)
+				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 	if(hastie)
 		to_chat(user, "\A [hastie] is attached to it.")
 
@@ -661,10 +677,13 @@ BLIND     // can't see anything
 		return
 	if (!can_use(M))
 		return
-	if(src.has_sensor >= 2)
+	if(src.has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
 		return 0
-	if(src.has_sensor <= 0)
+	if(src.has_sensor == BROKEN_SENSORS)
+		to_chat(usr, "The sensors have shorted out!")
+		return 0
+	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
 		return 0
 

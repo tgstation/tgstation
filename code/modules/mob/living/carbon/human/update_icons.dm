@@ -124,17 +124,17 @@ There are several things that need to be remembered:
 		else if(U.adjusted == DIGITIGRADE_STYLE)
 			t_color = "[t_color]_l"
 
-		var/image/standing
+		var/mutable_appearance/uniform_overlay
 
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
+				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
 
-		if(!standing)
-			standing = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
+		if(!uniform_overlay)
+			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
 
-		overlays_standing[UNIFORM_LAYER]	= standing
+		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
 	else if(!(dna && dna.species.nojumpsuit) && invdrop)
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
@@ -159,8 +159,7 @@ There are several things that need to be remembered:
 		update_observer_view(wear_id)
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
-		var/image/standing = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
-		overlays_standing[ID_LAYER] = standing
+		overlays_standing[ID_LAYER] = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
 
 	apply_overlay(ID_LAYER)
 
@@ -168,19 +167,19 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 
-	if(get_num_arms() <2)
-		if(!gloves && blood_DNA)
-			if(has_left_hand())
-				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands_left", "layer"=-GLOVES_LAYER)
-				apply_overlay(GLOVES_LAYER)
-			else if(has_right_hand())
-				overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands_right", "layer"=-GLOVES_LAYER)
-				apply_overlay(GLOVES_LAYER)
-		return
-
 	if(client && hud_used && hud_used.inv_slots[slot_gloves])
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_gloves]
 		inv.update_icon()
+
+	if(!gloves && blood_DNA)
+		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
+		if(get_num_arms() < 2)
+			if(has_left_hand())
+				bloody_overlay.icon_state = "bloodyhands_left"
+			else if(has_right_hand())
+				bloody_overlay.icon_state = "bloodyhands_right"
+
+		overlays_standing[GLOVES_LAYER] = bloody_overlay
 
 	if(gloves)
 		gloves.screen_loc = ui_gloves
@@ -191,14 +190,7 @@ There are several things that need to be remembered:
 		var/t_state = gloves.item_state
 		if(!t_state)
 			t_state = gloves.icon_state
-
-		var/image/standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
-
-		overlays_standing[GLOVES_LAYER]	= standing
-
-	else
-		if(blood_DNA)
-			overlays_standing[GLOVES_LAYER]	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands", "layer"=-GLOVES_LAYER)
+		overlays_standing[GLOVES_LAYER] = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
 
 	apply_overlay(GLOVES_LAYER)
 
@@ -221,8 +213,7 @@ There are several things that need to be remembered:
 		update_observer_view(glasses,1)
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 
-			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
-			overlays_standing[GLASSES_LAYER] = standing
+			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
 
 	apply_overlay(GLASSES_LAYER)
 
@@ -244,8 +235,7 @@ There are several things that need to be remembered:
 				client.screen += ears					//add it to the client's screen
 		update_observer_view(ears,1)
 
-		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
-		overlays_standing[EARS_LAYER] = standing
+		overlays_standing[EARS_LAYER] = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 
 	apply_overlay(EARS_LAYER)
 
@@ -266,8 +256,7 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
-		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
-		overlays_standing[SHOES_LAYER]	= standing
+		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
 
 	apply_overlay(SHOES_LAYER)
 
@@ -287,7 +276,7 @@ There are several things that need to be remembered:
 		var/t_state = s_store.item_state
 		if(!t_state)
 			t_state = s_store.icon_state
-		overlays_standing[SUIT_STORE_LAYER]	= image("icon"='icons/mob/belt_mirror.dmi', "icon_state"="[t_state]", "layer"=-SUIT_STORE_LAYER)
+		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance('icons/mob/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
 
 	apply_overlay(SUIT_STORE_LAYER)
 
@@ -313,8 +302,7 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = belt.icon_state
 
-		var/image/standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
-		overlays_standing[BELT_LAYER] = standing
+		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
 
 
 	apply_overlay(BELT_LAYER)
@@ -335,8 +323,7 @@ There are several things that need to be remembered:
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
-		overlays_standing[SUIT_LAYER]	= standing
+		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 
 		if(wear_suit.breakouttime) //suit is restraining
 			drop_all_held_items()
@@ -379,7 +366,7 @@ There are several things that need to be remembered:
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
 	if(legcuffed)
-		overlays_standing[LEGCUFF_LAYER] = image("icon"='icons/mob/mob.dmi', "icon_state"="legcuff1", "layer"=-LEGCUFF_LAYER)
+		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		apply_overlay(LEGCUFF_LAYER)
 		throw_alert("legcuffed", /obj/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
@@ -388,8 +375,7 @@ There are several things that need to be remembered:
 	var/icon/female_clothing_icon = GLOB.female_clothing_icons[index]
 	if(!female_clothing_icon) 	//Create standing/laying icons if they don't exist
 		generate_female_clothing(index,t_color,icon,type)
-	var/standing	= image("icon"=GLOB.female_clothing_icons["[t_color]"], "layer"=-layer)
-	return(standing)
+	return mutable_appearance(GLOB.female_clothing_icons[t_color], layer = -layer)
 
 /mob/living/carbon/human/proc/get_overlays_copy(list/unwantedLayers)
 	var/list/out = new
@@ -438,12 +424,12 @@ There are several things that need to be remembered:
 
 
 /*
-Does everything in relation to building the /image used in the mob's overlays list
+Does everything in relation to building the /mutable_appearance used in the mob's overlays list
 covers:
  inhands and any other form of worn item
- centering large images
- layering images on custom layers
- building images from custom icon files
+ centering large appearances
+ layering appearances on custom layers
+ building appearances from custom icon files
 
 By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
 
@@ -478,13 +464,13 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!layer2use)
 		layer2use = default_layer
 
-	var/image/standing
+	var/mutable_appearance/standing
 	if(femaleuniform)
 		standing = wear_female_version(state,file2use,layer2use,femaleuniform)
 	if(!standing)
-		standing = image("icon"=file2use, "icon_state"=state,"layer"=-layer2use)
+		standing = mutable_appearance(file2use, state, -layer2use)
 
-	//Get the overlay images for this item when it's being worn
+	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
 	var/list/worn_overlays = worn_overlays(isinhands)
 	if(worn_overlays && worn_overlays.len)

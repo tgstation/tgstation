@@ -99,8 +99,8 @@
 	var/static/gid = 0
 	var/id = 0
 
-/obj/machinery/satellite/New()
-	..()
+/obj/machinery/satellite/Initialize()
+	. = ..()
 	id = gid++
 
 /obj/machinery/satellite/interact(mob/user)

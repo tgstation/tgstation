@@ -1,0 +1,5 @@
+author: "Moonlighting Mac"
+delete-after: True
+changes: 
+  - experiment: "Due to budget cuts and oil synthesis replacing expensive processes of digging up haunted primeval ashwalker burial grounds, Nanotransen has taught chemists how to make plastic from chemicals in the hopes that new plastic products can reduce expenditure on metal and glass."
+  - rscadd: "you can now make plastic sheets from chemistry out of heated up crude oil, ash & sodium chloride"

@@ -5,45 +5,19 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	if(href_list["rejectadminhelp"])
-		if(world.time && (spamcooldown > world.time))
-			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
-			return
+	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/client/C = locate(href_list["rejectadminhelp"]) in GLOB.clients
-		if(!C)
-			return
-		if (deltimer(C.adminhelptimerid))
-			C.giveadminhelpverb()
 
-		C << 'sound/effects/adminhelp.ogg'
+		var/ahelp_ref = href_list["ahelp"]
+		var/datum/admin_help/AH = locate(ahelp_ref)
+		if(AH)
+			AH.Action(href_list["ahelp_action"])
+		else
+			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
 
-		to_chat(C, "<font color='red' size='4'><b>- AdminHelp Rejected! -</b></font>")
-		to_chat(C, "<font color='red'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</font>")
-		to_chat(C, "Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting.")
-
-		message_admins("[key_name_admin(usr)] Rejected [C.key]'s admin help. [C.key]'s Adminhelp verb has been returned to them.")
-		log_admin_private("[key_name(usr)] Rejected [C.key]'s admin help.")
-		spamcooldown = world.time + 150 // 15 seconds
-
-	else if(href_list["icissue"])
-		if(world.time && spamcooldown > world.time)
-			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
-			return
-		var/client/C = locate(href_list["icissue"]) in GLOB.clients
-		if(!C)
-			return
-
-		var/msg = "<font color='red' size='4'><b>- AdminHelp marked as IC issue! -</b></font><br>"
-		msg += "<font color='red'><b>Losing is part of the game!</b></font><br>"
-		msg += "<font color='red'>Your character will frequently die, sometimes without even a possibility of avoiding it. Events will often be out of your control. No matter how good or prepared you are, sometimes you just lose.</font>"
-
-		to_chat(C, msg)
-
-		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as an IC issue.")
-		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
-		spamcooldown = world.time + 150 // 15 seconds
+	else if(href_list["ahelp_tickets"])
+		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
@@ -524,7 +498,7 @@
 		GLOB.Banlist["minutes"] << minutes
 		GLOB.Banlist["bannedby"] << usr.ckey
 		GLOB.Banlist.cd = "/base"
-		feedback_inc("ban_edit",1)
+		SSblackbox.inc("ban_edit",1)
 		unbanpanel()
 
 	/////////////////////////////////////new ban stuff
@@ -546,7 +520,7 @@
 				if("Yes")
 					ban_unban_log_save("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
 					log_admin_private("[key_name(usr)] removed [key_name(M)]'s appearance ban.")
-					feedback_inc("ban_appearance_unban", 1)
+					SSblackbox.inc("ban_appearance_unban", 1)
 					DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, "appearance")
 					if(M.client)
 						jobban_buildcache(M.client)
@@ -565,7 +539,7 @@
 					jobban_buildcache(M.client)
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
 				log_admin_private("[key_name(usr)] appearance banned [key_name(M)]. \nReason: [reason]")
-				feedback_inc("ban_appearance",1)
+				SSblackbox.inc("ban_appearance",1)
 				create_message("note", M.ckey, null, "Appearance banned - [reason]", null, null, 0, 0)
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] appearance banned [key_name_admin(M)].</span>")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been appearance banned by [usr.client.ckey].</BIG></span>")
@@ -861,6 +835,22 @@
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=borer;jobban4=\ref[M]'>Borer</a></td>"
 
+	//Misc (Gray)
+		dat += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		dat += "<tr bgcolor='ffeeaa'><th colspan='5'>Misc</th></tr><tr align='center'>"
+
+		//Catban
+		if(jobban_isbanned(M, CATBAN) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=catban;jobban4=\ref[M]'><font color=red>Catbanned</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=catban;jobban4=\ref[M]'>Catban</a></td>"
+
+		//Cluwneban
+		if(jobban_isbanned(M, CLUWNEBAN) || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cluwneban;jobban4=\ref[M]'><font color=red>Cluwnebanned</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cluwneban;jobban4=\ref[M]'>Cluwneban</a></td>"
+
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
@@ -950,8 +940,8 @@
 							jobban_buildcache(M.client)
 						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
 						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
-						feedback_inc("ban_job_tmp",1)
-						feedback_add_details("ban_job_tmp","- [job]")
+						SSblackbox.inc("ban_job_tmp",1)
+						SSblackbox.add_details("ban_job_tmp","- [job]")
 						if(!msg)
 							msg = job
 						else
@@ -975,8 +965,8 @@
 								jobban_buildcache(M.client)
 							ban_unban_log_save("[key_name(usr)] perma-jobbanned [key_name(M)] from [job]. reason: [reason]")
 							log_admin_private("[key_name(usr)] perma-banned [key_name(M)] from [job]")
-							feedback_inc("ban_job",1)
-							feedback_add_details("ban_job","- [job]")
+							SSblackbox.inc("ban_job",1)
+							SSblackbox.add_details("ban_job","- [job]")
 							if(!msg)
 								msg = job
 							else
@@ -1006,8 +996,8 @@
 						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
 						if(M.client)
 							jobban_buildcache(M.client)
-						feedback_inc("ban_job_unban",1)
-						feedback_add_details("ban_job_unban","- [job]")
+						SSblackbox.inc("ban_job_unban",1)
+						SSblackbox.add_details("ban_job_unban","- [job]")
 						if(!msg)
 							msg = job
 						else
@@ -1109,7 +1099,7 @@
 
 	else if(href_list["messageedits"])
 		var/message_id = sanitizeSQL("[href_list["messageedits"]]")
-		var/DBQuery/query_get_message_edits = GLOB.dbcon.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
+		var/datum/DBQuery/query_get_message_edits = SSdbcore.NewQuery("SELECT edits FROM [format_table_name("messages")] WHERE id = '[message_id]'")
 		if(!query_get_message_edits.warn_execute())
 			return
 		if(query_get_message_edits.NextRow())
@@ -1124,7 +1114,7 @@
 		if(!ismob(M))
 			return
 
-		if(M.client && M.client.holder)
+		if(M.client && check_rights_for(M.client, R_ADMIN))
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
@@ -1142,15 +1132,18 @@
 				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
-				feedback_inc("ban_tmp",1)
-				feedback_inc("ban_tmp_mins",mins)
+				SSblackbox.inc("ban_tmp",1)
+				SSblackbox.inc("ban_tmp_mins",mins)
 				if(config.banappeals)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
 				log_admin_private("[key_name(usr)] has banned [M.ckey].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
-
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>"
+				message_admins(msg)
+				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
+				if(AH)
+					AH.Resolve()
 				qdel(M.client)
 			if("No")
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null
@@ -1174,8 +1167,12 @@
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
 				log_admin_private("[key_name(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>")
-				feedback_inc("ban_perma",1)
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>"
+				message_admins(msg)
+				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
+				if(AH)
+					AH.Resolve()
+				SSblackbox.inc("ban_perma",1)
 				qdel(M.client)
 			if("Cancel")
 				return
@@ -1189,7 +1186,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		var/dat = {"<B>What mode do you wish to play?</B><HR>"}
 		for(var/mode in config.modes)
@@ -1203,7 +1200,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1218,7 +1215,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if (SSticker && SSticker.mode)
+		if (SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		GLOB.master_mode = href_list["c_mode2"]
 		log_admin("[key_name(usr)] set the mode as [GLOB.master_mode].")
@@ -1232,7 +1229,7 @@
 		if(!check_rights(R_ADMIN|R_SERVER))
 			return
 
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			return alert(usr, "The game has already started.", null, null, null, null)
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
@@ -1706,7 +1703,7 @@
 
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
-		feedback_inc("admin_cookies_spawned",1)
+		SSblackbox.inc("admin_cookies_spawned",1)
 		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
 		H << 'sound/effects/pray_chaplain.ogg'
 
@@ -1818,18 +1815,18 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/mob/living/L = locate(href_list["languagemenu"]) in GLOB.mob_list
-		if(!isliving(L))
-			to_chat(usr, "This can only be used on instances of type /mob/living.")
+		var/mob/M = locate(href_list["languagemenu"]) in GLOB.mob_list
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
-
-		L.open_language_menu(usr)
+		var/datum/language_holder/H = M.get_language_holder()
+		H.open_language_menu(usr)
 
 	else if(href_list["traitor"])
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(!SSticker || !SSticker.mode)
+		if(!SSticker.HasRoundStarted())
 			alert("The game hasn't started yet!")
 			return
 
@@ -2006,7 +2003,7 @@
 			var/choice = alert("Please confirm Feed channel creation.","Network Channel Handler","Confirm","Cancel")
 			if(choice=="Confirm")
 				GLOB.news_network.CreateFeedChannel(src.admincaster_feed_channel.channel_name, src.admin_signature, src.admincaster_feed_channel.locked, 1)
-				feedback_inc("newscaster_channels",1)
+				SSblackbox.inc("newscaster_channels",1)
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
 		src.access_news_network()
@@ -2029,7 +2026,7 @@
 			src.admincaster_screen = 6
 		else
 			GLOB.news_network.SubmitArticle(src.admincaster_feed_message.returnBody(-1), src.admin_signature, src.admincaster_feed_channel.channel_name, null, 1)
-			feedback_inc("newscaster_stories",1)
+			SSblackbox.inc("newscaster_stories",1)
 			src.admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
@@ -2180,7 +2177,7 @@
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.IsRoundInProgress())
 			var/afkonly = text2num(href_list["afkonly"])
 			if(alert("Are you sure you want to kick all [afkonly ? "AFK" : ""] clients from the lobby??","Message","Yes","Cancel") != "Yes")
 				to_chat(usr, "Kick clients from lobby aborted")

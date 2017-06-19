@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 10
-	init_order = 3
+	init_order = INIT_ORDER_SHUTTLE
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
@@ -208,12 +208,10 @@ SUBSYSTEM_DEF(shuttle)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
-		if(SEC_LEVEL_GREEN)
-			emergency.request(null, 2, signal_origin, html_decode(emergency_reason), 0)
-		if(SEC_LEVEL_BLUE)
-			emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+		if(SEC_LEVEL_RED,SEC_LEVEL_DELTA)
+			emergency.request(null, signal_origin, html_decode(emergency_reason), 1) //There is a serious threat we gotta move no time to give them five minutes.
 		else
-			emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1) // There is a serious threat we gotta move no time to give them five minutes.
+			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
@@ -272,7 +270,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
-			emergency.request(null, 2.5)
+			emergency.request(null, set_coefficient = 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 

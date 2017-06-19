@@ -128,6 +128,13 @@
 	list_reagents = list("nutriment" = 5, "tomatojuice" = 10, "vitamin" = 3)
 	tastes = list("tomato" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/soup/tomato/eyeball
+	name = "eyeball soup"
+	desc = "It looks back at you..."
+	icon_state = "eyeballsoup"
+	bonus_reagents = list("nutriment" = 1, "liquidgibs" = 3)
+	tastes = list("tomato" = 1, "squirming" = 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/soup/milo
 	name = "milosoup"
 	desc = "The universes best soup! Yum!!!"
@@ -196,5 +203,3 @@
 	icon_state = "redbeetsoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
 	tastes = list("beet" = 1)
-
-

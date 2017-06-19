@@ -78,7 +78,7 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 PROBABILITY TRAITOR 5
 PROBABILITY TRAITORCHAN 4
-PROBABILITY DOUBLE_AGENTS 3
+PROBABILITY INTERNAL_AFFAIRS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
 PROBABILITY GANG 2
@@ -484,3 +484,8 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 #Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
 ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0
+
+# How many wirechewing rodents you want to spawn on exposed maintenane wires at the start of the round. You may wish to set this to 0 if you're testing powernets.
+
+MICE_ROUNDSTART 10
+

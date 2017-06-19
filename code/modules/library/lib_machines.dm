@@ -43,7 +43,7 @@
 			dat += "<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>"
 			dat += "<A href='?src=\ref[src];search=1'>\[Start Search\]</A><BR>"
 		if(1)
-			if (!GLOB.dbcon.Connect())
+			if (!SSdbcore.Connect())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(!SQLquery)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
@@ -51,7 +51,7 @@
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
 
-				var/DBQuery/query_library_list_books = GLOB.dbcon.NewQuery(SQLquery)
+				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery(SQLquery)
 				if(!query_library_list_books.Execute())
 					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
 				while(query_library_list_books.NextRow())
@@ -134,10 +134,10 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 /proc/load_library_db_to_cache()
 	if(GLOB.cachedbooks)
 		return
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		return
 	GLOB.cachedbooks = list()
-	var/DBQuery/query_library_cache = GLOB.dbcon.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
+	var/datum/DBQuery/query_library_cache = SSdbcore.NewQuery("SELECT id, author, title, category FROM [format_table_name("library")] WHERE isnull(deleted)")
 	if(!query_library_cache.Execute())
 		return
 	while(query_library_cache.NextRow())
@@ -411,7 +411,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			if(scanner.cache)
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
-					if (!GLOB.dbcon.Connect())
+					if (!SSdbcore.Connect())
 						alert("Connection to Archive has been severed. Aborting.")
 					else
 
@@ -419,7 +419,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 						var/sqlauthor = sanitizeSQL(scanner.cache.author)
 						var/sqlcontent = sanitizeSQL(scanner.cache.dat)
 						var/sqlcategory = sanitizeSQL(upload_category)
-						var/DBQuery/query_library_upload = GLOB.dbcon.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
+						var/datum/DBQuery/query_library_upload = SSdbcore.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
 						if(!query_library_upload.Execute())
 							alert("Database error encountered uploading to Archive")
 							return
@@ -449,13 +449,13 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
-		if (!GLOB.dbcon.Connect())
+		if (!SSdbcore.Connect())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			cooldown = world.time + PRINTER_COOLDOWN
-			var/DBQuery/query_library_print = GLOB.dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
+			var/datum/DBQuery/query_library_print = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			if(!query_library_print.Execute())
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return

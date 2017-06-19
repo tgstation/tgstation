@@ -178,21 +178,21 @@
 
 		var/log_attacher = ""
 		if(attacher)
-			log_attacher = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)"
+			log_attacher = "[ADMIN_QUE(attacher)] [ADMIN_FLW(attacher)]"
 
 		var/mob/mob = get_mob_by_key(src.fingerprintslast)
 		var/last_touch_info = ""
 		if(mob)
-			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>)"
+			last_touch_info = "[ADMIN_QUE(mob)] [ADMIN_FLW(mob)]"
 
 		var/log_str3 = " Last touched by: [key_name_admin(mob)]"
 
-		var/bomb_message = "[log_str1] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name]</a>  [log_str2][log_attacher] [log_str3][last_touch_info]"
+		var/bomb_message = "[log_str1] [A.name][ADMIN_JMP(bombturf)] [log_str2][log_attacher] [log_str3][last_touch_info]"
 
 		GLOB.bombers += bomb_message
 
 		message_admins(bomb_message, 0, 1)
-		log_game("[log_str1] [A.name]([A.x],[A.y],[A.z]) [log_str2] [log_str3]")
+		log_game("[log_str1] [A.name][COORD(bombturf)] [log_str2] [log_str3]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)

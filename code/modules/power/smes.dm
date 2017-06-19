@@ -38,9 +38,6 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 
-	var/static/list/smesImageCache
-
-
 /obj/machinery/power/smes/examine(user)
 	..()
 	if(!terminal)
@@ -173,7 +170,7 @@
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 		return
@@ -194,11 +191,12 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
-		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+	if(SSticker && SSticker.IsRoundInProgress())
+		var/area/A = get_area(src)
+		var/turf/T = get_turf(src)
+		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
+		log_game("SMES deleted at [A][COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]","singulo")
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -226,36 +224,20 @@
 	if(panel_open)
 		return
 
-	if(!smesImageCache || !smesImageCache.len)
-		smesImageCache = list()
-		smesImageCache.len = 9
-
-		smesImageCache[SMES_CLEVEL_1] = image('icons/obj/power.dmi',"smes-og1")
-		smesImageCache[SMES_CLEVEL_2] = image('icons/obj/power.dmi',"smes-og2")
-		smesImageCache[SMES_CLEVEL_3] = image('icons/obj/power.dmi',"smes-og3")
-		smesImageCache[SMES_CLEVEL_4] = image('icons/obj/power.dmi',"smes-og4")
-		smesImageCache[SMES_CLEVEL_5] = image('icons/obj/power.dmi',"smes-og5")
-
-		smesImageCache[SMES_OUTPUTTING] = image('icons/obj/power.dmi', "smes-op1")
-		smesImageCache[SMES_NOT_OUTPUTTING] = image('icons/obj/power.dmi',"smes-op0")
-		smesImageCache[SMES_INPUTTING] = image('icons/obj/power.dmi', "smes-oc1")
-		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
-
 	if(outputting)
-		add_overlay(smesImageCache[SMES_OUTPUTTING])
+		add_overlay("smes-op1")
 	else
-		add_overlay(smesImageCache[SMES_NOT_OUTPUTTING])
+		add_overlay("smes-op0")
 
 	if(inputting)
-		add_overlay(smesImageCache[SMES_INPUTTING])
+		add_overlay("smes-oc1")
 	else
 		if(input_attempt)
-			add_overlay(smesImageCache[SMES_INPUT_ATTEMPT])
+			add_overlay("smes-oc0")
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		add_overlay(smesImageCache[clevel])
-	return
+		add_overlay("smes-og[clevel]")
 
 
 /obj/machinery/power/smes/proc/chargedisplay()

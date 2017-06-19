@@ -101,8 +101,8 @@
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
+		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
@@ -211,6 +211,20 @@
 /turf/closed/wall/mineral/titanium/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
+
+/turf/closed/wall/mineral/titanium/survival
+	name = "pod wall"
+	desc = "An easily-compressable wall used for temporary shelter."
+	icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/mineral/titanium/survival/nodiagonal
+	smooth = SMOOTH_MORE
+
+/turf/closed/wall/mineral/titanium/survival/pod
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"

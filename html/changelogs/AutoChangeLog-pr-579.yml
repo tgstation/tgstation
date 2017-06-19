@@ -1,0 +1,5 @@
+author: "Nexendia"
+delete-after: True
+changes: 
+  - rscadd: "Added Hippie Lawnmowers"
+  - rscadd: "They can be purchased by traitor botanists."

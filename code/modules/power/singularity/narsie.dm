@@ -14,6 +14,7 @@
 	light_power = 0.7
 	light_range = 15
 	light_color = rgb(255, 0, 0)
+	gender = FEMALE
 	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
@@ -26,20 +27,20 @@
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
-/obj/singularity/narsie/large/New()
-	..()
+/obj/singularity/narsie/large/Initialize()
+	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
 	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
 
 	var/area/A = get_area(src)
 	if(A)
-		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
 
 	sleep(70)
-	SSshuttle.emergency.request(null, 0.1) // Cannot recall
+	SSshuttle.emergency.request(null, set_coefficient = 0.1) // Cannot recall
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)

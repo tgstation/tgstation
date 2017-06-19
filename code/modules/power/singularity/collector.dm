@@ -141,11 +141,11 @@ GLOBAL_LIST_EMPTY(rad_collectors)
 /obj/machinery/power/rad_collector/proc/update_icons()
 	cut_overlays()
 	if(loaded_tank)
-		add_overlay(image('icons/obj/singularity.dmi', "ptank"))
+		add_overlay("ptank")
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(active)
-		add_overlay(image('icons/obj/singularity.dmi', "on"))
+		add_overlay("on")
 
 
 /obj/machinery/power/rad_collector/proc/toggle_power()

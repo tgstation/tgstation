@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - bugfix: "fixed bug that caused an infinite connection loop when connecting on a new computer or computer with recently changed hardware."

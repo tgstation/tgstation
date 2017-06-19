@@ -35,7 +35,7 @@
 	return ..()
 
 /obj/machinery/computer/Initialize()
-	..()
+	. = ..()
 	power_change()
 
 /obj/machinery/computer/process()

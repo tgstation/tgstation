@@ -1,15 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ab" = (
 /obj/structure/grille,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ac" = (
 /obj/structure/lattice,
-/turf/open/space,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "ad" = (
 /obj/machinery/power/solar,
 /obj/structure/cable/yellow{
@@ -1982,26 +1982,26 @@
 /area/ruin/hotel/workroom)
 "eC" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/white,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "eD" = (
 /obj/structure/closet/crate,
 /obj/item/clothing/head/rice_hat,
-/turf/open/floor/plasteel/white,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "eE" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/bedsheet/patriot,
-/turf/open/floor/plasteel/white,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "eF" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/card/id/away/hotel,
-/turf/open/floor/plasteel/white,
 /obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "eG" = (
 /turf/closed/wall,
@@ -4424,14 +4424,14 @@
 	},
 /area/ruin/hotel/security)
 "kO" = (
-/turf/open/floor/plasteel/darkyellow,
 /obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/darkyellow,
 /area/ruin/hotel/security)
 "kP" = (
-/turf/open/floor/plasteel/darkyellow,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
+/turf/open/floor/plasteel/darkyellow,
 /area/ruin/hotel/security)
 "kQ" = (
 /obj/machinery/light{
@@ -4547,10 +4547,10 @@
 /turf/open/floor/plating,
 /area/ruin/hotel/security)
 "lf" = (
-/turf/open/floor/plasteel/darkyellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/turf/open/floor/plasteel/darkyellow,
 /area/ruin/hotel/security)
 "lg" = (
 /obj/structure/bed,

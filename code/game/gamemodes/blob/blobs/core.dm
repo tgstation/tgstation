@@ -15,7 +15,7 @@
 	var/point_rate = 2
 
 
-/obj/structure/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
+/obj/structure/blob/core/Initialize(mapload, client/new_overmind = null, new_rate = 2, placed = 0)
 	GLOB.blob_cores += src
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
@@ -25,7 +25,7 @@
 	if(overmind)
 		update_icon()
 	point_rate = new_rate
-	..()
+	. = ..()
 
 /obj/structure/blob/core/scannerreport()
 	return "Directs the blob's expansion, gradually expands, and sustains nearby blob spores and blobbernauts."
@@ -33,12 +33,11 @@
 /obj/structure/blob/core/update_icon()
 	cut_overlays()
 	color = null
-	var/image/I = new('icons/mob/blob.dmi', "blob")
+	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
-		I.color = overmind.blob_reagent_datum.color
-	add_overlay(I)
-	var/image/C = new('icons/mob/blob.dmi', "blob_core_overlay")
-	add_overlay(C)
+		blob_overlay.color = overmind.blob_reagent_datum.color
+	add_overlay(blob_overlay)
+	add_overlay(mutable_appearance('icons/mob/blob.dmi', "blob_core_overlay"))
 
 /obj/structure/blob/core/Destroy()
 	GLOB.blob_cores -= src

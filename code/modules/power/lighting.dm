@@ -649,3 +649,14 @@
 		force = 5
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()
+
+
+/obj/machinery/light/floor
+	name = "floor light"
+	icon = 'icons/obj/lighting.dmi'
+	base_state = "floor"		// base description and icon_state
+	icon_state = "floor1"
+	brightness = 4
+	layer = 2.5
+	light_type = /obj/item/weapon/light/bulb
+	fitting = "bulb"

@@ -12,7 +12,7 @@
 	var/destination_x
 	var/destination_y
 
-	var/global/datum/gas_mixture/space/space_gas = new
+	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
@@ -42,6 +42,8 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+	
+	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
@@ -159,18 +161,29 @@
 	return 0
 
 
-/turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/turf/open/space/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	if(!CanBuildHere())
 		return FALSE
+
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
 	return FALSE
 
-/turf/open/space/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/turf/open/space/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
 			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
+	
+/turf/open/space/ReplaceWithLattice()
+	var/dest_x = destination_x
+	var/dest_y = destination_y
+	var/dest_z = destination_z
+	..()
+	destination_x = dest_x
+	destination_y = dest_y
+	destination_z = dest_z
+	

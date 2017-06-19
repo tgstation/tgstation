@@ -8,7 +8,7 @@
 /mob/camera/aiEye/remote/xenobio/Initialize()
 	var/area/A = get_area(loc)
 	allowed_area = A.name
-	..()
+	. = ..()
 
 /mob/camera/aiEye/remote/xenobio/setLoc(var/t)
 	var/area/new_area = get_area(t)

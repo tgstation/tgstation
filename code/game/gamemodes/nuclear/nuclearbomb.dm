@@ -37,8 +37,8 @@
 	var/previous_level = ""
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
-	var/image/lights = null
-	var/image/interior = null
+	var/lights = ""
+	var/interior = ""
 	var/obj/effect/countdown/nuclearbomb/countdown
 	var/static/bomb_set
 
@@ -201,30 +201,32 @@
 	cut_overlay(interior)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
-			interior = image(icon,"panel-unscrewed")
+			interior = "panel-unscrewed"
 		if(NUKESTATE_PANEL_REMOVED)
-			interior = image(icon,"panel-removed")
+			interior = "panel-removed"
 		if(NUKESTATE_WELDED)
-			interior = image(icon,"plate-welded")
+			interior = "plate-welded"
 		if(NUKESTATE_CORE_EXPOSED)
-			interior = image(icon,"plate-removed")
+			interior = "plate-removed"
 		if(NUKESTATE_CORE_REMOVED)
-			interior = image(icon,"core-removed")
+			interior = "core-removed"
 		if(NUKESTATE_INTACT)
-			interior = null
+			return
 	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
-	cut_overlay(lights)
+	if(lights)
+		cut_overlay(lights)
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = null
+			lights = ""
+			return
 		if(NUKE_OFF_UNLOCKED)
-			lights = image(icon,"lights-safety")
+			lights = "lights-safety"
 		if(NUKE_ON_TIMING)
-			lights = image(icon,"lights-timing")
+			lights = "lights-timing"
 		if(NUKE_ON_EXPLODING)
-			lights = image(icon,"lights-exploding")
+			lights = "lights-exploding"
 	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()

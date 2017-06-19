@@ -227,7 +227,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			if(check_exile_implant(C))
 				say("Rejecting [AM]: Exile implant detected in contained lifeform.")
 				return
-	if(AM.buckled_mobs.len)
+	if(AM.has_buckled_mobs())
 		for(var/mob/living/carbon/C in AM.buckled_mobs)
 			if(check_exile_implant(C))
 				say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")

@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "Fixed the slimecore HUD's neck slot sprite."

@@ -16,6 +16,7 @@
 #define GLOBAL_PROTECT(X)
 #endif
 
+#define GLOBAL_REAL_VAR(X) var/global/##X
 #define GLOBAL_REAL(X, Typepath) var/global##Typepath/##X
 
 #define GLOBAL_RAW(X) /datum/controller/global_vars/var/global##X

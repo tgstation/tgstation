@@ -8,6 +8,7 @@
 	icon_state = "appendix"
 	zone = "mouth"
 	slot = "vocal_cords"
+	gender = PLURAL
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
@@ -18,6 +19,40 @@
 
 /obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
+
+/obj/item/organ/adamantine_resonator
+	name = "adamantine resonator"
+	desc = "Fragments of adamantine exists in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
+	zone = "head"
+	slot = "adamantine_resonator"
+	icon_state = "adamantine_resonator"
+
+/obj/item/organ/vocal_cords/adamantine
+	name = "adamantine vocal cords"
+	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Adamantine golems use this to broadcast messages to nearby golems."
+	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
+	zone = "mouth"
+	slot = "vocal_cords"
+	icon_state = "adamantine_cords"
+
+/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
+	if(!IsAvailable())
+		return
+	var/message = input(owner, "Resonate a message to all nearby golems.", "Resonate")
+	if(QDELETED(src) || QDELETED(owner) || !message)
+		return
+	owner.say(".x[message]")
+
+/obj/item/organ/vocal_cords/adamantine/handle_speech(message)
+	var/msg = "<span class='resonate'><span class='name'>[owner.real_name]</span> <span class='message'>resonates, \"[message]\"</span></span>"
+	for(var/m in GLOB.player_list)
+		if(iscarbon(m))
+			var/mob/living/carbon/C = m
+			if(C.getorganslot("adamantine_resonator"))
+				to_chat(C, msg)
+		if(isobserver(m))
+			var/link = FOLLOW_LINK(m, owner)
+			to_chat(m, "[link] [msg]")
 
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
@@ -107,7 +142,7 @@
 	message = lowertext(message)
 	var/mob/living/list/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
-		if(!L.ear_deaf && !L.null_rod_check() && L != user && L.stat != DEAD)
+		if(L.can_hear() && !L.null_rod_check() && L != user && L.stat != DEAD)
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
@@ -175,7 +210,7 @@
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
 	var/static/regex/weaken_words = regex("drop|fall|trip|weaken")
-	var/static/regex/sleep_words = regex("sleep|slumber")
+	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up")
 	var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
@@ -206,7 +241,6 @@
 	var/static/regex/throwmode_words = regex("throw|catch")
 	var/static/regex/flip_words = regex("flip|rotate|revolve|roll|somersault")
 	var/static/regex/speak_words = regex("speak|say something")
-	var/static/regex/rest_words = regex("rest")
 	var/static/regex/getup_words = regex("get up")
 	var/static/regex/sit_words = regex("sit")
 	var/static/regex/stand_words = regex("stand")
@@ -248,7 +282,7 @@
 	else if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			if(user.mind && (user.mind.assigned_role == "Librarian" || user.mind.assigned_role == "Mime"))
+			if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
 			C.silent += (10 * power_multiplier)
 
@@ -443,17 +477,9 @@
 			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 			sleep(5) //So the chat flows more naturally
 
-	//REST
-	else if((findtext(message, rest_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			if(!L.resting)
-				L.lay_down()
-
 	//GET UP
 	else if((findtext(message, getup_words)))
-		cooldown = COOLDOWN_DAMAGE
+		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.resting)

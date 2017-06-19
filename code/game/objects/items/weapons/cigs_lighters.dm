@@ -104,24 +104,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
-	var/lit = 0
+	var/lit = FALSE
+	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
 	var/chem_volume = 30
+	var/list/list_reagents = list("nicotine" = 15)
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/cigarette/New()
+/obj/item/clothing/mask/cigarette/Initialize()
 	..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
-	reagents.add_reagent("nicotine", 15)
+	if(list_reagents)
+		reagents.add_reagent_list(list_reagents)
+	if(starts_lit)
+		light()
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -245,6 +250,38 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/is_hot()
 	return lit * heat
 
+// Cigarette brands.
+
+/obj/item/clothing/mask/cigarette/space_cigarette
+	desc = "A Space Cigarette brand cigarette."
+
+/obj/item/clothing/mask/cigarette/dromedary
+	desc = "A DromedaryCo brand cigarette."
+
+/obj/item/clothing/mask/cigarette/uplift
+	desc = "An Uplift Smooth brand cigarette."
+	list_reagents = list("nicotine" = 7.5, "menthol" = 7.5)
+
+/obj/item/clothing/mask/cigarette/robust
+	desc = "A Robust brand cigarette."
+
+/obj/item/clothing/mask/cigarette/robustgold
+	desc = "A Robust Gold brand cigarette."
+	list_reagents = list("nicotine" = 15, "gold" = 1)
+
+/obj/item/clothing/mask/cigarette/carp
+	desc = "A Carp Classic brand cigarette."
+
+/obj/item/clothing/mask/cigarette/syndicate
+	desc = "An unknown brand cigarette."
+	list_reagents = list("nicotine" = 15, "omnizine" = 15)
+
+/obj/item/clothing/mask/cigarette/shadyjims
+	desc = "A Shady Jim's Super Slims cigarette."
+	list_reagents = list("nicotine" = 15, "lipolicide" = 4, "ammonia" = 2, "plantbgone" = 1, "toxin" = 1.5)
+
+// Rollies.
+
 /obj/item/clothing/mask/cigarette/rollie
 	name = "rollie"
 	desc = "A roll of dried plant matter wrapped in thin paper."
@@ -262,11 +299,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
-/obj/item/clothing/mask/cigarette/rollie/trippy/New()
-	..()
-	reagents.add_reagent("mushroomhallucinogen", 50)
-	light()
-
+/obj/item/clothing/mask/cigarette/rollie/trippy
+	list_reagents = list("nicotine" = 15, "mushroomhallucinogen" = 35)
+	starts_lit = TRUE
 
 /obj/item/weapon/cigbutt/roach
 	name = "roach"
@@ -338,9 +373,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "pipeoff"
 	smoketime = 0
 	chem_volume = 100
+	list_reagents = null
 	var/packeditem = 0
 
-/obj/item/clothing/mask/cigarette/pipe/New()
+/obj/item/clothing/mask/cigarette/pipe/Initialize()
 	..()
 	name = "empty [initial(name)]"
 
@@ -439,26 +475,35 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 
+/obj/item/weapon/lighter/update_icon()
+	if(lit)
+		icon_state = "[initial(icon_state)]_on"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
+	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
 	icon_state = "lighter"
 
-/obj/item/weapon/lighter/greyscale/New()
-	..()
-	var/image/I = image(icon,"lighter-overlay")
-	var/newcolor = color2hex(randomColor(1))
-	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	add_overlay(I)
+/obj/item/weapon/lighter/greyscale/Initialize()
+	. = ..()
+	add_atom_colour(color2hex(randomColor(1)), FIXED_COLOUR_PRIORITY)
+	update_icon()
+
+/obj/item/weapon/lighter/greyscale/update_icon()
+	cut_overlays()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon,"[initial(icon_state)]_base")
+	base_overlay.appearance_flags = RESET_COLOR //the edging doesn't change color
+	if(lit)
+		base_overlay.icon_state = "[initial(icon_state)]_on"
+	add_overlay(base_overlay)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
-
-/obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
-
-/obj/item/weapon/lighter/update_icon()
-	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.is_holding(src))
@@ -606,9 +651,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			screw = 1
 			to_chat(user, "<span class='notice'>You open the cap on the [src]</span>")
 			if(super)
-				add_overlay(image(icon, "vapeopen_med"))
+				add_overlay("vapeopen_med")
 			else
-				add_overlay(image(icon, "vapeopen_low"))
+				add_overlay("vapeopen_low")
 		else
 			screw = 0
 			to_chat(user, "<span class='notice'>You close the cap on the [src]</span>")
@@ -620,12 +665,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				cut_overlays()
 				super = 1
 				to_chat(user, "<span class='notice'>You increase the voltage in the [src]</span>")
-				add_overlay(image(icon, "vapeopen_med"))
+				add_overlay("vapeopen_med")
 			else
 				cut_overlays()
 				super = 0
 				to_chat(user, "<span class='notice'>You decrease the voltage in the [src]</span>")
-				add_overlay(image(icon, "vapeopen_low"))
+				add_overlay("vapeopen_low")
 
 		if(screw && emagged)
 			to_chat(user, "<span class='notice'>The [name] can't be modified!</span>")
@@ -638,7 +683,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			emagged = 1
 			super = 0
 			to_chat(user, "<span class='warning'>You maximize the voltage in the [src]</span>")
-			add_overlay(image(icon, "vapeopen_high"))
+			add_overlay("vapeopen_high")
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
 			sp.set_up(5, 1, src)
 			sp.start()

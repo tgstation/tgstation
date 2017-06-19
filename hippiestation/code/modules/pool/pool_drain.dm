@@ -12,6 +12,7 @@
 	var/obj/machinery/poolcontroller/poolcontrol = null
 
 /obj/machinery/drain/Initialize()
+	..()
 	for(var/obj/machinery/poolcontroller/control in range(srange,src))
 		src.poolcontrol += control
 

@@ -33,7 +33,7 @@
 								entry += " - <font color='black'><b>DEAD</b></font>"
 					if(is_special_character(C.mob))
 						entry += " - <b><font color='red'>Antagonist</font></b>"
-				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
+				entry += " [ADMIN_QUE(C.mob)]"
 				entry += " ([round(C.avgping, 1)]ms)"
 				Lines += entry
 		else//If they don't have +ADMIN, only show hidden admins
@@ -63,6 +63,8 @@
 	var/msg = "<b>Current Admins:</b>\n"
 	if(holder)
 		for(var/client/C in GLOB.admins)
+			if(check_rights_for(src, R_ADMIN))
+				continue
 			msg += "\t[C] is a [C.holder.rank]"
 
 			if(C.holder.fakekey)

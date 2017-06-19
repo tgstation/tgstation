@@ -1,6 +1,5 @@
 SUBSYSTEM_DEF(mobs)
 	name = "Mobs"
-	init_order = 4
 	priority = 100
 	flags = SS_KEEP_TIMING|SS_NO_INIT
 
@@ -17,12 +16,12 @@ SUBSYSTEM_DEF(mobs)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-
+	var/times_fired = src.times_fired
 	while(currentrun.len)
 		var/mob/M = currentrun[currentrun.len]
 		currentrun.len--
 		if(M)
-			M.Life(seconds)
+			M.Life(seconds, times_fired)
 		else
 			GLOB.mob_list.Remove(M)
 		if (MC_TICK_CHECK)

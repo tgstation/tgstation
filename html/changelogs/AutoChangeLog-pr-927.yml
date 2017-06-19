@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - tweak: "Blood Cult's talisman of Horrors now works at range. It will still give no warning to the victim."

@@ -59,21 +59,20 @@
 		icon_state = "pizzabox_open"
 		if(pizza)
 			icon_state = "pizzabox_messy"
-			var/image/pizzaimg = image(pizza.icon, icon_state = pizza.icon_state)
-			pizzaimg.pixel_y = -3
-			add_overlay(pizzaimg)
+			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
+			pizza_overlay.pixel_y = -3
+			add_overlay(pizza_overlay)
 		if(bomb)
 			bomb.icon_state = "pizzabomb_[bomb_active ? "active" : "inactive"]"
-			var/image/bombimg = image(bomb.icon, icon_state = bomb.icon_state)
-			bombimg.pixel_y = 5
-			add_overlay(bombimg)
-	else
+			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
+			bomb_overlay.pixel_y = 5
+			add_overlay(bomb_overlay)
 		icon_state = "pizzabox[boxes.len + 1]"
 		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
 		if(box.boxtag != "")
-			var/image/tagimg = image(icon, icon_state = "pizzabox_tag")
-			tagimg.pixel_y = boxes.len * 3
-			add_overlay(tagimg)
+			var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
+			tag_overlay.pixel_y = boxes.len * 3
+			add_overlay(tag_overlay)
 
 /obj/item/pizzabox/attack_self(mob/user)
 	if(boxes.len > 0)

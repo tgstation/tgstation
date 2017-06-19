@@ -12,6 +12,7 @@
 	var/uses_power = TRUE
 	var/metal_to_power = FALSE
 	var/repairing = null //what we're currently repairing, if anything
+	var/obj/effect/clockwork/sigil/transmission/recharging = null //the sigil we're charging from, if any
 	var/speed_multiplier = 1 //how fast this proselytizer works
 	var/charge_rate = MIN_CLOCKCULT_POWER //how much power we gain every two seconds
 	var/charge_delay = 1 //how many proccess ticks remain before we can start to charge
@@ -88,8 +89,8 @@
 				amount -= MIN_CLOCKCULT_POWER
 	. = ..()
 
-/obj/item/clockwork/clockwork_proselytizer/New()
-	..()
+/obj/item/clockwork/clockwork_proselytizer/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clockwork/clockwork_proselytizer/Destroy()
@@ -140,10 +141,11 @@
 
 /obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user))
-		if(!can_use_power(POWER_WALL_TOTAL))
-			to_chat(user, "<span class='warning'>[src] requires <b>[POWER_WALL_TOTAL]W</b> of power to produce brass sheets!</span>")
-			return
-		modify_stored_power(-POWER_WALL_TOTAL)
+		if(uses_power)
+			if(!can_use_power(POWER_WALL_TOTAL))
+				to_chat(user, "<span class='warning'>[src] requires <b>[POWER_WALL_TOTAL]W</b> of power to produce brass sheets!</span>")
+				return
+			modify_stored_power(-POWER_WALL_TOTAL)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new/obj/item/stack/tile/brass(user.loc, 5)
 		to_chat(user, "<span class='brass'>You user [stored_power ? "some":"all"] of [src]'s power to produce some brass sheets. It now stores <b>[get_power()]W/[get_max_power()]W</b> of power.</span>")
@@ -181,6 +183,9 @@
 		return FALSE
 	if(repairing)
 		to_chat(user, "<span class='warning'>You are currently repairing [repairing] with [src]!</span>")
+		return FALSE
+	if(recharging)
+		to_chat(user, "<span class='warning'>You are currently recharging [src] from the [recharging.sigil_name]!</span>")
 		return FALSE
 	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
@@ -237,7 +242,7 @@
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize_checks(list/proselytize_values, atom/target, expected_type, mob/user, silent) //checked constantly while proselytizing
 	if(!islist(proselytize_values) || !target || QDELETED(target) || !user)
 		return FALSE
-	if(repairing)
+	if(repairing || recharging)
 		return FALSE
 	if(target.type != expected_type)
 		return FALSE
@@ -294,5 +299,22 @@
 		if(!silent)
 			to_chat(user, "<span class='warning'>You need at least <b>[repair_values["power_required"]]W</b> power to start repairin[target == user ? "g yourself" : "g [target]"], and at least \
 			<b>[round(repair_values["amount_to_heal"]*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair [target == user ? "yourself" : "[target.p_them()]"]!</span>")
+		return FALSE
+	return TRUE
+
+//checked constantly while charging from a sigil
+/obj/item/clockwork/clockwork_proselytizer/proc/sigil_charge_checks(list/charge_values, obj/effect/clockwork/sigil/transmission/sigil, mob/user, silent)
+	if(!islist(charge_values) || !sigil || QDELETED(sigil) || !user)
+		return FALSE
+	if(can_use_power(RATVAR_POWER_CHECK))
+		return FALSE
+	charge_values["power_gain"] = Clamp(sigil.power_charge, 0, POWER_WALL_MINUS_FLOOR)
+	if(!charge_values["power_gain"])
+		if(!silent)
+			to_chat(user, "<span class='warning'>The [sigil.sigil_name] contains no power!</span>")
+		return FALSE
+	if(stored_power + charge_values["power_gain"] > max_power)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Your [name] contains too much power to charge from the [sigil.sigil_name]!</span>")
 		return FALSE
 	return TRUE

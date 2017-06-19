@@ -4,7 +4,7 @@
 	icon_state = "speedbike_blue"
 	layer = LYING_MOB_LAYER
 	var/overlay_state = "cover_blue"
-	var/image/overlay = null
+	var/static/mutable_appearance/overlay
 
 /obj/vehicle/space/speedbike/buckle_mob(mob/living/M, force = 0, check_loc = 1)
 	. = ..()
@@ -12,24 +12,12 @@
 
 /obj/vehicle/space/speedbike/New()
 	. = ..()
-	overlay = image("icons/obj/bike.dmi", overlay_state)
-	overlay.layer = ABOVE_MOB_LAYER
+	overlay = overlay ||  mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
-
-/obj/effect/overlay/temp/speedbike_trail
-	name = "speedbike trails"
-	icon_state = "ion_fade"
-	layer = BELOW_MOB_LAYER
-	duration = 10
-	randomdir = 0
-
-/obj/effect/overlay/temp/speedbike_trail/New(loc,move_dir)
-	..()
-	setDir(move_dir)
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
-		new /obj/effect/overlay/temp/speedbike_trail(loc,move_dir)
+		new /obj/effect/overlay/temp/dir_setting/speedbike_trail(loc,move_dir)
 	. = ..()
 
 /obj/vehicle/space/speedbike/red

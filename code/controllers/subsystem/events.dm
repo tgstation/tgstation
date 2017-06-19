@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
-	init_order = 6
+	init_order = INIT_ORDER_EVENTS
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -179,9 +179,13 @@ SUBSYSTEM_DEF(events)
 			if(!holidays)
 				holidays = list()
 			holidays[holiday.name] = holiday
+		else
+			qdel(holiday)
 
 	if(holidays)
 		holidays = shuffle(holidays)
+		// regenerate station name because holiday prefixes.
+		set_station_name(new_station_name())
 		world.update_status()
 
 /datum/controller/subsystem/events/proc/toggleWizardmode()

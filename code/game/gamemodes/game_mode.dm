@@ -75,21 +75,18 @@
 
 
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(report=0) //Gamemodes can override the intercept report. Passing a 1 as the argument will force a report.
+/datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
 		report = config.intercept
-	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
-		display_roundstart_logout_report()
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	feedback_set_details("round_start","[time2text(world.realtime)]")
+	SSblackbox.set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)
-		feedback_set_details("game_mode","[SSticker.mode]")
+		SSblackbox.set_details("game_mode","[SSticker.mode]")
 	if(GLOB.revdata.commit)
-		feedback_set_details("revision","[GLOB.revdata.commit]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
 	if(report)
-		spawn (rand(waittime_l, waittime_h))
-			send_intercept(0)
+		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count(1)
@@ -105,6 +102,7 @@
 
 ///Allows rounds to basically be "rerolled" should the initial premise fall through. Also known as mulligan antags.
 /datum/game_mode/proc/convert_roundtype()
+	set waitfor = FALSE
 	var/list/living_crew = list()
 
 	for(var/mob/Player in GLOB.mob_list)
@@ -143,7 +141,8 @@
 
 	for(var/mob/living/carbon/human/H in living_crew)
 		if(H.client && H.client.prefs.allow_midround_antag)
-			antag_candidates += H
+			if(!jobban_isbanned(H, CATBAN) && !jobban_isbanned(H, CLUWNEBAN))
+				antag_candidates += H
 
 	if(!antag_candidates)
 		message_admins("Convert_roundtype failed due to no antag candidates.")
@@ -158,15 +157,16 @@
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
-	spawn(rand(600,1800)) //somewhere between 1 and 3 minutes from now
-		if(!config.midround_antag[SSticker.mode.config_tag])
-			round_converted = 0
-			return 1
-		for(var/mob/living/carbon/human/H in antag_candidates)
-			replacementmode.make_antag_chance(H)
-		round_converted = 2
-		message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
-	return 1
+	. = 1
+	sleep(rand(600,1800))
+	 //somewhere between 1 and 3 minutes from now
+	if(!config.midround_antag[SSticker.mode.config_tag])
+		round_converted = 0
+		return 1
+	for(var/mob/living/carbon/human/H in antag_candidates)
+		replacementmode.make_antag_chance(H)
+	round_converted = 2
+	message_admins("-- IMPORTANT: The roundtype has been converted to [replacementmode.name], antagonists may have been created! --")
 
 
 ///Called by the gameSSticker
@@ -246,18 +246,20 @@
 				ghosts++
 
 	if(clients > 0)
-		feedback_set("round_end_clients",clients)
+		SSblackbox.set_val("round_end_clients",clients)
 	if(ghosts > 0)
-		feedback_set("round_end_ghosts",ghosts)
+		SSblackbox.set_val("round_end_ghosts",ghosts)
 	if(surviving_humans > 0)
-		feedback_set("survived_human",surviving_humans)
+		SSblackbox.set_val("survived_human",surviving_humans)
 	if(surviving_total > 0)
-		feedback_set("survived_total",surviving_total)
+		SSblackbox.set_val("survived_total",surviving_total)
 	if(escaped_humans > 0)
-		feedback_set("escaped_human",escaped_humans)
+		SSblackbox.set_val("escaped_human",escaped_humans)
 	if(escaped_total > 0)
-		feedback_set("escaped_total",escaped_total)
+		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
+	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+		datum_cult_completion()
 	return 0
 
 
@@ -303,7 +305,7 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready)
+		if(player.client && player.ready && !jobban_isbanned(player, CATBAN) && !jobban_isbanned(player, CLUWNEBAN))
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -478,7 +480,7 @@
 
 
 	for(var/mob/M in GLOB.mob_list)
-		if(M.client && M.client.holder)
+		if(M.client && check_rights_for(M.client, R_ADMIN))
 			to_chat(M, msg)
 
 /datum/game_mode/proc/printplayer(datum/mind/ply, fleecheck)

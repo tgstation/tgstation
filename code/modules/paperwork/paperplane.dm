@@ -14,7 +14,7 @@
 	var/obj/item/weapon/paper/internalPaper
 
 /obj/item/weapon/paperplane/Initialize(mapload, obj/item/weapon/paper/newPaper)
-	..()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	if(newPaper)
@@ -44,8 +44,7 @@
 	var/list/stamped = internalPaper.stamped
 	if(stamped)
 		for(var/S in stamped)
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[stamped]")
-			add_overlay(stampoverlay)
+			add_overlay("paperplane_[S]")
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")

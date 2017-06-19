@@ -129,8 +129,6 @@
 /obj/machinery/door/window/open(forced=0)
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return 0
-	if(!SSticker || !SSticker.mode)
-		return 0
 	if(!forced)
 		if(!hasPower())
 			return 0

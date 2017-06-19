@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Since drones are allowed to interact with pAIs, pAIs in mobile
+chassis form are no longer distorted to drone viewpoints."

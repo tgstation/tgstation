@@ -274,7 +274,7 @@
 	rev_mind.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
-	if(jobban_isbanned(rev_mind.current, ROLE_REV))
+	if(jobban_isbanned(rev_mind.current, ROLE_REV) || jobban_isbanned(rev_mind.current, CATBAN) || jobban_isbanned(rev_mind.current, CLUWNEBAN))
 		INVOKE_ASYNC(src, .proc/replace_jobbaned_player, rev_mind.current, ROLE_REV, ROLE_REV)
 	return 1
 //////////////////////////////////////////////////////////////////////////////
@@ -345,13 +345,13 @@
 //////////////////////////////////////////////////////////////////////
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
-		feedback_set_details("round_end_result","win - heads killed")
+		SSblackbox.set_details("round_end_result","win - heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 
 		SSticker.news_report = REVS_WIN
 
 	else if(finished == 2)
-		feedback_set_details("round_end_result","loss - rev heads killed")
+		SSblackbox.set_details("round_end_result","loss - rev heads killed")
 		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 
 		SSticker.news_report = REVS_LOSE

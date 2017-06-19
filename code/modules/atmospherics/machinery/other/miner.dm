@@ -98,12 +98,11 @@
 /obj/machinery/atmospherics/miner/update_icon()
 	overlays.Cut()
 	if(broken)
-		var/image/A = image(icon, "broken")
-		add_overlay(A)
+		add_overlay("broken")
 	else if(active)
-		var/image/A = image(icon, "on")
-		A.color = overlay_color
-		add_overlay(A)
+		var/mutable_appearance/on_overlay = mutable_appearance(icon, "on")
+		on_overlay.color = overlay_color
+		add_overlay(on_overlay)
 
 /obj/machinery/atmospherics/miner/process()
 	update_power()

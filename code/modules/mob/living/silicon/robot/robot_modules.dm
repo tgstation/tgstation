@@ -222,7 +222,7 @@
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	if(feedback_key && !did_feedback)
-		feedback_inc(feedback_key, 1)
+		SSblackbox.inc(feedback_key, 1)
 
 /obj/item/weapon/robot_module/standard
 	name = "Standard"
@@ -271,6 +271,7 @@
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/weapon/organ_storage,
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
@@ -287,7 +288,7 @@
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
-		/obj/item/weapon/rcd/borg,
+		/obj/item/weapon/construction/rcd/borg,
 		/obj/item/weapon/pipe_dispenser,
 		/obj/item/weapon/extinguisher,
 		/obj/item/weapon/weldingtool/largetank/cyborg,

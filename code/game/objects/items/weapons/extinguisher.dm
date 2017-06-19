@@ -94,6 +94,9 @@
 		return 0
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
+	// Make it so the extinguisher doesn't spray yourself when you click your inventory items
+	if (target.loc == user)
+		return
 	//TODO; Add support for reagents in water.
 	if(refilling)
 		refilling = FALSE

@@ -1,0 +1,4 @@
+author: "bgobandit"
+delete-after: True
+changes: 
+  - tweak: "The Syndicate has added basic functionality to their state-of-the-art equipment. Nuke ops can now donate all TCs at once."

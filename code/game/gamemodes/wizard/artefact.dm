@@ -329,7 +329,7 @@
 		if("cyborg")
 			for(var/X in M.bodyparts)
 				var/obj/item/bodypart/affecting = X
-				affecting.change_bodypart_status(BODYPART_ROBOTIC)
+				affecting.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.put_in_hands_or_del(sword)
 
@@ -630,6 +630,6 @@
 	duration = 40
 	pixel_x = 500
 
-/obj/effect/overlay/temp/tornado/New(loc)
-	..()
+/obj/effect/overlay/temp/tornado/Initialize()
+	. = ..()
 	animate(src, pixel_x = -500, time = 40)

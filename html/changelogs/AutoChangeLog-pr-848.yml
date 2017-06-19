@@ -1,0 +1,4 @@
+author: "HonkBot"
+delete-after: True
+changes: 
+  - experiment: "Songs can now be added to disco machines with add_track(file, name, length, beat). Only file is required, the other 3 should still be put in, though."

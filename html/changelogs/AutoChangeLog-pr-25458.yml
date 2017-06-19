@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Belligerent now prevents you from running for 7 seconds after every chant."
+  - rscdel: "However, you no longer remain walking after Belligerent's effect fades."

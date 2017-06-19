@@ -41,7 +41,7 @@
 		..()
 
 /obj/item/weapon/his_grace/CtrlClick(mob/user) //you can't pull his grace
-	attack_hand(user)
+	return
 
 /obj/item/weapon/his_grace/examine(mob/user)
 	..()

@@ -27,6 +27,9 @@
 			C.emote("scream")
 			C.regenerate_limbs(1)
 		C.regenerate_organs()
+		if(!user.getorganslot("brain"))
+			var/obj/item/organ/brain/changeling_brain/B = new()
+			B.Insert(C)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()

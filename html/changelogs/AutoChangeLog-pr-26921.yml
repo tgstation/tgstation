@@ -1,0 +1,6 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - rscadd: "Internal Affairs Agents now obtain the kill objectives of their targets when they die."
+  - rscadd: "Internal Affairs Agents now have an integrated nanotrasen pinpointer that tracks their target at distances further than ten squares."
+  - rscadd: "Internal Affairs Agents will now lose any restrictions on collateral damage and gain a \"Die a glorious death\" objective upon becoming the last man standing, and revert if any of their targets are cloned."

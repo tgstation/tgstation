@@ -122,8 +122,8 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 
-/obj/item/weapon/reagent_containers/glass/beaker/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/beaker/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
@@ -133,7 +133,7 @@
 	cut_overlays()
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -176,8 +176,8 @@
 	origin_tech = "materials=2;engineering=3;plasmatech=3"
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/beaker/noreact/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/beaker/noreact/Initialize()
+	. = ..()
 	reagents.set_reacting(FALSE)
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
@@ -279,3 +279,27 @@
 		slot_equipment_priority.Insert(index, slot_head)
 		return
 	return ..()
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle
+	name = "bottle of water"
+	desc = "A bottle of water filled at an old Earth bottling facility,"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "smallbottle"
+	item_state = "bottle"
+	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	materials = list(MAT_GLASS=0)
+	volume = 50
+	amount_per_transfer_from_this = 10
+	origin_tech = null
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large
+	desc = "A fresh commercial-sized bottle of water."
+	icon_state = "largebottle"
+	materials = list(MAT_GLASS=0)
+	list_reagents = list("water" = 100)
+	volume = 100
+	amount_per_transfer_from_this = 20
+
+
+
+

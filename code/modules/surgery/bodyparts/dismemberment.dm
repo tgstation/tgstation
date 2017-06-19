@@ -137,14 +137,10 @@
 	loc = LB
 
 /obj/item/organ/brain/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
-	if(C.mind && C.mind.changeling)
-		LB.brain = new //changeling doesn't lose its real brain organ, we drop a decoy.
-		LB.brain.loc = LB
-		LB.brain.decoy_override = TRUE
-	else			//if not a changeling, we put the brain organ inside the dropped head
-		Remove(C)	//and put the player in control of the brainmob
-		loc = LB
-		LB.brain = src
+	Remove(C)	//Changeling brain concerns are now handled in Remove
+	loc = LB
+	LB.brain = src
+	if(brainmob)
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.loc = LB
@@ -222,6 +218,14 @@
 		for(var/X in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
+
+	//Handle dental implants
+	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
+		AP.Remove(owner)
+		var/obj/pill = AP.target
+		if(pill)
+			pill.forceMove(src)
+
 	name = "[owner.real_name]'s head"
 	..()
 
@@ -258,6 +262,8 @@
 		if(held_index > C.hand_bodyparts.len)
 			C.hand_bodyparts.len = held_index
 		C.hand_bodyparts[held_index] = src
+		if(C.dna.species.mutanthands && !is_pseudopart)
+			C.put_in_hand(new C.dna.species.mutanthands(), held_index)
 		if(C.hud_used)
 			var/obj/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
@@ -272,6 +278,9 @@
 				C.surgeries -= S
 				qdel(S)
 				break
+
+	for(var/obj/item/organ/O in contents)
+		O.Insert(C)
 
 	update_bodypart_damage_state()
 
@@ -304,6 +313,14 @@
 		C.real_name = real_name
 	real_name = ""
 	name = initial(name)
+
+	//Handle dental implants
+	for(var/obj/item/weapon/reagent_containers/pill/P in src)
+		for(var/datum/action/item_action/hands_free/activate_pill/AP in P.actions)
+			P.forceMove(C)
+			AP.Grant(C)
+			break
+
 	..()
 
 

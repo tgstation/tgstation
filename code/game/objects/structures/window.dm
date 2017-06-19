@@ -18,7 +18,7 @@
 	var/fulltile = 0
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
-	var/image/crack_overlay
+	var/mutable_appearance/crack_overlay
 	var/list/debris = list()
 	can_be_unanchored = 1
 	resistance_flags = ACID_PROOF
@@ -27,7 +27,23 @@
 
 /obj/structure/window/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+	if(reinf)
+		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
+			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the frame.</span>")
+		else if(anchored && state == WINDOW_IN_FRAME)
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>")
+		else if(anchored && state == WINDOW_OUT_OF_FRAME)
+			to_chat(user, "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>")
+		else if(!anchored)
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+	else
+		if(anchored)
+			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
+		else
+			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+
+	if(!anchored)
+		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/window/Initialize(mapload, direct)
 	..()
@@ -57,13 +73,13 @@
 	if(rods)
 		debris += new /obj/item/stack/rods(src, rods)
 
-/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 	return FALSE
 
-/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/rcd/the_rcd)
+/obj/structure/window/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
@@ -364,7 +380,7 @@
 		cut_overlay(crack_overlay)
 		if(ratio > 75)
 			return
-		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
+		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
 		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -389,6 +405,7 @@
 
 /obj/structure/window/reinforced
 	name = "reinforced window"
+	desc = "A window that is reinforced with metal rods."
 	icon_state = "rwindow"
 	reinf = 1
 	heat_resistance = 1600

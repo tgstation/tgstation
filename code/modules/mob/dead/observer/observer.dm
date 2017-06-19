@@ -37,10 +37,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
 	var/hair_style
 	var/hair_color
-	var/image/hair_image
+	var/mutable_appearance/hair_overlay
 	var/facial_hair_style
 	var/facial_hair_color
-	var/image/facial_hair_image
+	var/mutable_appearance/facial_hair_overlay
 
 	var/updatedir = 1						//Do we have to update our dir as the ghost moves around?
 	var/lastsetting = null	//Stores the last setting that ghost_others was set to, for a little more efficiency when we update ghost images. Null means no update is necessary
@@ -57,9 +57,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	invisibility = GLOB.observer_default_invisibility
 
 	verbs += /mob/dead/observer/proc/dead_tele
-
-	if(config.cross_allowed)
-		verbs += /mob/dead/observer/proc/server_hop
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -120,8 +117,11 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
-	grant_all_languages()
+	GLOB.dead_mob_list += src
+
 	..()
+
+	grant_all_languages()
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
@@ -161,13 +161,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		ghost_accs = client.prefs.ghost_accs
 		ghost_others = client.prefs.ghost_others
 
-	if(hair_image)
-		cut_overlay(hair_image)
-		hair_image = null
+	if(hair_overlay)
+		cut_overlay(hair_overlay)
+		hair_overlay = null
 
-	if(facial_hair_image)
-		cut_overlay(facial_hair_image)
-		facial_hair_image = null
+	if(facial_hair_overlay)
+		cut_overlay(facial_hair_overlay)
+		facial_hair_overlay = null
 
 
 	if(new_form)
@@ -188,19 +188,19 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(facial_hair_style)
 			S = GLOB.facial_hair_styles_list[facial_hair_style]
 			if(S)
-				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
+				facial_hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(facial_hair_color)
-					facial_hair_image.color = "#" + facial_hair_color
-				facial_hair_image.alpha = 200
-				add_overlay(facial_hair_image)
+					facial_hair_overlay.color = "#" + facial_hair_color
+				facial_hair_overlay.alpha = 200
+				add_overlay(facial_hair_overlay)
 		if(hair_style)
 			S = GLOB.hair_styles_list[hair_style]
 			if(S)
-				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER)
+				hair_overlay = mutable_appearance(S.icon, "[S.icon_state]", -HAIR_LAYER)
 				if(hair_color)
-					hair_image.color = "#" + hair_color
-				hair_image.alpha = 200
-				add_overlay(hair_image)
+					hair_overlay.color = "#" + hair_color
+				hair_overlay.alpha = 200
+				add_overlay(hair_overlay)
 
 /*
  * Increase the brightness of a color by calculating the average distance between the R, G and B values,
@@ -272,25 +272,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(direct)//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+	var/oldloc = loc
+
 	if(NewLoc)
 		loc = NewLoc
-		for(var/obj/effect/step_trigger/S in NewLoc)
-			S.Crossed(src)
 		update_parallax_contents()
-		return
-	loc = get_turf(src) //Get out of closets and such as a ghost
-	if((direct & NORTH) && y < world.maxy)
-		y++
-	else if((direct & SOUTH) && y > 1)
-		y--
-	if((direct & EAST) && x < world.maxx)
-		x++
-	else if((direct & WEST) && x > 1)
-		x--
+	else
+		loc = get_turf(src) //Get out of closets and such as a ghost
+		if((direct & NORTH) && y < world.maxy)
+			y++
+		else if((direct & SOUTH) && y > 1)
+			y--
+		if((direct & EAST) && x < world.maxx)
+			x++
+		else if((direct & WEST) && x > 1)
+			x--
 
-	for(var/obj/effect/step_trigger/S in locate(x, y, z))	//<-- this is dumb
-		S.Crossed(src)
+	Moved(oldloc, direct)
 
 /mob/dead/observer/is_active()
 	return 0
@@ -298,7 +297,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/Stat()
 	..()
 	if(statpanel("Status"))
-		if(SSticker && SSticker.mode)
+		if(SSticker.HasRoundStarted())
 			for(var/datum/gang/G in SSticker.mode.gangs)
 				if(G.is_dominating)
 					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
@@ -355,9 +354,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!isobserver(usr))
 		to_chat(usr, "Not when you're not dead!")
 		return
-	var/A
-	A = input("Area to jump to", "BOOYEA", A) as null|anything in GLOB.sortedAreas
-	var/area/thearea = A
+	var/list/filtered = list()
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		if(!A.hidden)
+			filtered += A
+	var/area/thearea  = input("Area to jump to", "BOOYEA") as null|anything in filtered
+
 	if(!thearea)
 		return
 
@@ -586,29 +589,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.faction = list("neutral")
 	return 1
 
-/mob/dead/observer/proc/server_hop()
-	set category = "Ghost"
-	set name = "Server Hop!"
-	set desc= "Jump to the other server"
-	if(notransform)
-		return
-	if(!config.cross_allowed)
-		verbs -= /mob/dead/observer/proc/server_hop
-		to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
-		return
-	if (alert(src, "Jump to server running at [config.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
-		return 0
-	if (client && config.cross_allowed)
-		to_chat(src, "<span class='notice'>Sending you to [config.cross_address].</span>")
-		new /obj/screen/splash(client)
-		notransform = TRUE
-		sleep(29)	//let the animation play
-		notransform = FALSE
-		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
-		client << link(config.cross_address + "?server_hop=[key]")
-	else
-		to_chat(src, "<span class='error'>There is no other server configured!</span>")
-
 /proc/show_server_hop_transfer_screen(expected_key)
 	//only show it to incoming ghosts
 	for(var/mob/dead/observer/O in GLOB.player_list)
@@ -808,6 +788,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(!invisibility)
 		to_chat(user, "It seems extremely obvious.")
+
+// Ghosts have no momentum, being massless ectoplasm
+/mob/dead/observer/Process_Spacemove(movement_dir)
+	return 1
 
 /proc/set_observer_default_invisibility(amount, message=null)
 	for(var/mob/dead/observer/G in GLOB.player_list)

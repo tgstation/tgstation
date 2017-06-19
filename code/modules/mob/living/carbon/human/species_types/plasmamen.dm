@@ -6,6 +6,7 @@
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,RESISTCOLD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
+	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	dangerous_existence = 1 //So so much
 	blacklisted = 1 //See above
 	burnmod = 1.5

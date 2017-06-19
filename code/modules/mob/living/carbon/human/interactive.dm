@@ -277,7 +277,7 @@
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/4))
-			BP.change_bodypart_status(BODYPART_ROBOTIC)
+			BP.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
 	update_icons()
 	update_damage_overlays()
 	functions = list("nearbyscan","combat","shitcurity","chatter") // stop customize adding multiple copies of a function
@@ -525,7 +525,7 @@
 	saveVoice()
 	..()
 
-/mob/living/carbon/human/interactive/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/living/carbon/human/interactive/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
 	if(speaker != src)
 		knownStrings |= html_decode(raw_message)
 	..()

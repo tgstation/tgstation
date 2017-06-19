@@ -866,7 +866,6 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/image/text_image = new(loc = A)
 	text_image.maptext = "<font size = 4>[letter]</font>"
-	text_image.color = AverageColour(atom_icon)
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)
@@ -896,25 +895,6 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	// For debugging
 	final_image.text = initial(SA.name)
 	return final_image
-
-//Find's the average colour of the icon
-//By vg's ComicIronic
-/proc/AverageColour(icon/I)
-	var/list/colours = list()
-	for(var/x_pixel = 1 to I.Width())
-		for(var/y_pixel = 1 to I.Height())
-			var/this_colour = I.GetPixel(x_pixel, y_pixel)
-			if(this_colour)
-				colours.Add(this_colour)
-
-	if(!colours.len)
-		return null
-
-	var/final_average = colours[1]
-	for(var/colour in (colours - colours[1]))
-		final_average = BlendRGB(final_average, colour, 1)
-	return final_average
-
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
@@ -1011,7 +991,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		SET_SECONDARY_FLAG(src, FROZEN)
 
 //Assumes already frozed
-obj/proc/make_unfrozen()
+/obj/proc/make_unfrozen()
 	icon = initial(icon)
 	name = replacetext(name, "frozen ", "")
 	CLEAR_SECONDARY_FLAG(src, FROZEN)

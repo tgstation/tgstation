@@ -20,7 +20,7 @@
 	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/Initialize()
-	..()
+	. = ..()
 	update_current_glow()
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)

@@ -145,7 +145,7 @@
 /area/ruin/unpowered)
 "u" = (
 /obj/structure/closet/crate/engineering,
-/obj/item/weapon/rcd/loaded,
+/obj/item/weapon/construction/rcd/loaded,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Golems can now click on empty golem shells to transfer into them."
+  - tweak: "Plasma Golems now no longer explode on death. They instead explode if they're on fire and are hot enough. The explosion size has been increased."
+  - tweak: "Plasma Golems are now always flammable."

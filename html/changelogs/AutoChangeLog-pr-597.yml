@@ -1,0 +1,5 @@
+author: "Davidj361"
+delete-after: True
+changes: 
+  - bugfix: "Made it so chemsprayers, peppersprays, extinguishers don't spray when you click your inventory items"
+  - bugfix: "Spray guns now actually have their range change when changing modes between spray and stream"

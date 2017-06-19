@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()
-	..()
+	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
 	for(var/ddir in GLOB.cardinal)
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Initialize()
-	..()
+	. = ..()
 	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
 	LAZYINITLIST(GLOB.AISwarmersByType[type])
 	GLOB.AISwarmers += src
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/Initialize()
-	..()
+	. = ..()
 	sharedWanted = typecacheof(sharedWanted)
 	sharedIgnore = typecacheof(sharedIgnore)
 

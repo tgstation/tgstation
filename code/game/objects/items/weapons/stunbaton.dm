@@ -60,9 +60,9 @@
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
 	if(bcell)
-		user <<"<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>"
+		to_chat(user, "<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>")
 	else
-		user <<"<span class='warning'>The baton does not have a power source installed.</span>"
+		to_chat(user, "<span class='warning'>The baton does not have a power source installed.</span>")
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))

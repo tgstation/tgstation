@@ -1,0 +1,4 @@
+author: "QualityVan"
+delete-after: True
+changes: 
+  - bugfix: "You can hit emagged cloning pods with a medical ID to empty them"

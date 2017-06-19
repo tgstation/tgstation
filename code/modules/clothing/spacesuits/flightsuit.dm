@@ -326,9 +326,6 @@
 			disable_flight(1)
 		if(!suit)
 			disable_flight(1)
-		if(!resync)
-			addtimer(CALLBACK(src, .proc/resync), 600)
-			resync = 1
 		if(!wearer)	//Oh god our user fell off!
 			disable_flight(1)
 	if(!pressure && brake)
@@ -340,12 +337,6 @@
 			stabilizer = FALSE
 			usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
 
-//Resync the suit
-/obj/item/device/flightpack/proc/resync()
-	resync = FALSE
-	suit.resync()
-
-//How fast should the wearer be?
 /obj/item/device/flightpack/proc/update_slowdown()
 	if(!flight)
 		suit.slowdown = slowdown_ground
@@ -356,20 +347,11 @@
 /obj/item/device/flightpack/process()
 	if(!suit || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
-	update_slowdown()
-	update_icon()
 	check_conditions()
 	calculate_momentum_speed()
 	momentum_drift()
 	handle_boost()
 	handle_damage()
-	handle_flight()
-
-/obj/item/device/flightpack/proc/handle_flight()
-	if(!flight)
-		return FALSE
-	if(wearer)
-		wearer.float(TRUE)
 
 /obj/item/device/flightpack/proc/handle_damage()
 	if(crash_damage)
@@ -423,7 +405,6 @@
 			deactivate_booster()
 	if(boost_charge < boost_maxcharge)
 		boost_charge = Clamp(boost_charge+boost_chargerate, 0, boost_maxcharge)
-
 
 /obj/item/device/flightpack/proc/cycle_power()
 	if(powersetting < powersetting_high)
@@ -654,6 +635,8 @@
 	wearer.movement_type |= FLYING
 	wearer.pass_flags |= flight_passflags
 	usermessage("ENGAGING FLIGHT ENGINES.")
+	update_slowdown()
+	wearer.floating = TRUE
 	wearer.visible_message("<font color='blue' size='2'>[wearer]'s flight engines activate as they lift into the air!</font>")
 	//I DONT HAVE SOUND EFFECTS YET playsound(
 	flight = TRUE
@@ -670,6 +653,8 @@
 		momentum_x = 0
 		momentum_y = 0
 		usermessage("DISENGAGING FLIGHT ENGINES.")
+		update_slowdown()
+		wearer.floating = FALSE
 		wearer.visible_message("<font color='blue' size='2'>[wearer] drops to the ground as their flight engines cut out!</font>")
 		//NO SOUND YET	playsound(
 		ion_trail.stop()
@@ -678,6 +663,9 @@
 		flight = FALSE
 		if(suit.shoes)
 			suit.shoes.toggle(FALSE)
+		if(isturf(wearer.loc))
+			var/turf/T = wearer.loc
+			T.Entered(src)
 	else
 		if(override_safe)
 			disable_flight(TRUE)
@@ -749,11 +737,13 @@
 	wearer.visible_message("<span class='notice'>[wearer.name]'s flightpack engines flare in intensity as they are rocketed forward by the immense thrust!</span>")
 	boost = TRUE
 	update_slowdown()
+	update_icon()
 
 /obj/item/device/flightpack/proc/deactivate_booster()
 	usermessage("Boosters disengaged!")
 	boost = FALSE
 	update_slowdown()
+	update_icon()
 
 /obj/item/device/flightpack/proc/enable_airbrake()
 	if(wearer)

@@ -47,8 +47,8 @@
 	icon_state = "teleport"
 	duration = 80
 
-/obj/effect/overlay/temp/teleport_abductor/New()
+/obj/effect/overlay/temp/teleport_abductor/Initialize()
+	. = ..()
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(10,0,loc)
 	S.start()
-	..()

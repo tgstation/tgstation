@@ -10,7 +10,7 @@
 	density = TRUE
 	use_power = TRUE
 	idle_power_usage = 75
-	var/list/linkedturfs = list() //List contains all of the linked pool turfs to this controller, assignment happens on New()
+	var/list/linkedturfs //List contains all of the linked pool turfs to this controller, assignment happens on initialize
 	var/temperature = 3 //1-5 Frigid Cool Normal Warm Scalding
 	var/srange = 6 //The range of the search for pool turfs, change this for bigger or smaller pools.
 	var/linkedmist = list() //Used to keep track of created mist
@@ -30,13 +30,14 @@
 	var/canplus = TRUE
 	var/canminus = TRUE
 
-/obj/machinery/poolcontroller/New() //This proc automatically happens on world start
+/obj/machinery/poolcontroller/Initialize()
+	..()
+	LAZYINITLIST(linkedturfs)
 	wires = new /datum/wires/poolcontroller(src)
 	for(var/turf/open/pool/water/W in range(srange,src)) //Search for /turf/open/beach/water in the range of var/srange
-		src.linkedturfs += W
+		LAZYADD(linkedturfs, W)
 	for(var/obj/machinery/drain/pooldrain in range(srange,src))
-		src.linkeddrain += pooldrain
-	..() //Always call your parents when you're a new thing.
+		src.linkeddrain = pooldrain
 
 /obj/machinery/poolcontroller/emag_act(user as mob) //Emag_act, this is called when it is hit with a cryptographic sequencer.
 	if(!emagged) //If it is not already emagged, emag it.
@@ -44,9 +45,7 @@
 		emagged = TRUE
 		tempunlocked = TRUE
 		drainable = TRUE
-		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-		sparks.set_up(1, 1, src)
-		sparks.start()
+		do_sparks(1, 1)
 		if(GLOB.adminlog)
 			log_say("[key_name(user)] emagged the poolcontroller")
 			message_admins("[key_name_admin(user)] emagged the poolcontroller")

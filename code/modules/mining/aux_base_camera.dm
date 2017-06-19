@@ -20,7 +20,7 @@
 	dir = direct //This camera eye is visible as a drone, and needs to keep the dir updated
 	..()
 
-/obj/item/weapon/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
+/obj/item/weapon/construction/rcd/internal //Base console's internal RCD. Roundstart consoles are filled, rebuilt cosoles start empty.
 	name = "internal RCD"
 	max_matter = 600 //Bigger container and faster speeds due to being specialized and stationary.
 	no_ammo_message = "<span class='warning'>Internal matter exhausted. Please add additional materials.</span>"
@@ -30,7 +30,7 @@
 	name = "base contruction console"
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("SS13")
-	var/obj/item/weapon/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
+	var/obj/item/weapon/construction/rcd/internal/RCD //Internal RCD. The computer passes user commands to this in order to avoid massive copypaste.
 	circuit = /obj/item/weapon/circuitboard/computer/base_construction
 	off_action = new/datum/action/innate/camera_off/base_construction
 	var/datum/action/innate/aux_base/switch_mode/switch_mode_action = new //Action for switching the RCD's build modes
@@ -50,7 +50,7 @@
 
 /obj/machinery/computer/camera_advanced/base_construction/New()
 	..()
-	RCD = new /obj/item/weapon/rcd/internal(src)
+	RCD = new /obj/item/weapon/construction/rcd/internal(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()
@@ -117,7 +117,7 @@
 	remote_eye = C.remote_control
 	B = target
 	if(!B.RCD) //The console must always have an RCD.
-		B.RCD = new /obj/item/weapon/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
+		B.RCD = new /obj/item/weapon/construction/rcd/internal(src) //If the RCD is lost somehow, make a new (empty) one!
 
 /datum/action/innate/aux_base/proc/check_spot()
 //Check a loction to see if it is inside the aux base at the station. Camera visbility checks omitted so as to not hinder construction.

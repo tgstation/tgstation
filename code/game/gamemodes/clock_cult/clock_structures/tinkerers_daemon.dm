@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon
 	name = "tinkerer's daemon"
 	desc = "A strange machine with three small brass obelisks attached to it."
-	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if outnumbered by servants at a rate to 4:1."
+	clockwork_desc = "An efficient machine that can rapidly produce components at a small power cost. It will only function if outnumbered by servants at a rate to 5:1."
 	icon_state = "tinkerers_daemon"
 	active_icon = "tinkerers_daemon"
 	inactive_icon = "tinkerers_daemon"
@@ -14,14 +14,14 @@
 	debris = list(/obj/item/clockwork/alloy_shards/medium = 1, \
 	/obj/item/clockwork/alloy_shards/small = 6, \
 	/obj/item/clockwork/component/replicant_alloy/replication_plate = 1)
-	var/image/daemon_glow
-	var/image/component_glow
+	var/static/mutable_appearance/daemon_glow = mutable_appearance('icons/obj/clockwork_objects.dmi', "tinkerglow")
+	var/static/mutable_appearance/component_glow = mutable_appearance('icons/obj/clockwork_objects.dmi', "t_random_component")
 	var/component_id_to_produce
 	var/production_time = 0 //last time we produced a component
-	var/production_cooldown = 90
+	var/production_cooldown = 60
 
-/obj/structure/destructible/clockwork/powered/tinkerers_daemon/New()
-	..()
+/obj/structure/destructible/clockwork/powered/tinkerers_daemon/Initialize()
+	. = ..()
 	GLOB.clockwork_daemons++
 
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/Destroy()
@@ -53,7 +53,7 @@
 /obj/structure/destructible/clockwork/powered/tinkerers_daemon/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
-			try_use_power(MIN_CLOCKCULT_POWER*2)
+			try_use_power(MIN_CLOCKCULT_POWER*4)
 			visible_message("<span class='warning'>[src] shuts down with a horrible grinding noise!</span>")
 			playsound(src, 'sound/magic/clockwork/anima_fragment_attack.ogg', 50, 1)
 		else
@@ -119,14 +119,9 @@
 	. = ..()
 	if(active)
 		var/component_color = get_component_color(component_id_to_produce)
-		if(!daemon_glow)
-			daemon_glow = new('icons/obj/clockwork_objects.dmi', "tinkerglow")
 		daemon_glow.color = component_color
 		add_overlay(daemon_glow)
-		if(!component_glow)
-			component_glow = new('icons/obj/clockwork_objects.dmi', "t_[component_id_to_produce ? component_id_to_produce :"random_component"]")
-		else
-			component_glow.icon_state = "t_[component_id_to_produce ? component_id_to_produce :"random_component"]"
+		component_glow.icon_state = "t_[component_id_to_produce ? component_id_to_produce :"random_component"]"
 		component_glow.color = component_color
 		add_overlay(component_glow)
 		production_time = world.time + production_cooldown //don't immediately produce when turned on after being off

@@ -261,15 +261,14 @@ DROP TABLE IF EXISTS `SS13_player`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_player` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
   `lastseen` datetime NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ckey` (`ckey`),
+  `accountjoindate` DATE DEFAULT NULL,
+  PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

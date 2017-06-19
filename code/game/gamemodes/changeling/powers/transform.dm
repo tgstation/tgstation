@@ -5,7 +5,6 @@
 	dna_cost = 0
 	req_dna = 1
 	req_human = 1
-	max_genetic_damage = 3
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"

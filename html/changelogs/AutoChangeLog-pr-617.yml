@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Plasmamen no longer burn to death while inside a cloning pod."

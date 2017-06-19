@@ -72,7 +72,7 @@
 "m" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "n" = (
 /turf/closed/wall/shuttle{
@@ -131,7 +131,7 @@
 "x" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "y" = (
 /obj/structure/table/reinforced,
@@ -481,7 +481,7 @@ t
 s
 S
 o
-U
+S
 s
 t
 d

@@ -191,7 +191,7 @@
 
 //Return a jetpack that the mob can use
 //Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack	
 
 /mob/proc/get_jetpack()
 	return
@@ -207,3 +207,9 @@
 		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
 		J = C.jetpack
 	return J
+
+/mob/has_gravity(turf/T)
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(J && J.on)
+		return FALSE
+	return ..()

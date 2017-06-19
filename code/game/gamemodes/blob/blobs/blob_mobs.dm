@@ -179,11 +179,11 @@
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	if(is_zombie)
 		copy_overlays(oldguy, TRUE)
-		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
+		var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/blob.dmi', "blob_head")
 		if(overmind)
-			I.color = overmind.blob_reagent_datum.complementary_color
+			blob_head_overlay.color = overmind.blob_reagent_datum.complementary_color
 		color = initial(color)//looks better.
-		add_overlay(I)
+		add_overlay(blob_head_overlay)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"

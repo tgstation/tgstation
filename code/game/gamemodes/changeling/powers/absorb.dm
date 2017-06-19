@@ -4,7 +4,6 @@
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
-	max_genetic_damage = 100
 
 /obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
@@ -42,13 +41,13 @@
 				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain!</span>")
 				target.take_overall_damage(40)
 
-		feedback_add_details("changeling_powers","Absorb DNA|[i]")
+		SSblackbox.add_details("changeling_powers","Absorb DNA|[i]")
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
 			changeling.isabsorbing = 0
 			return
 
-	feedback_add_details("changeling_powers","Absorb DNA|4")
+	SSblackbox.add_details("changeling_powers","Absorb DNA|4")
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
 	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
 

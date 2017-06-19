@@ -48,6 +48,8 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_POSSESS
 		if("stealth")
 			flag = R_STEALTH
+		if("mentor")
+			flag = R_MENTOR
 		if("rejuv","rejuvinate")
 			flag = R_REJUVINATE
 		if("varedit")
@@ -105,7 +107,7 @@ GLOBAL_PROTECT(admin_ranks)
 	if(config.admin_legacy_system)
 		var/previous_rights = 0
 		//load text from file and process each line seperately
-		for(var/line in file2list("config/admin_ranks.txt"))
+		for(var/line in world.file2list("config/admin_ranks.txt"))
 			if(!line)
 				continue
 			if(findtextEx(line,"#",1,2))
@@ -125,14 +127,14 @@ GLOBAL_PROTECT(admin_ranks)
 
 			previous_rights = R.rights
 	else
-		if(!GLOB.dbcon.Connect())
+		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admin_ranks(). Reverting to legacy system.")
-			GLOB.diary << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
+			GLOB.world_game_log << "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admin_ranks()
 			return
 
-		var/DBQuery/query_load_admin_ranks = GLOB.dbcon.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
+		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
 		if(!query_load_admin_ranks.Execute())
 			return
 		while(query_load_admin_ranks.NextRow())
@@ -175,7 +177,7 @@ GLOBAL_PROTECT(admin_ranks)
 
 	if(config.admin_legacy_system)
 		//load text from file
-		var/list/lines = file2list("config/admins.txt")
+		var/list/lines = world.file2list("config/admins.txt")
 
 		//process each line seperately
 		for(var/line in lines)
@@ -200,14 +202,14 @@ GLOBAL_PROTECT(admin_ranks)
 				world.SetConfig("APP/admin", ckey, "role=admin")
 			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
 	else
-		if(!GLOB.dbcon.Connect())
+		if(!SSdbcore.Connect())
 			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
-			GLOB.diary << "Failed to connect to database in load_admins(). Reverting to legacy system."
+			GLOB.world_game_log << "Failed to connect to database in load_admins(). Reverting to legacy system."
 			config.admin_legacy_system = 1
 			load_admins()
 			return
 
-		var/DBQuery/query_load_admins = GLOB.dbcon.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())
 			return
 		while(query_load_admins.NextRow())
@@ -373,10 +375,10 @@ GLOBAL_PROTECT(admin_ranks)
 	edit_admin_permissions()
 
 /datum/admins/proc/updateranktodb(ckey,newrank)
-	if(!GLOB.dbcon.Connect())
+	if(!SSdbcore.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_admin_rank = sanitizeSQL(newrank)
 
-	var/DBQuery/query_admin_rank_update = GLOB.dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
+	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
 	query_admin_rank_update.Execute()

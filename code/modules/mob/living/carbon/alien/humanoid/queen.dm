@@ -37,7 +37,7 @@
 		I.override = 1
 		I.pixel_x -= owner.pixel_x
 		I.pixel_y -= owner.pixel_y
-		owner.add_alt_appearance("smallqueen", I, list(owner))
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallqueen", I)
 
 		small = 1
 	else

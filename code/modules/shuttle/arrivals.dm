@@ -22,20 +22,17 @@
 	var/perma_docked = FALSE	//highlander with RESPAWN??? OH GOD!!!
 
 /obj/docking_port/mobile/arrivals/Initialize(mapload)
-	if(mapload)
-		return TRUE	//late initialize to make sure the latejoin list is populated
-
-	preferred_direction = dir
-
 	if(SSshuttle.arrivals)
 		WARNING("More than one arrivals docking_port placed on map!")
-		qdel(src)
-		return
-
+		return INITIALIZE_HINT_QDEL
 	SSshuttle.arrivals = src
 
-	..()
+	. = ..()
 
+	preferred_direction = dir
+	return INITIALIZE_HINT_LATELOAD	//for latejoin list
+
+/obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
 	var/list/new_latejoin = list()
@@ -177,7 +174,7 @@
 
 	Launch(TRUE)
 
-	user << "<span class='notice'>Calling your shuttle. One moment...</span>"
+	to_chat(user, "<span class='notice'>Calling your shuttle. One moment...</span>")
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
@@ -190,5 +187,5 @@
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("perma_docked")
-			feedback_add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
+			SSblackbox.add_details("admin_secrets_fun_used","ShA[var_value ? "s" : "g"]")
 	return ..()

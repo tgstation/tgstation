@@ -26,9 +26,9 @@
 				if(M.mind)
 					for(var/obj/effect/proc_holder/spell/S in M.mind.spell_list)
 						S.charge_counter = S.charge_max
-				M <<"<span class='notice'>You feel raw magic flowing through you. It feels good!</span>"
+				to_chat(M, "<span class='notice'>You feel raw magic flowing through you. It feels good!</span>")
 			else
-				M <<"<span class='notice'>you feel very strange for a moment, but then it passes.</span>"
+				to_chat(M, "<span class='notice'>You feel very strange for a moment, but then it passes.</span>")
 				burnt_out = 1
 			charged_item = M
 			break

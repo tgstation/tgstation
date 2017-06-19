@@ -23,10 +23,10 @@
 	else
 		return ..()
 
-/obj/structure/reagent_dispensers/New()
+/obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume)
 	reagents.add_reagent(reagent_id, tank_volume)
-	..()
+	. = ..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
@@ -129,8 +129,8 @@
 	density = 0
 	reagent_id = "condensedcapsaicin"
 
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
+/obj/structure/reagent_dispensers/peppertank/Initialize()
+	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
 
@@ -138,7 +138,7 @@
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
 	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'hippiestation/icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
 	tank_volume = 500

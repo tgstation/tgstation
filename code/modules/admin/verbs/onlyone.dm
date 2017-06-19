@@ -1,6 +1,6 @@
 GLOBAL_VAR_INIT(highlander, FALSE)
 /client/proc/only_one() //Gives everyone kilts, berets, claymores, and pinpointers, with the objective to hijack the emergency shuttle.
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
 	GLOB.highlander = TRUE
@@ -79,7 +79,7 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
 
 /proc/only_me()
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		alert("The game hasn't started yet!")
 		return
 

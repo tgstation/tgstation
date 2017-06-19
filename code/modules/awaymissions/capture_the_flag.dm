@@ -200,13 +200,13 @@
 
 /obj/machinery/capture_the_flag/attack_ghost(mob/user)
 	if(ctf_enabled == FALSE)
-		if(user.client && user.client.holder)
+		if(user.client && check_rights_for(user.client, R_ADMIN))
 			var/response = alert("Enable CTF?", "CTF", "Yes", "No")
 			if(response == "Yes")
 				toggle_all_ctf(user)
 		return
 
-	if(SSticker.current_state < GAME_STATE_PLAYING)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)

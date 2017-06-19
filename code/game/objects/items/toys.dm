@@ -1218,9 +1218,9 @@
 	icon_state = "lawyer"
 	toysay = "My client is a dirty traitor!"
 
-/obj/item/toy/figure/librarian
-	name = "Librarian action figure"
-	icon_state = "librarian"
+/obj/item/toy/figure/curator
+	name = "Curator action figure"
+	icon_state = "curator"
 	toysay = "One day while..."
 
 /obj/item/toy/figure/md

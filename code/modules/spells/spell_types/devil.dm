@@ -234,7 +234,7 @@
 	else
 		var/list/funky_turfs = RANGE_TURFS(1, user)
 		for(var/turf/closed/solid in funky_turfs)
-			user << "<span class='warning'>You're too close to a wall.</span>"
+			to_chat(user, "<span class='warning'>You're too close to a wall.</span>")
 			return
 		dancefloor_exists = TRUE
 		var/i = 1

@@ -17,8 +17,6 @@
 	medhud.add_to_hud(src)
 	faction += "\ref[src]"
 
-	language_menu = new(src)
-
 
 /mob/living/prepare_huds()
 	..()
@@ -29,6 +27,13 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	if(LAZYLEN(status_effects))
+		for(var/s in status_effects)
+			var/datum/status_effect/S = s
+			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
+				qdel(S)
+			else
+				S.be_replaced()
 	if(ranged_ability)
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
@@ -42,8 +47,6 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-
-	QDEL_NULL(language_menu)
 
 	return ..()
 
@@ -379,8 +382,6 @@
 	cure_blind()
 	cure_husk()
 	disabilities = 0
-	ear_deaf = 0
-	ear_damage = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -491,7 +492,7 @@
 				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
-						TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
@@ -599,7 +600,7 @@
 	return name
 
 /mob/living/update_gravity(has_gravity,override = 0)
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
 		clear_alert("weightless")
@@ -923,3 +924,8 @@
 	if(riding_datum)
 		riding_datum.handle_vehicle_offsets()
 		riding_datum.handle_vehicle_layer()
+
+/mob/living/ConveyorMove()
+	if((movement_type & FLYING) && !stat)
+		return
+	..()

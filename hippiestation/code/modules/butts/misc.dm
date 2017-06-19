@@ -13,9 +13,9 @@
 	icon = 'hippiestation/icons/obj/butts.dmi'
 	icon_state = "butt"
 
-/obj/effect/immovablerod/butt/New()
-	SpinAnimation(24,200)
+/obj/effect/immovablerod/butt/Initialize()
 	..()
+	SpinAnimation(24,-1)
 
 /obj/item/clothing/proc/checkbuttuniform(mob/user)
 	var/obj/item/organ/butt/B = user.getorgan(/obj/item/organ/butt)

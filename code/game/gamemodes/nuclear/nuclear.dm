@@ -199,70 +199,70 @@
 
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
-		feedback_set_details("round_end_result","loss - syndicate nuked - disk secured")
+		SSblackbox.set_details("round_end_result","loss - syndicate nuked - disk secured")
 		to_chat(world, "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>")
 		to_chat(world, "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!")
 
 		SSticker.news_report = NUKE_SYNDICATE_BASE
 
 	else if(!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
-		feedback_set_details("round_end_result","win - syndicate nuke")
+		SSblackbox.set_details("round_end_result","win - syndicate nuke")
 		to_chat(world, "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>")
 
 		SSticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
+		SSblackbox.set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
 		to_chat(world, "<FONT size = 3><B>Total Annihilation</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!")
 
 		SSticker.news_report = STATION_NUKED
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - blew wrong station")
+		SSblackbox.set_details("round_end_result","halfwin - blew wrong station")
 		to_chat(world, "<FONT size = 3><B>Crew Minor Victory</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!")
 
 		SSticker.news_report = NUKE_MISS
 
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
+		SSblackbox.set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
 		to_chat(world, "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!")
 
 		SSticker.news_report = NUKE_MISS
 
 	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
+		SSblackbox.set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		to_chat(world, "<FONT size = 3><B>Crew Major Victory!</B></FONT>")
 		to_chat(world, "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>")
 
 		SSticker.news_report = OPERATIVES_KILLED
 
 	else if (disk_rescued)
-		feedback_set_details("round_end_result","loss - evacuation - disk secured")
+		SSblackbox.set_details("round_end_result","loss - evacuation - disk secured")
 		to_chat(world, "<FONT size = 3><B>Crew Major Victory</B></FONT>")
 		to_chat(world, "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>")
 
 		SSticker.news_report = OPERATIVES_KILLED
 
 	else if (!disk_rescued && are_operatives_dead())
-		feedback_set_details("round_end_result","halfwin - evacuation - disk not secured")
+		SSblackbox.set_details("round_end_result","halfwin - evacuation - disk not secured")
 		to_chat(world, "<FONT size = 3><B>Neutral Victory!</B></FONT>")
 		to_chat(world, "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>")
 
 		SSticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued &&  crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - detonation averted")
+		SSblackbox.set_details("round_end_result","halfwin - detonation averted")
 		to_chat(world, "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>")
 		to_chat(world, "<B>[syndicate_name()] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!")
 
 		SSticker.news_report = OPERATIVE_SKIRMISH
 
 	else if (!disk_rescued && !crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - interrupted")
+		SSblackbox.set_details("round_end_result","halfwin - interrupted")
 		to_chat(world, "<FONT size = 3><B>Neutral Victory</B></FONT>")
 		to_chat(world, "<B>Round was mysteriously interrupted!</B>")
 

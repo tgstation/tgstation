@@ -47,10 +47,28 @@ SUBSYSTEM_DEF(garbage)
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
 	..(msg)
 
+/datum/controller/subsystem/garbage/Shutdown()
+	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(didntgc.len || sleptDestroy.len)
+		var/list/dellog = list()
+		for(var/path in didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [didntgc[path]] \n"
+			if(path in sleptDestroy)
+				dellog += "Sleeps : [sleptDestroy[path]] \n"
+				sleptDestroy -= path
+		for(var/path in sleptDestroy)
+			dellog += "Path : [path] \n"
+			dellog += "Sleeps : [sleptDestroy[path]] \n"
+		log_world(dellog.Join())
+
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
+	
+	if (state == SS_PAUSED) //make us wait again before the next run.
+		state = SS_RUNNING 
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
@@ -95,24 +113,9 @@ SUBSYSTEM_DEF(garbage)
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
 			didntgc["[type]"]++
-			var/time = world.timeofday
-			var/tick = world.tick_usage
-			var/ticktime = world.time
-			del(A)
-			tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
+			
+			HardDelete(A)
 
-			if (tick > highest_del_tickusage)
-				highest_del_tickusage = tick
-			time = world.timeofday - time
-			if (!time && TICK_DELTA_TO_MS(tick) > 1)
-				time = TICK_DELTA_TO_MS(tick)/100
-			if (time > highest_del_time)
-				highest_del_time = time
-			if (time > 10)
-				log_game("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete)")
-				message_admins("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete).")
-				postpone(time/5)
-				break
 			++delslasttick
 			++totaldels
 		else
@@ -125,10 +128,10 @@ SUBSYSTEM_DEF(garbage)
 		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
 
 /datum/controller/subsystem/garbage/proc/Queue(datum/A)
-	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+	if (isnull(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
 		return
 	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		del(A)
+		HardDelete(A)
 		return
 	var/gctime = world.time
 	var/refid = "\ref[A]"
@@ -140,6 +143,30 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
+//this is purely to seperate things profile wise.
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
+	var/time = world.timeofday
+	var/tick = world.tick_usage
+	var/ticktime = world.time
+	
+	var/type = A.type
+	var/refID = "\ref[A]"
+	
+	del(A)
+	
+	tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
+	if (tick > highest_del_tickusage)
+		highest_del_tickusage = tick
+	time = world.timeofday - time
+	if (!time && TICK_DELTA_TO_MS(tick) > 1)
+		time = TICK_DELTA_TO_MS(tick)/100
+	if (time > highest_del_time)
+		highest_del_time = time
+	if (time > 10)
+		log_game("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete)")
+		message_admins("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete).")
+		postpone(time/5)
+	
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
@@ -192,7 +219,7 @@ SUBSYSTEM_DEF(garbage)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
-				del(D)
+				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING

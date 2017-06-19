@@ -396,7 +396,7 @@
 		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
 	qdel(src)
 
-/obj/structure/girder/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+/obj/structure/girder/rcd_vals(mob/user, obj/item/weapon/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 8)
@@ -404,7 +404,7 @@
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 13)
 	return FALSE
 
-/obj/structure/girder/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+/obj/structure/girder/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
 	var/turf/T = get_turf(src)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)

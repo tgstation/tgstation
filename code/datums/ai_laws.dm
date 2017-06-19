@@ -190,7 +190,7 @@
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
 	..()
-	for(var/line in file2list("config/silicon_laws.txt"))
+	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue
 		if(findtextEx(line,"#",1,2))

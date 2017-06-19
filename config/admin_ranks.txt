@@ -26,10 +26,10 @@
 # +SOUND (or +SOUNDS) = allows you to upload and play sounds
 # +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
+# +MENTOR = mentor verbs and abilities
 
-Admin Observer
-Moderator		= +ADMIN
-Admin Candidate	= +@
+Mentor			= +MENTOR
+Moderator		= +@ +ADMIN
 Trial Admin		= +@ +SPAWN +REJUV +VAREDIT +BAN
 Badmin			= +@ +POSSESS +BUILDMODE +SERVER +FUN
 Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
@@ -37,4 +37,4 @@ Game Master		= +EVERYTHING
 
 Host			= +EVERYTHING
 
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
+Coder			= +DEBUG +SPAWN +SERVER +ADMIN +MENTOR

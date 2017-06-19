@@ -6,9 +6,9 @@
 	var/date
 
 /datum/getrev/New()
-	var/head_file = return_file_text(".git/logs/HEAD")
+	var/head_file = file2text(".git/logs/HEAD")
 	if(SERVERTOOLS && fexists("..\\prtestjob.lk"))
-		var/list/tmp = file2list("..\\prtestjob.lk")
+		var/list/tmp = world.file2list("..\\prtestjob.lk")
 		for(var/I in tmp)
 			if(I)
 				testmerge |= I
@@ -25,7 +25,7 @@
 		for(var/line in testmerge)
 			if(line)
 				log_world("Test merge active of PR #[line]")
-				feedback_add_details("testmerged_prs","[line]")
+				SSblackbox.add_details("testmerged_prs","[line]")
 		log_world("Based off master commit [parentcommit]")
 	else
 		log_world(parentcommit)
@@ -89,7 +89,7 @@
 	to_chat(src, "Enforce Continuous Rounds: [config.continuous.len] of [config.modes.len] roundtypes")
 	to_chat(src, "Allow Midround Antagonists: [config.midround_antag.len] of [config.modes.len] roundtypes")
 	if(config.show_game_type_odds)
-		if(SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSticker.IsRoundInProgress())
 			var/prob_sum = 0
 			var/current_odds_differ = FALSE
 			var/list/probs = list()
@@ -105,13 +105,13 @@
 				probs[ctag] = 1
 				prob_sum += config.probabilities[ctag]
 			if(current_odds_differ)
-				src <<"<b>Game Mode Odds for current round:</b>"
+				to_chat(src, "<b>Game Mode Odds for current round:</b>")
 				for(var/ctag in probs)
 					if(config.probabilities[ctag] > 0)
 						var/percentage = round(config.probabilities[ctag] / prob_sum * 100, 0.1)
 						to_chat(src, "[ctag] [percentage]%")
 
-		src <<"<b>All Game Mode Odds:</b>"
+		to_chat(src, "<b>All Game Mode Odds:</b>")
 		var/sum = 0
 		for(var/ctag in config.probabilities)
 			sum += config.probabilities[ctag]

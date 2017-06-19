@@ -5,8 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-
-
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -46,8 +44,6 @@
 
 	update_teeth()
 
-	grant_language(/datum/language/common) // ME TARZAN, YOU JANEBOT
-
 	..()
 
 /mob/living/carbon/human/create_internal_organs()
@@ -61,7 +57,9 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
-	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutanteyes
+	internal_organs += new dna.species.mutantears
+	internal_organs += new dna.species.mutanttongue
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/butt
 	..()
@@ -216,6 +214,13 @@
 	if(legcuffed)
 		dat += "<tr><td><A href='?src=\ref[src];item=[slot_legcuffed]'>Legcuffed</A></td></tr>"
 
+	for(var/I in bodyparts)
+		if(istype(I, /obj/item/bodypart))
+			var/obj/item/bodypart/L = I
+
+			for(var/obj/item/J in L.embedded_objects)
+				dat += "<tr><td><a href='byond://?src=\ref[src];embedded_object=\ref[J];embedded_limb=\ref[L]'>Embedded in [L]: [J]</a><br></td></tr>"
+
 	dat += {"</table>
 	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
@@ -236,14 +241,16 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-
 		if(href_list["embedded_object"])
-			var/obj/item/I = locate(href_list["embedded_object"])
-			var/obj/item/bodypart/L = locate(href_list["embedded_limb"])
-			if(!I || !L || I.loc != src || !(I in L.embedded_objects)) //no item, no limb, or item is not in limb or in the person anymore
+			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+			if(!L)
+				return
+			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
 				return
 			var/time_taken = I.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from their [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [time_taken/10] seconds.)</span>")
+			usr.visible_message("<span class='warning'>[usr] attempts to remove \the [I] from [usr == src ? "their" : name + "'s"] [L.name].</span>",\
+								"<span class='notice'>You attempt to remove \the [I] from [usr == src ? "your" : name + "'s"] [L.name]... (It will take [time_taken/10] seconds.)</span>")
 			if(do_after(usr, time_taken, needhand = 1, target = src))
 				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 					return
@@ -251,8 +258,10 @@
 				L.receive_damage(I.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
 				I.forceMove(get_turf(src))
 				usr.put_in_hands(I)
-				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of their [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+				emote("scream")
+
+				visible_message("[usr] successfully rips \the [I] out of [usr == src ? "their" : name + "'s"] [L.name]!",\
+								"<span class='notice'>You successfully remove \the [I] from [usr == src ? "your" : name + "'s"] [L.name].</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 			return
@@ -732,8 +741,8 @@
 
 /mob/living/carbon/human/wash_cream()
 	//clean both to prevent a rare bug
-	cut_overlay(image('icons/effects/creampie.dmi', "creampie_lizard"))
-	cut_overlay(image('icons/effects/creampie.dmi', "creampie_human"))
+	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
+	cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 
 
 //Turns a mob black, flashes a skeleton overlay
@@ -742,17 +751,19 @@
 	//Handle mutant parts if possible
 	if(dna && dna.species)
 		add_atom_colour("#000000", TEMPORARY_COLOUR_PRIORITY)
-		var/static/image/electrocution_skeleton_anim = image(icon = icon, icon_state = "electrocuted_base")
-		electrocution_skeleton_anim.appearance_flags = RESET_COLOR
+		var/static/mutable_appearance/electrocution_skeleton_anim
+		if(!electrocution_skeleton_anim)
+			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
+			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR
 		add_overlay(electrocution_skeleton_anim)
 		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
 		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
 
-/mob/living/carbon/human/proc/end_electrocution_animation(image/I)
+/mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
-	cut_overlay(I)
+	cut_overlay(MA)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
@@ -790,7 +801,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - staminaloss
+			var/health_amount = health
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -821,9 +832,9 @@
 					if(hal_screwyhud == SCREWYHUD_HEALTHY)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+						hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
+					hud_used.healthdoll.add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -925,21 +936,21 @@
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/human(src)
-	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)))
+	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
 		return
-	if(buckled)	//NO INFINITE STACKING!!
-		return
-	if(M.stat != CONSCIOUS)
-		return
-	if(iscarbon(M))
-		if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-			M.visible_message("<span class='boldwarning'>[M] can't hang onto [src]!</span>")
-			return
-		if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
-			return
-	. = ..(M, force, check_loc)
-	stop_pulling()
+	visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
+	if(do_after(M, 15, target = src))
+		if(iscarbon(M))
+			if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
+				return
+			if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+				M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
+				return
+		. = ..(M, force, check_loc)
+		stop_pulling()
+	else
+		visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 
 /mob/living/carbon/human/unbuckle_mob(mob/living/M, force=FALSE)
 	if(iscarbon(M))
