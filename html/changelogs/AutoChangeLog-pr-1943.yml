@@ -1,0 +1,5 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - tweak: "Changed meth's probabilities and how it reacts to diphenhydramine use."
+  - tweak: "Changed how ephedrine reacts to meth use."
