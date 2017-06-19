@@ -1010,7 +1010,6 @@
 "acn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -1159,7 +1158,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/darkred{
 	dir = 4
@@ -1223,7 +1221,6 @@
 "acG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-13"
@@ -1884,7 +1881,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/darkred/side{
 	dir = 2
@@ -1931,7 +1927,6 @@
 "adQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/closed/wall,
 /area/security/prison)
@@ -3050,7 +3045,6 @@
 "afK" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
@@ -3072,7 +3066,6 @@
 "afM" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -3122,7 +3115,6 @@
 "afQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel/red/corner{
@@ -3132,7 +3124,6 @@
 "afR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -3155,7 +3146,6 @@
 "afT" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/red/corner{
@@ -4990,7 +4980,6 @@
 /obj/structure/closet/bombcloset,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -5755,7 +5744,6 @@
 "akS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -6532,7 +6520,6 @@
 "aml" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -7585,7 +7572,6 @@
 "aor" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7927,7 +7913,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -7941,7 +7926,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=14.8-Dorms-Lockers";
@@ -8626,7 +8610,6 @@
 "aqu" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8665,7 +8648,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -8938,7 +8920,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -9077,7 +9058,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -9110,7 +9090,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/effect/landmark/start/security_officer,
 /turf/open/floor/plasteel/red/side,
@@ -10748,7 +10727,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -10762,7 +10740,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/effect/landmark/lightsout,
 /turf/open/floor/plasteel,
@@ -11321,7 +11298,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -11589,7 +11565,6 @@
 "avH" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -12340,7 +12315,6 @@
 "awZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -12392,7 +12366,6 @@
 "axd" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
@@ -12406,7 +12379,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -12433,7 +12405,6 @@
 "axh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/machinery/door_timer{
 	id = "Cell 3";
@@ -12506,7 +12477,6 @@
 "axn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -12533,7 +12503,6 @@
 "axq" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 2
@@ -12589,7 +12558,6 @@
 "axu" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 2
@@ -12705,7 +12673,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -13321,7 +13288,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -13378,7 +13344,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -14189,7 +14154,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -14579,7 +14543,6 @@
 "aBg" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -14801,7 +14764,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -15423,7 +15385,6 @@
 "aCH" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -16089,7 +16050,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/urinal{
 	pixel_y = 29
@@ -16587,7 +16547,6 @@
 "aEQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -16967,7 +16926,6 @@
 "aFv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -16977,7 +16935,6 @@
 "aFw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -16990,7 +16947,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -18705,7 +18661,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -18766,7 +18721,6 @@
 "aIA" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -19272,7 +19226,6 @@
 "aJI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/corner{
@@ -19379,7 +19332,6 @@
 "aJT" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
@@ -19843,7 +19795,6 @@
 "aKW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -20532,7 +20483,6 @@
 "aMD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -21463,7 +21413,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -21501,7 +21450,6 @@
 "aOE" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -21516,7 +21464,6 @@
 "aOF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22191,7 +22138,6 @@
 "aPL" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -22662,7 +22608,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 8
@@ -23389,7 +23334,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -23612,7 +23556,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -24485,7 +24428,6 @@
 "aUg" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -24962,7 +24904,6 @@
 /obj/item/clothing/under/assistantformal,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
@@ -25884,7 +25825,6 @@
 "aWY" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
@@ -28132,7 +28072,6 @@
 "baJ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -28162,7 +28101,6 @@
 "baL" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/light,
 /obj/structure/disposalpipe/segment{
@@ -28196,7 +28134,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -28227,7 +28164,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -28244,7 +28180,6 @@
 "baR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -28293,7 +28228,6 @@
 "baW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/corner{
@@ -28316,7 +28250,6 @@
 "baY" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -28328,7 +28261,6 @@
 "baZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -28649,7 +28581,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -29361,7 +29292,6 @@
 "bcX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/book/manual/wiki/security_space_law{
@@ -29548,7 +29478,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -29589,7 +29518,6 @@
 "bds" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -32487,7 +32415,6 @@
 "biO" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -32966,7 +32893,6 @@
 "bjF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -33011,7 +32937,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -33050,7 +32975,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/holopad,
 /turf/open/floor/plasteel,
@@ -33701,7 +33625,6 @@
 "bkQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
@@ -33758,7 +33681,6 @@
 "bkV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -33772,7 +33694,6 @@
 "bkW" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/caution/corner{
 	dir = 8
@@ -33823,7 +33744,6 @@
 "blb" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/machinery/firealarm{
 	dir = 1;
@@ -33841,7 +33761,6 @@
 "blc" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/caution/corner{
 	dir = 8
@@ -33887,7 +33806,6 @@
 "blg" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=13.2-Tcommstore";
@@ -36053,7 +35971,6 @@
 "bpk" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -36877,7 +36794,6 @@
 "bqA" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -37304,7 +37220,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -37362,7 +37277,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -38005,7 +37919,6 @@
 "bsu" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -38059,7 +37972,6 @@
 "bsz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -38160,7 +38072,6 @@
 "bsI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
@@ -38995,7 +38906,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39136,7 +39046,6 @@
 "buw" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/black,
 /area/bridge)
@@ -39370,7 +39279,6 @@
 "buZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -39794,7 +39702,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -39829,7 +39736,6 @@
 "bvP" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -39842,7 +39748,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -39881,7 +39786,6 @@
 "bvU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -40566,14 +40470,12 @@
 "bxh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
 "bxi" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -41299,7 +41201,6 @@
 "byG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2";
@@ -41986,7 +41887,6 @@
 "bzS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/button/door{
 	id = "bridge blast";
@@ -42227,7 +42127,6 @@
 "bAt" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
@@ -42423,7 +42322,6 @@
 "bAP" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -43133,7 +43031,6 @@
 "bCj" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -43285,7 +43182,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "mix_in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -44207,7 +44103,6 @@
 "bEx" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/carpet,
 /area/library)
@@ -44253,7 +44148,6 @@
 "bEC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -44321,7 +44215,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -44412,7 +44305,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -44426,7 +44318,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/machinery/newscaster{
 	pixel_y = -29
@@ -44462,7 +44353,6 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -44631,7 +44521,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -44687,7 +44576,6 @@
 "bFc" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -44706,7 +44594,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -44760,7 +44647,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
@@ -45080,7 +44966,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -45680,7 +45565,6 @@
 "bGV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -45725,7 +45609,6 @@
 "bHa" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -45941,7 +45824,6 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6;
-	initialize_directions = 6
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -45987,7 +45869,6 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -46572,7 +46453,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 2
@@ -46609,7 +46489,6 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -46677,7 +46556,6 @@
 "bIQ" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -46697,7 +46575,6 @@
 "bIT" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -46771,7 +46648,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2o_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -47506,7 +47382,6 @@
 /obj/item/device/radio/beacon,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -48282,7 +48157,6 @@
 "bMb" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 8
@@ -49126,7 +49000,6 @@
 "bNz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -50064,7 +49937,6 @@
 "bPt" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -50109,7 +49981,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "tox_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -50532,7 +50403,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -51590,7 +51460,6 @@
 "bSi" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /obj/item/weapon/wrench,
@@ -51977,7 +51846,6 @@
 "bSX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -52355,7 +52223,6 @@
 "bTF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -52442,7 +52309,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/status_display{
 	density = 0;
@@ -52475,7 +52341,6 @@
 "bTQ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -52484,7 +52349,6 @@
 "bTR" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
@@ -52517,7 +52381,6 @@
 "bTU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/power/apc{
 	cell_type = 10000;
@@ -52536,7 +52399,6 @@
 "bTV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/sign/map/left{
 	desc = "A framed picture of the station. Clockwise from security at the top (red), you see engineering (yellow), science (purple), escape (red and white), medbay (green), arrivals (blue and white), and finally cargo (brown).";
@@ -52928,7 +52790,6 @@
 /obj/item/weapon/cigbutt,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -52965,7 +52826,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "co2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -56948,7 +56808,6 @@
 "ccj" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -57331,7 +57190,6 @@
 "ccT" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/atmos)
@@ -57631,7 +57489,6 @@
 "cdz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -57711,7 +57568,6 @@
 "cdI" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 2
@@ -57921,7 +57777,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -58136,7 +57991,6 @@
 "cey" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -58692,7 +58546,6 @@
 "cfs" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -59959,7 +59812,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -59988,7 +59840,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -60078,7 +59929,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -60283,7 +60133,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -60784,7 +60633,6 @@
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/surgery)
@@ -60854,7 +60702,6 @@
 "cjF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
@@ -60926,7 +60773,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -60943,7 +60789,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -61162,7 +61007,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -61529,7 +61373,6 @@
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/surgery)
@@ -61590,7 +61433,6 @@
 "cle" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 10
@@ -61661,7 +61503,6 @@
 "cll" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -62610,7 +62451,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 0;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "incinerator output intake";
 	on = 0;
@@ -62810,7 +62650,6 @@
 "cnv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/closet/secure_closet/medical1{
 	pixel_x = -3
@@ -63037,7 +62876,6 @@
 "cnP" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
@@ -64057,7 +63895,6 @@
 "cpD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -64715,7 +64552,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -64768,7 +64604,6 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -64785,7 +64620,6 @@
 "cqN" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 2
@@ -64799,7 +64633,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whitepurple/side{
@@ -67531,7 +67364,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
@@ -67865,7 +67697,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
@@ -68318,7 +68149,6 @@
 "cxk" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -68354,7 +68184,6 @@
 "cxo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -68484,7 +68313,6 @@
 "cxB" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=9.1-Escape-1";
@@ -68870,7 +68698,6 @@
 "cyo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2
@@ -68948,7 +68775,6 @@
 "cyx" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -69319,7 +69145,6 @@
 "czh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/button/door{
 	dir = 2;
@@ -69760,7 +69585,6 @@
 /obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
@@ -70193,7 +70017,6 @@
 "cAF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -70530,7 +70353,6 @@
 "cBp" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4
@@ -70629,7 +70451,6 @@
 "cBA" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -72014,7 +71835,6 @@
 "cEh" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
@@ -72171,7 +71991,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 0;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -73740,7 +73559,6 @@
 "cHc" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 2
@@ -73765,7 +73583,6 @@
 "cHf" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/closed/wall/r_wall,
 /area/science/server)
@@ -73879,7 +73696,6 @@
 /obj/structure/window/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plating,
 /area/medical/virology)
@@ -73908,7 +73724,6 @@
 "cHu" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whitegreen/side,
 /area/medical/virology)
@@ -74273,7 +74088,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
@@ -75309,7 +75123,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -76408,7 +76221,6 @@
 "cLX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -77563,7 +77375,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/effect/landmark/xmastree,
 /turf/open/floor/carpet,
@@ -77638,7 +77449,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -77883,7 +77693,6 @@
 "cOU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -77932,7 +77741,6 @@
 "cOZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -79095,7 +78903,6 @@
 "cRC" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -83841,7 +83648,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6;
-	initialize_directions = 6
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -84542,7 +84348,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 2;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -84596,7 +84401,6 @@
 "dcl" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -85299,7 +85103,6 @@
 /obj/item/weapon/cigbutt,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -85328,7 +85131,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -85349,7 +85151,6 @@
 "ddD" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
@@ -85520,7 +85321,6 @@
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/structure/window/reinforced/highpressure/fulltile,
 /turf/open/floor/plating,
@@ -86236,7 +86036,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel{
 	dir = 1

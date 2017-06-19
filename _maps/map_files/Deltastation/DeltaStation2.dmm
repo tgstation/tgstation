@@ -6576,9 +6576,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	initialize_directions = 11
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "aoN" = (
@@ -8464,7 +8462,6 @@
 "asq" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/atmospherics_engine)
@@ -11033,7 +11030,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -11630,7 +11626,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/yellow,
 /area/engine/atmospherics_engine)
@@ -12121,7 +12116,6 @@
 "aAg" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -18969,7 +18963,6 @@
 "aNT" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -20749,7 +20742,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -21668,7 +21660,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "co2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "co2 vent";
 	on = 1;
@@ -23583,7 +23574,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "oxygen vent";
 	on = 1;
@@ -24926,7 +24916,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "tox_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "plasma vent";
 	on = 1;
@@ -24985,7 +24974,6 @@
 "aZp" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -26378,7 +26366,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "n2 vent";
 	on = 1;
@@ -27722,7 +27709,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2o_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "n2o vent";
 	on = 1;
@@ -29667,7 +29653,6 @@
 "biY" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -29692,7 +29677,6 @@
 "bjb" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 1
@@ -29736,7 +29720,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral,
@@ -30382,7 +30365,6 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/status_display{
 	pixel_x = -32
@@ -32311,7 +32293,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmos)
@@ -33200,7 +33181,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "mix_in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "distro vent";
 	on = 1;
@@ -51532,7 +51512,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "server vent";
 	on = 1;
@@ -70115,7 +70094,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "server vent";
 	on = 1;
@@ -91805,7 +91783,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "server vent";
 	on = 1;

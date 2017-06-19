@@ -11433,7 +11433,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -11921,7 +11920,6 @@
 "qM" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/effect/turf_decal/bot{
@@ -13274,7 +13272,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "UO45_mix_in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -13753,7 +13750,6 @@
 "sZ" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 6;
-	initialize_directions = 6
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -14993,7 +14989,6 @@
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 1;
-	initialize_directions = 12
 	},
 /obj/machinery/meter{
 	layer = 3.3
@@ -15331,7 +15326,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "UO45_n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -15359,7 +15353,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "UO45_o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;

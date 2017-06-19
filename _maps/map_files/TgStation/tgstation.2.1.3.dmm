@@ -34099,7 +34099,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
 	pixel_x = 0;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -34681,7 +34680,6 @@
 "bzi" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
@@ -35959,7 +35957,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -41119,7 +41116,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 0;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -41339,7 +41335,6 @@
 "bMW" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41846,7 +41841,6 @@
 "bOe" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -41855,7 +41849,6 @@
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -42380,7 +42373,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "mix_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -43383,14 +43375,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4;
-	initialize_directions = 12
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRH" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 5;
-	initialize_directions = 12
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -43623,7 +43613,6 @@
 "bSg" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -43936,7 +43925,6 @@
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -44430,7 +44418,6 @@
 "bTR" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -44474,7 +44461,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2o_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -44627,7 +44613,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
 	pixel_x = 0;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -45139,7 +45124,6 @@
 "bVn" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -45428,7 +45412,6 @@
 "bWa" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -46376,7 +46359,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "tox_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -46609,7 +46591,6 @@
 "bYx" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
@@ -46745,7 +46726,6 @@
 "bYS" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
@@ -47110,7 +47090,6 @@
 "bZH" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/item/weapon/wrench,
 /turf/open/floor/plasteel,
@@ -48158,7 +48137,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "co2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -50097,7 +50075,6 @@
 "cfS" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4;
-	initialize_directions = 12
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -50268,7 +50245,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -51436,7 +51412,6 @@
 "ciz" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/disposal/incinerator)
@@ -52492,7 +52467,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -52521,7 +52495,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -54098,7 +54071,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 0;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -55979,7 +55951,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -60609,7 +60580,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
 	pixel_x = 0;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)

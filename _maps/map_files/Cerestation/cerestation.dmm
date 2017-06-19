@@ -4928,7 +4928,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -14590,7 +14589,6 @@
 "aCS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -37611,7 +37609,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -39440,7 +39437,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/engine{
@@ -41081,7 +41077,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 8;
-	initialize_directions = 11
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -43537,7 +43532,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 5;
-	initialize_directions = 12
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -43555,7 +43549,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4;
-	initialize_directions = 12
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -43596,7 +43589,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4;
-	initialize_directions = 12
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -43692,7 +43684,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /turf/open/floor/engine{
 	baseturf = /turf/open/floor/plating/asteroid/airless;
@@ -51193,7 +51184,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
 	pixel_x = 0;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -51854,7 +51844,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "n2 vent";
 	on = 1;
@@ -51908,7 +51897,6 @@
 "bPt" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /obj/effect/landmark/start/atmospheric_technician,
 /turf/open/floor/plasteel{
@@ -53030,7 +53018,6 @@
 "bRv" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -53759,7 +53746,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "oxygen vent";
 	on = 1;
@@ -54759,7 +54745,6 @@
 "bUY" = (
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
 	dir = 1;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel{
@@ -55005,7 +54990,6 @@
 "bVt" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -55750,7 +55734,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "co2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "co2 vent";
 	on = 1;
@@ -55787,7 +55770,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "tox_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "plasma vent";
 	on = 1;
@@ -55825,7 +55807,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2o_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "n2o vent";
 	on = 1;
@@ -55862,7 +55843,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "mix_in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	name = "distro vent";
 	on = 1;
@@ -66293,7 +66273,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 0;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -68101,7 +68080,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
 	pixel_x = 0;
-	initialize_directions = 10
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTH)";
@@ -68484,7 +68462,6 @@
 "cub" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/white{
@@ -70872,7 +70849,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 120;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -82551,7 +82527,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -82815,7 +82790,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/meter,
 /turf/open/floor/plasteel/floorgrime,
@@ -82988,7 +82962,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 0;
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -87195,7 +87168,6 @@
 "deg" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90455,7 +90427,6 @@
 "dmf" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91251,7 +91222,6 @@
 "dnR" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -92006,7 +91976,6 @@
 "dpi" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used to watch the various criminals inside their cells.";
@@ -94848,7 +94817,6 @@
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
-	initialize_directions = 11
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
