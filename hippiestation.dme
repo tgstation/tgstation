@@ -2258,6 +2258,7 @@
 #include "hippiestation\code\modules\mob\living\silicon\ai\vox_sounds.dm"
 #include "hippiestation\code\modules\mob\living\simple\buttbot.dm"
 #include "hippiestation\code\modules\mob\living\simple\sharks.dm"
+#include "hippiestation\code\modules\mob\living\simple_animal\guardian\types\standard.dm"
 #include "hippiestation\code\modules\modular_computers\computers\item\laptop.dm"
 #include "hippiestation\code\modules\paperwork\photocopier.dm"
 #include "hippiestation\code\modules\pool\pool_controller.dm"
