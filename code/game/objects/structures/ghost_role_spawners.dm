@@ -484,7 +484,7 @@
 /obj/effect/mob_spawn/human/oldsci
 	name = "old cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant"
-	mob_name = "a engineer"
+	mob_name = "a scientist"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
@@ -498,6 +498,6 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/weapon/card/id/away/old/sci
 
-/obj/effect/mob_spawn/human/oldeng/Destroy()
+/obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/oldpod(get_turf(src))
 	return ..()

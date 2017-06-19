@@ -334,3 +334,9 @@ update_label("John Doe", "Clowny")
 	name = "Engineer ID"
 	desc = "Engineers ID card."
 	icon_state = "centcom"
+
+/obj/item/weapon/card/id/away/old/apc
+	name = "APC Access ID"
+	desc = "Special ID card to allow access to APCs"
+	icon_state = "centcom"
+	access = list(GLOB.access_engine_equip)
