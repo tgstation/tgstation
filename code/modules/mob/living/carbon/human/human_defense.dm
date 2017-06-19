@@ -70,7 +70,7 @@
 
 				return -1 // complete projectile permutation
 
-		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
+		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
 
@@ -85,21 +85,21 @@
 			return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/proc/check_shields(atom/AM, var/damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
 
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
 			var/final_block_chance = I.block_chance - (Clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 				return 1
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	if(w_uniform)
 		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	return 0
 
@@ -122,7 +122,7 @@
 		throwpower = I.throwforce
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
-	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
@@ -170,7 +170,7 @@
 /mob/living/carbon/human/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)
 		var/hulk_verb = pick("smash","pummel")
-		if(check_shields(15, "the [hulk_verb]ing"))
+		if(check_shields(user, 15, "the [hulk_verb]ing"))
 			return
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
@@ -219,7 +219,7 @@
 	if(can_inject(M, 1, affecting))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
-			if(check_shields(damage))
+			if(check_shields(M, damage, "the [M.name]"))
 				return 0
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
@@ -227,7 +227,7 @@
 		return 1
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(check_shields(0, M.name))
+	if(check_shields(M, 0, "the M.name"))
 		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
 		return 0
 
@@ -272,7 +272,7 @@
 
 	if(..()) //successful larva bite.
 		var/damage = rand(1, 3)
-		if(check_shields(damage, "the [L.name]"))
+		if(check_shields(L, damage, "the [L.name]"))
 			return 0
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
@@ -288,7 +288,7 @@
 	. = ..()
 	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
+		if(check_shields(M, damage, "the [M.name]", MELEE_ATTACK, M.armour_penetration))
 			return FALSE
 		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
@@ -307,7 +307,7 @@
 		if(M.is_adult)
 			damage = rand(10, 35)
 
-		if(check_shields(damage, "the [M.name]"))
+		if(check_shields(M, damage, "the [M.name]"))
 			return 0
 
 		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
