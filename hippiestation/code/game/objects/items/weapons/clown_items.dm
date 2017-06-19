@@ -1,4 +1,5 @@
 /obj/item/weapon/bikehorn/golden/retardhorn
+	origin_tech = "engineering=4;syndicate=3" //Science can uncover if this is a regular bike horn or not using science goggles.
 
 /obj/item/weapon/bikehorn/golden/retardhorn/attack()
 	flip_mobs()
