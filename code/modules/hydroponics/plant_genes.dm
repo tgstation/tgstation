@@ -216,10 +216,9 @@
 		if(!istype(G, /obj/item/weapon/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
 			stun_len /= 3
 
-		var/stun = min(stun_len, 7)
-		var/weaken = min(stun_len, 7)
+		var/knockdown = min(stun_len, 7)
 
-		if(M.slip(stun, weaken, G))
+		if(M.slip(knockdown, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_slip(G, M)
 

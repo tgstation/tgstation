@@ -112,7 +112,7 @@
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
 		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
-		cult_mind.current.playsound_local('sound/ambience/antag/bloodcult.ogg',100,0)//subject to change
+		cult_mind.current.playsound_local(get_turf(cult_mind.current), 'sound/ambience/antag/bloodcult.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
 		add_cultist(cult_mind, 0)
 	..()
 
@@ -156,7 +156,7 @@
 		return 0
 	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
 		if(stun)
-			cult_mind.current.Paralyse(5)
+			cult_mind.current.Unconscious(100)
 		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, silent, stun)
@@ -167,7 +167,7 @@
 		cult_datum.silent = silent
 		cult_datum.on_removal()
 		if(stun)
-			cult_mind.current.Paralyse(5)
+			cult_mind.current.Unconscious(100)
 		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)

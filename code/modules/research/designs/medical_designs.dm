@@ -190,6 +190,17 @@
 	build_path = /obj/item/organ/eyes/robotic/shield
 	category = list("Misc", "Medical Designs")
 
+/datum/design/cyberimp_gloweyes
+	name = "Luminescent Eyes"
+	desc = "A pair of cybernetic eyes that can emit multicolored light"
+	id = "ci-gloweyes"
+	req_tech = list("materials" = 3, "biotech" = 3, "engineering" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(MAT_METAL = 600, MAT_GLASS = 1000)
+	build_path = /obj/item/organ/eyes/robotic/glow
+	category = list("Misc", "Medical Designs")
+
 /datum/design/cyberimp_breather
 	name = "Breathing Tube Implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."

@@ -347,12 +347,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			target.adjustToxLoss(amount)
 		if("oxyloss")
 			target.adjustOxyLoss(amount)
-		if("stunned")
-			target.AdjustStunned(amount)
-		if("weakened")
-			target.AdjustWeakened(amount)
-		if("paralysis")
-			target.AdjustParalysis(amount)
+		if("stun")
+			target.AdjustStun(amount)
+		if("knockdown")
+			target.AdjustKnockdown(amount)
+		if("unconscious")
+			target.AdjustUnconscious(amount)
 		else
 			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
 

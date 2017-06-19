@@ -1,88 +1,90 @@
 
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stunned, weakened, paralysis, sleeping, resting, jitteriness, dizziness, ear damage,
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
 
-/////////////////////////////////// STUNNED ////////////////////////////////////
+#define STUN_TIME_MULTIPLIER 0.05 //temporary; multiplies input stun times by this, will be removed once stuns are status effects
+
+/////////////////////////////////// STUN ////////////////////////////////////
 
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		stun = max(max(stun,amount * STUN_TIME_MULTIPLIER),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
 		return TRUE
 
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+/mob/proc/SetStun(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stun"
 	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount,0)
+		stun = max(amount * STUN_TIME_MULTIPLIER,0)
 		if(updating)
 			update_canmove()
 		return TRUE
 
-/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
+/mob/proc/AdjustStun(amount, updating = 1, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount,0)
+		stun = max(stun + (amount * STUN_TIME_MULTIPLIER),0)
 		if(updating)
 			update_canmove()
 		return TRUE
 
-/////////////////////////////////// WEAKENED ////////////////////////////////////
+/////////////////////////////////// KNOCKDOWN ////////////////////////////////////
 
-/mob/proc/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
+/mob/proc/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
+	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+		knockdown = max(max(knockdown,amount * STUN_TIME_MULTIPLIER),0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
 		return TRUE
 
-/mob/proc/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
+/mob/proc/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
+	if(status_flags & CANKNOCKDOWN || ignore_canknockdown)
+		knockdown = max(amount * STUN_TIME_MULTIPLIER,0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
 		return TRUE
 
-/mob/proc/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(weakened + amount,0)
+/mob/proc/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
+	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+		knockdown = max(knockdown + (amount * STUN_TIME_MULTIPLIER) ,0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
 		return TRUE
 
-/////////////////////////////////// PARALYSIS ////////////////////////////////////
+/////////////////////////////////// UNCONSCIOUS ////////////////////////////////////
 
-/mob/proc/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		var/old_paralysis = paralysis
-		paralysis = max(max(paralysis,amount),0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+/mob/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE)
+	if(status_flags & CANUNCONSCIOUS || ignore_canunconscious)
+		var/old_unconscious = unconscious
+		unconscious = max(max(unconscious,amount * STUN_TIME_MULTIPLIER),0)
+		if((!old_unconscious && unconscious) || (old_unconscious && !unconscious))
 			if(updating)
 				update_stat()
 		return TRUE
 
-/mob/proc/SetParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		var/old_paralysis = paralysis
-		paralysis = max(amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+/mob/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE)
+	if(status_flags & CANUNCONSCIOUS || ignore_canunconscious)
+		var/old_unconscious = unconscious
+		unconscious = max(amount * STUN_TIME_MULTIPLIER,0)
+		if((!old_unconscious && unconscious) || (old_unconscious && !unconscious))
 			if(updating)
 				update_stat()
 		return TRUE
 
-/mob/proc/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		var/old_paralysis = paralysis
-		paralysis = max(paralysis + amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+/mob/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE)
+	if(status_flags & CANUNCONSCIOUS || ignore_canunconscious)
+		var/old_unconscious = unconscious
+		unconscious = max(unconscious + (amount * STUN_TIME_MULTIPLIER) ,0)
+		if((!old_unconscious && unconscious) || (old_unconscious && !unconscious))
 			if(updating)
 				update_stat()
 		return TRUE
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/proc/Sleeping(amount, updating = 1, no_alert = FALSE)
+/mob/proc/Sleeping(amount, updating = TRUE, no_alert = FALSE)
 	var/old_sleeping = sleeping
-	sleeping = max(max(sleeping,amount),0)
+	sleeping = max(max(sleeping,amount * STUN_TIME_MULTIPLIER),0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
 			throw_alert("asleep", /obj/screen/alert/asleep)
@@ -95,7 +97,7 @@
 
 /mob/proc/SetSleeping(amount, updating = 1, no_alert = FALSE)
 	var/old_sleeping = sleeping
-	sleeping = max(amount,0)
+	sleeping = max(amount * STUN_TIME_MULTIPLIER,0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
 			throw_alert("asleep", /obj/screen/alert/asleep)
@@ -108,7 +110,7 @@
 
 /mob/proc/AdjustSleeping(amount, updating = 1, no_alert = FALSE)
 	var/old_sleeping = sleeping
-	sleeping = max(sleeping + amount,0)
+	sleeping = max(sleeping + (amount * STUN_TIME_MULTIPLIER) ,0)
 	if(!old_sleeping && sleeping)
 		if(!no_alert)
 			throw_alert("asleep", /obj/screen/alert/asleep)

@@ -37,7 +37,7 @@ Contents:
 			playsound(H.loc, "sparks", 50, 1)
 			new /obj/effect/temp_visual/dir_setting/ninja/phase(get_turf(H), H.dir)
 
-			destination.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
+			destination.phase_damage_creatures(20,H)//Stun and damage mobs and mechas on the turf
 			s_coold = 1
 		else
 			to_chat(H, "<span class='danger'>The VOID-shift device is malfunctioning, <B>teleportation failed</B>.</span>")
@@ -65,7 +65,7 @@ Contents:
 			playsound(H.loc, "sparks", 50, 1)
 			new /obj/effect/temp_visual/dir_setting/ninja/phase(get_turf(H), H.dir)
 
-			T.phase_damage_creatures(20,H)//Paralyse and damage mobs and mechas on the turf
+			T.phase_damage_creatures(20,H)//Stun and damage mobs and mechas on the turf
 			s_coold = 1
 		else
 			to_chat(H, "<span class='danger'>You cannot teleport into solid walls or from solid matter</span>")

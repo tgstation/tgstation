@@ -224,7 +224,7 @@ SUBSYSTEM_DEF(job)
 
 	//Get the players who are ready
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.ready && player.mind && !player.mind.assigned_role)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
 	initial_players_to_assign = unassigned.len
@@ -456,7 +456,7 @@ SUBSYSTEM_DEF(job)
 		var/level5 = 0 //banned
 		var/level6 = 0 //account too young
 		for(var/mob/dead/new_player/player in GLOB.player_list)
-			if(!(player.ready && player.mind && !player.mind.assigned_role))
+			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
 				level5++
@@ -489,7 +489,7 @@ SUBSYSTEM_DEF(job)
 		Debug("Popcap overflow Check observer located, Player: [player]")
 	to_chat(player, "<b>You have failed to qualify for any job you desired.</b>")
 	unassigned -= player
-	player.ready = 0
+	player.ready = PLAYER_NOT_READY
 
 
 /datum/controller/subsystem/job/Recover()

@@ -47,7 +47,7 @@
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
-				owner.Weaken(1)
+				owner.Knockdown(20)
 			if(iscultist(owner))
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
@@ -138,7 +138,7 @@
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
 				add_servant_of_ratvar(owner)
-			owner.Paralyse(5)
+			owner.Unconscious(100)
 		else
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")

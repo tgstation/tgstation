@@ -7,6 +7,7 @@
 	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	layer = ABOVE_WINDOW_LAYER
 
 	var/on = FALSE
 	state_open = FALSE
@@ -15,7 +16,7 @@
 
 	var/efficiency = 1
 	var/sleep_factor = 750
-	var/paralyze_factor = 1000
+	var/unconscious_factor = 1000
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
 
@@ -58,7 +59,7 @@
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C
-	paralyze_factor = initial(paralyze_factor) * C
+	unconscious_factor = initial(unconscious_factor) * C
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
 
@@ -112,7 +113,7 @@
 	var/turf/T = get_turf(src)
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
+		if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
@@ -128,8 +129,8 @@
 			return
 		if(air1.gases.len)
 			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 100)
-				mob_occupant.Paralyse((mob_occupant.bodytemperature / paralyze_factor) * 100)
+				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
+				mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.

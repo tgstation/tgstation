@@ -50,7 +50,7 @@
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(4, 2, src)
+		M.slip(4, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))
