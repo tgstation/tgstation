@@ -33,6 +33,7 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
+	S.echo = 0,0,0,0,0,0,0,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7
 
 
 
