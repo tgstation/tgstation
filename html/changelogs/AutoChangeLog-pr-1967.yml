@@ -1,0 +1,4 @@
+author: "QualityVan"
+delete-after: True
+changes: 
+  - rscadd: "The botany vending machine now has a stock of onion seeds"
