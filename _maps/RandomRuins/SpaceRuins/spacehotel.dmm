@@ -681,7 +681,6 @@
 "bM" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -746,7 +745,6 @@
 "bS" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -811,7 +809,6 @@
 "bY" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -876,7 +873,6 @@
 "ce" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -1415,7 +1411,6 @@
 "dm" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -1499,7 +1494,6 @@
 "du" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -2355,7 +2349,6 @@
 /area/ruin/hotel/dock)
 "fP" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2

@@ -1649,7 +1649,6 @@
 	},
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1998,7 +1997,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 12
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2136,7 +2134,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 12
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8275,7 +8272,6 @@
 	},
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/effect/turf_decal/bot,
@@ -21785,7 +21781,6 @@
 "aIH" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 12
 	},
 /obj/effect/turf_decal/delivery,
@@ -23786,7 +23781,6 @@
 "aMh" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 12
 	},
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -32884,7 +32878,6 @@
 "bch" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -33260,7 +33253,6 @@
 "bcY" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -35493,7 +35485,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 12
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -35899,7 +35890,6 @@
 /area/science/xenobiology)
 "bhj" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -39723,7 +39713,6 @@
 "brs" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{

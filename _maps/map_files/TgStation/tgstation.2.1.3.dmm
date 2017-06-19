@@ -1100,7 +1100,6 @@
 /area/security/prison)
 "acK" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -5978,7 +5977,6 @@
 /area/maintenance/port/fore)
 "amD" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -12741,7 +12739,6 @@
 /area/maintenance/starboard/fore)
 "aCm" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -13392,13 +13389,11 @@
 /area/crew_quarters/dorms)
 "aDL" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
 	},
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -14533,7 +14528,6 @@
 /area/ai_monitored/storage/eva)
 "aGk" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -15394,7 +15388,6 @@
 	on = 1
 	},
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -18313,7 +18306,6 @@
 /area/hallway/secondary/exit)
 "aOV" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -22496,7 +22488,6 @@
 "aZo" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -22834,7 +22825,6 @@
 /area/crew_quarters/kitchen)
 "bal" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -22935,7 +22925,6 @@
 "baw" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -23845,7 +23834,6 @@
 "bcO" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
@@ -26442,7 +26430,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -27818,7 +27805,6 @@
 "blH" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -28203,7 +28189,6 @@
 "bmC" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -33599,7 +33584,6 @@
 /area/security/checkpoint/checkpoint2)
 "bxN" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -37173,7 +37157,6 @@
 "bFA" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
@@ -38742,7 +38725,6 @@
 /area/medical/virology)
 "bIK" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -39975,7 +39957,6 @@
 /area/science/xenobiology)
 "bLd" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -43898,7 +43879,6 @@
 	pixel_x = -22
 	},
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -44493,7 +44473,6 @@
 "bVk" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
@@ -46153,7 +46132,6 @@
 /area/medical/virology)
 "bZa" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -53705,7 +53683,6 @@
 "coV" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -63183,7 +63160,6 @@
 "cLf" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{

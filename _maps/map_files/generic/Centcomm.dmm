@@ -4790,7 +4790,6 @@
 "mD" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11;
 	pixel_y = 0
 	},
@@ -11495,7 +11494,6 @@
 "Cq" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11564,7 +11562,6 @@
 "CA" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11704,7 +11701,6 @@
 "CO" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11737,7 +11733,6 @@
 "CR" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /turf/open/floor/plasteel/bar,
@@ -11774,7 +11769,6 @@
 "CW" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{

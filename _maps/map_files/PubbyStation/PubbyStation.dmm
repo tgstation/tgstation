@@ -2144,7 +2144,6 @@
 /area/security/prison)
 "aeU" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -12918,7 +12917,6 @@
 /area/crew_quarters/dorms)
 "aBs" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -15581,7 +15579,6 @@
 /area/crew_quarters/cafeteria/lunchroom)
 "aHt" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -23235,7 +23232,6 @@
 /obj/item/weapon/mop,
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -23571,7 +23567,6 @@
 /area/janitor)
 "aYm" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -28634,7 +28629,6 @@
 "bjo" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -32310,7 +32304,6 @@
 "bqm" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -32910,7 +32903,6 @@
 "brr" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -33270,7 +33262,6 @@
 "brW" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -34181,7 +34172,6 @@
 /area/medical/virology)
 "btP" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -35170,7 +35160,6 @@
 /area/medical/virology)
 "bvQ" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -37295,7 +37284,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -46975,7 +46963,6 @@
 /area/hallway/primary/central)
 "bVi" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -47592,7 +47579,6 @@
 /area/hallway/secondary/entry)
 "bWE" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -47941,7 +47927,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /turf/open/floor/plasteel/white,
@@ -51806,7 +51791,6 @@
 "cgT" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{

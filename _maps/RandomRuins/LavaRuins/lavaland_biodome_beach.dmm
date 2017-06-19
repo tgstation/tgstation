@@ -91,7 +91,6 @@
 "ao" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/effect/decal/sandeffect,
