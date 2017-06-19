@@ -281,17 +281,17 @@
 /area/ruin/ancientstation/powered
 	name = "Powered Tile"
 	icon_state = "teleporter"
-	requires_power = 0
+	requires_power = FALSE
 
 /area/ruin/ancientstation/space
 	name = "Exposed To Space"
 	icon_state = "teleporter"
-	has_gravity = 0
+	has_gravity = FALSE
 
 /area/ruin/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
-	has_gravity = 0
+	has_gravity = FALSE
 
 /area/ruin/ancientstation/betanorth
 	name = "Beta Station North Corridor"

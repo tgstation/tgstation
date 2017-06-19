@@ -52,8 +52,8 @@
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
-	opacity = 1
-	density = 1
+	opacity = TRUE
+	density = TRUE
 
 //see also turf/AfterChange for adjacency shennanigans
 

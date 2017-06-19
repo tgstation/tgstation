@@ -29,7 +29,7 @@
 "aC" = (/mob/living/simple_animal/hostile/hivebot/range,/turf/open/floor/plasteel/black,/area/ruin/ancientstation/hivebot)
 "aD" = (/mob/living/simple_animal/hostile/hivebot/strong,/turf/open/floor/plasteel/black,/area/ruin/ancientstation/hivebot)
 "aE" = (/obj/effect/decal/cleanable/oil,/mob/living/simple_animal/hostile/hivebot/strong,/turf/open/floor/plasteel/black,/area/ruin/ancientstation/hivebot)
-"aF" = (/obj/structure/shuttle/engine/large{tag = "icon-large_engine (EAST)"; icon_state = "large_engine"; dir = 4},/turf/open/floor/plating,/area/ruin/ancientstation/hivebot)
+"aF" = (/obj/structure/shuttle/engine/large{tag = "icon-large_engine (EAST)"; icon_state = "large_engine"; dir = 4},/turf/closed/wall,/area/ruin/ancientstation/hivebot)
 "aG" = (/turf/closed/wall/rust,/area/ruin/ancientstation)
 "aH" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/blue/side{dir = 9},/area/ruin/ancientstation/comm)
 "aI" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/floorgrime,/area/ruin/ancientstation/comm)
@@ -71,7 +71,7 @@
 "bs" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/blue/side{dir = 10},/area/ruin/ancientstation/comm)
 "bt" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table,/obj/item/weapon/dice/d6,/turf/open/floor/plasteel/blue/side,/area/ruin/ancientstation/comm)
 "bu" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table,/turf/open/floor/plasteel/blue/side,/area/ruin/ancientstation/comm)
-"bv" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table,/turf/open/floor/plasteel/blue/side{dir = 6},/area/ruin/ancientstation/comm)
+"bv" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table,/obj/item/weapon/soap/nanotrasen,/turf/open/floor/plasteel/blue/side{dir = 6},/area/ruin/ancientstation/comm)
 "bw" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/open/floor/plating,/area/ruin/ancientstation/betanorth)
 "bx" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/machinery/door/airlock/maintenance_hatch,/turf/open/floor/plating,/area/ruin/ancientstation)
 "by" = (/obj/structure/sign/poster/official/nanotrasen_logo,/turf/closed/wall/rust,/area/ruin/ancientstation/comm)
@@ -593,11 +593,11 @@ aaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacacacacaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacadadadadadadadadadadadadadadacacacaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacadaeafadafafadagahaiahahagadajadacacaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakakalamamamanakakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacadafaoadapafadafafafagaiaqadaiagararaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakakalamamamanakakaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacadafaoadapafadafafafagaiaqadaiagagaraa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaakakasatauavawaxayakakaaaaaaaaaaaaaaaaazazazaaaaaaaaaaaAacacadafafadafaBadafafahaCahaDadaEaDaFaraa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGakaHataIaJaKaLaIaxaMakaGaGaaaaaaaAaaacazazazaaaAaaaaaaaAacacadagahaNaqahaNafaBagaCaDahaNaDaDararaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGakaHataIaJaKaLaIaxaMakaGaGaaaaaaaAaaacazazazaaaAaaaaaaaAacacadagahaNaqahaNafaBagaCaDahaNaDaDagaraa
 aaaaaaaaaaaaaaaaaaaAaaaaaAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaOakaPaQaIaIaIaIaIaQaRakaSaGaGaAaAaaaaazazazazaaaaaaaaaAaaacacadaiahaNahaiaNafafaCaCaDahaNaDaDaFaraa
-aaaaaaaaaaaaacaaaaaaaaaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaGaTaUakaVaIaIaIaWaIaIaIaXakaYaGaGaaaaaaaAaaazazaaaaaaaAaaaaaaacacadaoafadagahadafagahaCahaDadaDaDararaa
+aaaaaaaaaaaaacaaaaaaaaaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaGaTaUakaVaIaIaIaWaIaIaIaXakaYaGaGaaaaaaaAaaazazaaaaaaaAaaaaaaacacadaoafadagahadafagahaCahaDadaDaDagaraa
 aaaaaaaAaaacazacaAaaaAaaaaaAaZaaaaaaaaaaaaaaaaaaaaaaaaaaaGaSaUakaPbaaIaIbbaIaIaQaRakaYbcaGaaaaaaaaaaaabdaaaaaaaaaaaaaaacacadafafadbeaCadafafafagaiaqadahaqaFaraa
 aabfbgbfaAacbhazacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGbiaUakbjbkaIaIblaIaIbmbnakaYaYaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacadboafadaBafadahahaqahahahadbpadacacaa
 bfbqbrbfbfacacacaaaaaaaAaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaYaUakakbsbtbkblbmbubvakakaYaYaGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacadadadaNaNadadadadadadadadadacacaaaa
@@ -631,7 +631,7 @@ ldkmlelfaaaAaaaaaaaaaaaaaAaalgaclhacaaaAaaaaaaaaaaaaaaaaaaaGaGaGbNbNkpbNkqbNkpbN
 aalkbrbraaaaaaaaaaaaaaaaaaaaaclllhacaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGjHbNbNlmbNbNjHaGaGaaaaaaaaaaaaaaaaaaaaacazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aAbrbraaaaaaaaaaaaaaaaaaaaaaacllazlnaaaaaaaaaaaaaaaaaaaaaaaaaaaaaGaGbLaGbLaGbLaGaGaaaaaaaaaaaaaaaaaaaaacacacacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacazloazacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaazazlplpazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaazazlplpazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaacazazazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacazacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
