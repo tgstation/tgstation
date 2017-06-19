@@ -191,8 +191,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/lava/smooth

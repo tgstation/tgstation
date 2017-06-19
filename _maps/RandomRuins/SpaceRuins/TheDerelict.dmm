@@ -373,8 +373,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Starboard Solar APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable,
 /obj/structure/cable{
@@ -700,8 +699,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -740,8 +738,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/bridge/ai_upload)
@@ -783,8 +780,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
 /area/derelict/bridge/ai_upload)
@@ -832,8 +828,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/closed/wall,
 /area/derelict/bridge/access)
@@ -1499,8 +1494,7 @@
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
 	icon_state = "radiation";
 	name = "RADIOACTIVE AREA";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/derelict/gravity_generator)
@@ -1600,8 +1594,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
@@ -1645,8 +1638,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -1729,8 +1721,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
@@ -2681,8 +2672,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
@@ -3101,8 +3091,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -3250,8 +3239,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -4448,8 +4436,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
@@ -4485,7 +4472,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Worn-out APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -4865,8 +4851,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
@@ -4981,8 +4966,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
@@ -5062,8 +5046,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/lattice/catwalk,
 /turf/template_noop,

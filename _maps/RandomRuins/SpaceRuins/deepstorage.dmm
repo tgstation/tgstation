@@ -219,8 +219,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -234,7 +233,6 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Recycling APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plating{
@@ -759,8 +757,7 @@
 /obj/machinery/microwave,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -814,8 +811,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -873,8 +869,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -887,8 +882,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -901,8 +895,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -916,7 +909,6 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Kitchen APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -956,8 +948,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1075,8 +1066,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1087,8 +1077,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile,
@@ -1101,8 +1090,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1112,8 +1100,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1123,8 +1110,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
@@ -1144,8 +1130,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Hydroponics APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1411,8 +1396,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1506,8 +1490,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 24
@@ -1533,8 +1516,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Storage APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1595,8 +1577,7 @@
 /obj/machinery/vending/cigarette,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1716,8 +1697,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/floorgrime{
@@ -1732,8 +1712,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -1751,8 +1730,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1762,8 +1740,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -1778,8 +1755,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2139,8 +2115,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -2177,7 +2152,6 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Main Area APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -2204,8 +2178,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2223,8 +2196,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2238,8 +2210,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2250,8 +2221,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2264,8 +2234,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/floorgrime{
@@ -2301,8 +2270,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2319,8 +2287,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2333,8 +2300,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2344,8 +2310,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2364,8 +2329,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Armory APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2532,8 +2496,7 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/gun/ballistic/automatic/wt550{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
@@ -2656,7 +2619,6 @@
 	id = "bunkerinterior";
 	name = "interior blastdoor access";
 	pixel_x = -24;
-	pixel_y = 0;
 	req_access_txt = "200"
 	},
 /obj/machinery/button/door{
@@ -2673,7 +2635,6 @@
 	dir = 1;
 	name = "Bunker Entrance";
 	network = list("Bunker1");
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2707,8 +2668,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -2728,7 +2688,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Airlock Control APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2855,8 +2814,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2888,8 +2846,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2961,8 +2918,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3229,8 +3185,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Dormory APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3411,14 +3366,12 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
 /obj/structure/sign/electricshock{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -3434,8 +3387,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -3585,8 +3537,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3651,7 +3602,6 @@
 	icon_state = "0-8"
 	},
 /obj/structure/sign/electricshock{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -3665,8 +3615,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3856,8 +3805,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3871,8 +3819,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3941,8 +3888,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -4056,8 +4002,7 @@
 /area/ruin/deepstorage/power)
 "he" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4107,8 +4052,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1

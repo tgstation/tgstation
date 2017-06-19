@@ -695,8 +695,7 @@
 	})
 "bk" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -25;
-	pixel_y = 0
+	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -1419,8 +1418,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -1474,7 +1472,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1519,8 +1516,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -1597,7 +1593,6 @@
 	id = "awaydorm2";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -1661,7 +1656,6 @@
 	id = "awaydorm1";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -1983,7 +1977,6 @@
 "dm" = (
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel{
@@ -2052,7 +2045,6 @@
 /obj/structure/sign/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -2100,7 +2092,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel{
@@ -2280,7 +2271,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/green/side{
@@ -2373,7 +2363,6 @@
 	},
 /obj/structure/chair,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/red/side{
@@ -2547,8 +2536,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/command{
 	icon_state = "closed";
@@ -2960,8 +2948,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/newscaster/security_unit{
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
@@ -3091,7 +3078,6 @@
 	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 0;
 	pixel_y = 3
 	},
 /obj/item/weapon/watertank,
@@ -3111,7 +3097,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -3247,7 +3232,6 @@
 	dir = 2;
 	locked = 0;
 	name = "Hydroponics APC";
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access = null;
 	start_charge = 100
@@ -3268,11 +3252,9 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/green/side{
@@ -3287,8 +3269,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/green/side{
@@ -3303,8 +3284,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 2;
@@ -3319,8 +3299,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 2;
@@ -3421,7 +3400,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel/green/side{
@@ -3487,8 +3465,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3508,8 +3485,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -3576,7 +3552,6 @@
 	id = "awaydorm3";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = 25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -3723,8 +3698,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -3740,7 +3714,6 @@
 "fQ" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/carpet{
@@ -3799,7 +3772,6 @@
 "fU" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/camera{
@@ -3816,7 +3788,6 @@
 	})
 "fV" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3853,7 +3824,6 @@
 /obj/structure/sign/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/black{
@@ -3886,8 +3856,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -3981,8 +3950,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4247,8 +4215,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4310,7 +4277,6 @@
 "gN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 0;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/white/side{
@@ -4348,8 +4314,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4466,7 +4431,6 @@
 "gZ" = (
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/white{
@@ -4561,7 +4525,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel{
@@ -4656,8 +4619,7 @@
 	})
 "hp" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -25;
-	pixel_y = 0
+	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria{
@@ -4698,7 +4660,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/camera{
@@ -4910,7 +4871,6 @@
 /obj/structure/table,
 /obj/item/trash/chips,
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/bar{
@@ -5015,8 +4975,7 @@
 "hR" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
-	pixel_y = 0
+	pixel_x = -3
 	},
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
@@ -5086,8 +5045,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -5167,7 +5125,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -5370,8 +5327,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/door/window{
 	name = "Gateway Chamber";
@@ -5628,8 +5584,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -5674,8 +5629,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -5840,7 +5794,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel/bar{
@@ -5856,8 +5809,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/bar{
 	heat_capacity = 1e+006
@@ -5874,7 +5826,6 @@
 /obj/structure/sign/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -5921,7 +5872,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/camera{
@@ -5954,8 +5904,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -6067,7 +6016,6 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/disk/tech_disk{
-	pixel_x = 0;
 	pixel_y = 0
 	},
 /obj/item/weapon/disk/design_disk,
@@ -6211,8 +6159,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -6300,7 +6247,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -6443,7 +6389,6 @@
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
-	pixel_x = 0;
 	pixel_y = 25;
 	req_access = null;
 	start_charge = 100
@@ -6459,8 +6404,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -6485,8 +6429,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2";
@@ -6507,8 +6450,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -6531,8 +6473,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -6551,8 +6492,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -6572,8 +6512,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -6706,8 +6645,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -6831,8 +6769,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -6891,7 +6828,6 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/head/welding,
 /obj/structure/sign/biohazard{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/item/device/assembly/prox_sensor,
@@ -7228,7 +7164,6 @@
 	})
 "kW" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -7347,7 +7282,6 @@
 "lf" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel{
@@ -7371,7 +7305,6 @@
 	dir = 5
 	},
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/bar{
@@ -7447,8 +7380,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/junction,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -7505,8 +7437,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -7523,8 +7454,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -7556,8 +7486,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7573,8 +7502,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7615,8 +7543,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/white{
@@ -7630,8 +7557,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -7648,8 +7574,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7669,8 +7594,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7687,8 +7611,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -7703,12 +7626,10 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -7731,8 +7652,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7755,8 +7675,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7775,8 +7694,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7797,8 +7715,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7816,8 +7733,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -7844,8 +7760,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/light,
 /obj/structure/disposalpipe/junction{
@@ -7854,7 +7769,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -7876,7 +7790,6 @@
 	dir = 2;
 	locked = 0;
 	name = "UO45 Research Division APC";
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access = null;
 	start_charge = 100
@@ -7964,7 +7877,6 @@
 "lN" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/camera{
@@ -8045,8 +7957,7 @@
 "lT" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
-	pixel_y = 0
+	pixel_x = -3
 	},
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
@@ -8066,7 +7977,6 @@
 /obj/structure/sign/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/bar{
@@ -8094,8 +8004,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -8240,8 +8149,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -8321,7 +8229,6 @@
 /obj/structure/closet/firecloset,
 /obj/machinery/light/small,
 /obj/structure/sign/securearea{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8350,8 +8257,7 @@
 "mo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/sign/securearea{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/purple/corner{
 	dir = 1;
@@ -8377,8 +8283,7 @@
 /obj/structure/table,
 /obj/item/weapon/newspaper,
 /obj/machinery/newscaster{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -8391,7 +8296,6 @@
 "mr" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/carpet{
@@ -8431,8 +8335,7 @@
 "mu" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -8503,8 +8406,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -8571,7 +8473,6 @@
 	})
 "mD" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/structure/rack{
@@ -8596,7 +8497,6 @@
 	dir = 2;
 	locked = 0;
 	name = "UO45 Gateway APC";
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access = null;
 	start_charge = 100
@@ -8620,7 +8520,6 @@
 "mF" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/rack{
@@ -8687,8 +8586,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -8707,8 +8605,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -8870,7 +8767,6 @@
 	id = "awaydorm5";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -8932,7 +8828,6 @@
 	id = "awaydorm7";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -9024,8 +8919,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -9165,8 +9059,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9187,8 +9080,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9207,8 +9099,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9231,8 +9122,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9385,8 +9275,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -9429,8 +9318,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -9469,8 +9357,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -9487,7 +9374,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/light/small{
@@ -9588,7 +9474,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/light{
@@ -9666,7 +9551,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -9700,8 +9584,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9722,8 +9605,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9744,8 +9626,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9765,8 +9646,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9789,8 +9669,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9810,8 +9689,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -9835,8 +9713,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -9863,8 +9740,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9882,8 +9758,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9904,8 +9779,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9928,8 +9802,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9949,8 +9822,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9973,8 +9845,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9993,8 +9864,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction{
 	dir = 2;
@@ -10016,8 +9886,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10039,8 +9908,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10064,8 +9932,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-y";
@@ -10084,8 +9951,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -10133,8 +9999,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -10150,8 +10015,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -10183,7 +10047,6 @@
 	desc = "A remote control-switch whichs locks the research division down in the event of a biohazard leak or contamination.";
 	id = "UO45_biohazard";
 	name = "Biohazard Door Control";
-	pixel_x = 0;
 	pixel_y = 8;
 	req_access_txt = "201"
 	},
@@ -10191,7 +10054,6 @@
 	desc = "A remote control-switch that controls the privacy shutters.";
 	id = "UO45_rdprivacy";
 	name = "Privacy Shutter Control";
-	pixel_x = 0;
 	pixel_y = -2;
 	req_access_txt = "201"
 	},
@@ -10239,8 +10101,7 @@
 	})
 "oC" = (
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
@@ -10337,7 +10198,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -10359,7 +10219,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -10456,15 +10315,13 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/airalarm{
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/light/small{
@@ -10487,8 +10344,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -10573,8 +10429,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -10653,7 +10508,6 @@
 /obj/structure/sign/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -10722,7 +10576,6 @@
 	desc = "A remote control-switch whichs locks the research division down in the event of a biohazard leak or contamination.";
 	id = "UO45_biohazard";
 	name = "Biohazard Door Control";
-	pixel_x = 0;
 	pixel_y = -24;
 	req_access_txt = "201"
 	},
@@ -10749,8 +10602,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -10969,8 +10821,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -11013,8 +10864,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -11080,8 +10930,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11192,7 +11041,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = -25;
-	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
@@ -11252,7 +11100,6 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 25;
-	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
@@ -11304,8 +11151,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer{
@@ -11358,8 +11204,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/door/airlock/glass_engineering{
@@ -11408,8 +11253,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11500,8 +11344,7 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -11;
-	pixel_y = 0
+	pixel_x = -11
 	},
 /obj/structure/mirror{
 	pixel_x = -28
@@ -11599,7 +11442,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/carpet{
@@ -11627,7 +11469,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/carpet{
@@ -11646,7 +11487,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel/freezer{
@@ -11660,8 +11500,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer{
@@ -11779,8 +11618,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -11816,8 +11654,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/visible{
@@ -11869,7 +11706,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/item/device/multitool,
@@ -11904,8 +11740,6 @@
 	node1_concentration = 0.8;
 	node2_concentration = 0.2;
 	on = 1;
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access = null;
 	target_pressure = 4500
 	},
@@ -11950,8 +11784,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11968,8 +11801,7 @@
 	},
 /obj/machinery/airalarm/server{
 	dir = 4;
-	pixel_x = -22;
-	pixel_y = 0
+	pixel_x = -22
 	},
 /obj/machinery/r_n_d/server/core{
 	id_with_download_string = "3";
@@ -12085,8 +11917,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12102,7 +11933,6 @@
 "qY" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster{
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/item/weapon/pen,
@@ -12157,8 +11987,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -12179,8 +12008,7 @@
 "re" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -25;
-	pixel_y = 0
+	pixel_x = -25
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -12193,8 +12021,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -12274,7 +12101,6 @@
 "rl" = (
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/tank_dispenser{
@@ -12294,20 +12120,16 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/tank/internals/emergency_oxygen{
-	pixel_x = -8;
-	pixel_y = 0
+	pixel_x = -8
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen{
-	pixel_x = -8;
-	pixel_y = 0
+	pixel_x = -8
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = 4;
-	pixel_y = 0
+	pixel_x = 4
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = 4;
-	pixel_y = 0
+	pixel_x = 4
 	},
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -12329,7 +12151,6 @@
 /obj/item/weapon/storage/box,
 /obj/item/weapon/storage/box,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/red/side{
@@ -12360,7 +12181,6 @@
 	locked = 1;
 	name = "UO45 Engineering APC";
 	pixel_x = -25;
-	pixel_y = 0;
 	req_access = list(201);
 	start_charge = 100
 	},
@@ -12503,8 +12323,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12657,7 +12476,6 @@
 "rJ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/gloves{
-	pixel_x = 0;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/white/side{
@@ -12672,8 +12490,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12761,8 +12578,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel{
@@ -12776,8 +12592,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12797,8 +12612,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12818,8 +12632,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12840,8 +12653,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -12867,8 +12679,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12894,8 +12705,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12916,8 +12726,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12938,8 +12747,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12963,8 +12771,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -12983,8 +12790,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -13156,7 +12962,6 @@
 	dir = 2;
 	locked = 0;
 	name = "UO45 Mining APC";
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access = null;
 	start_charge = 100
@@ -13319,7 +13124,6 @@
 /obj/structure/sign/deathsposal{
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO EXTERIOR'";
 	name = "\improper DISPOSAL: LEADS TO EXTERIOR";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/white/corner{
@@ -13424,8 +13228,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -13486,7 +13289,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/caution/corner{
@@ -13563,8 +13365,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -13698,8 +13499,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 1
@@ -13857,8 +13657,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -13877,8 +13676,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -13991,8 +13789,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14035,8 +13832,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -14086,8 +13882,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -14182,8 +13977,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
@@ -14345,8 +14139,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -14365,8 +14158,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction{
 	dir = 4;
@@ -14389,8 +14181,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -14408,8 +14199,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -14430,8 +14220,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -14453,8 +14242,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -14502,8 +14290,7 @@
 	})
 "tX" = (
 /obj/machinery/shower{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -14514,8 +14301,7 @@
 	})
 "tY" = (
 /obj/machinery/shower{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/item/weapon/bikehorn/rubberducky,
 /turf/open/floor/plasteel/freezer{
@@ -14540,8 +14326,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/brown/corner{
@@ -14587,8 +14372,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -14643,8 +14427,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
@@ -14731,7 +14514,6 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -14908,8 +14690,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -14961,8 +14742,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/door/airlock/engineering{
@@ -15061,8 +14841,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plating{
 	broken = 1;
@@ -15184,8 +14963,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -15226,8 +15004,7 @@
 	dir = 4
 	},
 /obj/structure/sign/securearea{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellow/side{
@@ -15270,8 +15047,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "UO45_Engineering";
@@ -15497,8 +15273,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/brown{
@@ -15542,8 +15317,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15563,8 +15337,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -15589,8 +15362,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -15606,8 +15378,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -15624,8 +15395,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4;
@@ -15639,8 +15409,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering";
@@ -15657,8 +15426,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -15798,8 +15566,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/glass_mining{
@@ -15870,8 +15637,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -16104,8 +15870,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -16168,8 +15933,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -16216,7 +15980,6 @@
 	id = "awaydorm8";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -16281,8 +16044,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
@@ -16356,8 +16118,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -16390,7 +16151,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -16419,8 +16179,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -16440,8 +16199,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -16485,8 +16243,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral{
@@ -16512,8 +16269,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/machinery/light/small,
 /obj/structure/mirror{
@@ -16543,7 +16299,6 @@
 	id = "awaydorm9";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = 25;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -16574,8 +16329,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -16592,8 +16346,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -16649,8 +16402,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -16660,7 +16412,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -16689,7 +16440,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/closet/secure_closet/miner{
@@ -16724,8 +16474,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 2;
@@ -16837,8 +16586,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -16954,14 +16702,12 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = 23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	heat_capacity = 1e+006
@@ -17015,8 +16761,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -17097,8 +16842,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -17228,8 +16972,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -17246,8 +16989,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -17464,7 +17206,6 @@
 	frequency = 1439;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null
 	},
 /obj/structure/closet/emcloset,
@@ -17535,8 +17276,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,

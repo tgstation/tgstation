@@ -254,8 +254,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/onehalf/dorms_med)

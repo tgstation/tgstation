@@ -684,8 +684,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 32
@@ -750,8 +749,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 32
@@ -816,8 +814,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 32
@@ -882,8 +879,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 32
@@ -1168,7 +1164,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1185,7 +1180,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1198,7 +1192,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1211,7 +1204,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -1232,7 +1224,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1246,7 +1237,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1261,8 +1251,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
+	dir = 9
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
@@ -1435,8 +1424,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 32
@@ -1450,7 +1438,6 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Guest Room APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -1521,8 +1508,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 32
@@ -1536,7 +1522,6 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Guest Room APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -1734,7 +1719,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -1747,7 +1731,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2031,7 +2014,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /turf/open/floor/plating,
@@ -2168,8 +2150,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
+	dir = 9
 	},
 /turf/open/floor/plating,
 /area/ruin/hotel)
@@ -2460,8 +2441,7 @@
 /area/ruin/hotel/dock)
 "fX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
+	dir = 9
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel/dock)
@@ -3148,7 +3128,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -3167,7 +3146,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -3318,7 +3296,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/door/firedoor,
@@ -3402,14 +3379,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/structure/sign/fire{
 	desc = "A poster designed to remind the reader to wear appropriate insulation and head protection when working with material.";
 	icon_state = "safety";
 	name = "Safety Poster";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -3423,7 +3398,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/airalarm{
@@ -3440,7 +3414,6 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Power Storage APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -3630,7 +3603,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -3647,7 +3619,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -3658,7 +3629,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3672,7 +3642,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -3690,7 +3659,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/airalarm{
@@ -3715,7 +3683,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -3732,7 +3699,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3745,7 +3711,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -4114,8 +4079,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -4237,8 +4201,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -5060,7 +5023,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5191,8 +5153,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
@@ -5209,7 +5170,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /turf/open/floor/carpet,
@@ -5227,8 +5187,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
@@ -5237,7 +5196,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

@@ -319,7 +319,6 @@
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_x = 0;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/green{
@@ -621,8 +620,7 @@
 "bY" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = -2;
@@ -688,7 +686,6 @@
 "ch" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 0;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/hydrofloor,
@@ -1108,7 +1105,6 @@
 "dF" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_x = 0;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/red,
@@ -2522,7 +2518,6 @@
 /area/awaymission/centcomAway/general)
 "hX" = (
 /obj/machinery/button/crematorium{
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /turf/open/floor/engine,
@@ -3841,8 +3836,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)

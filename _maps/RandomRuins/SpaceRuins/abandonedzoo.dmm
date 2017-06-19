@@ -20,8 +20,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/ruin/abandonedzoo)
@@ -93,8 +92,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/abandonedzoo)
@@ -202,8 +200,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bio Containment";
@@ -226,8 +223,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -246,8 +242,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/abandonedzoo)
@@ -256,8 +251,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/item/weapon/gun/energy/floragun,
 /turf/open/floor/plasteel{
@@ -268,8 +262,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/abandonedzoo)
@@ -279,8 +272,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -295,8 +287,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -325,8 +316,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/closed/wall/r_wall,
 /area/ruin/abandonedzoo)
@@ -373,8 +363,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -396,8 +385,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/space/hardsuit/medical,
@@ -485,8 +473,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/abandonedzoo)
@@ -495,8 +482,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkgreen,
 /area/ruin/abandonedzoo)
@@ -515,8 +501,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -593,8 +578,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -633,8 +617,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -644,8 +627,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;

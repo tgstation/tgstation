@@ -81,8 +81,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_y = 28
@@ -193,8 +192,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -495,8 +493,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
@@ -800,7 +797,6 @@
 /area/awaymission/cabin)
 "cL" = (
 /obj/structure/sign/barsign{
-	pixel_x = 0;
 	pixel_y = 32;
 	req_access = null
 	},

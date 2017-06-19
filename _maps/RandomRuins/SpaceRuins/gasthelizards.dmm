@@ -22,8 +22,7 @@
 /area/ruin/gasthelizard)
 "e" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -71,8 +70,7 @@
 /area/ruin/gasthelizard)
 "j" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/outlet_injector,
 /obj/effect/turf_decal/stripes/line{
@@ -325,8 +323,7 @@
 /area/ruin/gasthelizard)
 "N" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/machinery/light,
 /obj/structure/table,
