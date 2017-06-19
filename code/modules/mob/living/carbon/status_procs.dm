@@ -1,5 +1,5 @@
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stunned, weakened, paralysis, sleeping, resting, jitteriness, dizziness, ear damage,
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, NEARSIGHT disability, and HUSK disability.
 
 /mob/living/carbon/damage_eyes(amount)

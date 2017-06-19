@@ -137,7 +137,7 @@
 		qdel(hotspot)
 	return 1
 
-/turf/open/handle_slip(mob/living/carbon/C, s_amount, w_amount, obj/O, lube)
+/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
 	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
@@ -147,7 +147,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -162,11 +162,10 @@
 
 		var/olddir = C.dir
 		if(!(lube & SLIDE_ICE))
-			C.Stun(s_amount)
-			C.Weaken(w_amount)
+			C.Knockdown(knockdown_amount)
 			C.stop_pulling()
 		else
-			C.Stun(1)
+			C.Stun(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)

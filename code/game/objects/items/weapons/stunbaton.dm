@@ -11,7 +11,7 @@
 	attack_verb = list("beaten")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
 
-	var/stunforce = 7
+	var/stunforce = 140
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/hitcost = 1000
@@ -110,7 +110,7 @@
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
+		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -152,8 +152,7 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Stun(stunforce)
-	L.Weaken(stunforce)
+	L.Knockdown(stunforce)
 	L.apply_effect(STUTTER, stunforce)
 	if(user)
 		user.lastattacked = L
@@ -184,7 +183,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 5
+	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = SLOT_BACK

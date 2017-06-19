@@ -841,7 +841,7 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(2)
+	user.Stun(40)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
@@ -853,7 +853,7 @@
 /obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Weaken(20)
+	user.Knockdown(40)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

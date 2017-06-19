@@ -882,16 +882,16 @@
 	if(!(RADIMMUNE in species_traits))
 		if(H.radiation)
 			if (H.radiation > 100)
-				if(!H.weakened)
+				if(!H.knockdown)
 					H.emote("collapse")
-				H.Weaken(10)
+				H.Knockdown(200)
 				to_chat(H, "<span class='danger'>You feel weak.</span>")
 			switch(H.radiation)
 				if(50 to 75)
 					if(prob(5))
-						if(!H.weakened)
+						if(!H.knockdown)
 							H.emote("collapse")
-						H.Weaken(3)
+						H.Knockdown(60)
 						to_chat(H, "<span class='danger'>You feel weak.</span>")
 
 					if(prob(15))
@@ -1072,9 +1072,9 @@
 		target.apply_damage(damage, BRUTE, affecting, armor_block)
 		add_logs(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] has weakened [target]!</span>", \
-							"<span class='userdanger'>[user] has weakened [target]!</span>")
-			target.apply_effect(4, WEAKEN, armor_block)
+			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
+							"<span class='userdanger'>[user] has knocked [target] down!</span>")
+			target.apply_effect(80, KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
@@ -1098,7 +1098,7 @@
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
+			target.apply_effect(40, KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return
@@ -1232,7 +1232,7 @@
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
-						H.apply_effect(3, WEAKEN, armor_block)
+						H.apply_effect(60, KNOCKDOWN, armor_block)
 
 				if(bloody)
 					if(H.wear_suit)
@@ -1474,9 +1474,9 @@
 	return
 
 
-////////
+////////////
 //Stun//
-////////
+////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	. = stunmod * amount

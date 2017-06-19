@@ -10,7 +10,7 @@
 /obj/item/device/pda/clown/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if(M.slip(0, 6, src, NO_SLIP_WHEN_WALKING))
+		if(M.slip(6, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
 				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
 					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
