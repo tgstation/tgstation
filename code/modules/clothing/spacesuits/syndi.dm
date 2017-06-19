@@ -58,7 +58,7 @@
 
 /obj/item/clothing/suit/space/syndicate/orange/old
 	name = "engineering space suit"
-	desc = "Engineering issue space suit. Age has degraded the suit making is difficult to move around in a gravity based enviroment."
+	desc = "Engineering issue space suit. Age has degraded the suit making is difficult to move around in."
 	slowdown = 4
 
 //Blue syndicate space suit
