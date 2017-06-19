@@ -124,13 +124,13 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	..()
 
 /obj/machinery/telecomms/proc/is_freq_listening(datum/signal/signal)
-	// return 1 if found, 0 if not found
+	// return TRUE if found, 0 if not found
 	if(!signal)
-		return 0
+		return FALSE
 	if((signal.frequency in freq_listening) || (!freq_listening.len))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/telecomms/New()
@@ -171,7 +171,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/add_link(obj/machinery/telecomms/T)
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
-	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
+	if((position.z == T_position.z) || (long_range_link && T.long_range_link))
 		if(src != T)
 			for(var/x in autolinkers)
 				if(x in T.autolinkers)
