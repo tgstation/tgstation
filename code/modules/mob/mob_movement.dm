@@ -109,10 +109,12 @@
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
 
-
+#define MOVEMENT_DELAY_BUFFER 0.75
+#define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 /client/Move(n, direct)
 	if(world.time < move_delay)
 		return 0
+	var/old_move_delay = move_delay
 	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return 0
@@ -159,6 +161,9 @@
 
 	//We are now going to move
 	moving = 1
+	var/delay = mob.movement_delay()
+	if (move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER) > world.time)
+		move_delay += mob.movement_delay()
 	move_delay = mob.movement_delay() + world.time
 
 	if(mob.confused)
