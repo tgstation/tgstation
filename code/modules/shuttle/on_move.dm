@@ -52,7 +52,7 @@
 	if(!.)
 		return
 	if(!buckled && knockdown)
-		Knockdown(30)
+		Knockdown(60)
 
 /obj/effect/abstract/proximity_checker/onShuttleMove()
 	//timer so it only happens once

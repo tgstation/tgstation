@@ -129,8 +129,8 @@
 			return
 		if(air1.gases.len)
 			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 1000)
-				mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 1000)
+				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
+				mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.

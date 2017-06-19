@@ -208,7 +208,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(50)
+			Knockdown(100)
 			add_logs(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -262,7 +262,7 @@
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Knockdown(50)
+				Knockdown(100)
 				add_logs(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -334,7 +334,7 @@
 			switch(M.damtype)
 				if("brute")
 					if(M.force > 20)
-						Unconscious(10)
+						Unconscious(20)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 					damage_clothes(dmg, BRUTE, "melee", temp.body_zone)
@@ -388,7 +388,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			if (prob(max(70 - (bomb_armor * 0.5), 0)))
-				Unconscious(100)
+				Unconscious(200)
 
 		if(3)
 			b_loss = 30
@@ -398,7 +398,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
 			if (prob(max(50 - (bomb_armor * 0.5), 0)))
-				Unconscious(80)
+				Unconscious(160)
 
 	take_overall_damage(b_loss,f_loss)
 
@@ -468,10 +468,10 @@
 			switch(severity)
 				if(1)
 					L.receive_damage(0,10)
-					Stun(100)
+					Stun(200)
 				if(2)
 					L.receive_damage(0,5)
-					Stun(50)
+					Stun(100)
 	..()
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)

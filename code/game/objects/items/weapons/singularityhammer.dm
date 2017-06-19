@@ -48,7 +48,7 @@
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
 					if(M.magpulse)
 						continue
-				H.apply_effect(10, KNOCKDOWN, 0)
+				H.apply_effect(20, KNOCKDOWN, 0)
 				step_towards(H,pull)
 				step_towards(H,pull)
 				step_towards(H,pull)
@@ -81,7 +81,7 @@
 	origin_tech = "combat=4;powerstorage=7"
 
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
-	target.Stun(30)
+	target.Stun(60)
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()

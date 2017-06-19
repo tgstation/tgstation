@@ -97,7 +97,7 @@
 		attack_cooldown = world.time + initial(attack_cooldown) //can't attack until we're done impaling
 		if(target)
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
-			target.Stun(20) //brief stun
+			target.Stun(80) //brief stun
 			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
@@ -114,7 +114,7 @@
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
-					target.Knockdown(20) //then knockdown if we stayed next to them
+					target.Knockdown(40) //then knockdown if we stayed next to them
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
@@ -136,9 +136,9 @@
 		else if(!..())
 			if(!L.null_rod_check())
 				if(issilicon(L) || iscultist(L))
-					L.Knockdown(60)
+					L.Knockdown(100)
 				else
-					L.Knockdown(20)
+					L.Knockdown(40)
 			break_spear(T)
 	else
 		..()

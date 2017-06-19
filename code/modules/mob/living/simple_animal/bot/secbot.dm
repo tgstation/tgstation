@@ -229,11 +229,11 @@ Auto Patrol: []"},
 	var/threat = 5
 	if(ishuman(C))
 		C.stuttering = 5
-		C.Knockdown(50)
+		C.Knockdown(100)
 		var/mob/living/carbon/human/H = C
 		threat = H.assess_threat(src)
 	else
-		C.Knockdown(50)
+		C.Knockdown(100)
 		C.stuttering = 5
 		threat = C.assess_threat()
 	add_logs(src,C,"stunned")

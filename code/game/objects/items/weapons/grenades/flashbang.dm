@@ -30,8 +30,8 @@
 		M.Knockdown(max(100/max(1,distance), 3))
 //Bang
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Knockdown(100)
-		M.soundbang_act(1, 100, 10, 15)
+		M.Knockdown(200)
+		M.soundbang_act(1, 200, 10, 15)
 
 	else
-		M.soundbang_act(1, max(10/max(1,distance), 3), rand(0, 5))
+		M.soundbang_act(1, max(20/max(1,distance), 3), rand(0, 5))

@@ -286,7 +286,7 @@
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
-			SetSleeping(200) //Short nap
+			SetSleeping(400) //Short nap
 	update_canmove()
 
 /mob/proc/get_contents()
@@ -798,7 +798,7 @@
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(50)
+			Knockdown(100)
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
@@ -917,7 +917,7 @@
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
-	C.Knockdown(20)
+	C.Knockdown(40)
 
 /mob/living/post_buckle_mob(mob/living/M)
 	if(riding_datum)

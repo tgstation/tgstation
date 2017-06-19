@@ -346,7 +346,7 @@
 	icon_state = "bola_r"
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
-	knockdown = 10
+	knockdown = 20
 
 /obj/item/weapon/restraints/legcuffs/bola/energy //For Security
 	name = "energy bola"

@@ -165,7 +165,7 @@
 			C.Knockdown(knockdown_amount)
 			C.stop_pulling()
 		else
-			C.Stun(10)
+			C.Stun(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)

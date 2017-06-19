@@ -63,7 +63,7 @@
 /datum/emote/living/collapse/run_emote(mob/user, params)
 	. = ..()
 	if(.)
-		user.Unconscious(20)
+		user.Unconscious(40)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -111,7 +111,7 @@
 /datum/emote/living/faint/run_emote(mob/user, params)
 	. = ..()
 	if(.)
-		user.SetSleeping(100)
+		user.SetSleeping(200)
 
 /datum/emote/living/flap
 	key = "flap"

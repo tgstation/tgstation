@@ -259,7 +259,7 @@
 	addtimer(CALLBACK(src, .proc/reset_hallucinate_shock_animation, user, shock_image, electrocution_skeleton_anim), 40)
 	user.playsound_local(get_turf(src), "sparks", 100, 1)
 	user.staminaloss += 50
-	user.Stun(20)
+	user.Stun(40)
 	user.jitteriness += 1000
 	user.do_jitter_animation(user.jitteriness)
 	addtimer(CALLBACK(src, .proc/hallucinate_shock_drop, user), 20)
@@ -271,7 +271,7 @@
 
 /obj/machinery/door/airlock/proc/hallucinate_shock_drop(mob/living/user)
 	user.jitteriness = max(user.jitteriness - 990, 10) //Still jittery, but vastly less
-	user.Knockdown(30)
+	user.Knockdown(60)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != NOT_ELECTRIFIED)
@@ -745,7 +745,7 @@
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
-				H.Knockdown(50)
+				H.Knockdown(100)
 				H.apply_damage(10, BRUTE, "head")
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
@@ -1212,7 +1212,7 @@
 		if(!do_after(user, 150*I.toolspeed, target = src))
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
 			charge.ex_act(1)
-			user.Knockdown(30)
+			user.Knockdown(60)
 			return
 		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
@@ -1300,7 +1300,7 @@
 		detonated = 1
 		charge = null
 		for(var/mob/living/carbon/human/H in orange(2,src))
-			H.Unconscious(80)
+			H.Unconscious(160)
 			H.adjust_fire_stacks(20)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
 			H.apply_damage(40, BRUTE, "chest")

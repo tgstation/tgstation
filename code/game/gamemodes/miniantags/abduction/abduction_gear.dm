@@ -414,7 +414,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Knockdown(70)
+	L.Knockdown(140)
 	L.apply_effect(STUTTER, 7)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
@@ -432,7 +432,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
-		L.Sleeping(600)
+		L.Sleeping(1200)
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1

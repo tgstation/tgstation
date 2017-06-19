@@ -131,7 +131,7 @@
 		for(var/mob/M in viewers(1, location))
 			if (prob (50 * amount))
 				to_chat(M, "<span class='danger'>The explosion knocks you down.</span>")
-				M.Knockdown(rand(10,50))
+				M.Knockdown(rand(20,100))
 		return
 	else
 		dyn_explosion(location, amount, flashing_factor)

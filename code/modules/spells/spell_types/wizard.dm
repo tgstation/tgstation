@@ -280,7 +280,7 @@
 		if(distfromcaster == 0)
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Knockdown(50)
+				M.Knockdown(100)
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else

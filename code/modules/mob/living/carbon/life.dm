@@ -154,7 +154,7 @@
 		if(!co2overloadtime)
 			co2overloadtime = world.time
 		else if(world.time - co2overloadtime > 120)
-			Unconscious(30)
+			Unconscious(60)
 			adjustOxyLoss(3)
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
@@ -177,9 +177,9 @@
 	if(breath_gases["n2o"])
 		var/SA_partialpressure = (breath_gases["n2o"][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
-			Unconscious(30)
+			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
-				Sleeping(max(sleeping+20, 100))
+				Sleeping(max(sleeping+40, 100))
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
@@ -309,7 +309,7 @@
 
 	if(sleeping)
 		handle_dreams()
-		AdjustSleeping(-10)
+		AdjustSleeping(-20)
 		if(prob(10) && health>HEALTH_THRESHOLD_CRIT)
 			emote("snore")
 
@@ -353,8 +353,8 @@
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
 		if(prob(5))
-			AdjustSleeping(10)
-			Unconscious(50)
+			AdjustSleeping(20)
+			Unconscious(100)
 
 	//Jitteryness
 	if(jitteriness)

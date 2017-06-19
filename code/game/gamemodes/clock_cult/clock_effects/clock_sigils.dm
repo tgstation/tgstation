@@ -69,10 +69,10 @@
 	if(iscultist(L))
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
-		L.Knockdown(70)
+		L.Knockdown(140)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(50)
+	L.Stun(100)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
 
@@ -121,7 +121,7 @@
 	if(is_eligible_servant(L))
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	add_servant_of_ratvar(L)
-	L.Knockdown(30) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
+	L.Knockdown(60) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5

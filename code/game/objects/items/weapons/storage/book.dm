@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 	if (user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
-		user.Unconscious(200)
+		user.Unconscious(400)
 		return
 
 	var/chaplain = 0

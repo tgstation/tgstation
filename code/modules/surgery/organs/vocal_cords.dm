@@ -258,20 +258,20 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(30 * power_multiplier)
+			L.Stun(60 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Knockdown(30 * power_multiplier)
+			L.Knockdown(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(20 * power_multiplier)
+			C.Sleeping420 * power_multiplier)
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))

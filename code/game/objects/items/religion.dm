@@ -17,9 +17,9 @@
 		to_chat(H, "<span class='notice'>Your morale is increased by [user]'s banner!</span>")
 		H.adjustBruteLoss(-15)
 		H.adjustFireLoss(-15)
-		H.AdjustStun(-20)
-		H.AdjustKnockdown(-20)
-		H.AdjustUnconscious(-20)
+		H.AdjustStun(-40)
+		H.AdjustKnockdown(-40)
+		H.AdjustUnconscious(-40)
 
 /obj/item/weapon/banner/red
 	name = "red banner"

@@ -11,7 +11,7 @@
 	attack_verb = list("beaten")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
 
-	var/stunforce = 70
+	var/stunforce = 140
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/hitcost = 1000
@@ -183,7 +183,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 50
+	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = SLOT_BACK

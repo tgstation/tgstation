@@ -184,11 +184,11 @@
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Knockdown(80) //knocks down targets for 14-16 seconds
+			L.Knockdown(160) //knocks down targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Knockdown(40) //knocks down for 6-8 seconds, but set cultist targets on fire
+			L.Knockdown(80) //knocks down for 6-8 seconds, but set cultist targets on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))

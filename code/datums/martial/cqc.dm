@@ -40,7 +40,7 @@
 						  	"<span class='userdanger'>[A] slams you into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
-		D.Knockdown(60)
+		D.Knockdown(120)
 		add_logs(A, D, "cqc slammed")
 	return 1
 
@@ -57,7 +57,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking them out!</span>", \
 					  		"<span class='userdanger'>[A] kicks your head, knocking you out!</span>")
 		playsound(get_turf(A), 'sound/weapons/genhit1.ogg', 50, 1, -1)
-		D.SetSleeping(150)
+		D.SetSleeping(300)
 		D.adjustBrainLoss(25)
 	return 1
 
@@ -74,7 +74,7 @@
 		D.visible_message("<span class='warning'>[A] locks [D] into a restraining position!</span>", \
 							"<span class='userdanger'>[A] locks you into a restraining position!</span>")
 		D.adjustStaminaLoss(20)
-		D.Stun(50)
+		D.Stun(100)
 		restraining = 1
 		addtimer(CALLBACK(src, .proc/drop_restraining), 50, TIMER_UNIQUE)
 	return 1
@@ -130,7 +130,7 @@
 							"<span class='userdanger'>[A] leg sweeps you!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, 1, -1)
 		D.apply_damage(10, BRUTE)
-		D.Knockdown(30)
+		D.Knockdown(60)
 		add_logs(A, D, "cqc sweeped")
 	return 1
 
@@ -157,7 +157,7 @@
 	if(restraining && A.pulling == D)
 		D.visible_message("<span class='danger'>[A] puts [D] into a chokehold!</span>", \
 							"<span class='userdanger'>[A] puts you into a chokehold!</span>")
-		D.SetSleeping(200)
+		D.SetSleeping(400)
 		restraining = 0
 		if(A.grab_state < GRAB_NECK)
 			A.grab_state = GRAB_NECK

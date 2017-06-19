@@ -30,7 +30,7 @@
 					visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 							"<span class='userdanger'>[M] has punched [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 					if ((stat != DEAD) && (damage > 9 || prob(5)))//Regular humans have a very small chance of knocking an alien down.
-						Unconscious(20)
+						Unconscious(40)
 						visible_message("<span class='danger'>[M] has knocked [src] down!</span>", \
 								"<span class='userdanger'>[M] has knocked [src] down!</span>")
 					var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
@@ -44,7 +44,7 @@
 			if ("disarm")
 				if (!lying)
 					if (prob(5))
-						Unconscious(20)
+						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \

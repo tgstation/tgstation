@@ -179,7 +179,7 @@
 			S.speedmod += 1
 		if(7)
 			//Throw
-			user.Stun(30)
+			user.Stun(60)
 			user.adjustBruteLoss(50)
 			var/throw_dir = pick(GLOB.cardinal)
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)

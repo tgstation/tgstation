@@ -291,7 +291,7 @@
 		var/mob/living/L = target
 		L.blur_eyes(8)
 		if(L.staminaloss >= 40)
-			L.Sleeping(200)
+			L.Sleeping(400)
 		else
 			L.adjustStaminaLoss(55)
 	return 1
@@ -306,7 +306,7 @@
 /obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
-		L.Sleeping(200)
+		L.Sleeping(400)
 	return ..()
 
 

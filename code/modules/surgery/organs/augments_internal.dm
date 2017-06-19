@@ -1,4 +1,4 @@
-#define STUN_SET_AMOUNT 20
+#define STUN_SET_AMOUNT 40
 #define STUN_CHECK_AMOUNT 2
 
 /obj/item/organ/cyberimp
@@ -32,7 +32,7 @@
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
 		return
-	var/stun_amount = 100/severity
+	var/stun_amount = 200/severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
 	return stun_amount

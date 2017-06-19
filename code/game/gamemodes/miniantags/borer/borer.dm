@@ -507,7 +507,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-	M.Stun(30)
+	M.Stun(60)
 
 	used_dominate = world.time
 
@@ -766,7 +766,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		if("Deafness")
 			victim.minimumDeafTicks(20)
 		if("Stun")
-			victim.Knockdown(100)
+			victim.Knockdown(200)
 
 	log_game("[src]/([src.ckey]) punished [victim]/([victim.ckey] with [punishment]")
 

@@ -43,7 +43,7 @@
 		D.emote("scream")
 		D.drop_item()
 		D.apply_damage(5, BRUTE, pick("l_arm", "r_arm"))
-		D.Stun(30)
+		D.Stun(60)
 		return 1
 	add_logs(A, D, "wrist wrenched (Sleeping Carp)")
 	return basic_hit(A,D)
@@ -54,7 +54,7 @@
 		D.visible_message("<span class='warning'>[A] kicks [D] in the back!</span>", \
 						  "<span class='userdanger'>[A] kicks you in the back, making you stumble and fall!</span>")
 		step_to(D,get_step(D,D.dir),1)
-		D.Knockdown(40)
+		D.Knockdown(80)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
 	add_logs(A, D, "back-kicked (Sleeping Carp)")
@@ -67,7 +67,7 @@
 						  "<span class='userdanger'>[A] winds you with a knee in the stomach!</span>")
 		D.audible_message("<b>[D]</b> gags!")
 		D.losebreath += 3
-		D.Stun(20)
+		D.Stun(40)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
 		return 1
 	add_logs(A, D, "stomach kneed (Sleeping Carp)")
@@ -81,7 +81,7 @@
 		D.apply_damage(20, BRUTE, "head")
 		D.drop_item()
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, 1, -1)
-		D.Stun(40)
+		D.Stun(80)
 		return 1
 	add_logs(A, D, "head kicked (Sleeping Carp)")
 	return basic_hit(A,D)
@@ -130,7 +130,7 @@
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, 1, -1)
 	if(prob(D.getBruteLoss()) && !D.lying)
 		D.visible_message("<span class='warning'>[D] stumbles and falls!</span>", "<span class='userdanger'>The blow sends you to the ground!</span>")
-		D.Knockdown(40)
+		D.Knockdown(80)
 	add_logs(A, D, "[atk_verb] (Sleeping Carp)")
 	return 1
 
@@ -196,7 +196,7 @@
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='warning'>You club yourself over the head with [src].</span>")
-		user.Knockdown(30)
+		user.Knockdown(60)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
@@ -230,13 +230,13 @@
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
-			H.Knockdown(40)
+			H.Knockdown(80)
 		if(H.staminaloss && !H.sleeping)
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
 				H.visible_message("<span class='warning'>[user] delivers a heavy hit to [H]'s head, knocking them out cold!</span>", \
 									   "<span class='userdanger'>[user] knocks you unconscious!</span>")
-				H.SetSleeping(300)
+				H.SetSleeping(600)
 				H.adjustBrainLoss(25)
 	else
 		return ..()

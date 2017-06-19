@@ -51,7 +51,7 @@
 				if (prob(40))
 					damage = rand(10, 15)
 					if ( (unconscious < 5)  && (health > 0) )
-						Unconscious(rand(100, 150))
+						Unconscious(rand(200, 300))
 						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>", null, 5)
 				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
@@ -69,7 +69,7 @@
 			if (!unconscious)
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
-					Knockdown(20)
+					Knockdown(40)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					add_logs(M, src, "pushed")
 					visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
@@ -89,7 +89,7 @@
 				if (damage >= 25)
 					damage = rand(20, 40)
 					if (unconscious < 15)
-						Unconscious(rand(100, 150))
+						Unconscious(rand(200, 300))
 					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
 							"<span class='userdanger'>[M] has wounded [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				else
@@ -114,7 +114,7 @@
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
 			if(prob(95))
-				Knockdown(10)
+				Knockdown(20)
 				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
 						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			else
@@ -192,14 +192,14 @@
 			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
 			if(prob(70))
-				Unconscious(100)
+				Unconscious(200)
 
 		if(3)
 			take_overall_damage(30, 0)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)
 			if (prob(50))
-				Unconscious(80)
+				Unconscious(160)
 
 
 	//attempt to dismember bodyparts

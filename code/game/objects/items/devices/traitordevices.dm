@@ -42,7 +42,7 @@ effective or pretty fucking useless.
 	for(var/mob/living/carbon/human/M in urange(10, user, 1))
 		if(prob(50))
 
-			M.Knockdown(rand(100,200))
+			M.Knockdown(rand(200,400))
 			to_chat(M, "<span class='userdanger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
 
 		else
@@ -88,7 +88,7 @@ effective or pretty fucking useless.
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
-					M.apply_effect(round(intensity/0.15), UNCONSCIOUS)
+					M.apply_effect(round(intensity/0.075), UNCONSCIOUS)
 				M.rad_act(intensity*10)
 	else
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")

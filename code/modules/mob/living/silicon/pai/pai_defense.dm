@@ -4,7 +4,7 @@
 
 /mob/living/silicon/pai/emp_act(severity)
 	take_holo_damage(50/severity)
-	Knockdown(200/severity)
+	Knockdown(400/severity)
 	silent = max(30/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
@@ -18,10 +18,10 @@
 			qdel(src)
 		if(2)
 			fold_in(force = 1)
-			Knockdown(200)
+			Knockdown(400)
 		if(3)
 			fold_in(force = 1)
-			Knockdown(100)
+			Knockdown(200)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)
@@ -83,7 +83,7 @@
 	take_holo_damage(amount & 0.25)
 
 /mob/living/silicon/pai/adjustBrainLoss(amount)
-	Knockdown(amount * 0.1)
+	Knockdown(amount * 0.2)
 
 /mob/living/silicon/pai/getBruteLoss()
 	return emittermaxhealth - emitterhealth
