@@ -23,7 +23,7 @@
 	icon_state = "NONE"
 	ttone = "data"
 	fon = 0
-	detonate = 0
+	detonatable = FALSE
 
 /obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -121,7 +121,7 @@
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	inserted_item = /obj/item/weapon/pen/fountain/captain
 	icon_state = "pda-captain"
-	detonate = 0
+	detonatable = FALSE
 
 /obj/item/device/pda/cargo
 	name = "cargo technician PDA"
