@@ -85503,7 +85503,9 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dea" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	volume_rate = 200
+	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "deb" = (

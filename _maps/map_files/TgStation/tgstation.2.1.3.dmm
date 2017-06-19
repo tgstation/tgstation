@@ -62496,7 +62496,8 @@
 /area/engine/engineering)
 "cGZ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
+	dir = 1;
+	volume_rate = 200
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
