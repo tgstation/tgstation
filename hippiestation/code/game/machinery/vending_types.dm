@@ -443,6 +443,7 @@ MEGASEED SERVITOR
 		/obj/item/seeds/grass = 3,
 		/obj/item/seeds/lemon = 3,
 		/obj/item/seeds/lime = 3,
+		/obj/item/seeds/onion = 3,
 		/obj/item/seeds/orange = 3,
 		/obj/item/seeds/potato = 3,
 		/obj/item/seeds/poppy = 3,
