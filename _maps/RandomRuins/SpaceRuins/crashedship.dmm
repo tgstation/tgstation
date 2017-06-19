@@ -1106,7 +1106,6 @@
 /area/awaymission/BMPship/Aft)
 "dr" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{

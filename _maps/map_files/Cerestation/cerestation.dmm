@@ -40310,7 +40310,6 @@
 "buY" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -42841,7 +42840,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	name = "scrubbers pipe";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/black{
@@ -53077,7 +53075,6 @@
 "bRz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	name = "scrubbers pipe";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel{
@@ -53092,7 +53089,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	name = "scrubbers pipe";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -54130,7 +54126,6 @@
 /area/engine/atmos)
 "bTI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -54507,7 +54502,6 @@
 /area/engine/atmos)
 "bUt" = (
 /obj/machinery/atmospherics/pipe/manifold/green/visible{
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/machinery/meter,
@@ -71310,7 +71304,6 @@
 	req_access_txt = "30"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black{
@@ -82256,7 +82249,6 @@
 /area/maintenance/asteroid/central)
 "cUb" = (
 /obj/machinery/atmospherics/pipe/manifold/orange/hidden{
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plating/astplate{
@@ -84701,7 +84693,6 @@
 "cYE" = (
 /obj/structure/shuttle/engine/heater{
 	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced,

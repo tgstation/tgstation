@@ -495,7 +495,6 @@
 "bC" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating,

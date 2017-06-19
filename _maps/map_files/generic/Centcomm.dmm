@@ -5556,7 +5556,6 @@
 "oo" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -6673,7 +6672,6 @@
 "qI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/machinery/meter,
@@ -6696,7 +6694,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/structure/cable/white{
@@ -6719,7 +6716,6 @@
 "qK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/machinery/meter,
@@ -12919,7 +12915,6 @@
 "FO" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

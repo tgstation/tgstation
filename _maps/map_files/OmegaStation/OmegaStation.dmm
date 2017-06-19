@@ -37459,7 +37459,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	tag = "icon-heater (NORTH)";
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -41502,7 +41501,6 @@
 /area/shuttle/transport)
 "bwc" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -41556,7 +41554,6 @@
 /area/shuttle/transport)
 "bwo" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -41630,7 +41627,6 @@
 /area/shuttle/transport)
 "bwB" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{

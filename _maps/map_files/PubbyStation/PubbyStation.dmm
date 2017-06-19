@@ -17568,7 +17568,6 @@
 /area/shuttle/supply)
 "aLD" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -24364,7 +24363,6 @@
 /area/shuttle/arrival)
 "aZX" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -29840,7 +29838,6 @@
 /area/maintenance/department/cargo)
 "bls" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -30475,7 +30472,6 @@
 /area/maintenance/department/cargo)
 "bmM" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -52276,7 +52272,6 @@
 /area/shuttle/transport)
 "cif" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{

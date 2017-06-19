@@ -13746,7 +13746,6 @@
 /area/shuttle/arrival)
 "aEy" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -57574,7 +57573,6 @@
 /area/shuttle/pod_1)
 "cxy" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced,
@@ -57599,7 +57597,6 @@
 /area/shuttle/transport)
 "cxD" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -57892,7 +57889,6 @@
 /area/shuttle/abandoned)
 "cyo" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -59692,7 +59688,6 @@
 /area/shuttle/transport)
 "cCy" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{

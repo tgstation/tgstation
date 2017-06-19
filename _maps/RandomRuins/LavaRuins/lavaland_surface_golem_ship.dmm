@@ -53,7 +53,6 @@
 /area/ruin/powered/golem_ship)
 "h" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
