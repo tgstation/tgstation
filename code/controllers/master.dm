@@ -568,3 +568,6 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	for(var/S in subsystems)
 		var/datum/controller/subsystem/SS = S
 		SS.StopLoadingMap()
+
+/datum/controller/master/proc/RanThisTick()
+	return last_run == world.time
