@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/notehtml = ""
 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
 	var/cart = "" //A place to stick cartridge menu information
-	var/detonatable = 1 // Can the PDA be blown up?
+	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
 
