@@ -40,6 +40,8 @@
 			passindex++
 			var/mob/living/buckled_mob = m
 			var/list/offsets = get_offsets(passindex)
+			var/rider_dir = get_rider_dir(passindex)
+			buckled_mob.setDir(rider_dir)
 			dir_loop:
 				for(var/offsetdir in offsets)
 					if(offsetdir == ridden_dir)
@@ -55,6 +57,11 @@
 //Override this to set your vehicle's various pixel offsets
 /datum/riding/proc/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list("[NORTH]" = list(0, 0), "[SOUTH]" = list(0, 0), "[EAST]" = list(0, 0), "[WEST]" = list(0, 0))
+
+//Override this to set the passengers/riders dir based on which passenger they are.
+//ie: rider facing the vehicle's dir, but passenger 2 facing backwards, etc.
+/datum/riding/proc/get_rider_dir(pass_index)
+	return ridden.dir
 
 //KEYS
 /datum/riding/proc/keycheck(mob/user)

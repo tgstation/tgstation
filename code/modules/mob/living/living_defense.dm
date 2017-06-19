@@ -25,13 +25,19 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-//this returns the mob's protection against eye damage (number between -1 and 2)
+//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
 	return 0
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
 	return 0
+
+/mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
+	return FALSE
+
+/mob/living/proc/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
 	return

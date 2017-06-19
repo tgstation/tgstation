@@ -142,3 +142,33 @@
 	desc = "Contains all the paper you'll never need, IN COLOR!"
 	icon_state = "paper_binc"
 	papertype = /obj/item/weapon/paper/construction
+
+/obj/item/weapon/paper_bin/bundlenatural
+	name = "natural paper bundle"
+	desc = "A bundle of paper created using traditional methods."
+	icon_state = "paper_bundle"
+	papertype = /obj/item/weapon/paper/natural
+	resistance_flags = FLAMMABLE
+/obj/item/weapon/paper_bin/bundlenatural/attack_hand(mob/user)
+	..()
+	if(total_paper < 1)
+		qdel(src)
+/obj/item/weapon/paper_bin/bundlenatural/fire_act(exposed_temperature, exposed_volume)
+	qdel(src)
+/obj/item/weapon/paper_bin/bundlenatural/attackby(obj/item/weapon/W, mob/user)
+	if(W.is_sharp())
+		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
+		var/turf/T = get_turf(src.loc)
+		while(total_paper > 0)
+			total_paper--
+			var/obj/item/weapon/paper/P
+			if(papers.len > 0)
+				P = papers[papers.len]
+				papers -= P
+			else
+				P = new papertype()
+				P.forceMove(T)
+			CHECK_TICK
+		qdel(src)
+	else
+		..()
