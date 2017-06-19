@@ -95,7 +95,7 @@
 /obj/effect/particle_effect/foam/Crossed(atom/movable/AM)
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(5, src)
+		M.slip(100, src)
 
 /obj/effect/particle_effect/foam/metal/Crossed(atom/movable/AM)
 	return

@@ -214,9 +214,9 @@
 			return
 
 		if(!istype(G, /obj/item/weapon/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
-			stun_len /= 3
+			stun_len /= 1.5
 
-		var/knockdown = min(stun_len, 7)
+		var/knockdown = min(stun_len, 14)
 
 		if(M.slip(knockdown, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
