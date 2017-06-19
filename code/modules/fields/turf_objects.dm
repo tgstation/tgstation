@@ -11,6 +11,7 @@
 	var/datum/proximity_monitor/advanced/parent
 	var/mutable_appearance/self_appearance
 	var/inactive = FALSE				//Setting this to TRUE deactivates most functions.
+	explosion_block = EXPLOSION_BLOCK_PROC
 
 /obj/effect/abstract/proximity_checker/advanced/update_icon()
 	if(inactive)

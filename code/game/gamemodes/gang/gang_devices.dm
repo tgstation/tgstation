@@ -26,3 +26,5 @@
 		var/area/A = get_area(user)
 		master.gang_broadcast("A new dominator has been placed at [A.map_name]! This is your primary base and where you acquire equipment with your influence!")
 		new /obj/machinery/dominator(get_turf(user),master)
+	else
+		to_chat(user, "<span class='warning'>You must stand still while using the [src]!</span>")

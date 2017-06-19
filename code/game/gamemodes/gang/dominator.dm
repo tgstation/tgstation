@@ -4,7 +4,7 @@
 #define DOM_REQUIRED_DISTANCE_FROM_CRITICAL 25
 #define DOMINATOR_FORCEFIELD_RADIUS 6
 #define DOMINATOR_TELEGRAPH_DELAY 100		//No visual effects yet but prevents instant combat dominator dropping.
-#define DOMINATOR_FORCEFIELD FALSE			//Dominators have forcefields.
+#define DOMINATOR_FORCEFIELD TRUE			//Dominators have forcefields.
 #define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
@@ -53,7 +53,7 @@
 
 /proc/dominator_interference_check(atom/A)
 	if(!DOMINATOR_FORCEFIELD)
-		return TRUE
+		return FALSE
 	for(var/obj/machinery/dominator/DM in world)
 		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION && !(DM.stat & BROKEN))
 			return TRUE
@@ -323,7 +323,7 @@
 		if(!is_gangboss(user))
 			return to_chat(user, "<span class='warning'>An unclaimed dominator. You should probably inform your boss about this instead of trying to make your own gang by activating it.</span>")
 		var/redpill = input(user, "Do you want to claim this dominator for your gang?", "Claim Dominator") as null|anything in list("Yes", "No")
-		if(redpill == "yes")
+		if(redpill == "Yes")
 			claim_dominator(user)
 		return
 	if(!is_in_gang(user, gang.name))
@@ -338,7 +338,7 @@
 	. = list()
 	if(boss)
 		for(var/cat in gang.boss_category_list)
-			. += "<b>[cat]</b><br>"
+			. += "<b>[cat]</b>"
 			for(var/V in gang.boss_category_list[cat])
 				var/datum/gang_item/G = V
 				if(!G.can_see(user, gang, src))
@@ -354,12 +354,12 @@
 				. += toAdd
 				var/extra = G.get_extra_info(user, gang, src)
 				if(extra)
-					. += "<br><i>[extra]</i>"
-				. += "<br>"
-			. += "<br>"
+					. += "<i>[extra]</i>"
+				. += ""
+			. += ""
 	if(soldier)
 		for(var/cat in gang.reg_category_list)
-			. += "<b>[cat]</b><br>"
+			. += "<b>[cat]</b>"
 			for(var/V in gang.reg_category_list[cat])
 				var/datum/gang_item/G = V
 				if(!G.can_see(user, gang, src))
@@ -375,9 +375,9 @@
 				. += toAdd
 				var/extra = G.get_extra_info(user, gang, src)
 				if(extra)
-					. += "<br><i>[extra]</i>"
-				. += "<br>"
-			. += "<br>"
+					. += "<i>[extra]</i>"
+				. += ""
+			. += ""
 
 /obj/machinery/dominator/proc/claim_dominator(mob/user)
 	if(!is_gangboss(user))
@@ -389,15 +389,15 @@
 		to_chat(user, "<span class='boldwarning'>Your gang already has an established dominator at [current_area.map_name]!</span>")
 		return
 	gang = new_boss_in_town
-	to_chat(user, "<span clas='boldnotice'>You claim [src] for your new gang!</span>")
+	to_chat(user, "<span clas='boldnotice'>You claim [src] for your gang!</span>")
 	new_boss_in_town.gang_broadcast("[user] has designated a new dominator for your gang at [A.map_name]!")
 
 /obj/machinery/dominator/proc/get_gang_dominator_interface(takeover = TRUE, start = FALSE)
 	. = list()
 	if(takeover && gang.is_dominating)
-		. += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
+		. += "<center><font color='red'>Takeover In Progress:<B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 	if(start && !gang.is_dominating)
-		. += "<center><font color='red' size='4'><br><B><a href='?src=\ref[src];dominate=1'>START TAKEOVER</a></B></font></center>"
+		. += "<center><font color='red' size='4'><B><a href='?src=\ref[src];dominate=1'>START TAKEOVER</a></B></font></center>"
 
 /obj/machinery/dominator/proc/get_gang_status(mob/user)
 	if(!gang)
@@ -406,36 +406,36 @@
 	if(user)
 		var/isboss = (user.mind == gang.bosses[1])
 		if(isboss)
-			. += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
-			. += "Influence available to you: <B>[gang.bosses[user]]</B><br>"
+			. += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B>"
+			. += "Influence available to you: <B>[gang.bosses[user]]</B>"
 		else
-			. += "Registration: <B>[gang.name] Gang Soldier</B><br>"
-			. += "Influence available to you: <B>[gang.gangsters[user]]</B><br>"
+			. += "Registration: <B>[gang.name] Gang Soldier</B>"
+			. += "Influence available to you: <B>[gang.gangsters[user]]</B>"
 			. += "<B>Remember! Territories you tag will generate bonus influence to you!</B>"
-	. += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
+	. += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B>"
 
 /obj/machinery/dominator/proc/interface_boss(mob/user)
-	var/dat = list()
+	var/list/dat = list()
 	dat += get_gang_dominator_interface(TRUE, TRUE)
 	dat += "<hr>"
 	dat += get_gang_status(user)
 	dat += "<hr>"
 	dat += get_gang_item_interface(user, TRUE, FALSE)
 	dat += "<hr>"
-	show_popup(user, dat)
+	show_popup(user, dat.Join("<br>"))
 
 /obj/machinery/dominator/proc/interface_soldier(mob/user)
-	var/dat = list()
+	var/list/dat = list()
 	dat += get_gang_dominator_interface(TRUE, FALSE)
 	dat += "<hr>"
 	dat += get_gang_status(user)
 	dat += "<hr>"
 	dat += get_gang_item_interface(user, FALSE, TRUE)
 	dat += "<hr>"
-	show_popup(user, dat)
+	show_popup(user, dat.Join("<br>"))
 
 /obj/machinery/dominator/proc/show_popup(mob/user, data)
-	var/dat = list()
+	var/list/dat = list()
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 	dat += data
 	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangUplink v3.5", 340, 625)
