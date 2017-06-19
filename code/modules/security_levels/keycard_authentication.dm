@@ -105,7 +105,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 			make_maint_all_access()
 			SSblackbox.inc("alert_keycard_auth_maint",1)
 		if("Bluespace Artillery Unlock")
-			unlock_bluespace_artillery()
+			toggle_bluespace_artillery()
 			SSblackbox.inc("alert_keycard_auth_bsa",1)
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
@@ -125,6 +125,6 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	GLOB.emergency_access = FALSE
 
-/proc/unlock_bluespace_artillery()
-	GLOB.bsa_unlock = TRUE
-	minor_announce("Bluespace Artillery firing protocals have been unlocked.", "ATTENTION: Weapons Systems Update:")
+/proc/toggle_bluespace_artillery()
+	GLOB.bsa_unlock = !GLOB.bsa_unlock
+	minor_announce("Bluespace Artillery firing protocals have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "ATTENTION: Weapons Systems Update:")
