@@ -25,10 +25,13 @@
 	metal = 1
 	icon_state = "mfoam"
 
-
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
 	metal = 2
+
+/obj/effect/particle_effect/foam/metal/resin
+	name = "resin foam"
+	metal = 3
 
 
 /obj/effect/particle_effect/foam/New(loc)
@@ -49,6 +52,8 @@
 			new /obj/structure/foamedmetal(src.loc)
 		if(2)
 			new /obj/structure/foamedmetal/iron(src.loc)
+		if(3)
+			new /obj/structure/foamedmetal/resin(src.loc)
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -230,3 +235,38 @@
 	obj_integrity = 50
 	max_integrity = 50
 	icon_state = "ironfoam"
+
+//Atmos Backpack Resin, transparent, prevents atmos and filters the air
+/obj/structure/foamedmetal/resin
+	name = "ATMOS Resin"
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature"
+	opacity = 0
+	icon_state = "atmos_resin"
+	alpha = 120
+	obj_integrity = 10
+	max_integrity = 10
+
+/obj/structure/foamedmetal/resin/New()
+	if(isopenturf(loc))
+		var/turf/open/O = loc
+		if(O.air)
+			var/datum/gas_mixture/G = O.air
+			G.temperature = 293.15
+			for(var/obj/effect/hotspot/H in O)
+				qdel(H)
+			var/list/G_gases = G.gases
+			for(var/I in G_gases)
+				if(I != "o2")
+					G.gases[I][MOLES] = 0
+			G.garbage_collect()
+			O.air_update_turf()
+		for(var/obj/machinery/atmospherics/components/unary/U in O)
+			if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
+				U.welded = 1
+				U.update_icon()
+				U.visible_message("<span class='danger'>[U] sealed shut!</span>")
+		for(var/mob/living/L in O)
+			L.ExtinguishMob()
+		for(var/obj/item/Item in O)
+			Item.extinguish()
+	..()

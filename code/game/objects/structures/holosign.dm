@@ -65,6 +65,24 @@
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
 
+/obj/structure/holosign/barrier/atmos
+	name = "holo atmospheric fan"
+	desc = "A holographic fan that acts as a barrier for atmospheric changes."
+	icon_state = "holo_fan"
+	density = FALSE
+	anchored = 1
+	CanAtmosPass = ATMOS_PASS_NO
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/structure/holosign/barrier/atmos/New()
+	..()
+	air_update_turf(1)
+
+/obj/structure/holosign/barrier/atmos/Destroy()
+	CanAtmosPass = ATMOS_PASS_YES
+	air_update_turf(1)
+	return ..()
+
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."
