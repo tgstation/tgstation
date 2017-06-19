@@ -572,8 +572,6 @@ obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
 	else
 		footstep++
 
-//step_action()
-
 /////////////SHIELDED//////////////////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/shielded
