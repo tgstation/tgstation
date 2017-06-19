@@ -1,5 +1,5 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0)
-	return dna.species.can_equip(I, slot, disable_warning, src)
+/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = 0, bypass_equip_delay)
+	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay)
 
 // Return the item currently in the slot ID
 /mob/living/carbon/human/get_item_by_slot(slot_id)

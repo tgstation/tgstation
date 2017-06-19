@@ -362,6 +362,9 @@
 	if(M.equip_to_appropriate_slot(src))
 		M.update_inv_hands()
 		return TRUE
+	else
+		if(equip_delay)
+			return
 
 	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there
 		M.s_active.handle_item_insertion(src)

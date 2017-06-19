@@ -59,6 +59,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
+	var/equip_delay = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/breakouttime = 0
@@ -407,11 +408,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/proc/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0, bypass_equip_delay)
 	if(!M)
 		return 0
 
-	return M.can_equip(src, slot, disable_warning)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)

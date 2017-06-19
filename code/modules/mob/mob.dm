@@ -198,9 +198,9 @@
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1, bypass_equip_delay)
 	if(!istype(W)) return 0
-	if(!W.mob_can_equip(src, null, slot, disable_warning))
+	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay))
 		if(qdel_on_fail)
 			qdel(W)
 		else
@@ -216,8 +216,9 @@
 	return
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+//Also bypasses equip delay checks, since the mob isn't actually putting it on.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0, 1)
 
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
