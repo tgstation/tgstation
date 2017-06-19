@@ -38,6 +38,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define VALENTINES				"Valentine's Day"
 #define APRIL_FOOLS				"April Fool's Day"
 #define EASTER					"Easter"
+#define SPACE_EASTER			"Space Easter"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
 #define FESTIVE_SEASON			"Festive Season"
