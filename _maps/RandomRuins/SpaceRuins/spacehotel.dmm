@@ -2485,7 +2485,6 @@
 /obj/structure/table/wood,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -2860,7 +2859,6 @@
 /obj/structure/kitchenspike,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -2892,7 +2890,6 @@
 "hp" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -4089,7 +4086,6 @@
 "kg" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -4388,7 +4384,6 @@
 "kU" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -4595,7 +4590,6 @@
 "lz" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{

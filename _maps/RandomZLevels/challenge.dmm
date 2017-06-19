@@ -176,7 +176,6 @@
 /area/awaymission/challenge/main)
 "aJ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
@@ -548,7 +547,6 @@
 /area/awaymission/challenge/main)
 "by" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -984,7 +982,6 @@
 /area/awaymission/challenge/end)
 "cE" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/circuit,
@@ -995,7 +992,6 @@
 /area/awaymission/challenge/end)
 "cG" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/circuit,

@@ -154,7 +154,6 @@
 /area/security/prison)
 "aaw" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -212,8 +211,7 @@
 /area/security/prison)
 "aaG" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -715,8 +713,7 @@
 "abR" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -865,8 +862,7 @@
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/suit_storage_unit/hos,
 /turf/open/floor/carpet,
@@ -2013,8 +2009,7 @@
 /area/ai_monitored/security/armory)
 "aev" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
@@ -2298,7 +2293,6 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/structure/rack,
@@ -2928,8 +2922,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3073,8 +3066,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -3417,7 +3409,6 @@
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/structure/table/glass,
@@ -4476,7 +4467,6 @@
 /area/security/processing)
 "ajv" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4760,7 +4750,6 @@
 /area/security/processing)
 "akb" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -6812,8 +6801,7 @@
 /area/security/processing)
 "aot" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -7895,7 +7883,6 @@
 /area/maintenance/fore)
 "ara" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/requests_console{
@@ -8714,8 +8701,7 @@
 /area/lawoffice)
 "atd" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
@@ -9417,7 +9403,6 @@
 /area/construction/mining/aux_base)
 "auR" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
@@ -9852,7 +9837,6 @@
 	pixel_x = 24
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -10374,7 +10358,6 @@
 "awU" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/item/wallframe/camera,
@@ -11599,7 +11582,6 @@
 /area/gateway)
 "azK" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -12199,7 +12181,6 @@
 /area/ai_monitored/storage/eva)
 "aAX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12297,7 +12278,6 @@
 	layer = 2.9
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/item/weapon/tank/jetpack/carbondioxide,
@@ -12397,8 +12377,7 @@
 /area/ai_monitored/storage/eva)
 "aBu" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/blue/corner,
 /area/hallway/primary/fore)
@@ -12487,7 +12466,6 @@
 /area/hydroponics/garden)
 "aBH" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -14375,7 +14353,6 @@
 	pixel_y = 16
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14574,7 +14551,6 @@
 	amount = 50
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -15925,8 +15901,7 @@
 	pixel_x = 27
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/side{
@@ -15969,7 +15944,6 @@
 /obj/item/weapon/extinguisher,
 /obj/item/weapon/extinguisher,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -15987,7 +15961,6 @@
 "aJl" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -16793,8 +16766,7 @@
 /area/library)
 "aLh" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -19200,14 +19172,12 @@
 /area/bridge)
 "aRt" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aRu" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/structure/chair/stool,
@@ -19241,8 +19211,7 @@
 /area/crew_quarters/kitchen)
 "aRz" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -19883,8 +19852,7 @@
 /area/chapel/main)
 "aTj" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -19973,7 +19941,6 @@
 "aTw" = (
 /obj/structure/closet/wardrobe/green,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -21105,7 +21072,6 @@
 /area/maintenance/port)
 "aWm" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/light_switch{
@@ -21629,7 +21595,6 @@
 /area/hallway/primary/central)
 "aXi" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
@@ -21794,8 +21759,7 @@
 /area/crew_quarters/fitness)
 "aXG" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -23010,7 +22974,6 @@
 	pixel_x = 27
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -23228,7 +23191,6 @@
 /obj/structure/table,
 /obj/item/weapon/aiModule/reset,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -23265,7 +23227,6 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bbq" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -23889,7 +23850,6 @@
 /area/security/detectives_office)
 "bcW" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -24446,7 +24406,6 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bei" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -25054,8 +25013,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
@@ -26176,7 +26134,6 @@
 	receive_ore_updates = 1
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -27163,8 +27120,7 @@
 "bkw" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -27269,7 +27225,6 @@
 /area/quartermaster/sorting)
 "bkI" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -28511,8 +28466,7 @@
 /obj/item/weapon/stock_parts/matter_bin,
 /obj/item/weapon/stock_parts/matter_bin,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/item/weapon/stock_parts/scanning_module{
 	pixel_x = 2;
@@ -28917,7 +28871,6 @@
 	pixel_y = 6
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -31242,7 +31195,6 @@
 /area/science/robotics/lab)
 "bsX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white/side{
@@ -32098,8 +32050,7 @@
 /area/quartermaster/office)
 "buK" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -32171,8 +32122,7 @@
 /area/engine/gravity_generator)
 "buS" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Foyer"
@@ -33008,8 +32958,7 @@
 	pixel_x = 27
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -33664,7 +33613,6 @@
 /area/crew_quarters/heads/hor)
 "bxX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -33867,8 +33815,7 @@
 "byu" = (
 /obj/structure/displaycase/labcage,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -34116,8 +34063,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -34485,7 +34431,6 @@
 "bzP" = (
 /obj/machinery/computer/cargo,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
@@ -34721,7 +34666,6 @@
 "bAp" = (
 /obj/structure/closet/secure_closet/medical1,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -35451,8 +35395,7 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
@@ -35687,8 +35630,7 @@
 /area/quartermaster/miningdock)
 "bCp" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/corner{
@@ -37818,7 +37760,6 @@
 /area/maintenance/aft)
 "bGX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -38156,7 +38097,6 @@
 /area/storage/tech)
 "bHK" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/door/firedoor/heavy,
@@ -38617,8 +38557,7 @@
 "bIw" = (
 /obj/structure/closet/secure_closet/CMO,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
@@ -41152,8 +41091,7 @@
 	network = list("SS13")
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 5
@@ -41759,8 +41697,7 @@
 /area/engine/atmos)
 "bPi" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible,
 /turf/open/floor/plasteel/green/side{
@@ -41833,8 +41770,7 @@
 	},
 /obj/structure/closet/l3closet,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -42408,7 +42344,6 @@
 "bQN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -43201,8 +43136,7 @@
 "bSE" = (
 /obj/machinery/computer/station_alert,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/button/door{
 	id = "atmos";
@@ -43570,8 +43504,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/item/device/assembly/timer{
 	pixel_x = -3;
@@ -43984,7 +43917,6 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -44464,7 +44396,6 @@
 /area/science/xenobiology)
 "bVj" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -45160,8 +45091,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -45472,8 +45402,7 @@
 	pixel_x = 29
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -46896,14 +46825,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "caF" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -48081,8 +48008,7 @@
 /area/science/misc_lab)
 "ccT" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
@@ -48260,8 +48186,7 @@
 /area/engine/engineering)
 "cdo" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
@@ -51822,8 +51747,7 @@
 /area/maintenance/disposal/incinerator)
 "clf" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/floorgrime,
@@ -53726,8 +53650,7 @@
 /area/engine/engineering)
 "cpa" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -54393,7 +54316,6 @@
 	amount = 10
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -54414,8 +54336,7 @@
 /area/maintenance/port/aft)
 "cqz" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -55313,8 +55234,7 @@
 /area/engine/engineering)
 "csK" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -56764,7 +56684,6 @@
 	installation = /obj/item/weapon/gun/energy/e_gun
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/circuit,
@@ -56798,7 +56717,6 @@
 	installation = /obj/item/weapon/gun/energy/e_gun
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/circuit,
@@ -57131,7 +57049,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cwv" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/status_display{
@@ -57193,7 +57110,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cwB" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/ai_status_display{
@@ -58725,8 +58641,7 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/orange/visible{
 	dir = 4
@@ -60353,8 +60268,7 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -60777,8 +60691,7 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
@@ -62173,7 +62086,6 @@
 /obj/item/weapon/clipboard,
 /obj/item/toy/figure/syndie,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -62313,7 +62225,6 @@
 	name = "tactical chair"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -62505,7 +62416,6 @@
 /obj/item/weapon/crowbar/red,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/podhatch{
@@ -62831,7 +62741,6 @@
 /area/shuttle/syndicate)
 "cKg" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -63140,7 +63049,6 @@
 /obj/item/weapon/circular_saw,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -63392,7 +63300,6 @@
 "cLN" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
@@ -63470,7 +63377,6 @@
 /area/shuttle/abandoned)
 "cMb" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -63527,7 +63433,6 @@
 /area/shuttle/abandoned)
 "cMl" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

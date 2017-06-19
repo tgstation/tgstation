@@ -1131,7 +1131,6 @@
 /area/awaymission/BMPship/Fore)
 "dv" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -1759,7 +1758,6 @@
 /area/awaymission/BMPship/Fore)
 "eU" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/closet,

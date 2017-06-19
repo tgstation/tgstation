@@ -607,7 +607,6 @@
 /area/ruin/powered/clownplanet)
 "bo" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

@@ -2710,7 +2710,6 @@
 /area/derelict/medical/chapel)
 "hV" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/airless/white,
@@ -2986,7 +2985,6 @@
 /area/derelict/medical)
 "iO" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -3293,14 +3291,12 @@
 /area/ruin/unpowered/no_grav)
 "jH" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
 "jI" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,

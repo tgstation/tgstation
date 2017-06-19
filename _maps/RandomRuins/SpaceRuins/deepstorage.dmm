@@ -95,7 +95,6 @@
 	on = 1
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer{
@@ -770,7 +769,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -971,7 +969,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/beans,
 /obj/item/weapon/reagent_containers/food/snacks/beans,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -1879,7 +1876,6 @@
 /obj/item/weapon/storage/box/donkpockets,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/item/weapon/vending_refill/coffee,
@@ -1947,7 +1943,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2444,7 +2439,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2758,7 +2752,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3464,7 +3457,6 @@
 "gg" = (
 /obj/machinery/washing_machine,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/airalarm{
@@ -3525,7 +3517,6 @@
 /area/ruin/deepstorage/power)
 "gk" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{

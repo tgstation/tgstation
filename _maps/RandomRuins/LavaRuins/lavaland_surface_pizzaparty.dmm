@@ -78,8 +78,7 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop{
@@ -334,8 +333,7 @@
 /area/ruin/unpowered)
 "P" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{

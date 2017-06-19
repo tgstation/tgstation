@@ -172,7 +172,6 @@
 /area/ruin/onehalf/dorms_med)
 "aB" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/table,

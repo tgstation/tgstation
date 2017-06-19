@@ -206,8 +206,7 @@
 /area/awaymission/cabin)
 "aI" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -543,8 +542,7 @@
 /area/awaymission/cabin)
 "bU" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
@@ -557,8 +555,7 @@
 /area/awaymission/cabin)
 "bW" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -570,8 +567,7 @@
 /area/awaymission/cabin)
 "bY" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/processor,
 /turf/open/floor/plasteel/freezer,
@@ -703,8 +699,7 @@
 /area/awaymission/cabin)
 "cv" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -820,8 +815,7 @@
 /area/awaymission/cabin)
 "cQ" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)

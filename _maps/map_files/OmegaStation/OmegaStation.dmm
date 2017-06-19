@@ -1601,8 +1601,7 @@
 "acK" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/light_switch{
 	pixel_y = 24
@@ -3529,7 +3528,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4064,7 +4062,6 @@
 	pixel_x = -23
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -4106,7 +4103,6 @@
 "agM" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/status_display{
@@ -5475,7 +5471,6 @@
 	},
 /obj/item/weapon/gun/energy/e_gun/advtaser,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/status_display{
@@ -7086,7 +7081,6 @@
 "akW" = (
 /obj/vehicle/secway,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/power/apc{
@@ -7131,8 +7125,7 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
@@ -7333,8 +7326,7 @@
 	icon_state = "plant-22"
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -8675,7 +8667,6 @@
 /obj/item/weapon/storage/box/firingpins,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/requests_console{
@@ -10074,7 +10065,6 @@
 	pixel_x = -23
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -10919,8 +10909,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "Security - Brig Aft";
@@ -10956,8 +10945,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -11460,7 +11448,6 @@
 /area/security/brig)
 "arD" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/status_display{
@@ -13985,8 +13972,7 @@
 	name = "Distribution Loop"
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
@@ -15654,8 +15640,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -18546,8 +18531,7 @@
 /area/crew_quarters/dorms)
 "aDF" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/newscaster{
 	pixel_x = 32
@@ -21707,8 +21691,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner,
@@ -23613,8 +23596,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -26143,8 +26125,7 @@
 /area/engine/engineering)
 "aPJ" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -26692,7 +26673,6 @@
 /area/tcommsat/server)
 "aQI" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -28397,7 +28377,6 @@
 /area/tcommsat/server)
 "aTZ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -28902,8 +28881,7 @@
 /obj/item/weapon/storage/crayons,
 /obj/item/weapon/storage/crayons,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -32001,8 +31979,7 @@
 /area/hallway/primary/central)
 "baH" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
@@ -33368,8 +33345,7 @@
 "bdg" = (
 /obj/machinery/computer/security,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable/white{
 	d1 = 4;
@@ -33455,8 +33431,7 @@
 /area/science/robotics/mechbay)
 "bdo" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/circuit/green,
 /area/science/robotics/mechbay)
@@ -33477,8 +33452,7 @@
 /area/science/research)
 "bdr" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -35881,8 +35855,7 @@
 /area/science/xenobiology)
 "bhi" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -37190,7 +37163,6 @@
 	},
 /obj/item/weapon/storage/fancy/candle_box,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/newscaster{
@@ -37441,8 +37413,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -37936,8 +37907,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -38457,7 +38427,6 @@
 /area/space)
 "bmC" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -38628,7 +38597,6 @@
 /obj/item/weapon/clipboard,
 /obj/item/toy/figure/syndie,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -39699,7 +39667,6 @@
 /obj/item/weapon/circular_saw,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -40670,7 +40637,6 @@
 	name = "tactical chair"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -40749,7 +40715,6 @@
 /obj/item/weapon/crowbar/red,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/podhatch{
@@ -40841,7 +40806,6 @@
 /area/shuttle/syndicate)
 "btY" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{

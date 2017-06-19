@@ -1285,7 +1285,6 @@
 "cM" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating{
