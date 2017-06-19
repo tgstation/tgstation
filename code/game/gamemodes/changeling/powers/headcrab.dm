@@ -17,13 +17,13 @@
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	for(var/mob/living/carbon/human/H in range(2,user))
 		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
-		H.Stun(1)
+		H.Stun(20)
 		H.blur_eyes(20)
 		H.adjust_eye_damage(5)
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
-		S.Weaken(3)
+		S.Knockdown(60)
 	var/turf = get_turf(user)
 	user.gib()
 	. = TRUE
