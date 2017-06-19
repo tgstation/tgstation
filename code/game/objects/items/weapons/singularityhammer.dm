@@ -14,6 +14,7 @@
 	origin_tech = "combat=4;bluespace=4;plasmatech=7"
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	force_string = "LORD SINGULOTH HIMSELF"
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
