@@ -17,7 +17,7 @@
 		owner = new_owner
 	if(owner)
 		LAZYADD(owner.status_effects, src)
-	addtimer(CALLBACK(src, .proc/start_ticking), 1) //Give us time to set any variables
+	addtimer(CALLBACK(src, .proc/start_ticking), 0) //Give us the minimum possible time to set any variables
 
 /datum/status_effect/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -35,8 +35,8 @@
 		qdel(src)
 		return
 	if(duration != -1)
-		duration = world.time + initial(duration)
-	tick_interval = world.time + initial(tick_interval)
+		duration = world.time + duration
+	tick_interval = world.time + tick_interval
 	if(alert_type)
 		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to

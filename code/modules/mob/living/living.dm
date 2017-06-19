@@ -281,7 +281,7 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(sleeping)
+	if(IsSleeping())
 		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
@@ -368,10 +368,10 @@
 	setCloneLoss(0, 0)
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
-	SetUnconscious(0, 0)
-	SetStun(0, 0)
-	SetKnockdown(0, 0)
-	SetSleeping(0, 0)
+	SetUnconscious(0, FALSE)
+	SetStun(0, FALSE)
+	SetKnockdown(0, FALSE)
+	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
