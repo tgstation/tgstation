@@ -85,7 +85,7 @@
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
-			M.Weaken(3)
+			M.Knockdown(60)
 			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
 //
@@ -112,7 +112,7 @@
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		L.loc = src.loc
-		L.Weaken(5)
+		L.Knockdown(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
 	else

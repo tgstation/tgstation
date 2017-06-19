@@ -627,6 +627,7 @@
 /area/mine/production)
 "bD" = (
 /obj/structure/closet/crate,
+/obj/item/weapon/dice/d4,
 /turf/open/floor/plasteel/brown{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1

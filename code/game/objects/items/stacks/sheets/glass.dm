@@ -210,4 +210,4 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 							"<span class='userdanger'>You slide on the broken glass!</span>")
 
 				cooldown = world.time
-			H.Weaken(3)
+			H.Knockdown(60)

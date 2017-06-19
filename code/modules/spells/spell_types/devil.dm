@@ -196,8 +196,7 @@
 		if(locate(/datum/objective/sintouched) in H.mind.objectives)
 			continue
 		H.influenceSin()
-		H.Weaken(2)
-		H.Stun(2)
+		H.Knockdown(400)
 
 
 /obj/effect/proc_holder/spell/targeted/summon_dancefloor
