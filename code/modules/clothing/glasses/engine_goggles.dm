@@ -11,11 +11,6 @@
 	var/range = 1
 
 /obj/item/clothing/glasses/meson/engine/toggle_mode(mob/user, voluntary)
-	var/turf/T = get_turf(src)
-	if(T && T.z == ZLEVEL_MINING && !mesons_on)
-		if(picked_excuse)
-			to_chat(user, "<span class='warning'>Due to [picked_excuse], the [name] cannot currently be swapped to \[Meson] mode.</span>")
-		return
 	mesons_on = !mesons_on
 
 	if(!mesons_on)
