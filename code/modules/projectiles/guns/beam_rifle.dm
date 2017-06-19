@@ -40,7 +40,7 @@
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
-	var/aiming_time_increase_angle_multiplier = 0.5
+	var/aiming_time_increase_angle_multiplier = 0.3
 
 	var/lastangle = 0
 	var/aiming_lastangle = 0
