@@ -48,8 +48,8 @@
 		var/area/hearer_location = get_area(T)
 		var/area/source_location = get_area(turf_source)
 
-		if(source_location != null && isarea(source_location))
-			var/area/A = source_location
+		if(hearer_location != null && isarea(hearer_location))
+			var/area/A = hearer_location
 			if(A.sound_environment)
 				S.environment = A.sound_environment
 
