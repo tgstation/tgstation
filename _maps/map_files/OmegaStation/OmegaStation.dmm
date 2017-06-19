@@ -938,7 +938,6 @@
 /obj/item/weapon/storage/lockbox/medal,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -1625,7 +1624,6 @@
 "acT" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/holopad,
@@ -1820,7 +1818,6 @@
 /obj/structure/closet/secure_closet/hop,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/structure/cable/white{
@@ -3294,7 +3291,6 @@
 "afC" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/brown{
@@ -3591,7 +3587,6 @@
 "agg" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/light{
@@ -4646,7 +4641,6 @@
 "ahO" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -4716,7 +4710,6 @@
 "ahX" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -5170,7 +5163,6 @@
 /obj/structure/filingcabinet/filingcabinet,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/brown{
@@ -6191,7 +6183,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -7948,7 +7939,6 @@
 "amR" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light/small,
@@ -9073,7 +9063,6 @@
 /obj/machinery/cell_charger,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -9284,7 +9273,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -10183,7 +10171,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/bot,
@@ -10718,7 +10705,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/firealarm{
@@ -11720,7 +11706,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/camera{
@@ -12728,7 +12713,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/cable/white{
@@ -12846,7 +12830,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/cable/white{
@@ -13291,7 +13274,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -13662,7 +13644,6 @@
 "avW" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -13716,7 +13697,6 @@
 /obj/machinery/vending/assist,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -15042,7 +15022,6 @@
 "ayy" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -15619,7 +15598,6 @@
 /obj/item/weapon/canvas/twentythreeXtwentythree,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -16908,7 +16886,6 @@
 "aBY" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/light{
@@ -17219,7 +17196,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -18603,7 +18579,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -19823,7 +19798,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -20856,7 +20830,6 @@
 "aIA" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -21727,7 +21700,6 @@
 "aKa" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -22659,7 +22631,6 @@
 /obj/item/clothing/glasses/meson,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -23435,7 +23406,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -25427,7 +25397,6 @@
 "aQk" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -26251,7 +26220,6 @@
 "aRR" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -26405,7 +26373,6 @@
 /obj/structure/closet/wardrobe/chemistry_white,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/item/device/radio/intercom{
@@ -28721,7 +28688,6 @@
 /obj/effect/landmark/start/assistant,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/grimy,
@@ -28902,7 +28868,6 @@
 "aXi" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/black,
@@ -29188,7 +29153,6 @@
 /obj/item/weapon/wrench,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -29762,7 +29726,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/effect/turf_decal/delivery,
@@ -31043,7 +31006,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -32481,7 +32443,6 @@
 /obj/structure/closet/secure_closet/medical2,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/structure/extinguisher_cabinet{
@@ -32579,7 +32540,6 @@
 "bdY" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -32975,7 +32935,6 @@
 /obj/structure/closet/secure_closet/security,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/camera{
@@ -33798,7 +33757,6 @@
 "bfU" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -35422,7 +35380,6 @@
 /obj/structure/bookcase,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/firealarm{
@@ -35579,7 +35536,6 @@
 /obj/structure/closet/crate/bin,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -35737,7 +35693,6 @@
 "bjy" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -36845,7 +36800,6 @@
 	on = 1
 	},
 /obj/machinery/airalarm{
-	icon_state = "alarm0";
 	dir = 8;
 	pixel_x = 25
 	},

@@ -294,7 +294,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -32;
 	tag = "icon-alarm0 (EAST)"
 	},
@@ -851,7 +850,6 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -32;
 	tag = "icon-alarm0 (EAST)"
 	},
@@ -1756,7 +1754,6 @@
 "eT" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -32;
 	tag = "icon-alarm0 (EAST)"
 	},
@@ -3302,7 +3299,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -32;
 	tag = "icon-alarm0 (NORTH)"
 	},
@@ -4384,7 +4380,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 32;
 	tag = "icon-alarm0 (WEST)"
 	},
@@ -4829,7 +4824,6 @@
 "mX" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 32;
 	tag = "icon-alarm0 (WEST)"
 	},

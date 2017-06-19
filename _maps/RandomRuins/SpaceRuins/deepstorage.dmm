@@ -1140,7 +1140,6 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2082,7 +2081,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black{
@@ -3056,7 +3054,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -24;
 	tag = "icon-alarm0 (EAST)"
 	},
@@ -3475,7 +3472,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{

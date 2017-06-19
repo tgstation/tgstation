@@ -2029,7 +2029,6 @@
 "eL" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -24;
 	tag = "icon-alarm0 (NORTH)"
 	},
@@ -2038,7 +2037,6 @@
 "eM" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -24;
 	tag = "icon-alarm0 (NORTH)"
 	},
@@ -3663,7 +3661,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -24;
 	tag = "icon-alarm0 (NORTH)"
 	},

@@ -4219,7 +4219,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black,
@@ -18296,7 +18295,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -30895,7 +30893,6 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/item/weapon/storage/box/beakers,
@@ -33423,7 +33420,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -46079,7 +46075,6 @@
 /obj/item/device/radio,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -48617,7 +48612,6 @@
 "bZa" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black,

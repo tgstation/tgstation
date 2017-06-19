@@ -2847,7 +2847,6 @@
 /obj/machinery/light/small,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/black,
@@ -2963,7 +2962,6 @@
 /obj/machinery/recharger,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -3073,7 +3071,6 @@
 "agG" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -5425,7 +5422,6 @@
 "alr" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -6650,7 +6646,6 @@
 "anY" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/black,
@@ -7479,7 +7474,6 @@
 "aqd" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -9857,7 +9851,6 @@
 "avQ" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -10390,7 +10383,6 @@
 /obj/item/wallframe/camera,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/item/device/assembly/prox_sensor{
@@ -14300,7 +14292,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/light_switch{
@@ -14366,7 +14357,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
@@ -15316,7 +15306,6 @@
 "aHL" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/closet/l3closet/scientist,
@@ -15443,7 +15432,6 @@
 "aHZ" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/structure/closet/crate/wooden/toy,
@@ -16731,7 +16719,6 @@
 "aKZ" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/camera{
@@ -16804,7 +16791,6 @@
 "aLf" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/wood,
@@ -17139,7 +17125,6 @@
 "aLU" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/light/small{
@@ -17822,7 +17807,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/closet/chefcloset,
@@ -18622,7 +18606,6 @@
 /obj/structure/table,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel,
@@ -19489,7 +19472,6 @@
 "aSb" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel,
@@ -20047,7 +20029,6 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/camera{
@@ -20226,7 +20207,6 @@
 "aUf" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/camera{
@@ -20377,7 +20357,6 @@
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black,
@@ -20416,7 +20395,6 @@
 "aUG" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black,
@@ -20550,7 +20528,6 @@
 "aVa" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/structure/closet/toolcloset,
@@ -21423,7 +21400,6 @@
 "aWQ" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -22823,7 +22799,6 @@
 "bag" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/bar,
@@ -22944,7 +22919,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/wood,
@@ -23920,7 +23894,6 @@
 "bcV" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/filingcabinet,
@@ -25237,7 +25210,6 @@
 "bgd" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -25369,7 +25341,6 @@
 "bgs" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/freezer,
@@ -25602,7 +25573,6 @@
 /obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/item/device/camera,
@@ -26816,7 +26786,6 @@
 "bjE" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -26989,7 +26958,6 @@
 "bjY" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -27021,7 +26989,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black,
@@ -27074,7 +27041,6 @@
 /obj/item/weapon/reagent_containers/dropper,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/white,
@@ -28262,7 +28228,6 @@
 /obj/structure/table/glass,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/item/stack/cable_coil/random,
@@ -28939,7 +28904,6 @@
 /obj/item/weapon/bedsheet/captain,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -29030,7 +28994,6 @@
 "boj" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/requests_console{
@@ -29484,7 +29447,6 @@
 "bpi" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/cable{
@@ -30100,7 +30062,6 @@
 "bqC" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/cable{
@@ -31868,7 +31829,6 @@
 "bui" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -32086,7 +32046,6 @@
 /obj/structure/table,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/computer/stockexchange,
@@ -32205,7 +32164,6 @@
 "buQ" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -33564,7 +33522,6 @@
 /obj/machinery/computer/secure_data,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/red/side{
@@ -33757,7 +33714,6 @@
 "byb" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -34173,7 +34129,6 @@
 "byX" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/light{
@@ -34244,7 +34199,6 @@
 "bze" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/shower{
@@ -34306,7 +34260,6 @@
 /obj/machinery/computer/cloning,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -35204,7 +35157,6 @@
 "bBj" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/structure/cable{
@@ -35452,7 +35404,6 @@
 "bBI" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/closet/wardrobe/miner,
@@ -35979,7 +35930,6 @@
 "bCS" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36074,7 +36024,6 @@
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/white/side{
@@ -37208,7 +37157,6 @@
 "bFz" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -37281,7 +37229,6 @@
 "bFI" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/light/small{
@@ -41901,7 +41848,6 @@
 "bPr" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/closet/l3closet,
@@ -43948,7 +43894,6 @@
 "bUb" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/structure/sink{
@@ -45156,7 +45101,6 @@
 "bWL" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/structure/disposalpipe/segment,
@@ -46114,7 +46058,6 @@
 "bYM" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/structure/disposalpipe/segment{
@@ -46885,7 +46828,6 @@
 /obj/item/clothing/glasses/meson,
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel,
@@ -48427,7 +48369,6 @@
 "cdw" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel,
@@ -48738,7 +48679,6 @@
 "ceg" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/light,
@@ -49379,7 +49319,6 @@
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -50097,7 +50036,6 @@
 /obj/machinery/airalarm{
 	desc = "This particular atmos control unit appears to have no access restrictions.";
 	dir = 8;
-	icon_state = "alarm0";
 	locked = 0;
 	name = "all-access air alarm";
 	pixel_x = 24;
@@ -51052,7 +50990,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/computer/card/minor/ce,
@@ -53905,7 +53842,6 @@
 "cpm" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -53944,7 +53880,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -56370,7 +56305,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/rack,
@@ -59222,7 +59156,6 @@
 "cBe" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /obj/machinery/holopad,
@@ -60753,7 +60686,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -61643,7 +61575,6 @@
 "cHa" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black,
