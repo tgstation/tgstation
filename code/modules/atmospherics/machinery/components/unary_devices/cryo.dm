@@ -96,35 +96,35 @@
 	if(state_open)
 		icon_state = "pod-open"
 	else if(occupant)
-		var/mutable_appearance/occupant_overlay
+		var/image/occupant_overlay
 
-		if(istype(occupant, /mob/living/carbon/human) || istype(occupant, /mob/living/carbon/alien/larva) || istype(occupant, /mob/living/simple_animal/slime) || istype(occupant, /mob/living/simple_animal/parrot) || istype(occupant, /mob/living/simple_animal/pet))
-			// Mobs that are smaller than cryotube
-			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
-			occupant_overlay.copy_overlays(occupant)
-
-		else if(istype(occupant, /mob/living/carbon/monkey)) // Monkey
+		if(ismonkey(occupant)) // Monkey
 			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
-			occupant_overlay.copy_overlays(occupant)
 
-		else if(istype(occupant, /mob/living/carbon/alien))
+		else if(isalienadult(occupant))
 
 			if(istype(occupant, /mob/living/carbon/alien/humanoid/royal)) // Queen and prae
-				occupant_overlay = mutable_appearance(CRYOMOBS, "alienq")
+				occupant_overlay = image(CRYOMOBS, "alienq")
 
 			else if(istype(occupant, /mob/living/carbon/alien/humanoid/hunter)) // Hunter
-				occupant_overlay = mutable_appearance(CRYOMOBS, "alienh")
+				occupant_overlay = image(CRYOMOBS, "alienh")
 
 			else if(istype(occupant, /mob/living/carbon/alien/humanoid/sentinel)) // Sentinel
-				occupant_overlay = mutable_appearance(CRYOMOBS, "aliens")
+				occupant_overlay = image(CRYOMOBS, "aliens")
 
 			else // Drone (or any other alien that isn't any of the above)
-				occupant_overlay = mutable_appearance(CRYOMOBS, "aliend")
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
 
 		else // Anything else
-			occupant_overlay = mutable_appearance(CRYOMOBS, "generic")
+			occupant_overlay = image(CRYOMOBS, "generic")
 
+		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
+
 		if(on && is_operational() && !running_bob_anim)
 			icon_state = "pod-on"
 			running_bob_anim = TRUE
@@ -143,7 +143,7 @@
 	if(panel_open)
 		add_overlay("pod-panel")
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, mutable_appearance/occupant_overlay)
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, image/occupant_overlay)
 	if(!on || !occupant || !is_operational())
 		running_bob_anim = FALSE
 		return
