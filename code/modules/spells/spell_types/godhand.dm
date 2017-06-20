@@ -42,7 +42,7 @@
 	name = "\improper disintegrating touch"
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
-	on_use_sound = 'sound/magic/Disintegrate.ogg'
+	on_use_sound = 'sound/magic/disintegrate.ogg'
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
 
@@ -69,6 +69,6 @@
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
 		return
 	var/mob/living/M = target
-	M.Stun(2)
+	M.Stun(40)
 	M.petrify()
 	..()

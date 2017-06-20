@@ -25,7 +25,7 @@
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
+				preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
 				preview_icon.Scale(64, 64)
 				return
 			if(CYBORG)

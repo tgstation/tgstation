@@ -174,7 +174,7 @@ Difficulty: Medium
 				return
 			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
 			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
-			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 			A.wind_down()
 			return
 	else
@@ -187,7 +187,7 @@ Difficulty: Medium
 
 	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
 

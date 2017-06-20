@@ -162,7 +162,7 @@
 					playsound(loc, WT.usesound, 40, 1)
 					if(do_after(user, 40*WT.toolspeed, target = src))
 						obj_integrity = max_integrity
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")

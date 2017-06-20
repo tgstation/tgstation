@@ -119,7 +119,7 @@
 		qdel(src)
 		return FALSE
 	if(!sender)
-		visible_message("<span class='warning'>[A] bounces off of [src]!</span>")
+		visible_message("<span class='warning'>[A] bounces off [src]!</span>")
 		return FALSE
 	if(!uses)
 		return FALSE
@@ -127,8 +127,8 @@
 		var/mob/living/user = A
 		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
-	playsound(src, 'sound/effects/EMPulse.ogg', 50, 1)
-	playsound(linked_gateway, 'sound/effects/EMPulse.ogg', 50, 1)
+	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
+	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
 	transform = matrix() * 1.5
 	animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	linked_gateway.transform = matrix() * 1.5
@@ -194,7 +194,7 @@
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
 		if(CO.active)
-			to_chat(invoker, "<span class='warning'>That [target.name] is sustaining a gateway, and cannot recieve another!</span>")
+			to_chat(invoker, "<span class='warning'>That [target.name] is sustaining a gateway, and cannot receive another!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		var/efficiency = CO.get_efficiency_mod()
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)

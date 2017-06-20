@@ -113,7 +113,7 @@
 			if(!H.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				H.co2overloadtime = world.time
 			else if(world.time - H.co2overloadtime > 120)
-				H.Paralyse(3)
+				H.Unconscious(60)
 				H.adjustOxyLoss(3) // Lets hurt em a little, let them know we mean business
 				if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					H.adjustOxyLoss(8)
@@ -179,10 +179,10 @@
 	// N2O
 
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases["n2o"][MOLES])
-		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-			H.Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+		if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
+			H.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-				H.Sleeping(max(H.sleeping+2, 10))
+				H.Sleeping(max(H.sleeping+40, 200))
 		else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if(prob(20))
 				H.emote(pick("giggle", "laugh"))

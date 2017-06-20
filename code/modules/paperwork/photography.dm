@@ -533,7 +533,6 @@
 	cut_overlays()
 	if(displayed)
 		add_overlay(getFlatIcon(displayed))
-		add_overlay("frame-overlay")
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -572,7 +571,7 @@
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 		deconstruct()
 		return
@@ -591,13 +590,12 @@
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	if(framed)
-		framed.show()
+		framed.show(user)
 
 /obj/structure/sign/picture_frame/update_icon()
 	cut_overlays()
 	if(framed)
 		add_overlay(getFlatIcon(framed))
-		add_overlay("frame-overlay")
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

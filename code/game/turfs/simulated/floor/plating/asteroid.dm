@@ -81,7 +81,7 @@
 			var/obj/item/stack/tile/light/L = Z
 			var/turf/open/floor/light/F = T
 			F.state = L.state
-		playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 
 /turf/open/floor/plating/asteroid/proc/gets_dug()
 	if(dug)

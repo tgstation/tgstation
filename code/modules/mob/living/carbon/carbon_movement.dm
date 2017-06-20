@@ -19,12 +19,12 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
-/mob/living/carbon/slip(s_amount, w_amount, obj/O, lube)
+/mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0
 	if(!(lube&SLIDE_ICE))
 		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
-	return loc.handle_slip(src, s_amount, w_amount, O, lube)
+	return loc.handle_slip(src, knockdown_amount, O, lube)
 
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
@@ -57,3 +57,13 @@
 				nutrition -= HUNGER_FACTOR/10
 		if((disabilities & FAT) && m_intent == MOVE_INTENT_RUN && bodytemperature <= 360)
 			bodytemperature += 2
+
+/mob/living/carbon/Moved(oldLoc, Dir)
+	. = ..()
+	for(var/obj/O in internal_organs)
+		O.on_mob_move(dir, src, oldLoc)
+
+/mob/living/carbon/setDir(newdir)
+	. = ..()
+	for(var/obj/O in internal_organs)
+		O.on_mob_turn(newdir, src)

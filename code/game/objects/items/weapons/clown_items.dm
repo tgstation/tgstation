@@ -50,7 +50,7 @@
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(4, 2, src)
+		M.slip(4, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))
@@ -134,7 +134,7 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	honksound = 'sound/items/AirHorn2.ogg'
+	honksound = 'sound/items/airhorn2.ogg'
 	cooldowntime = 50
 	origin_tech = "materials=4;engineering=4"
 

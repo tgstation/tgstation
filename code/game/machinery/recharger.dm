@@ -8,12 +8,12 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
-	var/list/allowed_devices = list(/obj/item/weapon/gun/energy,/obj/item/weapon/melee/baton,/obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer)
+	var/static/list/allowed_devices = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/ammo_box/magazine/recharge,/obj/item/device/modular_computer))
 	var/recharge_coeff = 1
 
-/obj/machinery/recharger/New()
-	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recharger(null)
+/obj/machinery/recharger/Initialize()
+	. = ..()
+	var/obj/item/weapon/circuitboard/machine/recharger/B = new()
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/recharger
@@ -37,7 +37,7 @@
 		playsound(loc, G.usesound, 75, 1)
 		return
 
-	var/allowed = is_type_in_list(G, allowed_devices)
+	var/allowed = is_type_in_typecache(G, allowed_devices)
 
 	if(allowed)
 		if(anchored)
