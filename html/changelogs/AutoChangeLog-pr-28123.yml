@@ -1,0 +1,4 @@
+author: "LanCartwright"
+delete-after: True
+changes: 
+  - rscdel: "Removed loot drops from Syndicate Simple mobs."
