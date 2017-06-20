@@ -23,7 +23,6 @@
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
 	materials = list(MAT_METAL = 1000)
-	force_string = "disciplinary"
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -60,7 +59,6 @@
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
-	force_string = "classy"
 
 /obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -78,7 +76,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	var/cooldown = 0
 	var/on = 1
-	force_string = "pinnacle of perp prejudice"
 
 /obj/item/weapon/melee/classic_baton/attack(mob/target, mob/living/user)
 	if(!on)
