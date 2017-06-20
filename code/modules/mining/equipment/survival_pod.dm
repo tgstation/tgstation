@@ -321,7 +321,6 @@
 						/obj/item/stack/telecrystal/twenty,
 						/obj/item/nuke_core,
 						/obj/item/phylactery,
-						/obj/item/riding_offhand,
 						/obj/item/weapon/banhammer)
 
 /obj/item/fakeartefact/Initialize()
