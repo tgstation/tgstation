@@ -712,9 +712,9 @@
 	req_access_txt = "2"
 	},
 /obj/structure/cable{
-	icon_state = "1-10";
-	d1 = 2;
-	d2 = 4
+	d1 = 1;
+	d2 = 10;
+	icon_state = "1-10"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -918,9 +918,9 @@
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	icon_state = "5-6";
-	d1 = 2;
-	d2 = 4
+	d1 = 5;
+	d2 = 6;
+	icon_state = "5-6"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1103,9 +1103,9 @@
 	d2 = 4
 	},
 /obj/structure/cable{
-	icon_state = "0-9";
-	d1 = 2;
-	d2 = 4
+	d1 = 0;
+	d2 = 9;
+	icon_state = "0-9"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
