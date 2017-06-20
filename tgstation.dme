@@ -2028,7 +2028,6 @@
 #include "code\modules\shuttle\special.dm"
 #include "code\modules\shuttle\supply.dm"
 #include "code\modules\shuttle\syndicate.dm"
-#include "code\modules\shuttle\transit.dm"
 #include "code\modules\shuttle\white_ship.dm"
 #include "code\modules\space_transition\space_transition.dm"
 #include "code\modules\spells\spell.dm"
