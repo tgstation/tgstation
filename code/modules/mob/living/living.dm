@@ -241,7 +241,7 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (health < HEALTH_THRESHOLD_CRIT && health > HEALTH_THRESHOLD_DEAD && stat == UNCONSCIOUS)
+	return (health < HEALTH_THRESHOLD_CRIT && health > HEALTH_THRESHOLD_DEAD && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
 
 /mob/living/proc/InFullCritical()
 	return (health < HEALTH_THRESHOLD_FULLCRIT && health > HEALTH_THRESHOLD_DEAD && stat == UNCONSCIOUS)
