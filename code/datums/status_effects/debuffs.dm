@@ -189,13 +189,13 @@
 /datum/status_effect/saw_bleed
 	id = "saw_bleed"
 	duration = -1 //removed under specific conditions
-	tick_interval = 5
+	tick_interval = 6
 	alert_type = null
 	var/mutable_appearance/bleed_overlay
 	var/mutable_appearance/bleed_underlay
 	var/bleed_amount = 0
 	var/bleed_buildup = 3
-	var/delay_before_decay = 4
+	var/delay_before_decay = 5
 	var/bleed_damage = 200
 	var/needs_to_bleed = FALSE
 
@@ -218,7 +218,7 @@
 	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
 	bleed_underlay.pixel_x = -owner.pixel_x
 	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 2
-	bleed_underlay.alpha = 20
+	bleed_underlay.alpha = 35
 	owner.add_overlay(bleed_overlay)
 	owner.underlays += bleed_underlay
 	return ..()
