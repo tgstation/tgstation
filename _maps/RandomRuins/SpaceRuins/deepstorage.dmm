@@ -95,7 +95,6 @@
 	on = 1
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer{
@@ -104,7 +103,6 @@
 /area/ruin/deepstorage/kitchen)
 "ap" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/freezer{
@@ -220,8 +218,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -235,7 +232,6 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Recycling APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plating{
@@ -514,7 +510,6 @@
 	pixel_x = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/machinery/firealarm{
@@ -533,7 +528,6 @@
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -548,7 +542,6 @@
 	pixel_y = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/item/weapon/kitchen/knife,
@@ -593,8 +586,6 @@
 /area/ruin/deepstorage)
 "bf" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -604,7 +595,6 @@
 "bg" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -618,7 +608,6 @@
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/storage/bag/plants,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/hydrofloor{
@@ -628,7 +617,6 @@
 "bi" = (
 /obj/machinery/vending/hydronutrients,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/firealarm{
@@ -643,7 +631,6 @@
 	slogan_delay = 700
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/hydrofloor{
@@ -653,7 +640,6 @@
 "bk" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/light{
@@ -663,7 +649,6 @@
 "bl" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/machinery/light{
@@ -700,7 +685,6 @@
 /area/ruin/deepstorage/storage)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -709,7 +693,6 @@
 /area/ruin/deepstorage/storage)
 "bq" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -740,8 +723,6 @@
 /area/ruin/deepstorage/kitchen)
 "bt" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -775,8 +756,7 @@
 /obj/machinery/microwave,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -789,7 +769,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -830,8 +809,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -889,8 +867,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -903,8 +880,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -917,8 +893,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -932,7 +907,6 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Kitchen APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -971,9 +945,7 @@
 "bR" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -997,7 +969,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/beans,
 /obj/item/weapon/reagent_containers/food/snacks/beans,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -1091,8 +1062,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1103,8 +1073,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile,
@@ -1117,8 +1086,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1128,8 +1096,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1139,8 +1106,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
@@ -1160,8 +1126,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Hydroponics APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1171,7 +1136,6 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -1405,7 +1369,6 @@
 /area/ruin/deepstorage/storage)
 "cC" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/structure/cable/yellow{
@@ -1423,14 +1386,12 @@
 	req_access_txt = "200"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1438,7 +1399,6 @@
 /area/ruin/deepstorage/storage)
 "cE" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -1459,7 +1419,6 @@
 /area/ruin/deepstorage)
 "cG" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -1525,9 +1484,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 24
@@ -1553,8 +1510,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Storage APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1599,8 +1555,6 @@
 /area/ruin/deepstorage)
 "cV" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -1617,8 +1571,7 @@
 /obj/machinery/vending/cigarette,
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1738,8 +1691,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/floorgrime{
@@ -1754,8 +1706,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -1773,8 +1724,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1784,8 +1734,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -1800,8 +1749,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1928,7 +1876,6 @@
 /obj/item/weapon/storage/box/donkpockets,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/item/weapon/vending_refill/coffee,
@@ -1996,7 +1943,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2128,7 +2074,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black{
@@ -2143,7 +2088,6 @@
 /area/ruin/deepstorage/dorm)
 "dR" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/structure/cable/yellow{
@@ -2157,14 +2101,12 @@
 /area/ruin/deepstorage/dorm)
 "dS" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -2187,7 +2129,6 @@
 /area/ruin/deepstorage)
 "dU" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2196,14 +2137,12 @@
 /area/ruin/deepstorage)
 "dV" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Main Area APC";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/corner,
@@ -2225,14 +2164,12 @@
 /area/ruin/deepstorage)
 "dX" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2240,8 +2177,6 @@
 /area/ruin/deepstorage)
 "dY" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -2252,8 +2187,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2261,15 +2195,13 @@
 /area/ruin/deepstorage)
 "dZ" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2280,8 +2212,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2289,14 +2220,12 @@
 /area/ruin/deepstorage)
 "eb" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/floorgrime{
@@ -2305,7 +2234,6 @@
 /area/ruin/deepstorage)
 "ec" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -2333,8 +2261,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2346,14 +2273,12 @@
 	req_access_txt = "200"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2361,14 +2286,12 @@
 /area/ruin/deepstorage/armory)
 "ef" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2378,8 +2301,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2398,8 +2320,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Armory APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2518,7 +2439,6 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2544,7 +2464,6 @@
 /area/ruin/deepstorage/armory)
 "ev" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/black{
@@ -2567,8 +2486,7 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/gun/ballistic/automatic/wt550{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
@@ -2601,7 +2519,6 @@
 /area/ruin/deepstorage/dorm)
 "eA" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/wood{
@@ -2613,7 +2530,6 @@
 	name = "Personal Dorm"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -2623,8 +2539,6 @@
 /area/ruin/deepstorage/dorm)
 "eC" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
@@ -2665,8 +2579,6 @@
 /area/ruin/deepstorage)
 "eG" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -2678,8 +2590,6 @@
 /area/ruin/deepstorage)
 "eH" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/closed/wall/mineral/iron{
@@ -2699,7 +2609,6 @@
 	id = "bunkerinterior";
 	name = "interior blastdoor access";
 	pixel_x = -24;
-	pixel_y = 0;
 	req_access_txt = "200"
 	},
 /obj/machinery/button/door{
@@ -2710,15 +2619,12 @@
 	req_access_txt = "200"
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen{
 	dir = 1;
 	name = "Bunker Entrance";
 	network = list("Bunker1");
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2727,8 +2633,6 @@
 /area/ruin/deepstorage/airlock)
 "eJ" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
@@ -2748,16 +2652,13 @@
 /area/ruin/deepstorage/airlock)
 "eK" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -2768,8 +2669,6 @@
 /area/ruin/deepstorage/airlock)
 "eL" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /obj/structure/cable/yellow{
@@ -2779,7 +2678,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Airlock Control APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2854,7 +2752,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -2906,8 +2803,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2939,8 +2835,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3012,8 +2907,7 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3083,7 +2977,6 @@
 /area/ruin/deepstorage/power)
 "fm" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3128,8 +3021,6 @@
 /area/ruin/deepstorage)
 "fr" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/machinery/light/small{
@@ -3142,8 +3033,6 @@
 /area/ruin/deepstorage)
 "fs" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/closed/wall/mineral/iron{
@@ -3152,15 +3041,11 @@
 /area/ruin/deepstorage/airlock)
 "ft" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	icon_state = "alarm0";
-	pixel_x = -24;
-	tag = "icon-alarm0 (EAST)"
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3168,8 +3053,6 @@
 /area/ruin/deepstorage/airlock)
 "fu" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/light,
@@ -3237,8 +3120,6 @@
 "fz" = (
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3247,8 +3128,6 @@
 /area/ruin/deepstorage/power)
 "fA" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3258,8 +3137,6 @@
 "fB" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -3274,7 +3151,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "o2_out_bunker";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -3296,8 +3172,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Dormory APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3410,7 +3285,6 @@
 /area/ruin/deepstorage)
 "fR" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -3428,7 +3302,6 @@
 /area/ruin/deepstorage)
 "fS" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 9
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3480,14 +3353,12 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
 /obj/structure/sign/electricshock{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -3503,8 +3374,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -3570,7 +3440,6 @@
 	name = "Personal Dorm"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/open/floor/wood{
@@ -3579,8 +3448,6 @@
 /area/ruin/deepstorage/dorm)
 "gf" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3590,12 +3457,10 @@
 "gg" = (
 /obj/machinery/washing_machine,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3652,13 +3517,11 @@
 /area/ruin/deepstorage/power)
 "gk" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3723,7 +3586,6 @@
 	icon_state = "0-8"
 	},
 /obj/structure/sign/electricshock{
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -3737,8 +3599,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3762,8 +3623,6 @@
 /area/ruin/deepstorage/power)
 "gu" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3776,7 +3635,6 @@
 	external_pressure_bound = 0;
 	frequency = 1441;
 	id_tag = "n2_out_bunker";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -3931,8 +3789,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3946,8 +3803,7 @@
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -4016,14 +3872,12 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
+	icon_state = "1-8"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating{
@@ -4131,8 +3985,7 @@
 /area/ruin/deepstorage/power)
 "he" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4144,7 +3997,6 @@
 "hf" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/airalarm{
@@ -4169,8 +4021,6 @@
 /area/ruin/deepstorage)
 "hh" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -4180,14 +4030,12 @@
 /area/ruin/deepstorage)
 "hi" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
+	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -4198,8 +4046,6 @@
 /area/ruin/deepstorage)
 "hj" = (
 /obj/machinery/atmospherics/pipe/manifold/supplymain/hidden{
-	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4
 	},
 /obj/structure/cable/yellow{

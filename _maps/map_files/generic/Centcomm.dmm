@@ -97,8 +97,7 @@
 "ap" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green{
-	layer = 3.3;
-	pixel_y = 0
+	layer = 3.3
 	},
 /turf/open/floor/holofloor{
 	icon_state = "wood";
@@ -146,12 +145,10 @@
 /obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/item/toy/snowball{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /obj/item/toy/snowball{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /obj/item/toy/snowball{
 	pixel_x = -4
@@ -3063,7 +3060,6 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -3151,8 +3147,6 @@
 /obj/machinery/status_display{
 	density = 0;
 	name = "cargo display";
-	pixel_x = 0;
-	pixel_y = 0;
 	supply_display = 1
 	},
 /turf/closed/indestructible/riveted,
@@ -3250,8 +3244,7 @@
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
 /area/centcom/supply)
@@ -3289,7 +3282,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -3313,15 +3305,13 @@
 "jk" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3473,14 +3463,12 @@
 "jA" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -3495,15 +3483,13 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3654,7 +3640,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -3686,8 +3671,7 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -3918,8 +3902,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4009,7 +3992,6 @@
 "kK" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown,
@@ -4255,7 +4237,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/vault,
@@ -4351,8 +4332,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -4364,7 +4343,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
@@ -4480,7 +4458,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/brown{
@@ -4649,7 +4626,6 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -4710,8 +4686,7 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 4
@@ -4789,9 +4764,7 @@
 "mD" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror/magic/badmin{
 	pixel_x = 28
@@ -4852,7 +4825,6 @@
 "mJ" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/closet/crate/bin,
@@ -4866,7 +4838,6 @@
 "mK" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown{
@@ -5003,8 +4974,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5075,7 +5045,6 @@
 /area/centcom/ferry)
 "nk" = (
 /obj/machinery/status_display{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -5096,7 +5065,6 @@
 	department = "Captain's Desk";
 	departmentType = 5;
 	name = "Captain RC";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/grimy,
@@ -5116,7 +5084,6 @@
 /obj/item/weapon/pen/fourcolor,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
 	pixel_y = 32;
 	req_access_txt = "0";
 	use_power = 0
@@ -5525,7 +5492,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/vault{
@@ -5556,7 +5522,6 @@
 "oo" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -5606,8 +5571,7 @@
 /obj/item/clothing/glasses/eyepatch,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
@@ -5644,8 +5608,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen/red,
@@ -5785,7 +5748,6 @@
 /obj/item/weapon/lighter,
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
@@ -5895,7 +5857,6 @@
 "oY" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault{
@@ -6099,8 +6060,7 @@
 	name = "memo"
 	},
 /obj/structure/noticeboard{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
@@ -6278,7 +6238,6 @@
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";
 	network = list("RD","Sat");
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/grimy,
@@ -6304,8 +6263,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Commander's Office APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal{
@@ -6573,7 +6531,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/green/side{
@@ -6673,7 +6630,6 @@
 "qI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/machinery/meter,
@@ -6696,7 +6652,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/structure/cable/white{
@@ -6719,7 +6674,6 @@
 "qK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
 	tag = "icon-manifold (NORTH)";
-	icon_state = "manifold";
 	dir = 1
 	},
 /obj/machinery/meter,
@@ -7130,7 +7084,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7151,7 +7104,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7252,7 +7204,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -7350,7 +7301,6 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
-	pixel_x = 0;
 	pixel_y = -38;
 	req_access_txt = "0"
 	},
@@ -7385,7 +7335,6 @@
 "sk" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/closet/crate/bin,
@@ -7428,7 +7377,6 @@
 "sp" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
@@ -7493,8 +7441,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -7535,7 +7481,6 @@
 	id = "nukeop_ready";
 	name = "mission launch control";
 	pixel_x = -26;
-	pixel_y = 0;
 	req_access_txt = "151"
 	},
 /turf/open/floor/plasteel/bar{
@@ -7822,7 +7767,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -7972,7 +7916,6 @@
 /area/centcom/control)
 "tB" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/green/corner{
@@ -7995,7 +7938,6 @@
 /obj/item/weapon/paper/pamphlet/ccaInfo,
 /obj/item/weapon/paper/pamphlet/ccaInfo,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/green/side{
@@ -8017,8 +7959,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 5
@@ -8168,7 +8109,6 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
-	pixel_x = 0;
 	pixel_y = 24;
 	req_access_txt = "2"
 	},
@@ -8400,8 +8340,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -8737,7 +8675,6 @@
 /area/centcom/control)
 "vC" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/green/corner,
@@ -9061,7 +8998,6 @@
 /area/centcom/ferry)
 "wr" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -9368,8 +9304,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Briefing Area APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9532,8 +9467,7 @@
 /area/centcom/control)
 "xJ" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -9875,7 +9809,6 @@
 /obj/structure/closet/secure_closet/ertMed,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
 	pixel_y = -32;
 	req_access_txt = "0";
 	use_power = 0
@@ -9980,8 +9913,7 @@
 /obj/structure/filingcabinet/medical,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10009,8 +9941,7 @@
 "yD" = (
 /obj/machinery/computer/security,
 /obj/machinery/newscaster{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10063,7 +9994,6 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -10130,8 +10060,7 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -10282,7 +10211,6 @@
 /area/centcom/control)
 "zf" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -10658,7 +10586,6 @@
 /area/tdome/tdomeobserve)
 "Ai" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/green/side{
@@ -11494,7 +11421,6 @@
 "Cq" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11563,7 +11489,6 @@
 "CA" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11635,8 +11560,7 @@
 "CH" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/bar,
 /area/tdome/tdomeobserve)
@@ -11703,7 +11627,6 @@
 "CO" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11736,7 +11659,6 @@
 "CR" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /turf/open/floor/plasteel/bar,
@@ -11773,7 +11695,6 @@
 "CW" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12
 	},
 /obj/structure/mirror{
@@ -11827,9 +11748,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Dc" = (
-/obj/machinery/computer/security/telescreen{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 1
@@ -11909,7 +11828,6 @@
 "Dk" = (
 /obj/machinery/vending/boozeomat,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
@@ -11948,9 +11866,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Dp" = (
-/obj/machinery/computer/security/telescreen{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12570,9 +12486,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/tdome/tdomeadmin)
 "EW" = (
-/obj/machinery/computer/security/telescreen{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12587,9 +12501,7 @@
 /area/tdome/tdomeadmin)
 "EY" = (
 /obj/machinery/button/flasher{
-	id = "tdomeflash";
-	pixel_x = 0;
-	pixel_y = 0
+	id = "tdomeflash"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
@@ -12622,8 +12534,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12769,7 +12680,6 @@
 /obj/machinery/button/door{
 	id = "thunderdomehea";
 	name = "Heavy Supply Control";
-	pixel_y = 0;
 	req_access_txt = "102"
 	},
 /obj/structure/table/reinforced,
@@ -12781,7 +12691,6 @@
 /obj/machinery/button/door{
 	id = "thunderdome";
 	name = "Main Blast Doors Control";
-	pixel_y = 0;
 	req_access_txt = "102"
 	},
 /obj/structure/table/reinforced,
@@ -12794,7 +12703,6 @@
 /obj/machinery/button/door{
 	id = "thunderdomegen";
 	name = "General Supply Control";
-	pixel_y = 0;
 	req_access_txt = "102"
 	},
 /obj/structure/table/reinforced,
@@ -12924,7 +12832,6 @@
 "FO" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -12977,8 +12884,7 @@
 "FY" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = -2;
@@ -13875,7 +13781,6 @@
 /area/syndicate_mothership)
 "JG" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -13890,7 +13795,6 @@
 /area/syndicate_mothership/control)
 "JI" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar{
@@ -13941,7 +13845,6 @@
 /area/centcom/evac)
 "JQ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -13954,7 +13857,6 @@
 /area/centcom/evac)
 "JS" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -13962,7 +13864,6 @@
 "JT" = (
 /obj/structure/bed,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -13971,7 +13872,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -13989,7 +13889,6 @@
 	dir = 9
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -13999,8 +13898,7 @@
 	dir = 5
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -14016,8 +13914,7 @@
 /area/centcom/supply)
 "JZ" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -14025,8 +13922,7 @@
 /area/centcom/supply)
 "Ka" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -14037,7 +13933,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14047,8 +13942,7 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -14058,7 +13952,6 @@
 /area/centcom/supply)
 "Ke" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -14067,8 +13960,7 @@
 /area/centcom/control)
 "Kf" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 4
@@ -14084,7 +13976,6 @@
 /area/syndicate_mothership)
 "Kh" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -14093,8 +13984,7 @@
 /area/centcom/control)
 "Ki" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -14113,7 +14003,6 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
@@ -14153,7 +14042,6 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/grass,
@@ -14177,8 +14065,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/grass,
 /area/centcom/control)
@@ -14198,8 +14085,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	name = "plating";
@@ -14213,22 +14099,19 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/grass,
 /area/centcom/control)
 "Kv" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "Kw" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -14341,7 +14224,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14384,7 +14266,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -14445,7 +14326,6 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/grass,
@@ -14473,8 +14353,7 @@
 /area/wizard_station)
 "Lc" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -14524,8 +14403,7 @@
 "Lj" = (
 /obj/structure/closet/crate/bin,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -14547,7 +14425,6 @@
 /area/tdome/tdomeobserve)
 "Lm" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
@@ -14556,8 +14433,7 @@
 /area/tdome/tdomeobserve)
 "Ln" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 8
@@ -14570,7 +14446,6 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/palebush,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid,
@@ -14580,8 +14455,7 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 6;
@@ -14596,7 +14470,6 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/palebush,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid,
@@ -14606,8 +14479,7 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 6;
@@ -14617,8 +14489,7 @@
 /area/tdome/tdomeadmin)
 "Ls" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -14626,7 +14497,6 @@
 /area/tdome/tdomeadmin)
 "Lt" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -14887,14 +14757,12 @@
 /area/shuttle/escape)
 "Me" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Mf" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium,

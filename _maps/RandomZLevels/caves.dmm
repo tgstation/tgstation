@@ -1216,8 +1216,7 @@
 "cE" = (
 /obj/structure/sign/vacuum{
 	name = "\improper LOW AIR AREA";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/item/stack/rods,
 /turf/open/floor/plasteel{
@@ -1286,7 +1285,6 @@
 "cM" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -1409,8 +1407,7 @@
 "cZ" = (
 /obj/structure/sign/vacuum{
 	name = "\improper LOW AIR AREA";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/basalt;
