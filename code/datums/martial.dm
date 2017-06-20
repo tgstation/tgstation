@@ -98,3 +98,16 @@
 	if(help_verb)
 		H.verbs -= help_verb
 	martial_art_owner = null
+
+/datum/martial_art/proc/mind_transfer(mob/living/carbon/human/present, mob/living/future)
+	if(!required_object)
+		martial_art_owner = future
+	else
+		var/obj/O = locate(required_object) in future
+		if(!O)
+			remove(present) //The player can always just re-equip the object, assuming they have access to their old corpse
+		else
+			if(!required_slot && present.get_item_by_slot(required_slot) != O)
+				remove(present)
+			else
+				martial_art_owner = future
