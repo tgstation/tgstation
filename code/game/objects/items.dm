@@ -105,6 +105,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+
+	//Tooltip vars
+	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
+	var/force_string //string form of an item's force. Edit this var only to set a custom force string
+	var/last_force_string_check = 0
+	var/tip_timer
+	var/force_string_override
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -115,6 +123,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(GLOB.rpg_loot_items)
 		rpg_loot = new(src)
+
+	if(force_string)
+		force_string_override = TRUE
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -368,9 +379,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		A.Remove(user)
 	if(DROPDEL & flags)
 		qdel(src)
+	in_inventory = FALSE
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	in_inventory = TRUE
 	return
 
 
@@ -396,6 +409,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	in_inventory = TRUE
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
@@ -426,7 +440,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 //This proc is executed when someone clicks the on-screen UI button.
 //The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
+//Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
 
@@ -501,8 +515,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				if(M.drop_item())
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
-			M.Paralyse(1)
-			M.Weaken(2)
+			M.Unconscious(20)
+			M.Knockdown(40)
 		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
 				to_chat(M, "<span class='danger'>You go blind!</span>")
@@ -546,6 +560,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	throw_speed = initial(throw_speed) //explosions change this.
+	in_inventory = FALSE
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
@@ -632,3 +647,37 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.dirty++
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
+
+/obj/item/proc/set_force_string()
+	switch(force)
+		if(0 to 4)
+			force_string = "very low"
+		if(4 to 7)
+			force_string = "low"
+		if(7 to 10)
+			force_string = "medium"
+		if(10 to 11)
+			force_string = "high"
+		if(11 to 20) //12 is the force of a toolbox
+			force_string = "robust"
+		if(20 to 25)
+			force_string = "very robust"
+		else
+			force_string = "exceptionally robust"
+	last_force_string_check = force
+
+/obj/item/proc/openTip(location, control, params, user)
+	if(last_force_string_check != force && !force_string_override)
+		set_force_string()
+	openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+
+/obj/item/MouseEntered(location, control, params)
+	if(in_inventory && usr.client.prefs.enable_tips)
+		var/timedelay = usr.client.prefs.tip_delay/100
+		var/user = usr
+		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+
+/obj/item/MouseExited()
+	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
+	closeToolTip(usr)
+

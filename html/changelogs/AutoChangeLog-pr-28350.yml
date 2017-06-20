@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - imageadd: "Changed cryo sprites to Bay cryopods, which show the person inside of them."

@@ -333,8 +333,7 @@
 
 /datum/riding/human/force_dismount(mob/living/user)
 	ridden.unbuckle_mob(user)
-	user.Weaken(3)
-	user.Stun(3)
+	user.Knockdown(60)
 	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
@@ -389,7 +388,7 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
-	M.Weaken(3)
+	M.Knockdown(60)
 
 /datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/amount_equipped = 0

@@ -72,7 +72,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
-	return !is_type_in_typecache(A, blacklist_typecache)
+	return !is_type_in_typecache(A, blacklist_typecache) && (isobj(A) || ismob(A))
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
 	if(A && A.loc != src)

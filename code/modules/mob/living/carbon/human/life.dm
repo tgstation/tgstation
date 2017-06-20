@@ -356,7 +356,7 @@
 
 	if(we_breath)
 		adjustOxyLoss(8)
-		Paralyse(4)
+		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
 
@@ -425,7 +425,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
 					to_chat(src, "<span class='warning'>Just a quick nap...</span>")
-					Sleeping(45)
+					Sleeping(900)
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
