@@ -5081,9 +5081,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_y = 0
-	},
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
@@ -12175,9 +12173,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/vest{
-	pixel_y = 0
-	},
+/obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/suit/armor/vest{
 	pixel_x = 3;
 	pixel_y = -3

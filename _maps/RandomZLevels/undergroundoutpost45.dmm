@@ -4276,9 +4276,7 @@
 	})
 "gN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/white/side{
 	dir = 2;
 	heat_capacity = 1e+006
@@ -6015,9 +6013,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/weapon/disk/tech_disk{
-	pixel_y = 0
-	},
+/obj/item/weapon/disk/tech_disk,
 /obj/item/weapon/disk/design_disk,
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
@@ -12475,9 +12471,7 @@
 	})
 "rJ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/gloves{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/box/gloves,
 /turf/open/floor/plasteel/white/side{
 	dir = 8;
 	heat_capacity = 1e+006

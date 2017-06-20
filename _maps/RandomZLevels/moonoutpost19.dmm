@@ -5606,9 +5606,7 @@
 	})
 "ho" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/gloves{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/box/gloves,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -5789,9 +5787,7 @@
 	})
 "hA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/firstaid/fire,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 28
@@ -5891,9 +5887,7 @@
 	})
 "hH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -6739,9 +6733,7 @@
 	name = "MO19 Arrivals"
 	})
 "iT" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen/entertainment,
 /turf/closed/wall/rust,
 /area/awaycontent/a1{
 	has_gravity = 1;

@@ -245,9 +245,7 @@
 /turf/open/floor/plasteel/barber,
 /area/security/prison)
 "aaM" = (
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	pixel_y = 0
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -392,9 +390,7 @@
 	},
 /obj/structure/table/wood,
 /obj/item/device/radio/off,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "abl" = (
@@ -612,9 +608,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_y = 0
-	},
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
@@ -3763,9 +3757,7 @@
 "ahV" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /turf/open/floor/plasteel/black,
 /area/security/prison)
 "ahW" = (
@@ -8776,9 +8768,7 @@
 	width = 9
 	},
 /obj/machinery/bluespace_beacon,
-/obj/machinery/computer/auxillary_base{
-	pixel_y = 0
-	},
+/obj/machinery/computer/auxillary_base,
 /turf/closed/wall,
 /area/shuttle/auxillary_base)
 "atm" = (
@@ -9106,9 +9096,7 @@
 /area/lawoffice)
 "auh" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /obj/item/weapon/cartridge/lawyer,
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -17791,9 +17779,7 @@
 /turf/open/floor/carpet,
 /area/hallway/secondary/entry)
 "aNS" = (
-/obj/machinery/bookbinder{
-	pixel_y = 0
-	},
+/obj/machinery/bookbinder,
 /turf/open/floor/wood,
 /area/library)
 "aNT" = (
@@ -18365,9 +18351,7 @@
 /area/library)
 "aPi" = (
 /obj/structure/table/wood,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /obj/item/device/camera,
 /obj/item/device/radio/intercom{
 	pixel_y = 25
@@ -19813,9 +19797,7 @@
 /area/library)
 "aTd" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	pixel_y = 0
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
@@ -22702,9 +22684,7 @@
 	},
 /area/hallway/primary/central)
 "aZZ" = (
-/obj/machinery/vending/cigarette{
-	pixel_y = 0
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "baa" = (
@@ -24439,9 +24419,7 @@
 	c_tag = "Captain's Office";
 	dir = 8
 	},
-/obj/item/weapon/storage/lockbox/medal{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/lockbox/medal,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "beo" = (
@@ -25583,9 +25561,7 @@
 /area/medical/medbay/central)
 "bhf" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bhg" = (
@@ -29781,12 +29757,8 @@
 "bpZ" = (
 /obj/item/weapon/folder/white,
 /obj/structure/table,
-/obj/item/weapon/disk/tech_disk{
-	pixel_y = 0
-	},
-/obj/item/weapon/disk/tech_disk{
-	pixel_y = 0
-	},
+/obj/item/weapon/disk/tech_disk,
+/obj/item/weapon/disk/tech_disk,
 /obj/item/weapon/disk/design_disk,
 /obj/item/weapon/disk/design_disk,
 /turf/open/floor/plasteel/white,
@@ -30742,9 +30714,7 @@
 /area/crew_quarters/heads/hop)
 "brX" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/masks{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/box/masks,
 /obj/item/weapon/storage/box/gloves{
 	pixel_x = 3;
 	pixel_y = 4
@@ -32945,12 +32915,8 @@
 	dir = 2;
 	network = list("SS13")
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_y = 0
-	},
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_y = 0
-	},
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bwK" = (
@@ -33685,9 +33651,7 @@
 "byg" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp/qm{
-	pixel_y = 0
-	},
+/obj/item/weapon/stamp/qm,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -38902,9 +38866,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/cloning{
-	pixel_x = 0
-	},
+/obj/item/weapon/circuitboard/computer/cloning,
 /obj/item/weapon/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
@@ -39284,12 +39246,8 @@
 /obj/item/device/transfer_valve{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
-	pixel_x = 0
-	},
-/obj/item/device/transfer_valve{
-	pixel_x = 0
-	},
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve{
 	pixel_x = 5
 	},
@@ -39342,9 +39300,7 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/timer{
-	pixel_y = 0
-	},
+/obj/item/device/assembly/timer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -45247,9 +45203,7 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /turf/open/floor/plasteel/floorgrime,
 /area/science/misc_lab)
 "bXj" = (
@@ -45673,9 +45627,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bYb" = (
-/obj/machinery/vending/cigarette{
-	pixel_y = 0
-	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bYc" = (
@@ -54286,9 +54238,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "cqs" = (
-/obj/structure/sign/fire{
-	pixel_y = 0
-	},
+/obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "cqt" = (
@@ -54651,9 +54601,7 @@
 /area/solar/starboard/aft)
 "crl" = (
 /obj/structure/table,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "crm" = (

@@ -428,7 +428,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -486,7 +485,6 @@
 	freerange = 1;
 	frequency = 1447;
 	name = "Private Channel";
-	pixel_x = 0;
 	pixel_y = -25
 	},
 /obj/item/device/radio/intercom{
@@ -494,7 +492,6 @@
 	freerange = 1;
 	listening = 0;
 	name = "Custom Channel";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /obj/item/device/radio/intercom{
@@ -517,7 +514,6 @@
 	freerange = 1;
 	frequency = 1447;
 	name = "Private Channel";
-	pixel_x = 0;
 	pixel_y = -25
 	},
 /obj/item/device/radio/intercom{
@@ -533,7 +529,6 @@
 	freerange = 1;
 	listening = 0;
 	name = "Custom Channel";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/circuit{
@@ -630,7 +625,6 @@
 	freerange = 1;
 	listening = 0;
 	name = "Custom Channel";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/machinery/turretid{
@@ -917,7 +911,6 @@
 	id = "smindicate";
 	name = "external door control";
 	pixel_x = -26;
-	pixel_y = 0;
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile{
@@ -1088,8 +1081,7 @@
 	dir = 2;
 	icon = 'icons/mob/robots.dmi';
 	icon_state = "robot_old";
-	name = "Cyborg Statue";
-	pixel_x = 0
+	name = "Cyborg Statue"
 	},
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1134,8 +1126,7 @@
 	dir = 2;
 	icon = 'icons/mob/robots.dmi';
 	icon_state = "robot_old";
-	name = "Cyborg Statue";
-	pixel_x = 0
+	name = "Cyborg Statue"
 	},
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1660,7 +1651,6 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Telecoms Server APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -2023,7 +2013,6 @@
 "aet" = (
 /obj/machinery/flasher{
 	id = "Cell 6";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/holopad,
@@ -2766,7 +2755,6 @@
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/machinery/turretid{
 	name = "AI Chamber turret control";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/black{
@@ -2910,7 +2898,6 @@
 /obj/machinery/door_timer{
 	id = "Cell 6";
 	name = "Cell 6";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -3870,7 +3857,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -3883,7 +3869,6 @@
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
 	pixel_x = -32;
-	pixel_y = 0;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -5299,7 +5284,6 @@
 /obj/structure/bed,
 /obj/machinery/flasher{
 	id = "PermaCell";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plating{
@@ -5822,7 +5806,6 @@
 /obj/machinery/button/flasher{
 	id = "PermaCell";
 	name = "Perma Flash";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/button/door{
@@ -6027,7 +6010,6 @@
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 24;
 	prison_radio = 1
 	},
@@ -6652,7 +6634,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Disposals APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/asteroid/end,
@@ -7052,7 +7033,6 @@
 	department = "Captain's Desk";
 	departmentType = 5;
 	name = "Captain RC";
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/wood{
@@ -7567,7 +7547,6 @@
 	},
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32;
-	pixel_y = 0;
 	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
@@ -8539,7 +8518,6 @@
 /obj/machinery/button/door{
 	id = "MiningWarehouse";
 	name = "Mining Warehouse Shutters";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/reagent_dispensers/fueltank,
@@ -9183,7 +9161,6 @@
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
 	pixel_x = 32;
-	pixel_y = 0;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
 /obj/effect/spawner/lootdrop/maintenance,
@@ -9422,7 +9399,6 @@
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
 	pixel_x = -32;
-	pixel_y = 0;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
 /obj/structure/closet/crate,
@@ -9538,7 +9514,6 @@
 /obj/machinery/button/door{
 	id = "MiningWarehouse";
 	name = "Mining Warehouse Shutters";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel{
@@ -13295,7 +13270,6 @@
 	id = "armoryaccess";
 	name = "Armory Shutter Access";
 	pixel_x = 24;
-	pixel_y = 0;
 	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel/showroomfloor{
@@ -14195,7 +14169,6 @@
 /obj/machinery/status_display{
 	density = 0;
 	name = "cargo display";
-	pixel_x = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -14209,7 +14182,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -14272,7 +14244,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Dock APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -14733,7 +14704,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel{
@@ -15564,7 +15534,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Head of Security's Personal Quarters APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -16841,7 +16810,6 @@
 	department = "Cargo Bay";
 	departmentType = 2;
 	name = "Cargo RC";
-	pixel_x = 0;
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -16874,7 +16842,6 @@
 /obj/machinery/status_display{
 	density = 0;
 	name = "cargo display";
-	pixel_x = 0;
 	pixel_y = 32;
 	supply_display = 1
 	},
@@ -16916,7 +16883,6 @@
 /obj/machinery/computer/stockexchange,
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -18922,7 +18888,6 @@
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF PAD WHEN IN USE'.";
 	name = "KEEP CLEAR OF PAD WHEN IN USE";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -19264,7 +19229,6 @@
 	id = "hopexternal";
 	name = "External Lockdown";
 	pixel_x = 24;
-	pixel_y = 0;
 	req_access_txt = "57"
 	},
 /turf/open/floor/wood{
@@ -19807,7 +19771,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral{
@@ -20024,7 +19987,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /obj/item/weapon/paper{
@@ -20260,7 +20222,6 @@
 /obj/machinery/button/door{
 	id = "lawyerexterior";
 	name = "Privacy Shutters";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/wood{
@@ -20770,7 +20731,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Fore Asteroid Maintenace APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/end,
@@ -23955,7 +23915,6 @@
 	id = "GulagCivExit3";
 	name = "Gulag Door Exit";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plating{
@@ -24541,7 +24500,6 @@
 	id = "GulagCivExit2";
 	name = "Gulag Door Exit";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -25423,7 +25381,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -25465,7 +25422,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -26346,7 +26302,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -27995,7 +27950,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Hallway APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -28107,7 +28061,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Asteroid Maintence APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -28153,7 +28106,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -28209,7 +28161,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -28314,7 +28265,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Bar APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -28705,7 +28655,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Kitchen APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -28904,7 +28853,6 @@
 "bbF" = (
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -29012,7 +28960,6 @@
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
 	pixel_x = -32;
-	pixel_y = 0;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
 /turf/open/floor/plating/astplate{
@@ -31174,7 +31121,6 @@
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/grass{
@@ -31282,7 +31228,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -31330,7 +31275,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -34834,7 +34778,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /obj/machinery/airalarm{
@@ -35044,7 +34987,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -35402,7 +35344,6 @@
 /obj/machinery/button/door{
 	id = "cmooffice";
 	name = "Office Emergency Lockdown";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /mob/living/simple_animal/pet/cat/Runtime,
@@ -36131,7 +36072,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Morgue APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -37895,7 +37835,6 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = 0;
 	pixel_y = -30;
 	pixel_z = 0
 	},
@@ -38080,7 +38019,6 @@
 	},
 /obj/machinery/light/small,
 /obj/machinery/computer/shuttle/pod{
-	pixel_x = 0;
 	pixel_y = 32;
 	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
@@ -38088,7 +38026,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/machinery/camera{
@@ -38324,7 +38261,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -38390,7 +38326,6 @@
 "brR" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /obj/structure/cable{
@@ -38688,7 +38623,6 @@
 "bsl" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /obj/structure/cable{
@@ -39739,7 +39673,6 @@
 	idDoor = "virology_airlock_exterior";
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
-	pixel_x = 0;
 	pixel_y = -28;
 	req_access_txt = "39"
 	},
@@ -39758,7 +39691,6 @@
 	idDoor = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
-	pixel_x = 0;
 	pixel_y = -28;
 	req_access_txt = "39"
 	},
@@ -39795,7 +39727,6 @@
 	idInterior = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Console";
-	pixel_x = 0;
 	pixel_y = -22;
 	req_access_txt = "39"
 	},
@@ -40421,7 +40352,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Central Asteroid Maintenance APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -41966,7 +41896,6 @@
 /obj/machinery/button/door{
 	id = "medmain";
 	name = "Medbay Foyer Doors";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/requests_console{
@@ -41975,7 +41904,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = 30;
-	pixel_y = 0;
 	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white{
@@ -44551,7 +44479,6 @@
 	id = "cloningmain";
 	name = "Cloning Door";
 	normaldoorcontrol = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/camera{
@@ -45205,8 +45132,6 @@
 	c_tag = "Hydroponics Storage";
 	dir = 1;
 	network = list("SS13");
-	pixel_x = 0;
-	pixel_y = 0;
 	start_active = 1
 	},
 /turf/open/floor/plasteel/hydrofloor{
@@ -45383,7 +45308,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Engineering APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -45918,7 +45842,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Atmospherics APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -46601,7 +46524,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/vault{
@@ -46639,7 +46561,6 @@
 "bGo" = (
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -49241,7 +49162,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Chemistry APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -49335,7 +49255,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = 30;
-	pixel_y = 0;
 	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white{
@@ -49859,7 +49778,6 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -50295,15 +50213,12 @@
 "bMH" = (
 /obj/structure/table,
 /obj/item/weapon/storage/belt/medical{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/belt/medical{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/belt/medical{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/clothing/neck/stethoscope,
@@ -50671,7 +50586,6 @@
 	id = "engiestoragesmes";
 	name = "Engineering SMES Blast Door Control";
 	pixel_x = -24;
-	pixel_y = 0;
 	req_access_txt = "10;11"
 	},
 /obj/machinery/button/door{
@@ -50888,7 +50802,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Genetics APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -51142,8 +51055,7 @@
 /area/engine/atmos)
 "bOn" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10;
-	pixel_x = 0
+	dir = 10
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -51551,7 +51463,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay Storage APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -51738,7 +51649,6 @@
 "bPh" = (
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -52802,7 +52712,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel{
@@ -53121,7 +53030,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -53738,8 +53646,6 @@
 	node1_concentration = 0.8;
 	node2_concentration = 0.2;
 	on = 1;
-	pixel_x = 0;
-	pixel_y = 0;
 	target_pressure = 4500
 	},
 /turf/open/floor/plasteel{
@@ -54256,7 +54162,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -54284,7 +54189,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -55354,7 +55258,6 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -55881,7 +55784,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Eastern External Waste Belt APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plating,
@@ -56850,7 +56752,6 @@
 /obj/item/chair/stool,
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -57083,7 +56984,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = 32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -57225,7 +57125,6 @@
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
 	pixel_x = -32;
-	pixel_y = 0;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
 /turf/open/floor/wood{
@@ -57370,7 +57269,6 @@
 "caw" = (
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -57651,7 +57549,6 @@
 /obj/structure/closet/lasertag/blue,
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -57686,7 +57583,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel{
@@ -57703,7 +57599,6 @@
 /obj/structure/closet/lasertag/red,
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -57724,7 +57619,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel{
@@ -57779,7 +57673,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -57835,7 +57728,6 @@
 /obj/machinery/computer/slot_machine,
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
@@ -58961,7 +58853,6 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -60916,7 +60807,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -61187,7 +61077,6 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating{
@@ -61230,7 +61119,6 @@
 /obj/item/weapon/stock_parts/micro_laser/high,
 /obj/machinery/requests_console{
 	department = "Tech storage";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /turf/open/floor/plating{
@@ -62005,7 +61893,6 @@
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF PAD WHEN IN USE'.";
 	name = "KEEP CLEAR OF PAD WHEN IN USE";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/black{
@@ -62068,7 +61955,6 @@
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF PAD WHEN IN USE'.";
 	name = "KEEP CLEAR OF PAD WHEN IN USE";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -62550,7 +62436,6 @@
 	dir = 4;
 	locked = 0;
 	pixel_x = -23;
-	pixel_y = 0;
 	req_access = null;
 	req_one_access_txt = "24;10"
 	},
@@ -62998,7 +62883,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /obj/item/weapon/paper{
@@ -63849,7 +63733,6 @@
 /area/shuttle/pod_2)
 "cmD" = (
 /obj/machinery/computer/shuttle/pod{
-	pixel_x = 0;
 	pixel_y = -32;
 	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
@@ -63868,7 +63751,6 @@
 	pixel_y = -28
 	},
 /obj/item/device/radio/intercom{
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/chair{
@@ -66253,7 +66135,6 @@
 	id_tag = "tox_airlock_control";
 	interior_door_tag = "tox_airlock_interior";
 	pixel_x = -24;
-	pixel_y = 0;
 	sanitize_external = 1;
 	sensor_tag = "tox_airlock_sensor"
 	},
@@ -66537,7 +66418,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Aft Asteroid Hallway APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -66973,12 +66853,8 @@
 /area/science/lab)
 "crC" = (
 /obj/item/weapon/folder/white,
-/obj/item/weapon/disk/tech_disk{
-	pixel_x = 0
-	},
-/obj/item/weapon/disk/tech_disk{
-	pixel_x = 0
-	},
+/obj/item/weapon/disk/tech_disk,
+/obj/item/weapon/disk/tech_disk,
 /obj/item/weapon/disk/design_disk,
 /obj/item/weapon/disk/design_disk,
 /obj/structure/table/glass,
@@ -68012,8 +67888,7 @@
 /area/science/mixing)
 "ctn" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10;
-	pixel_x = 0
+	dir = 10
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	tag = "icon-whitepurple (NORTH)";
@@ -68154,7 +68029,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -68267,7 +68141,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -69113,7 +68986,6 @@
 	pixel_y = -2
 	},
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/structure/table/reinforced,
@@ -69859,7 +69731,6 @@
 /area/science/mixing)
 "cwj" = (
 /obj/item/device/assembly/signaler{
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /obj/item/device/assembly/signaler{
@@ -69918,9 +69789,7 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/timer{
-	pixel_x = 0
-	},
+/obj/item/device/assembly/timer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/whitepurple/side{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -70753,7 +70622,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Toxins Lab APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable/orange{
@@ -71663,7 +71531,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/red/side{
@@ -72205,7 +72072,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "RnD Server APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/disposalpipe/segment{
@@ -72505,7 +72371,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Research Director's Office APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable/orange{
@@ -73159,7 +73024,6 @@
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel{
@@ -73349,7 +73213,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Testing Lab APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable/orange{
@@ -73461,7 +73324,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "South-Eastern External Waste Belt APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -73513,7 +73375,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "South-Western External Waste Belt APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/open/floor/plating,
@@ -73904,7 +73765,6 @@
 	},
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -74602,7 +74462,6 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/sign/poster/random{
 	name = "random official poster";
-	pixel_x = 0;
 	pixel_y = -32;
 	random_basetype = /obj/structure/sign/poster/official
 	},
@@ -78442,7 +78301,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Asteroid Maintence APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -78943,7 +78801,6 @@
 /obj/structure/sign/poster/random{
 	name = "random contraband poster";
 	pixel_x = -32;
-	pixel_y = 0;
 	random_basetype = /obj/structure/sign/poster/contraband
 	},
 /obj/item/clothing/head/sombrero,
@@ -79387,7 +79244,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Theatre APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -79920,7 +79776,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Morgue APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/table,
@@ -81148,7 +81003,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Toxins Storage APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable/orange{
@@ -82924,9 +82778,7 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/disposal/incinerator)
 "cVu" = (
-/obj/structure/sign/fire{
-	pixel_x = 0
-	},
+/obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "cVv" = (
@@ -83185,7 +83037,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security Transfer Range APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -85261,7 +85112,6 @@
 /area/shuttle/escape)
 "cZZ" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/black,
@@ -85272,7 +85122,6 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -85556,7 +85405,6 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel/neutral,
@@ -85626,7 +85474,6 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel,
@@ -85972,7 +85819,6 @@
 "dbJ" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/whiteblue/side,
@@ -85990,7 +85836,6 @@
 /area/shuttle/escape)
 "dbL" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -86180,7 +86025,6 @@
 "dcj" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -86195,7 +86039,6 @@
 /area/shuttle/escape)
 "dcm" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -86656,8 +86499,6 @@
 	c_tag = "Hydroponics South 1";
 	dir = 1;
 	network = list("SS13");
-	pixel_x = 0;
-	pixel_y = 0;
 	start_active = 1
 	},
 /turf/open/floor/plasteel/darkgreen{
@@ -86685,8 +86526,6 @@
 	c_tag = "Hydroponics South 2";
 	dir = 1;
 	network = list("SS13");
-	pixel_x = 0;
-	pixel_y = 0;
 	start_active = 1
 	},
 /turf/open/floor/plasteel/darkgreen{
@@ -87629,7 +87468,6 @@
 /obj/machinery/button/door{
 	id = "armoryaccess2";
 	name = "Armory Shutter Access";
-	pixel_x = 0;
 	pixel_y = -28;
 	req_access_txt = "3"
 	},
@@ -89906,7 +89744,6 @@
 "dlj" = (
 /obj/machinery/flasher{
 	id = "Cell 5";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/holopad,
@@ -90308,7 +90145,6 @@
 /obj/machinery/button/flasher{
 	id = "gulagshuttleflasher";
 	name = "Flash Control";
-	pixel_x = 0;
 	pixel_y = -26;
 	req_access_txt = "1"
 	},
@@ -90678,7 +90514,6 @@
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 24;
 	prison_radio = 1
 	},
@@ -90689,7 +90524,6 @@
 "dmL" = (
 /obj/machinery/flasher{
 	id = "PCell 1";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -91206,7 +91040,6 @@
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
 	name = "Prison Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 24;
 	prison_radio = 1
 	},
@@ -91217,7 +91050,6 @@
 "dnW" = (
 /obj/machinery/flasher{
 	id = "PCell 2";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -91614,7 +91446,6 @@
 "doG" = (
 /obj/machinery/flasher{
 	id = "PCell 3";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -92163,7 +91994,6 @@
 "dpL" = (
 /obj/machinery/flasher{
 	id = "PCell 4";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -92287,7 +92117,6 @@
 /obj/machinery/button/door{
 	id = "armoryaccess";
 	name = "Armory Shutter Access";
-	pixel_x = 0;
 	pixel_y = 28;
 	req_access_txt = "3"
 	},
@@ -92718,7 +92547,6 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot{
-	pixel_x = 0;
 	pixel_y = 1;
 	pixel_x = 3;
 	pixel_y = -3
@@ -92767,7 +92595,6 @@
 "dqN" = (
 /obj/machinery/flasher{
 	id = "PCell 5";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -93413,7 +93240,6 @@
 "drZ" = (
 /obj/machinery/flasher{
 	id = "PCell 6";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -95166,7 +94992,6 @@
 	id = "brigfront";
 	name = "Emergency Brig Lockdown";
 	pixel_x = -24;
-	pixel_y = 0;
 	req_access_txt = "1"
 	},
 /turf/open/floor/carpet,

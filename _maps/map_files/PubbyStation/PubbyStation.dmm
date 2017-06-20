@@ -1522,9 +1522,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "adu" = (
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	pixel_y = 0
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table,
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -3526,9 +3524,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof{
-	pixel_y = 0
-	},
+/obj/item/clothing/suit/armor/bulletproof,
 /obj/item/clothing/suit/armor/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
@@ -7325,9 +7321,7 @@
 "apD" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
+/obj/item/device/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
@@ -8047,7 +8041,6 @@
 	req_access_txt = "1"
 	},
 /obj/item/weapon/paper_bin{
-	pixel_y = 0;
 	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/pen{
@@ -12112,9 +12105,7 @@
 /area/storage/primary)
 "azT" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/lockbox/medal{
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/lockbox/medal,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
 "azU" = (
@@ -16412,9 +16403,7 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/clothing/shoes/magboots{
-	pixel_y = 0
-	},
+/obj/item/clothing/shoes/magboots,
 /obj/item/device/radio/intercom{
 	dir = 0;
 	name = "Station Intercom (General)";
@@ -16455,9 +16444,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_y = 0
-	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/jetpack/carbondioxide{
 	pixel_x = -4;
 	pixel_y = 1
@@ -20938,9 +20925,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/item/device/assembly/timer{
-	pixel_y = 0
-	},
+/obj/item/device/assembly/timer,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aSw" = (
@@ -24202,9 +24187,7 @@
 "aZD" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp/qm{
-	pixel_y = 0
-	},
+/obj/item/weapon/stamp/qm,
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Cargo Quartermaster's Office";
@@ -26217,9 +26200,7 @@
 	name = "Robotics Desk";
 	req_access_txt = "29"
 	},
-/obj/item/weapon/paper_bin{
-	pixel_y = 0
-	},
+/obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "robotics";
@@ -30128,9 +30109,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
 	},
-/obj/item/weapon/disk/tech_disk{
-	pixel_y = 0
-	},
+/obj/item/weapon/disk/tech_disk,
 /obj/item/weapon/disk/design_disk,
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -30773,9 +30752,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "bnp" = (
-/obj/machinery/disposal/bin{
-	pixel_x = 0
-	},
+/obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
@@ -36189,12 +36166,8 @@
 /obj/item/device/transfer_valve{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
-	pixel_x = 0
-	},
-/obj/item/device/transfer_valve{
-	pixel_x = 0
-	},
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve{
 	pixel_x = 5
 	},
@@ -36217,9 +36190,7 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
-/obj/item/device/assembly/timer{
-	pixel_y = 0
-	},
+/obj/item/device/assembly/timer,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -39548,9 +39519,7 @@
 /turf/open/floor/engine/n2o,
 /area/engine/atmos)
 "bFe" = (
-/obj/structure/sign/fire{
-	pixel_y = 0
-	},
+/obj/structure/sign/fire,
 /turf/closed/wall/r_wall,
 /area/science/mixing)
 "bFf" = (
@@ -40540,9 +40509,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/cloning{
-	pixel_x = 0
-	},
+/obj/item/weapon/circuitboard/computer/cloning,
 /obj/item/weapon/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
@@ -42054,9 +42021,7 @@
 	})
 "bKw" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	pixel_y = 0
-	},
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/floor/plasteel/black,
 /area/library)
 "bKx" = (

@@ -98,8 +98,7 @@
 "ap" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green{
-	layer = 3.3;
-	pixel_y = 0
+	layer = 3.3
 	},
 /turf/open/floor/holofloor{
 	icon_state = "wood";
@@ -147,12 +146,10 @@
 /obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/item/toy/snowball{
-	pixel_x = 0;
 	pixel_y = 6
 	},
 /obj/item/toy/snowball{
-	pixel_x = 5;
-	pixel_y = 0
+	pixel_x = 5
 	},
 /obj/item/toy/snowball{
 	pixel_x = -4
@@ -3064,7 +3061,6 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -3152,8 +3148,6 @@
 /obj/machinery/status_display{
 	density = 0;
 	name = "cargo display";
-	pixel_x = 0;
-	pixel_y = 0;
 	supply_display = 1
 	},
 /turf/closed/indestructible/riveted,
@@ -3251,8 +3245,7 @@
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
 	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0
+	name = "EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
 /area/centcom/supply)
@@ -3313,8 +3306,7 @@
 "jk" = (
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3472,8 +3464,7 @@
 "jA" = (
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3493,7 +3484,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -3913,8 +3903,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4004,7 +3993,6 @@
 "kK" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown,
@@ -4250,7 +4238,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/vault,
@@ -4346,8 +4333,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -4359,7 +4344,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
@@ -4475,7 +4459,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/brown{
@@ -4782,8 +4765,7 @@
 "mD" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror/magic/badmin{
 	pixel_x = 28
@@ -4844,7 +4826,6 @@
 "mJ" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/closet/crate/bin,
@@ -4858,7 +4839,6 @@
 "mK" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown{
@@ -4995,8 +4975,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5067,7 +5046,6 @@
 /area/centcom/ferry)
 "nk" = (
 /obj/machinery/status_display{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -5088,7 +5066,6 @@
 	department = "Captain's Desk";
 	departmentType = 5;
 	name = "Captain RC";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/grimy,
@@ -5108,7 +5085,6 @@
 /obj/item/weapon/pen/fourcolor,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
 	pixel_y = 32;
 	req_access_txt = "0";
 	use_power = 0
@@ -5517,7 +5493,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/vault{
@@ -5597,8 +5572,7 @@
 /obj/item/clothing/glasses/eyepatch,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/ferry)
@@ -5635,8 +5609,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen/red,
@@ -5776,7 +5749,6 @@
 /obj/item/weapon/lighter,
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
@@ -5886,7 +5858,6 @@
 "oY" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/vault{
@@ -6090,8 +6061,7 @@
 	name = "memo"
 	},
 /obj/structure/noticeboard{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
@@ -6269,7 +6239,6 @@
 	desc = "Used for watching the RD's goons and the AI's satellite from the safety of his office.";
 	name = "Research Monitor";
 	network = list("RD","Sat");
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/grimy,
@@ -6295,8 +6264,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Commander's Office APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/metal{
@@ -6564,7 +6532,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	pixel_y = 0;
 	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/green/side{
@@ -7118,7 +7085,6 @@
 	},
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -7139,7 +7105,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7337,7 +7302,6 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
-	pixel_x = 0;
 	pixel_y = -38;
 	req_access_txt = "0"
 	},
@@ -7372,7 +7336,6 @@
 "sk" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/structure/closet/crate/bin,
@@ -7415,7 +7378,6 @@
 "sp" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/vault{
@@ -7480,8 +7442,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -7522,7 +7482,6 @@
 	id = "nukeop_ready";
 	name = "mission launch control";
 	pixel_x = -26;
-	pixel_y = 0;
 	req_access_txt = "151"
 	},
 /turf/open/floor/plasteel/bar{
@@ -7809,7 +7768,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
-	pixel_x = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -8152,7 +8110,6 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
-	pixel_x = 0;
 	pixel_y = 24;
 	req_access_txt = "2"
 	},
@@ -8384,8 +8341,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_x = 0;
-	pixel_y = 0;
 	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
@@ -9350,8 +9305,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Briefing Area APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9514,8 +9468,7 @@
 /area/centcom/control)
 "xJ" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -9857,7 +9810,6 @@
 /obj/structure/closet/secure_closet/ertMed,
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
 	pixel_y = -32;
 	req_access_txt = "0";
 	use_power = 0
@@ -9962,8 +9914,7 @@
 /obj/structure/filingcabinet/medical,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9991,8 +9942,7 @@
 "yD" = (
 /obj/machinery/computer/security,
 /obj/machinery/newscaster{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -10111,8 +10061,7 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -11612,8 +11561,7 @@
 "CH" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/bar,
 /area/tdome/tdomeobserve)
@@ -11801,9 +11749,7 @@
 	},
 /area/tdome/tdomeobserve)
 "Dc" = (
-/obj/machinery/computer/security/telescreen{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen,
 /obj/structure/table/reinforced,
 /obj/machinery/light{
 	dir = 1
@@ -11921,9 +11867,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Dp" = (
-/obj/machinery/computer/security/telescreen{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12543,9 +12487,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/tdome/tdomeadmin)
 "EW" = (
-/obj/machinery/computer/security/telescreen{
-	pixel_y = 0
-	},
+/obj/machinery/computer/security/telescreen,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12560,9 +12502,7 @@
 /area/tdome/tdomeadmin)
 "EY" = (
 /obj/machinery/button/flasher{
-	id = "tdomeflash";
-	pixel_x = 0;
-	pixel_y = 0
+	id = "tdomeflash"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
@@ -12595,8 +12535,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -12742,7 +12681,6 @@
 /obj/machinery/button/door{
 	id = "thunderdomehea";
 	name = "Heavy Supply Control";
-	pixel_y = 0;
 	req_access_txt = "102"
 	},
 /obj/structure/table/reinforced,
@@ -12754,7 +12692,6 @@
 /obj/machinery/button/door{
 	id = "thunderdome";
 	name = "Main Blast Doors Control";
-	pixel_y = 0;
 	req_access_txt = "102"
 	},
 /obj/structure/table/reinforced,
@@ -12767,7 +12704,6 @@
 /obj/machinery/button/door{
 	id = "thunderdomegen";
 	name = "General Supply Control";
-	pixel_y = 0;
 	req_access_txt = "102"
 	},
 /obj/structure/table/reinforced,
@@ -12949,8 +12885,7 @@
 "FY" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = -2;
