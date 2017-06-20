@@ -165,6 +165,41 @@
 /obj/machinery/power/supermatter_shard/get_spans()
 	return list(SPAN_ROBOT)
 
+#define CRITICAL_TEMPERATURE 10000
+
+/obj/machinery/power/supermatter_shard/proc/get_status()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return SUPERMATTER_ERROR
+	var/datum/gas_mixture/air = T.return_air()
+	if(!air)
+		return SUPERMATTER_ERROR
+
+	if(get_integrity() < 5)
+		return SUPERMATTER_DELAMINATING
+
+	if(get_integrity() < 25)
+		return SUPERMATTER_EMERGENCY
+
+	if(get_integrity() < 50)
+		return SUPERMATTER_DANGER
+
+	if((get_integrity() < 100) || (air.temperature > CRITICAL_TEMPERATURE))
+		return SUPERMATTER_WARNING
+
+	if(air.temperature > (CRITICAL_TEMPERATURE * 0.8))
+		return SUPERMATTER_NOTIFY
+
+	if(power > 5)
+		return SUPERMATTER_NORMAL
+	return SUPERMATTER_INACTIVE
+
+/obj/machinery/power/supermatter_shard/proc/get_integrity()
+	var/integrity = damage / explosion_point
+	integrity = round(100 - integrity * 100)
+	integrity = integrity < 0 ? 0 : integrity
+	return integrity
+
 /obj/machinery/power/supermatter_shard/proc/explode()
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.mob_list)
