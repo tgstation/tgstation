@@ -37,10 +37,10 @@
 						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
 						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
-					imp = null
-					update_icon()
 				else
 					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
+				imp = null
+				update_icon()
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
