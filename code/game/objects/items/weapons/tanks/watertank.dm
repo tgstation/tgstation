@@ -212,6 +212,7 @@
 	safety = 0
 	max_water = 200
 	power = 8
+	force = 10
 	precision = 1
 	cooling_power = 5
 	w_class = WEIGHT_CLASS_HUGE
@@ -278,10 +279,10 @@
 		if(resin_cooldown)
 			to_chat(user, "<span class='warning'>Resin launcher is still recharging...</span>")
 			return
-		resin_cooldown = 1
+		resin_cooldown = TRUE
 		R.remove_any(100)
-		var/obj/effect/resin_container/A = new /obj/effect/resin_container(get_turf(src))
-		log_game("[user.ckey] ([user.name]) used Resin Launcher at [get_area(user)] ([user.x], [user.y], [user.z]).")
+		var/obj/effect/resin_container/A = new (get_turf(src))
+		log_game("[key_name_admin(user)] used Resin Launcher at [get_area(user)] [COORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,1)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
@@ -289,13 +290,13 @@
 		A.Smoke()
 		spawn(100)
 			if(src)
-				resin_cooldown = 0
+				resin_cooldown = FALSE
 		return
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/F = new /obj/effect/particle_effect/foam/metal/resin(get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
@@ -319,7 +320,7 @@
 	qdel(src)
 
 #undef EXTINGUISHER
-#undef resin
+#undef RESIN_LAUNCHER
 #undef RESIN_FOAM
 
 /obj/item/weapon/reagent_containers/chemtank

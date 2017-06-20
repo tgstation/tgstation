@@ -66,22 +66,24 @@
 	icon_state = "holosign_engi"
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo atmospheric fan"
-	desc = "A holographic fan that acts as a barrier for atmospheric changes."
-	icon_state = "holo_fan"
+	name = "holo firelock"
+	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
+	icon_state = "holo_firelock"
 	density = FALSE
-	anchored = 1
+	layer = ABOVE_MOB_LAYER
+	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
-	layer = ABOVE_NORMAL_TURF_LAYER
+	layer = ABOVE_MOB_LAYER
+	alpha = 150
 
-/obj/structure/holosign/barrier/atmos/New()
-	..()
-	air_update_turf(1)
+/obj/structure/holosign/barrier/atmos/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
 
 /obj/structure/holosign/barrier/atmos/Destroy()
-	CanAtmosPass = ATMOS_PASS_YES
-	air_update_turf(1)
-	return ..()
+	var/turf/T = get_turf(src)
+	. = ..()
+	T.air_update_turf(TRUE)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
