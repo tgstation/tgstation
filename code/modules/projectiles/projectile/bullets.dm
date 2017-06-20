@@ -103,7 +103,7 @@
 /obj/item/projectile/bullet/stunshot //taser slugs for shotguns, nothing special
 	name = "stunshot"
 	damage = 5
-	knockdown = 50
+	knockdown = 100
 	stutter = 5
 	jitter = 20
 	range = 7
@@ -139,16 +139,16 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
 	damage = 30
-	knockdown = 80
+	knockdown = 160
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/meteorshot/weak
 	damage = 10
-	knockdown = 40
+	knockdown = 80
 
 /obj/item/projectile/bullet/honker
 	damage = 0
-	knockdown = 30
+	knockdown = 60
 	forcedodge = 1
 	nodamage = 1
 	hitsound = 'sound/items/bikehorn.ogg'
@@ -228,7 +228,7 @@
 	icon_state = "neurotoxin"
 	damage = 5
 	damage_type = TOX
-	knockdown = 50
+	knockdown = 100
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = 0)
 	if(isalien(target))
@@ -264,7 +264,7 @@
 /obj/item/projectile/bullet/sniper
 	speed = 0		//360 alwaysscope.
 	damage = 70
-	knockdown = 50
+	knockdown = 100
 	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
@@ -276,7 +276,7 @@
 
 /obj/item/projectile/bullet/sniper/gang
 	damage = 55
-	knockdown = 10
+	knockdown = 20
 	dismemberment = 15
 	armour_penetration = 25
 
