@@ -348,3 +348,10 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/weapon/reagent_containers/glass/bottle/scalerot
+	name = "Scale rot culture bottle"
+	desc = "A small bottle. Contains Reptilian Necrotizing Dermatitis culture in synthblood medium. WARNING: KEEP AWAY FROM REPTILIAN LIFE-FORMS."
+	icon_state = "bottle3"
+	amount_per_transfer_from_this = 5
+	spawned_disease = /datum/disease/scalerot
