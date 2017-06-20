@@ -85,6 +85,7 @@
 	item_color = "bronze"
 	materials = list(MAT_METAL=1000)
 	resistance_flags = FIRE_PROOF
+	var/medaltype = "medal" //Sprite used for medalbox
 	var/commended = FALSE
 
 //Pinning medals on people
@@ -138,6 +139,7 @@
 	desc = "A silver medal."
 	icon_state = "silver"
 	item_color = "silver"
+	medaltype = "medal-silver"
 	materials = list(MAT_SILVER=1000)
 
 /obj/item/clothing/accessory/medal/silver/valor
@@ -153,6 +155,7 @@
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
 	item_color = "gold"
+	medaltype = "medal-gold"
 	materials = list(MAT_GOLD=1000)
 
 /obj/item/clothing/accessory/medal/gold/captain
@@ -169,6 +172,7 @@
 	desc = "An eccentric medal made of plasma."
 	icon_state = "plasma"
 	item_color = "plasma"
+	medaltype = "medal-plasma"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
 	materials = list(MAT_PLASMA=1000)
 
@@ -253,6 +257,23 @@
 	var/mob/living/L = user
 	if(L)
 		L.bubble_icon = initial(L.bubble_icon)
+
+////////////////
+//HA HA! NERD!//
+////////////////
+/obj/item/clothing/accessory/pocketprotector
+	name = "pocket protector"
+	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
+	icon_state = "pocketprotector"
+	item_color = "pocketprotector"
+	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector
+
+/obj/item/clothing/accessory/pocketprotector/full
+	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector/full
+
+/obj/item/clothing/accessory/pocketprotector/cosmetology
+	pockets = /obj/item/weapon/storage/internal/pocket/pocketprotector/cosmetology
+
 
 ////////////////
 //OONGA BOONGA//

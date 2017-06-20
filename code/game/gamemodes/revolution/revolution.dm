@@ -269,7 +269,7 @@
 		var/mob/living/carbon/carbon_mob = rev_mind.current
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 		carbon_mob.flash_act(1, 1)
-	rev_mind.current.Stun(5)
+	rev_mind.current.Stun(100)
 	to_chat(rev_mind.current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
 	rev_mind.current.log_message("<font color='red'>Has been converted to the revolution!</font>", INDIVIDUAL_ATTACK_LOG)
 	rev_mind.special_role = "Revolutionary"
@@ -297,7 +297,7 @@
 			message_admins("[ADMIN_LOOKUPFLW(rev_mind.current)] has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
-			rev_mind.current.Paralyse(5)
+			rev_mind.current.Unconscious(100)
 			rev_mind.current.visible_message("[rev_mind.current] looks like they just remembered their real allegiance!",\
 				"<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 		update_rev_icons_removed(rev_mind)

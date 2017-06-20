@@ -114,7 +114,7 @@
 		s.set_up(3, 1, M)
 		s.start()
 
-		M.Weaken(5)
+		M.Knockdown(100)
 
 	if(master)
 		master.receive_signal()

@@ -197,7 +197,7 @@
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
 	strip_delay = 15
-	put_on_delay = 25
+	equip_delay_other = 25
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
@@ -221,7 +221,7 @@
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
-	put_on_delay = 25
+	equip_delay_other = 25
 	resistance_flags = 0
 /*
 SEE_SELF  // can see self, no matter what
@@ -246,7 +246,7 @@ BLIND     // can't see anything
 	attack_verb = list("challenged")
 	var/transfer_prints = FALSE
 	strip_delay = 20
-	put_on_delay = 40
+	equip_delay_other = 40
 
 
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
@@ -316,7 +316,7 @@ BLIND     // can't see anything
 	body_parts_covered = NECK
 	slot_flags = SLOT_NECK
 	strip_delay = 40
-	put_on_delay = 40
+	equip_delay_other = 40
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -335,7 +335,7 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 	strip_delay = 40
-	put_on_delay = 40
+	equip_delay_other = 40
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
 
@@ -502,7 +502,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = 2
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
 
@@ -525,7 +525,7 @@ BLIND     // can't see anything
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
-	put_on_delay = 80
+	equip_delay_other = 80
 	resistance_flags = 0
 
 //Under clothing

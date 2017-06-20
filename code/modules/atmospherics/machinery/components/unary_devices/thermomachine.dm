@@ -1,7 +1,8 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
-	icon_state = "cold_map"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "freezer"
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
 	density = TRUE
@@ -9,6 +10,7 @@
 	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
+	layer = OBJ_LAYER
 
 	var/on = FALSE
 	var/min_temperature = 0
@@ -30,17 +32,18 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/micro_laser = 2,
-							/obj/item/stack/cable_coil = 1,
+							/obj/item/stack/cable_coil/one = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/machine/thermomachine/New()
-	..()
-	if(prob(50))
-		name = "Freezer (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-	else
-		name = "Heater (Machine Board)"
-		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+/obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
+	. = ..()
+	if(!build_path)
+		if(prob(50))
+			name = "Freezer (Machine Board)"
+			build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+		else
+			name = "Heater (Machine Board)"
+			build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
 	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer

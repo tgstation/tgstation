@@ -509,7 +509,7 @@
 		yieldmod = 1.3
 		mutmod = 0
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
-	
+
 	// Ambrosia Gaia produces earthsblood.
 	if(S.has_reagent("earthsblood"))
 		self_sufficiency_progress += S.get_reagent_amount("earthsblood")

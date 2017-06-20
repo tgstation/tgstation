@@ -137,6 +137,9 @@
 	if(istype(user))
 		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
 
+/obj/item/clothing/head/kitty/genuine
+	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
+
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"

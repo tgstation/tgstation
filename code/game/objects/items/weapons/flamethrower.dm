@@ -23,7 +23,7 @@
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
-	var/igniter_type = /obj/item/device/assembly/igniter 
+	var/igniter_type = /obj/item/device/assembly/igniter
 
 /obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
@@ -145,7 +145,7 @@
 	if(!status)
 		to_chat(user, "<span class='notice'>Secure the igniter first!</span>")
 		return
-	to_chat(user, "<span class='notice'>You ignite [src]!</span>")
+	to_chat(user, "<span class='notice'>You [lit ? "extinguish" : "ignite"] [src]!</span>")
 	lit = !lit
 	if(lit)
 		START_PROCESSING(SSobj, src)
@@ -222,8 +222,8 @@
 /obj/item/weapon/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AM)
-	var/obj/item/projectile/P = AM
+/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)

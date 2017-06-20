@@ -281,7 +281,7 @@
 			var/mob/living/L = O
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
-				C.slip(4,2,null,NO_SLIP_WHEN_WALKING)
+				C.slip(4,null,NO_SLIP_WHEN_WALKING)
 		else
 			wash_obj(O)
 
@@ -484,8 +484,7 @@
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
-				user.Stun(stunforce)
-				user.Weaken(stunforce)
+				user.Knockdown(stunforce)
 				user.stuttering = stunforce
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
