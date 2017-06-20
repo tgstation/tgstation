@@ -590,7 +590,8 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	//Collects persistence features
-	SSpersistence.CollectData()
+	if(mode.allow_persistence_save)
+		SSpersistence.CollectData()
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
