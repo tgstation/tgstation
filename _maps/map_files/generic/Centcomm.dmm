@@ -10,7 +10,6 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "ad" = (
-/obj/effect/landmark/transit,
 /turf/open/space,
 /area/space)
 "ae" = (
