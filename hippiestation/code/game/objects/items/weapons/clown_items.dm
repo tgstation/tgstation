@@ -1,3 +1,5 @@
+#define HORN_BRAIN_DAMAGE 10
+
 /obj/item/weapon/bikehorn/golden/retardhorn
 	origin_tech = "engineering=4;syndicate=3" //Science can uncover if this is a regular bike horn or not using science goggles.
 
@@ -19,4 +21,7 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 					continue
-			M.adjustBrainLoss(10)
+			M.adjustBrainLoss(HORN_BRAIN_DAMAGE)
+			log_admin("[key_name(user)] dealt brain damage to [key_name(M)] with the Extra annoying bike horn")
+
+#undef HORN_BRAIN_DAMAGE
