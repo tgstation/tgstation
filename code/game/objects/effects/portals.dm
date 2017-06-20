@@ -22,7 +22,7 @@
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
-	var/atmos_link = FALSE			//Link source/destination atmos.
+	var/atmos_link = TRUE		//Link source/destination atmos.
 	var/turf/open/atmos_source		//Atmos link source
 	var/turf/open/atmos_destination	//Atmos link destination
 
