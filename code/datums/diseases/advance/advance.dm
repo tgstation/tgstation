@@ -194,10 +194,8 @@
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2,3)
+			if(2 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER
-			if(4 to INFINITY)
-				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(Clamp(2 ** (properties["transmittable"] - symptoms.len), BLOOD, AIRBORNE))
