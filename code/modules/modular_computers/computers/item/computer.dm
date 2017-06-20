@@ -43,6 +43,10 @@
 
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
+	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
+	var/light_on = FALSE						//If that light is enabled
+	var/comp_light_luminosity = 3				//The brightness of that light
+	var/comp_light_color = "#FFFFFF"			//The color of that light
 
 
 
