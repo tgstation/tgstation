@@ -555,7 +555,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 25)
 		if(user.mind && user.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
-				C.slip(0,7 * power_multiplier)
+				C.slip(140 * power_multiplier)
 			cooldown = COOLDOWN_MEME
 
 	//RIGHT ROUND

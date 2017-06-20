@@ -201,7 +201,7 @@
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
 	// Applies other trait effects (teleporting, etc) to the target by on_slip.
 	name = "Slippery Skin"
-	rate = 0.1
+	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
 /datum/plant_gene/trait/slip/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
@@ -209,14 +209,14 @@
 		var/obj/item/seeds/seed = G.seed
 		var/mob/living/carbon/M = target
 
-		var/stun_len = seed.potency * rate * 0.8
 		if(istype(G) && ispath(G.trash, /obj/item/weapon/grown))
 			return
+		var/stun_len = seed.potency * rate
 
 		if(!istype(G, /obj/item/weapon/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
 			stun_len /= 3
 
-		var/knockdown = min(stun_len, 7)
+		var/knockdown = min(stun_len, 140)
 
 		if(M.slip(knockdown, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
