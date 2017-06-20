@@ -450,7 +450,7 @@
 	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
 		var/datum/game_mode/nuclear/NM = SSticker.mode
-		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		NM.syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
 		NM.nuke_off_station = off_station
 
 	SSticker.station_explosion_cinematic(off_station,null,src)

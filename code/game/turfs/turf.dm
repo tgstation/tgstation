@@ -168,17 +168,17 @@
 			return
 		switch(wet)
 			if(TURF_WET_WATER)
-				if(!M.slip(0, 3, null, NO_SLIP_WHEN_WALKING))
+				if(!M.slip(60, null, NO_SLIP_WHEN_WALKING))
 					M.inertia_dir = 0
 			if(TURF_WET_LUBE)
-				if(M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP)))
+				if(M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP)))
 					M.confused = max(M.confused, 8)
 			if(TURF_WET_ICE)
-				M.slip(0, 6, null, (SLIDE|GALOSHES_DONT_HELP))
+				M.slip(120, null, (SLIDE|GALOSHES_DONT_HELP))
 			if(TURF_WET_PERMAFROST)
-				M.slip(0, 6, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
+				M.slip(120, null, (SLIDE_ICE|GALOSHES_DONT_HELP))
 			if(TURF_WET_SLIDE)
-				M.slip(0, 4, null, (SLIDE|GALOSHES_DONT_HELP))
+				M.slip(80, null, (SLIDE|GALOSHES_DONT_HELP))
 	//melting
 	if(isobj(AM) && air && air.temperature > T0C)
 		var/obj/O = AM
@@ -293,7 +293,7 @@
 		if(M==U)
 			continue//Will not harm U. Since null != M, can be excluded to kill everyone.
 		M.adjustBruteLoss(damage)
-		M.Paralyse(damage/5)
+		M.Unconscious(damage * 4)
 	for(var/obj/mecha/M in src)
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 

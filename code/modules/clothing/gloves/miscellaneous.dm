@@ -7,7 +7,7 @@
 	item_color = null	//So they don't wash.
 	transfer_prints = TRUE
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 
@@ -48,7 +48,7 @@
 	item_color = null	//So they don't wash.
 	transfer_prints = TRUE
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

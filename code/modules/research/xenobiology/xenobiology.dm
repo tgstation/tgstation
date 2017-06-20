@@ -401,10 +401,10 @@
 
 	if(L.gender == MALE)
 		L.gender = FEMALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 	else
 		L.gender = MALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
 	qdel(src)
 
@@ -577,7 +577,7 @@
 				var/mob/living/M = A
 				if(M in immune)
 					continue
-				M.Stun(10, 1, 1)
+				M.Stun(200, 1, 1)
 				M.anchored = 1
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
@@ -607,7 +607,7 @@
 
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.AdjustStunned(-10, 1, 1)
+	M.AdjustStun(-200, 1, 1)
 	M.anchored = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M

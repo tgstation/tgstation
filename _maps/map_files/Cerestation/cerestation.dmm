@@ -37689,7 +37689,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
 	frequency = 1441;
-	id = null
+	id = null;
+	volume_rate = 200
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)

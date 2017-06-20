@@ -74,7 +74,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Weaken(2)
+				C.Knockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..()
@@ -221,9 +221,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 	holder.remove_reagent("flash_powder", created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
@@ -238,9 +238,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
@@ -296,7 +296,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -308,7 +308,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"

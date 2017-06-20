@@ -35,7 +35,7 @@
 							cooldown(G)
 						if(2)
 							new /obj/item/device/gangtool/soldier(M)
-							M.Paralyse(5)
+							M.Unconscious(100)
 							cooldown(G)
 						if(1)
 							to_chat(user, "<span class='warning'>This mind is resistant to recruitment!</span>")

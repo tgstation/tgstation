@@ -5,7 +5,7 @@
 	if(target.check_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind their back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(2)
+		user.Stun(40)
 		return TRUE
 
 
@@ -60,7 +60,7 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
-/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
@@ -84,7 +84,7 @@
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Knockdown(60 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, "head")
@@ -105,12 +105,12 @@
 		if(cooldown <= world.time)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 					return
 				if(check_martial_counter(H, user))
 					return
 			playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
-			target.Weaken(3)
+			target.Knockdown(60)
 			add_logs(user, target, "stunned", src)
 			src.add_fingerprint(user)
 			target.visible_message("<span class ='danger'>[user] has knocked down [target] with [src]!</span>", \
@@ -185,6 +185,7 @@
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 	origin_tech = "combat=7;materials=6"
+	force_string = "INFINITE"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
