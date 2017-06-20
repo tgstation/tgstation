@@ -97,10 +97,8 @@
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
+//this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(stun)
-		AdjustStun(-20, 1, 1)
 	if(knockdown)
 		AdjustKnockdown(-20, 1, 1)
 	if(unconscious)

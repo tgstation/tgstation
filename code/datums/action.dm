@@ -73,7 +73,8 @@
 		if(owner.restrained())
 			return 0
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.stun || owner.knockdown)
+		var/mob/living/L = owner
+		if(owner.knockdown || (istype(L) && L.IsStun()))
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)

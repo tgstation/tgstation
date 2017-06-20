@@ -108,7 +108,7 @@
 	if(crit_fail)
 		return
 
-	if(owner.stun > STUN_CHECK_AMOUNT)
+	if(owner.AmountStun() > STUN_SET_AMOUNT)
 		owner.SetStun(STUN_SET_AMOUNT)
 	if(owner.knockdown > STUN_CHECK_AMOUNT)
 		owner.SetKnockdown(STUN_SET_AMOUNT)

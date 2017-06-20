@@ -237,7 +237,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || unconscious || stun || knockdown || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || unconscious || IsStun() || knockdown || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 /mob/living/proc/InCritical()
@@ -931,3 +931,42 @@
 
 /mob/living/can_be_pulled()
 	return ..() && !(buckled && buckled.buckle_prevents_pull)
+
+//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
+//Robots, animals and brains have their own version so don't worry about them
+/mob/living/proc/update_canmove()
+	var/ko = knockdown || unconscious || stat || (status_flags & FAKEDEATH)
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/buckle_lying = !(buckled && !buckled.buckle_lying)
+	var/has_legs = get_num_legs()
+	var/has_arms = get_num_arms()
+	var/ignore_legs = get_leg_ignore()
+	if(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || chokehold)
+		drop_all_held_items()
+		unset_machine()
+		if(pulling)
+			stop_pulling()
+	else if(has_legs || ignore_legs)
+		lying = 0
+
+	if(buckled)
+		lying = 90*buckle_lying
+	else if(!lying)
+		if(resting)
+			fall()
+		else if(ko || (!has_legs && !ignore_legs) || chokehold)
+			fall(forced = 1)
+	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	density = !lying
+	if(lying)
+		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
+	else
+		if(layer == LYING_MOB_LAYER)
+			layer = initial(layer)
+	update_transform()
+	if(!lying && lying_prev)
+		if(client)
+			client.move_delay = world.time + movement_delay()
+	lying_prev = lying
+	return canmove

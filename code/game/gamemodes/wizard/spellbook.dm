@@ -838,10 +838,10 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
-/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(40)
+	user.Stun(40, ignore_canstun = TRUE)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock

@@ -15,7 +15,7 @@
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return
 
-	if(stat || lockcharge || knockdown || stun || unconscious)
+	if(stat || lockcharge || knockdown || IsStun() || unconscious)
 		return
 
 	var/list/modifiers = params2list(params)
