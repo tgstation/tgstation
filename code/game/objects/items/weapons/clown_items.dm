@@ -109,7 +109,6 @@
 	var/next_usable = 0
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/cooldowntime = 20
-	force_string = "HONK!"
 
 /obj/item/weapon/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -139,7 +138,6 @@
 	honksound = 'sound/items/airhorn2.ogg'
 	cooldowntime = 50
 	origin_tech = "materials=4;engineering=4"
-	force_string = "HOOOOOOOONK!"
 
 /obj/item/weapon/bikehorn/golden
 	name = "golden bike horn"
