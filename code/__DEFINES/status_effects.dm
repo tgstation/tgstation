@@ -30,7 +30,7 @@
 // DEBUFFS //
 /////////////
 
-#define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is asleep
+#define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is stunned
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
