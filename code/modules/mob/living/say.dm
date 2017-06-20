@@ -108,7 +108,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
 
+	var/in_full_critical = InFullCritical()
+		
 	if(in_critical)
+		if(!in_full_critical && !message_mode)
+			message_mode = MODE_WHISPER
 		if(!(crit_allowed_modes[message_mode]))
 			return
 	else if(stat == UNCONSCIOUS)
@@ -149,7 +153,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		message_range = 1
 		spans |= SPAN_ITALICS
 		log_whisper("[src.name]/[src.key] : [message]")
-		if(InFullCritical())
+		if(in_full_critical)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)
