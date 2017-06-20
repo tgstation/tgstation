@@ -539,11 +539,12 @@
 	throwforce_on = 20
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cleaving_saw"
+	icon_state_on = "cleaving_saw"
 	slot_flags = SLOT_BELT
 	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	hitsound_on = 'sound/weapons/slice.ogg'
+	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = IS_SHARP
 	var/transform_cooldown
@@ -552,7 +553,7 @@
 
 /obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for very rapid consecutive attacks"].</span>")
+	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].</span>")
 
 /obj/item/weapon/melee/transforming/cleaving_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -577,7 +578,7 @@
 		if(active)
 			to_chat(user, "<span class='notice'>You open [src]. It will now cleave enemies in a wide arc.</span>")
 		else
-			to_chat(user, "<span class='notice'>You close [src]. It will now attack rapidly.</span>")
+			to_chat(user, "<span class='notice'>You close [src]. It will now attack rapidly and cause beastly enemies to bleed.</span>")
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/weapon/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
@@ -586,31 +587,43 @@
 		user.take_bodypart_damage(10)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+	..()
 	if(!active)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
-	..()
 
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		var/beast_bonus_active = FALSE
 		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
-			force += beast_force_bonus //we do bonus damage against beastly creatures
-			beast_bonus_active = TRUE
+			var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+			if(!active)
+				if(!B)
+					target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+			else
+				force += beast_force_bonus //we do bonus damage against beastly creatures
+				beast_bonus_active = TRUE
+			if(B)
+				B.add_bleed(B.bleed_buildup)
 		..()
 		if(beast_bonus_active)
 			force -= beast_force_bonus
 		return
 	var/turf/target_turf = get_turf(target)
-	var/list/valid_swipe_turfs = RANGE_TURFS(1, target_turf)
 	var/turf/user_turf = get_turf(user)
-	valid_swipe_turfs &= RANGE_TURFS(1, user_turf) //create a list of turfs to swipe in
-	valid_swipe_turfs -= user_turf
+	var/dir_to_target = get_dir(user_turf, target_turf)
 	swiping = TRUE
-	for(var/t in valid_swipe_turfs)
-		var/turf/T = t
-		for(var/mob/living/L in T)
-			if(user.Adjacent(L) && L.density) //then slash everything we can reach
-				melee_attack_chain(user, L)
+	if(dir_to_target in GLOB.cardinal)
+		for(var/i in 1 to 5)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, 135 - (45 * i)))
+			for(var/mob/living/L in T)
+				if(user.Adjacent(L) && L.density) //slash everything we can reach
+					melee_attack_chain(user, L)
+	else
+		for(var/i in 1 to 3)
+			var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
+			for(var/mob/living/L in T)
+				if(user.Adjacent(L) && L.density)
+					melee_attack_chain(user, L)
 	swiping = FALSE
 
 //Dragon
