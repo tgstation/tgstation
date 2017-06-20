@@ -163,6 +163,9 @@
 		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(H.ckey == "Lzimann")
+		purrbation_apply(H)
+
 	if(visualsOnly)
 		return
 
