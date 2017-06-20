@@ -81,7 +81,8 @@
 	elements.Cut()
 
 /datum/beam/Destroy()
-	Reset()
+	if(!finished)
+		End(destroy_self = FALSE)
 	target = null
 	origin = null
 	return ..()
