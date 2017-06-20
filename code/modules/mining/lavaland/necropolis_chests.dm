@@ -549,7 +549,7 @@
 	sharpness = IS_SHARP
 	var/transform_cooldown
 	var/swiping = FALSE
-	var/beast_force_bonus = 25
+	var/beast_force_bonus = 30
 
 /obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
@@ -570,8 +570,9 @@
 			add_overlay("cleaving_saw_open")
 		else
 			cut_overlays()
-		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5)
+		var/cooldown_time = CLICK_CD_MELEE * 0.75
+		transform_cooldown = world.time + cooldown_time
+		user.changeNext_move(cooldown_time * 0.5)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
@@ -608,22 +609,14 @@
 		if(beast_bonus_active)
 			force -= beast_force_bonus
 		return
-	var/turf/target_turf = get_turf(target)
 	var/turf/user_turf = get_turf(user)
-	var/dir_to_target = get_dir(user_turf, target_turf)
+	var/dir_to_target = get_dir(user_turf, get_turf(target))
 	swiping = TRUE
-	if(dir_to_target in GLOB.cardinal)
-		for(var/i in 1 to 5)
-			var/turf/T = get_step(user_turf, turn(dir_to_target, 135 - (45 * i)))
-			for(var/mob/living/L in T)
-				if(user.Adjacent(L) && L.density) //slash everything we can reach
-					melee_attack_chain(user, L)
-	else
-		for(var/i in 1 to 3)
-			var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
-			for(var/mob/living/L in T)
-				if(user.Adjacent(L) && L.density)
-					melee_attack_chain(user, L)
+	for(var/i in 1 to 3)
+		var/turf/T = get_step(user_turf, turn(dir_to_target, 90 - (45 * i)))
+		for(var/mob/living/L in T)
+			if(user.Adjacent(L) && L.density)
+				melee_attack_chain(user, L)
 	swiping = FALSE
 
 //Dragon
