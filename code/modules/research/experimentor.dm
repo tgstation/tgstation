@@ -16,7 +16,8 @@
 
 #define FAIL 8
 /obj/machinery/r_n_d/experimentor
-	name = "E.X.P.E.R.I-MENTOR"
+	name = "\improper E.X.P.E.R.I-MENTOR"
+	desc = "A \"replacement\" for the deconstructive analyzer with a slight tendency to catastrophically fail."
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
 	density = 1
