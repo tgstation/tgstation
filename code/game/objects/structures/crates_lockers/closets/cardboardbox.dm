@@ -20,8 +20,7 @@
 	var/egged = 0
 
 /obj/structure/closet/cardboard/relaymove(mob/user, direction)
-	var/mob/living/L = user
-	if(opened || move_delay || user.stat || (istype(L) && L.IsStun()) || user.knockdown || user.unconscious || !isturf(loc) || !has_gravity(loc))
+	if(opened || move_delay || user.stat || IsStun() || user.knockdown || user.unconscious || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = 1
 	if(step(src, direction))

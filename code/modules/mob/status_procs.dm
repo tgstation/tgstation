@@ -7,13 +7,16 @@
 
 /////////////////////////////////// STUN ////////////////////////////////////
 
-/mob/living/proc/IsStun() //If we're stunned
+/mob/proc/IsStun() //non-living mobs shouldn't be stunned
+	return FALSE
+
+/mob/living/IsStun() //If we're stunned
 	return has_status_effect(STATUS_EFFECT_STUN)
 
 /mob/living/proc/AmountStun() //How many deciseconds remain in our stun
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
-		return world.time - S.duration
+		return S.duration - world.time
 	return 0
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
@@ -122,7 +125,7 @@
 /mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
-		return world.time - S.duration
+		return S.duration - world.time
 	return 0
 
 /mob/living/proc/Sleeping(amount, updating = TRUE) //Can't go below remaining duration
