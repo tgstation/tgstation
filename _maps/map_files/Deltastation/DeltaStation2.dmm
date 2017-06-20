@@ -35630,7 +35630,7 @@
 	},
 /obj/machinery/requests_console{
 	department = "Hydroponics";
-	departmentType = 0;
+	departmentType = 2;
 	name = "Hydroponics RC";
 	pixel_x = 32;
 	pixel_y = -32
