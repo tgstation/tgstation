@@ -1,0 +1,5 @@
+author: "Tacolizard"
+delete-after: True
+changes: 
+  - rscadd: "Some items now have custom force strings in their tooltips."
+  - bugfix: "items with no force can still use a custom force string."
