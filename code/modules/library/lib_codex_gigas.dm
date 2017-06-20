@@ -91,8 +91,6 @@
 			currentSection = SYLLABLE
 	else if(GLOB.devil_suffix.Find(action))
 		currentSection = SUFFIX
-	else
-		to_chat(world, "Codex Gigas failure [action]")
 	return currentSection != oldSection
 
 /obj/item/weapon/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
