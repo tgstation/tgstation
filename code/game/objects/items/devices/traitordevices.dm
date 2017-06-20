@@ -76,7 +76,7 @@ effective or pretty fucking useless.
 	var/stealth = FALSE
 
 /obj/item/device/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
-	if(!stealth || used)
+	if(!stealth || (stealth && used))
 		..()
 	if(!irradiate)
 		return
