@@ -80,12 +80,11 @@
 /obj/item/weapon/dash/energy_katana/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
 		return ..()
-	else
-		if(proximity_flag && (isobj(target) || issilicon(target)))
-			spark_system.start()
-			playsound(user, "sparks", 50, 1)
-			playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
-			target.emag_act(user)
+	if(proximity_flag && (isobj(target) || issilicon(target)))
+		spark_system.start()
+		playsound(user, "sparks", 50, 1)
+		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
+		target.emag_act(user)
 
 
 //If we hit the Ninja who owns this Katana, they catch it.
