@@ -73,9 +73,11 @@ effective or pretty fucking useless.
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
+	var/stealth = FALSE
 
 /obj/item/device/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
-	..()
+	if(!stealth || (stealth && !irradiate))
+		..()
 	if(!irradiate)
 		return
 	if(!used)
@@ -104,8 +106,9 @@ effective or pretty fucking useless.
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 
-	var/cooldown = round(max(10, (intensity*5 - wavelength/4)))
+	var/cooldown = round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 	var/dat = "Irradiation: <A href='?src=\ref[src];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
+	dat += "Stealth Mode [NOTE: Deactivates automatically while Irradiation is off]: <A href='?src=\ref[src];stealthy=1'>[stealth ? "On" : "Off"]</A><br>"
 	dat += "Scan Mode: <a href='?src=\ref[src];mode=1'>"
 	if(!scanmode)
 		dat += "Scan Health"
@@ -139,6 +142,9 @@ effective or pretty fucking useless.
 	usr.set_machine(src)
 	if(href_list["rad"])
 		irradiate = !irradiate
+	
+	else if(href_list["stealthy"])
+		stealth = !stealth
 
 	else if(href_list["mode"])
 		scanmode += 1
