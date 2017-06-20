@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - bugfix: "The display cases in luxury shelter capsules will no longer spawn unobtainable, abstract offhand objects."
