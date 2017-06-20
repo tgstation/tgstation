@@ -10,7 +10,6 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "ad" = (
-/obj/effect/landmark/transit,
 /turf/open/space,
 /area/space)
 "ae" = (
@@ -144,6 +143,8 @@
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
 "ay" = (
+/obj/effect/holodeck_effect/mobspawner/penguin,
+/obj/effect/holodeck_effect/mobspawner/penguin,
 /obj/item/toy/snowball{
 	pixel_x = 0;
 	pixel_y = 6
@@ -302,6 +303,7 @@
 	},
 /area/holodeck/rec_center/lounge)
 "aT" = (
+/obj/effect/holodeck_effect/mobspawner/penguin_baby,
 /obj/structure/flora/tree/pine,
 /turf/open/floor/holofloor/snow,
 /area/holodeck/rec_center/winterwonderland)
@@ -5590,8 +5592,8 @@
 /obj/item/clothing/under/skirt/black,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,
-/obj/item/clothing/tie/armband/deputy,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/armband/deputy,
+/obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/neck/stripedredscarf,
@@ -11175,7 +11177,7 @@
 /obj/structure/rack,
 /obj/item/clothing/head/that,
 /obj/item/clothing/under/suit_jacket,
-/obj/item/clothing/tie/waistcoat,
+/obj/item/clothing/accessory/waistcoat,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "BI" = (
@@ -11379,7 +11381,7 @@
 /obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
-/obj/item/clothing/tie/lawyers_badge{
+/obj/item/clothing/accessory/lawyers_badge{
 	desc = "A badge of upmost glory.";
 	name = "thunderdome badge"
 	},
@@ -11400,7 +11402,7 @@
 /obj/structure/sign/goldenplaque{
 	pixel_y = 32
 	},
-/obj/item/clothing/tie/medal/silver{
+/obj/item/clothing/accessory/medal/silver{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,
@@ -11605,11 +11607,11 @@
 	name = "Thunderdome Plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/tie/medal/gold{
+/obj/item/clothing/accessory/medal/gold{
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/clothing/tie/medal/gold,
+/obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/plasteel/grimy,
 /area/tdome/tdomeobserve)
 "CF" = (
@@ -11625,7 +11627,7 @@
 	name = "Thunderdome Plaque";
 	pixel_y = -32
 	},
-/obj/item/clothing/tie/medal{
+/obj/item/clothing/accessory/medal{
 	pixel_y = 5
 	},
 /turf/open/floor/plasteel/grimy,

@@ -484,7 +484,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+	if(is_hot())
+		. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/weapon/lighter/proc/set_lit(new_lit)
 	lit = new_lit
@@ -581,7 +582,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(base_overlay)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+	if(is_hot())
+		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 
 ///////////
@@ -775,12 +777,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
-			M.Weaken(15, 1, 0)
-			qdel(src)
+			M.Knockdown(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)
 			sp.start()
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
+			qdel(src)
+			return
 
 	if(reagents && reagents.total_volume)
 		hand_reagents()

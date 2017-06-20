@@ -1,4 +1,4 @@
-//Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
+//Judicial visor: Grants the ability to smite an area and knocking down the unfaithful nearby every thirty seconds.
 /obj/item/clothing/glasses/judicial_visor
 	name = "judicial visor"
 	desc = "A strange purple-lensed visor. Looking at it inspires an odd sense of guilt."
@@ -145,7 +145,7 @@
 		return TRUE
 	return FALSE
 
-//Judicial marker: Created by the judicial visor. After three seconds, stuns any non-servants nearby and damages Nar-Sian cultists.
+//Judicial marker: Created by the judicial visor. After three seconds, knocks down any non-Servants nearby and damages Nar-Sian cultists.
 /obj/effect/clockwork/judicial_marker
 	name = "judicial marker"
 	desc = "You get the feeling that you shouldn't be standing here."
@@ -163,7 +163,7 @@
 	INVOKE_ASYNC(src, .proc/judicialblast)
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
 	sleep(16)
 	layer = ABOVE_ALL_MOB_LAYER
@@ -184,11 +184,11 @@
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-			L.Weaken(8) //stun targets for 14-16 seconds
+			L.Knockdown(160) //knocks down targets for 14-16 seconds
 		else
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-			L.Weaken(4) //stun for 6-8 seconds, but set cultist targets on fire
+			L.Knockdown(80) //knocks down for 6-8 seconds, but set cultist targets on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
 		if(iscarbon(L))

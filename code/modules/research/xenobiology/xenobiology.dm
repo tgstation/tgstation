@@ -401,10 +401,10 @@
 
 	if(L.gender == MALE)
 		L.gender = FEMALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 	else
 		L.gender = MALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
 	qdel(src)
 
@@ -561,21 +561,23 @@
 
 /obj/effect/timestop/Initialize()
 	. = ..()
-	for(var/mob/living/M in GLOB.player_list)
-		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
-			immune |= M
+	for(var/M in GLOB.living_mob_list)
+		var/mob/living/L = M
+		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in L.mind.spell_list) //People who can stop time are immune to timestop
+			immune |= L
 	timestop()
 
 
 /obj/effect/timestop/proc/timestop()
-	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
+	set waitfor = FALSE
+	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
 			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)
 					continue
-				M.Stun(10, 1, 1)
+				M.Stun(200, 1, 1)
 				M.anchored = 1
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
@@ -605,7 +607,7 @@
 
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.AdjustStunned(-10, 1, 1)
+	M.AdjustStun(-200, 1, 1)
 	M.anchored = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M

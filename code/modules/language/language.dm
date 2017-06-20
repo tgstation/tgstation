@@ -35,7 +35,7 @@
 	return TRUE
 
 /datum/language/proc/get_icon()
-	return "<img class=icon src=\ref[icon] iconstate='[icon_state]'>"
+	return "[bicon(icon(icon, icon_state))]"
 
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)

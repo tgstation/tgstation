@@ -22,7 +22,7 @@
 /obj/effect/mine/proc/triggermine(mob/victim)
 	if(triggered)
 		return
-	visible_message("<span class='danger'>[victim] sets off \icon[src] [src]!</span>")
+	visible_message("<span class='danger'>[victim] sets off [bicon(src)] [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -44,11 +44,11 @@
 
 /obj/effect/mine/stun
 	name = "stun mine"
-	var/stun_time = 8
+	var/stun_time = 80
 
 /obj/effect/mine/stun/mineEffect(mob/victim)
 	if(isliving(victim))
-		victim.Weaken(stun_time)
+		victim.Knockdown(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -128,7 +128,7 @@
 
 	spawn(0)
 		new /obj/effect/hallucination/delusion(victim.loc,victim,"demon",duration,0)
-		
+
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
 	victim.drop_all_held_items()

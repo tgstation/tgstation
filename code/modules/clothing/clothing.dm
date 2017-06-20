@@ -197,7 +197,7 @@
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
 	strip_delay = 15
-	put_on_delay = 25
+	equip_delay_other = 25
 	resistance_flags = FLAMMABLE
 
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
@@ -221,7 +221,7 @@
 	var/list/icon/current = list() //the current hud icons
 	var/vision_correction = 0 //does wearing these glasses correct some of our vision defects?
 	strip_delay = 20
-	put_on_delay = 25
+	equip_delay_other = 25
 	resistance_flags = 0
 /*
 SEE_SELF  // can see self, no matter what
@@ -246,7 +246,7 @@ BLIND     // can't see anything
 	attack_verb = list("challenged")
 	var/transfer_prints = FALSE
 	strip_delay = 20
-	put_on_delay = 40
+	equip_delay_other = 40
 
 
 /obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
@@ -278,6 +278,11 @@ BLIND     // can't see anything
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 
+/obj/item/clothing/head/Initialize()
+	. = ..()
+	if(istype(loc, /mob/living/carbon/human) && dynamic_hair_suffix)
+		var/mob/living/carbon/human/H = loc
+		H.update_hair()
 
 /obj/item/clothing/head/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -293,6 +298,16 @@ BLIND     // can't see anything
 		var/mob/M = loc
 		M.update_inv_head()
 
+/obj/item/clothing/head/equipped(mob/user, slot)
+	..()
+	if(dynamic_hair_suffix)
+		user.update_hair()
+
+/obj/item/clothing/head/dropped(mob/user)
+	..()
+	if(dynamic_hair_suffix)
+		user.update_hair()
+
 
 //Neck
 /obj/item/clothing/neck
@@ -301,7 +316,7 @@ BLIND     // can't see anything
 	body_parts_covered = NECK
 	slot_flags = SLOT_NECK
 	strip_delay = 40
-	put_on_delay = 40
+	equip_delay_other = 40
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -320,7 +335,7 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_MASK
 	strip_delay = 40
-	put_on_delay = 40
+	equip_delay_other = 40
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
 
@@ -487,7 +502,7 @@ BLIND     // can't see anything
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = 2
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = 0
 
@@ -510,7 +525,7 @@ BLIND     // can't see anything
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	strip_delay = 80
-	put_on_delay = 80
+	equip_delay_other = 80
 	resistance_flags = 0
 
 //Under clothing
@@ -529,7 +544,7 @@ BLIND     // can't see anything
 	var/can_adjust = 1
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
-	var/obj/item/clothing/tie/hastie = null
+	var/obj/item/clothing/accessory/attached_accessory
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
@@ -541,14 +556,14 @@ BLIND     // can't see anything
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
-		if(hastie)
-			var/tie_color = hastie.item_color
-			if(!tie_color)
-				tie_color = hastie.icon_state
-			var/mutable_appearance/tie = mutable_appearance('icons/mob/ties.dmi', "[tie_color]")
-			tie.alpha = hastie.alpha
-			tie.color = hastie.color
-			. += tie
+		if(attached_accessory)
+			var/accessory_color = attached_accessory.item_color
+			if(!accessory_color)
+				accessory_color = attached_accessory.icon_state
+			var/mutable_appearance/accessory = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
+			accessory.alpha = attached_accessory.alpha
+			accessory.color = attached_accessory.color
+			. += accessory
 
 /obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
@@ -587,29 +602,30 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hastie && slot != slot_hands)
-		hastie.on_uniform_equip(src, user)
+	if(attached_accessory && slot != slot_hands)
+		attached_accessory.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)
-	if(hastie)
-		hastie.on_uniform_dropped(src, user)
+	if(attached_accessory)
+		attached_accessory.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attachTie(I, user))
+	if(!attach_accessory(I, user))
 		..()
 
-/obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user, notifyAttach = 1)
-	if(istype(I, /obj/item/clothing/tie))
-		var/obj/item/clothing/tie/T = I
-		if(hastie)
+/obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
+	. = FALSE
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if(attached_accessory)
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
-			return 0
+			return
 		else
 			if(user && !user.drop_item())
 				return
-			if(!T.attach(src, user))
+			if(!A.attach(src, user))
 				return
 
 			if(user && notifyAttach)
@@ -619,21 +635,21 @@ BLIND     // can't see anything
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
-			return 1
+			return TRUE
 
-/obj/item/clothing/under/proc/removetie(mob/user)
+/obj/item/clothing/under/proc/remove_accessory(mob/user)
 	if(!isliving(user))
 		return
 	if(!can_use(user))
 		return
 
-	if(hastie)
-		var/obj/item/clothing/tie/T = hastie
-		hastie.detach(src, user)
-		if(user.put_in_hands(T))
-			to_chat(user, "<span class='notice'>You detach [T] from [src].</span>")
+	if(attached_accessory)
+		var/obj/item/clothing/accessory/A = attached_accessory
+		attached_accessory.detach(src, user)
+		if(user.put_in_hands(A))
+			to_chat(user, "<span class='notice'>You detach [A] from [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>")
+			to_chat(user, "<span class='notice'>You detach [A] from [src] and it falls on the floor.</span>")
 
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -659,8 +675,8 @@ BLIND     // can't see anything
 				to_chat(user, "Its vital tracker appears to be enabled.")
 			if(SENSOR_COORDS)
 				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
-	if(hastie)
-		to_chat(user, "\A [hastie] is attached to it.")
+	if(attached_accessory)
+		to_chat(user, "\A [attached_accessory] is attached to it.")
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
@@ -721,8 +737,8 @@ BLIND     // can't see anything
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
-		if(hastie)
-			removetie(user)
+		if(attached_accessory)
+			remove_accessory(user)
 		else
 			rolldown()
 

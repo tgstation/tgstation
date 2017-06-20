@@ -79,13 +79,8 @@
 	return INITIALIZE_HINT_NORMAL
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
-//This version shouldn't be called
 /atom/proc/LateInitialize()
-	var/static/list/warned_types = list()
-	if(!warned_types[type])
-		WARNING("Old style LateInitialize behaviour detected in [type]!")
-		warned_types[type] = TRUE
-	Initialize(FALSE)
+	return
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -249,7 +244,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "\icon[src] That's [f_name]")
+	to_chat(user, "[bicon(src)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)

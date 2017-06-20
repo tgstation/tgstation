@@ -17,7 +17,7 @@
 		var/mob/living/carbon/C = user
 		var/list/missing = C.get_missing_limbs()
 		if(missing.len)
-			playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+			playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
 			C.visible_message("<span class='warning'>[user]'s missing limbs \
 				reform, making a loud, grotesque sound!</span>",
 				"<span class='userdanger'>Your limbs regrow, making a \

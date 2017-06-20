@@ -3,7 +3,7 @@
 	a_intent = INTENT_HELP
 	melee_damage_lower = 7
 	melee_damage_upper = 7
-	attack_sound = 'sound/items/Welder.ogg'
+	attack_sound = 'sound/items/welder.ogg'
 	attacktext = "ignites"
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	range = 7

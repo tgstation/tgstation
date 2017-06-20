@@ -17,7 +17,7 @@
 
 /datum/round_event/borer/announce()
 	if(successSpawn)
-		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/AI/aliens.ogg') //Borers seem like normal xenomorphs.
+		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg') //Borers seem like normal xenomorphs.
 
 
 /datum/round_event/borer/start()

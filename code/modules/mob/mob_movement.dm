@@ -178,11 +178,17 @@
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob.contents|mob.held_items)
-		O.on_mob_move(direct, src)
-
 	return .
 
+/mob/Moved(oldLoc, dir)
+	. = ..()
+	for(var/obj/O in contents)
+		O.on_mob_move(dir, src, oldLoc)
+
+/mob/setDir(newDir)
+	. = ..()
+	for(var/obj/O in contents)
+		O.on_mob_turn(newDir, src)
 
 ///Process_Grab()
 ///Called by client/Move()

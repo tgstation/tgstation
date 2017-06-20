@@ -484,7 +484,7 @@
 	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(0, user, 25)
 	active = 1
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	return 1
 
@@ -501,7 +501,7 @@
 	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(1, user, 25)
 	active = 1
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return 1
 
@@ -519,7 +519,7 @@
 	SSblackbox.add_details("wizard_spell_learned", name)
 	summonevents()
 	times++
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return 1
 
@@ -841,7 +841,7 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(2)
+	user.Stun(40)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
@@ -853,7 +853,7 @@
 /obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Weaken(20)
+	user.Knockdown(40)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

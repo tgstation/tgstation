@@ -5,23 +5,27 @@ GLOBAL_PROTECT(reboot_mode)
 	return params[SERVICE_WORLD_PARAM]
 
 /world/proc/ExportService(command)
-	return shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
+	return RunningService() && shell("python code/modules/server_tools/nudge.py \"[command]\"") == 0
 
 /world/proc/IRCBroadcast(msg)
 	ExportService("[SERVICE_REQUEST_IRC_BROADCAST] [msg]")
+
+/world/proc/ServiceEndProcess()
+	log_world("Sending shutdown request!");
+	sleep(1)	//flush the buffers
+	ExportService(SERVICE_REQUEST_KILL_PROCESS)
 
 //called at the exact moment the world is supposed to reboot
 /world/proc/ServiceReboot()
 	switch(GLOB.reboot_mode)
 		if(REBOOT_MODE_HARD)
 			to_chat(src, "<span class='boldannounce'>Hard reboot triggered, you will automatically reconnect...</span>")
-			log_world("Sending shutdown request!");
-			sleep(1)	//flush the buffers
-			ExportService(SERVICE_REQUEST_KILL_PROCESS)
+			ServiceEndProcess()
 		if(REBOOT_MODE_SHUTDOWN)
 			to_chat(src, "<span class='boldannounce'>The server is shutting down...</span>")
-			log_world("Deleting world")
-			qdel(src)
+			ServiceEndProcess()
+		else
+			ExportService(SERVICE_REQUEST_WORLD_REBOOT)	//just let em know
 
 /world/proc/ServiceCommand(list/params)
 	var/sCK = RunningService()

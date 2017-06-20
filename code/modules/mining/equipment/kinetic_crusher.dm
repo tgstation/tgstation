@@ -102,7 +102,7 @@
 				if(!QDELETED(C))
 					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
 				L.apply_damage(80, BRUTE, blocked = def_check)
-				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
 				if(!QDELETED(C))
 					C.total_damage += 50
@@ -175,8 +175,9 @@
 		if(istype(T, denied_type) || istype(src, T.denied_type))
 			to_chat(user, "<span class='warning'>You can't seem to attach [src] to [H]. Maybe remove a few trophies?</span>")
 			return FALSE
+	if(!user.transferItemToLoc(src, H))
+		return
 	H.trophies += src
-	forceMove(H)
 	to_chat(user, "<span class='notice'>You attach [src] to [H].</span>")
 	return TRUE
 
@@ -264,7 +265,7 @@
 	for(var/mob/living/L in oview(2, user))
 		if(L.stat == DEAD)
 			continue
-		playsound(L, 'sound/magic/Fireball.ogg', 20, 1)
+		playsound(L, 'sound/magic/fireball.ogg', 20, 1)
 		new /obj/effect/temp_visual/fire(L.loc)
 		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustBruteLoss(bonus_value)

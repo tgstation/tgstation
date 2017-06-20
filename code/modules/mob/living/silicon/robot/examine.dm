@@ -1,11 +1,11 @@
 /mob/living/silicon/robot/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
 	if(desc)
 		msg += "[desc]\n"
 
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
-		msg += "It is holding \icon[act_module] \a [act_module].\n"
+		msg += "It is holding [bicon(act_module)] \a [act_module].\n"
 	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < maxHealth*0.5)
