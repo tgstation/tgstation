@@ -162,7 +162,7 @@
 	//We are now going to move
 	moving = 1
 	var/delay = mob.movement_delay()
-	if (move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
+	if (old_move_delay + (delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay + delay
 	else
 		move_delay = delay + world.time
