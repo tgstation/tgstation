@@ -323,7 +323,7 @@
 	include_user = 1
 	selection_type = "view"
 	action_icon_state = "sacredflame"
-	sound = 'sound/magic/fleshtostone.ogg'
+	sound = 'sound/magic/fireball.ogg'
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)

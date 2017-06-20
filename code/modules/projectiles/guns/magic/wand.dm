@@ -159,7 +159,7 @@
 /obj/item/weapon/gun/magic/wand/fireball
 	name = "wand of fireball"
 	desc = "This wand shoots scorching balls of fire that explode into destructive flames."
-	fire_sound = 'sound/magic/fleshtostone.ogg'
+	fire_sound = 'sound/magic/fireball.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/fireball
 	icon_state = "firewand"
 	max_charges = 8 //8, 4, 4, 3
