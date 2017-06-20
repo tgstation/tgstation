@@ -15,7 +15,6 @@
 	obj_integrity = 150
 	max_integrity = 150
 	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
-	force_string = "professional"
 
 /obj/item/weapon/storage/briefcase/PopulateContents()
 	new /obj/item/weapon/pen(src)
