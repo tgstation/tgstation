@@ -1,5 +1,64 @@
 //Largely negative status effects go here, even if they have small benificial effects
+//STUN EFFECTS
+/datum/status_effect/incapacitating
+	tick_interval = 0
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	var/update_canmove = TRUE
 
+/datum/status_effect/incapacitating/on_apply()
+	if(update_canmove)
+		owner.update_canmove()
+	update_canmove = TRUE
+	return ..()
+
+/datum/status_effect/incapacitating/on_remove()
+	if(update_canmove)
+		owner.update_canmove()
+
+//SLEEPING
+/datum/status_effect/incapacitating/sleeping
+	id = "sleeping"
+	alert_type = /obj/screen/alert/status_effect/asleep
+	var/mob/living/carbon/carbon_owner
+	var/mob/living/carbon/human/human_owner
+
+/datum/status_effect/incapacitating/sleeping/Destroy()
+	carbon_owner = null
+	human_owner = null
+	return ..()
+
+/datum/status_effect/incapacitating/sleeping/on_apply()
+	if(update_canmove)
+		owner.update_stat()
+	if(iscarbon(owner)) //to avoid repeated istypes
+		carbon_owner = owner
+	if(ishuman(owner))
+		human_owner = owner
+	return ..()
+
+/datum/status_effect/incapacitating/sleeping/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+	if(human_owner && human_owner.drunkenness)
+		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
+	if(prob(20))
+		if(carbon_owner)
+			carbon_owner.handle_dreams()
+		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
+			owner.emote("snore")
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	..()
+	if(update_canmove)
+		owner.update_stat()
+
+/obj/screen/alert/status_effect/asleep
+	name = "Asleep"
+	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
+	icon_state = "asleep"
+
+//OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1

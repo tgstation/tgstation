@@ -110,8 +110,9 @@
 
 /datum/emote/living/faint/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.SetSleeping(200)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.SetSleeping(200)
 
 /datum/emote/living/flap
 	key = "flap"
