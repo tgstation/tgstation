@@ -76,7 +76,7 @@ effective or pretty fucking useless.
 	var/stealth = FALSE
 
 /obj/item/device/healthanalyzer/rad_laser/attack(mob/living/M, mob/living/user)
-	if(!stealth || (stealth && used))
+	if(!stealth || (stealth && !irradiate))
 		..()
 	if(!irradiate)
 		return
@@ -108,7 +108,7 @@ effective or pretty fucking useless.
 
 	var/cooldown = round(max(10, (stealth*30 + intensity*5 - wavelength/4)))
 	var/dat = "Irradiation: <A href='?src=\ref[src];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
-	dat += "Stealth Mode [NOTE: Deactivates during cooldown]: <A href='?src=\ref[src];stealthy=1'>[stealth ? "On" : "Off"]</A><br>"
+	dat += "Stealth Mode [NOTE: Deactivates automatically while Irradiation is off]: <A href='?src=\ref[src];stealthy=1'>[stealth ? "On" : "Off"]</A><br>"
 	dat += "Scan Mode: <a href='?src=\ref[src];mode=1'>"
 	if(!scanmode)
 		dat += "Scan Health"
