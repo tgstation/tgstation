@@ -44,6 +44,7 @@
 
 	var/list/datum/station_goal/station_goals = list()
 
+	var/allow_persistence_save = TRUE
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
