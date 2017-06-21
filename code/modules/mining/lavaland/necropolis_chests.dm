@@ -553,7 +553,9 @@
 
 /obj/item/weapon/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].</span>")
+	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
+	Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.<br>\
+	Transforming it immediately after an attack causes the next attack to come out faster.</span>")
 
 /obj/item/weapon/melee/transforming/cleaving_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -570,9 +572,8 @@
 			add_overlay("cleaving_saw_open")
 		else
 			cut_overlays()
-		var/cooldown_time = CLICK_CD_MELEE * 0.75
-		transform_cooldown = world.time + cooldown_time
-		user.changeNext_move(cooldown_time * 0.5)
+		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.75)
+		user.changeNext_move(CLICK_CD_MELEE * 0.375)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)

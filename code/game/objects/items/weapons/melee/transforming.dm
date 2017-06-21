@@ -10,6 +10,15 @@
 	sharpness = IS_SHARP
 	var/w_class_on = WEIGHT_CLASS_BULKY
 
+/obj/item/weapon/melee/transforming/Initialize()
+	. = ..()
+	if(active)
+		if(attack_verb_on.len)
+			attack_verb = attack_verb_on
+	else
+		if(attack_verb_off.len)
+			attack_verb = attack_verb_off
+
 /obj/item/weapon/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
 		clumsy_transform_effect(user)
