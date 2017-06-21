@@ -1,5 +1,10 @@
 #define DOM_BLOCKED_SPAM_CAP 6
 #define DOM_REQUIRED_TURFS 30
+#define DOM_REQUIRED_SEPARATION 10
+#define DOM_REQUIRED_DISTANCE_FROM_CRITICAL 25
+#define DOMINATOR_FORCEFIELD_RADIUS 6
+#define DOMINATOR_TELEGRAPH_DELAY 100		//No visual effects yet but prevents instant combat dominator dropping.
+#define DOMINATOR_FORCEFIELD TRUE			//Dominators have forcefields.
 #define DOM_HULK_HITS_REQUIRED 10
 
 /obj/machinery/dominator
@@ -20,9 +25,21 @@
 	var/spam_prevention = DOM_BLOCKED_SPAM_CAP //first message is immediate
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/effect/countdown/dominator/countdown
+	var/datum/proximity_monitor/advanced/dominator_forcefield/forcefield
+	var/recalling = FALSE
+	var/free_pens = 3
 
 /obj/machinery/dominator/hulk_damage()
 	return (max_integrity - integrity_failure) / DOM_HULK_HITS_REQUIRED
+
+/proc/check_valid_location_for_dominator(turf/T)
+	if(dominator_excessive_walls(T))
+		return "<span class='boldwarning'>This area has too many walls around it!</span>"
+	if(dominator_interference_check(T))
+		return "<span class='boldwarning'>This is too close to an existing dominator!</span>"
+	if(!dominator_location_check(T))
+		return "<span class='boldwarning'>Putting a dominator near such a critical location will surely attract the attention of the Nanotrasen Emergency Response Teams!</span>" //lol
+	return TRUE
 
 /proc/dominator_excessive_walls(atom/A)
 	var/open = 0
@@ -34,16 +51,114 @@
 	else
 		return FALSE
 
+/proc/dominator_interference_check(atom/A)
+	if(!DOMINATOR_FORCEFIELD)
+		return FALSE
+	for(var/obj/machinery/dominator/DM in world)
+		if(get_dist(DM, src) < DOM_REQUIRED_SEPARATION && !(DM.stat & BROKEN))
+			return TRUE
+	return FALSE
+
+/proc/dominator_location_check(turf/T)
+	var/atom/A = SSshuttle.getDock("emergency_home")
+	var/atom/B = SSshuttle.getDock("arrivals_stationary")
+	if(!istype(A) || !istype(B))			//Well great, someone fucked up the map, whatever.
+		return TRUE
+	if(get_dist(A, T) < DOM_REQUIRED_DISTANCE_FROM_CRITICAL || get_dist(B, T) < DOM_REQUIRED_DISTANCE_FROM_CRITICAL)
+		return FALSE
+	return TRUE
+
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/Initialize()
+/obj/machinery/dominator/Initialize(datum/gang/newgang)
 	. = ..()
+	gang = newgang
 	set_light(2)
 	GLOB.poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, TRUE, src)
 	countdown = new(src)
+	if(DOMINATOR_FORCEFIELD)
+		//Someone can add a visual telegraph later I guess!
+		addtimer(CALLBACK(src, .proc/activate_forcefield), DOMINATOR_TELEGRAPH_DELAY)
+	if(!SSticker.mode.gang_points)
+		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
+
+/obj/machinery/dominator/proc/can_use(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
+		return FALSE
+	if(!(src in user.contents))
+		return FALSE
+	if(!user.mind)
+		return FALSE
+	if(gang && (user.mind in gang.bosses))	//If it's already registered, only let the gang's bosses use this
+		return TRUE
+	else if(user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
+		return TRUE
+	return FALSE
+
+/obj/machinery/dominator/proc/recall(mob/user, phase = 1)
+	switch(phase)
+		if(1)
+			if(!can_use(user))
+				return FALSE
+
+			if(SSshuttle.emergencyNoRecall)
+				return FALSE
+
+			if(recalling)
+				to_chat(usr, "<span class='warning'>Error: Recall already in progress.</span>")
+				return FALSE
+
+			if(!gang.recalls)
+				to_chat(usr, "<span class='warning'>Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
+
+			gang.gang_broadcast("[usr] is attempting to recall the emergency shuttle.")
+			recalling = TRUE
+			to_chat(loc, "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>")
+			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
+		if(1)
+			if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
+				to_chat(user, "<span class='warning'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>")
+				recalling = FALSE
+				return FALSE
+			to_chat(loc, "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
+			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
+		if(2)
+			if(!gang.dom_attempts)
+				to_chat(user, "<span class='warning'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
+				recalling = FALSE
+				return FALSE
+
+			var/turf/userturf = get_turf(user)
+			if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
+				to_chat(user, "<span class='warning'>\icon[src]Error: Device out of range of station communication arrays.</span>")
+				recalling = FALSE
+				return FALSE
+			var/datum/station_state/end_state = new /datum/station_state()
+			end_state.count()
+			if((100 * GLOB.start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
+				to_chat(user, "<span class='warning'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>")
+				recalling = FALSE
+				return FALSE
+			to_chat(loc, "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>")
+
+			addtimer(CALLBACK(src, .proc/recall, user, phase+1), rand(100,300))
+		if(3)
+			recalling = FALSE
+			log_game("[key_name(user)] has tried to recall the shuttle with a gangtool.")
+			message_admins("[key_name_admin(user)] has tried to recall the shuttle with a gangtool.", 1)
+			var/turf/userturf = get_turf(user)
+			if(userturf.z == ZLEVEL_STATION) //Check one more time that they are on station.
+				if(SSshuttle.cancelEvac(user))
+					gang.recalls -= 1
+					return TRUE
+
+			to_chat(loc, "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>")
+			return FALSE
 	update_icon()
 
 /obj/machinery/dominator/examine(mob/user)
@@ -62,6 +177,25 @@
 		to_chat(user, "<span class='notice'>System on standby.</span>")
 	to_chat(user, "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>")
 
+/obj/machinery/dominator/proc/activate_forcefield(force = FALSE)
+	if(istype(forcefield))
+		QDEL_NULL(forcefield)
+	if(!istype(gang))
+		return FALSE
+	if(stat & BROKEN)
+		return FALSE
+	if(!force && gang.is_dominating)
+		return FALSE
+	var/list/fparams = list()
+	fparams["current_range"] = DOMINATOR_FORCEFIELD_RADIUS
+	fparams["host"] = src
+	fparams["controller"] = src
+	fparams["team"] = gang
+	forcefield = make_field(/datum/proximity_monitor/advanced/dominator_forcefield, fparams)
+
+/obj/machinery/dominator/proc/deactivate_forcefield()
+	QDEL_NULL(forcefield)
+
 /obj/machinery/dominator/process()
 	..()
 	if(gang && gang.is_dominating)
@@ -73,7 +207,7 @@
 				if(spam_prevention < DOM_BLOCKED_SPAM_CAP)
 					spam_prevention++
 				else
-					gang.message_gangtools("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
+					gang.gang_broadcast("Warning: There are too many walls around your gang's dominator, its signal is being blocked!")
 					say("Error: Takeover signal is currently blocked! There are too many walls within 3 standard units of this device.")
 					spam_prevention = 0
 				return
@@ -82,10 +216,10 @@
 			if(!warned && (time_remaining < 180))
 				warned = 1
 				var/area/domloc = get_area(loc)
-				gang.message_gangtools("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!")
+				gang.gang_broadcast("Less than 3 minutes remains in hostile takeover. Defend your dominator at [domloc.map_name]!", null, "System Alert", "userdanger")
 				for(var/datum/gang/G in SSticker.mode.gangs)
 					if(G != gang)
-						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
+						G.gang_broadcast("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!", null, "System Alert", "userdanger")
 
 	if(!.)
 		STOP_PROCESSING(SSmachines, src)
@@ -129,6 +263,7 @@
 /obj/machinery/dominator/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		set_broken()
+		deactivate_forcefield()
 
 /obj/machinery/dominator/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
@@ -159,7 +294,7 @@
 			if(get_security_level() == "delta")
 				set_security_level("red")
 
-		gang.message_gangtools("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]",1,1)
+		gang.gang_broadcast("Hostile takeover cancelled: Dominator is no longer operational.[gang.dom_attempts ? " You have [gang.dom_attempts] attempt remaining." : " The station network will have likely blocked any more attempts by us."]", null, "Broadcast", "userdanger")
 
 	set_light(0)
 	operating = 0
@@ -182,14 +317,155 @@
 	..()
 
 /obj/machinery/dominator/attack_hand(mob/user)
-	if(operating || (stat & BROKEN))
-		examine(user)
+	if(!is_gangster(user))
+		return to_chat(user, "<span class='warning'>What.. is this? And what's all the mumble jumbo with .. bling?</span>")
+	if(!gang)
+		if(!is_gangboss(user))
+			return to_chat(user, "<span class='warning'>An unclaimed dominator. You should probably inform your boss about this instead of trying to make your own gang by activating it.</span>")
+		var/redpill = input(user, "Do you want to claim this dominator for your gang?", "Claim Dominator") as null|anything in list("Yes", "No")
+		if(redpill == "Yes")
+			claim_dominator(user)
 		return
+	if(!is_in_gang(user, gang.name))
+		to_chat(user, "<span class='warning'>You seem to lack the credentials to interface with another gang's equipment..</span>")
+		return
+	if(is_gangboss(user))
+		interface_boss(user)
+	else
+		interface_soldier(user)
 
+/obj/machinery/dominator/proc/get_gang_item_interface(mob/user, boss = FALSE, soldier = FALSE)
+	. = list()
+	if(boss)
+		for(var/cat in gang.boss_category_list)
+			. += "<b>[cat]</b>"
+			for(var/V in gang.boss_category_list[cat])
+				var/datum/gang_item/G = V
+				if(!G.can_see(user, gang, src))
+					continue
+
+				var/cost = G.get_cost_display(user, gang, src)
+				if(cost)
+					. += cost + " "
+
+				var/toAdd = G.get_name_display(user, gang, src)
+				if(G.can_buy(user, gang, src))
+					toAdd = "<a href='?src=\ref[src];purchase=[G.id]'>[toAdd]</a>"
+				. += toAdd
+				var/extra = G.get_extra_info(user, gang, src)
+				if(extra)
+					. += "<i>[extra]</i>"
+				. += ""
+			. += ""
+	if(soldier)
+		for(var/cat in gang.reg_category_list)
+			. += "<b>[cat]</b>"
+			for(var/V in gang.reg_category_list[cat])
+				var/datum/gang_item/G = V
+				if(!G.can_see(user, gang, src))
+					continue
+
+				var/cost = G.get_cost_display(user, gang, src)
+				if(cost)
+					. += cost + " "
+
+				var/toAdd = G.get_name_display(user, gang, src)
+				if(G.can_buy(user, gang, src))
+					toAdd = "<a href='?src=\ref[src];purchase=[G.id]'>[toAdd]</a>"
+				. += toAdd
+				var/extra = G.get_extra_info(user, gang, src)
+				if(extra)
+					. += "<i>[extra]</i>"
+				. += ""
+			. += ""
+
+/obj/machinery/dominator/proc/claim_dominator(mob/user)
+	if(!is_gangboss(user))
+		return
+	var/area/A = get_area(src)
+	var/datum/gang/new_boss_in_town = user.mind.gang_datum
+	if(new_boss_in_town.current_dominator)
+		var/area/current_area = get_area(new_boss_in_town.current_dominator.loc)
+		to_chat(user, "<span class='boldwarning'>Your gang already has an established dominator at [current_area.map_name]!</span>")
+		return
+	gang = new_boss_in_town
+	to_chat(user, "<span clas='boldnotice'>You claim [src] for your gang!</span>")
+	new_boss_in_town.gang_broadcast("[user] has designated a new dominator for your gang at [A.map_name]!")
+
+/obj/machinery/dominator/proc/get_gang_dominator_interface(takeover = TRUE, start = FALSE)
+	. = list()
+	if(takeover && gang.is_dominating)
+		. += "<center><font color='red'>Takeover In Progress:<B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
+	if(start && !gang.is_dominating)
+		. += "<center><font color='red' size='4'><B><a href='?src=\ref[src];dominate=1'>START TAKEOVER</a></B></font></center>"
+
+/obj/machinery/dominator/proc/get_gang_status(mob/user)
+	if(!gang)
+		return
+	. = list()
+	if(user)
+		var/isboss = (user.mind == gang.bosses[1])
+		if(isboss)
+			. += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B>"
+			. += "Influence available to you: <B>[gang.bosses[user]]</B>"
+		else
+			. += "Registration: <B>[gang.name] Gang Soldier</B>"
+			. += "Influence available to you: <B>[gang.gangsters[user]]</B>"
+			. += "<B>Remember! Territories you tag will generate bonus influence to you!</B>"
+	. += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B>"
+
+/obj/machinery/dominator/proc/interface_boss(mob/user)
+	var/list/dat = list()
+	dat += get_gang_dominator_interface(TRUE, TRUE)
+	dat += "<hr>"
+	dat += get_gang_status(user)
+	dat += "<hr>"
+	dat += get_gang_item_interface(user, TRUE, FALSE)
+	dat += "<hr>"
+	show_popup(user, dat.Join("<br>"))
+
+/obj/machinery/dominator/proc/interface_soldier(mob/user)
+	var/list/dat = list()
+	dat += get_gang_dominator_interface(TRUE, FALSE)
+	dat += "<hr>"
+	dat += get_gang_status(user)
+	dat += "<hr>"
+	dat += get_gang_item_interface(user, FALSE, TRUE)
+	dat += "<hr>"
+	show_popup(user, dat.Join("<br>"))
+
+/obj/machinery/dominator/proc/show_popup(mob/user, data)
+	var/list/dat = list()
+	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
+	dat += data
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangUplink v3.5", 340, 625)
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/dominator/Topic(href, href_list)
+	if(!can_use(usr))
+		return
+	add_fingerprint(usr)
+	if(!gang)			//Shouldn't happen.
+		return
+	if(href_list["purchase_soldier"])
+		var/datum/gang_item/G = gang.reg_item_list[href_list["purchase"]]
+		if(G && G.can_buy(usr, gang, src))
+			G.purchase(usr, gang, src, FALSE)
+		interface_soldier(usr)
+	if(href_list["purchase_boss"])
+		var/datum/gang_item/G = gang.boss_item_list[href_list["purchase"]]
+		if(G && G.can_buy(usr, gang, src))
+			G.purchase(usr, gang, src, FALSE)
+		interface_boss(usr)
+	if(href_list["dominate"])
+		interface_domination(usr)
+
+/obj/machinery/dominator/proc/interface_domination(mob/user)
 	var/datum/gang/tempgang
 
 	if(user.mind in SSticker.mode.get_all_gangsters())
-		tempgang = user.mind.gang_datum
+		tempgang = user.mind.gang_datum					//If someone somehow teleported into your dominator and is now dominating with your dominator using one of THEIR charges in a crowd of angry gangsters, good/bad for them..
 	else
 		examine(user)
 		return
@@ -225,7 +501,19 @@
 		set_light(3)
 		START_PROCESSING(SSmachines, src)
 
-		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
+		deactivate_forcefield()
+
+		gang.gang_broadcast("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]", null, "Automatic Broadcast", "userdanger")
 		for(var/datum/gang/G in SSticker.mode.gangs)
 			if(G != gang)
-				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
+				G.gang_broadcast("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",null, "Automatic Broadcast", "userdanger")
+
+/obj/machinery/dominator/proc/ping_gang(mob/user)
+	if(!istype(user))
+		return
+	var/message = stripped_input(user, "Send a wide-wide broadcast.", "Send Message") as null|text
+	if(!message||!can_use(user))
+		return
+	if(user.z != ZLEVEL_STATION)
+		to_chat(user, "<span class='boldwarning'>[bicon(src)]Error: Relays out of range!</span>")
+	gang.gang_broadcast(message, user)

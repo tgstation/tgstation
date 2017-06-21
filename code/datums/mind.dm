@@ -452,10 +452,7 @@
 			if(src in (G.bosses))
 				text += "<B>GANG LEADER</B>"
 				text += "|Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-				var/list/L = current.get_contents()
-				var/obj/item/device/gangtool/gangtool = locate() in L
-				if (gangtool)
-					text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
+				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>"
 
 			else
 				text += "<a href='?src=\ref[src];gangboss=\ref[G]'>gang leader</a>"
@@ -1021,8 +1018,6 @@
 				var/list/L = current.get_contents()
 				for(var/obj/item/weapon/pen/gang/pen in L)
 					qdel(pen)
-				for(var/obj/item/device/gangtool/gangtool in L)
-					qdel(gangtool)
 				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
 					qdel(SC)
 
@@ -1443,7 +1438,7 @@
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
-		
+
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))

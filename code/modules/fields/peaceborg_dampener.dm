@@ -6,15 +6,6 @@
 	setup_edge_turfs = TRUE
 	setup_field_turfs = TRUE
 	field_shape = FIELD_SHAPE_RADIUS_SQUARE
-	var/static/image/edgeturf_south = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_south")
-	var/static/image/edgeturf_north = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_north")
-	var/static/image/edgeturf_west = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_west")
-	var/static/image/edgeturf_east = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_east")
-	var/static/image/northwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest")
-	var/static/image/southwest_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest")
-	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
-	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
-	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
 	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/item/projectile/tracked
 	var/list/obj/item/projectile/staging
@@ -29,6 +20,17 @@
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
 	STOP_PROCESSING(SSfields, src)
 	return ..()
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/initialize_effects()
+	edgeturf_south = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_south", dir = SOUTH)
+	edgeturf_north = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_north", dir = NORTH)
+	edgeturf_west = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_west", dir = WEST)
+	edgeturf_east = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_east", dir = EAST)
+	northwest_corner = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_northwest", dir = NORTHWEST)
+	southwest_corner = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_southwest", dir = SOUTHWEST)
+	northeast_corner = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast", dir = NORTHEAST)
+	southeast_corner = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast", dir = SOUTHEAST)
+	generic_edge = mutable_appearance('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/process()
 	if(!istype(projector))
@@ -47,39 +49,6 @@
 				R.unbuckle_mob(L)
 				do_sparks(5, 0, L)
 	..()
-
-/datum/proximity_monitor/advanced/peaceborg_dampener/setup_edge_turf(turf/T)
-	..()
-	var/image/I = get_edgeturf_overlay(get_edgeturf_direction(T))
-	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
-	F.appearance = I.appearance
-	F.invisibility = 0
-	F.mouse_opacity = 0
-	F.layer = 5
-
-/datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/T)
-	..()
-
-/datum/proximity_monitor/advanced/peaceborg_dampener/proc/get_edgeturf_overlay(direction)
-	switch(direction)
-		if(NORTH)
-			return edgeturf_north
-		if(SOUTH)
-			return edgeturf_south
-		if(EAST)
-			return edgeturf_east
-		if(WEST)
-			return edgeturf_west
-		if(NORTHEAST)
-			return northeast_corner
-		if(NORTHWEST)
-			return northwest_corner
-		if(SOUTHEAST)
-			return southeast_corner
-		if(SOUTHWEST)
-			return southwest_corner
-		else
-			return generic_edge
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/proc/capture_projectile(obj/item/projectile/P, track_projectile = TRUE)
 	if(P in tracked)

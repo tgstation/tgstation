@@ -23,6 +23,7 @@
 
 	var/domination_timer
 	var/is_dominating
+	var/obj/machinery/dominator/current_dominator
 
 	var/boss_item_list
 	var/boss_category_list
@@ -181,20 +182,6 @@
 	var/diff = domination_timer - world.time
 	return diff / 10
 
-//////////////////////////////////////////// MESSAGING
-
-
-/datum/gang/proc/message_gangtools(message,beep=1,warning)
-	if(!gangtools.len || !message)
-		return
-	for(var/obj/item/device/gangtool/tool in gangtools)
-		var/mob/living/mob = get(tool.loc,/mob/living)
-		if(mob && mob.mind && mob.stat == CONSCIOUS)
-			if(mob.mind.gang_datum == src)
-				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[bicon(tool)] [message]</span>")
-			return
-
-
 //////////////////////////////////////////// INCOME
 
 
@@ -330,6 +317,36 @@
 	for(var/datum/mind/bawss in bosses)
 		adjust_influence(bawss, amount/bosses.len)
 		announce_to_mind(bawss, "<span class='notice'>[name] Gang: [amount/bosses.len] influence given from internal automatic restructuring.</span>")
+
+/datum/gang/proc/gang_broadcast(message, mob/user, title = null, span = "boldwarning")
+	if(isnull(title) && istype(user))
+		var/gang_rank = bosses.Find(user.mind)
+		switch(gang_rank)
+			if(0)
+				title = null
+			if(1)
+				title = "Boss"
+			if(2)
+				title = "1st Lieutenant"
+			if(3)
+				title = "2nd Lieutenant"
+			if(4)
+				title = "3rd Lieutenant"
+			else
+				title = "[gang_rank]th Lieutenant"
+	var/final = "<span class='[span]'>[name] gang[title? " [title]":""]: [message]</span>"
+	var/list/send_to = gangsters|bosses
+	for(var/datum/mind/M in send_to)
+		var/mob/living/L = M.current
+		if(!istype(L)||L.stat != CONSCIOUS)
+			to_chat(L, final)
+	for(var/mob/M in GLOB.dead_mob_list)
+		var/follow = ""
+		if(user)
+			follow = FOLLOW_LINK(M, user)
+		to_chat(M, "[follow] [final]")
+	if(user)
+		log_game("[key_name(user)] gang-broadcasted \"[final]\".")
 
 //Multiverse
 

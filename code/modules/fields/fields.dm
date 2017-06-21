@@ -39,6 +39,21 @@
 	var/list/turf/field_turfs_new = list()
 	var/list/turf/edge_turfs_new = list()
 
+	var/mutable_appearance/edgeturf_south
+	var/mutable_appearance/edgeturf_north
+	var/mutable_appearance/edgeturf_west
+	var/mutable_appearance/edgeturf_east
+	var/mutable_appearance/northwest_corner
+	var/mutable_appearance/southwest_corner
+	var/mutable_appearance/northeast_corner
+	var/mutable_appearance/southeast_corner
+	var/mutable_appearance/generic_edge
+	var/field_edge_mouse_opacity = 0
+
+/datum/proximity_monitor/advanced/New()
+	initialize_effects()
+	..()
+
 /datum/proximity_monitor/advanced/Destroy()
 	full_cleanup()
 	return ..()
@@ -52,6 +67,8 @@
 			pass_check = FALSE
 	return pass_check
 
+/datum/proximity_monitor/advanced/proc/initialize_effects()
+
 /datum/proximity_monitor/advanced/proc/check_variables()
 	var/pass = TRUE
 	if(field_shape == FIELD_NO_SHAPE)	//If you're going to make a manually updated field you shouldn't be using automatic checks so don't.
@@ -61,6 +78,40 @@
 	if(!istype(host))
 		pass = FALSE
 	return pass
+
+/datum/proximity_monitor/advanced/proc/auto_set_edgeturf_appearance(turf/T)
+	var/mutable_appearance/I = get_edgeturf_appearance(get_edgeturf_direction(T))
+	if(!I)
+		I = get_edgeturf_appearance(0)		//Get generic if snowflake is unavailable
+		if(!I)
+			return
+	var/obj/effect/abstract/proximity_checker/advanced/F = edge_turfs[T]
+	I.invisibility = 0
+	I.layer = 5
+	F.self_appearance = I
+	F.update_icon()
+	F.mouse_opacity = field_edge_mouse_opacity
+
+/datum/proximity_monitor/advanced/proc/get_edgeturf_appearance(direction)
+	switch(direction)
+		if(NORTH)
+			return edgeturf_north
+		if(SOUTH)
+			return edgeturf_south
+		if(EAST)
+			return edgeturf_east
+		if(WEST)
+			return edgeturf_west
+		if(NORTHEAST)
+			return northeast_corner
+		if(NORTHWEST)
+			return northwest_corner
+		if(SOUTHEAST)
+			return southeast_corner
+		if(SOUTHWEST)
+			return southwest_corner
+		else
+			return generic_edge
 
 /datum/proximity_monitor/advanced/process()
 	if(process_inner_turfs)
@@ -132,6 +183,12 @@
 /datum/proximity_monitor/advanced/proc/field_turf_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_turf/F)
 	return TRUE
 
+/datum/proximity_monitor/advanced/proc/field_turf_block_air(obj/effect/abstract/proximity_checker/advanced/field_turf/F)
+	return FALSE
+
+/datum/proximity_monitor/advanced/proc/field_turf_explosion_block(obj/effect/abstract/proximity_checker/advanced/field_turf/F)
+	return 0
+
 /datum/proximity_monitor/advanced/proc/field_edge_canpass(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F, turf/entering)
 	return TRUE
 
@@ -143,6 +200,12 @@
 
 /datum/proximity_monitor/advanced/proc/field_edge_uncrossed(atom/movable/AM, obj/effect/abstract/proximity_checker/advanced/field_edge/F)
 	return TRUE
+
+/datum/proximity_monitor/advanced/proc/field_edge_block_air(obj/effect/abstract/proximity_checker/advanced/field_edge/F)
+	return FALSE
+
+/datum/proximity_monitor/advanced/proc/field_edge_explosion_block(obj/effect/abstract/proximity_checker/advanced/field_edge/F)
+	return 0
 
 /datum/proximity_monitor/advanced/HandleMove()
 	var/atom/_host = host
@@ -176,6 +239,7 @@
 
 /datum/proximity_monitor/advanced/proc/setup_edge_turf(turf/T)
 	edge_turfs[T] = new /obj/effect/abstract/proximity_checker/advanced/field_edge(T, src)
+	auto_set_edgeturf_appearance(T)
 
 /datum/proximity_monitor/advanced/proc/update_new_turfs()
 	if(!istype(host))
