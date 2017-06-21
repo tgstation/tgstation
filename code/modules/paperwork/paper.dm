@@ -483,6 +483,6 @@
 /obj/item/weapon/paper/oldstat/report
 	name = "Crew Reawakening Report"
 	info = "Artifical Program's report to surviving crewmembers.<br><br>Crew were placed into cryostasis on March 10th, 2445.<br><br>Crew were awoken from cryostasis around June, 2557.<br><br> \
-	<b>SIGNIFICANT EVENTS OF NOTE</b><br>1: The primariy radioation detectors were taken offline after 112 years due to power failure, secondary radioation detectors showed no residual \
+	<b>SIGNIFICANT EVENTS OF NOTE</b><br>1: The primary radiation detectors were taken offline after 112 years due to power failure, secondary radioation detectors showed no residual \
 	radioation on station. Deduction, primariy detector was malfunctioning and was producing a radioation signal when there was none.<br><br>2: A data burst from a nearby Nanotrasen Space \
 	Station was recieved, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: Unknown invasion force has occupied Delta station."

@@ -51,16 +51,6 @@
 	icon_state = "syndicate-orange"
 	item_state = "syndicate-orange"
 
-//Ancient station space suit
-/obj/item/clothing/head/helmet/space/syndicate/orange/old
-	name = "engineering space helmet"
-	desc = "Engineering issue space suit helmet. While old and dusty, it still gets the job done."
-
-/obj/item/clothing/suit/space/syndicate/orange/old
-	name = "engineering space suit"
-	desc = "Engineering issue space suit. Age has degraded the suit making is difficult to move around in."
-	slowdown = 4
-
 //Blue syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/blue
 	name = "blue space helmet"
