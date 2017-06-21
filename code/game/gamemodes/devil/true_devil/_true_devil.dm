@@ -177,7 +177,7 @@
 			if ("disarm")
 				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
-						Paralyse(2)
+						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						add_logs(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \

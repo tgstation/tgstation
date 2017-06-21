@@ -291,7 +291,7 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Weaken(2)
+				L.Knockdown(40)
 			O.forceMove(T)
 			close()
 	else

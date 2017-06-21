@@ -467,7 +467,7 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Weaken(2)
+			target.Knockdown(40)
 			GiveHint(target)
 		else if(istype(I,/obj/item/weapon/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")

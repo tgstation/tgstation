@@ -1,6 +1,6 @@
 /obj/item/projectile/energy/electrode
 	stun = 0
-	weaken = 0
+	knockdown = 0
 	stamina = 60
 
 /obj/item/projectile/beam/disabler

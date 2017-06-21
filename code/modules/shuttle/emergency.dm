@@ -402,6 +402,16 @@
 				mode = SHUTTLE_ENDGAME
 				timer = 0
 
+/obj/docking_port/mobile/emergency/transit_failure()
+	..()
+	message_admins("Moving emergency shuttle directly to centcom dock to prevent deadlock.")
+
+	mode = SHUTTLE_ESCAPE
+	launch_status = ENDGAME_LAUNCHED
+	setTimer(SSshuttle.emergencyEscapeTime)
+	priority_announce("The Emergency Shuttle preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+
+
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	id = "pod"

@@ -14,7 +14,7 @@
 		dreams -= dream_image
 		to_chat(src, "<span class='notice'><i>... [dream_image] ...</i></span>")
 		sleep(rand(40,70))
-		if(paralysis <= 0)
+		if(unconscious <= 0)
 			dreaming = 0
 			return 0
 	dreaming = 0

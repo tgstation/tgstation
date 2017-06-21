@@ -9,7 +9,7 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
-	var/strength = 5 //How weakened targets are when flashed.
+	var/strength = 100 //How knocked down targets are when flashed.
 	var/base_state = "mflash"
 	obj_integrity = 250
 	max_integrity = 250
@@ -20,7 +20,7 @@
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
-	strength = 4
+	strength = 80
 	anchored = 0
 	base_state = "pflash"
 	density = 1
@@ -119,7 +119,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
-			L.Weaken(strength)
+			L.Knockdown(strength)
 
 	return 1
 

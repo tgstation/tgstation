@@ -108,9 +108,9 @@
 			return
 		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
-		M.SetParalysis(0)
-		M.SetStunned(0)
-		M.SetWeakened(0)
+		M.SetUnconscious(0)
+		M.SetStun(0)
+		M.SetKnockdown(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
@@ -414,8 +414,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Stun(7)
-	L.Weaken(7)
+	L.Knockdown(140)
 	L.apply_effect(STUTTER, 7)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
@@ -433,7 +432,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
-		L.Sleeping(60)
+		L.Sleeping(1200)
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1

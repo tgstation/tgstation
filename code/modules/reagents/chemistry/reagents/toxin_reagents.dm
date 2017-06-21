@@ -165,7 +165,7 @@
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
 	M.adjustOxyLoss(0.5*REM, 0)
-	M.Weaken(5, 0)
+	M.Knockdown(100, 0)
 	M.silent = max(M.silent, 5)
 	M.tod = worldtime2text()
 	..()
@@ -275,10 +275,10 @@
 			M.confused += 2
 			M.drowsyness += 2
 		if(10 to 50)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 			. = 1
 		if(51 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 			M.adjustToxLoss((current_cycle - 50)*REM, 0)
 			. = 1
 	..()
@@ -294,7 +294,7 @@
 			M.confused += 1
 			M.drowsyness += 1
 		if(20 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 	..()
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
@@ -311,9 +311,9 @@
 /datum/reagent/toxin/beer2/on_mob_life(mob/living/M)
 	switch(current_cycle)
 		if(1 to 50)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 		if(51 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 			M.adjustToxLoss((current_cycle - 50)*REM, 0)
 	return ..()
 
@@ -456,7 +456,7 @@
 		M.adjustToxLoss(1*REM, 0)
 		. = 1
 	if(current_cycle >= 18)
-		M.Sleeping(2, 0)
+		M.Sleeping(40, 0)
 		. = 1
 	..()
 
@@ -474,7 +474,7 @@
 		M.losebreath += 1
 	if(prob(8))
 		to_chat(M, "You feel horrendously weak!")
-		M.Stun(2, 0)
+		M.Stun(40, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
@@ -534,8 +534,7 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				M.Stun(3, 0)
-				M.Weaken(3, 0)
+				M.Knockdown(60, 0)
 				. = 1
 			if(2)
 				M.losebreath += 10
@@ -566,7 +565,7 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Paralyse(2, 0)
+		M.Stun(40, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4
@@ -583,7 +582,7 @@
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Sleeping(2, 0)
+		M.Sleeping(40, 0)
 	M.adjustStaminaLoss(10*REM, 0)
 	..()
 	. = 1
@@ -599,7 +598,7 @@
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/M)
 	if(current_cycle >= 22)
-		M.Sleeping(2, 0)
+		M.Sleeping(40, 0)
 	return ..()
 
 /datum/reagent/toxin/amanitin
@@ -686,7 +685,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
-		M.Weaken(3, 0)
+		M.Knockdown(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -887,7 +886,7 @@
 		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Weaken(1, 0)
+			M.Knockdown(20, 0)
 		. = 1
 	..()
 

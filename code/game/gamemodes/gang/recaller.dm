@@ -226,7 +226,7 @@
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))
 		return 0
-	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
+	if(user.restrained() || user.lying || user.stat || user.stun || user.knockdown)
 		return 0
 	if(!(src in user.contents))
 		return 0

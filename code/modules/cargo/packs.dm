@@ -1423,6 +1423,7 @@
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
+					/obj/item/weapon/pen/fountain,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/folder/blue,
@@ -1433,6 +1434,12 @@
 					/obj/item/weapon/stamp,
 					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
+
+/datum/supply_pack/misc/fountainpens
+	name = "Calligraphy Crate"
+	cost = 700
+	contains = list(/obj/item/weapon/storage/box/fountainpens)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"

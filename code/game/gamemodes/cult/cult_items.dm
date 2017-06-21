@@ -14,7 +14,7 @@
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
-		user.Weaken(5)
+		user.Knockdown(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
@@ -69,7 +69,7 @@
 	desc = "A strong bola, bound with dark magic. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	breakouttime = 45
-	weaken = 1
+	knockdown = 10
 
 
 /obj/item/clothing/head/culthood
@@ -192,7 +192,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Weaken(5)
+			user.Knockdown(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
@@ -244,7 +244,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Weaken(5)
+			user.Knockdown(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The robes squeeze at your body!</span>")
@@ -266,7 +266,7 @@
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
-		user.Weaken(5)
+		user.Knockdown(100)
 		user.blind_eyes(30)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
@@ -286,7 +286,7 @@
 /obj/item/device/shuttle_curse/attack_self(mob/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		user.Weaken(5)
+		user.Knockdown(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
 	if(curselimit > 1)

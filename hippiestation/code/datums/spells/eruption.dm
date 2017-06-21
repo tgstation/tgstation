@@ -16,7 +16,7 @@
 	sound = 'sound/magic/Fireball.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/eruption/cast(list/targets,mob/user = usr)
-	user.stunned += 2
+	user.stun += 2
 	var/list/viewarea = view(range, usr)
 	LAZYINITLIST(targets)
 	LAZYCLEARLIST(targets)
