@@ -38,9 +38,10 @@
 			if(S)
 				S.update_canmove = updating
 				qdel(S)
+		else if(S)
+			S.duration = world.time + amount
 		else
 			S = apply_status_effect(STATUS_EFFECT_STUN)
-		if(S)
 			S.duration = amount
 			S.update_canmove = updating
 		return S
@@ -145,9 +146,10 @@
 		if(S)
 			S.update_canmove = updating
 			qdel(S)
+	else if(S)
+		S.duration = world.time + amount
 	else
 		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
-	if(S)
 		S.duration = amount
 		S.update_canmove = updating
 	return S
