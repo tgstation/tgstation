@@ -41,7 +41,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
-	var/cart = "" //A place to stick cartridge menu information
 	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
@@ -286,7 +285,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
-				dat += cart
+				dat += cartridge.generate_menu()
 
 	dat += "</body></html>"
 	user << browse(dat, "window=pda;size=400x450;border=1;can_resize=1;can_minimize=0")
@@ -313,9 +312,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					mode = round(mode/10)
 					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
 						mode = 0
-					else if(mode >= 40 && mode <= 59)//Fix for cartridges. Redirects to refresh the menu.
-						cartridge.mode = mode
-						cartridge.unlock()
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
@@ -328,8 +324,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U.put_in_hands(cartridge)
 					to_chat(U, "<span class='notice'>You remove [cartridge] from [src].</span>")
 					scanmode = 0
-					if (cartridge.radio)
-						cartridge.radio.hostpda = null
+					cartridge.host_pda = null
 					cartridge = null
 					update_icon()
 
@@ -470,9 +465,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 			else//Cartridge menu linking
 				mode = text2num(href_list["choice"])
-				if(cartridge)
-					cartridge.mode = mode
-					cartridge.unlock()
+
 	else//If not in range, can't interact or not using the pda.
 		U.unset_machine()
 		U << browse(null, "window=pda")
@@ -480,7 +473,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 //EXTRA FUNCTIONS===================================
 
-	if (mode == 2||mode == 21)//To clear message overlays.
+	if (mode == 2 || mode == 21)//To clear message overlays.
 		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -705,9 +698,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
+		cartridge.host_pda = src
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
-		if(cartridge.radio)
-			cartridge.radio.hostpda = src
 		update_icon()
 
 	else if(istype(C, /obj/item/weapon/card/id))
