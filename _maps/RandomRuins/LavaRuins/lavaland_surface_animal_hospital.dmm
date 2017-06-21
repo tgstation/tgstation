@@ -172,7 +172,6 @@
 /area/lavaland/surface/outdoors)
 "ay" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
