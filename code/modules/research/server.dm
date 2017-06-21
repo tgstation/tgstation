@@ -61,7 +61,7 @@
 			heat_health = max(0, heat_health - 1)
 	if(heat_health <= 0)
 		var/loss = pick(stored_research.researched_nodes)
-		stored_research.unresearch_node(stored_research.ressearched_nodes[loss])
+		stored_research.unresearch_node(stored_research.researched_nodes[loss])
 	if(delay)
 		delay--
 	else
@@ -192,19 +192,18 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
-		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("Technology Data Reset", "Are you sure you want to reset delete this research node? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue" && usr.canUseTopic(src))
-			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
+			var/datum/techweb_node/T = temp_server.stored_research.researched_nodes[href_list["reset_tech"]]
 			if(T)
-				T.level = 1
-		temp_server.files.RefreshResearch()
+				temp_server.stored_research.unresearch_node(T)
 
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue" && usr.canUseTopic(src))
 			var/datum/design/D = temp_server.stored_research.researched_designs[href_list["reset_design"]]
 			if(D)
-				temp_server.stored_research.researched_designs -= D.id
+				temp_server.stored_research.remove_design(D)
 		temp_server.files.RefreshResearch()
 
 	updateUsrDialog()
@@ -252,12 +251,10 @@
 		if(2) //Data Management menu
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += "Known Technologies<BR>"
-			for(var/v in temp_server.files.known_tech)
-				var/datum/tech/T = temp_server.files.known_tech[v]
-				if(T.level <= 0)
-					continue
-				dat += "* [T.name] "
-				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
+			for(var/v in temp_server.stored_research.researched_nodes)
+				var/datum/techweb_node/N = temp_server.stored_research.researched_nodes[v]
+				dat += "* [N.display_name] "
+				dat += "<A href='?src=\ref[src];reset_tech=[N.id]'>\[DELETE\]</A><BR>" //FYI, these are all strings.
 			dat += "Known Designs<BR>"
 			for(var/v in temp_server.stored_research.researched_designs)
 				var/datum/design/D = temp_server.stored_research.researched_designs[v]

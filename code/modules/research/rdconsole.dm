@@ -42,7 +42,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
 	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
-	var/screen = 1.0	//Which screen is currently showing.
+	var/screen = SCICONSOLE_MENU	//Which screen is currently showing.
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
@@ -52,6 +52,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/selected_category
 	var/list/datum/design/matching_designs = list() //for the search function
 	var/disk_slot_selected = 0
+	var/datum/techweb_node/selected_node
 
 
 /proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
@@ -177,7 +178,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(t_disk)
 			t_disk.loc = src.loc
 			t_disk = null
-		screen = 1.0
+		screen = SCICONSOLE_MENU
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
@@ -217,7 +218,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(d_disk)
 			d_disk.loc = src.loc
 			d_disk = null
-		screen = 1.0
+		screen = SCICONSOLE_MENU
 
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
 		var/slot = text2num(href_list["copy_design"])
@@ -248,7 +249,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
-				screen = 1.0
+				screen = SCICONSOLE_MENU
 
 	else if(href_list["deconstruct"]) //Deconstruct the item in the destructive analyzer and update the research holder.
 		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
@@ -272,7 +273,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_destroy)
 				linked_destroy.busy = 0
 				if(!linked_destroy.loaded_item)
-					screen = 1.0
+					screen = SCICONSOLE_MENU
 					return
 
 				for(var/T in temp_tech)
@@ -301,7 +302,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(!(I in linked_destroy.component_parts))
 							qdel(I)
 							linked_destroy.icon_state = "d_analyzer"
-			screen = 1.0
+			screen = SCICONSOLE_MENU
 			use_power(250)
 			updateUsrDialog()
 
@@ -412,7 +413,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_lathe.busy = 0
 			else
 				say("Protolathe connection failed. Production halted.")
-				screen = 1.0
+				screen = SCICONSOLE_MENU
 			updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
@@ -478,7 +479,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.busy = 0
 			else
 				say("Circuit Imprinter connection failed. Production halted.")
-				screen = 1.0
+				screen = SCICONSOLE_MENU
 			updateUsrDialog()
 
 	//Protolathe Materials
@@ -567,9 +568,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(first_use)
 		SyncRDevices()
 
-	var/dat = ""
+	var/dat = list()
 	files.RefreshResearch()
-	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
+	switch(screen) //A quick check.
+		if(SCICONSOLE_NODEDESC)
+			if(!selected_node)
+				screen = SCICONSOLE_MENU
 		if(2 to 2.9)
 			if(screen == 2.3)
 				;
@@ -589,59 +593,56 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	switch(screen)
 
 		//////////////////////R&D CONSOLE SCREENS//////////////////
-		if(0.0) dat += "<div class='statusDisplay'>Updating Database....</div>"
-
-		if(0.1) dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
-
+		if(0.0)
+			dat += "<div class='statusDisplay'>Updating Database....</div>"
+		if(0.1)
+			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
 		if(0.2)
 			dat += "<div class='statusDisplay'>SYSTEM LOCKED</div>"
 			dat += "<A href='?src=\ref[src];lock=1.6'>Unlock</A>"
-
 		if(0.3)
 			dat += "<div class='statusDisplay'>Constructing Prototype. Please Wait...</div>"
-
 		if(0.4)
 			dat += "<div class='statusDisplay'>Imprinting Circuit. Please Wait...</div>"
-
-		if(1.0) //Main Menu
+		if(SCICONSOLE_MENU) //Main Menu
 			dat += "<div class='statusDisplay'>"
-			dat += "<h3>Main Menu:</h3><BR>"
-			dat += "<A href='?src=\ref[src];menu=1.1'>Current Research Levels</A><BR>"
+			dat += "<h3>Main Menu:</h3>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_RES_NODELIST'>Researched Nodes</A>"
 			if(t_disk)
-				dat += "<A href='?src=\ref[src];menu=1.2'>Disk Operations</A><BR>"
+				dat += "<A href='?src=\ref[src];menu=1.2'>Disk Operations</A>"
 			else if(d_disk)
-				dat += "<A href='?src=\ref[src];menu=1.4'>Disk Operations</A><BR>"
+				dat += "<A href='?src=\ref[src];menu=1.4'>Disk Operations</A>"
 			else
-				dat += "<span class='linkOff'>Disk Operations</span><BR>"
+				dat += "<span class='linkOff'>Disk Operations</span>"
 			if(linked_destroy)
-				dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A><BR>"
+				dat += "<A href='?src=\ref[src];menu=2.2'>Destructive Analyzer Menu</A>"
 			else
-				dat += "<span class='linkOff'>Destructive Analyzer Menu</span><BR>"
+				dat += "<span class='linkOff'>Destructive Analyzer Menu</span>"
 			if(linked_lathe)
-				dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A><BR>"
+				dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Construction Menu</A>"
 			else
-				dat += "<span class='linkOff'>Protolathe Construction Menu</span><BR>"
+				dat += "<span class='linkOff'>Protolathe Construction Menu</span>"
 			if(linked_imprinter)
-				dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A><BR>"
+				dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Construction Menu</A>"
 			else
-				dat += "<span class='linkOff'>Circuit Construction Menu</span><BR>"
+				dat += "<span class='linkOff'>Circuit Construction Menu</span>"
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings</A>"
 			dat += "</div>"
 
-		if(1.1) //Research viewer
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
-			dat += "<h3>Current Research Levels:</h3><BR><div class='statusDisplay'>"
-			for(var/v in files.known_tech)
-				var/datum/tech/T = files.known_tech[v]
-				if(T.level <= 0)
-					continue
-				dat += "[T.name]<BR>"
-				dat +=  "* Level: [T.level]<BR>"
-				dat +=  "* Summary: [T.desc]<HR>"
+		if(SCICONSOLE_RES_NODELIST) //Research viewer
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
+			dat += "<h3>Currently researched nodes:</h3><div class='statusDisplay'>"
+			for(var/v in stored_research.researched_nodes)
+				var/datum/techweb_node/N = stored_research.researched_nodes[v]
+				dat += "<A href='?src=\ref[src];view_node=\ref[N]'>[N.display_name]</A>"
 			dat += "</div>"
-
+		if(SCICONSOLE_NODEDESC)
+			dat += SCICONSOLE_MENU_HREF
+			dat += "<div><h3>[selected_node.display_name]"
+			dat += "[selected_node.description]"
+			dat += "</div>"
 		if(1.2) //Technology Disk Menu
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
 			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A><A href='?src=\ref[src];updt_tech=0'>Upload All</A><A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
 			for(var/i in 1 to t_disk.max_tech_stored)
 				dat += "<div class='statusDisplay'>"
@@ -655,19 +656,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "Empty Slot<BR>Operations: <A href='?src=\ref[src];menu=1.3;disk_slot=[i]'>Load Tech to Slot</A>"
 				dat += "</div>"
 		if(1.3) //Technology Disk submenu
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Technology to Disk:</h3><BR>"
-			for(var/v in files.known_tech)
-				var/datum/tech/T = files.known_tech[v]
-				if(T.level <= 0)
-					continue
-				dat += "[T.name]"
-				dat += "<A href='?src=\ref[src];copy_tech=[disk_slot_selected];copy_tech_ID=[T.id]'>Copy to Disk</A><BR>"
+			dat += "<A href='?src=\ref[src];copy_tech=1'>Load Technology to Disk</A><BR>"
 			dat += "</div>"
 
 		if(1.4) //Design Disk menu.
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
 			dat += "Disk Operations: <A href='?src=\ref[src];clear_design=0'>Clear Disk</A><A href='?src=\ref[src];updt_design=0'>Upload All</A><A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
 			for(var/i in 1 to d_disk.max_blueprints)
 				dat += "<div class='statusDisplay'>"
@@ -692,7 +688,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "Empty Slot<BR>Operations: <A href='?src=\ref[src];menu=1.5;disk_slot=[i]'>Load Design to Slot</A>"
 				dat += "</div>"
 		if(1.5) //Design disk submenu
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Design to Disk:</h3><BR>"
 			for(var/v in stored_research.researched_designs)
@@ -702,7 +698,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 		if(1.6) //R&D console settings
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><div class='statusDisplay'>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><div class='statusDisplay'>"
 			dat += "<h3>R&D Console Setting:</h3><BR>"
 			if(sync)
 				dat += "<A href='?src=\ref[src];sync=1'>Sync Database with Network</A><BR>"
@@ -717,7 +713,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];reset=1'>Reset R&D Database</A></div>"
 
 		if(1.7) //R&D device linkage
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.6'>Settings Menu</A><div class='statusDisplay'>"
 			dat += "<h3>R&D Console Device Linkage Menu:</h3><BR>"
 			dat += "<A href='?src=\ref[src];find_device=1'>Re-sync with Nearby Devices</A><BR><BR>"
@@ -738,15 +734,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		////////////////////DESTRUCTIVE ANALYZER SCREENS////////////////////////////
 		if(2.0)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<div class='statusDisplay'>NO DESTRUCTIVE ANALYZER LINKED TO CONSOLE</div>"
 
 		if(2.1)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<div class='statusDisplay'>No Item Loaded. Standing-by...</div>"
 
 		if(2.2)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><div class='statusDisplay'>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Deconstruction Menu</h3><BR>"
 			dat += "Name: [linked_destroy.loaded_item.name]<BR>"
 			dat += "Origin Tech:<BR>"
@@ -762,16 +758,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A>"
 			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"
 		if(2.3)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<div class='statusDisplay'>Item is neither reliable enough or broken enough to learn from.</div>"
 
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
 		if(3.0)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
 			dat += "<div class='statusDisplay'>NO PROTOLATHE LINKED TO CONSOLE</div>"
 
 		if(3.1)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A> "
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A> "
 			dat += "<A href='?src=\ref[src];menu=3.2'>Material Storage</A>"
 			dat += "<A href='?src=\ref[src];menu=3.3'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Protolathe Menu:</h3><BR>"
@@ -790,7 +786,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		//Grouping designs by categories, to improve readability
 		if(3.15)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
@@ -828,7 +824,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 		if(3.17) //Display search result
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
 			dat += "<B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]<BR>"
@@ -862,7 +858,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 		if(3.2) //Protolathe Material Storage Sub-menu
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
 			if(!linked_lathe)
@@ -878,7 +874,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 		if(3.3)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=3.1'>Protolathe Menu</A>"
 			dat += "<A href='?src=\ref[src];disposeallP=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Chemical Storage:</h3><BR><HR>"
@@ -888,11 +884,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		///////////////////CIRCUIT IMPRINTER SCREENS////////////////////
 		if(4.0)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
 			dat += "<div class='statusDisplay'>NO CIRCUIT IMPRINTER LINKED TO CONSOLE</div>"
 
 		if(4.1)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.3'>Material Storage</A>"
 			dat += "<A href='?src=\ref[src];menu=4.2'>Chemical Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Circuit Imprinter Menu:</h3><BR>"
@@ -910,7 +906,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += list_categories(linked_imprinter.categories, 4.15)
 
 		if(4.15)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><BR>"
 			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
@@ -940,7 +936,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 		if(4.17)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<div class='statusDisplay'><h3>Search results:</h3><BR>"
 			dat += "Material Amount: [linked_imprinter.materials.total_amount]<BR>"
@@ -965,7 +961,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 		if(4.2) //Circuit Imprinter Material Storage Sub-menu
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A>"
 			dat += "<A href='?src=\ref[src];disposeallI=1'>Disposal All Chemicals in Storage</A><div class='statusDisplay'>"
 			dat += "<h3>Chemical Storage:</h3><BR><HR>"
@@ -974,7 +970,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];disposeI=[R.id]'>Purge</A><BR>"
 
 		if(4.3)
-			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=4.1'>Circuit Imprinter Menu</A><div class='statusDisplay'>"
 			dat += "<h3>Material Storage:</h3><BR><HR>"
 			if(!linked_imprinter)
@@ -990,7 +986,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
-	popup.set_content(dat)
+	popup.set_content(dat.Join("<br>"))
 	popup.open()
 	return
 
