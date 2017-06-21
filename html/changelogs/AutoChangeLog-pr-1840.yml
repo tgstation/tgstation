@@ -1,4 +1,0 @@
-author: "Tortellini Tony"
-delete-after: True
-changes: 
-  - bugfix: "Fixed IPCs being invisible."
