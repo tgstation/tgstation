@@ -204,7 +204,7 @@
 			var/datum/design/D = temp_server.stored_research.researched_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.stored_research.remove_design(D)
-		temp_server.files.RefreshResearch()
+		//temp_server.files.RefreshResearch()
 
 	updateUsrDialog()
 	return

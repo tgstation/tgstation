@@ -91,7 +91,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
-	stored_research = new /datum/tech_web
+	stored_research = new /datum/techweb
 	matching_designs = list()
 	if(!id)
 		fix_noid_research_servers()
