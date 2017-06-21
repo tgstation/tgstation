@@ -53,3 +53,9 @@
 		symptom_counter = rand(symptom_delay_min, symptom_delay_max)
 		return TRUE
 
+/datum/symptom/proc/Copy()
+	var/datum/symptom/new_symp = new type
+	new_symp.name = name
+	new_symp.id = id
+	new_symp.neutered = neutered
+	return new_symp
