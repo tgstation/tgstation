@@ -191,14 +191,6 @@
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
-/obj/item/weapon/cartridge/proc/print_to_host(text, mob/user)
-	if(!host_pda || !user)
-		return
-	host_pda.cart = text
-	host_pda.attack_self(user)
-
-	return
-
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
@@ -558,8 +550,6 @@ Code:
 		usr << browse(null, "window=pda")
 		return
 
-	var/obj/item/device/pda/pda = host_pda
- 
 	switch(href_list["choice"])
 		if("Medical Records")
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
@@ -658,9 +648,9 @@ Code:
 
 		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
 
-	generate_menu(usr)
-	print_to_host(menu, usr)
-
+	if(!host_pda)
+		return
+	host_pda.attack_self(usr)
 
 
 /obj/item/weapon/cartridge/proc/bot_control()
