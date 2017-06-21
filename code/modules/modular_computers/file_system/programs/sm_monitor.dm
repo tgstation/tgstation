@@ -16,9 +16,6 @@
 	var/obj/machinery/power/supermatter_shard/active = null		// Currently selected supermatter crystal.
 
 
-
-
-
 /datum/computer_file/program/supermatter_monitor/process_tick()
 	..()
 	var/new_status = get_status()
@@ -39,8 +36,6 @@
 	active = null
 	supermatters = null
 	..()
-
-
 
 // Refreshes list of active supermatter crystals
 /datum/computer_file/program/supermatter_monitor/proc/refresh()
@@ -70,6 +65,7 @@
 		var/turf/T = get_turf(active)
 		if(!T)
 			active = null
+			refresh()
 			return
 		var/datum/gas_mixture/air = T.return_air()
 		if(!istype(air))
@@ -83,7 +79,7 @@
 		data["SM_ambientpressure"] = air.return_pressure()
 		//data["SM_EPR"] = round((air.total_moles / air.group_multiplier) / 23.1, 0.01)
 		var/list/gasdata = list()
-		var/list/relevantgas = list("o2","co2","n2","plasma","n2o")
+		var/list/relevantgas = list("o2","co2","n2","plasma","n2o","freon")
 
 
 		if(air.total_moles())
@@ -91,13 +87,15 @@
 				if(!gasid in relevantgas)
 					continue
 				gasdata.Add(list(list(
-				"name"= air.gases[gas_id][GAS_META][META_GAS_NAME],
+				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
 				"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
 
 		else
-			for(var/gasid in gaseslist)
+			for(var/gasid in air.gases)
+				if(!gasid in relevantgas)
+					continue
 				gasdata.Add(list(list(
-					"name"= gasid,
+					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
 					"amount" = 0)))
 
 		data["gases"] = gasdata
@@ -105,11 +103,12 @@
 		var/list/SMS = list()
 		for(var/obj/machinery/power/supermatter_shard/S in supermatters)
 			var/area/A = get_area(S)
-			SMS.Add(list(list(
-			"area_name" = A.name,
-			"integrity" = S.get_integrity(),
-			"uid" = S.uid
-			)))
+			if(A)
+				SMS.Add(list(list(
+				"area_name" = A.name,
+				"integrity" = S.get_integrity(),
+				"uid" = S.uid
+				)))
 
 		data["active"] = 0
 		data["supermatters"] = SMS

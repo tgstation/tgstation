@@ -7,19 +7,14 @@
 	    if(charge == max) return 'good'
 		else if(charge > (max/2)) return 'average'
 		else return 'bad'
-	    }
-      }
-    }
-
-  component.exports = {
-    data: {
-	  bigState(val,aver,max) {
+	    },
+       bigState(val,aver,max) {
 	    if(charge > max) return 'bad'
 		else if(val > aver) return 'average'
 		else return 'good'
 	    }
-      }
-    }
+	}
+  }
 </script>
 
 
