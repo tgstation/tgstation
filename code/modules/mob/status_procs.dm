@@ -20,7 +20,7 @@
 	return 0
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
-	if(status_flags & CANSTUN || ignore_canstun)
+	if((status_flags & CANSTUN) || ignore_canstun)
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(S)
 			var/remaining_duration = world.time - S.duration
@@ -32,7 +32,7 @@
 		return S
 
 /mob/living/proc/SetStun(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
-	if(status_flags & CANSTUN || ignore_canstun)
+	if((status_flags & CANSTUN) || ignore_canstun)
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(amount <= 0)
 			if(S)
@@ -46,8 +46,8 @@
 		return S
 
 /mob/living/proc/AdjustStun(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
-	if(status_flags & CANSTUN || ignore_canstun)
-		var/datum/status_effect/incapacitating/sleeping/S = IsStun()
+	if((status_flags & CANSTUN) || ignore_canstun)
+		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(S)
 			S.duration += amount
 		else if(amount > 0)
