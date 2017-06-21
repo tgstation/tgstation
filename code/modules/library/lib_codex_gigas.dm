@@ -60,7 +60,7 @@
 	inUse = FALSE
 
 /obj/item/weapon/book/codex_gigas/proc/display_devil(datum/antagonist/devil/devil, mob/reader, devilName)
-	reader << browse("Information on [devilName]<br><br><br>[GLOB.lawlorify[LORE][devil.ban]]<br>[GLOB.lawlorify[LORE][devil.bane]]<br>[GLOB.lawlorify[LORE][devil.obligation]]<br>[GLOB.lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
+	reader << browse("Information on [devilName]<br><br><br>[GLOB.lawlorify[LORE][devil.ban]]<br>[GLOB.lawlorify[LORE][devil.bane]]<br>[GLOB.lawlorify[LORE][devil.obligation]]<br>[GLOB.lawlorify[LORE][devil.banish]]<br>[devil.ascendable?"This devil may ascend given enough souls.":""]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
 /obj/item/weapon/book/codex_gigas/proc/ask_name(mob/reader)
 	ui_interact(reader)

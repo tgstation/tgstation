@@ -112,7 +112,7 @@
 
 
 /turf/open/chasm/straight_down/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 	light_range = 1.9 //slightly less range than lava
@@ -173,7 +173,7 @@
 /turf/open/chasm/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -183,4 +183,4 @@
 /turf/open/chasm/straight_down/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

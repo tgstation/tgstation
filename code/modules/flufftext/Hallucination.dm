@@ -348,7 +348,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = SCREWYHUD_CRIT
-		target.SetSleeping(160, no_alert = TRUE)
+		target.SetUnconscious(160)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
@@ -1008,7 +1008,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if("death")
 			//Fake death
 			hal_screwyhud = SCREWYHUD_DEAD
-			SetSleeping(400, no_alert = TRUE)
+			SetUnconscious(400)
 			var/area/area = get_area(src)
 			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))

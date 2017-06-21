@@ -888,8 +888,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
-	if(M.sleeping)
-		M.AdjustSleeping(-20, 0)
+	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
 	M.reagents.remove_reagent("sugar", 3)
 	..()
