@@ -188,7 +188,7 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -202,7 +202,7 @@
 /datum/mind/proc/remove_wizard()
 	if(src in SSticker.mode.wizards)
 		current.spellremove(current)
-		src.remove_antag_datum(ANTAG_DATUM_WIZARD)
+		remove_antag_datum(ANTAG_DATUM_WIZARD)
 
 /datum/mind/proc/remove_cultist()
 	if(src in SSticker.mode.cult)

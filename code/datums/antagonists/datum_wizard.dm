@@ -62,12 +62,12 @@
 		escape_objective.owner = owner
 		add_objective(escape_objective)
 
-/datum/antagonist/wizard/apply_innate_effects()
-	name_wizard()
+/datum/antagonist/wizard/apply_innate_effects(apprentice = FALSE)
 	forge_wizard_objectives()
 	var/mob/living/carbon/human/H = owner.current
-	H.equipOutfit(/datum/outfit/wizard)
+	H.equipOutfit(pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb), apprentice)
 	finalize_wizard()
+	INVOKE_ASYNC(src, name_wizard())
 	return
 
 /datum/antagonist/wizard/proc/finalize_wizard()
@@ -96,15 +96,6 @@
 	if(H.age < WIZARD_AGE_MIN)
 		H.age = WIZARD_AGE_MIN
 	H.dna.update_dna_identity()
-	return
-
-/datum/antagonist/wizard/apprentice/apply_innate_effects()
-	name_wizard()
-	forge_wizard_objectives()
-	var/mob/living/carbon/human/H = owner.current
-	var/outfit = pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb)
-	H.equipOutfit(outfit, TRUE)
-	finalize_wizard()
 	return
 
 /datum/antagonist/wizard/apprentice/name_wizard()
@@ -140,21 +131,21 @@
 		to_chat(owner, "<B>You are an apprentice of the Wizard Federation! You are bound by magic contract to serve the Federation for the rest of your immortal life.</B>")
 	switch(school)
 		if("destruction")
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/aimed/fireball)
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned powerful, destructive spells. You are able to cast magic missile and fireball.</B>")
 		if("bluespace")
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.</B>")
 		if("healing")
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
-			owner.current.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing())
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall)
+			owner.current.put_in_hands_or_del(new /obj/item/weapon/gun/magic/staff/healing)
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned livesaving survival spells. You are able to cast charge and forcewall.</B>")
 		else
-			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock)
+			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer)
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying, you have learned stealthy, robeless spells. You are able to cast knock and mindswap.</B>")
 
 /datum/antagonist/wizard/proc/add_objective(var/datum/objective/O)

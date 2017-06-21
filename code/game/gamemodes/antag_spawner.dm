@@ -74,7 +74,7 @@
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/datum/antagonist/wizard/apprentice/antag_datum = new()
+	var/datum/antagonist/wizard/apprentice/antag_datum = new
 	if(usr)
 		antag_datum.summoner = usr
 	antag_datum.school = type
