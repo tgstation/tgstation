@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/taunting_trail
 	name = "strange smoke"
 	desc = "A cloud of purple smoke."
-	clockwork_desc = "A cloud of purple smoke that confuses and weakens non-Servants that enter it."
+	clockwork_desc = "A cloud of purple smoke that confuses and knocks down non-Servants that enter it."
 	gender = PLURAL
 	max_integrity = 5
 	obj_integrity = 5
@@ -58,5 +58,5 @@
 			L.confused = min(L.confused + 15, 50)
 			L.dizziness = min(L.dizziness + 15, 50)
 			if(L.confused >= 25)
-				L.Weaken(Floor(L.confused * 0.04))
+				L.Knockdown(Floor(L.confused * 0.8))
 		take_damage(max_integrity)

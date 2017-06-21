@@ -1,5 +1,0 @@
-author: "RandomMarine"
-delete-after: True
-changes: 
-  - tweak: "Compressed matter cartridge production costs now reflect their material worth at basic efficiency."
-  - bugfix: "Compressed matter cartridges can now be exported."

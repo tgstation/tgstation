@@ -68,9 +68,9 @@
 	add_logs(A, D, "punched")
 
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
-		D.visible_message("<span class='danger'>[A] has weakened [D]!!</span>", \
-								"<span class='userdanger'>[A] has weakened [D]!</span>")
-		D.apply_effect(4, WEAKEN, armor_block)
+		D.visible_message("<span class='danger'>[A] has knocked [D] down!!</span>", \
+								"<span class='userdanger'>[A] has knocked [D] down!</span>")
+		D.apply_effect(40, KNOCKDOWN, armor_block)
 		D.forcesay(GLOB.hit_appends)
 	else if(D.lying)
 		D.forcesay(GLOB.hit_appends)

@@ -31,7 +31,7 @@
 	owner.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(owner), slot_back) // ditto
 
 /datum/mutation/human/cluwne/on_life(mob/living/carbon/human/owner)
-	if((prob(15) && owner.paralysis <= 1))
+	if((prob(15) && owner.unconscious <= 1))
 		owner.setBrainLoss(200) // there I changed it to setBrainLoss
 		switch(rand(1, 6))
 			if(1)
@@ -40,7 +40,7 @@
 				owner.emote("scream")
 			if(6)
 				owner.Stun(1)
-				owner.Weaken(1)
+				owner.Knockdown(20)
 				owner.Jitter(500)
 
 /datum/mutation/human/cluwne/on_losing(mob/living/carbon/human/owner)

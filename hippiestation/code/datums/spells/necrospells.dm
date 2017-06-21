@@ -15,7 +15,7 @@
 	action_icon_state = "soulflare"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/soulflare
-	amt_paralysis = 1
+	amt_unconscious = 1
 	amt_dam_fire = 15
 	amt_dam_brute = 15
 	amt_dam_oxy = 15

@@ -8,7 +8,7 @@
 		return FALSE
 
 /mob/living/carbon/proc/update_nearcrit_stat()
-	Weaken(3)
+	Knockdown(60)
 	update_canmove()
 	if(prob(15))
 		INVOKE_ASYNC(src, .proc/emote, pick("moan", "cough", "groan", "whimper"))

@@ -91,7 +91,7 @@
 	if((ishuman(hit_atom)))
 		M.apply_damage(5, STAMINA)
 		if(prob(5))
-			M.Weaken(3)
+			M.Knockdown(60)
 			visible_message("<span class='danger'>The [src.name] smacks [M] right in the face!</span>", 3)
 
 /proc/buttificate(phrase)

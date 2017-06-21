@@ -63,6 +63,14 @@
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	cant_discount = TRUE
 
+/* Holo Parasites */
+/datum/uplink_item/dangerous/guardian
+	name = "Holoparasites"
+	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an organic host as a home base and source of fuel."
+	item = /obj/item/weapon/storage/box/syndie_kit/guardian
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+
 /datum/uplink_item/badass/sports/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/possible_items = list(
 								"/obj/item/weapon/storage/box/syndie_kit/wrestling",
@@ -102,4 +110,11 @@
 	item = /obj/item/weapon/twohanded/fireaxe/fireyaxe
 	restricted_roles = list("Atmospheric Technician")
 
-
+/datum/uplink_item/role_restricted/retardhorn
+	name = "Extra Annoying Bike Horn."
+	desc = "This bike horn has been carefully tuned by the clown federation to subtly affect the brains of those who\
+	 hear it using advanced sonic techniques. To the untrained eye, a golden bike horn but each honk will cause small\
+	  amounts of brain damage, most targets will be reduced to a gibbering wreck before they catch on."
+	cost = 5
+	item = /obj/item/weapon/bikehorn/golden/retardhorn
+	restricted_roles = list("Clown")

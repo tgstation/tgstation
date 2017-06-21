@@ -76,7 +76,7 @@
 			M.visible_message(\
 				"<span class='warning'>[M] unties the noose over their neck!</span>",\
 				"<span class='notice'>You untie the noose over your neck!</span>")
-			M.Weaken(3)
+			M.Knockdown(60)
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			H.noosed = FALSE

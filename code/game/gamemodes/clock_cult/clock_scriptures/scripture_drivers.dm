@@ -26,10 +26,9 @@
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
 /datum/clockwork_scripture/create_object/judicial_visor
-	descname = "Delayed Area Stun Glasses"
+	descname = "Delayed Area Knockdown Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging non-Servants. \
-	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, knocking down, muting, and damaging non-Servants."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
 	consumed_components = list(BELLIGERENT_EYE = 1)
@@ -42,14 +41,14 @@
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, stunning, muting, and damaging non-Servants after a delay."
+	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, knocking down, muting, and damaging non-Servants after a delay."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is stunned for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -178,7 +177,7 @@
 /datum/clockwork_scripture/channeled/taunting_tirade
 	descname = "Channeled, Mobile Confusion Trail"
 	name = "Taunting Tirade"
-	desc = "Allows movement for five seconds, leaving a confusing and weakening trail. Chanted every second for up to thirty seconds."
+	desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
@@ -188,7 +187,7 @@
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Allows movement for five seconds, leaving a confusing and weakening trail.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar

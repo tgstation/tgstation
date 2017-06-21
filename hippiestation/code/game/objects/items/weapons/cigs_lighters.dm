@@ -767,7 +767,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(15, BURN, "head") //Less damage
 			M.doUnEquip(src, 1)
-			M.Weaken(15, 1, 0)
+			M.Knockdown(300, 1, 0)
 			do_sparks(5, TRUE, src)
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
 			qdel(src)
@@ -781,7 +781,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
 			M.doUnEquip(src, 1)
-			M.Weaken(15, 1, 0)
+			M.Knockdown(300, 1, 0)
 			do_sparks(5, TRUE, src)
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
 			qdel(src)

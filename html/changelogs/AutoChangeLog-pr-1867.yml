@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "You can now pin papers and photos to airlocks. Anyone examining the airlock from up close can see the details. You can cut them down with wirecutters."

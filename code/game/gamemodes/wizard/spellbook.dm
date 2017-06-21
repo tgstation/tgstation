@@ -380,7 +380,7 @@
 
 /datum/spellbook_entry/item/plasma_fist
 	name = "Plasma Fist Scroll"
-	desc = "Consider this more of a "spell bundle." This artifact is NOT reccomended for weaklings. An ancient scroll that will teach you the art of Plasma Fist. With it's various combos you can knock people down in the area around you, light them on fire and finally perform the PLASMA FIST that will gib your target."
+	desc = "Consider this more of a \"spell bundle.\" This artifact is NOT reccomended for weaklings. An ancient scroll that will teach you the art of Plasma Fist. With it's various combos you can knock people down in the area around you, light them on fire and finally perform the PLASMA FIST that will gib your target."
 	item_path = /obj/item/weapon/plasma_fist_scroll
 	cost = 1
 
@@ -847,7 +847,7 @@
 /obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(2)
+	user.Stun(40)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
@@ -859,7 +859,7 @@
 /obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Weaken(20)
+	user.Knockdown(40)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
