@@ -256,6 +256,7 @@
 #include "code\datums\diseases\flu.dm"
 #include "code\datums\diseases\fluspanish.dm"
 #include "code\datums\diseases\gbs.dm"
+#include "code\datums\diseases\morphirigen.dm"
 #include "code\datums\diseases\magnitis.dm"
 #include "code\datums\diseases\parrotpossession.dm"
 #include "code\datums\diseases\pierrot_throat.dm"
