@@ -21,6 +21,7 @@
 	throw_speed = 3
 	throw_range = 7
 	var/cleanspeed = 50 //slower than mop
+	force_string = "robust... against germs"
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of plasma."

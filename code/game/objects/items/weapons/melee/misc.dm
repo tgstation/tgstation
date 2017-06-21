@@ -185,6 +185,7 @@
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 	origin_tech = "combat=7;materials=6"
+	force_string = "INFINITE"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
