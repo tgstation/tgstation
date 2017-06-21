@@ -412,3 +412,9 @@
 	exp_light = -1
 	exp_flash = 4
 	exp_fire= 5
+
+/obj/item/projectile/magic/aoe/fireball/infernal/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	for(var/i=0, i<50, i+=10)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
