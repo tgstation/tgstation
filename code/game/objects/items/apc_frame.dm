@@ -6,8 +6,8 @@
 	item_state = "syringe_kit"
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
-	var/inverse = 0
-	// For inverse dir frames like light fixtures.
+	var/inverse = 0 // For inverse dir frames like light fixtures.
+	var/onto_wall = FALSE //If the object places onto the wall instead of the floor
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
@@ -39,7 +39,11 @@
 		if(inverse)
 			ndir = turn(ndir, 180)
 
-		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
+		var/obj/O
+		if(!onto_wall)
+			O = new result_path(get_turf(user), ndir, TRUE)
+		else
+			O = new result_path(get_turf(on_wall), ndir, TRUE)
 		after_attach(O)
 
 	qdel(src)

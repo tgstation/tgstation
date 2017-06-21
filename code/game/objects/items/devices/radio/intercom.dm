@@ -19,6 +19,20 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/device/radio/intercom/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		var/obj/item/weapon/wrench/W = I
+		user.visible_message("<span class='notice'>[user] starts unsecuring [src]...</span>", "<span class='notice'>You start unsecuring [src]...</span>")
+		playsound(src, W.usesound, 50, 1)
+		if(!do_after(user, 80 * W.toolspeed, target = user))
+			return
+		user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
+		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+		new/obj/item/wallframe/intercom(get_turf(src))
+		qdel(src)
+		return
+	..()
+
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
@@ -69,3 +83,12 @@
 
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
 	return 0
+
+
+
+/obj/item/wallframe/intercom
+	name = "intercom frame"
+	desc = "A detached intercom."
+	icon_state = "intercom"
+	result_path = /obj/item/device/radio/intercom
+	onto_wall = TRUE
