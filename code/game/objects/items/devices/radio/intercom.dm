@@ -31,7 +31,7 @@
 		new/obj/item/wallframe/intercom(get_turf(src))
 		qdel(src)
 		return
-	..()
+	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	interact(user)
@@ -90,5 +90,6 @@
 	desc = "A ready-to-go intercom. Just slap it on a wall!"
 	icon_state = "intercom"
 	result_path = /obj/item/device/radio/intercom
-	onto_wall = TRUE
+	pixel_shift = 29
+	inverse = TRUE
 	materials = list(MAT_METAL = 75, MAT_GLASS = 25)

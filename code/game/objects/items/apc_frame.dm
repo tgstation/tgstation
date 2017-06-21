@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/result_path
 	var/inverse = 0 // For inverse dir frames like light fixtures.
-	var/onto_wall = FALSE //If the object places onto the wall instead of the floor
+	var/pixel_shift //The amount of pixels
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
@@ -39,11 +39,17 @@
 		if(inverse)
 			ndir = turn(ndir, 180)
 
-		var/obj/O
-		if(!onto_wall)
-			O = new result_path(get_turf(user), ndir, TRUE)
-		else
-			O = new result_path(get_turf(on_wall), ndir, TRUE)
+		var/obj/O = new result_path(get_turf(user), ndir, TRUE)
+		if(pixel_shift)
+			switch(ndir)
+				if(NORTH)
+					O.pixel_y = pixel_shift
+				if(SOUTH)
+					O.pixel_y = -pixel_shift
+				if(EAST)
+					O.pixel_x = pixel_shift
+				if(WEST)
+					O.pixel_x = -pixel_shift
 		after_attach(O)
 
 	qdel(src)
