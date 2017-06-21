@@ -335,7 +335,7 @@
 		if(brake || stabilizer)
 			brake = FALSE
 			stabilizer = FALSE
-			usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
+			usermessage("Warning: Sensor data is not being received from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
 
 /obj/item/device/flightpack/proc/update_slowdown()
 	if(!flight)
@@ -853,7 +853,7 @@
 
 /obj/item/clothing/shoes/flightshoes
 	name = "flight shoes"
-	desc = "A pair of specialized boots that contain stabilizers and sensors nessacary for flight gear to work" //Apparently you need these to detect mob movement.
+	desc = "A pair of specialized boots that contain stabilizers and sensors necessary for flight gear to work." //Apparently you need these to detect mob movement.
 	icon_state = "flightshoes"
 	item_state = "flightshoes_mob"
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null

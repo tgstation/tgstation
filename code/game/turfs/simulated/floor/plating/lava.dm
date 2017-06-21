@@ -132,7 +132,7 @@
 
 
 /turf/open/floor/plating/lava/smooth/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
