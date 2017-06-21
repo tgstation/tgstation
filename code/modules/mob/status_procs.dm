@@ -82,44 +82,48 @@
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/proc/Sleeping(amount, updating = TRUE, no_alert = FALSE)
-	var/old_sleeping = sleeping
-	sleeping = max(max(sleeping,amount * STUN_TIME_MULTIPLIER),0)
-	if(!old_sleeping && sleeping)
-		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating)
-			update_stat()
+/mob/living/proc/IsSleeping() //If we're asleep
+	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
-/mob/proc/SetSleeping(amount, updating = 1, no_alert = FALSE)
-	var/old_sleeping = sleeping
-	sleeping = max(amount * STUN_TIME_MULTIPLIER,0)
-	if(!old_sleeping && sleeping)
-		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating)
-			update_stat()
+/mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		return world.time - S.duration
+	return 0
 
-/mob/proc/AdjustSleeping(amount, updating = 1, no_alert = FALSE)
-	var/old_sleeping = sleeping
-	sleeping = max(sleeping + (amount * STUN_TIME_MULTIPLIER) ,0)
-	if(!old_sleeping && sleeping)
-		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating)
-			update_stat()
+/mob/living/proc/Sleeping(amount, updating = TRUE) //Can't go below remaining duration
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		var/remaining_duration = world.time - S.duration
+		S.duration = world.time + max(amount, remaining_duration)
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
+		S.duration = amount
+		S.update_canmove = updating
+	return S
+
+/mob/living/proc/SetSleeping(amount, updating = TRUE) //Sets remaining duration
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(amount <= 0)
+		if(S)
+			S.update_canmove = updating
+			qdel(S)
+	else
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
+	if(S)
+		S.duration = amount
+		S.update_canmove = updating
+	return S
+
+/mob/living/proc/AdjustSleeping(amount, updating = TRUE) //Adds to remaining duration
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		S.duration += amount
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
+		S.duration = amount
+		S.update_canmove = updating
+	return S
 
 /////////////////////////////////// RESTING ////////////////////////////////////
 
