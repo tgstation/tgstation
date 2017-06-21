@@ -2,8 +2,6 @@
 
 #define islist(L) (istype(L,/list))
 
-#define ismob(L) (istype(L, /mob))
-
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
 #define ismovableatom(A) (istype(A, /atom/movable))
@@ -120,6 +118,8 @@
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
+
+#define isdead(A) (istype(A, /mob/dead))
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
