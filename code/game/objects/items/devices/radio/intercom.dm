@@ -11,8 +11,10 @@
 	var/last_tick //used to delay the powercheck
 	dog_fashion = null
 
-/obj/item/device/radio/intercom/Initialize()
+/obj/item/device/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
+	if(building)
+		setDir(ndir)200
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/radio/intercom/Destroy()
