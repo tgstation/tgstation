@@ -750,8 +750,8 @@
 /mob/proc/activate_hand(selhand)
 	return
 
-/mob/proc/assess_threat() //For sec bot threat assessment
-	return
+/mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
+	return 0
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
