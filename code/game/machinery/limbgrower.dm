@@ -22,7 +22,7 @@
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/selected_category
 	var/screen = 1
 	var/emag = FALSE //Gives access to other cool stuff
@@ -193,8 +193,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
 		if(disabled || !can_build(D))

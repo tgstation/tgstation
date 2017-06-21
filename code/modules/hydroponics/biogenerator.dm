@@ -190,8 +190,8 @@
 			var/categories = show_categories.Copy()
 			for(var/V in categories)
 				categories[V] = list()
-			for(var/V in files.known_designs)
-				var/datum/design/D = files.known_designs[V]
+			for(var/V in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[V]
 				for(var/C in categories)
 					if(C in D.category)
 						categories[C] += D

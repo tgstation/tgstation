@@ -65,7 +65,7 @@
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
-		files.known_designs = list()
+		stored_research.researched_designs = list()
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			if(prob(1))
@@ -94,8 +94,8 @@
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			C.files.AddDesign2Known(D)
 		C.files.RefreshResearch()
 
@@ -238,9 +238,9 @@
 	else if(href_list["reset_design"])
 		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue" && usr.canUseTopic(src))
-			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
+			var/datum/design/D = temp_server.stored_research.researched_designs[href_list["reset_design"]]
 			if(D)
-				temp_server.files.known_designs -= D.id
+				temp_server.stored_research.researched_designs -= D.id
 		temp_server.files.RefreshResearch()
 
 	updateUsrDialog()
@@ -295,8 +295,8 @@
 				dat += "* [T.name] "
 				dat += "<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>" //FYI, these are all strings.
 			dat += "Known Designs<BR>"
-			for(var/v in temp_server.files.known_designs)
-				var/datum/design/D = temp_server.files.known_designs[v]
+			for(var/v in temp_server.stored_research.researched_designs)
+				var/datum/design/D = temp_server.stored_research.researched_designs[v]
 				dat += "* [D.name] "
 				dat += "<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"

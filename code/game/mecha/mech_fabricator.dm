@@ -100,8 +100,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -178,8 +178,8 @@
 
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -250,8 +250,8 @@
 		for(var/v in RDC.files.known_tech)
 			var/datum/tech/T = RDC.files.known_tech[v]
 			files.AddTech2Known(T)
-		for(var/v in RDC.files.known_designs)
-			var/datum/design/D = RDC.files.known_designs[v]
+		for(var/v in RDC.stored_research.researched_designs)
+			var/datum/design/D = RDC.stored_research.researched_designs[v]
 			files.AddDesign2Known(D)
 		files.RefreshResearch()
 		temp = "Processed equipment designs.<br>"
@@ -349,8 +349,8 @@
 				screen = "parts"
 	if(href_list["part"])
 		var/T = filter.getStr("part")
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -360,8 +360,8 @@
 					break
 	if(href_list["add_to_queue"])
 		var/T = filter.getStr("add_to_queue")
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -398,8 +398,8 @@
 		sync()
 	if(href_list["part_desc"])
 		var/T = filter.getStr("part_desc")
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path

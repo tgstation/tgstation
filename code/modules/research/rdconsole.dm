@@ -94,8 +94,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			C.files.AddDesign2Known(D)
 		C.files.RefreshResearch()
 
@@ -343,23 +343,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(S.disabled)
 							continue
 						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
-							for(var/v in files.known_tech)
-								var/datum/tech/T = files.known_tech[v]
-								S.files.AddTech2Known(T)
-							for(var/v in files.known_designs)
-								var/datum/design/D = files.known_designs[v]
-								S.files.AddDesign2Known(D)
-							S.files.RefreshResearch()
-							server_processed = 1
+							stored_research.copy_research_to(S.stored_research)
 						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
-							for(var/v in S.files.known_tech)
-								var/datum/tech/T = S.files.known_tech[v]
-								files.AddTech2Known(T)
-							for(var/v in S.files.known_designs)
-								var/datum/design/D = S.files.known_designs[v]
-								files.AddDesign2Known(D)
-							files.RefreshResearch()
-							server_processed = 1
+							stored_research.copy_research_to(S.stored_research)
 						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
 							S.produce_heat(100)
 					screen = 1.6
@@ -369,7 +355,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		sync = !sync
 
 	else if(href_list["build"]) //Causes the Protolathe to build something.
-		var/datum/design/being_built = files.known_designs[href_list["build"]]
+		var/datum/design/being_built = stored_research.researched_designs[href_list["build"]]
 		var/amount = text2num(href_list["amount"])
 
 		if(being_built.make_reagents.len)
@@ -450,7 +436,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			updateUsrDialog()
 
 	else if(href_list["imprint"]) //Causes the Circuit Imprinter to build something.
-		var/datum/design/being_built = files.known_designs[href_list["imprint"]]
+		var/datum/design/being_built = stored_research.researched_designs[href_list["imprint"]]
 
 		if(!linked_imprinter || !being_built)
 			updateUsrDialog()
@@ -580,8 +566,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			compare = IMPRINTER
 			screen = 4.17
 
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
+		for(var/v in stored_research.researched_designs)
+			var/datum/design/D = stored_research.researched_designs[v]
 			if(!(D.build_type & compare))
 				continue
 			if(findtext(D.name,href_list["to_search"]))
@@ -730,8 +716,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
 			dat += "<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Design to Disk:</h3><BR>"
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[v]
 				dat += "[D.name] "
 				dat += "<A href='?src=\ref[src];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A><BR>"
 			dat += "</div>"
@@ -832,8 +818,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<B>Chemical Volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]<HR>"
 
 			var/coeff = linked_lathe.efficiency_coeff
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[v]
 				if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 					continue
 				var/temp_material
@@ -952,8 +938,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "Chemical Volume: [linked_imprinter.reagents.total_volume]<HR>"
 
 			var/coeff = linked_imprinter.efficiency_coeff
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[v]
 				if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 					continue
 				var/temp_materials

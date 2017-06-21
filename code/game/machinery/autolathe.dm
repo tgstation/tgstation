@@ -25,7 +25,7 @@
 	var/prod_coeff = 1
 
 	var/datum/design/being_built
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
@@ -242,8 +242,8 @@
 		if(href_list["search"])
 			matching_designs.Cut()
 
-			for(var/v in files.known_designs)
-				var/datum/design/D = files.known_designs[v]
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = stored_research.researched_designs[v]
 				if(findtext(D.name,href_list["to_search"]))
 					matching_designs.Add(D)
 			updateUsrDialog()
@@ -295,8 +295,8 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in files.known_designs)
-		var/datum/design/D = files.known_designs[v]
+	for(var/v in stored_research.ressearched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
 
@@ -410,7 +410,7 @@
 			if(hacked)
 				files.AddDesign2Known(D)
 			else
-				files.known_designs -= D.id
+				stored_research.researched_designs -= D.id
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes

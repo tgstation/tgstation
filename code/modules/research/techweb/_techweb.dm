@@ -29,12 +29,12 @@
 	GLOB.techweb_designs = returned
 
 /proc/get_techweb_node_by_id(id)
-	if(techweb_nodes[id])
-		return techweb_nodes[id]
+	if(GLOB.techweb_nodes[id])
+		return GLOB.techweb_nodes[id]
 
 /proc/get_techweb_design_by_id(id)
-	if(techweb_designs[id])
-		return techweb_designs[id]
+	if(GLOB.techweb_designs[id])
+		return GLOB.techweb_designs[id]
 
 GLOBAL_LIST_INIT(techweb_nodes, list())
 GLOBAL_LIST_INIT(techweb_designs, list())
@@ -53,6 +53,12 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 		var/datum/techweb_node/DN = GLOB.techweb_nodes_starting[i]
 		research_node(DN)
 	return ..()
+
+/datum/techweb/admin/New()	//All unlocked.
+	. = ..()
+	for(var/i in GLOB.techweb_nodes)
+		var/datum/techweb_node/TN = GLOB.techweb_nodes[i]
+		research_node(TN, TRUE)
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -96,6 +102,15 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 	return add_design(get_techweb_design_by_id(id))
 
 /datum/techweb/proc/add_design(datum/design/design)
+	if(!istype(design))
+		return FALSE
+	researched_designs[design.id] = design
+	return TRUE
+
+/datum/techweb/proc/remove_design_by_id(id)
+	return remove_design(get_techweb_design_by_id(id))
+
+/datum/techweb/proc/remove_design(datum/design/design)
 	if(!istype(design))
 		return FALSE
 	researched_designs[design.id] = design
@@ -148,8 +163,82 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 			else
 				visible_nodes -= node.id
 
-/datum/techweb/admin/New()	//All unlocked.
+//Laggy procs to do specific checks, just in case. Don't use them if you can just use the vars that already store all this!
+/datum/techweb/proc/designHasReqs(datum/design/D)
+	for(var/i in researched_nodes)
+		var/datum/techweb_node/N = researched_nodes[i]
+		for(var/I in N.designs)
+			if(D == N.designs[I])
+				return TRUE
+	return FALSE
+
+/datum/techweb/proc/isDesignResearched(datum/design/D)
+	return isDesignResearchedID(D.id)
+
+/datum/techweb/proc/isDesignResearchedID(id)
+	return researched_designs[id]
+
+/datum/techweb/proc/isNodeResearched(datum/techweb_node/N)
+	return isNodeResearchedID(N.id)
+
+/datum/techweb/proc/isNodeResearchedID(id)
+	return researched_nodes[id]
+
+/datum/techweb/proc/isNodeVisible(datum/techweb_node/N)
+	return isNodeResearchedID(N.id)
+
+/datum/techweb/proc/isNodeVisibleID(id)
+	return visible_nodes[id]
+
+/datum/techweb/proc/isNodeAvailable(datum/techweb_node/N)
+	return isNodeAvaiableID(N.id)
+
+/datum/techweb/proc/isNodeAvailableID(id)
+	return available_nodes[id]
+
+/datum/techweb/autolathe/New()
 	. = ..()
-	for(var/i in GLOB.techweb_nodes)
-		var/datum/techweb_node/TN = GLOB.techweb_nodes[i]
-		research_node(TN, TRUE)
+	for(var/D in GLOB.techweb_designs)
+		var/datum/design/d = GLOB.techweb_designs[D]
+		if((d.build_type & AUTOLATHE) && ("initial" in d.category))
+			add_design(d)
+
+/datum/techweb/autolathe/add_design(datum/design/D)
+	if(!(D.build_type & AUTOLATHE))
+		return FALSE
+	return ..()
+
+/datum/techweb/limbgrower/New()
+	. = ..()
+	for(var/D in GLOB.techweb_designs)
+		var/datum/design/d = GLOB.techweb_designs[D]
+		if((d.build_type & LIMBGROWER) && ("initial" in d.category))
+			add_design(d)
+
+/datum/techweb/limbgrower/add_design(datum/design/D)
+	if(!(D.build_type & LIMBGROWER))
+		return FALSE
+	return TRUE
+
+/datum/techweb/biogenerator/New()
+	. = ..()
+	for(var/D in GLOB.techweb_designs)
+		var/datum/design/d = GLOB.techweb_designs[D]
+		if((d.build_type & BIOGENERATOR) && ("initial" in d.category))
+			add_design(d)
+
+/datum/techweb/biogenerator/add_design(datum/design/D)
+	if(!(D.build_type & BIOGENERATOR))
+		return FALSE
+	return ..()
+
+/datum/techweb/smelter/New()
+	for(var/D in GLOB.techweb_designs)
+		var/datum/design/d = GLOB.techweb_designs[D]
+		if((d.build_type & SMELTER) && ("initial" in d.category))
+			add_design(d)
+
+/datum/techweb/smelter/add_design(datum/design/D)
+	if(!(D.build_type & SMELTER))
+		return FALSE
+	return ..()

@@ -128,26 +128,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/disk/tech_disk
 	category = list("Electronics")
 
-/datum/design/tech_disk_adv
-	name = "Advanced Technology Data Storage Disk"
-	desc = "Produce disks with extra storage capacity for storing technology data."
-	id = "tech_disk_adv"
-	req_tech = list("programming" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=50)
-	build_path = /obj/item/weapon/disk/tech_disk/adv
-	category = list("Electronics")
-
-/datum/design/tech_disk_super_adv
-	name = "Quantum Technology Data Storage Disk"
-	desc = "Produce disks with extremely large storage capacity for storing technology data."
-	id = "tech_disk_super_adv"
-	req_tech = list("programming" = 6)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER=100, MAT_GOLD=100, MAT_BLUESPACE = 100)
-	build_path = /obj/item/weapon/disk/tech_disk/super_adv
-	category = list("Electronics")
-
 /////////////////////////////////////////
 /////////////////Mining//////////////////
 /////////////////////////////////////////
