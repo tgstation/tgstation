@@ -146,7 +146,7 @@
 			if(!istype(O) || (PIERCEIMMUNE in H.dna.species.species_traits))
 				return
 			H.apply_damage(rand(3, 6), BRUTE, picked_def_zone)
-			H.Weaken(2)
+			H.Knockdown(40)
 			H.visible_message("<span class='danger'>[H] steps on a cactus!</span>", \
 				"<span class='userdanger'>You step on a cactus!</span>")
 

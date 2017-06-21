@@ -307,17 +307,11 @@
 //this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
-		return
-	if(AM == src || !isturf(AM.loc))
-		return
-	if(AM.anchored || AM.throwing)
-		return
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(L.buckled && L.buckled.buckle_prevents_pull)
-			return
+		return FALSE
+	if(!(AM.can_be_pulled(src)))
+		return FALSE
 	if(throwing || incapacitated())
-		return
+		return FALSE
 
 	AM.add_fingerprint(src)
 
@@ -667,13 +661,13 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/ko = knockdown || unconscious || stat || (status_flags & FAKEDEATH)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || stunned || chokehold)
+	if(ko || resting || stun || chokehold)
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
@@ -688,7 +682,7 @@
 			fall()
 		else if(ko || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !((is_nearcrit() ? 0 : ko) || resting || stunned || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !((is_nearcrit() ? 0 : ko) || resting || stun || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -957,12 +951,12 @@
 				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
-		if("weakened")
-			SetWeakened(var_value)
-		if("stunned")
-			SetStunned(var_value)
-		if("paralysis")
-			SetParalysis(var_value)
+		if("knockdown")
+			SetKnockdown(var_value)
+		if("stun")
+			SetStun(var_value)
+		if("unconscious")
+			SetUnconscious(var_value)
 		if("sleeping")
 			SetSleeping(var_value)
 		if("eye_blind")

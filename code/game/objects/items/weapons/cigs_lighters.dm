@@ -777,12 +777,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, "head")
-			M.Weaken(15, 1, 0)
-			qdel(src)
+			M.Knockdown(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)
 			sp.start()
 			to_chat(M, "<span class='userdanger'>The [name] suddenly explodes in your mouth!</span>")
+			qdel(src)
+			return
 
 	if(reagents && reagents.total_volume)
 		hand_reagents()

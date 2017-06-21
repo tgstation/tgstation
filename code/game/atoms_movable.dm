@@ -200,6 +200,8 @@
 	
 	unbuckle_all_mobs(force=1)
 
+	unbuckle_all_mobs(force=1)
+
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
@@ -593,7 +595,7 @@
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION || currentturf.z == ZLEVEL_TRANSIT))
 		. = TRUE
 
 
@@ -687,3 +689,10 @@
 //Returns an atom's power cell, if it has one. Overload for individual items.
 /atom/movable/proc/get_cell()
 	return
+
+/atom/movable/proc/can_be_pulled(user)
+	if(src == user || !isturf(loc))
+		return FALSE
+	if(anchored || throwing)
+		return FALSE
+	return TRUE

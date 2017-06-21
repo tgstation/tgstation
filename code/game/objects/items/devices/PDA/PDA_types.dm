@@ -10,7 +10,7 @@
 /obj/item/device/pda/clown/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if(M.slip(0, 6, src, NO_SLIP_WHEN_WALKING))
+		if(M.slip(120, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
 				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
 					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
@@ -113,11 +113,13 @@
 /obj/item/device/pda/heads/rd
 	name = "research director PDA"
 	default_cartridge = /obj/item/weapon/cartridge/rd
+	inserted_item = /obj/item/weapon/pen/fountain
 	icon_state = "pda-rd"
 
 /obj/item/device/pda/captain
 	name = "captain PDA"
 	default_cartridge = /obj/item/weapon/cartridge/captain
+	inserted_item = /obj/item/weapon/pen/fountain/captain
 	icon_state = "pda-captain"
 	detonatable = FALSE
 
@@ -129,6 +131,7 @@
 /obj/item/device/pda/quartermaster
 	name = "quartermaster PDA"
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
+	inserted_item = /obj/item/weapon/pen/fountain
 	icon_state = "pda-qm"
 
 /obj/item/device/pda/shaftminer
@@ -150,6 +153,7 @@
 /obj/item/device/pda/lawyer
 	name = "lawyer PDA"
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
+	inserted_item = /obj/item/weapon/pen/fountain
 	icon_state = "pda-lawyer"
 	ttone = "objection"
 
@@ -168,6 +172,7 @@
 	icon_state = "pda-library"
 	icon_alert = "pda-r-library"
 	default_cartridge = /obj/item/weapon/cartridge/curator
+	inserted_item = /obj/item/weapon/pen/fountain
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!
@@ -186,6 +191,7 @@
 /obj/item/device/pda/bar
 	name = "bartender PDA"
 	icon_state = "pda-bartender"
+	inserted_item = /obj/item/weapon/pen/fountain
 
 /obj/item/device/pda/atmos
 	name = "atmospherics PDA"
