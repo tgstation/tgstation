@@ -226,7 +226,7 @@
 	exploding = TRUE
 	update_icon()
 	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/Alarm.ogg'
+		M.playsound_local(get_turf(M), 'sound/machines/Alarm.ogg', 100, FALSE, pressure_affected = FALSE)
 	addtimer(CALLBACK(src, .proc/boom), 100, TIMER_CLIENT_TIME)
 
 /obj/machinery/construction_nuke/proc/boom()
