@@ -2,12 +2,12 @@
 	name = "Wizard"
 	var/special_role = "wizard"
 	var/list/objectives_given
+	var/mob/living/carbon/human/summoner //To remain null on a real wizard.
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
 	special_role = "apprentice"
 	var/school = "robeless"
-	var/mob/living/carbon/human/summoner
 
 /datum/antagonist/wizard/can_be_owned()
 	if(!ishuman(owner.current))
@@ -62,12 +62,12 @@
 		escape_objective.owner = owner
 		add_objective(escape_objective)
 
-/datum/antagonist/wizard/apply_innate_effects(apprentice = FALSE)
+/datum/antagonist/wizard/apply_innate_effects()
 	forge_wizard_objectives()
 	var/mob/living/carbon/human/H = owner.current
-	H.equipOutfit(pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb), apprentice)
+	H.equipOutfit(pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb), summoner)
 	finalize_wizard()
-	INVOKE_ASYNC(src, name_wizard())
+	INVOKE_ASYNC(src, name_wizard(summoner))
 	return
 
 /datum/antagonist/wizard/proc/finalize_wizard()
@@ -86,28 +86,18 @@
 
 /datum/antagonist/wizard/proc/name_wizard()
 	var/randomname = "[pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)]"
-	var/newname = copytext(sanitize(input(owner.current, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	var/message = summoner ? "You are [summoner.real_name]'s apprentice." : "You are a 'diplomat' of the Wizard Federation."
+	var/newname = copytext(sanitize(input(owner.current, "[message] Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 	var/mob/living/carbon/human/H = owner.current
 	if(!newname)
 		newname = randomname
 	H.real_name = newname
 	H.name = newname
 	owner.name = newname
-	if(H.age < WIZARD_AGE_MIN)
+	if(summoner)
+		H.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
+	else if(H.age < WIZARD_AGE_MIN)
 		H.age = WIZARD_AGE_MIN
-	H.dna.update_dna_identity()
-	return
-
-/datum/antagonist/wizard/apprentice/name_wizard()
-	var/randomname = "[pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)]"
-	var/newname = copytext(sanitize(input(owner.current, "You are [summoner.real_name]'s apprentice. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
-	var/mob/living/carbon/human/H = owner.current
-	if(!newname)
-		newname = randomname
-	H.real_name = newname
-	H.name = newname
-	owner.name = newname
-	H.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
 	H.dna.update_dna_identity()
 	return
 
