@@ -33,7 +33,8 @@
 	S.wait = 0 //No queue
 	S.channel = channel || open_sound_channel()
 	S.volume = vol
-	S.echo = list(0,0,0,0,0,0,0,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
+	S.echo = initial(S.echo)
+	S.environment = initial(S.environment)
 
 
 
@@ -50,7 +51,7 @@
 
 		if(hearer_location != null && isarea(hearer_location))
 			var/area/A = hearer_location
-			if(A.sound_environment)
+			if(A.sound_environment && client.prefs.reverb)
 				S.environment = A.sound_environment
 
 
@@ -77,14 +78,14 @@
 
 			if(S.volume <= 0)
 				return //No sound
+		if(client.prefs.reverb)
+			//Occlusion
+			if(hearer_location != source_location)//Area-based occlusion
+				S.echo = gen_occlusion(1)
+			//no need for an else because the default echo we set takes care of non-occluded sounds
 
-		//Occlusion
-		if(hearer_location != source_location)//Area-based occlusion
-			S.echo = gen_occlusion(1)
-		//no need for an else because the default echo we set takes care of non-occluded sounds
-
-		//distance based occlusion
-		S.echo = gen_occlusion(2, turf_source, T)
+			//distance based occlusion
+			S.echo = gen_occlusion(2, turf_source, T)
 
 
 		// 3D sounds, the technology is here!

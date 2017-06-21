@@ -1153,6 +1153,7 @@
 #include "code\modules\client\preferences_toggles.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
+#include "code\modules\client\verbs\reverb.dm"
 #include "code\modules\client\verbs\sethotkeys.dm"
 #include "code\modules\client\verbs\suicide.dm"
 #include "code\modules\client\verbs\who.dm"
