@@ -1,0 +1,8 @@
+author: "Lordpidey"
+delete-after: True
+changes: 
+  - bugfix: "True and arch devils are no longer deaf."
+  - bugfix: "Fixed some edge cases with devils getting two sets of spells."
+  - bugfix: "True/arch devils can now instabreak cuffs."
+  - rscadd: "The codex gigas now indicates if a devil is ascendable or not."
+  - tweak: "Hellfire has been buffed, it now explodes multiple times."

@@ -1,0 +1,5 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - tweak: "Nanofrost setting and metal foam synthesizer on the Atmos watertank backpack changed to \"Resin\", which is a solid, but transparent structure similar to metal foam that scrubs the air of toxins, regulates temperature, etc"
+  - tweak: "Atmos holobarrier device swapped out for an Atmos holo-firelock device, which creates holographic firelocks that prevent atmospheric changes from going over them"

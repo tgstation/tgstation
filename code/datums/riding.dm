@@ -106,9 +106,6 @@
 	if(ridden.has_gravity())
 		return 1
 
-	if(ridden.pulledby)
-		return 1
-
 	return 0
 
 /datum/riding/space/Process_Spacemove(direction)

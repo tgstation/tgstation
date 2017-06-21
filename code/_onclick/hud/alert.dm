@@ -205,11 +205,6 @@ If you're feeling frisky, click yourself in help intent to pull the object out."
 		var/mob/living/carbon/human/M = usr
 		return M.help_shake_act(M)
 
-/obj/screen/alert/asleep
-	name = "Asleep"
-	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
-	icon_state = "asleep"
-
 /obj/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \

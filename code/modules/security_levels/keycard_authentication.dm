@@ -40,6 +40,7 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	data["auth_required"] = event_source ? event_source.event : 0
 	data["red_alert"] = (seclevel2num(get_security_level()) >= SEC_LEVEL_RED) ? 1 : 0
 	data["emergency_maint"] = GLOB.emergency_access
+	data["bsa_unlock"] = GLOB.bsa_unlock
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
@@ -66,6 +67,10 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 			if(event_source)
 				event_source.trigger_event(usr)
 				event_source = null
+				. = TRUE
+		if("bsa_unlock")
+			if(!event_source)
+				sendEvent("Bluespace Artillery Unlock")
 				. = TRUE
 
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
@@ -95,11 +100,13 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	switch(event)
 		if("Red Alert")
 			set_security_level(SEC_LEVEL_RED)
-			SSblackbox.inc("alert_keycard_auth_red",1)
+			SSblackbox.inc("alert_keycard_auth_red",)
 		if("Emergency Maintenance Access")
 			make_maint_all_access()
-			SSblackbox.inc("alert_keycard_auth_maint",1)
-
+			SSblackbox.inc("alert_keycard_auth_maint")
+		if("Bluespace Artillery Unlock")
+			toggle_bluespace_artillery()
+			SSblackbox.inc("alert_keycard_auth_bsa")
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
@@ -117,3 +124,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 			D.update_icon(0)
 	minor_announce("Access restrictions in maintenance areas have been restored.", "Attention! Station-wide emergency rescinded:")
 	GLOB.emergency_access = FALSE
+
+/proc/toggle_bluespace_artillery()
+	GLOB.bsa_unlock = !GLOB.bsa_unlock
+	minor_announce("Bluespace Artillery firing protocols have been [GLOB.bsa_unlock? "unlocked" : "locked"]", "Weapons Systems Update:")

@@ -23,13 +23,9 @@
 	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
 					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
 
-
-
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
-
 	create_internal_organs()
-
 	grant_all_languages(omnitongue=TRUE)
 	..()
 
@@ -37,8 +33,8 @@
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
 	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/ears/invincible //Prevents hearing loss from poorly aimed fireballs.
 	..()
-
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 500 // not an IMPOSSIBLE amount, but still near impossible.
@@ -56,7 +52,6 @@
 	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(ANTAG_DATUM_DEVIL)
 	devilinfo.greet()
 	mind.announce_objectives()
-
 
 /mob/living/carbon/true_devil/death(gibbed)
 	stat = DEAD
@@ -90,9 +85,14 @@
 	msg += "*---------*</span>"
 	to_chat(user, msg)
 
-
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
+
+/mob/living/carbon/true_devil/resist_buckle()
+	if(buckled)
+		buckled.user_unbuckle_mob(src,src)
+		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
 /mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated())
