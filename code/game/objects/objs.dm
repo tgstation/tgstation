@@ -23,8 +23,8 @@
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = FALSE // can you customize the description/name of the thing?
-	var/current_skin = null //Has the item been reskinned?
-	var/list/unique_reskin = null //List of options to reskin.
+	var/current_skin //Has the item been reskinned?
+	var/list/unique_reskin //List of options to reskin.
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 
 /obj/vv_edit_var(vname, vval)
@@ -209,11 +209,11 @@
 		reskin_obj(user)
 
 /obj/proc/reskin_obj(mob/M)
-	if(!unique_reskin || !islist(unique_reskin))
+	if(!LAZYLEN(unique_reskin))
 		return
 	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in unique_reskin
 	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
-		if(unique_reskin[choice] == null)
+		if(!unique_reskin[choice])
 			return
 		current_skin = choice
 		icon_state = unique_reskin[choice]
