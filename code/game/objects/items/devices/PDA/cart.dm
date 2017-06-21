@@ -621,6 +621,7 @@ Code:
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != host_pda_owner_name)
+				host_pda.mode = 99
 				host_pda.Topic(null,list("choice"="Refresh"))
 				return
 			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
