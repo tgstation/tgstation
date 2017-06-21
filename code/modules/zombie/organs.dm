@@ -6,7 +6,7 @@
 	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
 	var/datum/species/old_species = /datum/species/human
-	var/living_transformation_time = 3
+	var/living_transformation_time = 30
 	var/converts_living = FALSE
 
 	var/revive_time_min = 450
@@ -51,7 +51,7 @@
 	if(owner.stat != DEAD && !converts_living)
 		return
 	if(!iszombie(owner))
-		to_chat(owner, "<span class='narsiesmall'>You can feel your heart stopping, but something isn't right... \
+		to_chat(owner, "<span class='cultlarge'>You can feel your heart stopping, but something isn't right... \
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
 		not even death can stop, you will rise again!</span>")
 	var/revive_time = rand(revive_time_min, revive_time_max)
@@ -70,10 +70,12 @@
 
 	var/stand_up = (owner.stat == DEAD) || (owner.stat == UNCONSCIOUS)
 
+	if(!owner.revive(full_heal = TRUE))
+		return
+
 	owner.grab_ghost()
-	owner.revive(full_heal = TRUE)
 	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
-	owner.do_jitter_animation(living_transformation_time * 10)
+	owner.do_jitter_animation(living_transformation_time)
 	owner.Stun(living_transformation_time)
 	to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")

@@ -281,6 +281,11 @@
 		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
 		href_list["secrets"] = "check_antagonist"
+	else if(href_list["trigger_centcom_recall"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		usr.client.trigger_centcom_recall()
 
 	else if(href_list["toggle_continuous"])
 		if(!check_rights(R_ADMIN))
@@ -475,7 +480,8 @@
 				if(minutes > GLOB.CMinutes)
 					mins = minutes - GLOB.CMinutes
 				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
-				if(!mins)
+				if(mins <= 0)
+					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 					return
 				minutes = GLOB.CMinutes + mins
 				duration = GetExp(minutes)
@@ -909,7 +915,8 @@
 			switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 				if("Yes")
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
-					if(!mins)
+					if(mins <= 0)
+						to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 						return
 					var/reason = input(usr,"Please State Reason.","Reason") as message|null
 					if(!reason)
@@ -1104,7 +1111,8 @@
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))
 			if("Yes")
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
-				if(!mins)
+				if(mins <= 0)
+					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
 					return
 				var/reason = input(usr,"Please State Reason.","Reason") as message|null
 				if(!reason)
@@ -1206,7 +1214,7 @@
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 		Game() // updates the main game menu
-		world.save_mode(GLOB.master_mode)
+		SSticker.save_mode(GLOB.master_mode)
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
@@ -1342,7 +1350,7 @@
 		for(var/obj/item/I in M)
 			M.dropItemToGround(I, TRUE)
 
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdome1)
 		spawn(50)
@@ -1368,7 +1376,7 @@
 		for(var/obj/item/I in M)
 			M.dropItemToGround(I, TRUE)
 
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdome2)
 		spawn(50)
@@ -1391,7 +1399,7 @@
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.")
 			return
 
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdomeadmin)
 		spawn(50)
@@ -1421,7 +1429,7 @@
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdomeobserve)
 		spawn(50)
@@ -1510,17 +1518,6 @@
 			return
 
 		usr.client.cmd_admin_animalize(M)
-
-	else if(href_list["gangpoints"])
-		var/datum/gang/G = locate(href_list["gangpoints"]) in SSticker.mode.gangs
-		if(G)
-			var/newpoints = input("Set [G.name ] Gang's influence.","Set Influence",G.points) as null|num
-			if(!newpoints)
-				return
-			message_admins("[key_name_admin(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-			log_admin("[key_name(usr)] changed the [G.name] Gang's influence from [G.points] to [newpoints].</span>")
-			G.points = newpoints
-			G.message_gangtools("Your gang now has [G.points] influence.")
 
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
@@ -1745,7 +1742,7 @@
 	else if(href_list["reject_custom_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
+		var/obj/item/weapon/station_charter/charter = locate(href_list["reject_custom_name"])
 		if(istype(charter))
 			charter.reject_proposed(usr)
 	else if(href_list["jumpto"])
@@ -2246,7 +2243,7 @@
 
 	else if(href_list["showrelatedacc"])
 		var/client/C = locate(href_list["client"]) in GLOB.clients
-		var/list/thing_to_check
+		var/thing_to_check
 		if(href_list["showrelatedacc"] == "cid")
 			thing_to_check = C.related_accounts_cid
 		else
@@ -2254,9 +2251,8 @@
 		thing_to_check = splittext(thing_to_check, ", ")
 
 
-		var/dat = "Related accounts by [uppertext(href_list["showrelatedacc"])]:<br>"
-		for(var/thing in thing_to_check)
-			dat += "[thing]<br>"
+		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
+		dat += thing_to_check
 
-		usr << browse(dat, "size=420x300")
+		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 

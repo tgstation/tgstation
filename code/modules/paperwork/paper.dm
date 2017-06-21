@@ -26,7 +26,7 @@
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
-	var/fields		//Amount of user created fields
+	var/fields = 0	//Amount of user created fields
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
@@ -44,8 +44,8 @@
 	..()
 
 
-/obj/item/weapon/paper/New()
-	..()
+/obj/item/weapon/paper/Initialize()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	update_icon()
@@ -170,8 +170,7 @@
 
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
-	var/i = 0
-	for(i=1,i<=fields,i++)
+	for(var/i in 1 to min(fields, 15))
 		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
@@ -215,7 +214,7 @@
 		t = replacetext(t, "\[list\]", "<ul>")
 		t = replacetext(t, "\[/list\]", "</ul>")
 
-		t = "<font face=\"[PEN_FONT]\" color=[P.colour]>[t]</font>"
+		t = "<font face=\"[P.font]\" color=[P.colour]>[t]</font>"
 	else // If it is a crayon, and he still tries to use these, make them empty!
 		var/obj/item/toy/crayon/C = P
 		t = replacetext(t, "\[*\]", "")
@@ -305,7 +304,6 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
-			i.on_write(src,usr)
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=\ref[src];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
 			update_icon()
 
@@ -381,9 +379,18 @@
 
 /obj/item/weapon/paper/construction
 
-/obj/item/weapon/paper/construction/New()
-	..()
+/obj/item/weapon/paper/construction/Initialize()
+	. = ..()
 	color = pick("FF0000", "#33cc33", "#ffb366", "#551A8B", "#ff80d5", "#4d94ff")
+
+/*
+ * Natural paper
+ */
+
+/obj/item/weapon/paper/natural/Initialize()
+	. = ..()
+	color = "#FFF5ED"
+
 
 /*
  * Premade paper
@@ -395,7 +402,7 @@
 
 /obj/item/weapon/paper/Toxin
 	name = "paper- 'Chemical Information'"
-	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
+	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure unconscious and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tMorphine T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effect are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
 
 /obj/item/weapon/paper/courtroom
 	name = "paper- 'A Crash Course in Legal SOP on SS13'"

@@ -174,7 +174,6 @@
 		var/mob/living/carbon/human/gibee = occupant
 		sourcejob = gibee.job
 	var/sourcenutriment = mob_occupant.nutrition / 15
-	var/sourcetotalreagents = mob_occupant.reagents.total_volume
 	var/gibtype = /obj/effect/decal/cleanable/blood/gibs
 	var/typeofmeat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 	var/typeofskin = /obj/item/stack/sheet/animalhide/human
@@ -207,7 +206,6 @@
 			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
-		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 		allskin = newskin
 

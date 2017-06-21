@@ -17,7 +17,7 @@
 	robust_searching = 1
 	stat_attack = 2
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	speak_emote = list("squeaks")
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin

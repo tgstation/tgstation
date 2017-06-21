@@ -1,10 +1,6 @@
 
 //Allows the ninja to kidnap people
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet(mob/living/carbon/C in oview())//Only living carbon mobs.
-	set name = "Energy Net (20E)"
-	set desc = "Captures a fallen opponent in a net of energy. Will teleport them to a holding facility after 30 seconds."
-	set category = null
-	set src = usr.contents
 
 	if(!ninjacost(200,N_STEALTH_CANCEL) && iscarbon(C))
 		var/mob/living/carbon/human/H = affecting
@@ -26,4 +22,3 @@
 				to_chat(H, "<span class='warning'>[C.p_they(TRUE)] are already trapped inside an energy net!</span>")
 		else
 			to_chat(H, "<span class='warning'>[C.p_they(TRUE)] will bring no honor to your Clan!</span>")
-	return

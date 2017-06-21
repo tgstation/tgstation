@@ -947,7 +947,7 @@
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE
-	incorporeal_move = 1
+	incorporeal_move = INCORPOREAL_MOVE_BASIC
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/Initialize()

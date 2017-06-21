@@ -2,6 +2,11 @@
 
 //Misc mob defines
 
+//Ready states at roundstart for mob/dead/new_player
+#define PLAYER_NOT_READY 0
+#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_READY_TO_OBSERVE 2
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -80,6 +85,15 @@
 #define AI_IDLE		2
 #define AI_OFF		3
 
+#define ENVIRONMENT_SMASH_NONE 0
+
+#define ENVIRONMENT_SMASH_STRUCTURES 1
+
+#define ENVIRONMENT_SMASH_WALLS 2
+
+#define ENVIRONMENT_SMASH_RWALLS 3
+
+
 //SNPCs
 //AI defines
 #define INTERACTING 2
@@ -105,13 +119,6 @@
 #define SNPC_MARTYR 3
 #define SNPC_PSYCHO 4
 
-//Individual logging defines
-#define INDIVIDUAL_ATTACK_LOG "Attack log"
-#define INDIVIDUAL_SAY_LOG "Say log"
-#define INDIVIDUAL_EMOTE_LOG "Emote log"
-#define INDIVIDUAL_OOC_LOG "OOC log"
-#define INDIVIDUAL_SHOW_ALL_LOG "All logs"
-
 #define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
@@ -122,3 +129,8 @@
 #define MAX_CHICKENS 50
 
 #define UNHEALING_EAR_DAMAGE 100
+
+
+#define INCORPOREAL_MOVE_BASIC 1
+#define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
+#define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt

@@ -39,7 +39,7 @@
 
 	if(M.client)
 		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
-		body += "<br><b>Show related accounts by:</b> "
+		body += "<br><br><b>Show related accounts by:</b> "
 		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
 		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
 
@@ -421,13 +421,23 @@
 	set desc="Restarts the world immediately"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
-	if(confirm == "Cancel")
-		return
-	if(confirm == "Yes")
-		SSticker.delay_end = 0
+
+	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	if(world.RunningService())
+		options += "Service Restart (Force restart DD)";
+	var result = input(usr, "Select reboot method", "World Reboot", options[1]) as null|anything in options
+	if(result)
 		SSblackbox.add_details("admin_verb","Reboot World") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_error", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+		switch(result)
+			if("Regular Restart")
+				SSticker.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+			if("Hard Restart (No Delay, No Feeback Reason)")
+				world.Reboot()
+			if("Hardest Restart (No actions, just reboot)")
+				world.Reboot(fast_track = TRUE)
+			if("Service Restart (Force restart DD)")
+				GLOB.reboot_mode = REBOOT_MODE_HARD
+				world.ServiceReboot()
 
 /datum/admins/proc/end_round()
 	set category = "Server"
@@ -585,7 +595,7 @@
 	set category = "Admin"
 	set name = "Unprison"
 	if (M.z == ZLEVEL_CENTCOM)
-		M.loc = pick(GLOB.latejoin)
+		SSjob.SendToLateJoin(M)
 		message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 		log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 	else
@@ -604,7 +614,7 @@
 		if(3)
 			var/count = 0
 			for(var/mob/living/carbon/monkey/Monkey in world)
-				if(Monkey.z == 1)
+				if(Monkey.z == ZLEVEL_STATION)
 					count++
 			return "Kill all [count] of the monkeys on the station"
 		if(4)
@@ -684,7 +694,7 @@
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
 		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independant)"]: laws:</b>")
+			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [R.connected_ai])":"(Independent)"]: laws:</b>")
 		else if (ispAI(S))
 			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>")
 		else

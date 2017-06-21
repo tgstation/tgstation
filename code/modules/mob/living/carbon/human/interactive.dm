@@ -450,9 +450,9 @@
 		return 1
 	if(restrained())
 		return 1
-	if(paralysis)
+	if(unconscious)
 		return 1
-	if(stunned)
+	if(stun)
 		return 1
 	if(stat)
 		return 1
@@ -809,13 +809,13 @@
 	if(T.title == "Chief Medical Officer" || T.title == "Medical Doctor" || T.title == "Chemist" || T.title == "Virologist" || T.title == "Geneticist")
 		return /area/medical
 	if(T.title == "Research Director" || T.title == "Scientist" || T.title == "Roboticist")
-		return /area/toxins
+		return /area/science
 	if(T.title == "Head of Security" || T.title == "Warden" || T.title == "Security Officer" || T.title == "Detective")
 		return /area/security
 	if(T.title == "Botanist")
 		return /area/hydroponics
 	else
-		return pick(/area/hallway,/area/crew_quarters)
+		return pick(/area/hallway,/area/crew_quarters/locker)
 
 /mob/living/carbon/human/interactive/proc/target_filter(target)
 	var/list/filtered_targets = list(/area, /turf, /obj/machinery/door, /atom/movable/light, /obj/structure/cable, /obj/machinery/atmospherics)
@@ -1537,10 +1537,10 @@
 											stunning = 1
 									var/shouldFire = 1
 									var/mob/stunCheck = TARGET
-									if(stunning && stunCheck.stunned)
+									if(stunning && stunCheck.stun)
 										shouldFire = 0
 									if(shouldFire)
-										if(P.power_supply.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
+										if(P.cell.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
 											P.update_icon()
 											npcDrop(P,1)
 										else

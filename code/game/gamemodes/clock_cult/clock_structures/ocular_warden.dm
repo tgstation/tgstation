@@ -50,9 +50,6 @@
 	if(GLOB.ratvar_awakens)
 		damage_per_tick = 10
 		sight_range = 6
-	else if(GLOB.nezbere_invoked)
-		damage_per_tick = 5
-		sight_range = 5
 	else
 		damage_per_tick = initial(damage_per_tick)
 		sight_range = initial(sight_range)
@@ -87,7 +84,7 @@
 				var/obj/mecha/M = target
 				M.take_damage(damage_per_tick * get_efficiency_mod(), BURN, "melee", 1, get_dir(src, M))
 
-			new /obj/effect/overlay/temp/ratvar/ocular_warden(get_turf(target))
+			new /obj/effect/temp_visual/ratvar/ocular_warden(get_turf(target))
 
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)

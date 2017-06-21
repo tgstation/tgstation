@@ -293,7 +293,6 @@
 	// --- Cold, emotionless machines. ---
 	else if(isobj(M))
 		jobname = "Machine"
-		voice = capitalize(voice)
 
 	// --- Unidentifiable mob ---
 	else
@@ -557,8 +556,8 @@
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
+/obj/item/device/radio/borg/syndicate/Initialize()
+	. = ..()
 	set_frequency(GLOB.SYND_FREQ)
 
 /obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)

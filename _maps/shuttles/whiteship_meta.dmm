@@ -1747,10 +1747,7 @@
 /area/shuttle/abandoned)
 "db" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/med{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgicaldrill,/obj/item/weapon/razor);
-	desc = "A large dufflebag for holding extra medical supplies - this one seems to be designed for holding surgical tools.";
-	name = "surgical dufflebag";
+/obj/item/weapon/storage/backpack/duffelbag/med/surgery{
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium,

@@ -83,9 +83,24 @@
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
+	var/access_txt // mapping aid
+
+
+
+/obj/item/weapon/card/id/Initialize(mapload)
+	. = ..()
+	if(mapload && access_txt)
+		access = text2access(access_txt)
+
+/obj/item/weapon/card/id/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("assignment","registered_name")
+				update_label()
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [bicon(src)] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return

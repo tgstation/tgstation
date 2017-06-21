@@ -10,7 +10,7 @@
 	girder_type = /obj/structure/girder/cult
 
 /turf/closed/wall/mineral/cult/Initialize()
-	new /obj/effect/overlay/temp/cult/turf(src)
+	new /obj/effect/temp_visual/cult/turf(src)
 	. = ..()
 
 /turf/closed/wall/mineral/cult/devastate_wall()
@@ -39,11 +39,11 @@
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
 
 /turf/closed/wall/mineral/cult/artificer/break_wall()
-	new /obj/effect/overlay/temp/cult/turf(get_turf(src))
+	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 	return null //excuse me we want no runed metal here
 
 /turf/closed/wall/mineral/cult/artificer/devastate_wall()
-	new /obj/effect/overlay/temp/cult/turf(get_turf(src))
+	new /obj/effect/temp_visual/cult/turf(get_turf(src))
 
 //Clockwork wall: Causes nearby tinkerer's caches to generate components.
 /turf/closed/wall/clockwork
@@ -60,8 +60,8 @@
 
 /turf/closed/wall/clockwork/Initialize()
 	..()
-	new /obj/effect/overlay/temp/ratvar/wall(src)
-	new /obj/effect/overlay/temp/ratvar/beam(src)
+	new /obj/effect/temp_visual/ratvar/wall(src)
+	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/wall(src)
 	realappearence.linked = src
 	change_construction_value(5)
@@ -99,7 +99,7 @@
 		devastate_wall()
 		ChangeTurf(/turf/open/floor/plating)
 	else
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, 1)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)

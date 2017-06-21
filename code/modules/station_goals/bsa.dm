@@ -258,6 +258,7 @@
 	data["ready"] = cannon ? cannon.ready : FALSE
 	data["connected"] = cannon
 	data["notice"] = notice
+	data["unlocked"] = GLOB.bsa_unlock
 	if(target)
 		data["target"] = get_target_name()
 	return data
@@ -326,7 +327,7 @@
 	var/datum/effect_system/smoke_spread/s = new
 	s.set_up(4,get_turf(centerpiece))
 	s.start()
-	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),cannon_direction=centerpiece.get_cannon_direction())
+	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),centerpiece.get_cannon_direction())
 	qdel(centerpiece.front)
 	qdel(centerpiece.back)
 	qdel(centerpiece)

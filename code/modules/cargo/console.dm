@@ -8,7 +8,7 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
-	
+
 	light_color = "#E2853D"//orange
 
 /obj/machinery/computer/cargo/request
@@ -106,9 +106,9 @@
 				SSshuttle.supply.contraband = contraband
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
 				say("The supply shuttle has departed.")
-				investigate_log("[key_name(usr)] sent the supply shuttle away.", "cargo")
+				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
-				investigate_log("[key_name(usr)] called the supply shuttle.", "cargo")
+				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
 				say("The supply shuttle has been called and will arrive in [SSshuttle.supply.timeLeft(600)] minutes.")
 				SSshuttle.moveShuttle("supply", "supply_home", TRUE)
 			. = TRUE

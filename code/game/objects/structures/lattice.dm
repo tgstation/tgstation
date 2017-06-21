@@ -50,7 +50,7 @@
 		deconstruct()
 
 /obj/structure/lattice/clockwork
-	name = "clockwork lattice"
+	name = "cog lattice"
 	desc = "A lightweight support lattice. These hold the Justicar's station together."
 	icon = 'icons/obj/smooth_structures/lattice_clockwork.dmi'
 
@@ -102,8 +102,8 @@
 
 /obj/structure/lattice/catwalk/clockwork/Initialize(mapload)
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor/catwalk(loc)
-	new /obj/effect/overlay/temp/ratvar/beam/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/floor/catwalk(loc)
+	new /obj/effect/temp_visual/ratvar/beam/catwalk(loc)
 
 /obj/structure/lattice/catwalk/clockwork/ratvar_act()
 	return

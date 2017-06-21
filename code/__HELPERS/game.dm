@@ -449,15 +449,13 @@
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
 
-	pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
-
-	return candidates
+	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
-
+	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
 		if(!M.key || !M.client || (ignore_category && GLOB.poll_ignore[ignore_category] && M.ckey in GLOB.poll_ignore[ignore_category]))
@@ -472,17 +470,17 @@
 			if(jobban_isbanned(M, jobbanType) || jobban_isbanned(M, "Syndicate"))
 				continue
 
-		showCandidatePollWindow(M, poll_time, Question, group, ignore_category, time_passed, flashwindow)
+		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.
-	for(var/mob/M in group)
+	for(var/mob/M in result)
 		if(!M.key || !M.client)
-			group -= M
+			result -= M
 
-	listclearnulls(group)
+	listclearnulls(result)
 
-	return group
+	return result
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
 	var/list/L = pollGhostCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
@@ -508,7 +506,8 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new//The mob being spawned.
+	SSjob.SendToLateJoin(new_character)
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()

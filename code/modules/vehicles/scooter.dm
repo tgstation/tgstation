@@ -6,7 +6,7 @@
 /obj/vehicle/scooter/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You begin to remove the handlebars...</span>")
-		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
 		if(do_after(user, 40*I.toolspeed, target = src))
 			var/obj/vehicle/scooter/skateboard/S = new /obj/vehicle/scooter/skateboard(get_turf(src))
 			new /obj/item/stack/rods(get_turf(src),2)
@@ -55,7 +55,7 @@
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinal))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
-		H.Weaken(5)
+		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
@@ -84,7 +84,7 @@
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 		new /obj/item/stack/rods(get_turf(src),10)
-		playsound(get_turf(user), 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(get_turf(user), 'sound/items/ratchet.ogg', 50, 1)
 		qdel(src)
 		return
 

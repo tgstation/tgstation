@@ -74,6 +74,7 @@ CREATE TABLE `SS13_ban` (
   `bantime` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) NOT NULL,
   `bantype` enum('PERMABAN','TEMPBAN','JOB_PERMABAN','JOB_TEMPBAN','ADMIN_PERMABAN','ADMIN_TEMPBAN') NOT NULL,
   `reason` varchar(2048) NOT NULL,
   `job` varchar(32) DEFAULT NULL,
@@ -129,10 +130,13 @@ DROP TABLE IF EXISTS `SS13_death`;
 CREATE TABLE `SS13_death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` varchar(50) NOT NULL,
-  `coord` varchar(32) NOT NULL,
+  `x_coord` smallint(5) unsigned NOT NULL,
+  `y_coord` smallint(5) unsigned NOT NULL,
+  `z_coord` smallint(5) unsigned NOT NULL,
   `mapname` varchar(32) NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` varchar(32) NOT NULL,
   `special` varchar(32) DEFAULT NULL,
@@ -140,7 +144,6 @@ CREATE TABLE `SS13_death` (
   `byondkey` varchar(32) NOT NULL,
   `laname` varchar(96) DEFAULT NULL,
   `lakey` varchar(32) DEFAULT NULL,
-  `gender` enum('neuter','male','female','plural') NOT NULL,
   `bruteloss` smallint(5) unsigned NOT NULL,
   `brainloss` smallint(5) unsigned NOT NULL,
   `fireloss` smallint(5) unsigned NOT NULL,
@@ -360,6 +363,29 @@ CREATE TABLE `SS13_poll_vote` (
   PRIMARY KEY (`id`),
   KEY `idx_pvote_pollid_ckey` (`pollid`,`ckey`),
   KEY `idx_pvote_optionid_ckey` (`optionid`,`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SS13_round`
+--
+DROP TABLE IF EXISTS `SS13_round`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_round` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `start_datetime` DATETIME NOT NULL,
+  `end_datetime` DATETIME NULL,
+  `server_ip` INT(10) UNSIGNED NOT NULL,
+  `server_port` SMALLINT(5) UNSIGNED NOT NULL,
+  `commit_hash` CHAR(40) NULL,
+  `game_mode` VARCHAR(32) NULL,
+  `game_mode_result` VARCHAR(64) NULL,
+  `end_state` VARCHAR(64) NULL,
+  `shuttle_name` VARCHAR(64) NULL,
+  `map_name` VARCHAR(32) NULL,
+  `station_name` VARCHAR(80) NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

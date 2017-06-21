@@ -143,7 +143,7 @@
 	else
 		log_msg += "nothing"
 	log_msg += " [sending ? "to" : "from"] [target_x], [target_y], [z] ([A ? A.name : "null area"])"
-	investigate_log(log_msg.Join(), "telesci")
+	investigate_log(log_msg.Join(), INVESTIGATE_TELESCI)
 	updateDialog()
 
 //Starts in the briefcase. Don't spawn this directly, or it will runtime when closing.

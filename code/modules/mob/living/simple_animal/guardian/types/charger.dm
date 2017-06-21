@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/guardian/charger/Move()
 	if(charging)
-		new /obj/effect/overlay/temp/decoy/fading(loc,src)
+		new /obj/effect/temp_visual/decoy/fading(loc,src)
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/charger/snapback()
@@ -59,7 +59,7 @@
 				blocked = 1
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "[name]", src, attack_type = THROWN_PROJECTILE_ATTACK))
+				if(H.check_shields(src, 90, "[name]", attack_type = THROWN_PROJECTILE_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.drop_all_held_items()

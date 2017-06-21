@@ -36,8 +36,6 @@
 	//initialise organs
 	create_internal_organs()
 
-	martial_art = default_martial_art
-
 	handcrafting = new()
 
 	..()
@@ -410,7 +408,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", INVESTIGATE_RECORDS)
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return
@@ -503,7 +501,7 @@
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
-	return !(src.stat || src.weakened || src.stunned || src.restrained())
+	return !(src.stat || src.knockdown || src.stun || src.restrained())
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
@@ -884,7 +882,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Weaken(10)
+			Knockdown(200)
 		return 1
 	..()
 

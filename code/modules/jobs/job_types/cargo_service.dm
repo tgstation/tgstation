@@ -89,11 +89,12 @@ Shaft Miner
 	backpack_contents = list(
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
-		/obj/item/weapon/mining_voucher=1)
+		/obj/item/weapon/mining_voucher=1,\
+		/obj/item/stack/marker_beacon/ten=1)
 
 	backpack = /obj/item/weapon/storage/backpack/explorer
 	satchel = /obj/item/weapon/storage/backpack/satchel/explorer
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag
 	box = /obj/item/weapon/storage/box/survival_mining
 
 /datum/outfit/job/miner/asteroid
@@ -113,7 +114,8 @@ Shaft Miner
 		/obj/item/weapon/kitchen/knife/combat/survival=1,
 		/obj/item/weapon/mining_voucher=1,
 		/obj/item/device/t_scanner/adv_mining_scanner/lesser=1,
-		/obj/item/weapon/gun/energy/kinetic_accelerator=1)
+		/obj/item/weapon/gun/energy/kinetic_accelerator=1,\
+		/obj/item/stack/marker_beacon/ten=1)
 
 /datum/outfit/job/miner/equipped/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -277,4 +279,4 @@ Janitor
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
-	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1, /obj/item/soapstone/empty=1)
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)

@@ -39,7 +39,7 @@
 /obj/item/weapon/gun/energy/decloner/update_icon()
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(power_supply.charge > shot.e_cost)
+	if(cell.charge > shot.e_cost)
 		add_overlay("decloner_spin")
 
 /obj/item/weapon/gun/energy/floragun
@@ -121,7 +121,7 @@
 
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"
-	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
@@ -137,19 +137,19 @@
 
 /obj/item/weapon/gun/energy/plasmacutter/examine(mob/user)
 	..()
-	if(power_supply)
-		to_chat(user, "<span class='notice'>[src] is [round(power_supply.percent())]% charged.</span>")
+	if(cell)
+		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
 /obj/item/weapon/gun/energy/plasmacutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/plasma))
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
-		power_supply.give(1000)
+		cell.give(1000)
 		recharge_newshot(1)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
-		power_supply.give(500)
+		cell.give(500)
 		recharge_newshot(1)
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else
@@ -172,8 +172,8 @@
 	item_state = null
 	icon_state = "wormhole_projector"
 	origin_tech = "combat=4;bluespace=6;plasmatech=4;engineering=4"
-	var/obj/effect/portal/blue
-	var/obj/effect/portal/orange
+	var/obj/effect/portal/p_blue
+	var/obj/effect/portal/p_orange
 
 /obj/item/weapon/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
@@ -184,36 +184,50 @@
 	..()
 	select_fire()
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/portal_destroyed(obj/effect/portal/P)
-	if(P.icon_state == "portal")
-		blue = null
-		if(orange)
-			orange.target = null
-	else
-		orange = null
-		if(blue)
-			blue.target = null
+/obj/item/weapon/gun/energy/wormhole_projector/proc/on_portal_destroy(obj/effect/portal/P)
+	if(P == p_blue)
+		p_blue = null
+	else if(P == p_orange)
+		p_orange = null
 
-/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W)
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
-	P.precision = 0
-	if(W.name == "bluespace beam")
-		qdel(blue)
-		blue = P
-	else
-		qdel(orange)
+/obj/item/weapon/gun/energy/wormhole_projector/proc/has_blue_portal()
+	if(istype(p_blue) && !QDELETED(p_blue))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/has_orange_portal()
+	if(istype(p_orange) && !QDELETED(p_orange))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/crosslink()
+	if(!has_blue_portal() && !has_orange_portal())
+		return
+	if(!has_blue_portal() && has_orange_portal())
+		p_orange.link_portal(null)
+		return
+	if(!has_orange_portal() && has_blue_portal())
+		p_blue.link_portal(null)
+		return
+	p_orange.link_portal(p_blue)
+	p_blue.link_portal(p_orange)
+
+/obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
+	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
+		qdel(p_orange)
+		p_orange = P
 		P.icon_state = "portal1"
-		orange = P
-	if(orange && blue)
-		blue.target = get_turf(orange)
-		orange.target = get_turf(blue)
-
+	else
+		qdel(p_blue)
+		p_blue = P
+	crosslink()
 
 /* 3d printer 'pseudo guns' for borgs */
 
 /obj/item/weapon/gun/energy/printer
 	name = "cyborg lmg"
-	desc = "A machinegun that fires 3d-printed flachettes slowly regenerated using a cyborg's internal power source."
+	desc = "A machinegun that fires 3d-printed flechettes slowly regenerated using a cyborg's internal power source."
 	icon_state = "l6closed0"
 	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
@@ -268,7 +282,7 @@
 
 /obj/item/weapon/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
 	item_state = null

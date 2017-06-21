@@ -1,6 +1,0 @@
-author: "octareenroon91"
-delete-after: True
-changes: 
-  - rscadd: "Ambrosia Deus can now mutate into Gaia, and Gaia into Deus."
-  - rscdel: "A single branch of Ambrosia Gaia will not immediately make a hydroponics tray self-sufficient."
-  - balance: "A (total) dose of 20u Earthsblood (from Gaia) will make a hydroponics tray self-sufficient."

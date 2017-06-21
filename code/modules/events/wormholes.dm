@@ -26,24 +26,20 @@
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
 		var/turf/T = pick(pick_turfs)
-		wormholes += new /obj/effect/portal/wormhole(T, null, null, -1)
+		wormholes += new /obj/effect/portal/wormhole(T, null, 300, null, FALSE)
 
 /datum/round_event/wormholes/announce()
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/AI/spanomalies.ogg')
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", 'sound/ai/spanomalies.ogg')
 
 /datum/round_event/wormholes/tick()
 	if(activeFor % shift_frequency == 0)
 		for(var/obj/effect/portal/wormhole/O in wormholes)
 			var/turf/T = pick(pick_turfs)
 			if(T)
-				O.loc = T
+				O.forceMove(T)
 
 /datum/round_event/wormholes/end()
-	GLOB.portals.Remove(wormholes)
-	for(var/obj/effect/portal/wormhole/O in wormholes)
-		O.loc = null
-	wormholes.Cut()
-
+	QDEL_LIST(wormholes)
 
 /obj/effect/portal/wormhole
 	name = "wormhole"
@@ -70,7 +66,7 @@
 		if(GLOB.portals.len)
 			var/obj/effect/portal/P = pick(GLOB.portals)
 			if(P && isturf(P.loc))
-				target = P.loc
+				hard_target = P.loc
 		if(!target)
 			return
-		do_teleport(M, target, 1, 1, 0, 0) ///You will appear adjacent to the beacon
+		do_teleport(M, hard_target, 1, 1, 0, 0) ///You will appear adjacent to the beacon

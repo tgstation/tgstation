@@ -259,8 +259,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -590,8 +589,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -2259,8 +2257,7 @@
 /obj/machinery/button/door{
 	id = "sekret";
 	name = "shutter control";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/darkred{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4267,8 +4264,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 1;
-	name = "Pirate Radio Listening Channel";
-	pixel_x = 0
+	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/purple{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4350,8 +4346,7 @@
 	dir = 8;
 	freerange = 1;
 	listening = 0;
-	name = "Pirate Radio Broadcast Channel";
-	pixel_x = 0
+	name = "Pirate Radio Broadcast Channel"
 	},
 /turf/open/floor/plasteel/purple{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -4740,7 +4735,7 @@
 /area/awaymission/snowdin/sekret)
 "mx" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg,
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
 	wet = 0
@@ -4943,8 +4938,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 30

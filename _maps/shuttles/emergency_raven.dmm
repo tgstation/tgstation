@@ -123,6 +123,7 @@
 	},
 /area/shuttle/escape)
 "aw" = (
+/obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
 "ax" = (
@@ -168,6 +169,10 @@
 "aE" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/defibrillator/loaded,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
 	},
@@ -216,6 +221,9 @@
 	id = "shuttleflash";
 	pixel_y = -23
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
 	dir = 1
@@ -232,6 +240,9 @@
 	},
 /area/shuttle/escape)
 "aM" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
 	dir = 1
@@ -412,6 +423,9 @@
 	pixel_y = 9
 	},
 /obj/structure/closet/crate/internals,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkyellow/side{
 	tag = "icon-darkyellow (NORTHEAST)";
 	icon_state = "darkyellow";
@@ -516,6 +530,9 @@
 	pixel_y = 8
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
@@ -918,6 +935,9 @@
 /area/shuttle/escape)
 "ch" = (
 /obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
 	icon_state = "darkgreen";
@@ -926,6 +946,10 @@
 /area/shuttle/escape)
 "ci" = (
 /obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 5
 	},
@@ -1040,9 +1064,9 @@
 	name = "Bridge Blast Shutters";
 	pixel_x = 0;
 	pixel_y = -26;
-	req_access_txt = "150";
-	pixel_x = 0
+	req_access_txt = "19"
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/darkblue/side,
 /area/shuttle/escape)
 "cA" = (
@@ -1482,9 +1506,145 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
 	},
+/area/shuttle/escape)
+"eC" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/darkpurple/side{
+	dir = 4
+	},
+/area/shuttle/escape)
+"eD" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/brig{
+	dir = 8;
+	floor_tile = /obj/item/stack/tile/plasteel;
+	icon_state = "darkred"
+	},
+/area/shuttle/escape)
+"eE" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	tag = "icon-darkgreen (NORTH)";
+	icon_state = "darkgreen";
+	dir = 1
+	},
+/area/shuttle/escape)
+"eF" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/escape)
+"eG" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	tag = "icon-darkgreen (NORTH)";
+	icon_state = "darkgreen";
+	dir = 1
+	},
+/area/shuttle/escape)
+"eH" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/escape)
+"eI" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/escape)
+"eJ" = (
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/obj/machinery/light,
+/turf/open/floor/mineral/titanium/blue,
+/area/space)
+"eK" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	tag = "icon-darkgreen (NORTH)";
+	icon_state = "darkgreen";
+	dir = 1
+	},
+/area/shuttle/escape)
+"eL" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	tag = "icon-darkgreen (NORTH)";
+	icon_state = "darkgreen";
+	dir = 1
+	},
+/area/shuttle/escape)
+"eM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	tag = "icon-darkgreen (NORTH)";
+	icon_state = "darkgreen";
+	dir = 1
+	},
+/area/shuttle/escape)
+"eN" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/escape)
+"eO" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 8
+	},
+/area/shuttle/escape)
+"eP" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/escape)
+"eQ" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 4
+	},
+/area/shuttle/escape)
+"eR" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen/side,
+/area/shuttle/escape)
+"eS" = (
+/obj/machinery/light,
+/turf/open/floor/plasteel/darkgreen/side,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -1531,7 +1691,7 @@ cs
 ar
 aW
 bc
-bc
+eD
 bc
 bc
 bc
@@ -1545,7 +1705,7 @@ cu
 bF
 be
 be
-be
+eO
 be
 be
 cd
@@ -1604,19 +1764,19 @@ cu
 cu
 cs
 ar
-br
+eG
 aC
-bz
+eH
 ar
 bT
 bo
-br
+eK
 bZ
 ca
 aC
 bZ
 ca
-bz
+eR
 ab
 ch
 ar
@@ -1636,7 +1796,7 @@ be
 be
 be
 be
-be
+eF
 be
 bG
 aC
@@ -1712,13 +1872,13 @@ bP
 ar
 bU
 bo
-br
+eL
 bZ
 ca
 aC
 bZ
 ca
-bz
+eS
 ab
 ci
 ar
@@ -1742,7 +1902,7 @@ bz
 cs
 bH
 bG
-bz
+eI
 cs
 cs
 cs
@@ -1771,7 +1931,7 @@ bb
 bf
 bk
 cs
-br
+eE
 bz
 cs
 bI
@@ -1884,9 +2044,9 @@ aa
 cs
 cs
 cs
-br
+eM
 aC
-bz
+eP
 cs
 cs
 cs
@@ -1946,7 +2106,7 @@ bB
 cu
 ad
 ad
-ad
+eJ
 ad
 cu
 br
@@ -2004,7 +2164,7 @@ ar
 aE
 aI
 aO
-aV
+eC
 aV
 bi
 bm
@@ -2020,9 +2180,9 @@ cs
 bW
 aZ
 aZ
+eN
 aZ
-aZ
-aZ
+eQ
 aZ
 aZ
 ce

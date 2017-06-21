@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(timer)
 	wait = 1 //SS_TICKER subsystem, so wait is in ticks
 	init_order = INIT_ORDER_TIMER
 
-	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER|SS_NO_INIT
 
 	var/list/datum/timedevent/processing = list()
 	var/list/hashes = list()
@@ -365,10 +365,13 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
 	if (flags & TIMER_STOPPABLE)
 		return timer.id
+	return TIMER_ID_NULL
 
 /proc/deltimer(id)
 	if (!id)
 		return FALSE
+	if (id == TIMER_ID_NULL)
+		CRASH("Tried to delete a null timerid. Use TIMER_STOPPABLE flag")
 	if (!istext(id))
 		if (istype(id, /datum/timedevent))
 			qdel(id)

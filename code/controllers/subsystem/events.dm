@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = INIT_ORDER_EVENTS
+	runlevels = RUNLEVEL_GAME
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -69,7 +70,10 @@ SUBSYSTEM_DEF(events)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			continue
 		if(E.weight < 0)						//for round-start events etc.
-			if(TriggerEvent(E))
+			var/res = TriggerEvent(E)
+			if(res == EVENT_INTERRUPTED)
+				continue	//like it never happened
+			if(res == EVENT_CANT_RUN)
 				return
 		sum_of_weights += E.weight
 
@@ -88,7 +92,7 @@ SUBSYSTEM_DEF(events)
 	. = E.preRunEvent()
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
-	else if(. != EVENT_CANCELLED)
+	else if(. == EVENT_READY)
 		E.runEvent(TRUE)
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
@@ -104,7 +108,7 @@ SUBSYSTEM_DEF(events)
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.
 	var/list/danger_areas = list(
 	/area/engine/break_room,
-	/area/engine/chiefs_office)
+	/area/crew_quarters/heads/chief)
 
 	//Need to locate() as it's just a list of paths.
 	return locate(pick((GLOB.the_station_areas - safe_areas) + danger_areas))

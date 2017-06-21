@@ -6,14 +6,12 @@
 	var/category
 	var/id
 
+
 /datum/gang_item/proc/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool, check_canbuy = TRUE)
 	if(check_canbuy && !can_buy(user, gang, gangtool))
 		return FALSE
 	var/real_cost = get_cost(user, gang, gangtool)
-	if(gang && real_cost)
-		gang.message_gangtools("A [get_name_display(user, gang, gangtool)] was purchased by [user.real_name] for [real_cost] Influence.")
-		log_game("A [id] was purchased by [key_name(user)] ([gang.name] Gang) for [real_cost] Influence.")
-	gang.points -= real_cost
+	gang.adjust_influence(user.mind, -real_cost)
 	spawn_item(user, gang, gangtool)
 	return TRUE
 
@@ -25,7 +23,7 @@
 		to_chat(user, spawn_msg)
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gang && (gang.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
+	return gang && (gang.get_influence(user.mind) >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
 
 /datum/gang_item/proc/can_see(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return TRUE
@@ -78,23 +76,115 @@
 		gangtool.recall(user)
 
 
-/datum/gang_item/function/outfit
-	name = "Create Armored Gang Outfit"
-	id = "outfit"
+///////////////////
+//CLOTHING
+///////////////////
 
-/datum/gang_item/function/outfit/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	return gangtool && (gangtool.outfits > 0) && ..()
+/datum/gang_item/clothing
+	category = "Purchase Influence-Enhancing Clothes:"
 
-/datum/gang_item/function/outfit/get_cost_display(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	if(gangtool && !gangtool.outfits)
-		return "(Restocking)"
-	return ..()
+/datum/gang_item/clothing/under
+	name = "Gang Uniform"
+	id = "under"
+	cost = 1
 
-/datum/gang_item/function/outfit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
-	if(gang && gang.gang_outfit(user, gangtool))
-		to_chat(user, "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>")
-		if(gangtool)
-			gangtool.outfits -= 1
+/datum/gang_item/clothing/under/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(gang.inner_outfit)
+		var/obj/item/O = new gang.inner_outfit(user.loc)
+		user.put_in_hands(O)
+		to_chat(user, "<span class='notice'> This is your gang's official uniform, wearing it will increase your influence")
+
+/datum/gang_item/clothing/suit
+	name = "Gang Armored Outerwear"
+	id = "suit"
+	cost = 1
+
+/datum/gang_item/clothing/suit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
+	if(gang.outer_outfit)
+		var/obj/item/O = new gang.outer_outfit(user.loc)
+		O.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
+		O.desc += " Tailored for the [gang.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
+		user.put_in_hands(O)
+		to_chat(user, "<span class='notice'> This is your gang's official outerwear, wearing it will increase your influence")
+
+
+/datum/gang_item/clothing/hat
+	name = "Pimp Hat"
+	id = "hat"
+	cost = 16
+	item_path = /obj/item/clothing/head/collectable/petehat/gang
+
+/obj/item/clothing/head/collectable/petehat/gang
+	name = "pimpin' hat"
+	desc = "The undisputed king of style."
+
+/obj/item/clothing/head/collectable/petehat/gang/gang_contraband_value()
+	return 4
+
+/datum/gang_item/clothing/mask
+	name = "Golden Death Mask"
+	id = "mask"
+	cost = 18
+	item_path = /obj/item/clothing/mask/gskull
+
+/obj/item/clothing/mask/gskull
+	name = "golden death mask"
+	icon_state = "gskull"
+	desc = "Strike terror, and envy, into the hearts of your enemies."
+
+/obj/item/clothing/mask/gskull/gang_contraband_value()
+	return 5
+
+/datum/gang_item/clothing/shoes
+	name = "Bling Boots"
+	id = "boots"
+	cost = 22
+	item_path = /obj/item/clothing/shoes/gang
+
+/obj/item/clothing/shoes/gang
+	name = "blinged-out boots"
+	desc = "Stand aside peasants."
+	icon_state = "bling"
+
+/obj/item/clothing/shoes/gang/gang_contraband_value()
+	return 6
+
+/datum/gang_item/clothing/neck
+	name = "Gold Necklace"
+	id = "necklace"
+	cost = 9
+	item_path = /obj/item/clothing/neck/necklace/dope
+
+/datum/gang_item/clothing/hands
+	name = "Decorative Brass Knuckles"
+	id = "hand"
+	cost = 11
+	item_path = /obj/item/clothing/gloves/gang
+
+/obj/item/clothing/gloves/gang
+	name = "braggadocio's brass knuckles"
+	desc = "Purely decorative, don't find out the hard way."
+	icon_state = "knuckles"
+	w_class = 3
+
+/obj/item/clothing/gloves/gang/gang_contraband_value()
+	return 3
+
+/datum/gang_item/clothing/belt
+	name = "Badass Belt"
+	id = "belt"
+	cost = 13
+	item_path = /obj/item/weapon/storage/belt/military/gang
+
+/obj/item/weapon/storage/belt/military/gang
+	name = "badass belt"
+	icon_state = "gangbelt"
+	item_state = "gang"
+	desc = "The belt buckle simply reads 'BAMF'."
+	storage_slots = 1
+
+/obj/item/weapon/storage/belt/military/gang/gang_contraband_value()
+	return 4
 
 ///////////////////
 //WEAPONS
@@ -120,10 +210,34 @@
 	cost = 5
 	item_path = /obj/item/weapon/switchblade
 
+/datum/gang_item/weapon/surplus
+	name = "Surplus Rifle"
+	id = "surplus"
+	cost = 8
+	item_path = /obj/item/weapon/gun/ballistic/automatic/surplus
+
+/datum/gang_item/weapon/ammo/surplus_ammo
+	name = "Surplus Rifle Ammo"
+	id = "surplus_ammo"
+	cost = 5
+	item_path = /obj/item/ammo_box/magazine/m10mm/rifle
+
+/datum/gang_item/weapon/improvised
+	name = "Sawn-Off Improvised Shotgun"
+	id = "sawn"
+	cost = 6
+	item_path = /obj/item/weapon/gun/ballistic/revolver/doublebarrel/improvised/sawn
+
+/datum/gang_item/weapon/ammo/improvised_ammo
+	name = "Box of Buckshot"
+	id = "buckshot"
+	cost = 5
+	item_path = /obj/item/weapon/storage/box/lethalshot
+
 /datum/gang_item/weapon/pistol
 	name = "10mm Pistol"
 	id = "pistol"
-	cost = 25
+	cost = 30
 	item_path = /obj/item/weapon/gun/ballistic/automatic/pistol
 
 /datum/gang_item/weapon/ammo/pistol_ammo
@@ -133,30 +247,44 @@
 	item_path = /obj/item/ammo_box/magazine/m10mm
 
 /datum/gang_item/weapon/sniper
-	name = ".50cal Sniper Rifle"
+	name = "Black Market .50cal Sniper Rifle"
 	id = "sniper"
 	cost = 40
-	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
+	item_path = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
 
 /datum/gang_item/weapon/ammo/sniper_ammo
-	name = "Standard .50cal Sniper Rounds"
+	name = "Smuggled .50cal Sniper Rounds"
 	id = "sniper_ammo"
 	cost = 15
-	item_path = /obj/item/ammo_box/magazine/sniper_rounds
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang
+
+
+/datum/gang_item/weapon/ammo/sleeper_ammo
+	name = "Illicit Tranquilizer Cartridges"
+	id = "sniper_ammo"
+	cost = 15
+	item_path = /obj/item/ammo_box/magazine/sniper_rounds/gang/sleeper
+
+
+/datum/gang_item/weapon/machinegun
+	name = "Mounted Machine Gun"
+	id = "MG"
+	cost = 50
+	item_path = /obj/machinery/manned_turret
+	spawn_msg = "<span class='notice'>The mounted machine gun features enhanced responsiveness. Hold down on the trigger while firing to control where you're shooting.</span>"
 
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
 	id = "uzi"
 	cost = 60
 	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
-	id = "uzi"
+
 
 /datum/gang_item/weapon/ammo/uzi_ammo
 	name = "Uzi Ammo"
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-
 
 ///////////////////
 //EQUIPMENT
@@ -178,12 +306,6 @@
 	cost = 3
 	item_path = /obj/item/weapon/sharpener
 
-/datum/gang_item/equipment/necklace
-	name = "Gold Necklace"
-	id = "necklace"
-	cost = 1
-	item_path = /obj/item/clothing/neck/necklace/dope
-
 
 /datum/gang_item/equipment/emp
 	name = "EMP Grenade"
@@ -200,13 +322,13 @@
 /datum/gang_item/equipment/frag
 	name = "Fragmentation Grenade"
 	id = "frag nade"
-	cost = 10
+	cost = 18
 	item_path = /obj/item/weapon/grenade/syndieminibomb/concussion/frag
 
 /datum/gang_item/equipment/stimpack
 	name = "Black Market Stimulants"
 	id = "stimpack"
-	cost = 15
+	cost = 12
 	item_path = /obj/item/weapon/reagent_containers/syringe/stimulants
 
 /datum/gang_item/equipment/implant_breaker
@@ -222,6 +344,18 @@
 		user.put_in_hands(O)
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
+
+/datum/gang_item/equipment/wetwork_boots
+	name = "Wetwork boots"
+	id = "wetwork"
+	cost = 20
+	item_path = /obj/item/clothing/shoes/combat/gang
+
+/obj/item/clothing/shoes/combat/gang
+	name = "Wetwork boots"
+	desc = "A gang's best hitmen are prepared for anything."
+	permeability_coefficient = 0.01
+	flags = NOSLIP
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
@@ -297,7 +431,7 @@
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
+	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != ZLEVEL_STATION)
 		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
 		return FALSE
 
@@ -307,7 +441,7 @@
 			return FALSE
 
 	if(dominator_excessive_walls(user))
-		to_chat(user, "span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
+		to_chat(user, "<span class='warning'>The <b>dominator</b> will not function here! The <b>dominator</b> requires a sizable open space within three standard units so that walls do not interfere with the signal.</span>")
 		return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))

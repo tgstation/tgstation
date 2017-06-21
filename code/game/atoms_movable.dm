@@ -42,6 +42,30 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
+	switch(var_name)
+		if("x")
+			var/turf/T = locate(var_value, y, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("y")
+			var/turf/T = locate(x, var_value, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("z")
+			var/turf/T = locate(x, y, var_value)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("loc")
+			if(var_value == null || istype(var_value, /atom))
+				forceMove(var_value)
+				return TRUE
+			return FALSE
 	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -174,6 +198,8 @@
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 
+	unbuckle_all_mobs(force=1)
+
 	. = ..()
 	if(loc)
 		loc.handle_atom_del(src)
@@ -187,7 +213,8 @@
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
-/atom/movable/Crossed(atom/movable/AM)
+//oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
+/atom/movable/Crossed(atom/movable/AM, oldloc)
 	return
 
 /atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
@@ -223,7 +250,7 @@
 			for(var/atom/movable/AM in destination)
 				if(AM == src)
 					continue
-				AM.Crossed(src)
+				AM.Crossed(src, oldloc)
 
 		Moved(oldloc, 0)
 		return 1
@@ -566,7 +593,7 @@
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION || currentturf.z == ZLEVEL_TRANSIT))
 		. = TRUE
 
 
@@ -601,6 +628,10 @@
 /atom/movable/proc/has_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()
 	. = H.has_language(dt)
+
+/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.copy_known_languages_from(thing, replace)
 
 // Whether an AM can speak in a language or not, independent of whether
 // it KNOWS the language
@@ -652,3 +683,14 @@
 	set waitfor = FALSE
 	if(!anchored && has_gravity())
 		step(src, movedir)
+
+//Returns an atom's power cell, if it has one. Overload for individual items.
+/atom/movable/proc/get_cell()
+	return
+
+/atom/movable/proc/can_be_pulled(user)
+	if(src == user || !isturf(loc))
+		return FALSE
+	if(anchored || throwing)
+		return FALSE
+	return TRUE

@@ -24,7 +24,7 @@
 	maxHealth = 40
 	melee_damage_lower = 1
 	melee_damage_upper = 2
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
@@ -144,7 +144,7 @@
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>",
 			"<span class='notice'>You tip over [src].</span>")
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
-		Weaken(30)
+		Knockdown(60)
 		icon_state = icon_dead
 		spawn(rand(20,50))
 			if(!stat && M)

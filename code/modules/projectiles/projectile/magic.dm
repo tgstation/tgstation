@@ -277,6 +277,8 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
+	to_chat(new_mob, config.policies["polymorph"])
+
 	qdel(M)
 	return new_mob
 
@@ -351,21 +353,9 @@
 
 /obj/item/projectile/magic/aoe/Range()
 	if(proxdet)
-		var/turf/T1 = get_step(src,turn(dir, -45))
-		var/turf/T2 = get_step(src,turn(dir, 45))
-		var/turf/T3 = get_step(src,dir)
-		var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
-		if(L && L.stat != DEAD)
-			Bump(L,1) //Magic Bullet #teachthecontroversy
-			return
-		L = locate(/mob/living) in T2
-		if(L && L.stat != DEAD)
-			Bump(L,1)
-			return
-		L = locate(/mob/living) in T3
-		if(L && L.stat != DEAD)
-			Bump(L,1)
-			return
+		for(var/mob/living/L in range(1, get_turf(src)))
+			if(L.stat != DEAD && L != firer)
+				return Bump(L, TRUE)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning
@@ -424,3 +414,9 @@
 	exp_light = -1
 	exp_flash = 4
 	exp_fire= 5
+
+/obj/item/projectile/magic/aoe/fireball/infernal/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	for(var/i=0, i<50, i+=10)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)

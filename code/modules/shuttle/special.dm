@@ -104,7 +104,7 @@
 	// Existing sleepers
 	for(var/i in found)
 		var/mob/living/L = i
-		L.SetSleeping(10)
+		L.SetSleeping(200)
 
 	// Missing sleepers
 	for(var/i in sleepers - found)
@@ -192,7 +192,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Weaken(2)
+		M.Knockdown(40)
 		M.throw_at(throwtarget, 5, 1,src)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
@@ -254,7 +254,7 @@
 /mob/living/simple_animal/hostile/bear/fightpit
 	name = "fight pit bear"
 	desc = "This bear's trained through ancient Russian secrets to fear the walls of its glass prison."
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 
 /obj/effect/decal/hammerandsickle
 	name = "hammer and sickle"

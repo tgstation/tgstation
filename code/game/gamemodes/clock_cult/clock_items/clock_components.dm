@@ -69,7 +69,7 @@
 /obj/item/clockwork/component/vanguard_cogwheel/onyx_prism
 	name = "onyx prism"
 	desc = "An onyx prism with a small aperture. It's very heavy."
-	clockwork_desc = "A broken prism from a mending motor. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
+	clockwork_desc = "A broken prism from a prolonging prism. <b>Serviceable as a substitute for a vanguard cogwheel.</b>"
 	icon_state = "onyx_prism"
 	cultist_message = "The prism grows painfully hot in your hands."
 	servant_of_ratvar_messages = list("The prism isn't getting any lighter." = FALSE, "\"So... you haven't failed yet. Have hope, child.\"" = TRUE, \
@@ -153,45 +153,56 @@
 	icon_state = "obelisk_prism"
 	w_class = WEIGHT_CLASS_NORMAL
 
-//Shards of Alloy, suitable only for proselytization.
+//Shards of Alloy, suitable only as a source of power for a replica fabricator.
 /obj/item/clockwork/alloy_shards
 	name = "replicant alloy shards"
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
-	clockwork_desc = "Broken shards of replicant alloy. Can be proselytized for additional power."
+	clockwork_desc = "Broken shards of replicant alloy."
 	icon_state = "alloy_shards"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/randomsinglesprite = FALSE
 	var/randomspritemax = 2
+	var/sprite_shift = 9
 
 /obj/item/clockwork/alloy_shards/Initialize()
 	. = ..()
 	if(randomsinglesprite)
 		replace_name_desc()
 		icon_state = "[icon_state][rand(1, randomspritemax)]"
-		pixel_x = rand(-9, 9)
-		pixel_y = rand(-9, 9)
+		pixel_x = rand(-sprite_shift, sprite_shift)
+		pixel_y = rand(-sprite_shift, sprite_shift)
+
+/obj/item/clockwork/alloy_shards/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		to_chat(user, "<span class='brass'>Can be consumed by a replica fabricator as a source of power.</span>")
 
 /obj/item/clockwork/alloy_shards/proc/replace_name_desc()
 	name = "replicant alloy shard"
 	desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
-	clockwork_desc = "A broken shard of replicant alloy. Can be proselytized for additional power."
+	clockwork_desc = "A broken shard of replicant alloy."
 
 /obj/item/clockwork/alloy_shards/large
+	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
 	icon_state = "shard_large"
+	sprite_shift = 9
 
 /obj/item/clockwork/alloy_shards/medium
+	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
 	icon_state = "shard_medium"
+	sprite_shift = 10
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit
 	randomspritemax = 4
 	icon_state = "gear_bit"
+	sprite_shift = 12
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/replace_name_desc()
 	name = "gear bit"
 	desc = "A broken chunk of a gear. You want it."
-	clockwork_desc = "A broken chunk of a gear. Can be proselytized for additional power."
+	clockwork_desc = "A broken chunk of a gear."
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/large //gives more power
 
@@ -200,12 +211,14 @@
 	name = "complex gear bit"
 
 /obj/item/clockwork/alloy_shards/small
+	w_class = WEIGHT_CLASS_TINY
 	randomsinglesprite = TRUE
 	randomspritemax = 3
 	icon_state = "shard_small"
+	sprite_shift = 12
 
 /obj/item/clockwork/alloy_shards/pinion_lock
 	name = "pinion lock"
 	desc = "A dented and scratched gear. It's very heavy."
-	clockwork_desc = "A broken gear lock for pinion airlocks. Can be proselytized for additional power."
+	clockwork_desc = "A broken gear lock for pinion airlocks."
 	icon_state = "pinion_lock"

@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - spellcheck: "The names of several objects, such as the holopad and biogenerator, have been lowercased."
+  - spellcheck: "Added some descriptions to a few objects that lacked them."

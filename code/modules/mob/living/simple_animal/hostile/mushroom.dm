@@ -20,7 +20,7 @@
 	attacktext = "chomps"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1

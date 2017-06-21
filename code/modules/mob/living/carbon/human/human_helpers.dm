@@ -66,12 +66,21 @@
 	var/obj/item/weapon/storage/wallet/wallet = wear_id
 	var/obj/item/device/pda/pda = wear_id
 	var/obj/item/weapon/card/id/id = wear_id
+	var/obj/item/device/modular_computer/tablet/tablet = wear_id
 	if(istype(wallet))
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
 	else if(istype(pda))
 		. = pda.owner
+	else if(istype(tablet))
+		var/obj/item/weapon/computer_hardware/card_slot/card_slot = tablet.all_components[MC_CARD]
+		if(card_slot && (card_slot.stored_card2 || card_slot.stored_card))
+			if(card_slot.stored_card2) //The second card is the one used for authorization in the ID changing program, so we prioritize it here for consistency
+				. = card_slot.stored_card2.registered_name
+			else
+				if(card_slot.stored_card)
+					. = card_slot.stored_card.registered_name
 	if(!.)
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
@@ -144,9 +153,9 @@
 		if(NOGUNS in src.dna.species.species_traits)
 			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return 0
-
-	if(martial_art && martial_art.no_guns) //great dishonor to famiry
-		to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
-		return 0
+	if(mind)
+		if(mind.martial_art && mind.martial_art.no_guns) //great dishonor to famiry
+			to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
+			return 0
 
 	return .

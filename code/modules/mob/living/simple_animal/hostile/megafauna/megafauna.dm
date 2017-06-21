@@ -8,7 +8,7 @@
 	maxHealth = 1000
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
-	environment_smash = 3
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
 	light_range = 3
 	faction = list("mining", "boss")
@@ -34,6 +34,7 @@
 	/obj/structure/barricade,
 	/obj/machinery/field,
 	/obj/machinery/power/emitter)
+	var/list/crusher_loot
 	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
@@ -44,6 +45,10 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
 
+/mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
+	. = ..()
+	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
@@ -52,11 +57,18 @@
 	if(health > 0)
 		return
 	else
+		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+		if(C && crusher_loot)
+			if(C.total_damage >= maxHealth * 0.60) //if you do at least 60% of its health with the crusher, you'll get the item
+				spawn_crusher_loot()
 		if(!admin_spawned)
 			SSblackbox.set_details("megafauna_kills","[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
+	loot = crusher_loot
 
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)

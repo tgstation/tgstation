@@ -63,7 +63,10 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
+	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
+	/client/proc/deadchat,
+	/client/proc/toggleprayers,
+	/client/proc/toggleadminhelpsound
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel,/client/proc/DB_ban_panel,/client/proc/stickybanpanel))
@@ -78,7 +81,6 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/drop_dynex_bomb,
 	/client/proc/cinematic,
 	/client/proc/one_click_antag,
-	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/object_say,
 	/client/proc/toggle_random_events,
@@ -193,7 +195,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/get_dynex_power,
 	/client/proc/set_dynex_scale,
 	/client/proc/cinematic,
-	/client/proc/send_space_ninja,
 	/client/proc/cmd_admin_add_freeform_ai_law,
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_change_command_name,

@@ -105,7 +105,6 @@
 /area/ruin/powered)
 "as" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -228,7 +227,6 @@
 /area/ruin/unpowered/no_grav)
 "aO" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,
@@ -634,7 +632,6 @@
 /area/ruin/unpowered)
 "cb" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,

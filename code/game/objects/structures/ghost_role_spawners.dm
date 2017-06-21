@@ -29,6 +29,7 @@
 	return ..()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
+
 /obj/effect/mob_spawn/human/ash_walker
 	name = "ash walker egg"
 	desc = "A man-sized yellow egg, spawned from some unfathomable creature. A humanoid silhouette lurks within."
@@ -36,8 +37,7 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator/ash_walker
+	outfit = /datum/outfit/ashwalker
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0
@@ -58,11 +58,17 @@
 		H.underwear = "Nude"
 		H.update_body()
 
-/obj/effect/mob_spawn/human/ash_walker/New()
-	..()
+/obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
+	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+
+/datum/outfit/ashwalker
+	name ="Ashwalker"
+	head = /obj/item/clothing/head/helmet/gladiator
+	uniform = /obj/item/clothing/under/gladiator/ash_walker
+
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
@@ -149,8 +155,10 @@
 
 /obj/effect/mob_spawn/human/golem/attack_hand(mob/user)
 	if(isgolem(user) && can_transfer)
-		var/transfer = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
-		if(!transfer)
+		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
+		if(transfer_choice != "Yes")
+			return
+		if(QDELETED(src) || uses <= 0)
 			return
 		log_game("[user.ckey] golem-swapped into [src]")
 		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
@@ -186,38 +194,38 @@
 	conditions of your makeshift shelter, the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
 
-/obj/effect/mob_spawn/human/hermit/New()
+/obj/effect/mob_spawn/human/hermit/Initialize(mapload)
+	. = ..()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(1)
 			flavour_text += "you were a [pick("arms dealer", "shipwright", "docking manager")]'s assistant on a small trading station several sectors from here. Raiders attacked, and there was \
 			only one pod left when you got to the escape bay. You took it and launched it alone, and the crowd of terrified faces crowding at the airlock door as your pod's engines burst to \
 			life and sent you to this hell are forever branded into your memory.</b>"
-			uniform = /obj/item/clothing/under/assistantformal
-			shoes = /obj/item/clothing/shoes/sneakers/black
-			back = /obj/item/weapon/storage/backpack
+			outfit.uniform = /obj/item/clothing/under/assistantformal
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
+			outfit.back = /obj/item/weapon/storage/backpack
 		if(2)
 			flavour_text += "you're an exile from the Tiger Cooperative. Their technological fanaticism drove you to question the power and beliefs of the Exolitics, and they saw you as a \
 			heretic and subjected you to hours of horrible torture. You were hours away from execution when a high-ranking friend of yours in the Cooperative managed to secure you a pod, \
 			scrambled its destination's coordinates, and launched it. You awoke from stasis when you landed and have been surviving - barely - ever since.</b>"
-			uniform = /obj/item/clothing/under/rank/prisoner
-			shoes = /obj/item/clothing/shoes/sneakers/orange
-			back = /obj/item/weapon/storage/backpack
+			outfit.uniform = /obj/item/clothing/under/rank/prisoner
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/orange
+			outfit.back = /obj/item/weapon/storage/backpack
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there.</b>"
-			uniform = /obj/item/clothing/under/rank/medical
-			suit = /obj/item/clothing/suit/toggle/labcoat
-			back = /obj/item/weapon/storage/backpack/medic
-			shoes = /obj/item/clothing/shoes/sneakers/black
+			outfit.uniform = /obj/item/clothing/under/rank/medical
+			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
+			outfit.back = /obj/item/weapon/storage/backpack/medic
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
 		if(4)
 			flavour_text += "you were always joked about by your friends for \"not playing with a full deck\", as they so <i>kindly</i> put it. It seems that they were right when you, on a tour \
 			at one of Nanotrasen's state-of-the-art research facilities, were in one of the escape pods alone and saw the red button. It was big and shiny, and it caught your eye. You pressed \
 			it, and after a terrifying and fast ride for days, you landed here. You've had time to wisen up since then, and you think that your old friends wouldn't be laughing now.</b>"
-			uniform = /obj/item/clothing/under/color/grey/glorf
-			shoes = /obj/item/clothing/shoes/sneakers/black
-			back = /obj/item/weapon/storage/backpack
-	..()
+			outfit.uniform = /obj/item/clothing/under/color/grey/glorf
+			outfit.shoes = /obj/item/clothing/shoes/sneakers/black
+			outfit.back = /obj/item/weapon/storage/backpack
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
@@ -239,10 +247,7 @@
 	mob_name = "an escaped prisoner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	outfit = /datum/outfit/lavalandprisoner
 	roundstart = FALSE
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
@@ -252,12 +257,20 @@
 	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
 	L.name = L.real_name
 
-/obj/effect/mob_spawn/human/prisoner_transport/New()
+/obj/effect/mob_spawn/human/prisoner_transport/Initialize(mapload)
+	. = ..()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
 	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
 	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
-	..()
+
+/datum/outfit/lavalandprisoner
+	name = "Lavaland Prisoner"
+	uniform = /obj/item/clothing/under/rank/prisoner
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/sneakers/orange
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
@@ -270,30 +283,38 @@
 	mob_name = "hotel staff member"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	uniform = /obj/item/clothing/under/assistantformal
-	shoes = /obj/item/clothing/shoes/laceup
-	pocket1 = /obj/item/device/radio/off
-	back = /obj/item/weapon/storage/backpack
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
-	implants = list(/obj/item/weapon/implant/mindshield)
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
+	outfit = /datum/outfit/hotelstaff
 	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
 		dereliction of duty!"
+
+/datum/outfit/hotelstaff
+	name = "Hotel Staff"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	r_pocket = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
 	mob_name = "hotel security memeber"
-	uniform = /obj/item/clothing/under/rank/security/blueshirt
-	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/armor/vest/blueshirt
-	helmet = /obj/item/clothing/head/helmet/blueshirt
-	back = /obj/item/weapon/storage/backpack/security
-	belt = /obj/item/weapon/storage/belt/security/full
+	outfit = /datum/outfit/hotelstaff/security
 	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
 		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+
+/datum/outfit/hotelstaff/security
+	name = "Hotel Secuirty"
+	uniform = /obj/item/clothing/under/rank/security/blueshirt
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	head = /obj/item/clothing/head/helmet/blueshirt
+	back = /obj/item/weapon/storage/backpack/security
+	belt = /obj/item/weapon/storage/belt/security/full
 
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
@@ -305,22 +326,17 @@
 	mob_name = "Demonic friend"
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
-	uniform = /obj/item/clothing/under/assistantformal
-	shoes = /obj/item/clothing/shoes/laceup
-	pocket1 = /obj/item/device/radio/off
-	back = /obj/item/weapon/storage/backpack
-	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
+	outfit = /datum/outfit/demonic_friend
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
-	has_id = TRUE
 	id_job = "SuperFriend"
 	id_access = "assistant"
 	var/obj/effect/proc_holder/spell/targeted/summon_friend/spell
 	var/datum/mind/owner
 
 /obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
-	..()
+	. = ..()
 	owner = owner_mind
 	flavour_text = "You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for their short mortal coil.  Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell."
 	var/area/A = get_area(src)
@@ -347,3 +363,77 @@
 		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
 		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
 
+/datum/outfit/demonic_friend
+	name = "Demonic Friend"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	r_pocket = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/mindshield) //No revolutionaries, he's MY friend.
+	id = /obj/item/weapon/card/id
+
+/obj/effect/mob_spawn/human/syndicate
+	name = "Syndicate Operative"
+	roundstart = FALSE
+	death = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	id_access_list = list(GLOB.access_syndicate)
+	outfit = /datum/outfit/syndicate_empty
+
+/datum/outfit/syndicate_empty
+	name = "Syndicate Operative Empty"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset/syndicate/alt
+	back = /obj/item/weapon/storage/backpack
+	implants = list(/obj/item/weapon/implant/weapons_auth)
+	id = /obj/item/weapon/card/id
+
+/datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
+	H.faction |= "syndicate"
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser
+	name = "Syndicate Battlecruiser Ship Operative"
+	flavour_text = "<font size=3>You are a crewmember aboard the syndicate flagship: the SBC Starfury. <span class='danger'><b>Your job is to follow your captain's orders, maintain the ship, and keep the engine running.</b></span> If you are not familiar with how the supermatter engine functions: <b>do not attempt to start it.</b><br><br><span class='danger'><b>The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives.</b></span></font>"
+	outfit = /datum/outfit/syndicate_empty/SBC
+
+/datum/outfit/syndicate_empty/SBC
+	name = "Syndicate Battlecruiser Ship Operative"
+	l_pocket = /obj/item/weapon/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
+	belt = /obj/item/weapon/storage/belt/military/assault
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/assault
+	name = "Syndicate Battlecruiser Assault Operative"
+	flavour_text = "<font size=3>You are an assault operative aboard the syndicate flagship: the SBC Starfury. <span class='danger'><b>Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13.</b></span> There is an armory, multiple assault ships, and beam cannons to attack the station with.<br><br><span class='danger'><b>Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!</b></span></font>"
+	outfit = /datum/outfit/syndicate_empty/SBC/assault
+
+/datum/outfit/syndicate_empty/SBC/assault
+	name = "Syndicate Battlecruiser Assault Operative"
+	uniform = /obj/item/clothing/under/syndicate/combat
+	l_pocket = /obj/item/ammo_box/magazine/m10mm
+	r_pocket = /obj/item/weapon/kitchen/knife/combat/survival
+	belt = /obj/item/weapon/storage/belt/military
+	suit = /obj/item/clothing/suit/armor/vest
+	suit_store = /obj/item/weapon/gun/ballistic/automatic/pistol
+	back = /obj/item/weapon/storage/backpack/security
+	mask = /obj/item/clothing/mask/gas/syndicate
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
+	name = "Syndicate Battlecruiser Captain"
+	flavour_text = "<font size=3>You are the captain aboard the syndicate flagship: the SBC Starfury. <span class='danger'><b>Your job is to oversee your crew, defend the ship, and destroy Space Station 13.</b></span> The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal.<br><br><span class='danger'><b>As the captain, this whole operation falls on your shoulders.</b></span> You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough.</font>"
+	outfit = /datum/outfit/syndicate_empty/SBC/assault/captain
+	id_access_list = list(150,151)
+
+/datum/outfit/syndicate_empty/SBC/assault/captain
+	name = "Syndicate Battlecruiser Captain"
+	l_pocket = /obj/item/weapon/melee/energy/sword/saber/red
+	r_pocket = /obj/item/weapon/melee/classic_baton/telescopic
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	suit_store = /obj/item/weapon/gun/ballistic/revolver/mateba
+	back = /obj/item/weapon/storage/backpack/satchel/leather
+	head = /obj/item/clothing/head/HoS/syndicate
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch

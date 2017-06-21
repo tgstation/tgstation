@@ -187,7 +187,7 @@
 /turf/closed/mineral,
 /area/awaymission/wwmines)
 "aO" = (
-/obj/effect/mob_spawn/human/syndicatecommando,
+/obj/effect/mob_spawn/human/corpse/syndicatecommando,
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor";
 	tag = "icon-cult"
@@ -929,7 +929,7 @@
 	},
 /area/awaymission/wwgov)
 "dh" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -2017,7 +2017,7 @@
 	},
 /area/awaymission/wwmines)
 "gy" = (
-/obj/effect/mob_spawn/human/syndicatecommando{
+/obj/effect/mob_spawn/human/corpse/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,

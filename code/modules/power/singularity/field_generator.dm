@@ -71,7 +71,7 @@ field_generator power level display
 					"<span class='notice'>You turn on the [name].</span>", \
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
-				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				investigate_log("<font color='green'>activated</font> by [user.key].", INVESTIGATE_SINGULO)
 
 				add_fingerprint(user)
 	else
@@ -197,7 +197,7 @@ field_generator power level display
 	else
 		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
 		turn_off()
-		investigate_log("ran out of power and <font color='red'>deactivated</font>","singulo")
+		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
 		check_power_level()
 		return 0
@@ -324,7 +324,7 @@ field_generator power level display
 				if((world.time - O.last_warning) > 50) //to stop message-spam
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.", INVESTIGATE_SINGULO)
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

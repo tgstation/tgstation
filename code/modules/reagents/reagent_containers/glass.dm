@@ -298,6 +298,9 @@
 	amount_per_transfer_from_this = 10
 	origin_tech = null
 
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty
+	list_reagents = list()
+
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
@@ -305,6 +308,9 @@
 	list_reagents = list("water" = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty
+	list_reagents = list()
 
 
 
