@@ -84,11 +84,11 @@
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
 	return 0
 
-
-
+//Created through the autolathe or through deconstructing intercoms. Can be applied to wall to make a new intercom on it!
 /obj/item/wallframe/intercom
 	name = "intercom frame"
-	desc = "A detached intercom."
+	desc = "A ready-to-go intercom. Just slap it on a wall!"
 	icon_state = "intercom"
 	result_path = /obj/item/device/radio/intercom
 	onto_wall = TRUE
+	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
