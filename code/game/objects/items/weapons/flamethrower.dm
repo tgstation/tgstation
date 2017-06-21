@@ -138,7 +138,7 @@
 	toggle_igniter(user)
 
 /obj/item/weapon/flamethrower/AltClick(mob/user)
-	if(ptank)
+	if(ptank && isliving(user) && !user.incapacitated() && Adjacent)
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
