@@ -208,7 +208,7 @@
 						H.visible_message("<span class='danger'>[H] falls in the water!</span>",
 											"<span class='userdanger'>You fall in the water!</span>")
 						playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
-						H.Weaken(1)
+						H.Knockdown(20)
 						H.swimming = 1
 						return
 					else
@@ -218,21 +218,21 @@
 						H.visible_message("<span class='danger'>[H] falls in and takes a drink!</span>",
 											"<span class='userdanger'>You fall in and swallow some water!</span>")
 						playsound(src, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
-						H.Weaken(3)
+						H.Knockdown(60)
 						H.swimming = 1
 				else if(!istype(H.head, /obj/item/clothing/head/helmet))
 					if(prob(75))
 						H.visible_message("<span class='danger'>[H] falls in the drained pool!</span>",
 													"<span class='userdanger'>You fall in the drained pool!</span>")
 						H.adjustBruteLoss(7)
-						H.Weaken(4)
+						H.Knockdown(80)
 						H.swimming = TRUE
 						playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
 					else
 						H.visible_message("<span class='danger'>[H] falls in the drained pool, and cracks his skull!</span>",
 													"<span class='userdanger'>You fall in the drained pool, and crack your skull!</span>")
 						H.apply_damage(15, BRUTE, "head")
-						H.Weaken(10) // This should hurt. And it does.
+						H.Knockdown(200) // This should hurt. And it does.
 						H.adjustBrainLoss(30) //herp
 						H.swimming = TRUE
 						playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
@@ -240,7 +240,7 @@
 				else
 					H.visible_message("<span class='danger'>[H] falls in the drained pool, but had an helmet!</span>",
 										"<span class='userdanger'>You fall in the drained pool, but you had an helmet!</span>")
-					H.Weaken(2)
+					H.Knockdown(40)
 					H.swimming = TRUE
 					playsound(src, 'sound/effects/woodhit.ogg', 60, 1, 1)
 		else if(filled)
@@ -300,7 +300,7 @@
 			jumpee.layer = 4
 			jumpee.pixel_x = 0
 			jumpee.pixel_y = 0
-			jumpee.stunned = 1
+			jumpee.stun = 20
 			jumpee.swimming = TRUE
 
 /obj/structure/pool/Lboard/attack_hand(mob/user as mob)
@@ -324,7 +324,7 @@
 				jumper.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
 									 "<span class='notice'>You climb up \the [src] and prepares to jump!</span>")
 				jumper.canmove = FALSE
-				jumper.stunned = 4
+				jumper.stun = 80
 				jumping = TRUE
 				jumper.layer = 5.1
 				jumper.pixel_x = 3
@@ -332,7 +332,7 @@
 				jumper.dir=8
 				spawn(1) //somehow necessary
 					jumper.loc = T
-					jumper.stunned = 4
+					jumper.stun = 80
 					spawn(10)
 						switch(rand(1, 100))
 							if(1 to 20)
@@ -373,7 +373,7 @@
 												 "<span class='userdanger'>You misstep!</span>")
 								var/atom/throw_target = get_edge_target_turf(src, dir)
 								jumper.throw_at(throw_target, 0, 1)
-								jumper.Weaken(5)
+								jumper.Knockdown(100)
 								jumper.adjustBruteLoss(10)
 
 							if(91 to 100)

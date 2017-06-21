@@ -63,7 +63,7 @@
 				for(var/mob/living/carbon/human/whirlm in orange(2,src))
 					step_towards(whirlm,src)
 					if(prob(20))
-						whirlm.Weaken(2)
+						whirlm.Knockdown(40)
 					for(var/i in list(1,2,4,8,4,2,1)) //swirl!
 						whirlm.dir = i
 						sleep(1)

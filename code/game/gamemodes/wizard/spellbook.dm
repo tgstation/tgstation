@@ -380,7 +380,7 @@
 
 /datum/spellbook_entry/item/plasma_fist
 	name = "Plasma Fist Scroll"
-	desc = "Consider this more of a "spell bundle." This artifact is NOT reccomended for weaklings. An ancient scroll that will teach you the art of Plasma Fist. With it's various combos you can knock people down in the area around you, light them on fire and finally perform the PLASMA FIST that will gib your target."
+	desc = "Consider this more of a \"spell bundle.\" This artifact is NOT reccomended for weaklings. An ancient scroll that will teach you the art of Plasma Fist. With it's various combos you can knock people down in the area around you, light them on fire and finally perform the PLASMA FIST that will gib your target."
 	item_path = /obj/item/weapon/plasma_fist_scroll
 	cost = 1
 
