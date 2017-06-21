@@ -34,7 +34,6 @@
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/device/pda/host_pda = null
-	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
