@@ -237,7 +237,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || paralysis || stunned || weakened || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || unconscious || stun || knockdown || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 /mob/living/proc/InCritical()
@@ -281,12 +281,12 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(sleeping)
+	if(IsSleeping())
 		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
-			SetSleeping(20) //Short nap
+			SetSleeping(400) //Short nap
 	update_canmove()
 
 /mob/proc/get_contents()
@@ -368,10 +368,10 @@
 	setCloneLoss(0, 0)
 	setBrainLoss(0)
 	setStaminaLoss(0, 0)
-	SetParalysis(0, 0)
-	SetStunned(0, 0)
-	SetWeakened(0, 0)
-	SetSleeping(0, 0)
+	SetUnconscious(0, FALSE)
+	SetStun(0, FALSE)
+	SetKnockdown(0, FALSE)
+	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
@@ -666,7 +666,7 @@
 			return
 
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
-		if(do_mob(src, who, what.put_on_delay))
+		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
@@ -798,7 +798,7 @@
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Weaken(5)
+			Knockdown(100)
 			setStaminaLoss(health - 2)
 	update_health_hud()
 
@@ -917,7 +917,7 @@
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
-	C.Weaken(2)
+	C.Knockdown(40)
 
 /mob/living/post_buckle_mob(mob/living/M)
 	if(riding_datum)

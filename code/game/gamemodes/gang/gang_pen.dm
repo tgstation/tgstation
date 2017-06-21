@@ -29,7 +29,7 @@
 							to_chat(user, "<span class='boldwarning'>[M] is already in your gang!</span>")
 						if(2)
 							to_chat(user, "<span class='boldwarning'>You inject [M] with a control implant tuned to your gang!</span>")
-							M.Paralyse(5)
+							M.Unconscious(100)
 							cooldown(G)
 						if(1)
 							to_chat(user, "<span class='warning'>This mind is resistant to recruitment!</span>")

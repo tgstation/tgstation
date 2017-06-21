@@ -6,7 +6,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
-	put_on_delay = 20
+	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))

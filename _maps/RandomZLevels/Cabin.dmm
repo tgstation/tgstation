@@ -80,9 +80,7 @@
 "as" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_y = 28
@@ -91,7 +89,6 @@
 /area/awaymission/cabin)
 "at" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -193,8 +190,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -210,8 +206,7 @@
 /area/awaymission/cabin)
 "aI" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -494,9 +489,7 @@
 "bJ" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
@@ -531,8 +524,7 @@
 /area/awaymission/cabin)
 "bQ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4;
-	initialize_directions = 11
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
@@ -550,8 +542,7 @@
 /area/awaymission/cabin)
 "bU" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
@@ -564,8 +555,7 @@
 /area/awaymission/cabin)
 "bW" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -577,8 +567,7 @@
 /area/awaymission/cabin)
 "bY" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/machinery/processor,
 /turf/open/floor/plasteel/freezer,
@@ -710,8 +699,7 @@
 /area/awaymission/cabin)
 "cv" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
@@ -801,7 +789,6 @@
 /area/awaymission/cabin)
 "cL" = (
 /obj/structure/sign/barsign{
-	pixel_x = 0;
 	pixel_y = 32;
 	req_access = null
 	},
@@ -828,8 +815,7 @@
 /area/awaymission/cabin)
 "cQ" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/awaymission/cabin)

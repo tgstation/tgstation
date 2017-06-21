@@ -1350,7 +1350,7 @@
 		for(var/obj/item/I in M)
 			M.dropItemToGround(I, TRUE)
 
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdome1)
 		spawn(50)
@@ -1376,7 +1376,7 @@
 		for(var/obj/item/I in M)
 			M.dropItemToGround(I, TRUE)
 
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdome2)
 		spawn(50)
@@ -1399,7 +1399,7 @@
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.")
 			return
 
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdomeadmin)
 		spawn(50)
@@ -1429,7 +1429,7 @@
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), slot_w_uniform)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), slot_shoes)
-		M.Paralyse(5)
+		M.Unconscious(100)
 		sleep(5)
 		M.loc = pick(GLOB.tdomeobserve)
 		spawn(50)

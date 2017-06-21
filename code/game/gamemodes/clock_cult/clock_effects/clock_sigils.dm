@@ -46,7 +46,7 @@
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
 
-//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar-Sian cultists are damaged and knocked down for a longer stun
+//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar-Sian cultists are damaged and knocked down for a longer time
 /obj/effect/clockwork/sigil/transgression
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
@@ -69,10 +69,10 @@
 	if(iscultist(L))
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
-		L.Weaken(7)
+		L.Knockdown(140)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(5)
+	L.Stun(100)
 	new /obj/effect/temp_visual/ratvar/sigil/transgression(get_turf(src))
 	qdel(src)
 
@@ -121,8 +121,7 @@
 	if(is_eligible_servant(L))
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	add_servant_of_ratvar(L)
-	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
-	L.Stun(3)
+	L.Knockdown(60) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5

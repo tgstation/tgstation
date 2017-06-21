@@ -42,7 +42,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/notehtml = ""
 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
 	var/cart = "" //A place to stick cartridge menu information
-	var/detonate = 1 // Can the PDA be blown up?
+	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
 
@@ -153,31 +153,31 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
 
 				if (cartridge)
-					if (cartridge.access_clown)
+					if (cartridge.access & CART_CLOWN)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Trombone'><img src=pda_honk.png> Sad Trombone</a></li>"
-					if (cartridge.access_manifest)
+					if (cartridge.access & CART_MANIFEST)
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
-					if(cartridge.access_status_display)
+					if(cartridge.access & CART_STATUS_DISPLAY)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
-					if (cartridge.access_engine)
+					if (cartridge.access & CART_ENGINE)
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
 						dat += "</ul>"
-					if (cartridge.access_medical)
+					if (cartridge.access & CART_MEDICAL)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
 						dat += "</ul>"
-					if (cartridge.access_security)
+					if (cartridge.access & CART_SECURITY)
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
 						dat += "</ul>"
-					if(cartridge.access_quartermaster)
+					if(cartridge.access & CART_QUARTERMASTER)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>"
@@ -189,21 +189,21 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if (cartridge)
 					if(cartridge.bot_access_flags)
 						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_medbot.png> Bots Access</a></li>"
-					if (cartridge.access_janitor)
+					if (cartridge.access & CART_JANITOR)
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
-					if (cartridge.access_newscaster)
+					if (cartridge.access & CART_NEWSCASTER)
 						dat += "<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_notes.png> Newscaster Access </a></li>"
-					if (cartridge.access_reagent_scanner)
+					if (cartridge.access & CART_REAGENT_SCANNER)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
-					if (cartridge.access_engine)
+					if (cartridge.access & CART_ENGINE)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Halogen Counter'><img src=pda_reagent.png> [scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
-					if (cartridge.access_atmos)
+					if (cartridge.access & CART_ATMOS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
-					if (cartridge.access_remote_door)
+					if (cartridge.access & CART_REMOTE_DOOR)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
-					if (cartridge.access_dronephone)
+					if (cartridge.access & CART_DRONEPHONE)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Drone Phone'><img src=pda_dronephone.png> Drone Phone</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
@@ -362,17 +362,17 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Medical Scan")
 				if(scanmode == 1)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_medical))
+				else if((!isnull(cartridge)) && (cartridge.access & CART_MEDICAL))
 					scanmode = 1
 			if("Reagent Scan")
 				if(scanmode == 3)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_reagent_scanner))
+				else if((!isnull(cartridge)) && (cartridge.access & CART_REAGENT_SCANNER))
 					scanmode = 3
 			if("Halogen Counter")
 				if(scanmode == 4)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_engine))
+				else if((!isnull(cartridge)) && (cartridge.access & CART_ENGINE))
 					scanmode = 4
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
@@ -385,7 +385,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Gas Scan")
 				if(scanmode == 5)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_atmos))
+				else if((!isnull(cartridge)) && (cartridge.access & CART_ATMOS))
 					scanmode = 5
 			if("Drone Phone")
 				var/area/A = get_area(U)
@@ -448,7 +448,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
-				if(cartridge && cartridge.access_remote_door)
+				if(cartridge && cartridge.access & CART_REMOTE_DOOR)
 					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
@@ -826,7 +826,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
-	if(!detonate) return
+	if(!detonatable) return
 	var/turf/T = get_turf(src)
 
 	if (ismob(loc))
