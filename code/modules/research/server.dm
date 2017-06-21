@@ -59,7 +59,7 @@
 			heat_health = Clamp(heat_health, 0, 100)
 		if((T20C + 20) to INFINITY)
 			var/excess = environment.temperature - (T20C + 20)
-			heat_health = max(0, excess/40)
+			heat_health = max(0, -(excess/40))
 	if(heat_health <= 0)
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
