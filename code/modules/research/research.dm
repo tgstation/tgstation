@@ -196,169 +196,25 @@ research holder datum.
 **	Includes all the various technoliges and what they make.  **
 ***************************************************************/
 
-/datum/tech	//Datum of individual technologies.
-	var/name = "name"					//Name of the technology.
-	var/desc = "description"			//General description of what it does and what it makes.
-	var/id = "id"						//An easily referenced ID. Must be alphanumeric, lower-case, and no symbols.
-	var/level = 1						//A simple number scale of the research level. Level 0 = Secret tech.
-	var/rare = 1						//How much CentCom wants to get that tech. Used in supply shuttle tech cost calculation.
-	var/list/req_tech = list()			//List of ids associated values of techs required to research this tech. "id" = #
-
-
-//Trunk Technologies (don't require any other techs and you start knowning them).
-
-/datum/tech/materials
-	name = "Materials Research"
-	desc = "Development of new and improved materials."
-	id = "materials"
-
-/datum/tech/engineering
-	name = "Engineering Research"
-	desc = "Development of new and improved engineering parts and tools."
-	id = "engineering"
-
-/datum/tech/plasmatech
-	name = "Plasma Research"
-	desc = "Research into the mysterious substance colloqually known as \"plasma\"."
-	id = "plasmatech"
-	rare = 3
-
-/datum/tech/powerstorage
-	name = "Power Manipulation Technology"
-	desc = "The various technologies behind the storage and generation of electicity."
-	id = "powerstorage"
-
-/datum/tech/bluespace
-	name = "\"Blue-space\" Research"
-	desc = "Research into the sub-reality known as \"blue-space\"."
-	id = "bluespace"
-	rare = 2
-
-/datum/tech/biotech
-	name = "Biological Technology"
-	desc = "Research into the deeper mysteries of life and organic substances."
-	id = "biotech"
-
-/datum/tech/combat
-	name = "Combat Systems Research"
-	desc = "The development of offensive and defensive systems."
-	id = "combat"
-
-/datum/tech/magnets
-	name = "Electromagnetic Spectrum Research"
-	desc = "Research into the electromagnetic spectrum. No clue how they actually work, though."
-	id = "magnets"
-
-/datum/tech/programming
-	name = "Data Theory Research"
-	desc = "The development of new computer and artificial intelligence and data storage systems."
-	id = "programming"
-
-/datum/tech/syndicate
-	name = "Illegal Technologies Research"
-	desc = "The study of technologies that violate Nanotrassen regulations."
-	id = "syndicate"
-	rare = 4
-
-
-//Secret Technologies (hidden by default, require rare items to reveal)
-
-/datum/tech/abductor
-	name = "Alien Technologies Research"
-	desc = "The study of technologies used by the advanced alien race known as Abductors."
-	id = "abductor"
-	rare = 5
-	level = 0
-
-/datum/tech/arcane
-	name = "Arcane Research"
-	desc = "When sufficiently analyzed, any magic becomes indistinguishable from technology."
-	id = "arcane"
-	rare = 5
-	level = 0
-
-/*
-//Branch Techs
-/datum/tech/explosives
-	name = "Explosives Research"
-	desc = "The creation and application of explosive materials."
-	id = "explosives"
-	req_tech = list("materials" = 3)
-
-/datum/tech/generators
-	name = "Power Generation Technology"
-	desc = "Research into more powerful and more reliable sources."
-	id = "generators"
-	req_tech = list("powerstorage" = 2)
-
-/datum/tech/robotics
-	name = "Robotics Technology"
-	desc = "The development of advanced automated, autonomous machines."
-	id = "robotics"
-	req_tech = list("materials" = 3, "programming" = 3)
-*/
-
-
-/datum/tech/proc/getCost(var/current_level = null)
-	// Calculates tech disk's supply points sell cost
-	if(!current_level)
-		current_level = initial(level)
-
-	if(current_level >= level)
-		return 0
-
-	var/cost = 0
-	for(var/i=current_level+1, i<=level, i++)
-		if(i == initial(level))
-			continue
-		cost += i*rare
-
-	return cost
-
-/datum/tech/proc/copy()
-	var/datum/tech/T = new type()
-	T.level = level
-	return T
 
 /obj/item/weapon/disk/tech_disk
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
 	materials = list(MAT_METAL=300, MAT_GLASS=100)
-	var/list/tech_stored = list()
-	var/max_tech_stored = 1
+	var/datum/tech_web/stored_research
 
 /obj/item/weapon/disk/tech_disk/Initialize()
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
-	for(var/i in 1 to max_tech_stored)
-		tech_stored += null
-
-
-/obj/item/weapon/disk/tech_disk/adv
-	name = "advanced technology disk"
-	desc = "A disk for storing technology data for further research. This one has extra storage space."
-	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=50)
-	max_tech_stored = 5
-
-/obj/item/weapon/disk/tech_disk/super_adv
-	name = "quantum technology disk"
-	desc = "A disk for storing technology data for further research. This one has extremely large storage space."
-	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER=100, MAT_GOLD=100)
-	max_tech_stored = 10
+	stored_research = new /datum/tech_web
 
 /obj/item/weapon/disk/tech_disk/debug
 	name = "centcomm technology disk"
 	desc = "A debug item for research"
 	materials = list()
-	max_tech_stored = 0
 
 /obj/item/weapon/disk/tech_disk/debug/Initialize()
 	. = ..()
-	var/list/techs = subtypesof(/datum/tech)
-	max_tech_stored = techs.len
-	for(var/V in techs)
-		var/datum/tech/T = new V()
-		tech_stored += T
-		T.level = 8
+	stored_research = new /datum/tech_web/admin

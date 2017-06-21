@@ -34,7 +34,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
-	var/datum/research/files							//Stores all the collected research data.
+	var/datum/tech_web/stored_research					//Stored techweb
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
@@ -102,7 +102,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
-	files = new /datum/research(src) //Setup the research data holder.
+	stored_research = new /datum/tech_web
 	matching_designs = list()
 	if(!id)
 		fix_noid_research_servers()
@@ -173,22 +173,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		selected_category = href_list["category"]
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
-		var/n = text2num(href_list["updt_tech"])
 		screen = 0.0
 		var/wait = 50
-		if(!n)
-			wait = 0
-			for(var/D in t_disk.tech_stored)
-				if(D)
-					wait += 50
 		spawn(wait)
 			screen = 1.2
 			if(t_disk)
-				if(!n)
-					for(var/tech in t_disk.tech_stored)
-						files.AddTech2Known(tech)
-				else
-					files.AddTech2Known(t_disk.tech_stored[n])
+				t_disk.stored_research.copy_research_to(stored_research)
 				updateUsrDialog()
 				griefProtection() //Update centcom too
 
@@ -209,9 +199,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
-		var/datum/tech/T = files.known_tech[href_list["copy_tech_ID"]]
-		if(T)
-			t_disk.tech_stored[slot] = T.copy()
+		stored_research.copy_research_to(t_disk.stored_research)
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -229,9 +217,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(!n)
 					for(var/D in d_disk.blueprints)
 						if(D)
-							files.AddDesign2Known(D)
+							stored_research.add_design(D)
 				else
-					files.AddDesign2Known(d_disk.blueprints[n])
+					stored_research.add_design(d_disk.blueprints[n])
 				updateUsrDialog()
 				griefProtection() //Update centcom too
 
@@ -252,7 +240,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_design"]) //Copy design data from the research holder to the design disk.
 		var/slot = text2num(href_list["copy_design"])
-		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
+		var/datum/design/D = stored_research.researched_designs[href_list["copy_design_ID"]]
 		if(D)
 			var/autolathe_friendly = 1
 			if(D.reagents_list.len)

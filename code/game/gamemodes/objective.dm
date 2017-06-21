@@ -600,9 +600,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(!SN.stored_research.len)
 		return 0
 	else
-		for(var/datum/tech/current_data in SN.stored_research)
-			if(current_data.level)
-				current_amount += (current_data.level-1)
+		for(var/datum/techweb_node in SN.stored_research.researched_nodes)
+			current_amount++
 	if(current_amount<target_amount)
 		return 0
 	return 1
@@ -701,7 +700,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
-	
+
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 

@@ -2,7 +2,7 @@
 	name = "R&D Server"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
-	var/datum/research/files
+	var/datum/tech_web/stored_research
 	var/heat_health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
