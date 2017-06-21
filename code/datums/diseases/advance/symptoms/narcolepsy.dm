@@ -41,7 +41,7 @@ Bonus
 		if(10 to 19)
 			M.drowsyness += 1
 		if(20 to INFINITY)
-			M.Sleeping(5, 0)
+			M.Sleeping(30, 0)
 			sleep_level = 0
 			sleepy_ticks = 0
 

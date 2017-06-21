@@ -52,4 +52,4 @@ BONUS
 		M.adjustStaminaLoss(25)
 	if(power >= 3)
 		to_chat(M, "<span class='userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>")
-		M.Stun(2)
+		M.Stun(35)

@@ -58,7 +58,7 @@ BONUS
 					M.drop_item()
 			if(power >= 2 && prob(10))
 				to_chat(M, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
-				M.Stun(2)
+				M.Stun(20)
 				M.emote("cough")
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 6)
 				addtimer(CALLBACK(M, /mob/.proc/emote, "cough"), 12)
