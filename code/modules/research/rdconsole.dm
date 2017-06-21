@@ -88,29 +88,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				D.linked_console = src
 	first_use = 0
 
-//Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
-/obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
-		for(var/v in files.known_tech)
-			var/datum/tech/T = files.known_tech[v]
-			C.files.AddTech2Known(T)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
-			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
-
-
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	matching_designs = list()
 	if(!id)
 		fix_noid_research_servers()
-
-/*	Instead of calling this every tick, it is only being called when needed
-/obj/machinery/computer/rdconsole/process()
-	griefProtection()
-*/
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 
@@ -190,7 +173,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				else
 					files.AddTech2Known(t_disk.tech_stored[n])
 				updateUsrDialog()
-				griefProtection() //Update centcom too
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
 		if(t_disk)
@@ -233,7 +215,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				else
 					files.AddDesign2Known(d_disk.blueprints[n])
 				updateUsrDialog()
-				griefProtection() //Update centcom too
 
 	else if(href_list["clear_design"]) //Erases data on the design disk.
 		if(d_disk)
@@ -347,7 +328,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!sync)
 			to_chat(usr, "<span class='danger'>You must connect to the network first!</span>")
 		else
-			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
 					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
@@ -568,7 +548,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter = null
 
 	else if(href_list["reset"]) //Reset the R&D console's database.
-		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue" && usr.canUseTopic(src))
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
