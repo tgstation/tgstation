@@ -14,11 +14,6 @@
 	var/delay = 10
 	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
 
-/obj/machinery/r_n_d/server/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
-	B.apply_default_parts(src)
-
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/r_n_d/server
@@ -39,7 +34,10 @@
 
 /obj/machinery/r_n_d/server/Initialize(mapload)
 	. = ..()
-	if(!files) files = new /datum/research(src)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
+	if(!files)
+		files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
@@ -59,8 +57,9 @@
 			heat_health = min(100, heat_health + 1)
 		if(T0C to (T20C + 20))
 			heat_health = Clamp(heat_health, 0, 100)
-		if((T20C + 20) to (T0C + 70))
-			heat_health = max(0, heat_health - 1)
+		if((T20C + 20) to INFINITY)
+			var/excess = environment.temperature - (T20C + 20)
+			heat_health = max(0, excess/40)
 	if(heat_health <= 0)
 		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
 							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
