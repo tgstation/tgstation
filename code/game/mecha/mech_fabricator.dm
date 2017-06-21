@@ -12,7 +12,7 @@
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/material_container/materials
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/sync = 0
 	var/part_set
 	var/datum/design/being_built
@@ -36,7 +36,7 @@
 
 /obj/machinery/mecha_part_fabricator/New()
 	..()
-	files = new /datum/research(src) //Setup the research data holder.
+	stored_research = new
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
@@ -77,11 +77,11 @@
 		var/obj/item/device/pda/pda = I
 		I = pda.id
 	if(!istype(I) || !I.access) //not ID or no access
-		return 0
+		return FALSE
 	for(var/req in req_access)
 		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(emagged)
@@ -144,10 +144,10 @@
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
-		return 0
+		return FALSE
 	if(materials.has_materials(get_resources_w_coeff(D)))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D)
 	being_built = D
@@ -170,7 +170,7 @@
 	being_built = null
 
 	updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/update_queue_on_page()
 	send_byjax(usr,"mecha_fabricator.browser","queue",list_queue())
@@ -193,9 +193,9 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
 	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
-		return 0
+		return FALSE
 	queue.Cut(index,++index)
-	return 1
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/process_queue()
 	var/datum/design/D = queue[1]
@@ -208,12 +208,12 @@
 	temp = null
 	while(D)
 		if(stat&(NOPOWER|BROKEN))
-			return 0
+			return FALSE
 		if(!check_resources(D))
 			say("Not enough resources. Queue processing stopped.")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
-			return 0
+			return FALSE
 		remove_from_queue(1)
 		build_part(D)
 		D = listgetindex(queue, 1)
@@ -247,13 +247,7 @@
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
 			continue
-		for(var/v in RDC.files.known_tech)
-			var/datum/tech/T = RDC.files.known_tech[v]
-			files.AddTech2Known(T)
-		for(var/v in RDC.stored_research.researched_designs)
-			var/datum/design/D = RDC.stored_research.researched_designs[v]
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		RDC.stored_research.copy_research_to(stored_research)
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
 		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
@@ -376,7 +370,7 @@
 	if(href_list["process_queue"])
 		spawn(0)
 			if(processing_queue || being_built)
-				return 0
+				return FALSE
 			processing_queue = 1
 			process_queue()
 			processing_queue = 0
@@ -421,23 +415,23 @@
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
-		return 1
+		return TRUE
 
 	if(exchange_parts(user, W))
-		return 1
+		return TRUE
 
 	if(default_deconstruction_crowbar(W))
-		return 1
+		return TRUE
 
 	if(istype(W, /obj/item/stack/sheet))
 
 		if(!is_insertion_ready(user))
-			return 1
+			return TRUE
 
 		var/material_amount = materials.get_item_material_amount(W)
 
 		if(!try_insert(user, W, material_amount))
-			return 1
+			return TRUE
 
 		var/inserted = materials.insert_item(W)
 		if(inserted)
@@ -456,12 +450,12 @@
 	else if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 
 		if(!is_insertion_ready(user))
-			return 1
+			return TRUE
 
 		var/material_amount = materials.get_item_material_amount(W)
 
 		if(!try_insert(user, W, material_amount))
-			return 1
+			return TRUE
 
 		var/inserted = materials.insert_item(W)
 		if(inserted)

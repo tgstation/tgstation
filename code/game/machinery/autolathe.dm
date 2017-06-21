@@ -52,7 +52,7 @@
 	B.apply_default_parts(src)
 
 	wires = new /datum/wires/autolathe(src)
-	files = new /datum/research/autolathe(src)
+	stored_research = new /datum/techweb/autolathe
 	matching_designs = list()
 
 /obj/item/weapon/circuitboard/machine/autolathe
@@ -98,7 +98,7 @@
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
 	if (busy)
 		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
-		return 1
+		return TRUE
 
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
 		updateUsrDialog()
@@ -110,16 +110,16 @@
 	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
 			default_deconstruction_crowbar(O)
-			return 1
+			return TRUE
 		else if(is_wire_tool(O))
 			wires.interact(user)
-			return 1
+			return TRUE
 
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 	if(stat)
-		return 1
+		return TRUE
 
 	if(istype(O, /obj/item/weapon/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
@@ -130,24 +130,24 @@
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
-					files.AddDesign2Known(B)
+					stored_research.add_design(B)
 
 		busy = 0
-		return 1
+		return TRUE
 
 	if(HAS_SECONDARY_FLAG(O, HOLOGRAM))
-		return 1
+		return TRUE
 
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
 		to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of metal or glass to be accepted by the autolathe.</span>")
-		return 1
+		return TRUE
 	if(!materials.has_space(material_amount))
 		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal or glass from the autolathe in order to insert more.</span>")
-		return 1
+		return TRUE
 	if(!user.temporarilyRemoveItemFromInventory(O))
 		to_chat(user, "<span class='warning'>\The [O] is stuck to you and cannot be placed into the autolathe.</span>")
-		return 1
+		return TRUE
 
 	busy = 1
 	var/inserted = materials.insert_item(O)
@@ -170,7 +170,7 @@
 
 	busy = 0
 	updateUsrDialog()
-	return 1
+	return TRUE
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())
@@ -190,7 +190,7 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.isDesignResearchedID(href_list["make"])
 			if(!being_built)
 				return
 
@@ -295,7 +295,7 @@
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
 	dat += materials_printout()
 
-	for(var/v in stored_research.ressearched_designs)
+	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = stored_research.researched_designs[v]
 		if(!(selected_category in D.category))
 			continue
@@ -359,15 +359,15 @@
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff * amount)))
-		return 0
+		return FALSE
 	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff * amount)))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
@@ -392,25 +392,25 @@
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	for(var/datum/design/D in files.possible_designs)
+	for(var/datum/design/D in GLOB.techweb_designs)
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
-				files.AddDesign2Known(D)
+				stored_research.add_design(D)
 			else
-				stored_research.researched_designs -= D.id
+				stored_research.remove_design(D)
 
 //Called when the object is constructed by an autolathe
 //Has a reference to the autolathe so you can do !!FUN!! things with hacked lathes

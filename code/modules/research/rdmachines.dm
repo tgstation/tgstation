@@ -27,14 +27,14 @@
 
 /obj/machinery/r_n_d/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	do_sparks(5, TRUE, src)
 	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/r_n_d/attack_hand(mob/user)
 	if(shocked)
@@ -48,7 +48,7 @@
 /obj/machinery/r_n_d/attackby(obj/item/O, mob/user, params)
 	if (shocked)
 		if(shock(user,50))
-			return 1
+			return TRUE
 	if (default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), O))
 		if(linked_console)
 			disconnect_console()
@@ -58,9 +58,9 @@
 	if(default_deconstruction_crowbar(O))
 		return
 	if(is_open_container() && O.is_open_container())
-		return 0 //inserting reagents into the machine
+		return FALSE //inserting reagents into the machine
 	if(Insert_Item(O, user))
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -99,7 +99,7 @@
 	if(loaded_item)
 		to_chat(user, "<span class='warning'>The [src] is already loaded.</span>")
 		return
-	return 1
+	return TRUE
 
 
 //we eject the loaded item when deconstructing the machine

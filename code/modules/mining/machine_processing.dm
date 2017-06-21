@@ -70,18 +70,18 @@
 	var/on = FALSE
 	var/selected_material = MAT_METAL
 	var/selected_alloy = null
-	var/datum/research/files
+	var/datum/techweb/stored_research
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
 	proximity_monitor = new(src, 1)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
-	files = new /datum/research/smelter(src)
+	stored_research = new /datum/techweb/smelter
 
 /obj/machinery/mineral/processing_unit/Destroy()
 	CONSOLE = null
 	QDEL_NULL(materials)
-	QDEL_NULL(files)
+	QDEL_NULL(stored_research)
 	return ..()
 
 /obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
@@ -176,7 +176,7 @@
 
 
 /obj/machinery/mineral/processing_unit/proc/smelt_alloy()
-	var/datum/design/alloy = files.FindDesignByID(selected_alloy) //check if it's a valid design
+	var/datum/design/alloy = stored_research.isDesignResearchedID(selected_alloy) //check if it's a valid design
 	if(!alloy)
 		on = FALSE
 		return
@@ -193,7 +193,7 @@
 
 /obj/machinery/mineral/processing_unit/proc/can_smelt(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = SMELT_AMOUNT
 
@@ -203,7 +203,7 @@
 		var/datum/material/smelter_mat  = materials.materials[mat_id]
 
 		if(!M || !smelter_mat)
-			return 0
+			return FALSE
 
 		build_amount = min(build_amount, round(smelter_mat.amount / M))
 

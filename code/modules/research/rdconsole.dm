@@ -34,7 +34,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
-	var/datum/tech_web/stored_research					//Stored techweb
+	var/datum/techweb/stored_research					//Stored techweb
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
@@ -88,29 +88,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				D.linked_console = src
 	first_use = 0
 
-//Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
-/obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
-		for(var/v in files.known_tech)
-			var/datum/tech/T = files.known_tech[v]
-			C.files.AddTech2Known(T)
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
-			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
-
-
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
 	stored_research = new /datum/tech_web
 	matching_designs = list()
 	if(!id)
 		fix_noid_research_servers()
-
-/*	Instead of calling this every tick, it is only being called when needed
-/obj/machinery/computer/rdconsole/process()
-	griefProtection()
-*/
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 
@@ -180,7 +163,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(t_disk)
 				t_disk.stored_research.copy_research_to(stored_research)
 				updateUsrDialog()
-				griefProtection() //Update centcom too
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
 		if(t_disk)
@@ -221,7 +203,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				else
 					stored_research.add_design(d_disk.blueprints[n])
 				updateUsrDialog()
-				griefProtection() //Update centcom too
 
 	else if(href_list["clear_design"]) //Erases data on the design disk.
 		if(d_disk)
@@ -335,7 +316,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(!sync)
 			to_chat(usr, "<span class='danger'>You must connect to the network first!</span>")
 		else
-			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
 					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
@@ -359,7 +339,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/amount = text2num(href_list["amount"])
 
 		if(being_built.make_reagents.len)
-			return 0
+			return FALSE
 
 		if(!linked_lathe || !being_built || !amount)
 			updateUsrDialog()
@@ -542,14 +522,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter = null
 
 	else if(href_list["reset"]) //Reset the R&D console's database.
-		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue" && usr.canUseTopic(src))
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
 			screen = 0.0
-			qdel(files)
-			files = new /datum/research(src)
+			qdel(stored_research)
+			stored_research = new
 			spawn(20)
 				screen = 1.6
 				updateUsrDialog()

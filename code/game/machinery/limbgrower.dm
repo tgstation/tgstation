@@ -39,7 +39,7 @@
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/limbgrower(null)
 	B.apply_default_parts(src)
-	files = new /datum/research/limbgrower(src)
+	stored_research = new /datum/techweb/limbgrower
 
 /obj/item/weapon/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
@@ -108,7 +108,7 @@
 
 			/////////////////
 			//href protection
-			being_built = files.FindDesignByID(href_list["make"]) //check if it's a valid design
+			being_built = stored_research.isDesignResearchedID(href_list["make"]) //check if it's a valid design
 			if(!being_built)
 				return
 
@@ -235,8 +235,8 @@
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(emag==TRUE)
 		return
-	for(var/datum/design/D in files.possible_designs)
+	for(var/datum/design/D in GLOB.techweb_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
-			files.AddDesign2Known(D)
+			stored_research.add_design(D)
 	to_chat(user, "A warning flashes onto the screen, stating that safety overrides have been deactivated")
 	emag = TRUE

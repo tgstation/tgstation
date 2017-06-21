@@ -80,7 +80,7 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 	if(recalculate_designs)					//Wipes custom added designs like from design disks or anything like that!
 		researched_designs = list()
 	for(var/i in processing)
-		var/dautm/techweb_node/TN = processing[i]
+		var/datum/techweb_node/TN = processing[i]
 		for(var/I in TN.designs)
 			researched_designs[I] = TN.designs[I]
 
@@ -134,6 +134,15 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 		researched_designs[i] = node.designs[i]
 	update_node_status(node)
 	return TRUE
+
+/datum/techweb/proc/unresearch_node_id(id)
+	return unresearch_node(get_techweb_node_by_id(id))
+
+/datum/techweb/proc/unresearch_node(datum/techweb_node/node)
+	if(!istype(node))
+		return FALSE
+	researched_nodes -= node.id
+	recalculate_nodes(TRUE)				//Fully rebuild the tree.
 
 /datum/techweb/proc/update_node_status(datum/techweb_node/node)
 	var/researched = FALSE
@@ -191,7 +200,7 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 	return visible_nodes[id]
 
 /datum/techweb/proc/isNodeAvailable(datum/techweb_node/N)
-	return isNodeAvaiableID(N.id)
+	return isNodeAvailableID(N.id)
 
 /datum/techweb/proc/isNodeAvailableID(id)
 	return available_nodes[id]

@@ -10,7 +10,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 */
 
 
-//Needs to return the amount drained from the atom, if no drain on a power object, return 0, otherwise, return a define.
+//Needs to return the amount drained from the atom, if no drain on a power object, return FALSE, otherwise, return a define.
 /atom/proc/ninjadrain_act()
 	return INVALID_DRAIN
 
@@ -127,21 +127,10 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 			to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
 
-	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
-			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
-			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/id in files.known_tech)
-					var/datum/tech/analyzing_data = files.known_tech[id]
-					if(current_data.id == analyzing_data.id)
-						if(analyzing_data.level > current_data.level)
-							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
-							current_data.level = analyzing_data.level
-							. = DRAIN_RD_HACKED
-						break//Move on to next.
-			else
-				break//Otherwise, quit processing.
-
+	if(stored_research)
+		to_chat(H, "<span class='notice'>Copying files...</span>")
+		if(do_after(H, S.s_delay, target = src) && G.candrain && src)
+			stored_research.copy_research_to(S.stored_research)
 	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 
@@ -159,21 +148,10 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 			to_chat(AI, "<span class='userdanger'>Network Alert: Hacking attempt detected[location?" in [location]":". Unable to pinpoint location"]</span>.")
 
-	if(files && files.known_tech.len)
-		for(var/datum/tech/current_data in S.stored_research)
-			to_chat(H, "<span class='notice'>Checking \the [current_data.name] database.</span>")
-			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/id in files.known_tech)
-					var/datum/tech/analyzing_data = files.known_tech[id]
-					if(current_data.id == analyzing_data.id)
-						if(analyzing_data.level > current_data.level)
-							to_chat(H, "<span class='notice'>Database:</span> <b>UPDATED</b>.")
-							current_data.level = analyzing_data.level
-							. = DRAIN_RD_HACKED
-						break//Move on to next.
-			else
-				break//Otherwise, quit processing.
-
+	if(stored_research)
+		to_chat(H, "<span class='notice'>Copying files...</span>")
+		if(do_after(H, S.s_delay, target = src) && G.candrain && src)
+			stored_research.copy_research_to(S.stored_research)
 	to_chat(H, "<span class='notice'>Data analyzed. Process finished.</span>")
 
 

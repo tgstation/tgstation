@@ -22,7 +22,7 @@
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
 	var/datum/material_container/materials
-	var/datum/research/files
+	var/datum/techweb/stored_research
 	var/obj/item/weapon/disk/design_disk/inserted_disk
 
 /obj/machinery/mineral/ore_redemption/Initialize()
@@ -30,11 +30,11 @@
 	var/obj/item/weapon/circuitboard/machine/ore_redemption/B = new
 	B.apply_default_parts(src)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
-	files = new /datum/research/smelter(src)
+	stored_research = new /datum/techweb/smelter
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(materials)
-	QDEL_NULL(files)
+	QDEL_NULL(stored_research)
 	return ..()
 
 /obj/item/weapon/circuitboard/machine/ore_redemption
@@ -83,7 +83,7 @@
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	if(D.make_reagents.len)
-		return 0
+		return FALSE
 
 	var/build_amount = 0
 
@@ -92,12 +92,12 @@
 		var/datum/material/redemption_mat = materials.materials[mat_id]
 
 		if(!M || !redemption_mat)
-			return 0
+			return FALSE
 
 		var/smeltable_sheets = Floor(redemption_mat.amount / M)
 
 		if(!smeltable_sheets)
-			return 0
+			return FALSE
 
 		if(!build_amount)
 			build_amount = smeltable_sheets
@@ -314,11 +314,11 @@
 		if("diskUpload")
 			var/n = text2num(params["design"])
 			if(inserted_disk && inserted_disk.blueprints && inserted_disk.blueprints[n])
-				files.AddDesign2Known(inserted_disk.blueprints[n])
+				stored_research.add_design(inserted_disk.blueprints[n])
 			return TRUE
 		if("Smelt")
 			var/alloy_id = params["id"]
-			var/datum/design/alloy = files.FindDesignByID(alloy_id)
+			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
@@ -340,7 +340,7 @@
 			return TRUE
 		if("SmeltAll")
 			var/alloy_id = params["id"]
-			var/datum/design/alloy = files.FindDesignByID(alloy_id)
+			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
 			if((check_access(inserted_id) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				while(smelt_amount > 0)

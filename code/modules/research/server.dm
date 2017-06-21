@@ -2,7 +2,7 @@
 	name = "R&D Server"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
-	var/datum/tech_web/stored_research
+	var/datum/techweb/stored_research
 	var/heat_health = 100
 	var/list/id_with_upload = list()		//List of R&D consoles with upload to server access.
 	var/list/id_with_download = list()	//List of R&D consoles with download from server access.
@@ -14,11 +14,6 @@
 	var/delay = 10
 	req_access = list(GLOB.access_rd) //Only the R&D can change server settings.
 
-/obj/machinery/r_n_d/server/Initialize()
-	. = ..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
-	B.apply_default_parts(src)
-
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/r_n_d/server
@@ -28,7 +23,7 @@
 							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/r_n_d/server/Destroy()
-	griefProtection()
+	QDEL_NULL(stored_research)
 	return ..()
 
 /obj/machinery/r_n_d/server/RefreshParts()
@@ -39,7 +34,10 @@
 
 /obj/machinery/r_n_d/server/Initialize(mapload)
 	. = ..()
-	if(!files) files = new /datum/research(src)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
+
+	stored_research = new
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
@@ -62,42 +60,13 @@
 		if((T20C + 20) to (T0C + 70))
 			heat_health = max(0, heat_health - 1)
 	if(heat_health <= 0)
-		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
-							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
-		var/updateRD = 0
-		stored_research.researched_designs = list()
-		for(var/v in files.known_tech)
-			var/datum/tech/T = files.known_tech[v]
-			if(prob(1))
-				updateRD++
-				T.level--
-		if(updateRD)
-			files.RefreshResearch()
+		var/loss = pick(stored_research.researched_nodes)
+		stored_research.unresearch_node(stored_research.ressearched_nodes[loss])
 	if(delay)
 		delay--
 	else
 		produce_heat(heat_gen)
 		delay = initial(delay)
-
-
-/obj/machinery/r_n_d/server/emp_act(severity)
-	griefProtection()
-	..()
-
-/obj/machinery/r_n_d/server/ex_act(severity, target)
-	griefProtection()
-	..()
-
-//Backup files to centcom to help admins recover data after greifer attacks
-/obj/machinery/r_n_d/server/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
-		for(var/v in files.known_tech)
-			var/datum/tech/T = files.known_tech[v]
-			C.files.AddTech2Known(T)
-		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
-			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -119,11 +88,6 @@
 
 				env.merge(removed)
 				air_update_turf()
-
-//called when the server is deconstructed.
-/obj/machinery/r_n_d/server/on_deconstruction()
-	griefProtection()
-	..()
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)

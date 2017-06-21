@@ -29,7 +29,7 @@ Contents:
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
 	var/list/reagent_list = list("omnizine","salbutamol","spaceacillin","charcoal","nutriment","radium","potass_iodide")//The reagents ids which are added to the suit at New().
-	var/list/stored_research = list()//For stealing station research.
+	var/datum/techweb/stored_research
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 	var/obj/item/weapon/katana/energy/energyKatana //For teleporting the katana back to the ninja (It's an ability)
 
@@ -64,14 +64,12 @@ Contents:
 	..()
 
 	//Spark Init
-	spark_system = new()
+	spark_system = new
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 	//Research Init
 	stored_research = new()
-	for(var/T in subtypesof(/datum/tech))//Store up on research.
-		stored_research += new T(src)
 
 	//Reagent Init
 	var/reagent_amount
@@ -115,7 +113,7 @@ Contents:
 //This proc prevents the suit from being taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/lock_suit(mob/living/carbon/human/H)
 	if(!istype(H))
-		return 0
+		return FALSE
 	if(!is_ninja(H))
 		to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
 		H.gib()
