@@ -297,7 +297,7 @@
 
 /obj/machinery/processor/slime
 	name = "Slime processor"
-	desc = "An industrial grinder with a sSSticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
 /obj/machinery/processor/slime/New()
 	..()
