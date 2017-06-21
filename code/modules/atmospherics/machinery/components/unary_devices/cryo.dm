@@ -104,13 +104,13 @@
 
 		else if(isalienadult(occupant))
 
-			if(istype(occupant, /mob/living/carbon/alien/humanoid/royal)) // Queen and prae
+			if(isalienroyal(occupant)) // Queen and prae
 				occupant_overlay = image(CRYOMOBS, "alienq")
 
-			else if(istype(occupant, /mob/living/carbon/alien/humanoid/hunter)) // Hunter
+			else if(isalienhunter(occupant)) // Hunter
 				occupant_overlay = image(CRYOMOBS, "alienh")
 
-			else if(istype(occupant, /mob/living/carbon/alien/humanoid/sentinel)) // Sentinel
+			else if(isaliensentinel(occupant)) // Sentinel
 				occupant_overlay = image(CRYOMOBS, "aliens")
 
 			else // Drone (or any other alien that isn't any of the above)

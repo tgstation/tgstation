@@ -22,7 +22,7 @@ Doesn't work on other aliens/AI.*/
 	action = new(src)
 
 /obj/effect/proc_holder/alien/Click()
-	if(!istype(usr,/mob/living/carbon))
+	if(!iscarbon(usr))
 		return 1
 	var/mob/living/carbon/user = usr
 	if(cost_check(check_turf,user))

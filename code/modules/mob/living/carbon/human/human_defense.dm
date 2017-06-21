@@ -3,7 +3,7 @@
 	var/organnum = 0
 
 	if(def_zone)
-		if(islimb(def_zone))
+		if(isbodypart(def_zone))
 			return checkarmor(def_zone, type)
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(def_zone))
 		return checkarmor(affecting, type)

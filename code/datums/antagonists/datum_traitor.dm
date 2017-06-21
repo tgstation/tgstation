@@ -38,7 +38,7 @@
 
 
 /datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	if(istype(new_body,/mob/living/silicon/ai)==istype(old_body,/mob/living/silicon/ai))
+	if(isAI(new_body)==isAI(old_body))
 		..()
 	else
 		silent = TRUE
@@ -63,7 +63,7 @@
 
 /datum/antagonist/traitor/proc/specialise()
 	silent = TRUE
-	if(owner.current&&istype(owner.current,/mob/living/silicon/ai))
+	if(owner.current&&isAI(owner.current))
 		owner.add_antag_datum(ai_datum)
 	else owner.add_antag_datum(human_datum)
 	on_removal()

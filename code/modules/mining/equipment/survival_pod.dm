@@ -208,7 +208,7 @@
 	..(mapload, TRUE)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		return 1
 	return 0
 

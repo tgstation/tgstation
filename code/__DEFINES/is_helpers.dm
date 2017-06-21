@@ -2,6 +2,8 @@
 
 #define islist(L) (istype(L,/list))
 
+#define ismob(L) (istype(L, /mob))
+
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
 #define ismovableatom(A) (istype(A, /atom/movable))
@@ -51,6 +53,16 @@
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
+
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+
+//#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+
+#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
+
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
 
 #define isdevil(A) (istype(A, /mob/living/carbon/true_devil))
 
@@ -116,7 +128,7 @@
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
-#define islimb(A) (istype(A, /obj/item/bodypart))
+#define isitem(A) (istype(A, /obj/item))
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 
