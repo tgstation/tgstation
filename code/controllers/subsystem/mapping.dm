@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(mapping)
 	loading_ruins = TRUE
 	var/mining_type = config.minetype
 	if (mining_type == "lavaland")
-		seedRuins(list(5), global.config.lavaland_budget, /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
+		seedRuins(list(ZLEVEL_LAVALAND), global.config.lavaland_budget, /area/lavaland/surface/outdoors/unexplored, lava_ruins_templates)
 		spawn_rivers()
 
 	// deep space ruins
