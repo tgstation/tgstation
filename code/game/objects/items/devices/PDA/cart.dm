@@ -540,6 +540,9 @@ Code:
 		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
+		if (99) //Newscaster message permission error
+			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
+
 	return menu
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
@@ -611,14 +614,13 @@ Code:
 			host_pda.mode = 53
 
 		if("Newscaster Message")
-			var/pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
+			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
 			var/message = host_pda.msg_input()
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != host_pda_owner_name)
-				host_pda.cart += "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 				host_pda.Topic(null,list("choice"="Refresh"))
 				return
 			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
