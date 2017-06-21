@@ -1,9 +1,9 @@
 // Foam
 // Similar to smoke, but slower and mobs absorb its reagent through their exposed skin.
-
 #define ALUMINUM_FOAM 1
 #define IRON_FOAM 2
 #define RESIN_FOAM 3
+
 
 /obj/effect/particle_effect/foam
 	name = "foam"
@@ -32,7 +32,6 @@
 /obj/effect/particle_effect/foam/metal/iron
 	name = "iron foam"
 	metal = IRON_FOAM
-
 
 /obj/effect/particle_effect/foam/metal/resin
 	name = "resin foam"
