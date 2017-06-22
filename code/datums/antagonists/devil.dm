@@ -360,14 +360,14 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/proc/check_banishment(mob/living/body)
 	switch(banish)
 		if(BANISH_WATER)
-			if(istype(body, /mob/living/carbon))
+			if(iscarbon(body))
 				var/mob/living/carbon/H = body
 				return H.reagents.has_reagent("holy water")
 			return 0
 		if(BANISH_COFFIN)
 			return (body && istype(body.loc, /obj/structure/closet/coffin))
 		if(BANISH_FORMALDYHIDE)
-			if(istype(body, /mob/living/carbon))
+			if(iscarbon(body))
 				var/mob/living/carbon/H = body
 				return H.reagents.has_reagent("formaldehyde")
 			return 0
@@ -459,7 +459,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/update_hud()
-	if(istype(owner.current, /mob/living/carbon))
+	if(iscarbon(owner.current))
 		var/mob/living/C = owner.current
 		if(C.hud_used && C.hud_used.devilsouldisplay)
 			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)

@@ -258,7 +258,7 @@
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /atom/movable))
+	if(ismovableatom(target))
 		var/atom/movable/A = target
 		if(A.anchored)
 			return

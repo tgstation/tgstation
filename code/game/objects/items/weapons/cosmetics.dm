@@ -49,7 +49,7 @@
 	if(!open)
 		return
 
-	if(!istype(M, /mob))
+	if(!ismob(M))
 		return
 
 	if(ishuman(M))

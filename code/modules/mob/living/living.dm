@@ -94,7 +94,7 @@
 		var/obj/O = A
 		if(ObjBump(O))
 			return
-	if(istype(A, /atom/movable))
+	if(ismovableatom(A))
 		var/atom/movable/AM = A
 		if(PushAM(AM))
 			return

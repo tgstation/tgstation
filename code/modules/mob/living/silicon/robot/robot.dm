@@ -563,7 +563,7 @@
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_held_item(), /obj/item))
+		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
 	return 0
 
@@ -575,7 +575,7 @@
 	if(!L.len) //no requirements
 		return 1
 
-	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access

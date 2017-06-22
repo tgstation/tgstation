@@ -1258,7 +1258,7 @@
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(islimb(def_zone))
+	if(isbodypart(def_zone))
 		BP = def_zone
 	else
 		if(!def_zone)

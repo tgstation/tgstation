@@ -276,7 +276,7 @@
 	var/actuallyismob = 0
 	if(isliving(O))
 		actuallyismob = 1
-	else if(!istype(O, /obj/item))
+	else if(!isitem(O))
 		return
 	var/turf/T = get_turf(src)
 	var/list/targets = list(O, src)
@@ -355,7 +355,7 @@
 /obj/structure/closet/container_resist(mob/living/user)
 	if(opened)
 		return
-	if(istype(loc, /atom/movable))
+	if(ismovableatom(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/atom/movable/AM = loc

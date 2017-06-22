@@ -467,7 +467,7 @@
 
 /datum/emote/living/spin/run_emote(mob/user)
 	user.spin(20, 1)
-	if(istype(user, /mob/living/silicon/robot))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.buckled_mobs)
 			for(var/mob/M in R.buckled_mobs)

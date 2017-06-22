@@ -280,7 +280,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
-	if(istype(loc, /mob/living/carbon/human) && dynamic_hair_suffix)
+	if(ishuman(loc) && dynamic_hair_suffix)
 		var/mob/living/carbon/human/H = loc
 		H.update_hair()
 

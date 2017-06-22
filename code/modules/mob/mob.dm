@@ -246,7 +246,7 @@
 
 /mob/proc/reset_perspective(atom/A)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(ismovableatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
