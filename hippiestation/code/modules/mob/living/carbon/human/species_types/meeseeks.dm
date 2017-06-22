@@ -42,10 +42,14 @@
 		var/datum/mutation/human/HM = GLOB.mutations_list[SMILE]
 		HM.force_give(H)
 	if(stage_ticks == MEESEEKS_TICKS_STAGE_TWO)
+		message_admins("[key_name_admin(H)] has become a stage-two Mr. Meeseeks.")
+		log_game("[key_name(H)] has become a stage-two Mr. Meeseeks.")
 		to_chat(H, "<span class='userdanger'>You're starting to feel desperate. Help your master quickly! Meeseeks aren't meant to exist this long!</span>")
 		playsound(H.loc, 'hippiestation/sound/voice/meeseeks2.ogg', 40, 0, 1)
 		to_chat(master, "<span class='danger'>Your Mr. Meeseeks is getting sick of existing!</span>")
 	if(stage_ticks == MEESEEKS_TICKS_STAGE_THREE)
+		message_admins("[key_name_admin(H)] has become a stage-three Mr. Meeseeks.")
+		log_game("[key_name(H)] has become a stage-three Mr. Meeseeks.")
 		if(objective)
 			H.mind.objectives -= objective
 			QDEL_NULL(objective)
@@ -57,7 +61,6 @@
 		killmaster.owner = H.mind
 		objective = killmaster
 		playsound(H.loc, 'hippiestation/sound/voice/meeseeks3.ogg', 40, 0, 1)
-		to_chat(master, "<span class='danger'>Your Mr. Meeseeks has decided to complete your task using different methods. He will no longer obey you!</span>")
 	stage_ticks++
 
 /proc/destroy_meeseeks(mob/living/carbon/human/H, datum/species/meeseeks/SM)
@@ -70,6 +73,8 @@
 	new /obj/effect/cloud(get_turf(H))
 	H.visible_message("<span class='notice'>[H] disappears into a cloud of smoke!</span>")
 	qdel(H)
+	message_admins("[key_name_admin(H)] has been sent away by a Mr. Meeseeks box.")
+	log_game("[key_name(H)] has been sent away by a Mr. Meeseeks box.")
 
 /datum/species/meeseeks/handle_speech(message)
 	if(copytext(message, 1, 2) != "*")
