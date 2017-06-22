@@ -13,13 +13,18 @@
 	generate_techweb_unlock_linking()
 
 /proc/generate_techweb_unlock_linking()
+	for(var/node_id in GLOB.techweb_nodes)						//Clear all unlock links to avoid duplication.
+		var/datum/techweb_node/node = GLOB.techweb_nodes[node_id]
+		node.unlocks = list()
 	for(var/node_id in GLOB.techweb_nodes)
 		var/datum/techweb_node/node = GLOB.techweb_nodes[node_id]
 		for(var/prereq_id in node.prerequisites)
 			var/datum/techweb_node/prereq_node = node.prerequisites[prereq_id]
 			prereq_node.unlocks += node
 
-/proc/calculate_techweb_boost_list()
+/proc/calculate_techweb_boost_list(clearall = FALSE)
+	if(clearall)
+		GLOB.techweb_boost_items = list()
 	for(var/node_id in GLOB.techweb_nodes)
 		var/datum/techweb_node/node = GLOB.techweb_nodes[node_id]
 		for(var/path in node.boost_item_paths)

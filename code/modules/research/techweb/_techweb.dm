@@ -5,7 +5,7 @@
 	if(islist(GLOB.techweb_nodes_starting && clearall))
 		QDEL_LIST(GLOB.techweb_nodes_starting)
 	var/list/returned = list()
-	for(var/path in typesof(/datum/techweb_node))
+	for(var/path in subtypesof(/datum/techweb_node))
 		var/datum/techweb_node/TN = path
 		if(isnull(initial(TN.id)))
 			continue
@@ -14,6 +14,7 @@
 		if(TN.starting_node)
 			GLOB.techweb_nodes_starting[TN.id] = TN
 	GLOB.techweb_nodes = returned
+	verify_techweb_nodes()
 	calculate_techweb_nodes()
 	calculate_techweb_boost_list()
 
@@ -21,13 +22,14 @@
 	if(islist(GLOB.techweb_designs) && clearall)
 		QDEL_LIST(GLOB.techweb_designs)
 	var/list/returned = list()
-	for(var/path in typesof(/datum/design))
+	for(var/path in subtypesof(/datum/design))
 		var/datum/design/DN = path
 		if(isnull(initial(DN.id)))
 			continue
 		DN = new path
 		returned[initial(DN.id)] = DN
 	GLOB.techweb_designs = returned
+	verify_techweb_designs()
 
 /proc/get_techweb_node_by_id(id)
 	if(GLOB.techweb_nodes[id])
@@ -36,6 +38,20 @@
 /proc/get_techweb_design_by_id(id)
 	if(GLOB.techweb_designs[id])
 		return GLOB.techweb_designs[id]
+
+/proc/verify_techweb_nodes()
+	for(var/n in GLOB.techweb_nodes)
+		var/datum/techweb_node/N = GLOB.techweb_nodes[n]
+		if(!istype(N))
+			stack_trace("WARNING: Invalid research node with ID [n] detected and removed.")
+			GLOB.techweb_nodes -= n
+
+/proc/verify_techweb_designs()
+	for(var/d in GLOB.techweb_designs)
+		var/datum/design/D = GLOB.techweb_designs[d]
+		if(!istype(D))
+			stack_trace("WARNING: Invalid research design with ID [d] detected and removed.")
+			GLOB.techweb_designs -= d
 
 GLOBAL_LIST_INIT(techweb_nodes, list())
 GLOBAL_LIST_INIT(techweb_designs, list())
