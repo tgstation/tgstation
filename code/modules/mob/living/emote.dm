@@ -62,8 +62,9 @@
 
 /datum/emote/living/collapse/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.Unconscious(40)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Unconscious(40)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -330,8 +331,9 @@
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.Knockdown(200)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Knockdown(200)
 
 /datum/emote/living/sway
 	key = "sway"

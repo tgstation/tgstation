@@ -450,7 +450,7 @@
 		return 1
 	if(restrained())
 		return 1
-	if(unconscious)
+	if(IsUnconscious())
 		return 1
 	if(IsStun())
 		return 1

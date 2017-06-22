@@ -101,8 +101,6 @@
 /mob/living/proc/handle_status_effects()
 	if(knockdown)
 		AdjustKnockdown(-20, 1, 1)
-	if(unconscious)
-		AdjustUnconscious(-20, 1, 1)
 	if(confused)
 		confused = max(0, confused - 1)
 

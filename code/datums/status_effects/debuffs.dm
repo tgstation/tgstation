@@ -20,6 +20,14 @@
 /datum/status_effect/incapacitating/stun
 	id = "stun"
 
+//KNOCKDOWN
+/datum/status_effect/incapacitating/knockdown
+	id = "knockdown"
+
+//UNCONSCIOUS
+/datum/status_effect/incapacitating/unconscious
+	id = "unconscious"
+
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"

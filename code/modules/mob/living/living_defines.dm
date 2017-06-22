@@ -75,3 +75,4 @@
 	var/datum/riding/riding_datum
 
 	var/datum/language/selected_default_language
+	var/knockdown
