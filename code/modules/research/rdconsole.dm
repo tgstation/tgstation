@@ -148,7 +148,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		screen = text2num(href_list["menu"])
-		to_chat(world, "<span class='boldnotice'>DEBUG: Sciconsole setting menu screen to [screen]!</span>")
 
 	if(href_list["category"])
 		selected_category = href_list["category"]
@@ -679,7 +678,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(SCICONSOLE_SETTINGS) //R&D console settings
 			dat += SCICONSOLE_MENU_HREF
-			dat += <div class='statusDisplay'>"
+			dat += "<div class='statusDisplay'>"
 			dat += "<h3>R&D Console Setting:</h3>"
 			if(sync)
 				dat += "<A href='?src=\ref[src];sync=1'>Sync Database with Network</A>"
