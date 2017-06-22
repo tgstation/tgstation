@@ -549,22 +549,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(SCICONSOLE_NODEDESC)
 			if(!selected_node)
 				screen = SCICONSOLE_MENU
-		if(2 to 2.9)
-			else if(linked_destroy == null)
+		if(SCICONSOLE_DA_SCREENS)
+			if(linked_destroy == null)
 				screen = SCICONSOLE_DA_NONE
 			else if(linked_destroy.loaded_item == null)
 				screen = SCICONSOLE_DA_UNLOADED
 			else
 				screen = SCICONSOLE_DA_LOADED
-		if(3 to 3.9)
+		if(SCICONSOLE_PROTOLATHE_SCREENS)
 			if(linked_lathe == null)
 				screen = SCICONSOLE_PROTOLATHE_NONE
-		if(4 to 4.9)
+		if(SCICONSOLE_CIRCUIT_SCREENS)
 			if(linked_imprinter == null)
 				screen = SCICONSOLE_CIRCUIT_NONE
-
 	switch(screen)
-
 		//////////////////////R&D CONSOLE SCREENS//////////////////
 		if(SCICONSOLE_UPDATE_DATABASE)
 			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
