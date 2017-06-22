@@ -3177,8 +3177,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jm" = (
 /obj/structure/plasticflaps,
@@ -3190,8 +3189,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jn" = (
 /obj/machinery/door/poddoor{
@@ -3209,8 +3207,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jo" = (
 /obj/machinery/conveyor{
@@ -3383,8 +3380,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jK" = (
 /obj/structure/plasticflaps,
@@ -3395,8 +3391,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jL" = (
 /obj/machinery/door/poddoor{
@@ -3413,8 +3408,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jM" = (
 /obj/machinery/conveyor{
@@ -3424,8 +3418,7 @@
 /obj/effect/turf_decal/stripes/end{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "jN" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3895,8 +3888,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "kU" = (
 /obj/machinery/door/window/brigdoor{
@@ -3979,8 +3971,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "lc" = (
 /obj/machinery/door/airlock/centcom{
@@ -3990,8 +3981,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "ld" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -4342,8 +4332,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "lY" = (
 /obj/structure/table/reinforced,
@@ -5803,8 +5792,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "pt" = (
 /obj/structure/sign/nanotrasen,
@@ -5819,8 +5807,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/supply)
 "pv" = (
 /obj/machinery/door/airlock/centcom{
@@ -5831,8 +5818,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "pw" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -7269,8 +7255,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "sH" = (
 /obj/structure/table/reinforced,
@@ -7576,8 +7561,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "tt" = (
 /obj/machinery/door/poddoor/shutters{
@@ -8363,8 +8347,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "vw" = (
 /obj/machinery/light{
@@ -8642,8 +8625,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "wd" = (
 /turf/open/floor/plasteel/blue/corner{
@@ -9579,8 +9561,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/ferry)
 "yt" = (
 /obj/structure/closet/secure_closet/ertSec,
@@ -10078,8 +10059,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/control)
 "zz" = (
 /obj/structure/closet/cardboard,
@@ -10136,8 +10116,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "zJ" = (
 /obj/machinery/vending/cola,
@@ -10213,8 +10192,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "zU" = (
 /obj/machinery/door/airlock{
@@ -10836,8 +10814,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "BL" = (
 /obj/structure/sign/nosmoking_2,
@@ -10852,8 +10829,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "BN" = (
 /obj/structure/sign/nanotrasen,
@@ -11503,8 +11479,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Dh" = (
 /obj/structure/table/reinforced,
@@ -11743,8 +11718,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "DM" = (
 /obj/structure/rack,
@@ -11899,8 +11873,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/tdome/tdomeadmin)
 "Eh" = (
 /obj/effect/landmark/thunderdome/two,
@@ -14438,8 +14411,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/centcom/evac)
 "Mc" = (
 /turf/closed/indestructible/fakedoor{

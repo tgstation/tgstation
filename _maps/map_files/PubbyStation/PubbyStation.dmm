@@ -8015,8 +8015,7 @@
 	name = "Brig Desk";
 	req_access_txt = "1"
 	},
-/obj/item/weapon/paper_bin{
-	},
+/obj/item/weapon/paper_bin,
 /obj/item/weapon/pen{
 	layer = 3.1
 	},
@@ -18152,8 +18151,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	},
+/turf/open/floor/plating,
 /area/maintenance/disposal)
 "aMQ" = (
 /obj/machinery/door/airlock/titanium{
@@ -24503,8 +24501,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "baw" = (
 /turf/open/floor/plasteel,
@@ -29629,8 +29626,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "blm" = (
 /obj/machinery/door/window/northleft{
@@ -29643,8 +29639,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bln" = (
 /obj/structure/table/reinforced,
@@ -29679,8 +29674,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "blp" = (
 /obj/structure/table/reinforced,
@@ -31872,8 +31866,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/explab)
 "bpR" = (
 /obj/structure/cable{
@@ -31892,8 +31885,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/explab)
 "bpS" = (
 /obj/structure/cable{
@@ -31910,8 +31902,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/explab)
 "bpT" = (
 /obj/structure/cable{
@@ -32196,8 +32187,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bqo" = (
 /obj/machinery/door/window/northleft{
@@ -32210,8 +32200,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bqp" = (
 /obj/structure/table/reinforced,
@@ -32250,8 +32239,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bqs" = (
 /obj/structure/table/reinforced,
@@ -32286,8 +32274,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bqu" = (
 /obj/structure/table/reinforced,
@@ -32322,8 +32309,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/science/xenobiology)
 "bqw" = (
 /obj/structure/table/reinforced,
@@ -37025,8 +37011,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	},
+/turf/open/floor/plating,
 /area/science/mineral_storeroom)
 "bzN" = (
 /obj/structure/grille,
@@ -37967,8 +37952,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	},
+/turf/open/floor/plating,
 /area/science/mineral_storeroom)
 "bBT" = (
 /obj/structure/window/reinforced{
@@ -40054,8 +40038,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bGK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -40294,8 +40277,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bHm" = (
 /obj/machinery/door/firedoor,
@@ -41749,8 +41731,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "bKo" = (
 /obj/machinery/door/poddoor/preopen{
@@ -42054,8 +42035,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "bKT" = (
 /obj/machinery/suit_storage_unit/engine,
@@ -46427,8 +46407,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating{
-	},
+/turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "bUw" = (
 /obj/effect/landmark/start/security_officer,
@@ -46465,8 +46444,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	},
+/turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "bUA" = (
 /obj/machinery/door/airlock/glass{
@@ -46489,8 +46467,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	},
+/turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "bUB" = (
 /obj/item/weapon/storage/secure/safe{

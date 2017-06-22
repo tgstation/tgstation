@@ -435,8 +435,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
 /obj/machinery/door/airlock/shuttle{
@@ -668,8 +667,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bv" = (
 /obj/machinery/door/airlock/shuttle{
@@ -825,8 +823,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bS" = (
 /turf/open/floor/plasteel/neutral/corner{
@@ -873,8 +870,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bZ" = (
 /obj/machinery/suit_storage_unit/standard_unit,
