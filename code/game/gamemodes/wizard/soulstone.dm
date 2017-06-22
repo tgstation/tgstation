@@ -7,7 +7,6 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
-	origin_tech = "bluespace=4;materials=5"
 	var/usability = 0
 
 	var/reusable = TRUE

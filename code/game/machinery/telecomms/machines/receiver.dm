@@ -59,7 +59,6 @@
 /obj/item/weapon/circuitboard/machine/telecomms/receiver
 	name = "Subspace Receiver (Machine Board)"
 	build_path = /obj/machinery/telecomms/receiver
-	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/subspace/ansible = 1,
 							/obj/item/weapon/stock_parts/subspace/filter = 1,

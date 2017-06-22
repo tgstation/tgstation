@@ -11,7 +11,6 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=500)
-	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	resistance_flags = FIRE_PROOF
 	var/status = 0
 	var/lit = 0	//on or off

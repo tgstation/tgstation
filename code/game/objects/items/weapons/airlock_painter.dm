@@ -8,7 +8,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=2"
 
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT

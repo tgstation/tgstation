@@ -123,7 +123,6 @@
 /obj/item/weapon/circuitboard/machine/ntnet_relay
 	name = "NTNet Relay (Machine Board)"
 	build_path = /obj/machinery/ntnet_relay
-	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/subspace/filter = 1)

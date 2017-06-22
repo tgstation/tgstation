@@ -2,7 +2,6 @@
 	name = "microbomb implant"
 	desc = "And boom goes the weasel."
 	icon_state = "explosive"
-	origin_tech = "materials=2;combat=3;biotech=4;syndicate=4"
 	actions_types = list(/datum/action/item_action/explosive_implant)
 	// Explosive implant action is always availible.
 	var/weak = 2
@@ -89,7 +88,6 @@
 	name = "macrobomb implant"
 	desc = "And boom goes the weasel. And everything else nearby."
 	icon_state = "explosive"
-	origin_tech = "materials=3;combat=5;biotech=4;syndicate=5"
 	weak = 16
 	medium = 8
 	heavy = 4

@@ -2,7 +2,6 @@
 	name = "network card"
 	desc = "A basic wireless network card for usage with standard NTNet frequencies."
 	power_usage = 50
-	origin_tech = "programming=2;engineering=1"
 	icon_state = "radio_mini"
 	var/identification_id = null	// Identification ID. Technically MAC address of this device. Can't be changed by user.
 	var/identification_string = "" 	// Identification string, technically nickname seen in the network. Can be set by user.
@@ -65,7 +64,6 @@
 	name = "advanced network card"
 	desc = "An advanced network card for usage with standard NTNet frequencies. Its transmitter is strong enough to connect even off-station."
 	long_range = 1
-	origin_tech = "programming=4;engineering=2"
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "radio"
 	w_class = WEIGHT_CLASS_TINY
@@ -74,7 +72,6 @@
 	name = "wired network card"
 	desc = "An advanced network card for usage with standard NTNet frequencies. This one also supports wired connection."
 	ethernet = 1
-	origin_tech = "programming=5;engineering=3"
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "net_wired"
 	w_class = WEIGHT_CLASS_NORMAL

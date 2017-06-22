@@ -19,7 +19,6 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
-	origin_tech = "materials=1"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
@@ -84,7 +83,6 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
-	origin_tech = "materials=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass

@@ -11,7 +11,6 @@
 	slot_flags = SLOT_BACK
 	force = 15
 	materials = list()
-	origin_tech = ""
 	recoil = 5
 	ammo_x_offset = 3
 	ammo_y_offset = 3

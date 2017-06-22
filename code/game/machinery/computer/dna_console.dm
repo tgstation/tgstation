@@ -409,7 +409,6 @@
 											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
-								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)

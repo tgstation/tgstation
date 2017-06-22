@@ -6,7 +6,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	critical = 0
 	max_capacity = 16
-	origin_tech = "programming=1"
 	device_type = MC_SDD
 
 /obj/item/weapon/computer_hardware/hard_drive/portable/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
@@ -24,7 +23,6 @@
 	power_usage = 20
 	icon_state = "datadisk5"
 	max_capacity = 64
-	origin_tech = "programming=2"
 
 /obj/item/weapon/computer_hardware/hard_drive/portable/super
 	name = "super data disk"
@@ -32,4 +30,3 @@
 	power_usage = 40
 	icon_state = "datadisk3"
 	max_capacity = 256
-	origin_tech = "programming=4"

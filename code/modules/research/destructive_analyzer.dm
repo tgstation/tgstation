@@ -21,7 +21,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/item/weapon/circuitboard/machine/destructive_analyzer
 	name = "Destructive Analyzer (Machine Board)"
 	build_path = /obj/machinery/r_n_d/destructive_analyzer
-	origin_tech = "magnets=2;engineering=2;programming=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/scanning_module = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
@@ -49,10 +48,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		if(!O.origin_tech)
 			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
 			return
-		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'>You cannot deconstruct this item!</span>")
 			return

@@ -109,7 +109,6 @@
 	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	heal_brute = 40
-	origin_tech = "biotech=2"
 	self_delay = 20
 
 /obj/item/stack/medical/gauze
@@ -140,5 +139,4 @@
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
-	origin_tech = "biotech=2"
 	self_delay = 20

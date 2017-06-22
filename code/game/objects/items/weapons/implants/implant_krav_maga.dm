@@ -4,7 +4,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
 	activated = 1
-	origin_tech = "materials=2;biotech=4;combat=5;syndicate=4"
 	var/datum/martial_art/krav_maga/style = new
 
 /obj/item/weapon/implant/krav_maga/get_data()

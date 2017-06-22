@@ -23,7 +23,6 @@
 /obj/item/weapon/circuitboard/machine/processor
 	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
-	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)

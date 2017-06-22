@@ -56,7 +56,6 @@
 /obj/item/weapon/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
 	build_path = /obj/machinery/seed_extractor
-	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)

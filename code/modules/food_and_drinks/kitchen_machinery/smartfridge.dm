@@ -36,7 +36,6 @@
 /obj/item/weapon/circuitboard/machine/smartfridge
 	name = "Smartfridge (Machine Board)"
 	build_path = /obj/machinery/smartfridge
-	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
 	var/static/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
 							/obj/machinery/smartfridge/food = "food",

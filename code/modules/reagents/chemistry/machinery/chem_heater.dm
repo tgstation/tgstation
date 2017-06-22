@@ -20,7 +20,6 @@
 /obj/item/weapon/circuitboard/machine/chem_heater
 	name = "Chemical Heater (Machine Board)"
 	build_path = /obj/machinery/chem_heater
-	origin_tech = "programming=2;engineering=2;biotech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)

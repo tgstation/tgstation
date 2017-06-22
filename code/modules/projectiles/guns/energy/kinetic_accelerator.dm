@@ -7,7 +7,6 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/emproof
 	needs_permit = 0
 	unique_rename = 1
-	origin_tech = "combat=3;powerstorage=3;engineering=3"
 	weapon_weight = WEAPON_LIGHT
 	can_flashlight = 1
 	flight_x_offset = 15
@@ -219,7 +218,6 @@
 	desc = "An upgrade for kinetic accelerators."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "modkit"
-	origin_tech = "programming=2;materials=2;magnets=4"
 	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner

@@ -274,4 +274,3 @@ That prevents a few funky behaviors.
 
 /obj/item/weapon/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
-	origin_tech = "programming=3"

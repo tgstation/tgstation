@@ -6,7 +6,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/next_ask
 	var/askDelay = 600 //one minute
 	var/searching = FALSE

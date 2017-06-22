@@ -3,7 +3,6 @@
 	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=3;materials=2;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 1
 	burst_size = 1
@@ -55,7 +54,6 @@
 	desc = "The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "combat=3;materials=2;syndicate=3"
 	mag_type = /obj/item/ammo_box/magazine/pistolm9mm
 	can_suppress = 0
 	burst_size = 3
@@ -66,7 +64,6 @@
 	name = "flat gun"
 	desc = "A 2 dimensional gun.. what?"
 	icon_state = "flatgun"
-	origin_tech = "combat=3;materials=2;abductor=3"
 
 /obj/item/weapon/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
 	to_chat(user, "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>")

@@ -8,13 +8,11 @@
 	item_state = "paper"
 	throw_speed = 3
 	throw_range = 7
-	origin_tech = "bluespace=6"
 	resistance_flags = FLAMMABLE
 
 /obj/item/weapon/teleportation_scroll/apprentice
 	name = "lesser scroll of teleportation"
 	uses = 1
-	origin_tech = "bluespace=5"
 
 
 

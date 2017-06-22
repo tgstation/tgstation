@@ -67,7 +67,6 @@
 /obj/item/weapon/circuitboard/machine/smes
 	name = "SMES (Machine Board)"
 	build_path = /obj/machinery/power/smes
-	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/cell = 5,

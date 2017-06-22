@@ -41,7 +41,6 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/item/weapon/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
 	build_path = /obj/machinery/r_n_d/protolathe
-	origin_tech = "engineering=2;programming=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 2,

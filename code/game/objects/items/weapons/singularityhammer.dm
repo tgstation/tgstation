@@ -11,7 +11,6 @@
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
 	var/charged = 5
-	origin_tech = "combat=4;bluespace=4;plasmatech=7"
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
@@ -79,7 +78,6 @@
 	throwforce = 30
 	throw_range = 7
 	w_class = WEIGHT_CLASS_HUGE
-	origin_tech = "combat=4;powerstorage=7"
 
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
 	target.Stun(60)

@@ -26,7 +26,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
 	materials = list(MAT_METAL=150)
-	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -55,7 +54,6 @@
 	icon_state = "wrench"
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
-	origin_tech = "materials=5;engineering=5;abductor=3"
 
 /obj/item/weapon/wrench/power
 	name = "hand drill"
@@ -64,7 +62,6 @@
 	item_state = "drill"
 	usesound = 'sound/items/drill_use.ogg'
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -88,7 +85,6 @@
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
-	origin_tech = "materials=1;engineering=1;biotech=3"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
 
 /obj/item/weapon/wrench/medical/suicide_act(mob/user)
@@ -187,7 +183,6 @@
 	icon_state = "drill_screw"
 	item_state = "drill"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -233,7 +228,6 @@
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
-	origin_tech = "materials=1;engineering=1"
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 
@@ -275,7 +269,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cutters"
 	toolspeed = 0.1
-	origin_tech = "materials=5;engineering=4;abductor=3"
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -287,7 +280,6 @@
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
-	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.25
@@ -333,7 +325,6 @@
 	resistance_flags = FIRE_PROOF
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
-	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -571,7 +562,6 @@
 	icon_state = "indwelder"
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
-	origin_tech = "engineering=2;plasmatech=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -602,7 +592,6 @@
 	toolspeed = 0.1
 	light_intensity = 0
 	change_icons = 0
-	origin_tech = "plasmatech=5;engineering=5;abductor=3"
 
 /obj/item/weapon/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -616,7 +605,6 @@
 	item_state = "upindwelder"
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "engineering=3;plasmatech=2"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
@@ -625,7 +613,6 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1
@@ -664,7 +651,6 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
-	origin_tech = "engineering=1;combat=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -692,7 +678,6 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "crowbar"
 	toolspeed = 0.1
-	origin_tech = "combat=4;engineering=4;abductor=3"
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"
@@ -719,7 +704,6 @@
 	icon_state = "jaws_pry"
 	item_state = "jawsoflife"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-	origin_tech = "materials=2;engineering=2"
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	toolspeed = 0.25

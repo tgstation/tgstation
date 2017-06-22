@@ -30,7 +30,6 @@
 /obj/item/weapon/circuitboard/machine/plantgenes
 	name = "Plant DNA Manipulator (Machine Board)"
 	build_path = /obj/machinery/plantgenes
-	origin_tech = "programming=3;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -432,7 +431,6 @@
 /obj/item/weapon/circuitboard/machine/plantgenes/vault
 	name = "alien board (Plant DNA Manipulator)"
 	icon_state = "abductor_mod"
-	origin_tech = "programming=5;biotech=5"
 	// It wasn't made by actual abductors race, so no abductor tech here.
 	def_components = list(
 		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,

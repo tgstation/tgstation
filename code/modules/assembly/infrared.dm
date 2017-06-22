@@ -3,7 +3,6 @@
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon_state = "infrared"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
-	origin_tech = "magnets=2;materials=2"
 
 	var/on = 0
 	var/visible = 0

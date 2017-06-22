@@ -58,7 +58,6 @@
 /obj/item/weapon/circuitboard/machine/autolathe
 	name = "Autolathe (Machine Board)"
 	build_path = /obj/machinery/autolathe
-	origin_tech = "engineering=2;programming=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 3,
 							/obj/item/weapon/stock_parts/manipulator = 1,

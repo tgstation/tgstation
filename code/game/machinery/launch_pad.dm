@@ -25,7 +25,6 @@
 /obj/item/weapon/circuitboard/machine/launchpad
 	name = "Bluespace Launchpad (Machine Board)"
 	build_path = /obj/machinery/launchpad
-	origin_tech = "programming=3;engineering=3;plasmatech=2;bluespace=3"
 	req_components = list(
 							/obj/item/weapon/ore/bluespace_crystal = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -256,7 +255,6 @@
 	icon_state = "blpad-remote"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=3;magnets=2;bluespace=4;syndicate=3"
 	var/sending = TRUE
 	var/obj/machinery/launchpad/briefcase/pad
 

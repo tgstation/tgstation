@@ -19,7 +19,6 @@
 	force = 10
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/chainhit.ogg'
 	materials = list(MAT_METAL = 1000)
@@ -34,7 +33,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
-	origin_tech = "combat=5;biotech=5"
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 10
@@ -55,7 +53,6 @@
 	block_chance = 50
 	armour_penetration = 75
 	sharpness = IS_SHARP
-	origin_tech = "combat=5"
 	attack_verb = list("slashed", "cut")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
@@ -184,7 +181,6 @@
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
-	origin_tech = "combat=7;materials=6"
 	force_string = "INFINITE"
 
 /obj/item/weapon/melee/supermatter_sword/New()

@@ -1,5 +1,4 @@
 /obj/item/organ/alien
-	origin_tech = "biotech=5"
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
@@ -30,7 +29,6 @@
 /obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
 	icon_state = "plasma"
-	origin_tech = "biotech=5;plasmatech=4"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "plasmavessel"
@@ -55,7 +53,6 @@
 	plasma_rate = 15
 
 /obj/item/organ/alien/plasmavessel/large/queen
-	origin_tech = "biotech=6;plasmatech=4"
 	plasma_rate = 20
 
 /obj/item/organ/alien/plasmavessel/small
@@ -109,7 +106,6 @@
 	icon_state = "hivenode"
 	zone = "head"
 	slot = "hivenode"
-	origin_tech = "biotech=5;magnets=4;bluespace=3"
 	w_class = WEIGHT_CLASS_TINY
 	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
@@ -162,7 +158,6 @@
 	icon_state = "stomach-x"
 	zone = "mouth"
 	slot = "resinspinner"
-	origin_tech = "biotech=5;materials=4"
 	alien_powers = list(/obj/effect/proc_holder/alien/resin)
 
 
@@ -171,7 +166,6 @@
 	icon_state = "acid"
 	zone = "mouth"
 	slot = "acidgland"
-	origin_tech = "biotech=5;materials=2;combat=2"
 	alien_powers = list(/obj/effect/proc_holder/alien/acid)
 
 
@@ -180,7 +174,6 @@
 	icon_state = "neurotox"
 	zone = "mouth"
 	slot = "neurotoxingland"
-	origin_tech = "biotech=5;combat=5"
 	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin)
 
 
@@ -190,5 +183,4 @@
 	zone = "groin"
 	slot = "eggsac"
 	w_class = WEIGHT_CLASS_BULKY
-	origin_tech = "biotech=6"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)

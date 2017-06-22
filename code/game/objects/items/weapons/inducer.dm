@@ -4,7 +4,6 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 	item_state = "inducer-engi"
-	origin_tech = "engineering=4;magnets=4;powerstorage=4"
 	force = 7
 	var/powertransfer = 1000
 	var/opened = FALSE

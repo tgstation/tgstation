@@ -313,7 +313,6 @@
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
-	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/weapon/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

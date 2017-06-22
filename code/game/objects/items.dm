@@ -64,7 +64,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
-	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
@@ -188,9 +187,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(user.research_scanner) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
 
-		if(origin_tech)
 			msg += "<span class='notice'>Testing potentials:</span><BR>"
-			var/list/techlvls = params2list(origin_tech)
 			for(var/T in techlvls) //This needs to use the better names.
 				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
 		else

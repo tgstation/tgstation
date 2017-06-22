@@ -4,7 +4,6 @@
 	power_usage = 10 //W
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "programming=2"
 	device_type = MC_CARD
 
 	var/obj/item/weapon/card/id/stored_card = null

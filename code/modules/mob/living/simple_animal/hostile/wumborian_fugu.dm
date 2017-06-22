@@ -107,7 +107,6 @@
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
-	origin_tech = "biotech=6"
 	var/list/banned_mobs()
 
 /obj/item/asteroid/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)

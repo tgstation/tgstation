@@ -5,7 +5,6 @@
 	icon_state = "harddisk_mini"
 	critical = 1
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "programming=1;engineering=1"
 	device_type = MC_HDD
 	var/max_capacity = 128
 	var/used_capacity = 0
@@ -130,7 +129,6 @@
 	name = "advanced hard disk drive"
 	desc = "A hybrid HDD, for use in higher grade computers where balance between power efficiency and capacity is desired."
 	max_capacity = 256
-	origin_tech = "programming=2;engineering=2"
 	power_usage = 50 					// Hybrid, medium capacity and medium power storage
 	icon_state = "harddisk_mini"
 	w_class = WEIGHT_CLASS_SMALL
@@ -139,7 +137,6 @@
 	name = "super hard disk drive"
 	desc = "A high capacity HDD, for use in cluster storage solutions where capacity is more important than power efficiency."
 	max_capacity = 512
-	origin_tech = "programming=3;engineering=3"
 	power_usage = 100					// High-capacity but uses lots of power, shortening battery life. Best used with APC link.
 	icon_state = "harddisk_mini"
 	w_class = WEIGHT_CLASS_SMALL
@@ -148,7 +145,6 @@
 	name = "cluster hard disk drive"
 	desc = "A large storage cluster consisting of multiple HDDs for usage in dedicated storage systems."
 	power_usage = 500
-	origin_tech = "programming=4;engineering=4"
 	max_capacity = 2048
 	icon_state = "harddisk"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -158,7 +154,6 @@
 	name = "solid state drive"
 	desc = "An efficient SSD for portable devices."
 	power_usage = 10
-	origin_tech = "programming=2;engineering=2"
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
@@ -167,7 +162,6 @@
 	name = "micro solid state drive"
 	desc = "A highly efficient SSD chip for portable devices."
 	power_usage = 2
-	origin_tech = "programming=1;engineering=1"
 	max_capacity = 32
 	icon_state = "ssd_micro"
 	w_class = WEIGHT_CLASS_TINY

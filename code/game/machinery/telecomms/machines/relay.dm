@@ -53,7 +53,6 @@
 /obj/item/weapon/circuitboard/machine/telecomms/relay
 	name = "Relay Mainframe (Machine Board)"
 	build_path = /obj/machinery/telecomms/relay
-	origin_tech = "programming=2;engineering=2;bluespace=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 2,

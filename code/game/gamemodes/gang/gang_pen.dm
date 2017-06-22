@@ -2,7 +2,6 @@
  * Gang Boss Pens
  */
 /obj/item/weapon/pen/gang
-	origin_tech = "materials=2;syndicate=3"
 	var/cooldown
 	var/last_used = 0
 	var/charges = 1

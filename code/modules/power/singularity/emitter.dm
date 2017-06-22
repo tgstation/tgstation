@@ -43,7 +43,6 @@
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "Emitter (Machine Board)"
 	build_path = /obj/machinery/power/emitter
-	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)

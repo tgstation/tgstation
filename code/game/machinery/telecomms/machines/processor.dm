@@ -43,7 +43,6 @@
 /obj/item/weapon/circuitboard/machine/telecomms/processor
 	name = "Processor Unit (Machine Board)"
 	build_path = /obj/machinery/telecomms/processor
-	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 3,
 							/obj/item/weapon/stock_parts/subspace/filter = 1,

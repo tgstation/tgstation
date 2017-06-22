@@ -40,7 +40,6 @@
 /obj/item/weapon/circuitboard/machine/ore_redemption
 	name = "Ore Redemption (Machine Board)"
 	build_path = /obj/machinery/mineral/ore_redemption
-	origin_tech = "programming=1;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 1,

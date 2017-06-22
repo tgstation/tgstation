@@ -4,7 +4,6 @@
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=7"
 	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 

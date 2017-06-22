@@ -12,14 +12,12 @@
 	var/fieldlimit = 4
 	var/list/fields = list()
 	var/quick_burst_mod = 0.8
-	origin_tech = "magnets=3;engineering=3"
 
 /obj/item/weapon/resonator/upgraded
 	name = "upgraded resonator"
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early."
 	icon_state = "resonator_u"
 	item_state = "resonator_u"
-	origin_tech = "materials=4;powerstorage=3;engineering=3;magnets=3"
 	fieldlimit = 6
 	quick_burst_mod = 1
 

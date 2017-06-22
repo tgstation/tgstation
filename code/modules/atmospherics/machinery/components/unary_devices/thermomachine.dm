@@ -28,7 +28,6 @@
 /obj/item/weapon/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
-	origin_tech = "programming=3;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/micro_laser = 2,

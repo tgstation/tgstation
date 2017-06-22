@@ -120,7 +120,6 @@
 /obj/item/weapon/circuitboard/machine/dna_vault
 	name = "DNA Vault (Machine Board)"
 	build_path = /obj/machinery/dna_vault
-	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor/super = 5,
 							/obj/item/weapon/stock_parts/manipulator/pico = 5,

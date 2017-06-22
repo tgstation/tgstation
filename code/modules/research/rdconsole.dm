@@ -250,7 +250,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			updateUsrDialog()
 			return
 
-		var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 		var/cancontinue = FALSE
 		for(var/T in temp_tech)
 			if(files.IsTechHigher(T, temp_tech[T]))
@@ -729,7 +728,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Deconstruction Menu</h3><BR>"
 			dat += "Name: [linked_destroy.loaded_item.name]<BR>"
 			dat += "Origin Tech:<BR>"
-			var/list/temp_tech = linked_destroy.ConvertReqString2List(linked_destroy.loaded_item.origin_tech)
 			for(var/T in temp_tech)
 				dat += "* [CallTechName(T)] [temp_tech[T]]"
 				var/datum/tech/F = files.known_tech[T]

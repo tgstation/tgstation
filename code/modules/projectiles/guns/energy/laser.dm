@@ -5,7 +5,6 @@
 	item_state = "laser"
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=4;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 1
 	shaded_charge = 1
@@ -13,7 +12,6 @@
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
-	origin_tech = "combat=2;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
 	needs_permit = 0
@@ -30,7 +28,6 @@
 	item_state = "caplaser"
 	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
 	force = 10
-	origin_tech = null
 	ammo_x_offset = 3
 	selfcharge = 1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -40,13 +37,11 @@
 	icon_state = "lasercannon"
 	item_state = "laser"
 	desc = "An industrial-grade heavy-duty laser rifle with a modified laser lense to scatter its shot into multiple smaller lasers. The inner-core can self-charge for theorically infinite use."
-	origin_tech = "combat=5;materials=4;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
 /obj/item/weapon/gun/energy/laser/cyborg
 	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
-	origin_tech = null
 	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/laser/cyborg/emp_act()
@@ -78,7 +73,6 @@
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
-	origin_tech = "combat=4;magnets=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/accelerator)
 	pin = null
 	ammo_x_offset = 3
@@ -104,7 +98,6 @@
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts that pass through multiple soft targets and heavier materials"
 	icon_state = "xray"
 	item_state = null
-	origin_tech = "combat=6;materials=4;magnets=4;syndicate=1"
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	pin = null
 	ammo_x_offset = 3
@@ -116,7 +109,6 @@
 	icon_state = "bluetag"
 	desc = "A retro laser gun modified to fire harmless blue beams of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/bluetag)
-	origin_tech = "combat=2;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
 	pin = /obj/item/device/firing_pin/tag/blue
@@ -128,7 +120,6 @@
 	icon_state = "redtag"
 	desc = "A retro laser gun modified to fire harmless beams red of light. Sound effects included!"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag)
-	origin_tech = "combat=2;magnets=2"
 	clumsy_check = 0
 	needs_permit = 0
 	pin = /obj/item/device/firing_pin/tag/red

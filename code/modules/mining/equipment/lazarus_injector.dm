@@ -12,7 +12,6 @@
 	var/loaded = 1
 	var/malfunctioning = 0
 	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
-	origin_tech = "biotech=4;magnets=6"
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)

@@ -279,7 +279,6 @@
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
-	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	resistance_flags = FIRE_PROOF
@@ -437,7 +436,6 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
 /obj/item/weapon/melee/chainofcommand/tailwhip/kitty

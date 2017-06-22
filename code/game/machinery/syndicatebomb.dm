@@ -276,7 +276,6 @@
 	icon_state = "bombcore"
 	item_state = "eshield0"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "syndicate=5;combat=6"
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 	var/range_heavy = 3
@@ -310,7 +309,6 @@
 /obj/item/weapon/bombcore/training
 	name = "dummy payload"
 	desc = "A nanotrasen replica of a syndicate payload. Its not intended to explode but to announce that it WOULD have exploded, then rewire itself to allow for more training."
-	origin_tech = null
 	var/defusals = 0
 	var/attempts = 0
 
@@ -349,7 +347,6 @@
 /obj/item/weapon/bombcore/badmin
 	name = "badmin payload"
 	desc = "If you're seeing this someone has either made a mistake or gotten dangerously savvy with var editing!"
-	origin_tech = null
 
 /obj/item/weapon/bombcore/badmin/defuse() //because we wouldn't want them being harvested by players
 	var/obj/machinery/syndicatebomb/B = loc
@@ -395,7 +392,6 @@
 /obj/item/weapon/bombcore/chemical
 	name = "chemical payload"
 	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. It is able to hold up to four chemical containers, and must be loaded before use."
-	origin_tech = "combat=4;materials=3"
 	icon_state = "chemcore"
 	var/list/beakers = list()
 	var/max_beakers = 1
@@ -526,7 +522,6 @@
 	icon_state = "bigred"
 	item_state = "electronic"
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "syndicate=3"
 	var/timer = 0
 	var/detonated =	0
 	var/existant =	0

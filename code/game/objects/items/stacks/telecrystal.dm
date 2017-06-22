@@ -7,7 +7,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
 	flags = NOBLUDGEON
-	origin_tech = "materials=6;syndicate=1"
 
 /obj/item/stack/telecrystal/attack(mob/target, mob/user)
 	if(target == user) //You can't go around smacking people with crystals to find out if they have an uplink or not.

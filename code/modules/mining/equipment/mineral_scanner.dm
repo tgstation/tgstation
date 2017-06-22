@@ -9,7 +9,6 @@
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
-	origin_tech = "engineering=1;magnets=1"
 
 /obj/item/device/mining_scanner/attack_self(mob/user)
 	if(!user.client)
@@ -38,7 +37,6 @@
 	var/cooldown = 35
 	var/current_cooldown = 0
 	var/range = 7
-	origin_tech = "engineering=3;magnets=3"
 
 /obj/item/device/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"

@@ -46,7 +46,6 @@
 /obj/item/weapon/circuitboard/machine/biogenerator
 	name = "Biogenerator (Machine Board)"
 	build_path = /obj/machinery/biogenerator
-	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,

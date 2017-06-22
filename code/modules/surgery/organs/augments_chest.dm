@@ -14,7 +14,6 @@
 	var/synthesizing = 0
 	var/poison_amount = 5
 	slot = "stomach"
-	origin_tech = "materials=2;powerstorage=2;biotech=2"
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
 	if(synthesizing)
@@ -41,14 +40,12 @@
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
-	origin_tech = "materials=4;powerstorage=3;biotech=3"
 
 /obj/item/organ/cyberimp/chest/reviver
 	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
-	origin_tech = "materials=5;programming=4;biotech=4"
 	slot = "heartdrive"
 	var/revive_cost = 0
 	var/reviving = 0
@@ -120,7 +117,6 @@
 	Unlike regular jetpack, this device has no stablilzation system."
 	slot = "thrusters"
 	icon_state = "imp_jetpack"
-	origin_tech = "materials=4;magnets=4;biotech=4;engineering=5"
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)

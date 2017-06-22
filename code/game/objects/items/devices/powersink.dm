@@ -11,7 +11,6 @@
 	throw_speed = 1
 	throw_range = 2
 	materials = list(MAT_METAL=750)
-	origin_tech = "powerstorage=5;syndicate=5"
 	var/drain_rate = 1600000	// amount of power to drain per tick
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 1e10		// maximum power that can be drained before exploding

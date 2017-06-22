@@ -3,7 +3,6 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	materials = list(MAT_METAL=100)
-	origin_tech = "combat=1;materials=2;engineering=1"
 	attachable = 1
 	var/armed = 0
 

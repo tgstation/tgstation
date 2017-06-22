@@ -38,7 +38,6 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/item/weapon/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
-	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)

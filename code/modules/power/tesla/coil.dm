@@ -25,7 +25,6 @@
 /obj/item/weapon/circuitboard/machine/tesla_coil
 	name = "Tesla Coil (Machine Board)"
 	build_path = /obj/machinery/power/tesla_coil
-	origin_tech = "programming=3;magnets=3;powerstorage=3"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -117,7 +116,6 @@
 /obj/item/weapon/circuitboard/machine/grounding_rod
 	name = "Grounding Rod (Machine Board)"
 	build_path = /obj/machinery/power/grounding_rod
-	origin_tech = "programming=3;powerstorage=3;magnets=3;plasmatech=2"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)

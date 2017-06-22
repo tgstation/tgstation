@@ -45,7 +45,6 @@
 /obj/item/weapon/circuitboard/machine/hydroponics
 	name = "Hydroponics Tray (Machine Board)"
 	build_path = /obj/machinery/hydroponics/constructable
-	origin_tech = "programming=1;biotech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 1,

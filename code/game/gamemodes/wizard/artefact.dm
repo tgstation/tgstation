@@ -127,7 +127,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
 	item_state = "electronic"
-	origin_tech = "bluespace=4;materials=4"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0

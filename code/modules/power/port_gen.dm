@@ -75,7 +75,6 @@
 /obj/item/weapon/circuitboard/machine/pacman
 	name = "PACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman
-	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -85,12 +84,10 @@
 /obj/item/weapon/circuitboard/machine/pacman/super
 	name = "SUPERPACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman/super
-	origin_tech = "programming=3;powerstorage=4;engineering=4"
 
 /obj/item/weapon/circuitboard/machine/pacman/mrs
 	name = "MRSPACMAN-type Generator (Machine Board)"
 	build_path = "/obj/machinery/power/port_gen/pacman/mrs"
-	origin_tech = "programming=3;powerstorage=4;engineering=4;plasmatech=4"
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()

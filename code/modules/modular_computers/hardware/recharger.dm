@@ -28,7 +28,6 @@
 	desc = "A device that wirelessly recharges connected device from nearby APC."
 	icon_state = "charger_APC"
 	w_class = WEIGHT_CLASS_SMALL // Can't be installed into tablets/PDAs
-	origin_tech = "programming=2;engineering=2;powerstorage=3"
 
 /obj/item/weapon/computer_hardware/recharger/APC/use_power(amount, charging=0)
 	if(istype(holder.physical, /obj/machinery))
@@ -52,7 +51,6 @@
 	desc = "A power connector that recharges connected device from nearby power wire. Incompatible with portable computers."
 	icon_state = "charger_wire"
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "engineering=2;powerstorage=1"
 
 /obj/item/weapon/computer_hardware/recharger/wired/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
 	if(istype(M.physical, /obj/machinery) && M.physical.anchored)

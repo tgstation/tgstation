@@ -34,7 +34,6 @@
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	origin_tech = "engineering=3;biotech=3;plasmatech=2"
 	energy_drain = 20
 	range = MELEE
 	equip_cooldown = 20
@@ -258,7 +257,6 @@
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MELEE|RANGED
 	equip_cooldown = 10
-	origin_tech = "materials=3;biotech=4;magnets=4"
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
 	..()
@@ -535,7 +533,6 @@
 	energy_drain = 10
 	range = MELEE|RANGED
 	equip_cooldown = 0
-	origin_tech = "combat=5;materials=6;powerstorage=7;biotech=6"
 	var/obj/item/weapon/gun/medbeam/mech/medigun
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_PLASMA = 3000, MAT_GOLD = 8000, MAT_DIAMOND = 2000)
 

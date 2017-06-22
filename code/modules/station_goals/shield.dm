@@ -39,7 +39,6 @@
 /obj/item/weapon/circuitboard/machine/computer/sat_control
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
-	origin_tech = "engineering=3"
 
 /obj/machinery/computer/sat_control
 	name = "Satellite control"

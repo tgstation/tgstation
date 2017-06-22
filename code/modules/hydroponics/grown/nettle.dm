@@ -40,7 +40,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
-	origin_tech = "combat=3"
 	attack_verb = list("stung")
 
 /obj/item/weapon/grown/nettle/suicide_act(mob/user)
@@ -89,7 +88,6 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
-	origin_tech = "combat=5"
 
 /obj/item/weapon/grown/nettle/death/add_juice()
 	..()

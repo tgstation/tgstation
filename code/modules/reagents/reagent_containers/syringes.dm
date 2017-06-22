@@ -234,13 +234,11 @@
 	desc = "An advanced syringe that can hold 60 units of chemicals"
 	amount_per_transfer_from_this = 20
 	volume = 60
-	origin_tech = "bluespace=4;materials=4;biotech=4"
 
 /obj/item/weapon/reagent_containers/syringe/noreact
 	name = "cryo syringe"
 	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
 	volume = 20
-	origin_tech = "materials=3;engineering=3"
 
 /obj/item/weapon/reagent_containers/syringe/noreact/Initialize()
 	. = ..()
@@ -251,4 +249,3 @@
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	volume = 10
 	proj_piercing = 1
-	origin_tech = "combat=3;materials=4;engineering=5"

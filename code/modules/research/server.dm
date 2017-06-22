@@ -17,7 +17,6 @@
 /obj/item/weapon/circuitboard/machine/rdserver
 	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/r_n_d/server
-	origin_tech = "programming=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/scanning_module = 1)

@@ -10,7 +10,6 @@
 
 /obj/item/weapon/kitchen
 	icon = 'icons/obj/kitchen.dmi'
-	origin_tech = "materials=1"
 
 /obj/item/weapon/kitchen/fork
 	name = "fork"
@@ -106,7 +105,6 @@
 	desc = "A military combat utility survival knife."
 	force = 20
 	throwforce = 20
-	origin_tech = "materials=3;combat=4"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
@@ -132,7 +130,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
-	origin_tech = null
 
 /obj/item/weapon/kitchen/knife/carrotshiv
 	name = "carrot shiv"
@@ -142,7 +139,6 @@
 	force = 8
 	throwforce = 12//fuck git
 	materials = list()
-	origin_tech = "biotech=3;combat=2"
 	attack_verb = list("shanked", "shivved")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 

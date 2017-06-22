@@ -4,7 +4,6 @@
 /obj/item/weapon/implant/exile
 	name = "exile implant"
 	desc = "Prevents you from returning from away missions"
-	origin_tech = "materials=2;biotech=3;magnets=2;bluespace=3"
 	activated = 0
 
 /obj/item/weapon/implant/exile/get_data()

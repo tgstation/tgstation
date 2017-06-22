@@ -25,7 +25,6 @@ effective or pretty fucking useless.
 	throw_range = 7
 	flags = CONDUCT
 	item_state = "electronic"
-	origin_tech = "magnets=3;combat=3;syndicate=3"
 
 	var/times_used = 0 //Number of times it's been used.
 	var/max_uses = 2
@@ -68,7 +67,6 @@ effective or pretty fucking useless.
 
 /obj/item/device/healthanalyzer/rad_laser
 	materials = list(MAT_METAL=400)
-	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds

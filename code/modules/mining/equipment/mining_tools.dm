@@ -12,7 +12,6 @@
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
-	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/weapon/pickaxe/mini
@@ -33,7 +32,6 @@
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
-	origin_tech = "materials=3;engineering=4"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
@@ -42,7 +40,6 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 14
-	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
@@ -54,7 +51,6 @@
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
-	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/weapon/pickaxe/drill/cyborg
@@ -66,7 +62,6 @@
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	digspeed = 7
-	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
@@ -79,7 +74,6 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
@@ -97,7 +91,6 @@
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=50)
-	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 

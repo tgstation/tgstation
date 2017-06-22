@@ -201,7 +201,6 @@
 	item_state = "bl_suit"
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
-	origin_tech = "syndicate=2"
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	resistance_flags = 0
@@ -226,7 +225,6 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
@@ -248,7 +246,6 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	item_state = "meson"
-	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
@@ -383,7 +380,6 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)

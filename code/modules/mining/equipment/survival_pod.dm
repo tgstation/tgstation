@@ -13,7 +13,6 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "engineering=3;bluespace=3"
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE
@@ -70,7 +69,6 @@
 /obj/item/weapon/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
 	desc = "An exorbitantly expensive luxury suite stored within a pocket of bluespace."
-	origin_tech = "engineering=3;bluespace=4"
 	template_id = "shelter_beta"
 
 //Pod objects

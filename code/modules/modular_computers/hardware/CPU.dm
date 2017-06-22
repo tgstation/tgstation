@@ -9,7 +9,6 @@
 	power_usage = 50
 	critical = 1
 	malfunction_probability = 1
-	origin_tech = "programming=3;engineering=2"
 	var/max_idle_programs = 2 // 2 idle, + 1 active = 3 as said in description.
 	device_type = MC_CPU
 
@@ -23,7 +22,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	power_usage = 25
 	max_idle_programs = 1
-	origin_tech = "programming=2;engineering=2"
 
 /obj/item/weapon/computer_hardware/processor_unit/photonic
 	name = "photonic processor board"
@@ -32,7 +30,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	power_usage = 250
 	max_idle_programs = 4
-	origin_tech = "programming=5;engineering=4"
 
 /obj/item/weapon/computer_hardware/processor_unit/photonic/small
 	name = "photonic microprocessor"
@@ -41,4 +38,3 @@
 	w_class = WEIGHT_CLASS_TINY
 	power_usage = 75
 	max_idle_programs = 2
-	origin_tech = "programming=4;engineering=3"

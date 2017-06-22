@@ -137,7 +137,6 @@
 /datum/plant_gene/trait
 	var/rate = 0.05
 	var/examine_line = ""
-	var/list/origin_tech = null
 	var/trait_id // must be set and equal for any two traits of the same type
 
 /datum/plant_gene/trait/Copy()
@@ -157,19 +156,11 @@
 	return TRUE
 
 /datum/plant_gene/trait/proc/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
-	if(!origin_tech) // This ugly code segment adds RnD tech levels to resulting plants.
 		return
 
-	if(G.origin_tech)
-		var/list/tech = params2list(G.origin_tech)
-		for(var/t in origin_tech)
 			if(t in tech)
-				tech[t] = max(text2num(tech[t]), origin_tech[t])
 			else
-				tech[t] = origin_tech[t]
-		G.origin_tech = list2params(tech)
 	else
-		G.origin_tech = list2params(origin_tech)
 
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
@@ -195,7 +186,6 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-	origin_tech = list("biotech" = 5)
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -229,7 +219,6 @@
 	// Multiplies max charge by (rate*1000) when used in potato power cells.
 	name = "Electrical Activity"
 	rate = 0.2
-	origin_tech = list("powerstorage" = 5)
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
@@ -304,7 +293,6 @@
 	// Teleport radius is calculated as max(round(potency*rate), 1)
 	name = "Bluespace Activity"
 	rate = 0.1
-	origin_tech = list("bluespace" = 5)
 
 /datum/plant_gene/trait/teleport/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target))

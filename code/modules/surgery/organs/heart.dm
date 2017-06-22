@@ -3,7 +3,6 @@
 	icon_state = "heart-on"
 	zone = "chest"
 	slot = "heart"
-	origin_tech = "biotech=5"
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
 	var/icon_base = "heart"
@@ -54,7 +53,6 @@
 	desc = "A heart that, when inserted, will force you to pump it manually."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
-	origin_tech = "biotech=6"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums

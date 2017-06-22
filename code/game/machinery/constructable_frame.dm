@@ -304,7 +304,6 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/abductor
 	name = "alien board (Report This)"
 	icon_state = "abductor_mod"
-	origin_tech = "programming=5;abductor=3"
 
 /obj/item/weapon/circuitboard/machine/clockwork
 	name = "clockwork board (Report This)"

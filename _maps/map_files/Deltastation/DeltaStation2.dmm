@@ -103523,7 +103523,6 @@
 "dQO" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/organ/tongue/bone{
-	origin_tech = "biotech=0"
 	},
 /turf/open/floor/plating,
 /area/library/abandoned)

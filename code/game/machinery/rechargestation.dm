@@ -21,7 +21,6 @@
 /obj/item/weapon/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
-	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 2,
 							/obj/item/weapon/stock_parts/cell = 1,

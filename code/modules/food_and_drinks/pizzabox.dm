@@ -4,7 +4,6 @@
 	desc = "Special delivery!"
 	icon_state = "pizzabomb_inactive"
 	item_state = "eshield0"
-	origin_tech = "syndicate=3;engineering=3"
 
 /obj/item/pizzabox
 	name = "pizza box"

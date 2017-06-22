@@ -42,7 +42,6 @@
 	icon_state = "bloodtomato"
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
-	origin_tech = "biotech=5"
 
 
 // Blue Tomato
@@ -88,7 +87,6 @@
 	name = "bluespace tomato"
 	desc = "So lubricated, you might slip through space-time."
 	icon_state = "bluespacetomato"
-	origin_tech = "biotech=4;bluespace=5"
 
 
 // Killer Tomato
@@ -115,7 +113,6 @@
 	icon_state = "killertomato"
 	var/awakening = 0
 	filling_color = "#FF0000"
-	origin_tech = "biotech=4;combat=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)

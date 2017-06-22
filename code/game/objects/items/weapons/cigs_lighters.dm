@@ -24,7 +24,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/burnt = FALSE
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1"
 	heat = 1000
 
 /obj/item/weapon/match/process()

@@ -5,7 +5,6 @@
 	icon_state = "bottle19"
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=3"
 
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/regenerative_core/C = M

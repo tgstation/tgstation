@@ -3,7 +3,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
-	origin_tech = "biotech=3"
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	var/zone = "chest"
@@ -64,7 +63,6 @@
 	S.desc = desc
 	S.icon = icon
 	S.icon_state = icon_state
-	S.origin_tech = origin_tech
 	S.w_class = w_class
 
 	return S

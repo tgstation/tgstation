@@ -4,7 +4,6 @@
 	icon_state = "signaller"
 	item_state = "signaler"
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
-	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
@@ -196,7 +195,6 @@ Code:
 	return
 
 /obj/item/device/assembly/signaler/cyborg
-	origin_tech = null
 
 /obj/item/device/assembly/signaler/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return

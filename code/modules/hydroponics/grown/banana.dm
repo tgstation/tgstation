@@ -101,7 +101,6 @@
 	icon_state = "banana_blue"
 	trash = /obj/item/weapon/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
-	origin_tech = "biotech=3;bluespace=5"
 
 /obj/item/weapon/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace
