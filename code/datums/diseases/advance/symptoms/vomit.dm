@@ -32,7 +32,7 @@ Bonus
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	var/vomit_blood = FALSE
-	var/proj_vomit = FALSE
+	var/proj_vomit = 0
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
 	..()
@@ -41,7 +41,7 @@ Bonus
 	if(A.properties["resistance"] >= 7) //blood vomit
 		vomit_blood = TRUE
 	if(A.properties["transmittable"] >= 7) //projectile vomit
-		proj_vomit = TRUE
+		proj_vomit = 5
 
 /datum/symptom/vomit/Activate(datum/disease/advance/A)
 	if(!..())
@@ -52,7 +52,7 @@ Bonus
 			if(prob(base_message_chance) && !suppress_warning)
 				to_chat(M, "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>")
 		else
-			Vomit(M)
+			vomit(M)
 
-/datum/symptom/vomit/proc/Vomit(mob/living/carbon/M)
-	M.vomit(20, vomit_blood, distance = 5 * proj_vomit)
+/datum/symptom/vomit/proc/vomit(mob/living/carbon/M)
+	M.vomit(20, vomit_blood, distance = proj_vomit)
