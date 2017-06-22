@@ -539,7 +539,7 @@
 	throwforce_on = 20
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cleaving_saw"
-	icon_state_on = "cleaving_saw"
+	icon_state_on = "cleaving_saw_open"
 	slot_flags = SLOT_BELT
 	attack_verb_off = list("attacked", "sawed", "sliced", "torn", "ripped", "diced", "cut")
 	attack_verb_on = list("cleaved", "swiped", "slashed", "chopped")
@@ -568,10 +568,6 @@
 		return FALSE
 	. = ..()
 	if(.)
-		if(active)
-			add_overlay("cleaving_saw_open")
-		else
-			cut_overlays()
 		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.75)
 		user.changeNext_move(CLICK_CD_MELEE * 0.375)
 
