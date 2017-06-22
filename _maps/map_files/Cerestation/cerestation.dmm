@@ -1190,12 +1190,12 @@
 	name = "Command Asteroid"
 	})
 "acI" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "acJ" = (
@@ -8032,7 +8032,6 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/asteroid/fore/com_east)
 "aqh" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
@@ -8041,6 +8040,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aqi" = (
@@ -8067,10 +8067,10 @@
 	},
 /area/ai_monitored/turret_protected/aisat/hallway)
 "aql" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aqm" = (
@@ -20572,7 +20572,6 @@
 	},
 /area/hallway/primary/fore)
 "aNm" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -20581,13 +20580,14 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aNn" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aNo" = (
@@ -21039,7 +21039,6 @@
 	},
 /area/hallway/primary/fore)
 "aOc" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -21053,10 +21052,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aOd" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -21070,7 +21068,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aOe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -23781,25 +23779,23 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aSi" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "aSj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -24335,10 +24331,10 @@
 /turf/open/space,
 /area/space)
 "aTf" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aTg" = (
@@ -25992,16 +25988,15 @@
 	},
 /area/maintenance/asteroid/fore/cargo_south)
 "aWb" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aWc" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -26015,10 +26010,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aWd" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -26026,7 +26020,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aWe" = (
 /obj/structure/grille,
@@ -26063,7 +26057,6 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/nuke_storage)
 "aWi" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -26074,10 +26067,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWj" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -26093,10 +26085,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWk" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -26105,6 +26096,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aWl" = (
@@ -26183,7 +26175,6 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "aWs" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -26197,7 +26188,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aWt" = (
 /obj/structure/cable{
@@ -26228,7 +26219,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "aWx" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -26237,10 +26227,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWy" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -26254,7 +26243,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aWz" = (
 /obj/machinery/power/solar_control{
@@ -26320,7 +26309,6 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/asteroid/command)
 "aWF" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -26336,6 +26324,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aWG" = (
@@ -26422,12 +26411,12 @@
 	},
 /area/hallway/primary/starboard/fore)
 "aWN" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aWO" = (
@@ -26442,7 +26431,6 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/asteroid/fore)
 "aWP" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -26453,6 +26441,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aWQ" = (
@@ -26504,7 +26493,6 @@
 	},
 /area/hallway/primary/starboard/fore)
 "aWU" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -26520,6 +26508,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aWV" = (
@@ -26537,7 +26526,6 @@
 	},
 /area/hallway/primary/starboard/fore)
 "aWW" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -26546,10 +26534,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aWX" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -26565,10 +26553,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aWY" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -26577,10 +26564,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aWZ" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -26594,33 +26580,32 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aXa" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aXb" = (
-/obj/structure/lattice/catwalk,
 /obj/item/stack/cable_coil{
 	amount = 2
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aXc" = (
-/obj/structure/lattice/catwalk,
 /obj/item/stack/cable_coil{
 	amount = 30
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aXd" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -26631,46 +26616,46 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aXe" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/power/tracker,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aXf" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aXg" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aXh" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aXi" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -26686,19 +26671,19 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "aXj" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/tracker,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aXk" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -26719,6 +26704,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aXl" = (
@@ -26739,7 +26725,6 @@
 	name = "Civilian Asteroid"
 	})
 "aXo" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -26755,6 +26740,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aXp" = (
@@ -26809,7 +26795,6 @@
 /turf/open/floor/plating,
 /area/maintenance/asteroid/port/west)
 "aXx" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -26820,6 +26805,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "aXy" = (
@@ -27091,7 +27077,6 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/asteroid/port/west)
 "aYk" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -27105,7 +27090,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_serv)
 "aYl" = (
 /obj/structure/grille,
@@ -27159,7 +27144,6 @@
 	},
 /area/crew_quarters/rehab_dome)
 "aYr" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -27170,10 +27154,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aYs" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -27189,10 +27172,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/com_engi)
 "aYt" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -27201,6 +27183,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aYu" = (
@@ -27357,7 +27340,6 @@
 	},
 /area/hallway/primary/central)
 "aYP" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
@@ -27366,10 +27348,10 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "aYQ" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -27385,7 +27367,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/med_cargo)
 "aYR" = (
 /obj/structure/disposalpipe/trunk{
@@ -34902,7 +34884,6 @@
 	},
 /area/maintenance/asteroid/port/neast)
 "bms" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -34911,10 +34892,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bmt" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -35172,7 +35153,6 @@
 	},
 /area/hallway/primary/central)
 "bmM" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -35185,10 +35165,10 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bmN" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -35201,10 +35181,10 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bmO" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -35216,6 +35196,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bmP" = (
@@ -35789,7 +35770,6 @@
 	},
 /area/maintenance/asteroid/port/neast)
 "bnM" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
@@ -35803,10 +35783,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "bnN" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
@@ -35820,10 +35799,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "bnO" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
@@ -35837,7 +35815,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "bnP" = (
 /obj/machinery/light{
@@ -35902,7 +35880,6 @@
 	},
 /area/hallway/primary/central)
 "bnV" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
@@ -35920,10 +35897,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "bnW" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 4;
@@ -35940,10 +35916,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "bnX" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	d1 = 1;
@@ -35961,7 +35936,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "bnY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -39141,13 +39116,12 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "btn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -39457,7 +39431,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -39467,13 +39440,12 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "btM" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -39482,13 +39454,12 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "btN" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -39498,7 +39469,7 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/engi_med)
 "btO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -40044,10 +40015,10 @@
 	},
 /area/maintenance/asteroid/port/east)
 "buK" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "buL" = (
@@ -40409,15 +40380,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bvo" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -40425,6 +40395,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bvp" = (
@@ -54617,7 +54588,6 @@
 	},
 /area/maintenance/asteroid/central)
 "bVb" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -54632,10 +54602,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVc" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -54652,10 +54621,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVd" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -54664,6 +54632,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bVe" = (
@@ -54973,7 +54942,6 @@
 	},
 /area/engine/atmos)
 "bVD" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -54983,10 +54951,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVE" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -55001,7 +54968,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "bVF" = (
 /obj/machinery/light{
@@ -55730,12 +55697,12 @@
 	},
 /area/maintenance/asteroid/central)
 "bXd" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "bXe" = (
@@ -58089,7 +58056,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
@@ -58127,7 +58094,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
@@ -58147,7 +58114,6 @@
 	name = "Civilian Asteroid"
 	})
 "cce" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
@@ -58155,10 +58121,10 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "ccf" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -58173,10 +58139,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "ccg" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -58193,7 +58158,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/dock_med)
 "cch" = (
 /obj/structure/table,
@@ -58248,7 +58213,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
@@ -58266,7 +58231,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
@@ -58283,13 +58248,13 @@
 	},
 /area/hallway/primary/starboard/aft)
 "cco" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "ccp" = (
@@ -59239,8 +59204,8 @@
 /turf/open/space,
 /area/space)
 "ceg" = (
-/obj/structure/lattice/catwalk,
 /obj/item/weapon/wrench,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/aft)
 "ceh" = (
@@ -59419,7 +59384,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
@@ -59439,7 +59404,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless/astplate{
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/bridges/serv_sci)
@@ -59989,8 +59954,8 @@
 	},
 /area/quartermaster/miningdock/abandoned)
 "cfG" = (
-/obj/structure/lattice/catwalk,
 /obj/item/stack/sheet/glass,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/aft)
 "cfH" = (
@@ -63485,13 +63450,12 @@
 	},
 /area/teleporter/quantum/research)
 "cme" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/sci_dock)
 "cmf" = (
 /turf/closed/wall{
@@ -65681,11 +65645,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/structure/girder,
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/sci_dock)
 "cpD" = (
 /obj/machinery/status_display{
@@ -73300,21 +73263,21 @@
 	},
 /area/hallway/secondary/entry)
 "cCE" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "cCF" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "cCG" = (
@@ -81592,10 +81555,10 @@
 /obj/structure/disposaloutlet{
 	dir = 8
 	},
-/obj/structure/lattice/catwalk,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "cTn" = (
@@ -83586,13 +83549,12 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/serv_engi)
 "cWT" = (
 /obj/structure/disposalpipe/segment{
@@ -83830,12 +83792,11 @@
 /turf/open/space/basic,
 /area/space)
 "cXt" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "cXu" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -83851,10 +83812,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXv" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -83863,10 +83823,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXw" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -83880,7 +83839,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -83938,7 +83897,6 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXE" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -83947,7 +83905,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -83956,7 +83914,6 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXG" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -83965,7 +83922,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXH" = (
 /obj/machinery/camera{
@@ -84066,13 +84023,12 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/turf/open/space,
+/turf/open/floor/plating,
 /area/hallway/secondary/bridges/cargo_ai)
 "cXT" = (
 /obj/machinery/light{
@@ -86119,10 +86075,10 @@
 	},
 /area/hydroponics)
 "dcA" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
 "dcB" = (
@@ -88527,21 +88483,21 @@
 	},
 /area/hallway/primary/starboard/fore)
 "dib" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "dic" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/command)
 "did" = (
@@ -88549,12 +88505,12 @@
 /turf/open/space,
 /area/solar/asteroid/command)
 "die" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/fore)
 "dif" = (
@@ -88970,12 +88926,12 @@
 /turf/open/space,
 /area/solar/asteroid/aft)
 "djq" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/aft)
 "djr" = (
@@ -88985,28 +88941,28 @@
 	},
 /area/hallway/primary/starboard/aft)
 "djs" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/aft)
 "djt" = (
-/obj/structure/lattice/catwalk,
 /obj/item/stack/cable_coil{
 	amount = 2
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/aft)
 "dju" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/solar/asteroid/aft)
 "djv" = (
@@ -89508,12 +89464,12 @@
 	name = "Command Asteroid"
 	})
 "dkG" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "dkH" = (
@@ -89832,12 +89788,12 @@
 	},
 /area/security/prison)
 "dlr" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
 "dls" = (
@@ -127994,7 +127950,7 @@ bNs
 bOt
 ddN
 bGJ
-ddT
+bOn
 bOo
 ded
 del
@@ -139720,7 +139676,7 @@ amE
 ano
 aop
 apk
-aZp
+bSC
 aqh
 aqU
 aqU
@@ -147998,8 +147954,8 @@ aqU
 aqU
 aqU
 aYP
-aZp
-aZp
+bSC
+bSC
 bap
 baT
 bap
