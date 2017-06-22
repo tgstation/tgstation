@@ -4,7 +4,7 @@ a /datum/desgin on the linked R&D console. You can then print them out in a fasi
 using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
-/obj/machinery/r_n_d/circuit_imprinter
+/obj/machinery/rnd/circuit_imprinter
 	name = "Circuit Imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
@@ -27,26 +27,26 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Computer Parts"
 								)
 
-/obj/machinery/r_n_d/circuit_imprinter/Initialize()
+/obj/machinery/rnd/circuit_imprinter/Initialize()
 	. = ..()
 	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
 	B.apply_default_parts(src)
 
-/obj/machinery/r_n_d/circuit_imprinter/Destroy()
+/obj/machinery/rnd/circuit_imprinter/Destroy()
 	qdel(materials)
 	return ..()
 
 /obj/item/weapon/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
-	build_path = /obj/machinery/r_n_d/circuit_imprinter
+	build_path = /obj/machinery/rnd/circuit_imprinter
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
-/obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
+/obj/machinery/rnd/circuit_imprinter/RefreshParts()
 	reagents.maximum_volume = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
@@ -61,11 +61,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
-/obj/machinery/r_n_d/circuit_imprinter/blob_act(obj/structure/blob/B)
+/obj/machinery/rnd/circuit_imprinter/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+/obj/machinery/rnd/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.amount(M)
@@ -75,18 +75,18 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
-/obj/machinery/r_n_d/circuit_imprinter/on_deconstruction()
+/obj/machinery/rnd/circuit_imprinter/on_deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()
 	..()
 
 
-/obj/machinery/r_n_d/circuit_imprinter/disconnect_console()
+/obj/machinery/rnd/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
 	..()
 
-/obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
+/obj/machinery/rnd/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
 
 	if(istype(O,/obj/item/stack/sheet))
 		. = 1

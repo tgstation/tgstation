@@ -2006,6 +2006,7 @@
 #include "code\modules\research\designs\stock_parts_designs.dm"
 #include "code\modules\research\designs\telecomms_designs.dm"
 #include "code\modules\research\designs\weapon_designs.dm"
+#include "code\modules\research\techweb\__techweb_helpers.dm"
 #include "code\modules\research\techweb\_techweb.dm"
 #include "code\modules\research\techweb\_techweb_node.dm"
 #include "code\modules\research\techweb\all_nodes.dm"

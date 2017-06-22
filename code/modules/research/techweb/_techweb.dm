@@ -6,18 +6,24 @@
 	var/list/datum/techweb_node/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = datum
 	var/list/datum/design/researched_designs = list()			//Designs that are available for use. Assoc list, id = datum
 	var/list/datum/techweb_node/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node datum = path of boost object.
+	var/research_points = 0										//Available research points.
 
 /datum/techweb/New()
-	for(var/i in GLOB.techweb_nodes_starting)
-		var/datum/techweb_node/DN = GLOB.techweb_nodes_starting[i]
+	for(var/i in SSresearch.techweb_nodes_starting)
+		var/datum/techweb_node/DN = SSresearch.techweb_nodes_starting[i]
 		research_node(DN)
 	return ..()
 
+/datum/techweb/admin
+	research_points = INFINITY	//KEKKLES.
+
 /datum/techweb/admin/New()	//All unlocked.
 	. = ..()
-	for(var/i in GLOB.techweb_nodes)
-		var/datum/techweb_node/TN = GLOB.techweb_nodes[i]
+	for(var/i in SSresearch.techweb_nodes)
+		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
 		research_node(TN, TRUE)
+
+/datum/techweb/science	//Global science techweb for RND consoles.
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -166,8 +172,8 @@
 
 /datum/techweb/autolathe/New()
 	. = ..()
-	for(var/D in GLOB.techweb_designs)
-		var/datum/design/d = GLOB.techweb_designs[D]
+	for(var/D in SSresearch.techweb_designs)
+		var/datum/design/d = SSresearch.techweb_designs[D]
 		if((d.build_type & AUTOLATHE) && ("initial" in d.category))
 			add_design(d)
 
@@ -178,8 +184,8 @@
 
 /datum/techweb/limbgrower/New()
 	. = ..()
-	for(var/D in GLOB.techweb_designs)
-		var/datum/design/d = GLOB.techweb_designs[D]
+	for(var/D in SSresearch.techweb_designs)
+		var/datum/design/d = SSresearch.techweb_designs[D]
 		if((d.build_type & LIMBGROWER) && ("initial" in d.category))
 			add_design(d)
 
@@ -190,8 +196,8 @@
 
 /datum/techweb/biogenerator/New()
 	. = ..()
-	for(var/D in GLOB.techweb_designs)
-		var/datum/design/d = GLOB.techweb_designs[D]
+	for(var/D in SSresearch.techweb_designs)
+		var/datum/design/d = SSresearch.techweb_designs[D]
 		if((d.build_type & BIOGENERATOR) && ("initial" in d.category))
 			add_design(d)
 
@@ -201,8 +207,8 @@
 	return ..()
 
 /datum/techweb/smelter/New()
-	for(var/D in GLOB.techweb_designs)
-		var/datum/design/d = GLOB.techweb_designs[D]
+	for(var/D in SSresearch.techweb_designs)
+		var/datum/design/d = SSresearch.techweb_designs[D]
 		if((d.build_type & SMELTER) && ("initial" in d.category))
 			add_design(d)
 

@@ -404,7 +404,7 @@
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
-	for(var/datum/design/D in GLOB.techweb_designs)
+	for(var/datum/design/D in SSresearch.techweb_designs)
 		if((D.build_type & AUTOLATHE) && ("hacked" in D.category))
 			if(hacked)
 				stored_research.add_design(D)

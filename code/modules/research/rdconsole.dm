@@ -34,13 +34,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/weapon/circuitboard/computer/rdconsole
-	var/datum/techweb/stored_research					//Stored techweb
+	var/datum/techweb/stored_research					//Reference to global science techweb.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
 
-	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/rnd/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
+	var/obj/machinery/rnd/protolathe/linked_lathe = null				//Linked Protolathe
+	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
 	var/screen = SCICONSOLE_MENU	//Which screen is currently showing.
 	var/lastscreen = SCICONSOLE_MENU
@@ -66,18 +66,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return "ERROR: Report This"
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/r_n_d/D in oview(3,src))
+	for(var/obj/machinery/rnd/D in oview(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
-		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
+		if(istype(D, /obj/machinery/rnd/destructive_analyzer))
 			if(linked_destroy == null)
 				linked_destroy = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/protolathe))
+		else if(istype(D, /obj/machinery/rnd/protolathe))
 			if(linked_lathe == null)
 				linked_lathe = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
+		else if(istype(D, /obj/machinery/rnd/circuit_imprinter))
 			if(linked_imprinter == null)
 				linked_imprinter = D
 				D.linked_console = src
@@ -85,7 +85,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
-	stored_research = new /datum/techweb
+	stored_research = SSresearch.science_tech
 	matching_designs = list()
 	if(!id)
 		fix_noid_research_servers()
@@ -291,29 +291,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		else
 			to_chat(usr, "Unauthorized Access.")
 
-	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
-		screen = SCICONSOLE_UPDATE_DATABASE
-		if(!sync)
-			to_chat(usr, "<span class='danger'>You must connect to the network first!</span>")
-		else
-			spawn(30)
-				if(src)
-					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
-						var/server_processed = 0
-						if(S.disabled)
-							continue
-						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
-							stored_research.copy_research_to(S.stored_research)
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
-							stored_research.copy_research_to(S.stored_research)
-						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
-							S.produce_heat(100)
-					screen = SCICONSOLE_SETTINGS
-					updateUsrDialog()
-
-	else if(href_list["togglesync"]) //Prevents the console from being synced by other consoles. Can still send data.
-		sync = !sync
-
 	else if(href_list["build"]) //Causes the Protolathe to build something.
 		var/datum/design/being_built = stored_research.researched_designs[href_list["build"]]
 		var/amount = text2num(href_list["amount"])
@@ -501,18 +478,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_imprinter.linked_console = null
 				linked_imprinter = null
 
-	else if(href_list["reset"]) //Reset the R&D console's database.
-		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue" && usr.canUseTopic(src))
-			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
-			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
-			screen = SCICONSOLE_UPDATE_DATABASE
-			qdel(stored_research)
-			stored_research = new
-			spawn(20)
-				screen = SCICONSOLE_SETTINGS
-				updateUsrDialog()
-
 	else if(href_list["search"]) //Search for designs with name matching pattern
 		var/compare
 
@@ -680,17 +645,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += SCICONSOLE_MENU_HREF
 			dat += "<div class='statusDisplay'>"
 			dat += "<h3>R&D Console Setting:</h3>"
-			if(sync)
-				dat += "<A href='?src=\ref[src];sync=1'>Sync Database with Network</A>"
-				dat += "<span class='linkOn'>Connect to Research Network</span>"
-				dat += "<A href='?src=\ref[src];togglesync=1'>Disconnect from Research Network</A>"
-			else
-				dat += "<span class='linkOff'>Sync Database with Network</span>"
-				dat += "<A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A>"
-				dat += "<span class='linkOn'>Disconnect from Research Network</span>"
 			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_LINKING]'>Device Linkage Menu</A>"
 			dat += "<A href='?src=\ref[src];lock=[SCICONSOLE_LOCKED]'>Lock Console</A>"
-			dat += "<A href='?src=\ref[src];reset=1'>Reset R&D Database</A></div>"
 
 		if(SCICONSOLE_LINKING) //R&D device linkage
 			dat += SCICONSOLE_MENU_HREF

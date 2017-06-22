@@ -7,7 +7,7 @@ it creates. All the menus and other manipulation commands are in the R&D console
 Note: Must be placed west/left of and R&D console to function.
 
 */
-/obj/machinery/r_n_d/protolathe
+/obj/machinery/rnd/protolathe
 	name = "Protolathe"
 	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
@@ -31,7 +31,7 @@ Note: Must be placed west/left of and R&D console to function.
 								)
 
 
-/obj/machinery/r_n_d/protolathe/Initialize()
+/obj/machinery/rnd/protolathe/Initialize()
 	. = ..()
 	create_reagents(0)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
@@ -40,17 +40,17 @@ Note: Must be placed west/left of and R&D console to function.
 
 /obj/item/weapon/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
-	build_path = /obj/machinery/r_n_d/protolathe
+	build_path = /obj/machinery/rnd/protolathe
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
-/obj/machinery/r_n_d/protolathe/Destroy()
+/obj/machinery/rnd/protolathe/Destroy()
 	qdel(materials)
 	return ..()
 
-/obj/machinery/r_n_d/protolathe/RefreshParts()
+/obj/machinery/rnd/protolathe/RefreshParts()
 	reagents.maximum_volume = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
@@ -65,7 +65,7 @@ Note: Must be placed west/left of and R&D console to function.
 		T -= M.rating/10
 	efficiency_coeff = min(max(0, T), 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+/obj/machinery/rnd/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	var/A = materials.amount(M)
@@ -75,18 +75,18 @@ Note: Must be placed west/left of and R&D console to function.
 	return round(A / max(1, (all_materials[M]*efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
-/obj/machinery/r_n_d/protolathe/on_deconstruction()
+/obj/machinery/rnd/protolathe/on_deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	materials.retrieve_all()
 	..()
 
 
-/obj/machinery/r_n_d/protolathe/disconnect_console()
+/obj/machinery/rnd/protolathe/disconnect_console()
 	linked_console.linked_lathe = null
 	..()
 
-/obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)
+/obj/machinery/rnd/protolathe/Insert_Item(obj/item/O, mob/user)
 
 	if(istype(O, /obj/item/stack/sheet))
 		. = 1

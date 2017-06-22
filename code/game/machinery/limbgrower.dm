@@ -234,7 +234,7 @@
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(emag==TRUE)
 		return
-	for(var/datum/design/D in GLOB.techweb_designs)
+	for(var/datum/design/D in SSresearch.techweb_designs)
 		if((D.build_type & LIMBGROWER) && ("special" in D.category))
 			stored_research.add_design(D)
 	to_chat(user, "A warning flashes onto the screen, stating that safety overrides have been deactivated")

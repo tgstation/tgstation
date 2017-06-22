@@ -15,7 +15,7 @@
 #define EFFECT_PROB_VERYHIGH 95
 
 #define FAIL 8
-/obj/machinery/r_n_d/experimentor
+/obj/machinery/rnd/experimentor
 	name = "E.X.P.E.R.I-MENTOR"
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
 	icon_state = "h_lathe"
@@ -33,14 +33,14 @@
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items = list() //items that can cause critical reactions
 
-/obj/machinery/r_n_d/experimentor/proc/ConvertReqString2List(list/source_list)
+/obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
 	for(var/O in temp_list)
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
 /* //uncomment to enable forced reactions.
-/obj/machinery/r_n_d/experimentor/verb/forceReaction()
+/obj/machinery/rnd/experimentor/verb/forceReaction()
 	set name = "Force Experimentor Reaction"
 	set category = "Debug"
 	set src in oview(1)
@@ -53,7 +53,7 @@
 			item_reactions["[loaded_item.type]"] = oldReaction
 */
 
-/obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
+/obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		if(istype(I,/obj/item/weapon/relic))
@@ -79,7 +79,7 @@
 				critical_items += I
 
 
-/obj/machinery/r_n_d/experimentor/Initialize()
+/obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/experimentor(null)
 	B.apply_default_parts(src)
@@ -90,13 +90,13 @@
 
 /obj/item/weapon/circuitboard/machine/experimentor
 	name = "E.X.P.E.R.I-MENTOR (Machine Board)"
-	build_path = /obj/machinery/r_n_d/experimentor
+	build_path = /obj/machinery/rnd/experimentor
 	req_components = list(
 							/obj/item/weapon/stock_parts/scanning_module = 1,
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/weapon/stock_parts/micro_laser = 2)
 
-/obj/machinery/r_n_d/experimentor/RefreshParts()
+/obj/machinery/rnd/experimentor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		if(resetTime > 0 && (resetTime - M.rating) >= 1)
 			resetTime -= M.rating
@@ -105,7 +105,7 @@
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
-/obj/machinery/r_n_d/experimentor/proc/checkCircumstances(obj/item/O)
+/obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O,/obj/item/device/transfer_valve))
 		var/obj/item/device/transfer_valve/T = O
@@ -113,7 +113,7 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/r_n_d/experimentor/Insert_Item(obj/item/O, mob/user)
+/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != INTENT_HARM)
 		. = 1
 		if(!is_insertion_ready(user))
@@ -126,11 +126,11 @@
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
 		flick("h_lathe_load", src)
 
-/obj/machinery/r_n_d/experimentor/default_deconstruction_crowbar(obj/item/O)
+/obj/machinery/rnd/experimentor/default_deconstruction_crowbar(obj/item/O)
 	ejectItem()
 	..(O)
 
-/obj/machinery/r_n_d/experimentor/attack_hand(mob/user)
+/obj/machinery/rnd/experimentor/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<center>"
 	if(!linked_console)
@@ -159,7 +159,7 @@
 	onclose(user, "experimentor")
 
 
-/obj/machinery/r_n_d/experimentor/proc/matchReaction(matching,reaction)
+/obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
 	var/obj/item/D = matching
 	if(D)
 		if(item_reactions.Find("[D.type]"))
@@ -173,7 +173,7 @@
 	else
 		return FAIL
 
-/obj/machinery/r_n_d/experimentor/proc/ejectItem(delete=FALSE)
+/obj/machinery/rnd/experimentor/proc/ejectItem(delete=FALSE)
 	if(loaded_item)
 		if(cloneMode && cloneCount > 0)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
@@ -191,12 +191,12 @@
 			qdel(loaded_item)
 		loaded_item = null
 
-/obj/machinery/r_n_d/experimentor/proc/throwSmoke(turf/where)
+/obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(0, where)
 	smoke.start()
 
-/obj/machinery/r_n_d/experimentor/proc/pickWeighted(list/from)
+/obj/machinery/rnd/experimentor/proc/pickWeighted(list/from)
 	var/result = FALSE
 	var/counter = 1
 	while(!result)
@@ -209,7 +209,7 @@
 		else
 			counter = 1
 
-/obj/machinery/r_n_d/experimentor/proc/experiment(exp,obj/item/exp_on)
+/obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
 	var/chosenchem
@@ -493,7 +493,7 @@
 		icon_state = "h_lathe"
 		recentlyExperimented = 0
 
-/obj/machinery/r_n_d/experimentor/Topic(href, href_list)
+/obj/machinery/rnd/experimentor/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)
@@ -536,7 +536,7 @@
 	return
 
 //~~~~~~~~Admin logging proc, aka the Powergamer Alarm~~~~~~~~
-/obj/machinery/r_n_d/experimentor/proc/warn_admins(mob/user, ReactionName)
+/obj/machinery/rnd/experimentor/proc/warn_admins(mob/user, ReactionName)
 	var/turf/T = get_turf(src)
 	message_admins("Experimentor reaction: [ReactionName] generated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]",0,1)
 	log_game("Experimentor reaction: [ReactionName] generated by [key_name(user)] in ([T.x],[T.y],[T.z])")
