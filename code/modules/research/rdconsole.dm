@@ -43,6 +43,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
 	var/screen = SCICONSOLE_MENU	//Which screen is currently showing.
+	var/lastscreen = SCICONSOLE_MENU
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
@@ -139,6 +140,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	add_fingerprint(usr)
 
 	usr.set_machine(src)
+	if(href_list["back_screen"])
+		lastscreen = text2num(href_list["back_screen"])
+
 	if(href_list["disk_slot"])
 		disk_slot_selected = text2num(href_list["disk_slot"])
 
@@ -153,7 +157,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = SCICONSOLE_UPDATE_DATABASE
 		var/wait = 50
 		spawn(wait)
-			screen = 1.2
+			screen = SCICONSOLE_TDISK
 			if(t_disk)
 				t_disk.stored_research.copy_research_to(stored_research)
 				updateUsrDialog()
@@ -170,7 +174,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		stored_research.copy_research_to(t_disk.stored_research)
-		screen = 1.2
+		screen = SCICONSOLE_TDISK
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
 		var/n = text2num(href_list["updt_design"])
 		screen = SCICONSOLE_UPDATE_DATABASE
@@ -181,7 +185,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(D)
 					wait += 50
 		spawn(wait)
-			screen = 1.4
+			screen = SCICONSOLE_DDISK
 			if(d_disk)
 				if(!n)
 					for(var/D in d_disk.blueprints)
@@ -224,7 +228,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				D.build_type = autolathe_friendly ? (D.build_type | AUTOLATHE) : D.build_type
 				D.category |= "Imported"
 			d_disk.blueprints[slot] = D
-		screen = 1.4
+		screen = SCICONSOLE_DDISK
 
 	else if(href_list["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(linked_destroy)
@@ -578,9 +582,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Main Menu:</h3>"
 			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_RES_NODELIST'>Researched Nodes</A>"
 			if(t_disk)
-				dat += "<A href='?src=\ref[src];menu=1.2'>Disk Operations</A>"
+				dat += "<A href='?src=\ref[src];menu=SCICONSOLE_TDISK'>Disk Operations</A>"
 			else if(d_disk)
-				dat += "<A href='?src=\ref[src];menu=1.4'>Disk Operations</A>"
+				dat += "<A href='?src=\ref[src];menu=SCICONSOLE_DDISK'>Disk Operations</A>"
 			else
 				dat += "<span class='linkOff'>Disk Operations</span>"
 			if(linked_destroy)
@@ -603,15 +607,31 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Currently researched nodes:</h3><div class='statusDisplay'>"
 			for(var/v in stored_research.researched_nodes)
 				var/datum/techweb_node/N = stored_research.researched_nodes[v]
-				dat += "<A href='?src=\ref[src];view_node=\ref[N]'>[N.display_name]</A>"
+				dat += "<A href='?src=\ref[src];view_node=\ref[N];back_screen=[screen]'>[N.display_name]</A>"
 			dat += "</div>"
 		if(SCICONSOLE_NODEDESC)
 			dat += SCICONSOLE_MENU_HREF
-			dat += "<div><h3>[selected_node.display_name]"
+			dat += SCICONSOLE_BACK_HREF
+			dat += "<div><h3>[selected_node.display_name]</h3>"
 			dat += "[selected_node.description]"
 			dat += "</div>"
-		if(1.2) //Technology Disk Menu
-			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
+			dat += "<div><h3>Designs:</h3>"
+			for(var/i in selected_node.designs)
+				var/datum/design/D = i
+				dat += "[D.name]"
+			dat += "</div>"
+			dat += "<div><h3>Prerequisites:</h3>"
+			for(var/i in selected_node.prerequisites)
+				var/datum/techweb_node/prereq = i
+				dat += "<A href='?src=\ref[src];view_node=\ref[prereq]>[prereq.display_name]</A>"
+			dat += "</div>"
+			dat += "<div><h3>Unlocks:</h3>"
+			for(var/i in selected_node.unlocks)
+				var/datum/techweb_node/unlock = i
+				dat += "<A href='?src=\ref[src];view_node=\ref[unlock]>[unlock.display_name]</A>"
+			dat += "</div>"
+		if(SCICONSOLE_TDISK) //Technology Disk Menu
+			dat += SCICONSOLE_MENU_HREF
 			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A>"
 			dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
 			dat += "<A href='?src=\ref[src];updt_tech=0'>Upload All</A>"
@@ -619,11 +639,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
 			for(var/i in t_disk.stored_research.researched_nodes)
 				var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
-				dat += "[N.display_name]"
+				dat += "<A href='?src=\ref[src];view_node=\ref[N];back_screen=[screen]'>[N.display_name]</A>"
 			dat += "</div>"
 
-		if(1.4) //Design Disk menu.
-			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
+		if(SCICONSOLE_DDISK) //Design Disk menu.
+			dat += SCICONSOLE_MENU_HREF
 			dat += "Disk Operations: <A href='?src=\ref[src];clear_design=0'>Clear Disk</A><A href='?src=\ref[src];updt_design=0'>Upload All</A><A href='?src=\ref[src];eject_design=1'>Eject Disk</A>"
 			for(var/i in 1 to d_disk.max_blueprints)
 				dat += "<div class='statusDisplay'>"
@@ -645,11 +665,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						dat += "* [CallMaterialName(M)] x [all_mats[M]]"
 					dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
 				else
-					dat += "Empty SlotOperations: <A href='?src=\ref[src];menu=1.5;disk_slot=[i]'>Load Design to Slot</A>"
+					dat += "Empty SlotOperations: <A href='?src=\ref[src];menu=SCICONSOLE_DDISKL;disk_slot=[i]'>Load Design to Slot</A>"
 				dat += "</div>"
-		if(1.5) //Design disk submenu
+		if(SCICONSOLE_DDISKL) //Design disk submenu
 			dat += SCICONSOLE_MENU_HREF
-			dat += "<A href='?src=\ref[src];menu=1.4'>Return to Disk Operations</A><div class='statusDisplay'>"
+			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_DDISK'>Return to Disk Operations</A><div class='statusDisplay'>"
 			dat += "<h3>Load Design to Disk:</h3>"
 			for(var/v in stored_research.researched_designs)
 				var/datum/design/D = stored_research.researched_designs[v]
@@ -712,7 +732,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
 		if(SCICONSOLE_PROTOLATHE_NONE)
-			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
+			dat += SCICONSOLE_MENU_HREF
 			dat += "<div class='statusDisplay'>NO PROTOLATHE LINKED TO CONSOLE</div>"
 
 		if(SCICONSOLE_PROTOLATHE_CAT)
@@ -833,7 +853,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		///////////////////CIRCUIT IMPRINTER SCREENS////////////////////
 		if(SCICONSOLE_CIRCUIT_NONE)
-			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
+			dat += SCICONSOLE_MENU_HREF
 			dat += "<div class='statusDisplay'>NO CIRCUIT IMPRINTER LINKED TO CONSOLE</div>"
 
 		if(SCICONSOLE_CIRCUIT_CAT)

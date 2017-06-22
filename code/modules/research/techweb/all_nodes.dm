@@ -4,27 +4,27 @@
 	starting_node = TRUE
 	display_name = "Basic Materials Processing"
 	description = "The study into processing and use of basic materials, like glass, and steel."
-	unlock_ids = list("advancedmaterials")
 	design_ids = list("basic_matter_bin")
 
 /datum/techweb_node/advanced_materials
 	id = "advancedmaterials"
 	display_name = "Advanced Materials Processing"
 	description = "The study into processing and use of more advanced materials, like gold and silver."
-	unlock_ids = list("industrialmaterials")
+	prereq_ids = list("basicmaterials")
 	design_ids = list("adv_matter_bin")
 
 /datum/techweb_node/industrial_materials
 	id = "industrialmaterials"
 	display_name = "Industrial Materials Processing"
 	description = "The study into processing and use of industrial materials, including uranium, diamond, and titanium."
-	unlock_ids = list("bluespacematerials")
+	prereq_ids = list("advancedmaterials")
 	design_ids = list("plasteel", "plastitanium", "alienalloy", "super_matter_bin")
 
 /datum/techweb_node/bluespace_materials
 	id = "bluespacematerials"
 	display_name = "Bluespace Materials Processing"
 	description = "Highly advanced research into processing and use of rare materials with transdimensional bluespace properties."
+	prereq_ids = list("industrialmaterials")
 	design_ids = list("bluespace_matter_bin")
 
 
