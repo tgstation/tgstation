@@ -96,7 +96,7 @@
 		if(!(istype(M, /obj/mecha) && mech_sized))
 			return
 
-	if(istype(M, /atom/movable))
+	if(ismovableatom(M))
 		if(do_teleport(M, hard_target, 6))
 			// KERPLUNK
 			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)

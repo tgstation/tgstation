@@ -70,7 +70,7 @@
 
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)	//People with return to lobby may still be in the lobby. Let's pick someone else in that case.
-		if(istype(rev_mind.current,/mob/dead/new_player))
+		if(isnewplayer(rev_mind.current))
 			head_revolutionaries -= rev_mind
 			var/list/newcandidates = shuffle(antag_candidates)
 			if(newcandidates.len == 0)
@@ -79,7 +79,7 @@
 				var/datum/mind/lenin = M
 				antag_candidates -= lenin
 				newcandidates -= lenin
-				if(istype(lenin.current,/mob/dead/new_player)) //We don't want to make the same mistake again
+				if(isnewplayer(lenin.current)) //We don't want to make the same mistake again
 					continue
 				else
 					var/mob/Nm = lenin.current

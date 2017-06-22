@@ -52,7 +52,7 @@
 		return ..()
 
 /obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
-	if(istype(loc, /atom/movable))
+	if(ismovableatom(loc))
 		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
 		AM.relay_container_resist(user, O)
 		return

@@ -305,7 +305,7 @@
 	action_background_icon_state = "bg_alien"
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)

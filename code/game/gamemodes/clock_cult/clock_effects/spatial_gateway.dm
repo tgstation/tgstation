@@ -165,7 +165,7 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
+	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (isitem(src) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	if(!target) //if we have no target, but did have a key, let them retry
 		to_chat(invoker, "<span class='warning'>That target no longer exists!</span>")

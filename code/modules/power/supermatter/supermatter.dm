@@ -540,7 +540,7 @@
 /obj/machinery/power/supermatter_shard/proc/supermatter_pull(turf/center, pull_range = 10)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
 	for(var/atom/P in orange(pull_range,center))
-		if(istype(P, /atom/movable))
+		if(ismovableatom(P))
 			var/atom/movable/pulled_object = P
 			if(ishuman(P))
 				var/mob/living/carbon/human/H = P
