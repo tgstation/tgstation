@@ -68,11 +68,11 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
 	icon_state = "pwindow";
-	layer = 3;
+	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
 	dir = 1;
-	icon_state = "windoor";
+	icon_state = "windoor"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -105,7 +105,7 @@
 "r" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
-	icon_state = "pwindow";
+	icon_state = "pwindow"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -134,7 +134,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/black{
-	pixel_y = -9;
+	pixel_y = -9
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -163,7 +163,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	density = 0;
 	dir = 9;
-	icon_state = "pwindow";
+	icon_state = "pwindow"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -180,7 +180,7 @@
 /obj/structure/sink/kitchen{
 	icon_state = "sink_alt";
 	dir = 4;
-	pixel_x = -13;
+	pixel_x = -13
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)

@@ -1018,7 +1018,7 @@
 "df" = (
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "white_warn_corner";
+	icon_state = "white_warn_corner"
 	},
 /area/holodeck/rec_center/medical)
 "dg" = (
@@ -1219,7 +1219,7 @@
 /obj/item/clothing/head/powdered_wig,
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dI" = (
@@ -1229,7 +1229,7 @@
 /obj/item/clothing/suit/holidaypriest,
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dJ" = (
@@ -1237,7 +1237,7 @@
 /obj/item/weapon/storage/book/bible,
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dK" = (
@@ -1245,7 +1245,7 @@
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dL" = (
@@ -1254,7 +1254,7 @@
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dM" = (
@@ -1335,18 +1335,18 @@
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_viva";
-	name = "Black Rook";
+	name = "Black Rook"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "dW" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_mime";
-	name = "Black Queen";
+	name = "Black Queen"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1356,18 +1356,18 @@
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_clown";
-	name = "Black King";
+	name = "Black King"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "dY" = (
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_ian";
-	name = "Black Knight";
+	name = "Black Knight"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1386,7 +1386,7 @@
 	dir = 1;
 	icon_state = "mass_driver";
 	id = "trektorpedo1";
-	name = "photon torpedo tube";
+	name = "photon torpedo tube"
 	},
 /obj/item/toy/minimeteor{
 	color = "";
@@ -1459,7 +1459,7 @@
 	dir = 1;
 	icon_state = "mass_driver";
 	id = "trektorpedo2";
-	name = "photon torpedo tube";
+	name = "photon torpedo tube"
 	},
 /obj/item/toy/minimeteor{
 	color = "";
@@ -1489,7 +1489,7 @@
 /obj/structure/chair,
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "ej" = (
@@ -1553,7 +1553,7 @@
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_greytide";
-	name = "Black Pawn";
+	name = "Black Pawn"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1563,11 +1563,11 @@
 /obj/item/cardboard_cutout/adaptive{
 	color = "#9999BB";
 	icon_state = "cutout_greytide";
-	name = "Black Pawn";
+	name = "Black Pawn"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "et" = (
@@ -1613,7 +1613,7 @@
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "chapel";
+	icon_state = "chapel"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eB" = (
@@ -1628,13 +1628,13 @@
 /obj/structure/table/wood,
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eD" = (
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "chapel";
+	icon_state = "chapel"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eE" = (
@@ -1680,7 +1680,7 @@
 "eK" = (
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "eL" = (
@@ -1717,7 +1717,7 @@
 "eQ" = (
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eR" = (
@@ -1798,7 +1798,7 @@
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "chapel";
+	icon_state = "chapel"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "fe" = (
@@ -1834,17 +1834,17 @@
 "fi" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_greytide";
-	name = "White Pawn";
+	name = "White Pawn"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "fj" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_greytide";
-	name = "White Pawn";
+	name = "White Pawn"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1951,7 +1951,7 @@
 "fv" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_viva";
-	name = "White Rook";
+	name = "White Rook"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1960,17 +1960,17 @@
 "fw" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_mime";
-	name = "White Queen";
+	name = "White Queen"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "fx" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
-	name = "White King";
+	name = "White King"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1979,11 +1979,11 @@
 "fy" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_ian";
-	name = "White Knight";
+	name = "White Knight"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
-	icon_state = "dark";
+	icon_state = "dark"
 	},
 /area/holodeck/rec_center/spacechess)
 "fz" = (
@@ -3330,7 +3330,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3910,7 +3910,7 @@
 	dir = 2;
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
-	req_access_txt = "109";
+	req_access_txt = "109"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -3947,7 +3947,7 @@
 	dir = 2;
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
-	req_access_txt = "109";
+	req_access_txt = "109"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -3966,7 +3966,7 @@
 	dir = 2;
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
-	req_access_txt = "109";
+	req_access_txt = "109"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -4070,7 +4070,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault,
 /area/centcom/control)
@@ -4160,7 +4160,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
+	name = "WARNING: BLAST DOORS"
 	},
 /turf/open/floor/plating,
 /area/centcom/control)
@@ -4283,7 +4283,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/brown{
 	icon_state = "brown";
@@ -4790,7 +4790,7 @@
 	dir = 2;
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
-	req_access_txt = "109";
+	req_access_txt = "109"
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -4806,7 +4806,7 @@
 	dir = 2;
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
-	req_access_txt = "109";
+	req_access_txt = "109"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -4851,7 +4851,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-15";
 	pixel_x = -6;
-	pixel_y = 12;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 6
@@ -5306,7 +5306,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5475,7 +5475,7 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	icon_state = "nboard00";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -6092,7 +6092,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
 	d2 = 2;
-	icon_state = "0-2";
+	icon_state = "0-2"
 	},
 /obj/structure/cable/white{
 	icon_state = "0-8"
@@ -6328,7 +6328,7 @@
 /obj/structure/noticeboard{
 	dir = 8;
 	icon_state = "nboard00";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 5
@@ -6450,7 +6450,7 @@
 	},
 /obj/structure/cable/white{
 	d2 = 2;
-	icon_state = "0-2";
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -7213,7 +7213,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
+	name = "WARNING: BLAST DOORS"
 	},
 /turf/open/floor/plating,
 /area/centcom/evac)
@@ -7534,7 +7534,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -8100,7 +8100,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: BLAST DOORS";
+	name = "WARNING: BLAST DOORS"
 	},
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -8642,7 +8642,7 @@
 	dir = 2;
 	icon_state = "direction_bridge";
 	name = "command department";
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -9265,7 +9265,7 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	icon_state = "nboard00";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -9507,7 +9507,7 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	icon_state = "nboard00";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -11578,7 +11578,7 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	icon_state = "nboard00";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,

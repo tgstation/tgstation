@@ -166,7 +166,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "aC" = (
@@ -223,7 +223,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "aK" = (
@@ -293,7 +293,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "aX" = (
@@ -685,7 +685,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "ck" = (
@@ -696,7 +696,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/asteroid{
-	baseturf = /turf/open/floor/plating/beach/sand;
+	baseturf = /turf/open/floor/plating/beach/sand
 	},
 /area/ruin/powered/beach)
 "cl" = (

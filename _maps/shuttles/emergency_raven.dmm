@@ -165,7 +165,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/defibrillator/loaded,
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
@@ -316,7 +316,7 @@
 "aY" = (
 /obj/machinery/flasher{
 	id = "shuttleflash";
-	pixel_x = -26;
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
@@ -330,7 +330,7 @@
 "ba" = (
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 8;
-	icon_state = "darkyellow";
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bb" = (
@@ -443,7 +443,7 @@
 "bf" = (
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4;
-	icon_state = "darkyellow";
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bg" = (
@@ -470,7 +470,7 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 10;
-	icon_state = "darkyellow";
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bk" = (
@@ -482,7 +482,7 @@
 /area/shuttle/escape)
 "bl" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -634,7 +634,7 @@
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -655,7 +655,7 @@
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -805,7 +805,7 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -820,7 +820,7 @@
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -915,13 +915,13 @@
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "ci" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 5
@@ -951,7 +951,7 @@
 /area/shuttle/escape)
 "cn" = (
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -973,7 +973,7 @@
 "cq" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1473,10 +1473,10 @@
 "eB" = (
 /obj/machinery/flasher{
 	id = "shuttleflash";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1484,7 +1484,7 @@
 /area/shuttle/escape)
 "eC" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
@@ -1572,7 +1572,7 @@
 /area/shuttle/escape)
 "eN" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1592,7 +1592,7 @@
 /area/shuttle/escape)
 "eQ" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4

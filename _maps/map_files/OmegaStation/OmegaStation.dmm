@@ -170,7 +170,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
@@ -182,7 +182,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -194,7 +194,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
@@ -274,7 +274,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkred/side{
 	dir = 1
@@ -306,7 +306,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
@@ -321,7 +321,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -334,7 +334,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/vault{
@@ -363,7 +363,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkyellow/side{
 	icon_state = "darkyellow";
@@ -430,7 +430,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -465,7 +465,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -730,12 +730,12 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = -32;
+	pixel_x = -32
 	},
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -780,7 +780,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -811,13 +811,13 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -862,7 +862,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -906,7 +906,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -946,7 +946,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -984,7 +984,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
@@ -1167,7 +1167,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1179,7 +1179,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1220,7 +1220,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -1259,7 +1259,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -1284,7 +1284,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1317,7 +1317,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault,
 /area/bridge)
@@ -1349,7 +1349,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1363,7 +1363,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -1633,7 +1633,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -1644,7 +1644,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -1670,7 +1670,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -1745,7 +1745,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/bridge)
@@ -1802,7 +1802,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/bridge)
@@ -1848,7 +1848,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -1884,7 +1884,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -2213,7 +2213,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -2284,7 +2284,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -2305,7 +2305,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/command{
@@ -2414,7 +2414,7 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	pixel_y = 32;
+	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -2455,7 +2455,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor{
 	id = "cargounload";
@@ -2590,7 +2590,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -2645,7 +2645,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/turret_protected/ai)
@@ -2743,7 +2743,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -2790,7 +2790,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -2825,7 +2825,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2959,7 +2959,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -3094,7 +3094,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-15";
 	pixel_x = -6;
-	pixel_y = 12;
+	pixel_y = 12
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
@@ -3110,7 +3110,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3145,7 +3145,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /obj/machinery/camera{
 	c_tag = "Bridge - Port Access";
@@ -3184,7 +3184,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
@@ -3239,7 +3239,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3505,7 +3505,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -3616,7 +3616,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/grimy,
@@ -3651,7 +3651,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3743,7 +3743,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3778,7 +3778,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -3799,7 +3799,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "Head of Personnel's Office";
@@ -3991,7 +3991,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -4030,7 +4030,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4175,7 +4175,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -4309,7 +4309,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -4468,7 +4468,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor{
@@ -4665,7 +4665,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -4778,7 +4778,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -4825,7 +4825,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5098,7 +5098,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -5126,7 +5126,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -5148,7 +5148,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -5185,7 +5185,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5206,7 +5206,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -5413,7 +5413,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -5530,7 +5530,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5587,7 +5587,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5661,7 +5661,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5726,7 +5726,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5808,7 +5808,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/blue/corner{
@@ -5822,7 +5822,7 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: PRESSURIZED DOORS";
-	pixel_y = 32;
+	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5849,7 +5849,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -5864,7 +5864,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -6104,7 +6104,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6196,7 +6196,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -6906,7 +6906,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -6966,7 +6966,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
@@ -7007,7 +7007,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -7069,7 +7069,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/command{
 	name = "Teleport Access";
@@ -7115,7 +7115,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L2"
@@ -7140,7 +7140,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L6"
@@ -7184,7 +7184,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L14"
@@ -7197,14 +7197,14 @@
 	desc = "A direction sign, pointing out which way the Supply department is.";
 	dir = 4;
 	icon_state = "direction_supply";
-	name = "supply department";
+	name = "supply department"
 	},
 /obj/structure/sign/directions/engineering{
 	desc = "A direction sign, pointing out which way the Command department is.";
 	dir = 1;
 	icon_state = "direction_bridge";
 	name = "command department";
-	pixel_y = 8;
+	pixel_y = 8
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -7230,7 +7230,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
@@ -7275,7 +7275,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
@@ -7288,7 +7288,7 @@
 /obj/structure/noticeboard{
 	dir = 4;
 	icon_state = "nboard00";
-	pixel_x = -32;
+	pixel_x = -32
 	},
 /obj/item/weapon/clipboard,
 /obj/item/weapon/folder/yellow,
@@ -7393,7 +7393,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -7451,7 +7451,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
@@ -7522,7 +7522,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
@@ -7630,7 +7630,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -7686,7 +7686,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -7706,7 +7706,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central{
@@ -7740,7 +7740,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -7803,7 +7803,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -7876,7 +7876,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
@@ -7922,7 +7922,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/storage)
@@ -8006,7 +8006,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/bot,
@@ -8044,7 +8044,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8175,7 +8175,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -8214,7 +8214,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -8270,7 +8270,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -8311,7 +8311,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -8338,7 +8338,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -8377,7 +8377,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -8496,7 +8496,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral,
@@ -8569,7 +8569,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
@@ -8601,7 +8601,7 @@
 	dir = 1;
 	icon_state = "direction_bridge";
 	name = "command department";
-	pixel_y = 8;
+	pixel_y = 8
 	},
 /turf/closed/wall,
 /area/security/brig)
@@ -8621,7 +8621,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -8691,7 +8691,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -8727,7 +8727,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -8795,7 +8795,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8856,7 +8856,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
@@ -8933,7 +8933,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
@@ -8989,7 +8989,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/brown{
@@ -9068,7 +9068,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -9240,7 +9240,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -9321,7 +9321,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -9497,7 +9497,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -9792,7 +9792,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -9843,7 +9843,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -9955,7 +9955,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -10128,7 +10128,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -10191,7 +10191,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution,
 /area/maintenance/starboard/central)
@@ -10317,7 +10317,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/brown/corner,
 /area/hallway/primary/central{
@@ -10582,7 +10582,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/vault{
@@ -10631,7 +10631,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -10684,7 +10684,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
@@ -10771,7 +10771,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellow/side{
@@ -10799,7 +10799,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -10843,7 +10843,7 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: PRESSURIZED DOORS";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/bar{
@@ -10855,7 +10855,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -10885,7 +10885,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -11417,7 +11417,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 9
@@ -11606,7 +11606,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -11958,7 +11958,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/corner{
@@ -12058,7 +12058,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -12207,7 +12207,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -12234,7 +12234,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -12267,7 +12267,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4
@@ -12304,7 +12304,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -12317,7 +12317,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -12548,7 +12548,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12575,7 +12575,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -12745,7 +12745,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -12778,7 +12778,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/theatre)
@@ -12925,7 +12925,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -12950,7 +12950,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -13067,7 +13067,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
@@ -13391,7 +13391,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
@@ -13425,7 +13425,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -13546,7 +13546,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -13571,7 +13571,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -13682,7 +13682,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
@@ -13872,7 +13872,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -14023,7 +14023,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
@@ -14052,7 +14052,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -14216,7 +14216,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -14348,7 +14348,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -14372,7 +14372,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Atmospherics Maintenance";
@@ -14406,7 +14406,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -14436,7 +14436,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
@@ -14459,7 +14459,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -14493,7 +14493,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -14559,7 +14559,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -14659,7 +14659,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 4
@@ -14687,7 +14687,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -14811,7 +14811,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -14908,7 +14908,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
@@ -14937,7 +14937,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
@@ -14946,7 +14946,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -15033,7 +15033,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/maintenance/starboard/central)
@@ -15174,7 +15174,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -15188,7 +15188,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -15276,7 +15276,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -15349,7 +15349,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -15378,7 +15378,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
@@ -15413,7 +15413,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -15733,7 +15733,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -15744,7 +15744,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -15917,7 +15917,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/theatre)
@@ -15954,7 +15954,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -16005,7 +16005,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/maintenance/starboard/central)
@@ -16032,7 +16032,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
@@ -16106,7 +16106,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit{
@@ -16392,7 +16392,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -16504,7 +16504,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -16532,7 +16532,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -16688,7 +16688,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -16729,7 +16729,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -16772,7 +16772,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/hallway/secondary/exit{
@@ -16957,7 +16957,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -17005,7 +17005,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)
@@ -17025,7 +17025,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution,
 /area/engine/atmos)
@@ -17068,7 +17068,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -17184,7 +17184,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -17315,7 +17315,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -17403,7 +17403,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -17607,7 +17607,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -17667,7 +17667,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -17726,7 +17726,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "Central Hallway East";
@@ -17790,7 +17790,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/theatre)
@@ -17803,7 +17803,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -17890,7 +17890,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -18048,7 +18048,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -18090,7 +18090,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 1
@@ -18270,7 +18270,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -18381,7 +18381,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -18687,7 +18687,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -18735,7 +18735,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central{
@@ -18799,7 +18799,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -18965,7 +18965,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -19088,7 +19088,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -19110,7 +19110,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -19234,7 +19234,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -19313,7 +19313,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -19367,7 +19367,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -19510,7 +19510,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
@@ -19581,7 +19581,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/kitchen)
@@ -19617,7 +19617,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -19655,7 +19655,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit{
@@ -19723,7 +19723,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -19775,7 +19775,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -19812,7 +19812,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/yellow/corner{
 	dir = 8
@@ -19879,7 +19879,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -20087,7 +20087,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -20156,7 +20156,7 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	icon_state = "nboard00";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -20176,7 +20176,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -20551,7 +20551,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -20633,7 +20633,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -20822,7 +20822,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -20860,7 +20860,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -20900,7 +20900,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -20913,7 +20913,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/maintenance/starboard/central)
@@ -20972,7 +20972,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/sign/nosmoking_2{
 	pixel_x = -32
@@ -21153,7 +21153,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -21185,7 +21185,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -21216,7 +21216,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable/white{
@@ -21259,7 +21259,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -21292,7 +21292,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -21321,7 +21321,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -21387,7 +21387,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -21470,7 +21470,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -21551,7 +21551,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
@@ -21736,7 +21736,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -21826,7 +21826,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -21876,7 +21876,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -21902,7 +21902,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
@@ -21987,7 +21987,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -22012,7 +22012,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -22059,7 +22059,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/greenblue/side{
 	icon_state = "greenblue";
@@ -22105,7 +22105,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar{
@@ -22205,7 +22205,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -22428,7 +22428,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -22510,7 +22510,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -22675,7 +22675,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -22722,7 +22722,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -22786,7 +22786,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -22845,7 +22845,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -23122,7 +23122,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -23212,7 +23212,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -23288,7 +23288,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/purple/side{
 	dir = 10
@@ -23333,7 +23333,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -23444,7 +23444,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -23660,7 +23660,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/newscaster{
 	pixel_x = -32
@@ -23816,7 +23816,7 @@
 	desc = "A handy sign praising the engineering department.";
 	icon_state = "safety";
 	name = "engineering plaque";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /obj/item/clothing/glasses/meson/engine,
 /obj/effect/turf_decal/stripes/line{
@@ -23911,7 +23911,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics South West";
@@ -23951,7 +23951,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -23991,7 +23991,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -24086,7 +24086,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -24392,7 +24392,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/airalarm{
 	dir = 4;
@@ -24494,7 +24494,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -24511,7 +24511,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -24575,7 +24575,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/redyellow/side{
 	icon_state = "redyellow";
@@ -24609,7 +24609,7 @@
 	desc = "A direction sign, pointing out which way the Supply department is.";
 	dir = 4;
 	icon_state = "direction_supply";
-	name = "supply department";
+	name = "supply department"
 	},
 /obj/structure/sign/directions/science{
 	pixel_y = -8
@@ -24640,7 +24640,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -24694,7 +24694,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -25603,7 +25603,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -25679,7 +25679,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -25803,7 +25803,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -25947,7 +25947,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "L2"
@@ -26053,7 +26053,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
@@ -26287,7 +26287,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -26323,7 +26323,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -26355,7 +26355,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -26427,7 +26427,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -26494,7 +26494,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -26530,7 +26530,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -26762,7 +26762,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -26848,7 +26848,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/library)
@@ -26880,7 +26880,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault,
@@ -26989,7 +26989,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -27023,7 +27023,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/table,
 /obj/item/weapon/disk/tech_disk{
@@ -27107,7 +27107,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -27131,7 +27131,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/maintenance/starboard)
@@ -27350,7 +27350,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -27432,7 +27432,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -27502,7 +27502,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 1
@@ -27558,7 +27558,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -27667,7 +27667,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -27857,7 +27857,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/blobstart,
@@ -27962,7 +27962,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/vault{
@@ -28131,7 +28131,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -28183,7 +28183,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/maintenance/starboard)
@@ -28326,7 +28326,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -28358,7 +28358,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -28450,7 +28450,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -28477,7 +28477,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -28571,7 +28571,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
@@ -28640,7 +28640,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -28701,7 +28701,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -28764,7 +28764,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -28796,7 +28796,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -28926,7 +28926,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
@@ -28963,7 +28963,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/lab)
@@ -29008,7 +29008,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
@@ -29057,7 +29057,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/corner,
@@ -29135,7 +29135,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
 /area/library)
@@ -29220,7 +29220,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -29296,7 +29296,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -29376,7 +29376,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/corner{
@@ -29393,7 +29393,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
@@ -29524,7 +29524,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whiteblue/corner{
@@ -29643,7 +29643,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -29716,7 +29716,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -29744,7 +29744,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -29784,7 +29784,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -29812,7 +29812,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = -30;
+	pixel_x = -30
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";
@@ -29910,7 +29910,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/blue,
@@ -29939,7 +29939,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -30061,7 +30061,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
@@ -30398,7 +30398,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/neutral,
@@ -30441,7 +30441,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -30516,7 +30516,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -30558,7 +30558,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -30609,7 +30609,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -30661,7 +30661,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
@@ -30936,7 +30936,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -31018,7 +31018,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 4
@@ -31150,7 +31150,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -31201,7 +31201,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -31270,7 +31270,7 @@
 /obj/structure/noticeboard{
 	dir = 1;
 	icon_state = "nboard00";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -31339,7 +31339,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/medical/medbay/zone3)
@@ -31384,7 +31384,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Foyer";
@@ -31410,7 +31410,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/table/reinforced,
 /obj/item/weapon/crowbar,
@@ -31455,7 +31455,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -31552,7 +31552,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -31639,7 +31639,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -31771,7 +31771,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -31794,7 +31794,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whiteblue/corner,
 /area/medical/medbay/zone3)
@@ -31819,7 +31819,7 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	icon_state = "fire0";
-	pixel_x = 24;
+	pixel_x = 24
 	},
 /obj/machinery/light{
 	dir = 4
@@ -31844,7 +31844,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -31878,7 +31878,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -31983,7 +31983,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -32079,7 +32079,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/landmark/blobstart,
 /obj/effect/decal/cleanable/dirt,
@@ -32180,7 +32180,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
@@ -32288,7 +32288,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -32313,7 +32313,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -32342,7 +32342,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -32384,7 +32384,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
@@ -32402,7 +32402,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -32527,7 +32527,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -32700,7 +32700,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/chair/office/dark{
 	dir = 8
@@ -32747,7 +32747,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -32833,7 +32833,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/science/research)
@@ -32861,7 +32861,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -32913,7 +32913,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -33071,7 +33071,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
@@ -33148,7 +33148,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay/zone3)
@@ -33242,7 +33242,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -33264,7 +33264,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -33321,7 +33321,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -33347,7 +33347,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -33525,7 +33525,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -33548,7 +33548,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -33577,7 +33577,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side,
@@ -33608,7 +33608,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
@@ -33644,7 +33644,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -33669,7 +33669,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -33882,7 +33882,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/glass_security{
@@ -33907,7 +33907,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/purple/corner,
 /area/hallway/primary/central)
@@ -33990,7 +33990,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -34164,7 +34164,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34189,7 +34189,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -34219,7 +34219,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/blobstart,
@@ -34290,7 +34290,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central)
@@ -34385,7 +34385,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "rdxeno";
@@ -34420,7 +34420,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -34472,7 +34472,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -34486,7 +34486,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -34595,7 +34595,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -34689,7 +34689,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -34831,7 +34831,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 5
@@ -34884,7 +34884,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -34945,7 +34945,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -34991,7 +34991,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
@@ -35029,7 +35029,7 @@
 	desc = "A direction sign, pointing out which way the Supply department is.";
 	dir = 1;
 	icon_state = "direction_supply";
-	name = "supply department";
+	name = "supply department"
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
@@ -35102,7 +35102,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 4;
@@ -35121,7 +35121,7 @@
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 5;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/science/xenobiology)
 "bhe" = (
@@ -35237,7 +35237,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -35250,7 +35250,7 @@
 /obj/structure/noticeboard{
 	dir = 4;
 	icon_state = "nboard00";
-	pixel_x = -32;
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
@@ -35271,7 +35271,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 2;
@@ -35398,7 +35398,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/hallway/secondary/entry)
@@ -35490,7 +35490,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
@@ -35640,7 +35640,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -35688,7 +35688,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	dir = 4;
@@ -35920,7 +35920,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -36182,7 +36182,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
@@ -36366,7 +36366,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
 	d1 = 1;
@@ -36386,7 +36386,7 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 5;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/science/xenobiology)
 "bju" = (
@@ -36482,7 +36482,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
@@ -36492,7 +36492,7 @@
 "bjG" = (
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6;
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/science/xenobiology)
 "bjH" = (
@@ -36533,7 +36533,7 @@
 	dir = 1;
 	icon_state = "nboard00";
 	name = "memorial board";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
@@ -36724,7 +36724,7 @@
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
-	name = "WARNING: EXTERNAL AIRLOCK";
+	name = "WARNING: EXTERNAL AIRLOCK"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -37268,7 +37268,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 2";
@@ -37353,7 +37353,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "Engineering Starboard";
@@ -39272,7 +39272,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -39291,7 +39291,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -39590,7 +39590,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit{
@@ -39601,7 +39601,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit{
@@ -39618,7 +39618,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/escape,
 /area/hallway/secondary/exit{
@@ -39643,7 +39643,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
 	},
@@ -40906,7 +40906,7 @@
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

@@ -1066,7 +1066,7 @@
 	dir = 4;
 	icon_state = "roomnum";
 	name = "Room Number 3";
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1077,7 +1077,7 @@
 	dir = 8;
 	icon_state = "roomnum";
 	name = "Room Number 4";
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1094,7 +1094,7 @@
 	dir = 6;
 	icon_state = "roomnum";
 	name = "Room Number 5";
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1114,7 +1114,7 @@
 	dir = 10;
 	icon_state = "roomnum";
 	name = "Room Number 6";
-	pixel_y = 24;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -1263,7 +1263,7 @@
 	dir = 1;
 	icon_state = "roomnum";
 	name = "Room Number 2";
-	pixel_y = -24;
+	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,

@@ -609,7 +609,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cf" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)

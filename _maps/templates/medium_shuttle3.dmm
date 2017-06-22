@@ -89,7 +89,7 @@
 	})
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -119,7 +119,7 @@
 	})
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/space,
 /area/ruin/powered{

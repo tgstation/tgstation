@@ -528,7 +528,7 @@
 /area/awaymission/snowdin/base)
 "br" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
@@ -3578,7 +3578,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jJ" = (
@@ -3586,7 +3586,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "jK" = (
@@ -3727,7 +3727,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "kb" = (
@@ -3736,7 +3736,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/asteroid/snow;
+	baseturf = /turf/open/floor/plating/asteroid/snow
 	},
 /area/awaymission/snowdin/sekret)
 "kc" = (
@@ -5174,7 +5174,7 @@
 /area/awaymission/snowdin/sekret)
 "nA" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)

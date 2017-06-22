@@ -662,7 +662,7 @@
 	pixel_x = 28
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -4860,7 +4860,7 @@
 "akt" = (
 /turf/open/floor/wood{
 	broken = 1;
-	icon_state = "wood-broken";
+	icon_state = "wood-broken"
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "aku" = (
@@ -5054,7 +5054,7 @@
 /area/security/warden)
 "akO" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -9677,7 +9677,7 @@
 	layer = 4
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -10698,7 +10698,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
@@ -11722,7 +11722,7 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -12469,7 +12469,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -12817,7 +12817,7 @@
 	pixel_x = 27
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
@@ -13374,7 +13374,7 @@
 /obj/structure/table,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -14901,13 +14901,13 @@
 	dir = 8;
 	icon_state = "direction_sec";
 	pixel_x = -32;
-	pixel_y = -24;
+	pixel_y = -24
 	},
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	icon_state = "direction_evac";
 	pixel_x = -32;
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /obj/structure/sign/directions/science{
 	pixel_x = -32;
@@ -15775,7 +15775,7 @@
 	pixel_y = 30
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
@@ -17989,7 +17989,7 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "aMv" = (
@@ -18022,7 +18022,7 @@
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -19291,7 +19291,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "aPh" = (
@@ -19817,7 +19817,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "aQn" = (
@@ -20035,7 +20035,7 @@
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	icon_state = "direction_evac";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
@@ -20751,7 +20751,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "aSk" = (
@@ -21495,7 +21495,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "aTT" = (
@@ -21969,7 +21969,7 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "aUT" = (
@@ -21985,7 +21985,7 @@
 	pixel_y = -26
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -22218,7 +22218,7 @@
 /obj/item/weapon/pen,
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/customs)
@@ -22847,7 +22847,7 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/brown{
-	dir = 1;
+	dir = 1
 	},
 /area/quartermaster/qm)
 "aWP" = (
@@ -23323,7 +23323,7 @@
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/quartermaster/miningdock)
 "aXT" = (
@@ -23773,7 +23773,7 @@
 "aYO" = (
 /obj/machinery/mineral/equipment_vendor,
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/quartermaster/miningdock)
 "aYP" = (
@@ -23818,7 +23818,7 @@
 "aYV" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -23926,7 +23926,7 @@
 /obj/structure/sign/directions/evac{
 	dir = 8;
 	icon_state = "direction_evac";
-	pixel_y = -32;
+	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -24149,7 +24149,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/quartermaster/miningdock)
 "aZG" = (
@@ -24476,13 +24476,13 @@
 	dir = 1;
 	icon_state = "direction_evac";
 	pixel_x = -32;
-	pixel_y = 38;
+	pixel_y = 38
 	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
 	icon_state = "direction_med";
 	pixel_x = -32;
-	pixel_y = 28;
+	pixel_y = 28
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -24553,10 +24553,10 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Mining Dock APC";
-	pixel_x = -24;
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/quartermaster/miningdock)
 "baB" = (
@@ -24599,7 +24599,7 @@
 /area/shuttle/arrival)
 "baG" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -24764,7 +24764,7 @@
 	dir = 1;
 	icon_state = "direction_evac";
 	pixel_x = 32;
-	pixel_y = 38;
+	pixel_y = 38
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -25986,7 +25986,7 @@
 "bdC" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 1;
+	dir = 1
 	},
 /area/medical/medbay/central)
 "bdD" = (
@@ -25995,7 +25995,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 1;
+	dir = 1
 	},
 /area/medical/medbay/central)
 "bdE" = (
@@ -26368,7 +26368,7 @@
 "bez" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /obj/item/weapon/pen,
 /obj/structure/sign/poster/official/random{
@@ -26460,7 +26460,7 @@
 /obj/structure/table,
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -27663,7 +27663,7 @@
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/science,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 5
@@ -27846,7 +27846,7 @@
 	},
 /obj/item/weapon/storage/box/masks,
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 1;
+	dir = 1
 	},
 /area/medical/medbay/zone3)
 "bhP" = (
@@ -27879,7 +27879,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	dir = 1;
+	dir = 1
 	},
 /area/medical/medbay/central)
 "bhT" = (
@@ -27896,7 +27896,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = -32;
+	pixel_x = -32
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -31663,7 +31663,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = -32;
+	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -32599,7 +32599,7 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	pixel_x = -2;
+	pixel_x = -2
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters";
@@ -33960,7 +33960,7 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 10
@@ -34060,7 +34060,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = -32;
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -34814,7 +34814,7 @@
 	pixel_x = -32
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -35909,7 +35909,7 @@
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
 	pixel_x = -2;
-	pixel_y = 5;
+	pixel_y = 5
 	},
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
@@ -37155,7 +37155,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = -30;
+	pixel_x = -30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -38873,7 +38873,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /obj/item/weapon/pen/red,
 /turf/open/floor/plasteel/whitegreen/side,
@@ -41664,7 +41664,7 @@
 	pixel_x = -32
 	},
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -43852,7 +43852,7 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/clothing/glasses/meson,
 /obj/item/weapon/paper_bin{
-	layer = 2.9;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -45893,7 +45893,7 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	pixel_x = -2;
-	pixel_y = 5;
+	pixel_y = 5
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/yellow/side{
@@ -46996,14 +46996,14 @@
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	icon_state = "direction_evac";
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "bVG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "bVH" = (
@@ -47020,7 +47020,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "bVJ" = (
@@ -47299,7 +47299,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	dir = 1;
+	dir = 1
 	},
 /area/hallway/primary/central)
 "bWu" = (
@@ -52039,7 +52039,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/escape{
-	dir = 10;
+	dir = 10
 	},
 /area/hallway/secondary/exit/departure_lounge)
 "chZ" = (
@@ -52125,7 +52125,7 @@
 /area/hallway/secondary/entry)
 "cim" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /obj/docking_port/mobile/arrivals{
 	height = 13;

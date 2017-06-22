@@ -618,7 +618,7 @@
 "ca" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 8;
-	icon_state = "burst_l";
+	icon_state = "burst_l"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -836,7 +836,7 @@
 "cF" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8;
-	icon_state = "burst_r";
+	icon_state = "burst_r"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)

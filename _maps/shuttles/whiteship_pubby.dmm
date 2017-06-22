@@ -60,7 +60,7 @@
 /area/shuttle/abandoned)
 "k" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)

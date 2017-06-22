@@ -256,7 +256,7 @@
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -329,7 +329,7 @@
 /area/shuttle/escape)
 "bc" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -349,7 +349,7 @@
 	},
 /obj/item/weapon/crowbar,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4

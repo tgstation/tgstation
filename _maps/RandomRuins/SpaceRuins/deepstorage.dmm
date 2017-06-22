@@ -1899,7 +1899,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	icon_state = "scrub_map";
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2760,7 +2760,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	icon_state = "scrub_map";
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3053,7 +3053,7 @@
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
 	icon_state = "mvalve_map";
-	name = "Port To Hall";
+	name = "Port To Hall"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3097,7 +3097,7 @@
 	icon_state = "mixer_off";
 	node1_concentration = 0.2;
 	node2_concentration = 0.8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless

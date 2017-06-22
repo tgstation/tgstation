@@ -747,7 +747,7 @@
 /area/awaymission/research/interior/gateway)
 "cl" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3371,13 +3371,13 @@
 	dir = 1;
 	icon_state = "direction_eng";
 	pixel_x = 32;
-	pixel_y = 33;
+	pixel_y = 33
 	},
 /obj/structure/sign/directions/science{
 	dir = 1;
 	icon_state = "direction_sci";
 	pixel_x = 32;
-	pixel_y = 26;
+	pixel_y = 26
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged,
 /turf/open/floor/plasteel/whitegreen,
@@ -4174,7 +4174,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 4
@@ -4300,7 +4300,7 @@
 "mf" = (
 /turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
@@ -4586,7 +4586,7 @@
 "mX" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	pixel_x = 32;
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/whitegreen/corner{
 	dir = 1

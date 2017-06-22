@@ -82,7 +82,7 @@
 /area/shuttle/abandoned)
 "an" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)

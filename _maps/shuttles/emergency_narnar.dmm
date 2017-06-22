@@ -162,7 +162,7 @@
 /area/shuttle/escape)
 "G" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /obj/item/weapon/extinguisher{
 	safety = 0
@@ -201,7 +201,7 @@
 /area/shuttle/escape)
 "M" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
@@ -225,7 +225,7 @@
 	},
 /obj/item/weapon/crowbar,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plasteel/cult,

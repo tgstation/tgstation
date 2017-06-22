@@ -26,7 +26,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -93,7 +93,7 @@
 /area/shuttle/escape)
 "at" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27;
+	pixel_x = 27
 	},
 /obj/machinery/light/small{
 	dir = 4

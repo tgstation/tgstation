@@ -78,7 +78,7 @@
 /area/shuttle/escape)
 "ap" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)

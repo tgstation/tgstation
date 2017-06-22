@@ -21,7 +21,7 @@
 /area/ruin/powered/authorship)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/template_noop,
 /area/ruin/powered/authorship)

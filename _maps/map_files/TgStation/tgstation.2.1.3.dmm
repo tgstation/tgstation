@@ -14229,7 +14229,7 @@
 /area/shuttle/arrival)
 "aFF" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -28915,7 +28915,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = 30;
+	pixel_x = 30
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
@@ -31241,7 +31241,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_x = -30;
+	pixel_x = -30
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -34082,7 +34082,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_y = 30;
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -38349,7 +38349,7 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_y = -30;
+	pixel_y = -30
 	},
 /obj/item/weapon/storage/firstaid/fire{
 	pixel_x = 3;
@@ -51327,7 +51327,7 @@
 /area/maintenance/starboard/aft)
 "ckq" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -57213,7 +57213,7 @@
 /area/hallway/secondary/entry)
 "cwU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4;
+	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -57735,7 +57735,7 @@
 /area/hallway/secondary/entry)
 "cym" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -61925,7 +61925,7 @@
 /area/science/robotics/lab)
 "cIg" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /obj/docking_port/mobile/arrivals,
 /obj/docking_port/stationary{

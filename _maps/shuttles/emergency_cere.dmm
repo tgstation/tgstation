@@ -50,7 +50,7 @@
 "ak" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -108,7 +108,7 @@
 "au" = (
 /obj/machinery/computer/communications,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -151,7 +151,7 @@
 /area/shuttle/escape)
 "aD" = (
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/black,
@@ -881,7 +881,7 @@
 /area/shuttle/escape)
 "cC" = (
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -927,7 +927,7 @@
 "cF" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/scalpel{
@@ -961,7 +961,7 @@
 "cJ" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/gloves/color/latex,

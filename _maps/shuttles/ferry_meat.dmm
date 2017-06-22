@@ -74,7 +74,7 @@
 /area/shuttle/transport)
 "k" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30;
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)

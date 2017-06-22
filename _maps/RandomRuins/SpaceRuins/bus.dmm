@@ -82,7 +82,7 @@
 "ap" = (
 /obj/structure/fluff/bus/passable/seat{
 	icon_state = "backseat";
-	pixel_y = 15;
+	pixel_y = 15
 	},
 /turf/open/floor/plasteel/airless/black{
 	icon_state = "bus"
@@ -110,7 +110,7 @@
 "as" = (
 /obj/structure/fluff/bus/passable/seat/driver{
 	icon_state = "driverseat";
-	pixel_y = 17;
+	pixel_y = 17
 	},
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,
 /obj/effect/decal/cleanable/dirt,
@@ -243,7 +243,7 @@
 "aM" = (
 /obj/structure/fluff/bus/passable{
 	icon_state = "bottomdoor";
-	layer = 3;
+	layer = 3
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
@@ -301,7 +301,7 @@
 "aW" = (
 /obj/structure/fluff/bus/passable/seat/driver{
 	icon_state = "driverseat";
-	pixel_y = 17;
+	pixel_y = 17
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/black{

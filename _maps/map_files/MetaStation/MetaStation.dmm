@@ -30991,7 +30991,7 @@
 /area/shuttle/arrival)
 "bgu" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -56382,7 +56382,7 @@
 	announcementConsole = 0;
 	department = "Medbay";
 	departmentType = 1;
-	name = "Medbay RC";
+	name = "Medbay RC"
 	},
 /turf/closed/wall,
 /area/security/checkpoint/medical)
@@ -80817,7 +80817,7 @@
 /area/shuttle/abandoned)
 "cWf" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -87184,7 +87184,7 @@
 /area/shuttle/arrival)
 "djM" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /obj/docking_port/mobile/arrivals,
 /obj/docking_port/stationary{

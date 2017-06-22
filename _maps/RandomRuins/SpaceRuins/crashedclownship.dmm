@@ -57,7 +57,7 @@
 "l" = (
 /obj/structure/shuttle/engine/heater{
 	color = "#FFFF00";
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	color = "#FFFF00";

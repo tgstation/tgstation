@@ -41,7 +41,7 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)

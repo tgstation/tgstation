@@ -82,7 +82,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -141,7 +141,7 @@
 	layer = 2.9
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -153,7 +153,7 @@
 /area/shuttle/escape)
 "B" = (
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -184,7 +184,7 @@
 "G" = (
 /obj/machinery/computer/emergency_shuttle,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -197,7 +197,7 @@
 "I" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/yellow,
@@ -223,7 +223,7 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)

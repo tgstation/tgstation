@@ -107,11 +107,11 @@
 /area/shuttle/abandoned)
 "ao" = (
 /obj/structure/mirror{
-	pixel_x = 28;
+	pixel_x = 28
 	},
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11;
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -317,7 +317,7 @@
 /area/shuttle/abandoned)
 "aC" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -514,7 +514,7 @@
 "aT" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/mirror{
-	pixel_x = 28;
+	pixel_x = 28
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -849,7 +849,7 @@
 	name = "dust"
 	},
 /obj/structure/fluff/empty_sleeper/nanotrasen{
-	dir = 1;
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -863,7 +863,7 @@
 	name = "dust"
 	},
 /obj/structure/fluff/empty_sleeper/nanotrasen{
-	dir = 1;
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1441,7 +1441,7 @@
 "cC" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11;
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1526,7 +1526,7 @@
 	use_power = 0
 	},
 /obj/machinery/iv_drip{
-	density = 0;
+	density = 0
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1563,7 +1563,7 @@
 "cN" = (
 /obj/structure/sink{
 	dir = 4;
-	pixel_x = 11;
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/xenoblood,
 /obj/effect/decal/cleanable/xenoblood/xgibs/limb,
@@ -1705,7 +1705,7 @@
 "cZ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
