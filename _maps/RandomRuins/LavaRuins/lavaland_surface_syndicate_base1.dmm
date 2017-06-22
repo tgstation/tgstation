@@ -43,7 +43,6 @@
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -144,7 +143,6 @@
 "aw" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -196,7 +194,6 @@
 "aA" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -352,7 +349,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -394,7 +390,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "aZ" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -406,7 +401,6 @@
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -476,14 +470,12 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bj" = (
 /obj/machinery/chem_master,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -593,7 +585,6 @@
 /obj/machinery/iv_drip,
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -660,7 +651,6 @@
 "bD" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -695,7 +685,6 @@
 	amount = 10
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -748,7 +737,6 @@
 "bM" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -779,7 +767,6 @@
 "bQ" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -797,7 +784,6 @@
 /obj/item/weapon/reagent_containers/syringe,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -857,7 +843,6 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -869,7 +854,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -894,7 +878,6 @@
 /obj/item/weapon/pen,
 /obj/machinery/light,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -908,7 +891,6 @@
 	amount = 10
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -983,7 +965,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "cn" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1044,7 +1025,6 @@
 /obj/item/target/clown,
 /obj/item/target/clown,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1073,7 +1053,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "cA" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1941,7 +1920,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1962,7 +1940,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1971,7 +1948,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -2005,7 +1981,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -2037,7 +2012,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)

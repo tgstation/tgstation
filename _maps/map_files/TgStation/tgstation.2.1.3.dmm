@@ -62236,7 +62236,6 @@
 "cIY" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -62313,14 +62312,12 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cJg" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -62371,14 +62368,12 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
 "cJo" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -62439,7 +62434,6 @@
 "cJz" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
@@ -62731,13 +62725,11 @@
 /area/shuttle/syndicate)
 "cKr" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKs" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -62751,19 +62743,16 @@
 /area/shuttle/syndicate)
 "cKu" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKv" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKw" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -62777,13 +62766,11 @@
 /area/shuttle/syndicate)
 "cKy" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKz" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -62845,7 +62832,6 @@
 /area/shuttle/syndicate)
 "cKN" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)

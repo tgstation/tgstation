@@ -2673,7 +2673,6 @@
 "afK" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -2717,7 +2716,6 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -2861,7 +2859,6 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
@@ -3378,7 +3375,6 @@
 "aho" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
@@ -4819,7 +4815,6 @@
 /area/shuttle/syndicate)
 "akL" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -5282,7 +5277,6 @@
 /area/shuttle/syndicate)
 "alM" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
@@ -112283,7 +112277,6 @@
 "elc" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/space)
@@ -112369,7 +112362,6 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
@@ -112398,7 +112390,6 @@
 "elq" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/space)
@@ -112455,7 +112446,6 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/space)
@@ -112468,7 +112458,6 @@
 "elC" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/space)
@@ -112541,7 +112530,6 @@
 "elQ" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/space)
@@ -112920,13 +112908,11 @@
 /area/space)
 "enf" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
 "eng" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
@@ -112940,19 +112926,16 @@
 /area/space)
 "eni" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
 "enj" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
 "enk" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
@@ -112966,13 +112949,11 @@
 /area/space)
 "enm" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
 "enn" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/space)
@@ -113040,7 +113021,6 @@
 /area/space)
 "enD" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/space)

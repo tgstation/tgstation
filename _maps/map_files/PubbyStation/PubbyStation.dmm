@@ -51231,7 +51231,6 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -52276,7 +52275,6 @@
 "ciG" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -52297,7 +52295,6 @@
 "ciJ" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -52320,14 +52317,12 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
 "ciN" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/shuttle/syndicate)
@@ -52339,7 +52334,6 @@
 "ciP" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
@@ -52418,43 +52412,36 @@
 /area/shuttle/syndicate)
 "cjd" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cje" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjf" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjg" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjh" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cji" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjj" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
@@ -52506,7 +52493,6 @@
 /area/shuttle/syndicate)
 "cjv" = (
 /turf/open/floor/plasteel/podhatch{
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/shuttle/syndicate)
