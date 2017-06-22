@@ -2723,7 +2723,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 0;
-	icon_state = "door_closed";
 	id_tag = null;
 	locked = 0;
 	name = "Prisoner Transfer Centre";
@@ -10732,7 +10731,6 @@
 "axa" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "AI Upload Access";
 	req_access_txt = "16"

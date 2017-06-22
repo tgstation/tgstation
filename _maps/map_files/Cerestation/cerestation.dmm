@@ -61737,7 +61737,6 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "ckL" = (
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "AI Upload Access";
 	req_access_txt = "16"

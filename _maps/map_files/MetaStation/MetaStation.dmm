@@ -23882,7 +23882,6 @@
 /area/storage/primary)
 "aTi" = (
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "AI Upload";
 	req_access_txt = "16"
@@ -30854,7 +30853,6 @@
 /area/shuttle/pod_4)
 "bgc" = (
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "MiniSat Space Access Airlock";
 	req_one_access_txt = "32;19"
 	},
@@ -33926,7 +33924,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "blI" = (
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "AI Chamber";
 	req_access_txt = "16"
@@ -36127,7 +36124,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "MiniSat Foyer";
 	req_one_access_txt = "32;19"
 	},
@@ -36180,7 +36176,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "MiniSat Antechamber";
 	req_one_access_txt = "32;19"
 	},
@@ -39367,7 +39362,6 @@
 /area/engine/break_room)
 "bvs" = (
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "MiniSat Space Access Airlock";
 	req_one_access_txt = "32;19"
 	},
@@ -39775,7 +39769,6 @@
 /area/crew_quarters/heads/hop)
 "bwl" = (
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "MiniSat Space Access Airlock";
 	req_one_access_txt = "32;19"
 	},
@@ -61585,7 +61578,6 @@
 /area/maintenance/starboard/aft)
 "clX" = (
 /obj/machinery/door/airlock/maintenance{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "Storage Room";
 	req_access_txt = "0";
@@ -68262,7 +68254,6 @@
 "cyi" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
-	icon_state = "door_closed";
 	id_tag = "AuxGenetics";
 	locked = 0;
 	name = "Genetics Lab";
@@ -68297,7 +68288,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
-	icon_state = "door_closed";
 	id_tag = "AuxGenetics";
 	locked = 0;
 	name = "Genetics Access";
@@ -75113,7 +75103,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "Storage Room";
 	req_access_txt = "0";
@@ -79522,7 +79511,6 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "Test Chamber Maintenance";
 	req_access_txt = "47";
 	req_one_access_txt = "0"
@@ -81722,7 +81710,6 @@
 /area/shuttle/abandoned)
 "cXQ" = (
 /obj/machinery/door/airlock/titanium{
-	icon_state = "door_closed";
 	name = "medbay";
 	welded = 0
 	},
@@ -84568,7 +84555,6 @@
 /area/science/xenobiology)
 "ddp" = (
 /obj/machinery/door/airlock/hatch{
-	icon_state = "door_closed";
 	name = "Test Chamber Maintenance";
 	req_access_txt = "47";
 	req_one_access_txt = "0"

@@ -1273,7 +1273,6 @@
 /area/shuttle/abandoned)
 "co" = (
 /obj/machinery/door/airlock/titanium{
-	icon_state = "door_closed";
 	name = "medbay";
 	welded = 0
 	},

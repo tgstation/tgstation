@@ -2171,7 +2171,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 0;
-	icon_state = "door_closed";
 	id_tag = null;
 	locked = 0;
 	name = "Prisoner Transfer Centre";
@@ -6489,7 +6488,6 @@
 /area/maintenance/solars/port/fore)
 "anI" = (
 /obj/machinery/door/airlock/engineering{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "Port Bow Solar Access";
 	req_access_txt = "10"
@@ -7671,7 +7669,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/engineering{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "Starboard Bow Solar Access";
 	req_access_txt = "10"
@@ -16287,7 +16284,6 @@
 "aKc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
-	icon_state = "door_closed";
 	lockdownbyai = 0;
 	locked = 0;
 	name = "Gateway Access";
@@ -22108,7 +22104,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/highsecurity{
-	icon_state = "door_closed";
 	locked = 0;
 	name = "AI Upload Access";
 	req_access_txt = "16"
