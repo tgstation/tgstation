@@ -105,9 +105,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && mind.martial_art.block_chance \
-		&& prob(mind.martial_art.block_chance) && in_throw_mode \
-		&& !stat && !knockdown && !stun)
+		if(mind.martial_art && prob(mind.martial_art.block_chance) && in_throw_mode && !stat && !knockdown && !IsStun())
 			return TRUE
 	return FALSE
 

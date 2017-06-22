@@ -55,7 +55,7 @@
 		return 1
 	if(unconscious)
 		return 1
-	if(stun)
+	if(IsStun())
 		return 1
 	if(stat)
 		return 1

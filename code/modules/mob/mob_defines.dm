@@ -69,7 +69,6 @@
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/unconscious = 0
-	var/stun = 0
 	var/knockdown = 0
 	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living

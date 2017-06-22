@@ -68,7 +68,7 @@
 		. = step(A,get_dir(A,src.loc))
 		density = 1
 
-/obj/structure/proc/climb_structure(mob/user)
+/obj/structure/proc/climb_structure(mob/living/user)
 	src.add_fingerprint(user)
 	user.visible_message("<span class='warning'>[user] starts climbing onto [src].</span>", \
 								"<span class='notice'>You start climbing onto [src]...</span>")

@@ -348,7 +348,7 @@
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
-	if(usr.stat || usr.unconscious || usr.stun || usr.knockdown)
+	if(usr.stat || usr.unconscious || usr.knockdown || usr.IsStun())
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
