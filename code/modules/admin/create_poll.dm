@@ -61,55 +61,56 @@
 	if(!question)
 		return
 	question = sanitizeSQL(question)
-	var/list/sql_option_list = list()
-	var/add_option = 1
-	while(add_option)
-		var/option = input("Write your option","Option") option as message|null
-		if(!option)
-			return
-		option = sanitizeSQL(option)
-		var/minval = 0
-		var/maxval = 0
-		var/descmin = ""
-		var/descmid = ""
-		var/descmax = ""
-		if(polltype == POLLTYPE_RATING)
-			minval = input("Set minimum rating value.","Minimum rating") as num|null
-			if(minval)
-				minval = sanitizeSQL(minval)
-			else if(minval == null)
+	if(polltype != POLLTYPE_TEXT)
+		var/list/sql_option_list = list()
+		var/add_option = 1
+		while(add_option)
+			var/option = input("Write your option","Option") option as message|null
+			if(!option)
 				return
-			maxval = input("Set maximum rating value.","Maximum rating") as num|null
-			if(maxval)
-				maxval = sanitizeSQL(maxval)
-			if(minval >= maxval)
-				to_chat(src, "Maximum rating value can't be less than or equal to minimum rating value")
-				continue
-			else if(maxval == null)
-				return
-			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
-			if(descmin)
-				descmin = sanitizeSQL(descmin)
-			else if(descmin == null)
-				return
-			descmid = input("Optional: Set description for median rating","Median rating description") as message|null
-			if(descmid)
-				descmid = sanitizeSQL(descmid)
-			else if(descmid == null)
-				return
-			descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
-			if(descmax)
-				descmax = sanitizeSQL(descmax)
-			else if(descmax == null)
-				return
-		sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'"))
-		switch(alert(" ",,"Add option","Finish", "Cancel"))
-			if("Add option")
-				add_option = 1
-			if("Finish")
-				add_option = 0
-			else
-				return 0
+			option = sanitizeSQL(option)
+			var/minval = 0
+			var/maxval = 0
+			var/descmin = ""
+			var/descmid = ""
+			var/descmax = ""
+			if(polltype == POLLTYPE_RATING)
+				minval = input("Set minimum rating value.","Minimum rating") as num|null
+				if(minval)
+					minval = sanitizeSQL(minval)
+				else if(minval == null)
+					return
+				maxval = input("Set maximum rating value.","Maximum rating") as num|null
+				if(maxval)
+					maxval = sanitizeSQL(maxval)
+				if(minval >= maxval)
+					to_chat(src, "Maximum rating value can't be less than or equal to minimum rating value")
+					continue
+				else if(maxval == null)
+					return
+				descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
+				if(descmin)
+					descmin = sanitizeSQL(descmin)
+				else if(descmin == null)
+					return
+				descmid = input("Optional: Set description for median rating","Median rating description") as message|null
+				if(descmid)
+					descmid = sanitizeSQL(descmid)
+				else if(descmid == null)
+					return
+				descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
+				if(descmax)
+					descmax = sanitizeSQL(descmax)
+				else if(descmax == null)
+					return
+			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'"))
+			switch(alert(" ",,"Add option","Finish", "Cancel"))
+				if("Add option")
+					add_option = 1
+				if("Finish")
+					add_option = 0
+				else
+					return 0
 	var/datum/DBQuery/query_polladd_question = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', INET_ATON('[address]'), '[dontshow]')")
 	if(!query_polladd_question.warn_execute())
 		return
