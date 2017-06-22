@@ -332,7 +332,7 @@
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
-	if(istype(C, /obj/item))
+	if(isitem(C))
 		var/obj/item/I = C
 		if(I.slowdown <= 0)
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")

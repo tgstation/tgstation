@@ -122,7 +122,7 @@
 		return
 
 
-	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!isturf(target) && isitem(focus) && target.Adjacent(focus))
 		apply_focus_overlay()
 		var/obj/item/I = focus
 		I.melee_attack_chain(tk_user, target, params) //isn't copying the attack chain fun. we should do it more often.

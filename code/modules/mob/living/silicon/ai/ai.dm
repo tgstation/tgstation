@@ -877,7 +877,7 @@
 	if(istype(A,/obj/machinery/camera))
 		current = A
 	if(client)
-		if(istype(A, /atom/movable))
+		if(ismovableatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else

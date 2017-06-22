@@ -114,7 +114,7 @@ Frequency:
 			else
 				if (href_list["temp"])
 					src.temp = null
-		if (istype(src.loc, /mob))
+		if (ismob(src.loc))
 			attack_self(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))

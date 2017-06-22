@@ -1222,7 +1222,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
-	if(istype(mob_or_client, /mob))
+	if(ismob(mob_or_client))
 		var/mob/M = mob_or_client
 		if(M.client)
 			C = M.client

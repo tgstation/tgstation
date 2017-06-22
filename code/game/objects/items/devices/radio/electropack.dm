@@ -78,14 +78,14 @@
 					on = !( on )
 					icon_state = "electropack[on]"
 		if(!( master ))
-			if(istype(loc, /mob))
+			if(ismob(loc))
 				attack_self(loc)
 			else
 				for(var/mob/M in viewers(1, src))
 					if(M.client)
 						attack_self(M)
 		else
-			if(istype(master.loc, /mob))
+			if(ismob(master.loc))
 				attack_self(master.loc)
 			else
 				for(var/mob/M in viewers(1, master))

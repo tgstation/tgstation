@@ -622,7 +622,7 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !wielded)
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)

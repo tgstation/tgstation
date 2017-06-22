@@ -61,7 +61,7 @@
 		if(!(istype(M, /obj/mecha) && mech_sized))
 			return
 
-	if(istype(M, /atom/movable))
+	if(ismovableatom(M))
 		var/turf/target
 		if(GLOB.portals.len)
 			var/obj/effect/portal/P = pick(GLOB.portals)

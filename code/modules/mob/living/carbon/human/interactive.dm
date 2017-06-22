@@ -632,7 +632,7 @@
 		if(!TARGET in blacklistItems)
 			insert_into_backpack() // dump random item into backpack to make space
 			//---------ITEMS
-			if(istype(TARGET, /obj/item))
+			if(isitem(TARGET))
 				if(istype(TARGET, /obj/item/weapon))
 					var/obj/item/weapon/W = TARGET
 					if(W.force >= best_force || prob((FUZZY_CHANCE_LOW+FUZZY_CHANCE_HIGH)/2))
@@ -939,7 +939,7 @@
 					retal = 1
 					retal_target = traitorTarget
 				if(SNPC_STEALTH)
-					if(istype(traitorTarget,/mob)) // it's inside something, lets kick their shit in
+					if(ismob(traitorTarget)) // it's inside something, lets kick their shit in
 						var/mob/M = traitorTarget
 						if(!M.stat)
 							retal = 1
