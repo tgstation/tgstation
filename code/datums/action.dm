@@ -263,7 +263,7 @@
 
 /datum/action/item_action/clock/hierophant
 	name = "Hierophant Network"
-	desc = "Allows you to communicate with other Servants."
+	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
 	button_icon_state = "hierophant_slab"
 
 /datum/action/item_action/clock/quickbind
