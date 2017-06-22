@@ -73,7 +73,7 @@
 				research_node_id_error(u)
 		for(var/d in N.designs)
 			var/datum/design/D = N.designs[d]
-			if(!istype(d))
+			if(!istype(D))
 				stack_trace("WARNING: Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.designs -= d
 				design_id_error(d)
