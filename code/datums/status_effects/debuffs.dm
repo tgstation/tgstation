@@ -5,15 +5,19 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/update_canmove = TRUE
-	var/needs_update_stat = FALSE
 
-/datum/status_effect/incapacitating/on_apply()
+/datum/status_effect/incapacitating/New(mob/living/new_owner, terrifying_second_argument)
+	..()
+	if(isnum(terrifying_second_argument))
+		update_canmove = terrifying_second_argument
 	if(update_canmove)
 		owner.update_canmove()
 		if(issilicon(owner))
 			owner.update_stat()
+
+/datum/status_effect/incapacitating/on_apply()
+	. = ..()
 	update_canmove = TRUE
-	return ..()
 
 /datum/status_effect/incapacitating/on_remove()
 	if(update_canmove)
@@ -40,18 +44,18 @@
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
-/datum/status_effect/incapacitating/sleeping/Destroy()
-	carbon_owner = null
-	human_owner = null
-	return ..()
-
-/datum/status_effect/incapacitating/sleeping/on_apply()
+/datum/status_effect/incapacitating/sleeping/New(mob/living/new_owner, terrifying_second_argument)
+	..()
 	if(update_canmove)
 		owner.update_stat()
 	if(iscarbon(owner)) //to avoid repeated istypes
 		carbon_owner = owner
 	if(ishuman(owner))
 		human_owner = owner
+
+/datum/status_effect/incapacitating/sleeping/Destroy()
+	carbon_owner = null
+	human_owner = null
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
