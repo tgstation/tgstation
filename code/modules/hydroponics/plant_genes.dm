@@ -156,11 +156,7 @@
 	return TRUE
 
 /datum/plant_gene/trait/proc/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
-		return
-
-			if(t in tech)
-			else
-	else
+	return
 
 /datum/plant_gene/trait/proc/on_consume(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return

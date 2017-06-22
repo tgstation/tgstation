@@ -54,13 +54,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/disk_slot_selected = 0
 	var/datum/techweb_node/selected_node
 
-
-/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
-	if(GLOB.tech_list[ID])
-		var/datum/tech/tech = GLOB.tech_list[ID]
-		return tech.name
-	return "ERROR: Report This"
-
 /proc/CallMaterialName(ID)
 	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
 		var/datum/material/material = GLOB.materials_list[ID]
@@ -176,7 +169,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		screen = SCICONSOLE_MENU
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
-		var/slot = text2num(href_list["copy_tech"])
 		stored_research.copy_research_to(t_disk.stored_research)
 		screen = 1.2
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -251,10 +243,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			return
 
 		var/cancontinue = FALSE
-		for(var/T in temp_tech)
-			if(files.IsTechHigher(T, temp_tech[T]))
-				cancontinue = TRUE
-				break
+		//TODO: Add boost checking.
 		if(!cancontinue)
 			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
 			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
@@ -268,13 +257,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				if(!linked_destroy.loaded_item)
 					screen = SCICONSOLE_MENU
 					return
-
-				for(var/T in temp_tech)
-					var/datum/tech/KT = files.known_tech[T] //For stat logging of high levels
-					if(files.IsTechHigher(T, temp_tech[T]) && KT.level >= 5) //For stat logging of high levels
-						SSblackbox.add_details("high_research_level","[KT][KT.level + 1]") //+1 to show the level which we're about to get
-					files.UpdateTech(T, temp_tech[T])
-
+				//TODO: Add boost checking.
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
 						linked_lathe.materials.insert_amount(min((linked_lathe.materials.max_amount - linked_lathe.materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
@@ -561,8 +544,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(first_use)
 		SyncRDevices()
 
-	var/dat = list()
-	files.RefreshResearch()
+	var/list/dat = list()
 	switch(screen) //A quick check.
 		if(SCICONSOLE_NODEDESC)
 			if(!selected_node)
@@ -639,8 +621,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<A href='?src=\ref[src];updt_tech=0'>Upload All</A>"
 			dat += "<A href='?src=\ref[src];copy_tech=1'>Load Technology to Disk</A><BR>"
 			dat += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
-			for(var/i in disk.stored_research.researched_nodes)
-				var/datum/techweb_node/N = disk.stored_research.researched_nodes[i]
+			for(var/i in t_disk.stored_research.researched_nodes)
+				var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
 				dat += "[N.display_name]"
 			dat += "</div>"
 
@@ -728,13 +710,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "<h3>Deconstruction Menu</h3><BR>"
 			dat += "Name: [linked_destroy.loaded_item.name]<BR>"
 			dat += "Origin Tech:<BR>"
-			for(var/T in temp_tech)
-				dat += "* [CallTechName(T)] [temp_tech[T]]"
-				var/datum/tech/F = files.known_tech[T]
-				if(F)
-					dat += " (Current: [F.level])"
-
-				dat += "<BR>"
+			//TODO: Add boost checking.
 			dat += "</div>Options: "
 			dat += "<A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A>"
 			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"

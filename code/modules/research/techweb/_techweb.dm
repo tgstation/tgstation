@@ -15,6 +15,7 @@
 			GLOB.techweb_nodes_starting[TN.id] = TN
 	GLOB.techweb_nodes = returned
 	calculate_techweb_nodes()
+	calculate_techweb_boost_list()
 
 /proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(GLOB.techweb_designs) && clearall)
@@ -39,6 +40,7 @@
 GLOBAL_LIST_INIT(techweb_nodes, list())
 GLOBAL_LIST_INIT(techweb_designs, list())
 GLOBAL_LIST_INIT(techweb_nodes_starting, list())
+GLOBAL_LIST_INIT(techweb_boost_items, list())		//Cache for boost items, item = list(node = points).
 GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 
 //Techweb datums are meant to store unlocked research, being able to be stored on research consoles, servers, and disks. They are NOT global.
@@ -47,7 +49,7 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 	var/list/datum/techweb_node/visible_nodes = list()			//Visible nodes, doesn't mean it can be researched. Assoc list, id = datum
 	var/list/datum/techweb_node/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = datum
 	var/list/datum/design/researched_designs = list()			//Designs that are available for use. Assoc list, id = datum
-	var/list/used_boost_items = list()							//List of paths that were used as boost items for tech nodes.
+	var/list/datum/techweb_node/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node datum = path of boost object.
 
 /datum/techweb/New()
 	for(var/i in GLOB.techweb_nodes_starting)

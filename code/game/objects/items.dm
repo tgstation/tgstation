@@ -184,25 +184,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 
-	if(user.research_scanner) //Mob has a research scanner active.
-		var/msg = "*--------* <BR>"
-
-			msg += "<span class='notice'>Testing potentials:</span><BR>"
-			for(var/T in techlvls) //This needs to use the better names.
-				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
-		else
-			msg += "<span class='danger'>No tech origins detected.</span><BR>"
-
-
-		if(materials.len)
-			msg += "<span class='notice'>Extractable materials:<BR>"
-			for(var/mat in materials)
-				msg += "[CallMaterialName(mat)]<BR>" //Capitize first word, remove the "$"
-		else
-			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
-		msg += "*--------*"
-		to_chat(user, msg)
-
+	//if(user.research_scanner) //Mob has a research scanner active.
+		//TODO: Add boost checking.
 
 /obj/item/attack_self(mob/user)
 	interact(user)

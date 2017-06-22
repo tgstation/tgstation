@@ -118,22 +118,13 @@
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		if(!checkCircumstances(O))
-			to_chat(user, "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>")
-			return
-			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
-			return
-		if (temp_tech.len == 0)
-			to_chat(user, "<span class='warning'>You cannot experiment on this item!</span>")
-			return
+		//TODO: Add boost checking
 		if(!user.drop_item())
 			return
 		loaded_item = O
 		O.loc = src
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
 		flick("h_lathe_load", src)
-
-
 
 /obj/machinery/r_n_d/experimentor/default_deconstruction_crowbar(obj/item/O)
 	ejectItem()
@@ -147,8 +138,7 @@
 	if(loaded_item)
 		dat += "<b>Loaded Item:</b> [loaded_item]<br>"
 		dat += "<b>Technology</b>:<br>"
-		for(var/T in D)
-			dat += "[T]<br>"
+		//TODO: Add boost checking.
 		dat += "<br><br>Available tests:"
 		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_POKE]'>Poke</A></b>"
 		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
@@ -541,10 +531,8 @@
 			dotype = matchReaction(process,scantype)
 		experiment(dotype,process)
 		use_power(750)
-		if(dotype != FAIL)
-				for(var/T in temp_tech)
-					//linked_console.files.UpdateTech(T, temp_tech[T])
-	src.updateUsrDialog()
+		//yell at kevinz000 to finish his shit if this is still in the code.
+	updateUsrDialog()
 	return
 
 //~~~~~~~~Admin logging proc, aka the Powergamer Alarm~~~~~~~~

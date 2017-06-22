@@ -13,6 +13,15 @@
 			node.designs += GLOB.techweb_designs[i]
 		CHECK_TICK
 
+/proc/calculate_techweb_boost_list()
+	for(var/node_id in GLOB.techweb_nodes)
+		var/datum/techweb_node/node = GLOB.techweb_nodes[node_id]
+		for(var/path in node.boost_item_paths)
+			if(!ispath(path))
+				continue
+			GLOB.techweb_boost_items[path] = list(node = node.boost_item_paths[path])
+		CHECK_TICK
+
 //Techweb nodes are GLOBAL, there should only be one instance of them in the game. Persistant changes should never be made to them in-game.
 
 /datum/techweb_node
@@ -28,6 +37,7 @@
 	var/list/datum/design/designs = list()
 	var/list/boost_item_paths = list()		//Associative list, path = point_value.
 	var/export_price = 0					//Cargo export price.
+
 
 
 

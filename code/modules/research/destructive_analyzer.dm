@@ -50,9 +50,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
 			return
-		if (temp_tech.len == 0)
-			to_chat(user, "<span class='warning'>You cannot deconstruct this item!</span>")
-			return
+		//TODO: Add boost checking.
 		if(!user.drop_item())
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
 			return
