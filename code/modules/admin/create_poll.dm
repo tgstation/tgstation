@@ -3,7 +3,7 @@
 	set category = "Special Verbs"
 	if(!check_rights(R_PERMISSIONS))
 		return
-	if(!SSdbcore.Connected())
+	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")|null
@@ -31,7 +31,7 @@
 	if(!endtime)
 		return
 	endtime = sanitizeSQL(endtime)
-	var/datum/DBQuery/query_validate_time = SSdbcore.NewQuery("SELECT STR_TO_DATE('[endtime]','%Y-%c-%d %T') < NOW()")
+	var/datum/DBQuery/query_validate_time = SSdbcore.NewQuery("SELECT IF(STR_TO_DATE('[endtime]','%Y-%c-%d %T') > NOW(), STR_TO_DATE('[endtime]','%Y-%c-%d %T'), 0)")
 	if(!query_validate_time.warn_execute())
 		return
 	if(query_validate_time.NextRow())
@@ -61,11 +61,11 @@
 	if(!question)
 		return
 	question = sanitizeSQL(question)
+	var/list/sql_option_list = list()
 	if(polltype != POLLTYPE_TEXT)
-		var/list/sql_option_list = list()
 		var/add_option = 1
 		while(add_option)
-			var/option = input("Write your option","Option") option as message|null
+			var/option = input("Write your option","Option") as message|null
 			if(!option)
 				return
 			option = sanitizeSQL(option)
@@ -121,8 +121,8 @@
 			return
 		if(query_get_id.NextRow())
 			pollid = query_get_id.item[1]
-		for(var/i in sql_option_list)
-			sql_option_list[i] |= list("pollid" = "'[pollid]'")
+		for(var/list/i in sql_option_list)
+			i |= list("pollid" = "'[pollid]'")
 		SSdbcore.MassInsert(format_table_name("poll_option"), sql_option_list, warn = 1)
 	log_admin("[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]")
 	message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
