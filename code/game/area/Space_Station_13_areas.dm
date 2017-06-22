@@ -324,7 +324,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 
 //Hallway
-	
+/area/hallway
+	sound_environment = ECHO_HANGAR
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -340,11 +342,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/starboard/aft
 	name = "Starboard Quarter Primary Hallway"
 	icon_state = "hallAS"
-	
+
 /area/hallway/primary/starboard/fore
 	name = "Starboard Bow Primary Hallway"
 	icon_state = "hallFS"
-	
+
 /area/hallway/primary/port
 	name = "Port Primary Hallway"
 	icon_state = "hallP"
@@ -352,11 +354,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/port/aft
 	name = "Port Quarter Primary Hallway"
 	icon_state = "hallAP"
-	
+
 /area/hallway/primary/port/fore
 	name = "Port Bow Primary Hallway"
 	icon_state = "hallFP"
-	
+
 /area/hallway/primary/central
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
@@ -364,7 +366,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/command
 	name = "Command Hallway"
 	icon_state = "bridge_hallway"
-	
+
 /area/hallway/secondary/construction
 	name = "Construction Area"
 	icon_state = "construction"
@@ -380,11 +382,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/secondary/entry
 	name = "Arrival Shuttle Hallway"
 	icon_state = "entry"
-	
+
 /area/hallway/secondary/service
 	name = "Service Hallway"
 	icon_state = "hall_service"
-	
+
 /area/hallway/secondary/bridges/cargo_ai
 	name = "Cargo-AI-Command Bridge"
 	icon_state = "yellow"
@@ -447,7 +449,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	music = null
 	sound_environment = ECHO_LIVINGROOM
 
-/area/crew_quarters/heads/captain	
+/area/crew_quarters/heads/captain
 	name = "Captain's Office"
 	icon_state = "captain"
 	sound_environment = ECHO_LIVINGROOM
