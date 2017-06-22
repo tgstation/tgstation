@@ -32,9 +32,8 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
@@ -103,9 +102,8 @@
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "au" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)

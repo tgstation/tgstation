@@ -617,7 +617,7 @@
 /area/ruin/unpowered)
 "ca" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -834,7 +834,7 @@
 /area/ruin/unpowered)
 "cF" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)

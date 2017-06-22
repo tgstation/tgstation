@@ -70,9 +70,7 @@
 	},
 /area/space)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/space)
 "q" = (
@@ -80,9 +78,7 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "r" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/space)
 "s" = (

@@ -22,6 +22,14 @@
 	icon_state = "propulsion"
 	opacity = 1
 
+/obj/structure/shuttle/engine/propulsion/left
+	name = "left"
+	icon_state = "propulsion_l"
+
+/obj/structure/shuttle/engine/propulsion/right
+	name = "right"
+	icon_state = "propulsion_r"
+
 /obj/structure/shuttle/engine/propulsion/burst
 	name = "burst"
 

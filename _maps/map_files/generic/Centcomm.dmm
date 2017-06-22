@@ -12455,8 +12455,7 @@
 /turf/closed/wall/mineral/titanium/overspace,
 /area/centcom/evac)
 "FI" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -12468,8 +12467,7 @@
 /turf/open/floor/plating/airless,
 /area/centcom/evac)
 "FK" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

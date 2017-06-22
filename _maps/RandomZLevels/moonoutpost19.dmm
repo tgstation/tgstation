@@ -8536,7 +8536,7 @@
 	})
 "lE" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -8800,7 +8800,7 @@
 	})
 "mf" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";

@@ -71,9 +71,8 @@
 	},
 /area/shuttle/abandoned)
 "ak" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -1574,9 +1573,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cO" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)

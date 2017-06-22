@@ -17155,9 +17155,7 @@
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aKF" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "aKG" = (
@@ -23825,7 +23823,7 @@
 /area/shuttle/arrival)
 "aYZ" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -25221,7 +25219,7 @@
 /area/shuttle/arrival)
 "bbR" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -28946,9 +28944,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "bjY" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
@@ -51616,9 +51613,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "chd" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
@@ -51628,9 +51623,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "chf" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)

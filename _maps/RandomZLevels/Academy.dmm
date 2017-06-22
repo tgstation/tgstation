@@ -3130,9 +3130,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "iY" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "iZ" = (
@@ -3140,9 +3138,7 @@
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "ja" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "jb" = (

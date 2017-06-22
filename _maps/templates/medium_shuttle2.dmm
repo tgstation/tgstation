@@ -4,7 +4,7 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{
@@ -37,7 +37,7 @@
 	})
 "f" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/powered{

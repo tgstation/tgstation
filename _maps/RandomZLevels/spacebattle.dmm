@@ -13,8 +13,7 @@
 	},
 /area/awaymission/spacebattle/syndicate2)
 "ad" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
@@ -26,8 +25,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate2)
 "af" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
@@ -110,8 +108,7 @@
 	},
 /area/awaymission/spacebattle/syndicate3)
 "aw" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
@@ -123,8 +120,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate3)
 "ay" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
@@ -217,8 +213,7 @@
 	},
 /area/awaymission/spacebattle/syndicate1)
 "aP" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
@@ -230,8 +225,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate1)
 "aR" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
@@ -479,8 +473,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "bI" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r";
+/obj/structure/shuttle/engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/space,
@@ -490,8 +483,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "bK" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/space,
@@ -565,7 +557,7 @@
 /area/awaymission/spacebattle/cruiser)
 "bX" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
@@ -914,9 +906,8 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "df" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
@@ -2217,9 +2208,8 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate7)
 "hm" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 4
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate7)
@@ -2267,9 +2257,8 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
 "hv" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 4
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate7)
@@ -2563,7 +2552,7 @@
 /area/awaymission/spacebattle/cruiser)
 "iv" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 8;
+	dir = 8
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)

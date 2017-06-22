@@ -3,8 +3,7 @@
 /turf/open/space,
 /area/shuttle/transport)
 "ab" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l";
+/obj/structure/shuttle/engine/propulsion/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -312,9 +311,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "bj" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 

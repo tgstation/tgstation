@@ -2510,9 +2510,7 @@
 	},
 /area/tcommsat/computer)
 "aft" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "afu" = (
@@ -2520,9 +2518,7 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "afv" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "afw" = (
@@ -89232,9 +89228,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dno" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnp" = (
@@ -89242,9 +89236,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnq" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnr" = (
@@ -89398,9 +89390,7 @@
 	},
 /area/maintenance/asteroid/fore/com_north)
 "dnI" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnJ" = (
@@ -89408,15 +89398,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnK" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnL" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnM" = (
@@ -89424,9 +89410,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnN" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "dnO" = (

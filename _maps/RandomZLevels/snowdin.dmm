@@ -5079,9 +5079,7 @@
 	},
 /area/awaymission/snowdin)
 "np" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating,
 /area/awaymission/snowdin)
 "nq" = (
@@ -5089,9 +5087,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin)
 "nr" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating,
 /area/awaymission/snowdin)
 "ns" = (

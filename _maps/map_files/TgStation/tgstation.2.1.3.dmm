@@ -13704,7 +13704,7 @@
 /area/shuttle/arrival)
 "aEx" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -16350,7 +16350,7 @@
 /area/shuttle/arrival)
 "aKi" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 4;
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -54355,9 +54355,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqI" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "cqJ" = (
@@ -54544,9 +54542,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "crf" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "crg" = (
@@ -57382,9 +57378,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxt" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
@@ -57672,9 +57667,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cyf" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -57838,9 +57832,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cyF" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -63077,9 +63070,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "cLw" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
@@ -63089,9 +63080,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "cLy" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
@@ -63120,9 +63109,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "cLC" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
@@ -63132,16 +63119,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "cLE" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "cLF" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
@@ -63151,9 +63134,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
 "cLH" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate)
