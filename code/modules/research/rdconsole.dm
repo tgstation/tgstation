@@ -157,7 +157,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		selected_category = href_list["category"]
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
-		screen = 0.0
+		screen = SCICONSOLE_UPDATE_DATABASE
 		var/wait = 50
 		spawn(wait)
 			screen = 1.2
@@ -167,13 +167,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
 		if(t_disk)
-			var/n = text2num(href_list["clear_tech"])
-			if(!n)
-				for(var/i in 1 to t_disk.max_tech_stored)
-					t_disk.tech_stored[i] = null
-			else
-				t_disk.tech_stored[n] = null
-
+			qdel(t_disk.stored_research)
+			t_disk.stored_research = new
 	else if(href_list["eject_tech"]) //Eject the technology disk.
 		if(t_disk)
 			t_disk.loc = src.loc
@@ -184,10 +179,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/slot = text2num(href_list["copy_tech"])
 		stored_research.copy_research_to(t_disk.stored_research)
 		screen = 1.2
-
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
 		var/n = text2num(href_list["updt_design"])
-		screen = 0.0
+		screen = SCICONSOLE_UPDATE_DATABASE
 		var/wait = 50
 		if(!n)
 			wait = 0
@@ -266,7 +260,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
 			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
 		linked_destroy.busy = 1
-		screen = 0.1
+		screen = SCICONSOLE_UPDATE_DATABASE
 		updateUsrDialog()
 		flick("d_analyzer_process", linked_destroy)
 		spawn(24)
@@ -313,7 +307,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			to_chat(usr, "Unauthorized Access.")
 
 	else if(href_list["sync"]) //Sync the research holder with all the R&D consoles in the game that aren't sync protected.
-		screen = 0.0
+		screen = SCICONSOLE_UPDATE_DATABASE
 		if(!sync)
 			to_chat(usr, "<span class='danger'>You must connect to the network first!</span>")
 		else
@@ -358,7 +352,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		for(var/M in being_built.materials)
 			power += round(being_built.materials[M] * amount / 5)
 		power = max(3000, power)
-		screen = 0.3
+		screen = SCICONSOLE_UPDATE_PROTOLATHE
 		var/key = usr.key	//so we don't lose the info during the spawn delay
 		if (!(being_built.build_type & PROTOLATHE))
 			message_admins("Protolathe exploit attempted by [key_name(usr, usr.client)]!")
@@ -435,7 +429,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		for(var/M in being_built.materials)
 			power += round(being_built.materials[M] / 5)
 		power = max(4000, power)
-		screen = 0.4
+		screen = SCICONSOLE_UPDATE_CIRCUIT
 		if (!(being_built.build_type & IMPRINTER))
 			message_admins("Circuit imprinter exploit attempted by [key_name(usr, usr.client)]!")
 			updateUsrDialog()
@@ -504,7 +498,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 
 	else if(href_list["find_device"]) //The R&D console looks for devices nearby to link up with.
-		screen = 0.0
+		screen = SCICONSOLE_UPDATE_DATABASE
 		spawn(20)
 			SyncRDevices()
 			screen = 1.7
@@ -527,7 +521,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(choice == "Continue" && usr.canUseTopic(src))
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
-			screen = 0.0
+			screen = SCICONSOLE_UPDATE_DATABASE
 			qdel(stored_research)
 			stored_research = new
 			spawn(20)
@@ -593,16 +587,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	switch(screen)
 
 		//////////////////////R&D CONSOLE SCREENS//////////////////
-		if(0.0)
-			dat += "<div class='statusDisplay'>Updating Database....</div>"
-		if(0.1)
+		if(SCICONSOLE_UPDATE_DATABASE)
 			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
-		if(0.2)
+		if(SCICONSOLE_LOCKED)
 			dat += "<div class='statusDisplay'>SYSTEM LOCKED</div>"
 			dat += "<A href='?src=\ref[src];lock=1.6'>Unlock</A>"
-		if(0.3)
+		if(SCICONSOLE_UPDATE_PROTOLATHE)
 			dat += "<div class='statusDisplay'>Constructing Prototype. Please Wait...</div>"
-		if(0.4)
+		if(SCICONSOLE_UPDATE_CIRCUIT)
 			dat += "<div class='statusDisplay'>Imprinting Circuit. Please Wait...</div>"
 		if(SCICONSOLE_MENU) //Main Menu
 			dat += "<div class='statusDisplay'>"
@@ -643,23 +635,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 		if(1.2) //Technology Disk Menu
 			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A><HR>"
-			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A><A href='?src=\ref[src];updt_tech=0'>Upload All</A><A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
-			for(var/i in 1 to t_disk.max_tech_stored)
-				dat += "<div class='statusDisplay'>"
-				if(t_disk.tech_stored[i])
-					var/datum/tech/tech = t_disk.tech_stored[i]
-					dat += "Name: [tech.name]<BR>"
-					dat += "Level: [tech.level]<BR>"
-					dat += "Description: [tech.desc]<BR>"
-					dat += "Operations: <A href='?src=\ref[src];updt_tech=[i]'>Upload to Database</A><A href='?src=\ref[src];clear_tech=[i]'>Clear Slot</A>"
-				else
-					dat += "Empty Slot<BR>Operations: <A href='?src=\ref[src];menu=1.3;disk_slot=[i]'>Load Tech to Slot</A>"
-				dat += "</div>"
-		if(1.3) //Technology Disk submenu
-			dat += "<A href='?src=\ref[src];menu=SCICONSOLE_MENU'>Main Menu</A>"
-			dat += "<A href='?src=\ref[src];menu=1.2'>Return to Disk Operations</A><div class='statusDisplay'>"
-			dat += "<h3>Load Technology to Disk:</h3><BR>"
+			dat += "Disk Operations: <A href='?src=\ref[src];clear_tech=0'>Clear Disk</A>"
+			dat += "<A href='?src=\ref[src];eject_tech=1'>Eject Disk</A>"
+			dat += "<A href='?src=\ref[src];updt_tech=0'>Upload All</A>"
 			dat += "<A href='?src=\ref[src];copy_tech=1'>Load Technology to Disk</A><BR>"
+			dat += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
+			for(var/i in disk.stored_research.researched_nodes)
+				var/datum/techweb_node/N = disk.stored_research.researched_nodes[i]
+				dat += "[N.display_name]"
 			dat += "</div>"
 
 		if(1.4) //Design Disk menu.
@@ -709,7 +692,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "<A href='?src=\ref[src];togglesync=1'>Connect to Research Network</A><BR>"
 				dat += "<span class='linkOn'>Disconnect from Research Network</span><BR>"
 			dat += "<A href='?src=\ref[src];menu=1.7'>Device Linkage Menu</A><BR>"
-			dat += "<A href='?src=\ref[src];lock=0.2'>Lock Console</A><BR>"
+			dat += "<A href='?src=\ref[src];lock=SCICONSOLE_LOCKED'>Lock Console</A><BR>"
 			dat += "<A href='?src=\ref[src];reset=1'>Reset R&D Database</A></div>"
 
 		if(1.7) //R&D device linkage

@@ -26,6 +26,7 @@
 	var/list/datum/techweb_node/prerequisites = list()
 	var/list/datum/techweb_node/unlocks = list()
 	var/list/datum/design/designs = list()
+	var/list/boost_item_paths = list()		//Associative list, path = point_value.
 	var/export_price = 0					//Cargo export price.
 
 

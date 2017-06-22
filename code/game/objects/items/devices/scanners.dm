@@ -17,7 +17,6 @@ MASS SPECTROMETER
 	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
-	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -66,7 +65,6 @@ MASS SPECTROMETER
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
-	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
 	var/scanmode = 0
 
@@ -251,7 +249,6 @@ MASS SPECTROMETER
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
-	origin_tech = "magnets=1;engineering=1"
 
 /obj/item/device/analyzer/attack_self(mob/user)
 
@@ -326,7 +323,6 @@ MASS SPECTROMETER
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=150, MAT_GLASS=100)
-	origin_tech = "magnets=2;biotech=1;plasmatech=2"
 	var/details = 0
 
 /obj/item/device/mass_spectrometer/New()
@@ -372,14 +368,12 @@ MASS SPECTROMETER
 	name = "advanced mass-spectrometer"
 	icon_state = "adv_spectrometer"
 	details = 1
-	origin_tech = "magnets=4;biotech=3;plasmatech=3"
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
-	origin_tech = "biotech=2"
 	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0

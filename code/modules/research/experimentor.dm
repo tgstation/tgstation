@@ -549,7 +549,7 @@
 			if(process && process.origin_tech)
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
-					linked_console.files.UpdateTech(T, temp_tech[T])
+					//linked_console.files.UpdateTech(T, temp_tech[T])
 	src.updateUsrDialog()
 	return
 

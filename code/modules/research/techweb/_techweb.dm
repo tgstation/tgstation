@@ -47,6 +47,7 @@ GLOBAL_VAR(techweb_admin)	//Holds a fully completely tech web.
 	var/list/datum/techweb_node/visible_nodes = list()			//Visible nodes, doesn't mean it can be researched. Assoc list, id = datum
 	var/list/datum/techweb_node/available_nodes = list()		//Nodes that can immediately be researched, all reqs met. assoc list, id = datum
 	var/list/datum/design/researched_designs = list()			//Designs that are available for use. Assoc list, id = datum
+	var/list/used_boost_items = list()							//List of paths that were used as boost items for tech nodes.
 
 /datum/techweb/New()
 	for(var/i in GLOB.techweb_nodes_starting)
