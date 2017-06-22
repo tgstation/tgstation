@@ -4,6 +4,8 @@
 
 /mob/living/carbon/damage_eyes(amount)
 	var/obj/item/organ/eyes/eyes = src.getorganslot("eyes_sight")
+	if (!eyes)
+		return 
 	if(amount>0)
 		eyes.eye_damage = amount
 		if(eyes.eye_damage > 20)
@@ -15,6 +17,8 @@
 /mob/living/carbon/set_eye_damage(amount)
 	var/obj/item/organ/eyes/eyes = src.getorganslot("eyes_sight")
 	eyes.eye_damage = max(amount,0)
+	if (!eyes)
+		return 
 	if(eyes.eye_damage > 20)
 		if(eyes.eye_damage > 30)
 			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
@@ -25,6 +29,8 @@
 
 /mob/living/carbon/adjust_eye_damage(amount)
 	var/obj/item/organ/eyes/eyes = src.getorganslot("eyes_sight")
+	if (!eyes)
+		return
 	eyes.eye_damage = max(eyes.eye_damage+amount, 0)
 	if(eyes.eye_damage > 20)
 		if(eyes.eye_damage > 30)

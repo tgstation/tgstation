@@ -29,7 +29,9 @@ Bonus
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")	
+		var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+		if (!eyes)
+			return	
 		switch(A.stage)
 			if(1, 2)
 				to_chat(M, "<span class='warning'>Your eyes itch.</span>")
