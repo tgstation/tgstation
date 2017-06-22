@@ -27,10 +27,6 @@
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/scanning_module = 1)
 
-/obj/machinery/r_n_d/server/Destroy()
-	griefProtection()
-	return ..()
-
 /obj/machinery/r_n_d/server/RefreshParts()
 	var/tot_rating = 0
 	for(var/obj/item/weapon/stock_parts/SP in src)
@@ -62,8 +58,6 @@
 		if((T20C + 20) to (T0C + 70))
 			heat_health = max(0, heat_health - 1)
 	if(heat_health <= 0)
-		/*griefProtection() This seems to get called twice before running any code that deletes/damages the server or it's files anwyay.
-							refreshParts and the hasReq procs that get called by this are laggy and do not need to be called by every server on the map every tick */
 		var/updateRD = 0
 		files.known_designs = list()
 		for(var/v in files.known_tech)
@@ -78,26 +72,6 @@
 	else
 		produce_heat(heat_gen)
 		delay = initial(delay)
-
-
-/obj/machinery/r_n_d/server/emp_act(severity)
-	griefProtection()
-	..()
-
-/obj/machinery/r_n_d/server/ex_act(severity, target)
-	griefProtection()
-	..()
-
-//Backup files to centcom to help admins recover data after greifer attacks
-/obj/machinery/r_n_d/server/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
-		for(var/v in files.known_tech)
-			var/datum/tech/T = files.known_tech[v]
-			C.files.AddTech2Known(T)
-		for(var/v in files.known_designs)
-			var/datum/design/D = files.known_designs[v]
-			C.files.AddDesign2Known(D)
-		C.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -119,11 +93,6 @@
 
 				env.merge(removed)
 				air_update_turf()
-
-//called when the server is deconstructed.
-/obj/machinery/r_n_d/server/on_deconstruction()
-	griefProtection()
-	..()
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)
