@@ -39,6 +39,7 @@
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/weapon/inducer(src)
+	new /obj/item/weapon/inducer(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 	for(var/i in 1 to 3)
