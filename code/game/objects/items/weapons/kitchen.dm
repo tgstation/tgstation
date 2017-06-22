@@ -101,7 +101,7 @@
 
 /obj/item/weapon/kitchen/knife/combat
 	name = "combat knife"
-	icon_state = "buckknife"
+	icon_state = "combatknife"
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
 	force = 20
