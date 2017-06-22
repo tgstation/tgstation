@@ -43,18 +43,22 @@
 
 	var/list/idle_threads							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null									// Object that represents our computer. It's used for Adjacent() and UI visibility checks.
+	var/has_light = FALSE						//If the computer has a flashlight/LED light/what-have-you installed
+	var/light_on = FALSE						//If that light is enabled
+	var/comp_light_luminosity = 3				//The brightness of that light
+	var/comp_light_color			//The color of that light
 
 
 
-/obj/item/device/modular_computer/New()
+/obj/item/device/modular_computer/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	update_icon()
 	if(!physical)
 		physical = src
-	..()
-
+	comp_light_color = "#FFFFFF"
 	all_components = list()
 	idle_threads = list()
+	update_icon()
 
 /obj/item/device/modular_computer/Destroy()
 	kill_program(forced = TRUE)

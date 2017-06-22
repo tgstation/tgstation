@@ -385,7 +385,7 @@
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
-	if(!istype(L))		// We don't run process() when we are in space
+	if(!istype(L) || isspaceturf(L))		// We don't run process() when we are in space
 		return FALSE	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))

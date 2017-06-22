@@ -316,7 +316,7 @@ Difficulty: Medium
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
-		if(!islist(flame_hit) || !flame_hit[L])
+		if(islist(flame_hit) && !flame_hit[L])
 			L.adjustFireLoss(40)
 			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			flame_hit[L] = TRUE
