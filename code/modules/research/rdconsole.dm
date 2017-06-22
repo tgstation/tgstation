@@ -616,17 +616,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			dat += "</div>"
 			dat += "<div><h3>Designs:</h3>"
 			for(var/i in selected_node.designs)
-				var/datum/design/D = i
+				var/datum/design/D = selected_node.designs[i]
 				dat += "[D.name]"
 			dat += "</div>"
 			dat += "<div><h3>Prerequisites:</h3>"
 			for(var/i in selected_node.prerequisites)
-				var/datum/techweb_node/prereq = i
+				var/datum/techweb_node/prereq = selected_node.prerequisites[i]
 				dat += "<A href='?src=\ref[src];view_node=\ref[prereq]>[prereq.display_name]</A>"
 			dat += "</div>"
 			dat += "<div><h3>Unlocks:</h3>"
 			for(var/i in selected_node.unlocks)
-				var/datum/techweb_node/unlock = i
+				var/datum/techweb_node/unlock = selected_node.unlocks[i]
 				dat += "<A href='?src=\ref[src];view_node=\ref[unlock]>[unlock.display_name]</A>"
 			dat += "</div>"
 		if(SCICONSOLE_TDISK) //Technology Disk Menu
