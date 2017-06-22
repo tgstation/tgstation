@@ -529,7 +529,6 @@
 "br" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel{
@@ -2127,7 +2126,6 @@
 /obj/structure/table/wood,
 /obj/machinery/light/built{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -2425,7 +2423,6 @@
 "gB" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkbrown{
@@ -2485,7 +2482,6 @@
 "gI" = (
 /obj/machinery/light/built{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkbrown{
@@ -2642,7 +2638,6 @@
 "hd" = (
 /obj/machinery/light/built{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -4389,7 +4384,6 @@
 /obj/item/weapon/bedsheet,
 /obj/machinery/light/built{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
@@ -4754,7 +4748,6 @@
 "mz" = (
 /obj/machinery/light/built{
 	tag = "icon-tube1 (NORTH)";
-	icon_state = "tube1";
 	dir = 1
 	},
 /turf/open/floor/plating{
@@ -4937,7 +4930,6 @@
 "mU" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -5196,7 +5188,6 @@
 "nA" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)

@@ -144,7 +144,6 @@
 	},
 /obj/structure/table/wood/fancy/black{
 	pixel_y = -9;
-	pixel_z = 0
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -165,10 +164,7 @@
 /obj/structure/displaycase{
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
-	pixel_w = 0;
-	pixel_x = 0;
 	pixel_y = -4;
-	pixel_z = 0;
 	req_access = 48;
 	start_showpiece_type = /obj/item/fakeartefact
 	},
@@ -198,7 +194,6 @@
 	icon_state = "sink_alt";
 	dir = 4;
 	pixel_x = -13;
-	pixel_y = 0
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)

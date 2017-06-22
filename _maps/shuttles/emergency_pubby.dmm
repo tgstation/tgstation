@@ -27,13 +27,11 @@
 /obj/machinery/recharger,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ag" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -97,7 +95,6 @@
 "at" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -298,7 +295,6 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,

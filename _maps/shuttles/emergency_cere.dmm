@@ -51,7 +51,6 @@
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -112,7 +111,6 @@
 /obj/machinery/computer/communications,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -157,7 +155,6 @@
 "aD" = (
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/black,
@@ -212,7 +209,6 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -226,7 +222,6 @@
 /area/shuttle/escape)
 "aO" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/black,
@@ -237,7 +232,6 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkred/side{
@@ -464,7 +458,6 @@
 	dir = 1
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
@@ -602,7 +595,6 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel/neutral,
@@ -663,7 +655,6 @@
 /area/shuttle/escape)
 "bQ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -689,7 +680,6 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel,
@@ -775,7 +765,6 @@
 /area/shuttle/escape)
 "cf" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -932,7 +921,6 @@
 /area/shuttle/escape)
 "cA" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -943,7 +931,6 @@
 "cC" = (
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -991,7 +978,6 @@
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/scalpel{
@@ -1027,7 +1013,6 @@
 /obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/gloves/color/latex,
@@ -1056,7 +1041,6 @@
 "cM" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/whiteblue/side,
@@ -1074,7 +1058,6 @@
 /area/shuttle/escape)
 "cO" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1144,7 +1127,6 @@
 /area/shuttle/escape)
 "cX" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -1265,7 +1247,6 @@
 "dm" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -1280,7 +1261,6 @@
 /area/shuttle/escape)
 "dp" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/yellow/side{

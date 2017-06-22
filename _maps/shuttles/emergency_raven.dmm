@@ -171,7 +171,6 @@
 /obj/item/weapon/defibrillator/loaded,
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
@@ -327,8 +326,6 @@
 /obj/machinery/flasher{
 	id = "shuttleflash";
 	pixel_x = -26;
-	pixel_y = 0;
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
@@ -500,7 +497,6 @@
 "bl" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6;
-	pixel_y = 0
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -948,7 +944,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 5
@@ -979,7 +974,6 @@
 "cn" = (
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1002,7 +996,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1062,7 +1055,6 @@
 /obj/machinery/button/door{
 	id = "shuttleshutters";
 	name = "Bridge Blast Shutters";
-	pixel_x = 0;
 	pixel_y = -26;
 	req_access_txt = "19"
 	},
@@ -1504,11 +1496,9 @@
 /obj/machinery/flasher{
 	id = "shuttleflash";
 	pixel_x = 24;
-	pixel_y = 0
 	},
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1517,7 +1507,6 @@
 "eC" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
@@ -1611,7 +1600,6 @@
 "eN" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1632,7 +1620,6 @@
 "eQ" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4

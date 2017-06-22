@@ -127,7 +127,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Gravity Generator APC";
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -150,7 +149,6 @@
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
 	icon_state = "radiation";
 	name = "RADIOACTIVE AREA";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -184,7 +182,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -204,7 +201,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/space,
 /area/space/nearstation)
@@ -214,7 +210,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -223,7 +218,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -250,7 +244,6 @@
 	dir = 1
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -512,7 +505,6 @@
 "bn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
-	pixel_y = 0
 	},
 /obj/machinery/light,
 /turf/open/floor/plating,
@@ -787,7 +779,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -797,7 +788,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -808,7 +798,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/bridge)
@@ -817,7 +806,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -833,7 +821,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
@@ -842,7 +829,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 4
@@ -855,7 +841,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -870,7 +855,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -879,7 +863,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
 	},
 /obj/structure/cable{
 	icon_state = "1-8"
@@ -946,7 +929,6 @@
 "ct" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -1236,7 +1218,6 @@
 /area/storage/primary)
 "dm" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -1249,7 +1230,6 @@
 /area/construction)
 "do" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1259,7 +1239,6 @@
 /area/construction)
 "dp" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -1301,7 +1280,6 @@
 /area/storage/primary)
 "dx" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plating,

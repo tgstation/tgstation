@@ -190,7 +190,6 @@
 "ar" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6;
-	pixel_y = 0
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -221,7 +220,6 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo,
@@ -344,7 +342,6 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26;
-	pixel_y = 0
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -432,7 +429,6 @@
 "aU" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -488,7 +484,6 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 0;
 	pixel_y = -1
 	},
 /obj/item/weapon/storage/toolbox/emergency{
@@ -506,7 +501,6 @@
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = -26;
-	pixel_y = 0
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -597,8 +591,6 @@
 "bj" = (
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
-	pixel_x = 0;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
@@ -621,7 +613,6 @@
 /obj/item/clothing/head/hardhat/red,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -785,7 +776,6 @@
 "bJ" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 0;
 	pixel_y = 58
 	},
 /turf/open/floor/plasteel/neutral/side,
@@ -869,7 +859,6 @@
 /obj/item/weapon/storage/box/zipties,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = 0;
 	pixel_y = -26
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -1103,7 +1092,6 @@
 	pixel_y = 3
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -1137,7 +1125,6 @@
 	pixel_y = 3
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/side{

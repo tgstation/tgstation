@@ -356,7 +356,6 @@
 	},
 /obj/item/clothing/glasses/meson/engine,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -376,7 +375,6 @@
 	dir = 8
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plating,

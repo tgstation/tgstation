@@ -2535,7 +2535,6 @@
 "io" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,

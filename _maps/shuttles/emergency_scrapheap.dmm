@@ -70,7 +70,6 @@
 "an" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/carpet,
@@ -206,7 +205,6 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -313,7 +311,6 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/bar,

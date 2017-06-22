@@ -88,7 +88,6 @@
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/structure/chair/comfy/brown{
@@ -99,7 +98,6 @@
 "as" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/carpet,
@@ -236,7 +234,6 @@
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/plastitanium/brig,
@@ -279,7 +276,6 @@
 "aS" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -585,7 +581,6 @@
 /area/shuttle/escape)
 "bR" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/bar,
@@ -632,7 +627,6 @@
 /area/shuttle/escape)
 "bX" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar,

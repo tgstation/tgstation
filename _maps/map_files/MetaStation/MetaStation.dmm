@@ -56384,7 +56384,6 @@
 	department = "Medbay";
 	departmentType = 1;
 	name = "Medbay RC";
-	pixel_z = 0
 	},
 /turf/closed/wall,
 /area/security/checkpoint/medical)

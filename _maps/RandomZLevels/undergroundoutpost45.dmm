@@ -470,7 +470,6 @@
 	})
 "aR" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
@@ -967,7 +966,6 @@
 	})
 "bH" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -3392,7 +3390,6 @@
 	})
 "fs" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/airalarm{
@@ -5288,7 +5285,6 @@
 	})
 "ir" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/processor,
@@ -5803,7 +5799,6 @@
 	})
 "jc" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
@@ -11146,7 +11141,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11339,7 +11333,6 @@
 /obj/machinery/light/small,
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -11
 	},
 /obj/structure/mirror{
@@ -11495,7 +11488,6 @@
 "qx" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -11982,7 +11974,6 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer{
@@ -16262,7 +16253,6 @@
 "wL" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
 	pixel_x = 11
 	},
 /obj/machinery/light/small,

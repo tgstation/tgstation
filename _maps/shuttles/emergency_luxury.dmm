@@ -336,7 +336,6 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
@@ -353,7 +352,6 @@
 	icon_state = "plant-10"
 	},
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,
@@ -366,7 +364,6 @@
 /area/shuttle/escape)
 "bn" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/gold,

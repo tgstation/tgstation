@@ -24636,7 +24636,6 @@
 	dir = 8;
 	name = "Mining Dock APC";
 	pixel_x = -24;
-	pixel_z = 0
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
@@ -27998,7 +27997,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = -32;
-	pixel_z = 0
 	},
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -31774,7 +31772,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = -32;
-	pixel_z = 0
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -34186,7 +34183,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = -32;
-	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -37298,7 +37294,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = -30;
-	pixel_z = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whiteblue/side{

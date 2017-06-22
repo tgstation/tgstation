@@ -28917,7 +28917,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = 30;
-	pixel_z = 0
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
@@ -31244,7 +31243,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = -30;
-	pixel_z = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -34086,7 +34084,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_y = 30;
-	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -38354,7 +38351,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_y = -30;
-	pixel_z = 0
 	},
 /obj/item/weapon/storage/firstaid/fire{
 	pixel_x = 3;

@@ -3626,7 +3626,6 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/bot,
@@ -3976,7 +3975,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -4298,7 +4296,6 @@
 "lu" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/filingcabinet/filingcabinet,
@@ -4316,7 +4313,6 @@
 "lw" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
@@ -5325,7 +5321,6 @@
 /obj/item/weapon/pen/fourcolor,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -5580,7 +5575,6 @@
 /obj/item/weapon/book/codex_gigas,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -5643,7 +5637,6 @@
 /obj/structure/bookcase/random,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -5735,7 +5728,6 @@
 /obj/item/device/assembly/flash/handheld,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -6155,7 +6147,6 @@
 "pL" = (
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /obj/structure/filingcabinet/filingcabinet,
@@ -7415,7 +7406,6 @@
 /obj/machinery/computer/security,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -9551,7 +9541,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/cmo,
@@ -9745,7 +9734,6 @@
 "yk" = (
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -10269,7 +10257,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -10316,7 +10303,6 @@
 /obj/item/weapon/pen/blue,
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -11574,7 +11560,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	icon_state = "alarm0";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/vault{
@@ -11914,7 +11899,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{
@@ -12669,7 +12653,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 1;
-	icon_state = "alarm0";
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/vault{

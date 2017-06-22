@@ -86,7 +86,6 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -94,7 +93,6 @@
 "as" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -259,7 +257,6 @@
 "aR" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -298,7 +295,6 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -334,7 +330,6 @@
 "bc" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -355,7 +350,6 @@
 /obj/item/weapon/crowbar,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -399,7 +393,6 @@
 "bm" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium,

@@ -30383,7 +30383,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = -30;
-	pixel_z = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Medbay Storage";

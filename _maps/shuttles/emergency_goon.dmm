@@ -90,7 +90,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -150,7 +149,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -163,7 +161,6 @@
 "B" = (
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /obj/structure/window/reinforced{
 	dir = 1
@@ -197,7 +194,6 @@
 /obj/machinery/computer/emergency_shuttle,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -211,7 +207,6 @@
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/mineral/titanium/yellow,
@@ -238,7 +233,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4;
-	pixel_x = 0
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)

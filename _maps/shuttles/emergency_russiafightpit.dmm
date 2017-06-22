@@ -81,7 +81,6 @@
 "ap" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_x = 0;
 	pixel_y = -29
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -424,7 +423,6 @@
 /area/shuttle/escape)
 "bs" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -432,7 +430,6 @@
 "bt" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
@@ -464,7 +461,6 @@
 "bz" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
-	pixel_y = 0
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

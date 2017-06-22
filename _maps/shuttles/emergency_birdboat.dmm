@@ -14,7 +14,6 @@
 /obj/structure/table,
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/weapon/hemostat,

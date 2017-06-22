@@ -289,7 +289,6 @@
 /area/awaymission/research/interior/maint)
 "aZ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/machinery/airalarm{
@@ -777,7 +776,6 @@
 "cl" = (
 /obj/machinery/light{
 	dir = 4;
-	icon_state = "tube1"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1199,7 +1197,6 @@
 /area/awaymission/research/interior/secure)
 "dq" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/purple,
@@ -1227,7 +1224,6 @@
 "dv" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/purple,
@@ -1802,7 +1798,6 @@
 /area/awaymission/research/interior/cryo)
 "fb" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -1857,7 +1852,6 @@
 /area/awaymission/research/interior/cryo)
 "fi" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -2377,7 +2371,6 @@
 "gz" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -2385,7 +2378,6 @@
 "gA" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitepurple,
@@ -2397,7 +2389,6 @@
 "gC" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -2420,14 +2411,12 @@
 "gG" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitered,
 /area/awaymission/research/interior)
 "gH" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitered,
@@ -2435,7 +2424,6 @@
 "gI" = (
 /obj/structure/barricade/security,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitered,
@@ -2714,7 +2702,6 @@
 	},
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -3010,7 +2997,6 @@
 /area/awaymission/research/interior/genetics)
 "ic" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/purple,
@@ -3120,7 +3106,6 @@
 	pixel_x = -32
 	},
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -3437,7 +3422,6 @@
 /area/awaymission/research/interior/medbay)
 "jg" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -3573,7 +3557,6 @@
 /area/awaymission/research/interior/medbay)
 "jB" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -3634,7 +3617,6 @@
 "jL" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -3642,14 +3624,12 @@
 "jM" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue,
 /area/awaymission/research/interior)
 "jN" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue,
@@ -4173,7 +4153,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -4183,7 +4162,6 @@
 /area/awaymission/research/interior/medbay)
 "lm" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -4653,7 +4631,6 @@
 "mC" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -4770,7 +4747,6 @@
 /area/awaymission/research/interior/escapepods)
 "mR" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitegreen/side{

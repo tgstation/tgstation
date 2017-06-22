@@ -154,7 +154,6 @@
 /area/shuttle/supply)
 "x" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,

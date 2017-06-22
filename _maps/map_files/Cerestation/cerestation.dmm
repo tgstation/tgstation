@@ -37811,7 +37811,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_y = -30;
-	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -41875,7 +41874,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = 30;
-	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -49226,7 +49224,6 @@
 	departmentType = 1;
 	name = "Medbay RC";
 	pixel_x = 30;
-	pixel_z = 0
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
