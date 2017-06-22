@@ -92,15 +92,13 @@
 /area/ruin/derelictoutpost/dockedship)
 "ar" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 1;
-	name = "shuttle engine"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)
 "as" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 1;
-	name = "shuttle engine"
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/derelictoutpost/dockedship)

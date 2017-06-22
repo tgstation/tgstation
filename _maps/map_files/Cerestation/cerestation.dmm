@@ -71776,9 +71776,7 @@
 	},
 /area/maintenance/asteroid/aft/science)
 "cCh" = (
-/obj/structure/shuttle/engine/propulsion{
-	name = "shuttle engine"
-	},
+/obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "cCi" = (
