@@ -5,16 +5,21 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/update_canmove = TRUE
+	var/needs_update_stat = FALSE
 
 /datum/status_effect/incapacitating/on_apply()
 	if(update_canmove)
 		owner.update_canmove()
+		if(issilicon(owner))
+			owner.update_stat()
 	update_canmove = TRUE
 	return ..()
 
 /datum/status_effect/incapacitating/on_remove()
 	if(update_canmove)
 		owner.update_canmove()
+		if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+			owner.update_stat()
 
 //STUN
 /datum/status_effect/incapacitating/stun

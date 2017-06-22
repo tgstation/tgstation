@@ -1618,7 +1618,6 @@
 #include "code\modules\mob\living\silicon\say.dm"
 #include "code\modules\mob\living\silicon\silicon.dm"
 #include "code\modules\mob\living\silicon\silicon_defense.dm"
-#include "code\modules\mob\living\silicon\status_procs.dm"
 #include "code\modules\mob\living\silicon\ai\ai.dm"
 #include "code\modules\mob\living\silicon\ai\ai_defense.dm"
 #include "code\modules\mob\living\silicon\ai\death.dm"
