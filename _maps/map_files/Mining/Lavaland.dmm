@@ -1442,7 +1442,6 @@
 /area/mine/living_quarters)
 "do" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{

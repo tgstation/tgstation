@@ -4108,7 +4108,6 @@
 /area/crew_quarters/heads/captain/private)
 "agS" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -4718,7 +4717,6 @@
 /area/crew_quarters/heads/captain/private)
 "ahL" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -7287,7 +7285,6 @@
 /obj/structure/table/reinforced,
 /obj/structure/noticeboard{
 	dir = 4;
-	icon_state = "nboard00";
 	pixel_x = -32
 	},
 /obj/item/weapon/clipboard,
@@ -14036,7 +14033,6 @@
 /area/crew_quarters/theatre)
 "awj" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -19251,7 +19247,6 @@
 /area/engine/engineering)
 "aFx" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -19273,7 +19268,6 @@
 /area/engine/engineering)
 "aFy" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/firealarm{
@@ -20155,7 +20149,6 @@
 	},
 /obj/structure/noticeboard{
 	dir = 1;
-	icon_state = "nboard00";
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
@@ -21688,7 +21681,6 @@
 /area/engine/gravity_generator)
 "aJm" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
@@ -28059,7 +28051,6 @@
 /area/medical/chemistry)
 "aUx" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -28069,7 +28060,6 @@
 /area/hallway/primary/central)
 "aUz" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -28204,7 +28194,6 @@
 /area/maintenance/starboard)
 "aUN" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -31269,7 +31258,6 @@
 /obj/machinery/light,
 /obj/structure/noticeboard{
 	dir = 1;
-	icon_state = "nboard00";
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -34504,7 +34492,6 @@
 /area/chapel/main)
 "bfY" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/power/apc{
@@ -34526,7 +34513,6 @@
 /area/chapel/main)
 "bfZ" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -34539,7 +34525,6 @@
 /area/chapel/main)
 "bga" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -34875,7 +34860,6 @@
 /area/chapel/main)
 "bgJ" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -34897,7 +34881,6 @@
 /area/chapel/main)
 "bgK" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -35249,7 +35232,6 @@
 	},
 /obj/structure/noticeboard{
 	dir = 4;
-	icon_state = "nboard00";
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/grimy,
@@ -35679,7 +35661,6 @@
 /area/chapel/main)
 "bik" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -35697,7 +35678,6 @@
 /area/chapel/main)
 "bil" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36064,7 +36044,6 @@
 /area/chapel/main)
 "biQ" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36081,7 +36060,6 @@
 /area/chapel/main)
 "biR" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -36094,7 +36072,6 @@
 /area/chapel/main)
 "biS" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/button/door{
@@ -36531,7 +36508,6 @@
 /obj/structure/noticeboard{
 	desc = "A board for remembering the fallen of the station.";
 	dir = 1;
-	icon_state = "nboard00";
 	name = "memorial board";
 	pixel_y = -32
 	},

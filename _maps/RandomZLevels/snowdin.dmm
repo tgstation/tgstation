@@ -4505,7 +4505,6 @@
 /area/awaymission/snowdin/sekret)
 "lX" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/wood{

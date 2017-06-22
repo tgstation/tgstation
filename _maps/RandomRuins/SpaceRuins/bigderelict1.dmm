@@ -471,7 +471,6 @@
 /area/ruin/derelictoutpost/powerstorage)
 "br" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /turf/open/floor/plasteel,

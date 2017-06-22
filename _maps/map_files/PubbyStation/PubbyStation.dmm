@@ -257,7 +257,6 @@
 	uses = 8
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/holopad,
@@ -8733,7 +8732,6 @@
 /area/crew_quarters/dorms)
 "asK" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -10226,7 +10224,6 @@
 /area/crew_quarters/dorms)
 "avR" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -11863,7 +11860,6 @@
 /area/crew_quarters/dorms)
 "azv" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -13732,7 +13728,6 @@
 /area/shuttle/escape)
 "aDA" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -17585,7 +17580,6 @@
 /area/maintenance/disposal)
 "aLL" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -18273,7 +18267,6 @@
 	icon_state = "2-4"
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/wood{
@@ -20227,7 +20220,6 @@
 /area/crew_quarters/theatre)
 "aRd" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/carpet{
@@ -22776,7 +22768,6 @@
 "aWH" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -23666,7 +23657,6 @@
 /area/crew_quarters/bar)
 "aYC" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/light,
@@ -23678,7 +23668,6 @@
 /area/crew_quarters/bar)
 "aYE" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /obj/machinery/light,
@@ -36133,7 +36122,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -39047,7 +39035,6 @@
 /area/engine/atmos)
 "bEs" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -42058,7 +42045,6 @@
 /area/engine/engine_smes)
 "bKS" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -46029,7 +46015,6 @@
 /area/tcommsat/server)
 "bTt" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /turf/open/floor/plasteel/black{
@@ -47264,7 +47249,6 @@
 /area/crew_quarters/kitchen)
 "bWq" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/carpet{
@@ -47274,7 +47258,6 @@
 "bWr" = (
 /obj/effect/landmark/start/assistant,
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/carpet{
@@ -47420,14 +47403,12 @@
 /area/crew_quarters/bar)
 "bWI" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar)
 "bWJ" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -47944,7 +47925,6 @@
 /area/science/research)
 "bYj" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -47954,7 +47934,6 @@
 /area/science/research)
 "bYk" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -50518,7 +50497,6 @@
 /area/chapel/main/monastery)
 "ceD" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

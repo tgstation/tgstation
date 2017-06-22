@@ -19,7 +19,6 @@
 /area/shuttle/escape)
 "af" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -41,7 +40,6 @@
 /area/shuttle/escape)
 "aj" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -51,7 +49,6 @@
 /area/shuttle/escape)
 "al" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -294,7 +291,6 @@
 /area/shuttle/escape)
 "aY" = (
 /obj/structure/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,

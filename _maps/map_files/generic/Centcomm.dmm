@@ -220,7 +220,6 @@
 /area/holodeck/rec_center/bunker)
 "aK" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/holofloor{
@@ -247,7 +246,6 @@
 /area/holodeck/rec_center/lounge)
 "aN" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/holofloor{
@@ -263,7 +261,6 @@
 /area/holodeck/rec_center/winterwonderland)
 "aP" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -1597,7 +1594,6 @@
 /area/holodeck/rec_center/kobayashi)
 "ey" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
@@ -2013,7 +2009,6 @@
 /area/holodeck/rec_center/spacechess)
 "fD" = (
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/holofloor/grass,
@@ -3329,7 +3324,6 @@
 "jC" = (
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4069,7 +4063,6 @@
 "lm" = (
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault,
@@ -4282,7 +4275,6 @@
 "lP" = (
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/brown{
@@ -5305,7 +5297,6 @@
 /obj/structure/table/wood,
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/vault{
@@ -5474,7 +5465,6 @@
 /obj/structure/bookcase/random,
 /obj/structure/noticeboard{
 	dir = 1;
-	icon_state = "nboard00";
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
@@ -6327,7 +6317,6 @@
 "qz" = (
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/green/side{
@@ -6436,7 +6425,6 @@
 /area/centcom/ferry)
 "qJ" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
@@ -9264,7 +9252,6 @@
 /obj/machinery/light,
 /obj/structure/noticeboard{
 	dir = 1;
-	icon_state = "nboard00";
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -9506,7 +9493,6 @@
 /obj/machinery/light,
 /obj/structure/noticeboard{
 	dir = 1;
-	icon_state = "nboard00";
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/vault{
@@ -11577,7 +11563,6 @@
 /obj/machinery/door/firedoor,
 /obj/structure/noticeboard{
 	dir = 1;
-	icon_state = "nboard00";
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,

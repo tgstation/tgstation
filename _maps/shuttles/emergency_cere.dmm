@@ -83,7 +83,6 @@
 /area/shuttle/escape)
 "aq" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple,
@@ -117,7 +116,6 @@
 /area/shuttle/escape)
 "aw" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow,
@@ -1215,7 +1213,6 @@
 /area/shuttle/escape)
 "dt" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /turf/open/floor/plating,

@@ -298,7 +298,6 @@
 /area/derelict/solar_control)
 "aI" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -4035,7 +4034,6 @@
 /area/derelict/atmospherics)
 "lL" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -4791,7 +4789,6 @@
 /area/template_noop)
 "nU" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{

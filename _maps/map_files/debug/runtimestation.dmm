@@ -237,7 +237,6 @@
 /area/engine/engineering)
 "aG" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/light{
@@ -494,7 +493,6 @@
 /area/engine/atmos)
 "bm" = (
 /obj/machinery/atmospherics/components/binary/valve/open{
-	icon_state = "mvalve_map";
 	dir = 4
 	},
 /turf/open/floor/plating,

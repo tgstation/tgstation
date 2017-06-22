@@ -2946,7 +2946,6 @@
 /area/ruin/deepstorage/airlock)
 "fk" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3052,7 +3051,6 @@
 "fv" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
-	icon_state = "mvalve_map";
 	name = "Port To Hall"
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3062,7 +3060,6 @@
 "fw" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/item/weapon/wrench,
@@ -3472,7 +3469,6 @@
 /area/ruin/deepstorage/power)
 "gi" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

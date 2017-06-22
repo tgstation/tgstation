@@ -30606,7 +30606,6 @@
 /obj/effect/landmark/start/captain,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -32927,7 +32926,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bjS" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/flasher{
@@ -35049,7 +35047,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "bnF" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -39982,7 +39979,6 @@
 	icon_state = "1-4"
 	},
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -40014,7 +40010,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -40932,7 +40927,6 @@
 /area/crew_quarters/heads/captain/private)
 "byq" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -40944,7 +40938,6 @@
 /area/crew_quarters/heads/captain/private)
 "bys" = (
 /obj/structure/chair/comfy/brown{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -41774,7 +41767,6 @@
 /area/bridge)
 "bzU" = (
 /obj/structure/chair/comfy/teal{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /obj/structure/chair/comfy/black{
@@ -53227,7 +53219,6 @@
 /area/maintenance/solars/port/aft)
 "bVS" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -56874,7 +56865,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/dark/visible{
@@ -75988,7 +75978,6 @@
 /area/maintenance/starboard/aft)
 "cMq" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -85153,7 +85142,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -85365,7 +85353,6 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister,

@@ -13949,7 +13949,6 @@
 /area/bridge)
 "aBZ" = (
 /turf/open/floor/plasteel/darkblue/corner{
-	icon_state = "darkbluecorners";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -15339,7 +15338,6 @@
 /area/crew_quarters/toilet)
 "aEr" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -15517,7 +15515,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	icon_state = "darkbluecorners";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -15574,7 +15571,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	icon_state = "darkbluecorners";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19728,7 +19724,6 @@
 /area/maintenance/asteroid/fore/com_east)
 "aMi" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -19796,7 +19791,6 @@
 	},
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /obj/item/weapon/paper{
@@ -19928,7 +19922,6 @@
 /area/security/detectives_office)
 "aMz" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -20545,7 +20538,6 @@
 	d2 = 2
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -25255,7 +25247,6 @@
 /area/hallway/primary/fore)
 "aVw" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -25599,7 +25590,6 @@
 /area/maintenance/asteroid/fore/cargo_south)
 "aWa" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -25727,7 +25717,6 @@
 /area/space)
 "aWl" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -28740,7 +28729,6 @@
 /area/maintenance/asteroid/port/west)
 "bck" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -29946,7 +29934,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/structure/sign/electricshock{
@@ -32210,7 +32197,6 @@
 /area/maintenance/asteroid/port/neast)
 "biG" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -32630,7 +32616,6 @@
 /area/maintenance/asteroid/port/neast)
 "bjz" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -33194,7 +33179,6 @@
 /area/maintenance/asteroid/port/neast)
 "bky" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -38671,7 +38655,6 @@
 /area/engine/engineering)
 "btF" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -40520,7 +40503,6 @@
 /area/medical/medbay/central)
 "bwP" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -41700,7 +41682,6 @@
 /area/medical/medbay/central)
 "byY" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -46858,7 +46839,6 @@
 /area/library/lounge)
 "bIe" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy{
@@ -51065,7 +51045,6 @@
 /area/engine/engine_smes)
 "bPK" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -51083,7 +51062,6 @@
 /area/engine/engine_smes)
 "bPL" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -51834,7 +51812,6 @@
 "bRe" = (
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel{
@@ -51981,7 +51958,6 @@
 /area/engine/atmos)
 "bRt" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/pump,
@@ -59967,7 +59943,6 @@
 /area/maintenance/asteroid/aft/arrivals)
 "chE" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -60414,7 +60389,6 @@
 /area/hallway/primary/aft)
 "ciy" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -60745,7 +60719,6 @@
 /area/hallway/primary/aft)
 "cjf" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -61222,7 +61195,6 @@
 /area/hallway/primary/aft)
 "cjR" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -61797,7 +61769,6 @@
 	},
 /obj/structure/noticeboard{
 	dir = 4;
-	icon_state = "nboard00";
 	pixel_x = -32
 	},
 /obj/item/weapon/paper{
@@ -61867,7 +61838,6 @@
 	},
 /obj/structure/noticeboard{
 	dir = 8;
-	icon_state = "nboard00";
 	pixel_x = 32
 	},
 /obj/item/weapon/paper{
@@ -66714,7 +66684,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -66861,7 +66830,6 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -66894,7 +66862,6 @@
 "ctF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -66909,7 +66876,6 @@
 /area/science/research)
 "ctH" = (
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -67130,7 +67096,6 @@
 "cui" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -67145,7 +67110,6 @@
 "cuk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -67217,7 +67181,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -67280,7 +67243,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -67335,7 +67297,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -67704,7 +67665,6 @@
 /area/shuttle/arrival)
 "cvk" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
@@ -68659,7 +68619,6 @@
 "cww" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -68722,7 +68681,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -68961,7 +68919,6 @@
 /obj/structure/bed/roller,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71703,7 +71660,6 @@
 /area/science/misc_lab)
 "cBQ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -73874,7 +73830,6 @@
 /area/crew_quarters/fitness)
 "cGB" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
@@ -75913,7 +75868,6 @@
 /area/science/mixing)
 "cKw" = (
 /turf/open/floor/plasteel/whitepurple/corner{
-	icon_state = "whitepurplecorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -77215,7 +77169,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /obj/structure/cable{
@@ -77497,7 +77450,6 @@
 /area/crew_quarters/theatre)
 "cNw" = (
 /obj/structure/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -77507,7 +77459,6 @@
 /area/crew_quarters/theatre)
 "cNx" = (
 /obj/structure/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -77766,7 +77717,6 @@
 /area/crew_quarters/theatre)
 "cOa" = (
 /obj/structure/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -77791,7 +77741,6 @@
 /area/crew_quarters/theatre)
 "cOc" = (
 /obj/structure/chair/wood{
-	icon_state = "wooden_chair";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -83442,7 +83391,6 @@
 /area/shuttle/escape)
 "cZq" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple,
@@ -83476,7 +83424,6 @@
 /area/shuttle/escape)
 "cZw" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow,
@@ -84625,7 +84572,6 @@
 /area/shuttle/escape)
 "dcq" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 4
 	},
 /turf/open/floor/plating,

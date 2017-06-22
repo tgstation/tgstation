@@ -2085,7 +2085,6 @@
 /area/awaymission/research/interior/security)
 "gd" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{

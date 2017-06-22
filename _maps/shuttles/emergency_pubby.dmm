@@ -38,7 +38,6 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -250,7 +249,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,

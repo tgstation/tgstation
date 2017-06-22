@@ -164,7 +164,6 @@
 	})
 "x" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkyellow,

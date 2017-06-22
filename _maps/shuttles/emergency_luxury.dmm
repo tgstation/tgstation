@@ -119,7 +119,6 @@
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/mineral/gold,
@@ -288,7 +287,6 @@
 /area/shuttle/escape)
 "bd" = (
 /obj/structure/chair/comfy{
-	icon_state = "comfychair";
 	dir = 1
 	},
 /turf/open/floor/carpet,

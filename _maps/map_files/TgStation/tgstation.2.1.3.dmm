@@ -7393,7 +7393,6 @@
 /obj/structure/chair/comfy/beige{
 	desc = "It looks comfy and extra tactical.\n<span class='notice'>Alt-click to rotate it clockwise.</span>";
 	dir = 1;
-	icon_state = "comfychair";
 	name = "tactical armchair"
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -30773,7 +30772,6 @@
 /area/engine/gravity_generator)
 "bse" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -43538,7 +43536,6 @@
 /area/maintenance/port/aft)
 "bTx" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -46375,7 +46372,6 @@
 /area/medical/virology)
 "bZQ" = (
 /obj/machinery/atmospherics/components/binary/valve/open{
-	icon_state = "mvalve_map";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -49880,7 +49876,6 @@
 /area/maintenance/disposal/incinerator)
 "chm" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/airalarm{
@@ -51862,7 +51857,6 @@
 /area/maintenance/solars/starboard/aft)
 "clz" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -52262,7 +52256,6 @@
 /area/engine/engine_smes)
 "cmA" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -52275,7 +52268,6 @@
 /area/engine/engine_smes)
 "cmB" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable/yellow{
@@ -52895,7 +52887,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -52914,7 +52905,6 @@
 /area/engine/engine_smes)
 "cnP" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -54823,7 +54813,6 @@
 /area/engine/engineering)
 "crL" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
@@ -58967,7 +58956,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cBc" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/ai_slipper{
@@ -60627,7 +60615,6 @@
 /area/engine/engineering)
 "cEW" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -65013,7 +65000,6 @@
 /area/tcommsat/server)
 "cSF" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /turf/open/floor/plasteel/black{

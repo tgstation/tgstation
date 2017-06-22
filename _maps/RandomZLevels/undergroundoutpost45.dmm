@@ -260,7 +260,6 @@
 	})
 "ay" = (
 /obj/structure/chair/comfy/beige{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /obj/effect/landmark/awaystart,
@@ -1500,7 +1499,6 @@
 	dir = 10
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/carpet{
@@ -1584,7 +1582,6 @@
 	pressure_checks = 1
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -8748,7 +8745,6 @@
 	specialfunctions = 4
 	},
 /obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
 	dir = 1
 	},
 /turf/open/floor/carpet{
@@ -8828,7 +8824,6 @@
 	})
 "nd" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -8851,7 +8846,6 @@
 	})
 "nf" = (
 /obj/structure/chair/comfy/black{
-	icon_state = "comfychair";
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -10338,7 +10332,6 @@
 	})
 "oV" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman{
@@ -10358,7 +10351,6 @@
 	})
 "oW" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman/super{
@@ -10383,7 +10375,6 @@
 	})
 "oX" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/machinery/power/port_gen/pacman{
