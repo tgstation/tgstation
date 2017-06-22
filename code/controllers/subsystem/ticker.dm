@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
 	if(!HasRoundStarted())
@@ -590,7 +590,11 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	//Collects persistence features
-	SSpersistence.CollectData()
+	if(mode.allow_persistence_save)
+		SSpersistence.CollectData()
+
+	//stop collecting feedback during grifftime
+	SSblackbox.Seal()
 
 	sleep(50)
 	if(mode.station_was_nuked)

@@ -31,6 +31,7 @@
 	var/ricochets = 0
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
+	var/ignore_source_check = FALSE
 
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
@@ -40,8 +41,8 @@
 	var/range = 50 //This will de-increment every step. When 0, it will delete the projectile.
 		//Effects
 	var/stun = 0
-	var/weaken = 0
-	var/paralyze = 0
+	var/knockdown = 0
+	var/unconscious = 0
 	var/irradiate = 0
 	var/stutter = 0
 	var/slur = 0
@@ -124,7 +125,7 @@
 			reagent_note += num2text(R.volume) + ") "
 
 	add_logs(firer, L, "shot", src, reagent_note)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -138,8 +139,9 @@
 	if(check_ricochet() && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
+			ignore_source_check = TRUE
 			return FALSE
-	if(firer && !ricochets)
+	if(firer && !ignore_source_check)
 		if(A == firer || (A == firer.loc && istype(A, /obj/mecha))) //cannot shoot yourself or your mech
 			loc = A.loc
 			return FALSE

@@ -133,7 +133,7 @@
 	target.name = initial(picked_item.name)
 	target.desc = initial(picked_item.desc)
 	target.icon_state = initial(picked_item.icon_state)
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)

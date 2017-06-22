@@ -214,18 +214,18 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
 		target << message
 		CRASH("Invalid message! [message]")
-	
+
 	if(!istext(message))
 		return
 
 	if(target == world)
 		target = GLOB.clients
-	
+
 	var/list/targets
 	if(!islist(target))
 		targets = list(target)
 	else
-		targets = target 
+		targets = target
 		if(!targets.len)
 			return
 
@@ -241,11 +241,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		if (!C)
 			continue
-		
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			C << message
 			return TRUE
-			
+
 		if(!C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += message
@@ -257,7 +257,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/grab_client(target)
 	if(istype(target, /client))
 		return target
-	else if(istype(target, /mob))
+	else if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client

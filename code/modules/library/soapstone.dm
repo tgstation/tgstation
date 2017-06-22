@@ -116,6 +116,7 @@
 	anchored = TRUE
 	obj_integrity = 30
 	max_integrity = 30
+	layer = LATTICE_LAYER
 
 	var/hidden_message
 	var/creator_key

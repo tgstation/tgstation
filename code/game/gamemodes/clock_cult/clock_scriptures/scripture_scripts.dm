@@ -251,7 +251,7 @@
 	channel_time = 20
 	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and stun them, but break the spear."
+	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
@@ -275,7 +275,7 @@
 	desc = "Allows you to summon a Ratvarian spear to fight enemies."
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
 	var/base_cooldown = RATVARIAN_SPEAR_DURATION

@@ -46,7 +46,7 @@
 
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(spent)
@@ -67,7 +67,7 @@
 	if(!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	release_shades(user)

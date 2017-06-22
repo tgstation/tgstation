@@ -23,7 +23,7 @@
 
 			new_mob.key = key
 
-		The Login proc will handle making a new mob for that mobtype (including setting up stuff like mind.name). Simple!
+		The Login proc will handle making a new mind for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that
 		yourself.
 
@@ -1149,7 +1149,7 @@
 				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
-				if( !changeling || !changeling.stored_profiles.len || !istype(current, /mob/living/carbon))
+				if( !changeling || !changeling.stored_profiles.len || !iscarbon(current))
 					to_chat(usr, "<span class='danger'>Resetting DNA failed!</span>")
 				else
 					var/mob/living/carbon/C = current
@@ -1443,7 +1443,7 @@
 	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
-		
+
 
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
 	if(!(src in SSticker.mode.syndicates))

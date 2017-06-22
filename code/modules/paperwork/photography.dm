@@ -218,7 +218,7 @@
 
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
-		if(istype(A, /atom/movable))
+		if(ismovableatom(A))
 			offX += A:step_x
 			offY += A:step_y
 
@@ -533,7 +533,6 @@
 	cut_overlays()
 	if(displayed)
 		add_overlay(getFlatIcon(displayed))
-		add_overlay("frame-overlay")
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -591,13 +590,12 @@
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	if(framed)
-		framed.show()
+		framed.show(user)
 
 /obj/structure/sign/picture_frame/update_icon()
 	cut_overlays()
 	if(framed)
 		add_overlay(getFlatIcon(framed))
-		add_overlay("frame-overlay")
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))

@@ -4,6 +4,7 @@
 	for(var/I in overlays_standing)
 		add_overlay(I)
 
+	var/asleep = IsSleeping()
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)
@@ -11,12 +12,12 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !sleeping) || weakened)
+	else if((stat == UNCONSCIOUS && !asleep) || knockdown)
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(lying || resting || sleeping)
+	else if(lying || resting || asleep)
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"

@@ -123,7 +123,7 @@ Contains:
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/suit/space/pirate
@@ -137,7 +137,7 @@ Contains:
 	slowdown = 0
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
@@ -326,7 +326,7 @@ Contains:
 	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
 	strip_delay = 65
 
-/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
 		src.flags -= STOPSPRESSUREDMAGE
