@@ -16,10 +16,6 @@
 	if(update_canmove)
 		owner.update_canmove()
 
-//STUN
-/datum/status_effect/incapacitating/stun
-	id = "stun"
-
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"

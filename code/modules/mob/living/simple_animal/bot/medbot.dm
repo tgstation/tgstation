@@ -14,8 +14,6 @@
 	maxHealth = 20
 	pass_flags = PASSMOB
 
-	status_flags = (CANPUSH | CANSTUN)
-
 	radio_key = /obj/item/device/encryptionkey/headset_med
 	radio_channel = "Medical"
 
@@ -79,9 +77,6 @@
 	if(!on)
 		icon_state = "medibot0"
 		return
-	if(IsStun())
-		icon_state = "medibota"
-		return
 	if(mode == BOT_HEALING)
 		icon_state = "medibots[stationary_mode]"
 		return
@@ -101,10 +96,6 @@
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
-
-/mob/living/simple_animal/bot/medbot/update_canmove()
-	. = ..()
-	update_icon()
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -274,10 +265,17 @@
 	if(mode == BOT_HEALING)
 		return
 
-	if(IsStun())
+	if(stun)
+		icon_state = "medibota"
+		stun--
+
 		oldpatient = patient
 		patient = null
 		mode = BOT_IDLE
+
+		if(stun <= 0)
+			update_icon()
+			stun = 0
 		return
 
 	if(frustration > 8)
@@ -505,6 +503,11 @@
 	if(current_volume + injection_amount > R.overdose_threshold)
 		return 1
 	return 0
+
+/mob/living/simple_animal/bot/medbot/bullet_act(obj/item/projectile/Proj)
+	if(Proj.flag == "taser")
+		stun = min(stun+10,20)
+	..()
 
 /mob/living/simple_animal/bot/medbot/explode()
 	on = 0
