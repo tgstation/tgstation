@@ -143,6 +143,7 @@ h1.alert, h2.alert		{color: #000000;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .command_headset		{font-weight: bold; font-size: 3;}
+.small					{font-size: 1;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 .greentext				{color: #00FF00;	font-size: 3;}
