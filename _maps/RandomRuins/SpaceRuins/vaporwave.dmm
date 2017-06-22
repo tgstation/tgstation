@@ -140,7 +140,6 @@
 /area/ruin/unpowered/no_grav)
 "D" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-recharge_floor_asteroid";
 	icon_state = "recharge_floor_asteroid"
 	},
 /area/ruin/unpowered/no_grav)
@@ -169,25 +168,21 @@
 /turf/open/space,
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-platingsandeffect";
 	icon_state = "platingsandeffect"
 	},
 /area/ruin/unpowered/no_grav)
 "J" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-l";
 	icon_state = "stairs-l"
 	},
 /area/ruin/unpowered/no_grav)
 "K" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-m";
 	icon_state = "stairs-m"
 	},
 /area/ruin/unpowered/no_grav)
 "L" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-r";
 	icon_state = "stairs-r"
 	},
 /area/ruin/unpowered/no_grav)

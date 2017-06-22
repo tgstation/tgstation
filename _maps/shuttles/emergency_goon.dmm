@@ -48,20 +48,17 @@
 /area/shuttle/escape)
 "i" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-wall_space (WEST)";
 	icon_state = "wall_space";
 	dir = 8
 	},
 /area/shuttle/escape)
 "j" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall4";
 	icon_state = "swall4"
 	},
 /area/shuttle/escape)
 "k" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall12";
 	icon_state = "swall12"
 	},
 /area/shuttle/escape)
@@ -76,7 +73,6 @@
 /area/shuttle/escape)
 "n" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall1";
 	icon_state = "swall1"
 	},
 /area/shuttle/escape)
@@ -170,13 +166,11 @@
 /area/shuttle/escape)
 "C" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall8";
 	icon_state = "swall8"
 	},
 /area/shuttle/escape)
 "D" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall3";
 	icon_state = "swall3"
 	},
 /area/shuttle/escape)
@@ -238,14 +232,12 @@
 /area/shuttle/escape)
 "N" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-wall_space (EAST)";
 	icon_state = "wall_space";
 	dir = 4
 	},
 /area/shuttle/escape)
 "O" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-wall_floor (WEST)";
 	icon_state = "wall_floor";
 	dir = 8
 	},
@@ -253,7 +245,6 @@
 "P" = (
 /obj/machinery/status_display,
 /turf/closed/wall/shuttle{
-	tag = "icon-swall0";
 	icon_state = "swall0"
 	},
 /area/shuttle/escape)

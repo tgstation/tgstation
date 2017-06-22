@@ -5,7 +5,6 @@
 "b" = (
 /turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (WEST)";
 	icon_state = "corner";
 	dir = 8
 	},
@@ -30,7 +29,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (NORTH)";
 	icon_state = "corner";
 	dir = 1
 	},
@@ -47,7 +45,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (EAST)";
 	icon_state = "corner";
 	dir = 4
 	},
@@ -63,7 +60,6 @@
 /area/ruin/powered)
 "j" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (NORTH)";
 	icon_state = "propulsion";
 	dir = 1
 	},
@@ -71,13 +67,11 @@
 /area/ruin/powered)
 "k" = (
 /turf/closed/indestructible/oldshuttle{
-	tag = "icon-orange";
 	icon_state = "orange"
 	},
 /area/ruin/powered)
 "l" = (
 /obj/structure/chair/old{
-	tag = "icon-chairold (NORTH)";
 	icon_state = "chairold";
 	dir = 1
 	},
@@ -92,7 +86,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (WEST)";
 	icon_state = "corner";
 	dir = 8
 	},
@@ -107,7 +100,6 @@
 "o" = (
 /turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (NORTH)";
 	icon_state = "corner";
 	dir = 1
 	},
@@ -115,7 +107,6 @@
 "p" = (
 /turf/open/space,
 /turf/closed/indestructible/oldshuttle/corner{
-	tag = "icon-corner (EAST)";
 	icon_state = "corner";
 	dir = 4
 	},

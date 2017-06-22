@@ -68,7 +68,6 @@
 /area/shuttle/escape)
 "an" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHWEST)";
 	dir = 9
 	},
 /area/shuttle/escape)
@@ -77,13 +76,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
 "ap" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -118,7 +115,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHWEST)";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -139,7 +135,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHEAST)";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -182,7 +177,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -192,7 +186,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -224,7 +217,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -243,7 +235,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -340,7 +331,6 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 8;
 	icon_state = "darkyellow";
-	tag = "icon-darkyellow (NORTHEAST)"
 	},
 /area/shuttle/escape)
 "bb" = (
@@ -424,7 +414,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (NORTHEAST)";
 	icon_state = "darkyellow";
 	dir = 5
 	},
@@ -455,7 +444,6 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4;
 	icon_state = "darkyellow";
-	tag = "icon-darkyellow (NORTHEAST)"
 	},
 /area/shuttle/escape)
 "bg" = (
@@ -483,13 +471,11 @@
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 10;
 	icon_state = "darkyellow";
-	tag = "icon-darkyellow (SOUTHEAST)"
 	},
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (SOUTHEAST)";
 	icon_state = "darkyellow";
 	dir = 6
 	},
@@ -572,7 +558,6 @@
 /area/shuttle/escape)
 "br" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -650,7 +635,6 @@
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
 	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -672,7 +656,6 @@
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
 	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -699,7 +682,6 @@
 "bL" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -824,7 +806,6 @@
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
 	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -840,7 +821,6 @@
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
 	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -886,7 +866,6 @@
 "cb" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -937,7 +916,6 @@
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
 	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
 	},
 /area/shuttle/escape)
 "ci" = (
@@ -1527,7 +1505,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1545,7 +1522,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1572,7 +1548,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1582,7 +1557,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1592,7 +1566,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},

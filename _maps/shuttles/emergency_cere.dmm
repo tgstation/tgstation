@@ -83,7 +83,6 @@
 /area/shuttle/escape)
 "aq" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},
@@ -101,7 +100,6 @@
 /area/shuttle/escape)
 "at" = (
 /obj/structure/chair/office/light{
-	tag = "icon-officechair_white (NORTH)";
 	icon_state = "officechair_white";
 	dir = 1
 	},
@@ -119,7 +117,6 @@
 /area/shuttle/escape)
 "aw" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},
@@ -161,7 +158,6 @@
 /area/shuttle/escape)
 "aE" = (
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (NORTH)";
 	icon_state = "darkyellow";
 	dir = 1
 	},
@@ -182,13 +178,11 @@
 /area/shuttle/escape)
 "aI" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
 "aJ" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1
 	},
@@ -212,7 +206,6 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -235,7 +228,6 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1
 	},
@@ -279,7 +271,6 @@
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -291,7 +282,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -300,7 +290,6 @@
 "aX" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -309,7 +298,6 @@
 "aY" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred (NORTHEAST)";
 	icon_state = "darkred";
 	dir = 5;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -317,21 +305,18 @@
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (WEST)";
 	icon_state = "neutral";
 	dir = 8
 	},
 /area/shuttle/escape)
 "ba" = (
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (EAST)";
 	icon_state = "neutral";
 	dir = 4
 	},
 /area/shuttle/escape)
 "bb" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
@@ -376,7 +361,6 @@
 /area/shuttle/escape)
 "bh" = (
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -445,7 +429,6 @@
 /area/shuttle/escape)
 "br" = (
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred";
 	icon_state = "darkred";
 	dir = 2;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -453,7 +436,6 @@
 /area/shuttle/escape)
 "bs" = (
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -464,14 +446,12 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (WEST)";
 	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
 "bt" = (
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -480,7 +460,6 @@
 "bu" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -489,7 +468,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (EAST)";
 	icon_state = "brown";
 	dir = 4
 	},
@@ -506,7 +484,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred (SOUTHWEST)";
 	icon_state = "darkred";
 	dir = 10;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -517,7 +494,6 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred";
 	icon_state = "darkred";
 	dir = 2;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -528,7 +504,6 @@
 /obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/zipties,
 /turf/open/floor/mineral/plastitanium/brig{
-	tag = "icon-darkred";
 	icon_state = "darkred";
 	dir = 2;
 	floor_tile = /obj/item/stack/tile/plasteel
@@ -552,7 +527,6 @@
 /area/shuttle/escape)
 "bB" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (WEST)";
 	icon_state = "brown";
 	dir = 8
 	},
@@ -565,7 +539,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (EAST)";
 	icon_state = "brown";
 	dir = 4
 	},
@@ -632,7 +605,6 @@
 /area/shuttle/escape)
 "bM" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHWEST)";
 	icon_state = "brown";
 	dir = 10
 	},
@@ -648,7 +620,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet,
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHEAST)";
 	icon_state = "brown";
 	dir = 6
 	},
@@ -661,14 +632,12 @@
 /area/shuttle/escape)
 "bR" = (
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
 "bS" = (
 /turf/open/floor/plasteel/neutral/corner{
-	tag = "icon-neutralcorner (EAST)";
 	icon_state = "neutralcorner";
 	dir = 4
 	},
@@ -742,7 +711,6 @@
 "cc" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -768,7 +736,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	tag = "icon-neutralcorner (WEST)";
 	icon_state = "neutralcorner";
 	dir = 8
 	},
@@ -784,14 +751,12 @@
 	name = "Speedy* Recovery"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTHWEST)";
 	icon_state = "whiteblue";
 	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	icon_state = "whiteblue";
 	dir = 1
 	},
@@ -800,7 +765,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	icon_state = "whiteblue";
 	dir = 1
 	},
@@ -808,7 +772,6 @@
 "ck" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	icon_state = "whiteblue";
 	dir = 1
 	},
@@ -816,7 +779,6 @@
 "cl" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	icon_state = "whiteblue";
 	dir = 1
 	},
@@ -826,7 +788,6 @@
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/weapon/wrench,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTHEAST)";
 	icon_state = "whiteblue";
 	dir = 5
 	},
@@ -837,7 +798,6 @@
 /area/shuttle/escape)
 "co" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (WEST)";
 	icon_state = "whiteblue";
 	dir = 8
 	},
@@ -847,7 +807,6 @@
 /area/shuttle/escape)
 "cq" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	tag = "icon-intact (NORTHEAST)";
 	icon_state = "intact";
 	dir = 5
 	},
@@ -859,7 +818,6 @@
 /area/shuttle/escape)
 "cs" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
-	tag = "icon-intact (NORTHWEST)";
 	icon_state = "intact";
 	dir = 9
 	},
@@ -867,7 +825,6 @@
 /area/shuttle/escape)
 "ct" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	tag = "icon-whitebluecorner (EAST)";
 	icon_state = "whitebluecorner";
 	dir = 4
 	},
@@ -881,14 +838,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTHEAST)";
 	icon_state = "whiteblue";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cv" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (SOUTHWEST)";
 	icon_state = "whiteblue";
 	dir = 10
 	},
@@ -898,7 +853,6 @@
 /area/shuttle/escape)
 "cx" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	tag = "icon-whitebluecorner (WEST)";
 	icon_state = "whitebluecorner";
 	dir = 8
 	},
@@ -910,7 +864,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	icon_state = "whiteblue";
 	dir = 4
 	},
@@ -945,7 +898,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	icon_state = "whiteblue";
 	dir = 4
 	},
@@ -996,7 +948,6 @@
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/crowbar,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	icon_state = "whiteblue";
 	dir = 4
 	},
@@ -1026,7 +977,6 @@
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (SOUTHWEST)";
 	icon_state = "whiteblue";
 	dir = 10
 	},
@@ -1051,7 +1001,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (SOUTHEAST)";
 	icon_state = "whiteblue";
 	dir = 6
 	},
@@ -1061,7 +1010,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -1095,14 +1043,12 @@
 "cT" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTHWEST)";
 	icon_state = "yellow";
 	dir = 9
 	},
 /area/shuttle/escape)
 "cU" = (
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -1113,14 +1059,12 @@
 	},
 /obj/machinery/computer/monitor,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cW" = (
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTHEAST)";
 	icon_state = "yellow";
 	dir = 5
 	},
@@ -1145,21 +1089,18 @@
 "cZ" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (SOUTHWEST)";
 	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
 "da" = (
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (WEST)";
 	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
 "db" = (
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (EAST)";
 	icon_state = "yellowcorner";
 	dir = 4
 	},
@@ -1168,7 +1109,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/metalfoam,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -1177,7 +1117,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -1186,7 +1125,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTHEAST)";
 	icon_state = "yellow";
 	dir = 5
 	},
@@ -1207,7 +1145,6 @@
 "dh" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (SOUTHWEST)";
 	icon_state = "yellow";
 	dir = 10
 	},
@@ -1217,7 +1154,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
 	dir = 4
 	},
@@ -1226,7 +1162,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (SOUTHWEST)";
 	icon_state = "yellow";
 	dir = 10
 	},
@@ -1264,7 +1199,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (SOUTHEAST)";
 	icon_state = "yellow";
 	dir = 6
 	},
@@ -1278,7 +1212,6 @@
 /area/shuttle/escape)
 "ds" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
 	icon_state = "bulb1";
 	dir = 1
 	},
@@ -1286,7 +1219,6 @@
 /area/shuttle/escape)
 "dt" = (
 /obj/machinery/power/terminal{
-	tag = "icon-term (EAST)";
 	icon_state = "term";
 	dir = 4
 	},

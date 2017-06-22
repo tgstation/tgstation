@@ -1131,7 +1131,6 @@
 /area/awaymission/spacebattle/cruiser)
 "dN" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
@@ -3152,7 +3151,6 @@
 /area/awaymission/spacebattle/cruiser)
 "ks" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port";
 	icon_state = "recharge_port";
 	dir = 2
 	},
@@ -3242,7 +3240,6 @@
 /area/awaymission/spacebattle/cruiser)
 "kH" = (
 /obj/machinery/mech_bay_recharge_port{
-	tag = "icon-recharge_port (NORTH)";
 	icon_state = "recharge_port";
 	dir = 1
 	},

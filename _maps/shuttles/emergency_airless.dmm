@@ -52,7 +52,6 @@
 "l" = (
 /obj/structure/closet/malf,
 /obj/machinery/light/built{
-	tag = "icon-tube1 (WEST)";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -64,7 +63,6 @@
 	name = "4maintenance loot spawner"
 	},
 /obj/machinery/light/built{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

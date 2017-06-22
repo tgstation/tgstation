@@ -60,7 +60,6 @@
 "an" = (
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor";
-	tag = "icon-cult"
 	},
 /area/awaymission/wwvault)
 "ao" = (
@@ -177,7 +176,6 @@
 	},
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor";
-	tag = "icon-cult"
 	},
 /area/awaymission/wwvault)
 "aM" = (
@@ -190,7 +188,6 @@
 /obj/effect/mob_spawn/human/corpse/syndicatecommando,
 /turf/open/floor/plasteel/cult{
 	name = "engraved floor";
-	tag = "icon-cult"
 	},
 /area/awaymission/wwvault)
 "aP" = (

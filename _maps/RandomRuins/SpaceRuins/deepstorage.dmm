@@ -154,7 +154,6 @@
 /area/ruin/deepstorage/crusher)
 "av" = (
 /obj/structure/window/reinforced/highpressure{
-	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
 	dir = 8
 	},
@@ -1170,7 +1169,6 @@
 /area/ruin/deepstorage)
 "ck" = (
 /obj/structure/chair{
-	tag = "icon-chair (EAST)";
 	icon_state = "chair";
 	dir = 4
 	},
@@ -1427,7 +1425,6 @@
 /area/ruin/deepstorage)
 "cH" = (
 /obj/structure/chair{
-	tag = "icon-chair (EAST)";
 	icon_state = "chair";
 	dir = 4
 	},
@@ -1541,7 +1538,6 @@
 /area/ruin/deepstorage)
 "cU" = (
 /obj/structure/chair{
-	tag = "icon-chair (NORTH)";
 	icon_state = "chair";
 	dir = 1
 	},
@@ -1908,7 +1904,6 @@
 	dir = 1;
 	icon_state = "scrub_map";
 	on = 1;
-	tag = "icon-scrub_map (NORTH)"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2770,7 +2765,6 @@
 	dir = 1;
 	icon_state = "scrub_map";
 	on = 1;
-	tag = "icon-scrub_map (NORTH)"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2956,7 +2950,6 @@
 /area/ruin/deepstorage/airlock)
 "fk" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	tag = "icon-connector_map (NORTH)";
 	icon_state = "connector_map";
 	dir = 1
 	},
@@ -3065,7 +3058,6 @@
 	dir = 4;
 	icon_state = "mvalve_map";
 	name = "Port To Hall";
-	tag = "icon-mvalve_map (EAST)"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3074,7 +3066,6 @@
 "fw" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	tag = "icon-connector_map (WEST)";
 	icon_state = "connector_map";
 	dir = 8
 	},
@@ -3111,7 +3102,6 @@
 	node1_concentration = 0.2;
 	node2_concentration = 0.8;
 	on = 1;
-	tag = "icon-mixer_off (NORTH)"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3367,7 +3357,6 @@
 /area/ruin/deepstorage/power)
 "fY" = (
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (EAST)";
 	icon_state = "warningline";
 	dir = 4
 	},
@@ -3487,12 +3476,10 @@
 /area/ruin/deepstorage/power)
 "gi" = (
 /obj/machinery/power/terminal{
-	tag = "icon-term (WEST)";
 	icon_state = "term";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (EAST)";
 	icon_state = "warningline";
 	dir = 4
 	},

@@ -76,7 +76,6 @@
 "k" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30;
-	tag = "n"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)

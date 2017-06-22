@@ -167,7 +167,6 @@
 	},
 /turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered/beach)
 "aC" = (
@@ -225,7 +224,6 @@
 	},
 /turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered/beach)
 "aK" = (
@@ -296,7 +294,6 @@
 	},
 /turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered/beach)
 "aX" = (
@@ -689,7 +686,6 @@
 	},
 /turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered/beach)
 "ck" = (
@@ -701,7 +697,6 @@
 	},
 /turf/open/floor/plasteel/asteroid{
 	baseturf = /turf/open/floor/plating/beach/sand;
-	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered/beach)
 "cl" = (

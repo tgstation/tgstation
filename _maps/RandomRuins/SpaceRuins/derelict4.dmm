@@ -27,7 +27,6 @@
 "i" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
 	dir = 8
 	},
@@ -45,7 +44,6 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -55,7 +53,6 @@
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
 	icon_state = "chair";
 	dir = 8
 	},
@@ -72,7 +69,6 @@
 "q" = (
 /obj/item/weapon/shard,
 /obj/structure/chair{
-	tag = "icon-chair (WEST)";
 	icon_state = "chair";
 	dir = 8
 	},
@@ -83,7 +79,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
 	dir = 8
 	},

@@ -4,7 +4,6 @@
 /area/survivalpod)
 "b" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (NORTH)";
 	icon_state = "survival";
 	dir = 1
 	},
@@ -42,7 +41,6 @@
 /area/survivalpod)
 "j" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (EAST)";
 	icon_state = "survival";
 	dir = 4
 	},

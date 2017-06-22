@@ -172,7 +172,6 @@
 /area/ruin/powered/snow_biodome)
 "aA" = (
 /obj/structure/chair/comfy/brown{
-	tag = "icon-comfychair (EAST)";
 	icon_state = "comfychair";
 	dir = 4
 	},
@@ -216,7 +215,6 @@
 /area/ruin/powered/snow_biodome)
 "aG" = (
 /obj/structure/chair/comfy/brown{
-	tag = "icon-comfychair (WEST)";
 	icon_state = "comfychair";
 	dir = 8
 	},

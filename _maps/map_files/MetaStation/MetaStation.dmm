@@ -79493,7 +79493,6 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -87391,7 +87390,6 @@
 "dkp" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -87413,7 +87411,6 @@
 "dks" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -87437,7 +87434,6 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
@@ -87445,7 +87441,6 @@
 "dkw" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -87458,7 +87453,6 @@
 "dky" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
@@ -87538,49 +87532,42 @@
 /area/shuttle/syndicate)
 "dkM" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkN" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkO" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkP" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkQ" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkR" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "dkS" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -87633,7 +87620,6 @@
 /area/shuttle/syndicate)
 "dle" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},

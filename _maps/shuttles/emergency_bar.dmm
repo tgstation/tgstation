@@ -45,7 +45,6 @@
 /area/shuttle/escape)
 "aj" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swallc3";
 	icon_state = "swallc3";
 	dir = 2
 	},
@@ -120,7 +119,6 @@
 /area/shuttle/escape)
 "av" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-swall13";
 	icon_state = "swall13";
 	dir = 2
 	},
@@ -188,7 +186,6 @@
 /obj/structure/piano{
 	icon_state = "piano";
 	name = "space piano";
-	tag = "icon-piano"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
@@ -461,7 +458,6 @@
 /obj/structure/toilet{
 	dir = 4;
 	icon_state = "toilet00";
-	tag = "icon-toilet00 (NORTH)"
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -596,7 +592,6 @@
 /area/shuttle/escape)
 "bT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-10";
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/bar,

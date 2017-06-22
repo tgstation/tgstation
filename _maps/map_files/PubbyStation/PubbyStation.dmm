@@ -663,7 +663,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -1433,7 +1432,6 @@
 	network = list("MiniSat")
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -1595,7 +1593,6 @@
 /area/ai_monitored/turret_protected/aisat_interior)
 "adG" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -1818,7 +1815,6 @@
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -3490,7 +3486,6 @@
 	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTHEAST)";
 	dir = 5
 	},
 /area/security/brig)
@@ -3899,7 +3894,6 @@
 	},
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	dir = 4
 	},
 /area/security/brig)
@@ -4250,7 +4244,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (WEST)";
 	dir = 8
 	},
 /area/security/brig)
@@ -4283,7 +4276,6 @@
 /area/security/brig)
 "ajk" = (
 /obj/structure/cable{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
@@ -4869,7 +4861,6 @@
 /turf/open/floor/wood{
 	broken = 1;
 	icon_state = "wood-broken";
-	tag = "icon-wood-broken"
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "aku" = (
@@ -5065,7 +5056,6 @@
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (WEST)"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -5425,7 +5415,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (EAST)";
 	dir = 4
 	},
 /area/crew_quarters/heads/hos)
@@ -5436,7 +5425,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
 /area/crew_quarters/heads/hos)
@@ -5447,7 +5435,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
 /area/crew_quarters/heads/hos)
@@ -5469,7 +5456,6 @@
 	pixel_y = -27
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
 /area/crew_quarters/heads/hos)
@@ -5488,7 +5474,6 @@
 	d2 = 4
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
 /area/crew_quarters/heads/hos)
@@ -6944,7 +6929,6 @@
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/bridge)
@@ -6956,21 +6940,18 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/bridge)
 "aoP" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/bridge)
 "aoQ" = (
 /obj/machinery/computer/teleporter,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/bridge)
@@ -6984,7 +6965,6 @@
 	},
 /obj/machinery/recharger,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/bridge)
@@ -7744,7 +7724,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	dir = 4
 	},
 /area/security/brig)
@@ -7801,7 +7780,6 @@
 /area/bridge)
 "aqD" = (
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -8029,7 +8007,6 @@
 "arg" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	dir = 4
 	},
 /area/security/brig)
@@ -8041,7 +8018,6 @@
 	req_access_txt = "1"
 	},
 /obj/item/weapon/paper_bin{
-	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/pen{
 	layer = 3.1
@@ -8136,7 +8112,6 @@
 /area/bridge)
 "arr" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -8637,7 +8612,6 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -9057,7 +9031,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	dir = 4
 	},
 /area/security/brig)
@@ -9165,7 +9138,6 @@
 "att" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -9444,7 +9416,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/crew_quarters/heads/captain)
@@ -9546,7 +9517,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -9709,7 +9679,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -10207,7 +10176,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -10732,7 +10700,6 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
@@ -10800,7 +10767,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -10993,7 +10959,6 @@
 "axE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
-	tag = "icon-redcorner (WEST)";
 	dir = 8
 	},
 /area/hallway/primary/fore)
@@ -11481,7 +11446,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/corner{
-	tag = "icon-redcorner (WEST)";
 	dir = 8
 	},
 /area/hallway/primary/fore)
@@ -11655,7 +11619,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
 	},
 /area/bridge)
@@ -11712,7 +11675,6 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai_upload)
@@ -11731,7 +11693,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
 /area/ai_monitored/turret_protected/ai_upload)
@@ -11763,7 +11724,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -12061,7 +12021,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/red/corner{
-	tag = "icon-redcorner (WEST)";
 	dir = 8
 	},
 /area/hallway/primary/fore)
@@ -12197,7 +12156,6 @@
 "aAa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
 	},
 /area/bridge)
@@ -12256,7 +12214,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/ai_monitored/turret_protected/ai_upload)
@@ -12514,7 +12471,6 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -12660,7 +12616,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
 	},
 /area/bridge)
@@ -12864,7 +12819,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
@@ -13000,7 +12954,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
-	tag = "icon-redcorner (WEST)";
 	dir = 8
 	},
 /area/hallway/primary/fore)
@@ -13423,7 +13376,6 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -13781,7 +13733,6 @@
 /area/shuttle/escape)
 "aDA" = (
 /obj/structure/chair/comfy/black{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},
@@ -14783,7 +14734,6 @@
 	icon_state = "plant-17"
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTHEAST)";
 	dir = 5
 	},
 /area/hallway/secondary/exit/departure_lounge)
@@ -14953,14 +14903,12 @@
 	icon_state = "direction_sec";
 	pixel_x = -32;
 	pixel_y = -24;
-	tag = "icon-direction_sec (WEST)"
 	},
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	icon_state = "direction_evac";
 	pixel_x = -32;
 	pixel_y = -32;
-	tag = "icon-direction_evac (NORTH)"
 	},
 /obj/structure/sign/directions/science{
 	pixel_x = -32;
@@ -15199,7 +15147,6 @@
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	dir = 4
 	},
 /area/hallway/secondary/exit/departure_lounge)
@@ -15830,7 +15777,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 9
@@ -16067,7 +16013,6 @@
 /area/maintenance/department/cargo)
 "aIp" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -17641,7 +17586,6 @@
 /area/maintenance/disposal)
 "aLL" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},
@@ -18047,7 +17991,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "aMv" = (
@@ -18081,7 +18024,6 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -18218,7 +18160,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplatecorner (EAST)"
 	},
 /area/maintenance/disposal)
 "aMQ" = (
@@ -19352,7 +19293,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "aPh" = (
@@ -19879,7 +19819,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "aQn" = (
@@ -20098,7 +20037,6 @@
 	dir = 1;
 	icon_state = "direction_evac";
 	pixel_x = 32;
-	tag = "icon-direction_evac (NORTH)"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner,
@@ -20284,7 +20222,6 @@
 /area/crew_quarters/bar)
 "aRc" = (
 /obj/structure/piano{
-	tag = "icon-piano";
 	icon_state = "piano"
 	},
 /turf/open/floor/wood,
@@ -20816,7 +20753,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "aSk" = (
@@ -21390,7 +21326,6 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTHEAST)";
 	dir = 5
 	},
 /area/security/checkpoint/customs)
@@ -21562,7 +21497,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "aTT" = (
@@ -21817,7 +21751,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	dir = 4
 	},
 /area/security/checkpoint/customs)
@@ -22038,7 +21971,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "aUT" = (
@@ -22055,7 +21987,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -22289,7 +22220,6 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/customs)
@@ -22900,7 +22830,6 @@
 	},
 /obj/item/weapon/storage/belt/fannypack/yellow,
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHWEST)";
 	dir = 9
 	},
 /area/quartermaster/qm)
@@ -22920,7 +22849,6 @@
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1;
-	tag = "icon-brown (NORTH)"
 	},
 /area/quartermaster/qm)
 "aWP" = (
@@ -22939,7 +22867,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHWEST)";
 	dir = 9
 	},
 /area/quartermaster/miningdock)
@@ -23398,7 +23325,6 @@
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/quartermaster/miningdock)
 "aXT" = (
@@ -23849,7 +23775,6 @@
 /obj/machinery/mineral/equipment_vendor,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/quartermaster/miningdock)
 "aYP" = (
@@ -23895,7 +23820,6 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
@@ -24004,7 +23928,6 @@
 	dir = 8;
 	icon_state = "direction_evac";
 	pixel_y = -32;
-	tag = "icon-direction_evac (WEST)"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -24228,7 +24151,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/quartermaster/miningdock)
 "aZG" = (
@@ -24556,14 +24478,12 @@
 	icon_state = "direction_evac";
 	pixel_x = -32;
 	pixel_y = 38;
-	tag = "icon-direction_evac (NORTH)"
 	},
 /obj/structure/sign/directions/medical{
 	dir = 8;
 	icon_state = "direction_med";
 	pixel_x = -32;
 	pixel_y = 28;
-	tag = "icon-direction_med (WEST)"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -24596,7 +24516,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_corner (WEST)"
 	},
 /area/science/robotics/mechbay)
 "baw" = (
@@ -24639,7 +24558,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/quartermaster/miningdock)
 "baB" = (
@@ -24832,7 +24750,6 @@
 /area/hallway/primary/central)
 "baU" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -24850,7 +24767,6 @@
 	icon_state = "direction_evac";
 	pixel_x = 32;
 	pixel_y = 38;
-	tag = "icon-direction_evac (NORTH)"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -26073,7 +25989,6 @@
 /obj/structure/chair,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1;
-	tag = "icon-whiteblue (NORTH)"
 	},
 /area/medical/medbay/central)
 "bdD" = (
@@ -26083,7 +25998,6 @@
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1;
-	tag = "icon-whiteblue (NORTH)"
 	},
 /area/medical/medbay/central)
 "bdE" = (
@@ -26457,7 +26371,6 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/pen,
 /obj/structure/sign/poster/official/random{
@@ -26550,7 +26463,6 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -27754,7 +27666,6 @@
 /obj/item/clothing/glasses/science,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 5
@@ -27871,7 +27782,6 @@
 	},
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	dir = 1
 	},
 /area/medical/genetics)
@@ -27881,7 +27791,6 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	dir = 1
 	},
 /area/medical/genetics)
@@ -27896,14 +27805,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	dir = 1
 	},
 /area/medical/genetics)
 "bhL" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	dir = 1
 	},
 /area/medical/genetics)
@@ -27914,7 +27821,6 @@
 	pixel_y = 27
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTH)";
 	dir = 1
 	},
 /area/medical/genetics)
@@ -27943,13 +27849,11 @@
 /obj/item/weapon/storage/box/masks,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1;
-	tag = "icon-whiteblue (NORTH)"
 	},
 /area/medical/medbay/zone3)
 "bhP" = (
 /obj/machinery/vending/medical,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTHEAST)";
 	dir = 5
 	},
 /area/medical/medbay/zone3)
@@ -27978,7 +27882,6 @@
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1;
-	tag = "icon-whiteblue (NORTH)"
 	},
 /area/medical/medbay/central)
 "bhT" = (
@@ -27986,7 +27889,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTHEAST)";
 	dir = 5
 	},
 /area/medical/medbay/central)
@@ -28016,7 +27918,6 @@
 	},
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (NORTHEAST)";
 	dir = 5
 	},
 /area/medical/medbay/central)
@@ -28366,7 +28267,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (WEST)";
 	dir = 8
 	},
 /area/medical/medbay/zone3)
@@ -28391,7 +28291,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/zone3)
@@ -28522,7 +28421,6 @@
 "bjc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -28539,7 +28437,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -29746,7 +29643,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTHEAST)"
 	},
 /area/science/xenobiology)
 "blm" = (
@@ -29761,7 +29657,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/xenobiology)
 "bln" = (
@@ -29798,7 +29693,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/xenobiology)
 "blp" = (
@@ -31992,7 +31886,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/explab)
 "bpR" = (
@@ -32013,7 +31906,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/explab)
 "bpS" = (
@@ -32032,7 +31924,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/explab)
 "bpT" = (
@@ -32319,7 +32210,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTHEAST)"
 	},
 /area/science/xenobiology)
 "bqo" = (
@@ -32334,7 +32224,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/xenobiology)
 "bqp" = (
@@ -32375,7 +32264,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/xenobiology)
 "bqs" = (
@@ -32412,7 +32300,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/xenobiology)
 "bqu" = (
@@ -32449,7 +32336,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/science/xenobiology)
 "bqw" = (
@@ -32716,7 +32602,6 @@
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
 	pixel_x = -2;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters";
@@ -32819,7 +32704,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
@@ -32842,7 +32726,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
@@ -33514,7 +33397,6 @@
 /area/science/explab)
 "bsw" = (
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
@@ -34081,7 +33963,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 10
@@ -34107,7 +33988,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/whitepurple/corner{
-	tag = "icon-whitepurplecorner (WEST)";
 	dir = 8
 	},
 /area/medical/genetics)
@@ -34229,7 +34109,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -34736,7 +34615,6 @@
 /area/medical/virology)
 "buV" = (
 /obj/machinery/shower{
-	tag = "icon-shower (EAST)";
 	icon_state = "shower";
 	dir = 4
 	},
@@ -34784,7 +34662,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -34940,7 +34817,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -36036,7 +35912,6 @@
 	layer = 2.9;
 	pixel_x = -2;
 	pixel_y = 5;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
@@ -36106,7 +35981,6 @@
 "bxH" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
@@ -36115,7 +35989,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light,
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
@@ -36123,7 +35996,6 @@
 "bxJ" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/white/side{
-	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
 	dir = 1
 	},
@@ -36285,7 +36157,6 @@
 /area/maintenance/department/chapel/monastery)
 "bya" = (
 /turf/open/floor/plasteel/loadingarea{
-	tag = "icon-loadingarea (EAST)";
 	dir = 4
 	},
 /area/science/mineral_storeroom)
@@ -36359,7 +36230,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHWEST)";
 	icon_state = "whitegreen";
 	dir = 9
 	},
@@ -36386,7 +36256,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHEAST)";
 	icon_state = "whitegreen";
 	dir = 5
 	},
@@ -36463,7 +36332,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -36718,7 +36586,6 @@
 "byU" = (
 /obj/machinery/vending/medical,
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHWEST)";
 	icon_state = "whitegreen";
 	dir = 9
 	},
@@ -36801,7 +36668,6 @@
 "bzd" = (
 /obj/structure/closet/l3closet/virology,
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHEAST)";
 	icon_state = "whitegreen";
 	dir = 5
 	},
@@ -37174,7 +37040,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplate (WEST)"
 	},
 /area/science/mineral_storeroom)
 "bzN" = (
@@ -37282,7 +37147,6 @@
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
 	dir = 4
 	},
@@ -37305,7 +37169,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -37375,7 +37238,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/surgery)
@@ -37655,7 +37517,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/loadingarea{
-	tag = "icon-loadingarea (EAST)";
 	dir = 4
 	},
 /area/science/mineral_storeroom)
@@ -37675,7 +37536,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	tag = "icon-plating_warn_end (NORTH)";
 	icon_state = "plating_warn_end"
 	},
 /area/science/mineral_storeroom)
@@ -37747,7 +37607,6 @@
 /area/maintenance/department/engine)
 "bAY" = (
 /obj/structure/light_construct{
-	tag = "icon-tube-construct-stage1 (EAST)";
 	icon_state = "tube-construct-stage1";
 	dir = 4
 	},
@@ -37845,7 +37704,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -37892,7 +37750,6 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/surgery)
@@ -37990,7 +37847,6 @@
 	on = 0
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -38127,7 +37983,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplatecorner (EAST)"
 	},
 /area/science/mineral_storeroom)
 "bBT" = (
@@ -38208,7 +38063,6 @@
 	layer = 3
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
 	dir = 4
 	},
@@ -38259,7 +38113,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/medbay/central)
@@ -38303,7 +38156,6 @@
 /obj/structure/table,
 /obj/item/weapon/surgical_drapes,
 /turf/open/floor/plasteel/whiteblue/side{
-	tag = "icon-whiteblue (EAST)";
 	dir = 4
 	},
 /area/medical/surgery)
@@ -38508,7 +38360,6 @@
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -38666,7 +38517,6 @@
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (SOUTHEAST)";
 	icon_state = "whitegreen";
 	dir = 6
 	},
@@ -38892,7 +38742,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -39028,7 +38877,6 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/pen/red,
 /turf/open/floor/plasteel/whitegreen/side,
@@ -39038,7 +38886,6 @@
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (SOUTHEAST)";
 	icon_state = "whitegreen";
 	dir = 6
 	},
@@ -39146,7 +38993,6 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/arrival{
-	tag = "icon-arrival (NORTHWEST)";
 	icon_state = "arrival";
 	dir = 9
 	},
@@ -39235,7 +39081,6 @@
 /area/engine/atmos)
 "bEw" = (
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -39493,7 +39338,6 @@
 	on = 0
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -39773,7 +39617,6 @@
 	sensors = list("n2o_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -40228,7 +40071,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTHEAST)"
 	},
 /area/engine/gravity_generator)
 "bGK" = (
@@ -40407,7 +40249,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -40470,7 +40311,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (EAST)"
 	},
 /area/engine/gravity_generator)
 "bHm" = (
@@ -40703,7 +40543,6 @@
 	on = 0
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -41007,7 +40846,6 @@
 	sensors = list("tox_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -41591,7 +41429,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -41831,7 +41668,6 @@
 	},
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -41930,7 +41766,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (EAST)"
 	},
 /area/engine/engineering)
 "bKo" = (
@@ -42041,7 +41876,6 @@
 	on = 0
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -42172,7 +42006,6 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/crew_quarters/heads/chief)
@@ -42239,13 +42072,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-warning (NORTH)"
 	},
 /area/engine/engine_smes)
 "bKT" = (
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/engine_smes)
@@ -42369,7 +42200,6 @@
 	sensors = list("co2_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -42458,7 +42288,6 @@
 	},
 /obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/crew_quarters/heads/chief)
@@ -42616,7 +42445,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	dir = 4
 	},
 /area/engine/engine_smes)
@@ -44028,7 +43856,6 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/weapon/paper_bin{
 	layer = 2.9;
-	tag = "every single paper bin is edited to this"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -46070,7 +45897,6 @@
 /obj/item/weapon/paper_bin{
 	pixel_x = -2;
 	pixel_y = 5;
-	tag = "every single paper bin is edited to this"
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/yellow/side{
@@ -46620,7 +46446,6 @@
 	dir = 1
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplate (NORTH)"
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "bUw" = (
@@ -46659,7 +46484,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplate (WEST)"
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "bUA" = (
@@ -46684,7 +46508,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating{
-	tag = "icon-warnplate (WEST)"
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "bUB" = (
@@ -46798,7 +46621,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/bridge)
@@ -46867,7 +46689,6 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/red/corner{
-	tag = "icon-redcorner (WEST)";
 	dir = 8
 	},
 /area/hallway/primary/fore)
@@ -47179,7 +47000,6 @@
 	dir = 1;
 	icon_state = "direction_evac";
 	pixel_x = 32;
-	tag = "icon-direction_evac (NORTH)"
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
@@ -47187,7 +47007,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "bVH" = (
@@ -47205,7 +47024,6 @@
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "bVJ" = (
@@ -47481,12 +47299,10 @@
 /area/crew_quarters/bar)
 "bWt" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1;
-	tag = "icon-browncorner (NORTH)"
 	},
 /area/hallway/primary/central)
 "bWu" = (
@@ -48010,7 +47826,6 @@
 "bXT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (EAST)";
 	icon_state = "yellowcorner";
 	dir = 4
 	},
@@ -48132,7 +47947,6 @@
 /area/science/research)
 "bYj" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (EAST)";
 	icon_state = "comfychair";
 	dir = 4
 	},
@@ -48143,7 +47957,6 @@
 /area/science/research)
 "bYk" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (WEST)";
 	icon_state = "comfychair";
 	dir = 8
 	},
@@ -48851,7 +48664,6 @@
 /area/space/nearstation)
 "cae" = (
 /obj/structure/sign/directions/engineering{
-	tag = "icon-direction_eng (EAST)";
 	icon_state = "direction_eng";
 	dir = 4
 	},
@@ -50840,7 +50652,6 @@
 /area/shuttle/abandoned)
 "ceV" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	tag = "icon-propulsion (NORTH)";
 	icon_state = "propulsion";
 	dir = 1
 	},
@@ -51420,7 +51231,6 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -52235,7 +52045,6 @@
 	},
 /turf/open/floor/plasteel/escape{
 	dir = 10;
-	tag = "icon-escape (NORTHWEST)"
 	},
 /area/hallway/secondary/exit/departure_lounge)
 "chZ" = (
@@ -52467,7 +52276,6 @@
 "ciG" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -52489,7 +52297,6 @@
 "ciJ" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -52513,7 +52320,6 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
@@ -52521,7 +52327,6 @@
 "ciN" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -52534,7 +52339,6 @@
 "ciP" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
@@ -52614,49 +52418,42 @@
 /area/shuttle/syndicate)
 "cjd" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cje" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjf" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjg" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjh" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cji" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cjj" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -52709,7 +52506,6 @@
 /area/shuttle/syndicate)
 "cjv" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},

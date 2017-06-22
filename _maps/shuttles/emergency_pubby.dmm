@@ -38,7 +38,6 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/chair/comfy/black{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},
@@ -251,7 +250,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/structure/chair/comfy/beige{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},

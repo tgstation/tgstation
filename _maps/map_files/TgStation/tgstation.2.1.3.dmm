@@ -62236,7 +62236,6 @@
 "cIY" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -62314,7 +62313,6 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -62322,7 +62320,6 @@
 "cJg" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -62374,7 +62371,6 @@
 	name = "tactical chair"
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
@@ -62382,7 +62378,6 @@
 "cJo" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
 	icon_state = "podhatch";
 	dir = 4
 	},
@@ -62444,7 +62439,6 @@
 "cJz" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},
@@ -62737,14 +62731,12 @@
 /area/shuttle/syndicate)
 "cKr" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKs" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -62759,21 +62751,18 @@
 /area/shuttle/syndicate)
 "cKu" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKv" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKw" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -62788,14 +62777,12 @@
 /area/shuttle/syndicate)
 "cKy" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
 /area/shuttle/syndicate)
 "cKz" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
 	icon_state = "podhatch";
 	dir = 1
 	},
@@ -62858,7 +62845,6 @@
 /area/shuttle/syndicate)
 "cKN" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
 	icon_state = "podhatch";
 	dir = 6
 	},

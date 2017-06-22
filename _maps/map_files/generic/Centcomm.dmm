@@ -51,7 +51,6 @@
 /area/holodeck/rec_center/bunker)
 "ak" = (
 /turf/open/floor/holofloor{
-	tag = "icon-asteroid_warn_side (WEST)";
 	icon_state = "asteroid_warn_side";
 	dir = 8
 	},
@@ -62,7 +61,6 @@
 	heal_burn = 10
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-asteroid_warn_side (WEST)";
 	icon_state = "asteroid_warn_side";
 	dir = 8
 	},
@@ -157,7 +155,6 @@
 /area/holodeck/rec_center/winterwonderland)
 "az" = (
 /turf/open/floor/holofloor{
-	tag = "icon-asteroid_warn (WEST)";
 	icon_state = "asteroid_warn";
 	dir = 8
 	},
@@ -166,7 +163,6 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /turf/open/floor/holofloor{
-	tag = "icon-asteroidfloor (WEST)";
 	icon_state = "asteroidfloor";
 	dir = 8
 	},
@@ -220,7 +216,6 @@
 /obj/structure/table,
 /obj/item/weapon/gun/energy/laser,
 /turf/open/floor/holofloor{
-	tag = "icon-asteroidfloor (WEST)";
 	icon_state = "asteroidfloor";
 	dir = 8
 	},
@@ -372,7 +367,6 @@
 	heal_brute = 10
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-asteroid_warn_side (WEST)";
 	icon_state = "asteroid_warn_side";
 	dir = 8
 	},
@@ -439,7 +433,6 @@
 /obj/structure/table/glass,
 /obj/item/weapon/surgicaldrill,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHWEST)";
 	icon_state = "white";
 	dir = 9
 	},
@@ -448,7 +441,6 @@
 /obj/structure/table/glass,
 /obj/item/weapon/hemostat,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTH)";
 	icon_state = "white";
 	dir = 1
 	},
@@ -460,7 +452,6 @@
 	},
 /obj/item/weapon/circular_saw,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTH)";
 	icon_state = "white";
 	dir = 1
 	},
@@ -469,7 +460,6 @@
 /obj/structure/table/glass,
 /obj/item/weapon/retractor,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTH)";
 	icon_state = "white";
 	dir = 1
 	},
@@ -479,7 +469,6 @@
 /obj/item/stack/medical/gauze,
 /obj/item/weapon/cautery,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHEAST)";
 	icon_state = "white";
 	dir = 5
 	},
@@ -513,7 +502,6 @@
 /obj/structure/table,
 /obj/machinery/readybutton,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline";
 	icon_state = "warningline";
 	dir = 2
 	},
@@ -526,7 +514,6 @@
 /obj/item/clothing/under/color/red,
 /obj/item/weapon/holo/esword/red,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline";
 	icon_state = "warningline";
 	dir = 2
 	},
@@ -535,7 +522,6 @@
 /turf/open/floor/holofloor/basalt,
 /obj/structure/table,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline";
 	icon_state = "warningline";
 	dir = 2
 	},
@@ -577,7 +563,6 @@
 /obj/item/weapon/surgical_drapes,
 /obj/item/weapon/razor,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (WEST)";
 	icon_state = "white";
 	dir = 8
 	},
@@ -589,7 +574,6 @@
 /area/holodeck/rec_center/medical)
 "bK" = (
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (EAST)";
 	icon_state = "white";
 	dir = 4
 	},
@@ -657,7 +641,6 @@
 /area/holodeck/rec_center/pet_lounge)
 "bX" = (
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHWEST)";
 	icon_state = "white";
 	dir = 10
 	},
@@ -685,7 +668,6 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHEAST)";
 	icon_state = "white";
 	dir = 6
 	},
@@ -742,14 +724,12 @@
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHWEST)";
 	icon_state = "white";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
 "cl" = (
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHEAST)";
 	icon_state = "white";
 	dir = 5
 	},
@@ -842,14 +822,12 @@
 "cy" = (
 /obj/machinery/chem_master,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHWEST)";
 	icon_state = "white";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "cz" = (
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHEAST)";
 	icon_state = "white";
 	dir = 6
 	},
@@ -980,7 +958,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHWEST)";
 	icon_state = "white";
 	dir = 9
 	},
@@ -996,7 +973,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHEAST)";
 	icon_state = "white";
 	dir = 5
 	},
@@ -1040,7 +1016,6 @@
 /area/holodeck/rec_center/pet_lounge)
 "de" = (
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (WEST)";
 	icon_state = "white";
 	dir = 8
 	},
@@ -1049,20 +1024,17 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "white_warn_corner";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/medical)
 "dg" = (
 /obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTH)";
 	icon_state = "white";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
 "dh" = (
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTH)";
 	icon_state = "white";
 	dir = 1
 	},
@@ -1077,7 +1049,6 @@
 	density = 0
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHWEST)";
 	icon_state = "white";
 	dir = 10
 	},
@@ -1123,7 +1094,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHEAST)";
 	icon_state = "white";
 	dir = 6
 	},
@@ -1157,7 +1127,6 @@
 /turf/open/floor/holofloor/basalt,
 /obj/structure/table,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -1170,7 +1139,6 @@
 /obj/item/clothing/under/color/green,
 /obj/item/weapon/holo/esword/green,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -1180,7 +1148,6 @@
 /obj/structure/table,
 /obj/machinery/readybutton,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -1210,7 +1177,6 @@
 "dz" = (
 /turf/open/floor/holofloor/grass,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline";
 	icon_state = "warningline";
 	dir = 2
 	},
@@ -1261,7 +1227,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dI" = (
@@ -1272,7 +1237,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dJ" = (
@@ -1281,7 +1245,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dK" = (
@@ -1290,7 +1253,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dL" = (
@@ -1300,7 +1262,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "dM" = (
@@ -1343,7 +1304,6 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHWEST)";
 	icon_state = "white";
 	dir = 9
 	},
@@ -1353,7 +1313,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTH)";
 	icon_state = "white";
 	dir = 1
 	},
@@ -1366,7 +1325,6 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (NORTHEAST)";
 	icon_state = "white";
 	dir = 5
 	},
@@ -1386,12 +1344,10 @@
 	color = "#9999BB";
 	icon_state = "cutout_viva";
 	name = "Black Rook";
-	tag = "icon-cutout_viva"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "dW" = (
@@ -1399,7 +1355,6 @@
 	color = "#9999BB";
 	icon_state = "cutout_mime";
 	name = "Black Queen";
-	tag = "icon-cutout_mime"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1410,12 +1365,10 @@
 	color = "#9999BB";
 	icon_state = "cutout_clown";
 	name = "Black King";
-	tag = "icon-cutout_clown"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "dY" = (
@@ -1423,7 +1376,6 @@
 	color = "#9999BB";
 	icon_state = "cutout_ian";
 	name = "Black Knight";
-	tag = "icon-cutout_ian"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1443,7 +1395,6 @@
 	icon_state = "mass_driver";
 	id = "trektorpedo1";
 	name = "photon torpedo tube";
-	tag = "icon-mass_driver (NORTH)"
 	},
 /obj/item/toy/minimeteor{
 	color = "";
@@ -1517,7 +1468,6 @@
 	icon_state = "mass_driver";
 	id = "trektorpedo2";
 	name = "photon torpedo tube";
-	tag = "icon-mass_driver (NORTH)"
 	},
 /obj/item/toy/minimeteor{
 	color = "";
@@ -1533,14 +1483,12 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-chapel (NORTH)";
 	icon_state = "chapel";
 	dir = 1
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eh" = (
 /turf/open/floor/holofloor{
-	tag = "icon-chapel (EAST)";
 	icon_state = "chapel";
 	dir = 4
 	},
@@ -1550,12 +1498,10 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "ej" = (
 /turf/open/floor/holofloor{
-	tag = "icon-chapel (NORTH)";
 	icon_state = "chapel";
 	dir = 1
 	},
@@ -1565,7 +1511,6 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-chapel (EAST)";
 	icon_state = "chapel";
 	dir = 4
 	},
@@ -1592,7 +1537,6 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (WEST)";
 	icon_state = "white";
 	dir = 8
 	},
@@ -1609,7 +1553,6 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (EAST)";
 	icon_state = "white";
 	dir = 4
 	},
@@ -1619,7 +1562,6 @@
 	color = "#9999BB";
 	icon_state = "cutout_greytide";
 	name = "Black Pawn";
-	tag = "icon-cutout_greytide"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1630,12 +1572,10 @@
 	color = "#9999BB";
 	icon_state = "cutout_greytide";
 	name = "Black Pawn";
-	tag = "icon-cutout_greytide"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "et" = (
@@ -1665,7 +1605,6 @@
 /area/holodeck/rec_center/kobayashi)
 "ey" = (
 /obj/structure/chair/comfy{
-	tag = "icon-comfychair (NORTH)";
 	icon_state = "comfychair";
 	dir = 1
 	},
@@ -1683,12 +1622,10 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "chapel";
-	tag = "icon-chapel"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eB" = (
 /turf/open/floor/holofloor{
-	tag = "icon-chapel";
 	icon_state = "chapel";
 	dir = 2
 	},
@@ -1700,14 +1637,12 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eD" = (
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "chapel";
-	tag = "icon-chapel"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eE" = (
@@ -1715,7 +1650,6 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-chapel";
 	icon_state = "chapel";
 	dir = 2
 	},
@@ -1729,7 +1663,6 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHWEST)";
 	icon_state = "white";
 	dir = 10
 	},
@@ -1744,7 +1677,6 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-white_warn (SOUTHEAST)";
 	icon_state = "white";
 	dir = 6
 	},
@@ -1757,7 +1689,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "eL" = (
@@ -1767,7 +1698,6 @@
 /area/holodeck/rec_center/spacechess)
 "eM" = (
 /turf/open/floor/holofloor{
-	tag = "icon-stairs-old (WEST)";
 	icon_state = "stairs-old";
 	dir = 8
 	},
@@ -1796,7 +1726,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "eR" = (
@@ -1848,7 +1777,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-chapel (NORTH)";
 	icon_state = "chapel";
 	dir = 1
 	},
@@ -1858,7 +1786,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-chapel (EAST)";
 	icon_state = "chapel";
 	dir = 4
 	},
@@ -1880,7 +1807,6 @@
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "chapel";
-	tag = "icon-chapel"
 	},
 /area/holodeck/rec_center/chapelcourt)
 "fe" = (
@@ -1888,7 +1814,6 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-chapel";
 	icon_state = "chapel";
 	dir = 2
 	},
@@ -1918,19 +1843,16 @@
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_greytide";
 	name = "White Pawn";
-	tag = "icon-cutout_greytide"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "fj" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_greytide";
 	name = "White Pawn";
-	tag = "icon-cutout_greytide"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -1961,7 +1883,6 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -1971,7 +1892,6 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/pen,
 /turf/open/floor/holofloor{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -1984,7 +1904,6 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/pen/red,
 /turf/open/floor/holofloor{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -2041,7 +1960,6 @@
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_viva";
 	name = "White Rook";
-	tag = "icon-cutout_viva"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -2051,19 +1969,16 @@
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_mime";
 	name = "White Queen";
-	tag = "icon-cutout_mime"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "fx" = (
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_clown";
 	name = "White King";
-	tag = "icon-cutout_clown"
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -2073,17 +1988,14 @@
 /obj/item/cardboard_cutout/adaptive{
 	icon_state = "cutout_ian";
 	name = "White Knight";
-	tag = "icon-cutout_ian"
 	},
 /turf/open/floor/holofloor{
 	dir = 8;
 	icon_state = "dark";
-	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/spacechess)
 "fz" = (
 /turf/open/floor/holofloor{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -2103,7 +2015,6 @@
 "fC" = (
 /turf/open/floor/holofloor/grass,
 /turf/open/floor/holofloor{
-	tag = "icon-warningline (NORTH)";
 	icon_state = "warningline";
 	dir = 1
 	},
@@ -2121,14 +2032,12 @@
 /obj/item/clothing/under/trek/medsci,
 /obj/item/clothing/under/trek/command,
 /turf/open/floor/holofloor{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
 /area/holodeck/rec_center/kobayashi)
 "fF" = (
 /turf/open/floor/holofloor{
-	tag = "icon-neutral";
 	icon_state = "neutral";
 	dir = 2
 	},
@@ -2138,7 +2047,6 @@
 /obj/item/clothing/under/trek/engsec,
 /obj/item/clothing/under/trek/engsec,
 /turf/open/floor/holofloor{
-	tag = "icon-neutral (NORTH)";
 	icon_state = "neutral";
 	dir = 1
 	},
@@ -2148,7 +2056,6 @@
 	dir = 9;
 	icon_state = "conveyor0";
 	id = "holocoaster";
-	tag = "icon-conveyor0 (NORTHWEST)";
 	verted = -1
 	},
 /turf/open/floor/holofloor/asteroid,
@@ -2304,43 +2211,36 @@
 /area/ctf)
 "gf" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHWEST)";
 	dir = 9
 	},
 /area/ctf)
 "gg" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/ctf)
 "gh" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
 /area/ctf)
 "gi" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTHWEST)";
 	dir = 9
 	},
 /area/ctf)
 "gj" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
 /area/ctf)
 "gk" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTHEAST)";
 	dir = 5
 	},
 /area/ctf)
 "gl" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2349,7 +2249,6 @@
 /area/ctf)
 "gn" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/ctf)
@@ -2376,7 +2275,6 @@
 /area/ctf)
 "gu" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2386,7 +2284,6 @@
 /area/ctf)
 "gw" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (EAST)";
 	dir = 4
 	},
 /area/ctf)
@@ -2402,7 +2299,6 @@
 /area/start)
 "gA" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHWEST)";
 	dir = 10
 	},
 /area/ctf)
@@ -2411,13 +2307,11 @@
 /area/ctf)
 "gC" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHEAST)";
 	dir = 6
 	},
 /area/ctf)
 "gD" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (SOUTHWEST)";
 	dir = 10
 	},
 /area/ctf)
@@ -2426,7 +2320,6 @@
 /area/ctf)
 "gF" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (SOUTHEAST)";
 	dir = 6
 	},
 /area/ctf)
@@ -2456,7 +2349,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2496,19 +2388,16 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
 /area/ctf)
 "gQ" = (
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (WEST)";
 	dir = 8
 	},
 /area/ctf)
 "gR" = (
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
 /area/ctf)
@@ -2549,7 +2438,6 @@
 /area/ctf)
 "gY" = (
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (NORTH)";
 	dir = 1
 	},
 /area/ctf)
@@ -2567,21 +2455,18 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
 /area/ctf)
 "hc" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (NORTH)";
 	dir = 1
 	},
 /area/ctf)
 "hd" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkblue/corner{
-	tag = "icon-darkbluecorners (EAST)";
 	dir = 4
 	},
 /area/ctf)
@@ -2593,7 +2478,6 @@
 /area/ctf)
 "hf" = (
 /obj/machinery/power/emitter/energycannon{
-	tag = "icon-emitter (NORTH)";
 	icon_state = "emitter";
 	dir = 1
 	},
@@ -2679,7 +2563,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHWEST)";
 	dir = 9
 	},
 /area/ctf)
@@ -2688,7 +2571,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/ctf)
@@ -2697,7 +2579,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
 /area/ctf)
@@ -2712,7 +2593,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTHWEST)";
 	dir = 9
 	},
 /area/ctf)
@@ -2721,7 +2601,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	dir = 1
 	},
 /area/ctf)
@@ -2730,7 +2609,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTHEAST)";
 	dir = 5
 	},
 /area/ctf)
@@ -2739,7 +2617,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2751,7 +2628,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (EAST)";
 	dir = 4
 	},
 /area/ctf)
@@ -2786,7 +2662,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHWEST)";
 	dir = 10
 	},
 /area/ctf)
@@ -2797,7 +2672,6 @@
 "hP" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHEAST)";
 	dir = 6
 	},
 /area/ctf)
@@ -2808,7 +2682,6 @@
 "hR" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (SOUTHWEST)";
 	dir = 10
 	},
 /area/ctf)
@@ -2821,7 +2694,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (SOUTHEAST)";
 	dir = 6
 	},
 /area/ctf)
@@ -2891,7 +2763,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2900,7 +2771,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2909,7 +2779,6 @@
 /area/ctf)
 "ih" = (
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
 	},
 /area/ctf)
@@ -2918,19 +2787,16 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
 	},
 /area/ctf)
 "ij" = (
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (EAST)";
 	dir = 4
 	},
 /area/ctf)
 "ik" = (
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2939,7 +2805,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (WEST)";
 	dir = 8
 	},
 /area/ctf)
@@ -2952,14 +2817,12 @@
 "in" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (EAST)";
 	dir = 4
 	},
 /area/ctf)
 "io" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
 	},
 /area/ctf)
@@ -2968,7 +2831,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	tag = "icon-darkredcorners (NORTH)";
 	dir = 1
 	},
 /area/ctf)
@@ -3162,7 +3024,6 @@
 /area/centcom/supply)
 "iT" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
 	dir = 1
 	},
@@ -3173,7 +3034,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHEAST)";
 	icon_state = "brown";
 	dir = 5
 	},
@@ -3332,7 +3192,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_end (WEST)"
 	},
 /area/centcom/supply)
 "jm" = (
@@ -3346,7 +3205,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jn" = (
@@ -3366,7 +3224,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jo" = (
@@ -3483,7 +3340,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	tag = "icon-nboard00 (WEST)"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3543,7 +3399,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_end (WEST)"
 	},
 /area/centcom/supply)
 "jK" = (
@@ -3556,7 +3411,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jL" = (
@@ -3575,7 +3429,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "jM" = (
@@ -3587,7 +3440,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_end (NORTH)"
 	},
 /area/centcom/supply)
 "jN" = (
@@ -3996,7 +3848,6 @@
 /area/centcom/supply)
 "kL" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHEAST)";
 	icon_state = "brown";
 	dir = 6
 	},
@@ -4060,7 +3911,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "kU" = (
@@ -4070,7 +3920,6 @@
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
 	req_access_txt = "109";
-	tag = "icon-leftsecure (NORTH)"
 	},
 /obj/machinery/light{
 	dir = 8
@@ -4108,7 +3957,6 @@
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
 	req_access_txt = "109";
-	tag = "icon-leftsecure (NORTH)"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -4128,7 +3976,6 @@
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
 	req_access_txt = "109";
-	tag = "icon-leftsecure (NORTH)"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -4148,7 +3995,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "lc" = (
@@ -4160,7 +4006,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "ld" = (
@@ -4235,7 +4080,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/vault,
 /area/centcom/control)
@@ -4305,7 +4149,6 @@
 /area/centcom/supply)
 "lv" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHWEST)";
 	icon_state = "brown";
 	dir = 9
 	},
@@ -4316,7 +4159,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHEAST)";
 	icon_state = "brown";
 	dir = 5
 	},
@@ -4328,7 +4170,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
 /area/centcom/control)
@@ -4434,7 +4275,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHWEST)";
 	icon_state = "brown";
 	dir = 9
 	},
@@ -4444,7 +4284,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
 	dir = 1
 	},
@@ -4454,10 +4293,8 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHEAST)";
 	icon_state = "brown";
 	dir = 5
 	},
@@ -4523,7 +4360,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "lY" = (
@@ -4653,7 +4489,6 @@
 /area/centcom/supply)
 "mm" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHWEST)";
 	icon_state = "brown";
 	dir = 10
 	},
@@ -4837,7 +4672,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHEAST)";
 	icon_state = "brown";
 	dir = 6
 	},
@@ -4966,7 +4800,6 @@
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
 	req_access_txt = "109";
-	tag = "icon-leftsecure (NORTH)"
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -4983,7 +4816,6 @@
 	icon_state = "leftsecure";
 	name = "Centcom Stand";
 	req_access_txt = "109";
-	tag = "icon-leftsecure (NORTH)"
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -5029,7 +4861,6 @@
 	icon_state = "plant-15";
 	pixel_x = -6;
 	pixel_y = 12;
-	tag = "icon-plant-15"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 6
@@ -5298,7 +5129,6 @@
 /area/centcom/supply)
 "nQ" = (
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHEAST)";
 	icon_state = "brown";
 	dir = 5
 	},
@@ -5455,7 +5285,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor{
-	tag = "icon-rightsecure (EAST)";
 	name = "Centcom Customs";
 	icon_state = "rightsecure";
 	dir = 4;
@@ -5487,7 +5316,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5516,7 +5344,6 @@
 /area/centcom/ferry)
 "oo" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold (WEST)";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -5658,7 +5485,6 @@
 	dir = 1;
 	icon_state = "nboard00";
 	pixel_y = -32;
-	tag = "icon-nboard00 (NORTH)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -5997,7 +5823,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "pt" = (
@@ -6014,7 +5839,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/supply)
 "pv" = (
@@ -6027,7 +5851,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "pw" = (
@@ -6244,7 +6067,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -6280,10 +6102,8 @@
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2";
-	tag = "icon-0-2"
 	},
 /obj/structure/cable/white{
-	tag = "icon-0-8";
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -6460,12 +6280,10 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted{
-	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
 	dir = 1
 	},
 /obj/machinery/door/window{
-	tag = "icon-right (WEST)";
 	name = "Tactical Toilet";
 	icon_state = "right";
 	dir = 8;
@@ -6522,7 +6340,6 @@
 	dir = 8;
 	icon_state = "nboard00";
 	pixel_x = 32;
-	tag = "icon-nboard00 (WEST)"
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 5
@@ -6560,7 +6377,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-4";
 	icon_state = "2-4"
 	},
 /turf/open/floor/wood,
@@ -6573,7 +6389,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6586,7 +6401,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -6596,7 +6410,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -6610,7 +6423,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -6620,16 +6432,13 @@
 /area/centcom/ferry)
 "qI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	tag = "icon-manifold (NORTH)";
 	dir = 1
 	},
 /obj/machinery/meter,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6642,21 +6451,17 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	tag = "icon-manifold (NORTH)";
 	dir = 1
 	},
 /obj/structure/cable/white{
-	tag = "icon-0-8";
 	icon_state = "0-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-0-4";
 	icon_state = "0-4"
 	},
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2";
-	tag = "icon-0-2"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -6664,20 +6469,16 @@
 /area/centcom/ferry)
 "qK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/visible{
-	tag = "icon-manifold (NORTH)";
 	dir = 1
 	},
 /obj/machinery/meter,
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /obj/structure/cable/white{
-	tag = "icon-2-8";
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/vault{
@@ -6717,7 +6518,6 @@
 /area/centcom/ferry)
 "qO" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1
 	},
@@ -6993,7 +6793,6 @@
 	dir = 4
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood,
@@ -7041,7 +6840,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/structure/cable/white{
-	tag = "icon-1-4";
 	icon_state = "1-4"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7057,11 +6855,9 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	tag = "icon-4-8";
 	icon_state = "4-8"
 	},
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7079,7 +6875,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/white{
-	tag = "icon-1-8";
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7353,7 +7148,6 @@
 /area/centcom/ferry)
 "sn" = (
 /obj/structure/cable/white{
-	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
 /turf/open/floor/wood,
@@ -7431,7 +7225,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
 /area/centcom/evac)
@@ -7500,7 +7293,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "sH" = (
@@ -7651,7 +7443,6 @@
 /area/centcom/evac)
 "sY" = (
 /turf/open/floor/plasteel/blue/corner{
-	tag = "icon-bluecorner (WEST)";
 	icon_state = "bluecorner";
 	dir = 8
 	},
@@ -7682,7 +7473,6 @@
 /area/wizard_station)
 "td" = (
 /obj/structure/chair/wood/wings{
-	tag = "icon-wooden_chair_wings (EAST)";
 	icon_state = "wooden_chair_wings";
 	dir = 4
 	},
@@ -7695,7 +7485,6 @@
 /area/wizard_station)
 "tf" = (
 /obj/structure/chair/wood/wings{
-	tag = "icon-wooden_chair_wings (WEST)";
 	icon_state = "wooden_chair_wings";
 	dir = 8
 	},
@@ -7757,7 +7546,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: EXTERNAL AIRLOCK";
-	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -7812,7 +7600,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "tt" = (
@@ -7972,7 +7759,6 @@
 /area/centcom/evac)
 "tJ" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (NORTHEAST)";
 	icon_state = "blue";
 	dir = 5
 	},
@@ -7982,14 +7768,12 @@
 /area/centcom/evac)
 "tL" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (EAST)";
 	icon_state = "blue";
 	dir = 4
 	},
 /area/centcom/evac)
 "tM" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (WEST)";
 	icon_state = "blue";
 	dir = 8
 	},
@@ -8190,7 +7974,6 @@
 /area/centcom/evac)
 "uo" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (SOUTHEAST)";
 	icon_state = "blue";
 	dir = 6
 	},
@@ -8207,7 +7990,6 @@
 /area/centcom/evac)
 "uq" = (
 /obj/structure/chair/wood/wings{
-	tag = "icon-wooden_chair_wings (WEST)";
 	icon_state = "wooden_chair_wings";
 	dir = 8
 	},
@@ -8330,7 +8112,6 @@
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
 	name = "WARNING: BLAST DOORS";
-	tag = "icon-doors"
 	},
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -8402,7 +8183,6 @@
 /area/centcom/evac)
 "uQ" = (
 /turf/open/floor/plasteel/neutral/side{
-	tag = "icon-neutral (NORTHEAST)";
 	icon_state = "neutral";
 	dir = 5
 	},
@@ -8535,14 +8315,12 @@
 /area/centcom/control)
 "vm" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (NORTHWEST)";
 	icon_state = "blue";
 	dir = 9
 	},
 /area/centcom/evac)
 "vn" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (SOUTHWEST)";
 	icon_state = "blue";
 	dir = 10
 	},
@@ -8609,7 +8387,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/ferry)
 "vw" = (
@@ -8877,7 +8654,6 @@
 	icon_state = "direction_bridge";
 	name = "command department";
 	pixel_y = 24;
-	tag = "icon-direction_bridge"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -8890,19 +8666,16 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "wd" = (
 /turf/open/floor/plasteel/blue/corner{
-	tag = "icon-bluecorner (NORTH)";
 	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/centcom/evac)
 "we" = (
 /turf/open/floor/plasteel/blue/side{
-	tag = "icon-blue (NORTH)";
 	icon_state = "blue";
 	dir = 1
 	},
@@ -9128,7 +8901,6 @@
 /area/centcom/ferry)
 "wL" = (
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
 	dir = 5
 	},
 /area/centcom/ferry)
@@ -9491,7 +9263,6 @@
 /area/centcom/control)
 "xK" = (
 /obj/machinery/sleeper{
-	tag = "icon-sleeper-open (EAST)";
 	icon_state = "sleeper-open";
 	dir = 4
 	},
@@ -9506,7 +9277,6 @@
 	dir = 1;
 	icon_state = "nboard00";
 	pixel_y = -32;
-	tag = "icon-nboard00 (NORTH)"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -9749,7 +9519,6 @@
 	dir = 1;
 	icon_state = "nboard00";
 	pixel_y = -32;
-	tag = "icon-nboard00 (NORTH)"
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -9836,7 +9605,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn (NORTHWEST)"
 	},
 /area/centcom/ferry)
 "yt" = (
@@ -10039,7 +9807,6 @@
 /area/centcom/control)
 "yO" = (
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (EAST)";
 	dir = 4
 	},
 /area/centcom/control)
@@ -10065,7 +9832,6 @@
 /area/centcom/control)
 "yR" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/centcom/control)
@@ -10152,7 +9918,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (EAST)";
 	dir = 4
 	},
 /area/centcom/control)
@@ -10162,7 +9927,6 @@
 /obj/item/weapon/folder/red,
 /obj/item/weapon/pen/red,
 /obj/machinery/door/window/brigdoor{
-	tag = "icon-rightsecure (EAST)";
 	name = "Centcom Customs";
 	icon_state = "rightsecure";
 	dir = 4;
@@ -10178,7 +9942,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen/blue,
 /obj/machinery/door/window/brigdoor{
-	tag = "icon-rightsecure (WEST)";
 	name = "Centcom Customs";
 	icon_state = "rightsecure";
 	dir = 8;
@@ -10193,7 +9956,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/centcom/control)
@@ -10342,7 +10104,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/control)
 "zz" = (
@@ -10357,7 +10118,6 @@
 /area/wizard_station)
 "zB" = (
 /obj/vehicle/scooter/skateboard{
-	tag = "icon-skateboard (EAST)";
 	icon_state = "skateboard";
 	dir = 4
 	},
@@ -10382,7 +10142,6 @@
 /area/wizard_station)
 "zF" = (
 /obj/structure/toilet{
-	tag = "icon-toilet00 (NORTH)";
 	icon_state = "toilet00";
 	dir = 1
 	},
@@ -10404,7 +10163,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "zJ" = (
@@ -10482,7 +10240,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "zU" = (
@@ -10786,7 +10543,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHWEST)";
 	icon_state = "whitegreen";
 	dir = 9
 	},
@@ -10804,7 +10560,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (NORTHEAST)";
 	icon_state = "whitegreen";
 	dir = 5
 	},
@@ -10831,7 +10586,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (NORTH)";
 	icon_state = "whiteredcorner";
 	dir = 1
 	},
@@ -10845,7 +10599,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (EAST)";
 	icon_state = "whiteredcorner";
 	dir = 4
 	},
@@ -11110,7 +10863,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "BL" = (
@@ -11127,7 +10879,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "BN" = (
@@ -11382,7 +11133,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
 	dir = 4
 	},
@@ -11414,7 +11164,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (NORTH)";
 	icon_state = "whiteredcorner";
 	dir = 1
 	},
@@ -11619,7 +11368,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	tag = "icon-whiteredcorner (WEST)";
 	icon_state = "whiteredcorner";
 	dir = 8
 	},
@@ -11768,7 +11516,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	tag = "icon-whitegreen (EAST)";
 	icon_state = "whitegreen";
 	dir = 4
 	},
@@ -11783,7 +11530,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeobserve)
 "Dh" = (
@@ -11845,7 +11591,6 @@
 	dir = 1;
 	icon_state = "nboard00";
 	pixel_y = -32;
-	tag = "icon-nboard00 (NORTH)"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -12026,7 +11771,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeadmin)
 "DM" = (
@@ -12183,7 +11927,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/tdome/tdomeadmin)
 "Eh" = (
@@ -12529,7 +12272,6 @@
 /area/tdome/tdomeadmin)
 "Ff" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -13890,7 +13632,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
 	dir = 1
 	},
@@ -14726,7 +14467,6 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-plasteel_warn_side (EAST)"
 	},
 /area/centcom/evac)
 "Mc" = (

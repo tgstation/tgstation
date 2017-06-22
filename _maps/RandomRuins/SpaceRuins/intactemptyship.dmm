@@ -23,7 +23,6 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "propulsion";
-	tag = "icon-propulsion (EAST)"
 	},
 /turf/template_noop,
 /area/ruin/powered/authorship)
@@ -32,7 +31,6 @@
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater{
-	tag = "icon-heater (WEST)";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

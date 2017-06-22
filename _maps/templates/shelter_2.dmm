@@ -4,7 +4,6 @@
 /area/survivalpod)
 "b" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (NORTH)";
 	icon_state = "survival";
 	dir = 1
 	},
@@ -50,7 +49,6 @@
 /area/survivalpod)
 "j" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (EAST)";
 	icon_state = "survival";
 	dir = 4
 	},
@@ -73,12 +71,10 @@
 	dir = 8;
 	icon_state = "pwindow";
 	layer = 3;
-	tag = "icon-pwindow (WEST)"
 	},
 /obj/machinery/door/window/survival_pod{
 	dir = 1;
 	icon_state = "windoor";
-	tag = "icon-windoor (NORTH)"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -90,7 +86,6 @@
 	name = "lusty xenomorph maid"
 	},
 /obj/structure/window/reinforced/survival_pod{
-	tag = "icon-pwindow (NORTH)";
 	icon_state = "pwindow";
 	dir = 1
 	},
@@ -113,7 +108,6 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
 	icon_state = "pwindow";
-	tag = "icon-pwindow (WEST)"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -138,7 +132,6 @@
 	pixel_y = -2
 	},
 /obj/structure/window/reinforced/survival_pod{
-	tag = "icon-pwindow (NORTH)";
 	icon_state = "pwindow";
 	dir = 1
 	},
@@ -149,7 +142,6 @@
 /area/survivalpod)
 "u" = (
 /obj/machinery/door/window/survival_pod{
-	tag = "icon-windoor (NORTH)";
 	icon_state = "windoor";
 	dir = 1
 	},
@@ -157,7 +149,6 @@
 /area/survivalpod)
 "v" = (
 /obj/structure/window/reinforced/survival_pod{
-	tag = "icon-pwindow (NORTH)";
 	icon_state = "pwindow";
 	dir = 1
 	},
@@ -175,7 +166,6 @@
 	density = 0;
 	dir = 9;
 	icon_state = "pwindow";
-	tag = "icon-pwindow (NORTHWEST)"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -190,7 +180,6 @@
 /area/survivalpod)
 "y" = (
 /obj/structure/sink/kitchen{
-	tag = "icon-sink_alt (EAST)";
 	icon_state = "sink_alt";
 	dir = 4;
 	pixel_x = -13;
