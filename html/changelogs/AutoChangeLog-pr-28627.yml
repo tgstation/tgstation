@@ -1,6 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Alt-clicking the Show/Hide Actions button will now reset the positions of all action buttons."
-  - rscadd: "Hints to the two shortcuts for action buttons are now included in the Show/Hide Actions button's tooltip."
-  - rscadd: "(As a reminder, that's shift-click to reset the clicked button, and alt-clicking the Show/Hide Actions button to reset it and all the others!)"
