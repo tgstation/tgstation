@@ -56,8 +56,6 @@
 
 #define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
 
-//#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
-
 #define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
 
 #define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
