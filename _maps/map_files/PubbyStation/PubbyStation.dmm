@@ -23824,9 +23824,8 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "aYZ" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 4;
-	icon_state = "burst_r"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -25221,9 +25220,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "bbR" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 4;
-	icon_state = "burst_l"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)

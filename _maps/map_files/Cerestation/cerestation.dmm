@@ -12987,9 +12987,7 @@
 	},
 /area/quartermaster/office)
 "aAf" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_l"
-	},
+/obj/structure/shuttle/engine/propulsion/burst/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "aAg" = (
@@ -12997,9 +12995,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "aAh" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "burst_r"
-	},
+/obj/structure/shuttle/engine/propulsion/burst/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "aAi" = (

@@ -564,9 +564,8 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "bX" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 8;
-	icon_state = "burst_l"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
@@ -2563,9 +2562,8 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "iv" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8;
-	icon_state = "burst_r"
 	},
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)

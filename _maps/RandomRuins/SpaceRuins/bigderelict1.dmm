@@ -93,7 +93,6 @@
 "ar" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 1;
-	icon_state = "burst_r";
 	name = "shuttle engine"
 	},
 /turf/open/floor/plating,
@@ -101,7 +100,6 @@
 "as" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 1;
-	icon_state = "burst_l";
 	name = "shuttle engine"
 	},
 /turf/open/floor/plating,
