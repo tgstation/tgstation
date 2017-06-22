@@ -35,6 +35,18 @@
 		number += E.bang_protect
 	return number
 
+/mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
+	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
+		return TRUE
+
+/mob/living/carbon/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
+	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return TRUE
+	if(check_head && head && (head.flags_cover & HEADCOVERSEYES))
+		return TRUE
+	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
+		return TRUE
+
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
@@ -143,10 +155,9 @@
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
-				Weaken(power)
+				Knockdown(power*20)
 				if(stuttering < power)
 					stuttering = power
-				Stun(power)
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
@@ -211,12 +222,11 @@
 	do_jitter_animation(jitteriness)
 	stuttering += 2
 	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-		Stun(2)
+		Stun(40)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-			Stun(3)
-			Weaken(3)
+			Knockdown(60)
 	if(override)
 		return override
 	else
@@ -232,16 +242,13 @@
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
 							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
-		else if(check_zone(M.zone_selected) == "head")
-			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		AdjustSleeping(-5)
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
+		AdjustStun(-60)
+		AdjustKnockdown(-60)
+		AdjustUnconscious(-60)
+		AdjustSleeping(-100)
 		if(resting)
 			resting = 0
 			update_canmove()
@@ -293,18 +300,18 @@
 			mind.disrupt_spells(0)
 
 
-/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 1, damage_pwr = 5, deafen_pwr = 15)
+/mob/living/carbon/soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15)
 	var/ear_safety = get_ear_protection()
 	var/obj/item/organ/ears/ears = getorganslot("ears")
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
-			Stun(stun_pwr*effect_amount)
-			Weaken(stun_pwr*effect_amount)
+			Knockdown(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
-			ears.ear_damage += damage_pwr * effect_amount
-			ears.deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			var/ear_damage = damage_pwr * effect_amount
+			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			adjustEarDamage(ear_damage,deaf)
 
 			if(ears.ear_damage >= 15)
 				to_chat(src, "<span class='warning'>Your ears start to ring badly!</span>")

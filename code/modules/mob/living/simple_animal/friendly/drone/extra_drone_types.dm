@@ -91,6 +91,15 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
+/obj/item/drone_shell/dusty
+	name = "derelict drone shell"
+	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
+	drone_type = /mob/living/simple_animal/drone/derelict
+
+/mob/living/simple_animal/drone/derelict
+	name = "derelict drone"
+	default_hatmask = /obj/item/clothing/head/ushanka
+
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
 	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
@@ -121,14 +130,14 @@
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
-	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
-	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
+	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt fabricator that can convert brass \
+	to power, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create.</b>"
 
-/mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
+/mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal fabricator
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
 
-/mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost proselytizer and slab in its box
+/mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost fabricator and slab in its box
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
 
 /mob/living/simple_animal/drone/cogscarab/Initialize()
@@ -168,9 +177,7 @@
 		..()
 
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
-	if(!GLOB.ratvar_awakens)
-		changeNext_move(CLICK_CD_RANGE*4) //about as much delay as an unupgraded kinetic accelerator
-	return TRUE
+	return GLOB.ratvar_awakens
 
 /mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
 	if(GLOB.ratvar_awakens)
@@ -192,11 +199,41 @@
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
 
-/obj/item/drone_shell/dusty
-	name = "derelict drone shell"
-	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	drone_type = /mob/living/simple_animal/drone/derelict
+/mob/living/simple_animal/drone/cogscarab/update_icons()
+	if(stat != DEAD)
+		if(incapacitated())
+			icon_state = "[visualAppearence]_flipped"
+		else
+			icon_state = visualAppearence
+	else
+		icon_state = "[visualAppearence]_dead"
 
-/mob/living/simple_animal/drone/derelict
-	name = "derelict drone"
-	default_hatmask = /obj/item/clothing/head/ushanka
+/mob/living/simple_animal/drone/cogscarab/Stun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/SetStun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/AdjustStun(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
+	. = ..()
+	if(.)
+		update_icons()
+
+/mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
+	. = ..()
+	if(.)
+		update_icons()

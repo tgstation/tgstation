@@ -79,31 +79,6 @@ Contains:
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
-	//Marine Armour
-/obj/item/clothing/head/helmet/space/hardsuit/ueg
-	name = "Iron Hawk Marine Helmet"
-	desc = "An armoured, pressurised, military helmet used as standard issue among Iron Hawk Marines."
-	icon_state = "ueghelm"
-	item_state = "ueghelm"
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 70, fire = 100, acid = 100)
-	strip_delay = 120
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	actions_types = list()
-
-/obj/item/clothing/head/helmet/space/hardsuit/ueg/attack_self(mob/user)
-	return
-
-/obj/item/clothing/suit/space/hardsuit/ueg
-	name = "Iron Hawk Marine Armour"
-	desc = "Modified MK.II SWAT Armour. Used by Iron Hawk Marines in ship to ship action. This model appears to have lost some of its armour plating during the crash."
-	icon_state = "uegarmor"
-	item_state = "uegarmor"
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals,/obj/item/weapon/kitchen/knife/combat)
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 90, rad = 100, fire = 100, acid = 100)
-	strip_delay = 130
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ueg
-
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
 	name = "NASA Void Helmet"
@@ -148,7 +123,7 @@ Contains:
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/suit/space/pirate
@@ -162,7 +137,7 @@ Contains:
 	slowdown = 0
 	armor = list(melee = 30, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 60, acid = 75)
 	strip_delay = 40
-	put_on_delay = 20
+	equip_delay_other = 20
 
 	//Emergency Response Team suits
 /obj/item/clothing/head/helmet/space/hardsuit/ert
@@ -351,7 +326,7 @@ Contains:
 	armor = list(melee = 5, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10, fire = 0, acid = 0)
 	strip_delay = 65
 
-/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!torn && prob(50))
 		to_chat(owner, "<span class='warning'>[src] tears from the damage, breaking the air-tight seal!</span>")
 		src.flags -= STOPSPRESSUREDMAGE

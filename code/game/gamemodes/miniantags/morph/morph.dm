@@ -72,7 +72,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/morph/proc/allowed(atom/movable/A) // make it into property/proc ? not sure if worth it
-	return !is_type_in_typecache(A, blacklist_typecache)
+	return !is_type_in_typecache(A, blacklist_typecache) && (isobj(A) || ismob(A))
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
@@ -224,7 +224,7 @@
 	player_mind.special_role = "Morph"
 	SSticker.mode.traitors |= player_mind
 	to_chat(S, S.playstyle_string)
-	S << 'sound/magic/Mutate.ogg'
+	S << 'sound/magic/mutate.ogg'
 	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
 	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S

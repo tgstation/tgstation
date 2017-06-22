@@ -86,27 +86,27 @@
 	if(isliving(loc))
 		var/mob/living/M = loc
 		if(!emagged)
-			to_chat(M, "<span class='boldannounce'>\icon[src] RADIATION PULSE DETECTED.</span>")
-			to_chat(M, "<span class='boldannounce'>\icon[src] Severity: [amount]</span>")
+			to_chat(M, "<span class='boldannounce'>[bicon(src)] RADIATION PULSE DETECTED.</span>")
+			to_chat(M, "<span class='boldannounce'>[bicon(src)] Severity: [amount]</span>")
 		else
-			to_chat(M, "<span class='boldannounce'>\icon[src] !@%$AT!(N P!LS! D/TEC?ED.</span>")
-			to_chat(M, "<span class='boldannounce'>\icon[src] &!F2rity: <=[amount]#1</span>")
+			to_chat(M, "<span class='boldannounce'>[bicon(src)] !@%$AT!(N P!LS! D/TEC?ED.</span>")
+			to_chat(M, "<span class='boldannounce'>[bicon(src)] &!F2rity: <=[amount]#1</span>")
 	update_icon()
 
 /obj/item/device/geiger_counter/attack_self(mob/user)
 	scanning = !scanning
 	update_icon()
-	to_chat(user, "<span class='notice'>\icon[src] You switch [scanning ? "on" : "off"] [src].</span>")
+	to_chat(user, "<span class='notice'>[bicon(src)] You switch [scanning ? "on" : "off"] [src].</span>")
 
 /obj/item/device/geiger_counter/attack(mob/living/M, mob/user)
 	if(user.a_intent == INTENT_HELP)
 		if(!emagged)
 			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='notice'>You scan [M]'s radiation levels with [src]...</span>")
 			if(!M.radiation)
-				to_chat(user, "<span class='notice'>\icon[src] Radiation levels within normal boundaries.</span>")
+				to_chat(user, "<span class='notice'>[bicon(src)] Radiation levels within normal boundaries.</span>")
 				return 1
 			else
-				to_chat(user, "<span class='boldannounce'>\icon[src] Subject is irradiated. Radiation levels: [M.radiation].</span>")
+				to_chat(user, "<span class='boldannounce'>[bicon(src)] Subject is irradiated. Radiation levels: [M.radiation].</span>")
 				return 1
 		else
 			user.visible_message("<span class='notice'>[user] scans [M] with [src].</span>", "<span class='danger'>You project [src]'s stored radiation into [M]'s body!</span>")
@@ -125,7 +125,7 @@
 		if(!do_after(user, 40*I.toolspeed, target = user))
 			return 0
 		user.visible_message("<span class='notice'>[user] refastens [src]'s maintenance panel!</span>", "<span class='notice'>You reset [src] to its factory settings!</span>")
-		playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+		playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 		emagged = 0
 		radiation_count = 0
 		update_icon()

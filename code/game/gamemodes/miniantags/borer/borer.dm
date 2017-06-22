@@ -138,7 +138,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	host_brain = null
 	victim = null
-	
+
 	QDEL_NULL(talk_to_host_action)
 	QDEL_NULL(infest_host_action)
 	QDEL_NULL(toggle_hide_action)
@@ -152,7 +152,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	QDEL_NULL(freeze_victim_action)
 	QDEL_NULL(punish_victim_action)
 	QDEL_NULL(jumpstart_host_action)
-	
+
 	return ..()
 
 /mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
@@ -488,7 +488,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
-			
+
 	if(!choices.len)
 		return
 	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
@@ -500,14 +500,14 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		return
 
 	if(M.has_brain_worms())
-		to_chat(src, "<span class='warning'>You cannot paralyze someone who is already infested!</span>")
+		to_chat(src, "<span class='warning'>You cannot stun someone who is already infested!</span>")
 		return
 
 	layer = MOB_LAYER
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-	M.Stun(3)
+	M.Stun(60)
 
 	used_dominate = world.time
 
@@ -608,9 +608,9 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		victim.setToxLoss(0)
 		victim.setOxyLoss(0)
 		victim.setCloneLoss(0)
-		victim.SetParalysis(0)
-		victim.SetStunned(0)
-		victim.SetWeakened(0)
+		victim.SetUnconscious(0)
+		victim.SetStun(0)
+		victim.SetKnockdown(0)
 		victim.radiation = 0
 		victim.heal_overall_damage(victim.getBruteLoss(), victim.getFireLoss())
 		victim.reagents.clear_reagents()
@@ -766,7 +766,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		if("Deafness")
 			victim.minimumDeafTicks(20)
 		if("Stun")
-			victim.Weaken(10)
+			victim.Knockdown(200)
 
 	log_game("[src]/([src.ckey]) punished [victim]/([victim.ckey] with [punishment]")
 

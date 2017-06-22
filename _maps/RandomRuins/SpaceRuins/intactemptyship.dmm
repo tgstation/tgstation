@@ -33,7 +33,6 @@
 	},
 /obj/structure/shuttle/engine/heater{
 	tag = "icon-heater (WEST)";
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

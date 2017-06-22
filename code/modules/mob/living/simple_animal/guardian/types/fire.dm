@@ -3,7 +3,7 @@
 	a_intent = INTENT_HELP
 	melee_damage_lower = 7
 	melee_damage_upper = 7
-	attack_sound = 'sound/items/Welder.ogg'
+	attack_sound = 'sound/items/welder.ogg'
 	attacktext = "ignites"
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	range = 7
@@ -21,7 +21,7 @@
 /mob/living/simple_animal/hostile/guardian/fire/AttackingTarget()
 	. = ..()
 	if(. && ishuman(target) && target != summoner)
-		new /obj/effect/hallucination/delusion(target.loc,target,force_kind="custom",duration=200,skip_nearby=0, custom_icon = src.icon_state, custom_icon_file = src.icon)
+		new /obj/effect/hallucination/delusion(target.loc,target,"custom",200,0, icon_state,icon)
 
 /mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
 	..()

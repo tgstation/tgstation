@@ -53,8 +53,7 @@
 		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
-	J.target = chosen_beacon
+	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), src, lifespan=100, null, FALSE, get_turf(chosen_beacon))
 	try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
@@ -98,12 +97,12 @@
 			return
 
 	if(istype(M, /atom/movable))
-		if(do_teleport(M, target, 6))
+		if(do_teleport(M, hard_target, 6))
 			// KERPLUNK
 			playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
 			if(iscarbon(M))
 				var/mob/living/carbon/L = M
-				L.Weaken(3)
+				L.Knockdown(60)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
 					addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)

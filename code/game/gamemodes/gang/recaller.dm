@@ -15,7 +15,6 @@
 	var/outfits = 2
 	var/free_pen = 0
 	var/promotable = 0
-	var/points = 15
 	var/list/tags = list()
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
@@ -50,7 +49,7 @@
 		var/isboss = (user.mind == gang.bosses[1])
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Your Influence: <B>[points]</B><br>"
+		dat += "Your Influence: <B>[gang.get_influence(user.mind)]</B><br>"
 		dat += "Time until Influence grows: <B>[time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss")]</B><br>"
 		dat += "<hr>"
 
@@ -111,7 +110,7 @@
 	if(!message || !can_use(user))
 		return
 	if(user.z > 2)
-		to_chat(user, "<span class='info'>\icon[src]Error: Station out of range.</span>")
+		to_chat(user, "<span class='info'>[bicon(src)]Error: Station out of range.</span>")
 		return
 	var/list/members = list()
 	members += gang.gangsters
@@ -147,8 +146,9 @@
 		gang.gangtools += src
 		icon_state = "gangtool-[gang.color]"
 		if(!(user.mind in gang.bosses))
+			var/cached_influence = gang.gangsters[user.mind]
 			SSticker.mode.remove_gangster(user.mind, 0, 2)
-			gang.bosses += user.mind
+			gang.bosses[user.mind] = cached_influence
 			user.mind.gang_datum = gang
 			user.mind.special_role = "[gang.name] Gang Lieutenant"
 			gang.add_gang_hud(user.mind)
@@ -179,35 +179,35 @@
 
 	gang.message_gangtools("[usr] is attempting to recall the emergency shuttle.")
 	recalling = 1
-	to_chat(loc, "<span class='info'>\icon[src]Generating shuttle recall order with codes retrieved from last call signal...</span>")
+	to_chat(loc, "<span class='info'>[bicon(src)]Generating shuttle recall order with codes retrieved from last call signal...</span>")
 
 	sleep(rand(100,300))
 
 	if(SSshuttle.emergency.mode != SHUTTLE_CALL) //Shuttle can only be recalled when it's moving to the station
-		to_chat(user, "<span class='warning'>\icon[src]Emergency shuttle cannot be recalled at this time.</span>")
+		to_chat(user, "<span class='warning'>[bicon(src)]Emergency shuttle cannot be recalled at this time.</span>")
 		recalling = 0
 		return 0
-	to_chat(loc, "<span class='info'>\icon[src]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
+	to_chat(loc, "<span class='info'>[bicon(src)]Shuttle recall order generated. Accessing station long-range communication arrays...</span>")
 
 	sleep(rand(100,300))
 
 	if(!gang.dom_attempts)
-		to_chat(user, "<span class='warning'>\icon[src]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
+		to_chat(user, "<span class='warning'>[bicon(src)]Error: Unable to access communication arrays. Firewall has logged our signature and is blocking all further attempts.</span>")
 		recalling = 0
 		return 0
 
 	var/turf/userturf = get_turf(user)
 	if(userturf.z != ZLEVEL_STATION) //Shuttle can only be recalled while on station
-		to_chat(user, "<span class='warning'>\icon[src]Error: Device out of range of station communication arrays.</span>")
+		to_chat(user, "<span class='warning'>[\bicon(src)]Error: Device out of range of station communication arrays.</span>")
 		recalling = 0
 		return 0
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	if((100 * GLOB.start_state.score(end_state)) < 80) //Shuttle cannot be recalled if the station is too damaged
-		to_chat(user, "<span class='warning'>\icon[src]Error: Station communication systems compromised. Unable to establish connection.</span>")
+		to_chat(user, "<span class='warning'>[bicon(src)]Error: Station communication systems compromised. Unable to establish connection.</span>")
 		recalling = 0
 		return 0
-	to_chat(loc, "<span class='info'>\icon[src]Comm arrays accessed. Broadcasting recall signal...</span>")
+	to_chat(loc, "<span class='info'>[bicon(src)]Comm arrays accessed. Broadcasting recall signal...</span>")
 
 	sleep(rand(100,300))
 
@@ -220,13 +220,13 @@
 			gang.recalls -= 1
 			return 1
 
-	to_chat(loc, "<span class='info'>\icon[src]No response recieved. Emergency shuttle cannot be recalled at this time.</span>")
+	to_chat(loc, "<span class='info'>[bicon(src)]No response recieved. Emergency shuttle cannot be recalled at this time.</span>")
 	return 0
 
 /obj/item/device/gangtool/proc/can_use(mob/living/carbon/human/user)
 	if(!istype(user))
 		return 0
-	if(user.restrained() || user.lying || user.stat || user.stunned || user.weakened)
+	if(user.restrained() || user.lying || user.stat || user.IsStun() || user.knockdown)
 		return 0
 	if(!(src in user.contents))
 		return 0
@@ -246,9 +246,6 @@
 
 ///////////// Internal tool used by gang regulars ///////////
 
-/obj/item/device/gangtool/soldier
-	points = 5
-
 /obj/item/device/gangtool/soldier/New(mob/user)
 	. = ..()
 	gang = user.mind.gang_datum
@@ -264,7 +261,7 @@
 		dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 	dat += "Registration: <B>[gang.name] - Foot Soldier</B><br>"
 	dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
-	dat += "Your Influence: <B>[points]</B><br>"
+	dat += "Your Influence: <B>[gang.get_influence(user.mind)]</B><br>"
 	if(LAZYLEN(tags))
 		dat += "Your tags generate bonus influence for you.<br> You have tagged the following territories:"
 		for(var/obj/effect/decal/cleanable/crayon/gang/T in tags)

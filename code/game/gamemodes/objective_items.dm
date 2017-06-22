@@ -43,7 +43,7 @@
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
-	targetitem = /obj/item/clothing/tie/medal/gold/captain
+	targetitem = /obj/item/clothing/accessory/medal/gold/captain
 	difficulty = 5
 	excludefromjob = list("Captain")
 
@@ -83,6 +83,16 @@
 
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/weapon/storage/box/syndie_kit/nuke
+	..()
+
+/datum/objective_item/steal/supermatter
+	name = "a sliver of a supermatter crystal. Be sure to use the proper safety equipment when extracting the sliver!"
+	targetitem = /obj/item/nuke_core/supermatter_sliver
+	difficulty = 15
+
+/datum/objective_item/steal/supermatter/New()
+	special_equipment += /obj/item/weapon/storage/box/syndie_kit/supermatter
+	..()
 
 //Items with special checks!
 /datum/objective_item/steal/plasma

@@ -95,7 +95,7 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(active)
 		return ..()
 	return 0
@@ -188,7 +188,7 @@
 	icon_state = "esaw_0"
 	item_color = null
 
-/obj/item/weapon/melee/energy/sword/cyborg/saw/hit_reaction()
+/obj/item/weapon/melee/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 
 /obj/item/weapon/melee/energy/sword/saber

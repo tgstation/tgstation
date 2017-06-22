@@ -12,7 +12,7 @@
 
 /datum/status_effect/shadow_mend/on_apply()
 	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
-	playsound(owner, 'sound/magic/Teleport_app.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_app.ogg', 50, 1)
 	return ..()
 
 /datum/status_effect/shadow_mend/tick()
@@ -21,7 +21,7 @@
 
 /datum/status_effect/shadow_mend/on_remove()
 	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
-	playsound(owner, 'sound/magic/Teleport_diss.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, 1)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
 
 
@@ -37,7 +37,7 @@
 	icon_state = "shadow_mend"
 
 /datum/status_effect/void_price/tick()
-	owner << sound('sound/magic/Summon_Karp.ogg', volume = 25)
+	owner << sound('sound/magic/summon_karp.ogg', volume = 25)
 	owner.adjustBruteLoss(3)
 
 
@@ -73,8 +73,8 @@
 	add_logs(owner, null, "gained Vanguard stun immunity")
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
-	owner.SetStunned(0, FALSE)
-	owner.SetWeakened(0)
+	owner.SetStun(0, FALSE)
+	owner.SetKnockdown(0)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -96,13 +96,12 @@
 				otheractiveabsorptions = TRUE
 		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
-			owner.Stun(stuns_blocked)
-			owner.Weaken(stuns_blocked)
+			owner.Knockdown(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 15)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
 				stuns_blocked *= 2
-				owner.Paralyse(stuns_blocked)
+				owner.Unconscious(stuns_blocked)
 		else
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
@@ -130,14 +129,14 @@
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
-	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, 1)
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	add_logs(owner, null, "lost Inath-neq's invulnerability")
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
-	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
 
 
 /datum/status_effect/cyborg_power_regen
@@ -232,19 +231,20 @@
 /datum/status_effect/cult_master
 	id = "The Cult Master"
 	duration = -1
-	tick_interval = 100
 	alert_type = null
+	on_remove_on_mob_delete = TRUE
 	var/alive = TRUE
 
 /datum/status_effect/cult_master/proc/deathrattle()
+	if(!QDELETED(GLOB.cult_narsie))
+		return //if nar-sie is alive, don't even worry about it
 	var/area/A = get_area(owner)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
 			var/mob/living/M = B.current
 			M << 'sound/hallucinations/veryfar_noise.ogg'
-			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in the [A]!")
-			
-			
+			to_chat(M, "<span class='cultlarge'>The Cult's Master, [owner], has fallen in \the [A]!</span>")
+
 /datum/status_effect/cult_master/tick()
 	if(owner.stat != DEAD && !alive)
 		alive = TRUE

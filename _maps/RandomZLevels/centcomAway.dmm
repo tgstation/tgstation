@@ -319,7 +319,6 @@
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_x = 0;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/green{
@@ -496,7 +495,6 @@
 "bC" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -621,8 +619,7 @@
 "bY" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 0
+	pixel_x = 2
 	},
 /obj/item/weapon/storage/firstaid/regular{
 	pixel_x = -2;
@@ -688,7 +685,6 @@
 "ch" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/spray/plantbgone{
-	pixel_x = 0;
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/hydrofloor,
@@ -1108,7 +1104,6 @@
 "dF" = (
 /obj/structure/table,
 /obj/machinery/processor{
-	pixel_x = 0;
 	pixel_y = 10
 	},
 /turf/open/floor/plasteel/red,
@@ -2380,7 +2375,6 @@
 /area/awaymission/centcomAway/general)
 "hA" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -2522,7 +2516,6 @@
 /area/awaymission/centcomAway/general)
 "hX" = (
 /obj/machinery/button/crematorium{
-	pixel_x = 0;
 	pixel_y = 25
 	},
 /turf/open/floor/engine,
@@ -3502,7 +3495,7 @@
 /area/awaymission/centcomAway/general)
 "kN" = (
 /obj/structure/table/wood,
-/obj/item/clothing/tie/medal,
+/obj/item/clothing/accessory/medal,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kO" = (
@@ -3516,7 +3509,7 @@
 /area/awaymission/centcomAway/general)
 "kQ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/tie/medal/gold,
+/obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kR" = (
@@ -3766,7 +3759,6 @@
 /area/awaymission/centcomAway/thunderdome)
 "lD" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -3840,9 +3832,7 @@
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)

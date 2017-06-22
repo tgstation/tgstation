@@ -4,7 +4,7 @@
 /datum/action/innate/cult
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
@@ -81,17 +81,12 @@
 	popup.open()
 	return 1
 
-/mob/living/proc/cult_master()
-	set category = "Cultist"
-	set name = "Assert Leadership"
-	pollCultists(src)  // This proc handles the distribution of cult master actions
-
 /datum/action/innate/cult/mastervote
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
 /datum/action/innate/cult/mastervote/IsAvailable()
-	if(GLOB.cult_vote_called)
+	if(GLOB.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 
@@ -236,7 +231,7 @@
 		return FALSE
 	if(cooldown > world.time)
 		if(!CM.active)
-			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>"
+			to_chat(owner, "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can mark another target!</b></span>")
 		return FALSE
 	return ..()
 
@@ -300,3 +295,91 @@
 			B.current.client.images -= GLOB.blood_target_image
 	QDEL_NULL(GLOB.blood_target_image)
 	GLOB.blood_target = null
+
+
+
+//////// ELDRITCH PULSE /////////
+
+
+
+/datum/action/innate/cult/master/pulse
+	name = "Eldritch Pulse"
+	desc = "Seize upon a fellow cultist or cult structure and teleport it to a nearby location."
+	button_icon_state = "arcane_barrage"
+	var/obj/effect/proc_holder/pulse/PM
+	var/cooldown = 0
+	var/base_cooldown = 150
+	var/throwing = FALSE
+	var/mob/living/throwee
+
+/datum/action/innate/cult/master/pulse/New()
+	PM = new()
+	PM.attached_action = src
+	..()
+
+/datum/action/innate/cult/master/pulse/IsAvailable()
+	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+		return FALSE
+	if(cooldown > world.time)
+		if(!PM.active)
+			owner << "<span class='cultlarge'><b>You need to wait [round((cooldown - world.time) * 0.1)] seconds before you can pulse again!</b></span>"
+		return FALSE
+	return ..()
+
+/datum/action/innate/cult/master/pulse/Destroy()
+	QDEL_NULL(PM)
+	return ..()
+
+/datum/action/innate/cult/master/pulse/Activate()
+	PM.toggle(owner) //the important bit
+	return TRUE
+
+/obj/effect/proc_holder/pulse
+	active = FALSE
+	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	var/datum/action/innate/cult/master/pulse/attached_action
+
+/obj/effect/proc_holder/pulse/Destroy()
+	QDEL_NULL(attached_action)
+	return ..()
+
+/obj/effect/proc_holder/pulse/proc/toggle(mob/user)
+	if(active)
+		remove_ranged_ability("<span class='cult'>You cease your preparations...</span>")
+		attached_action.throwing = FALSE
+	else
+		add_ranged_ability(user, "<span class='cult'>You prepare to tear through the fabric of reality...</span>")
+
+/obj/effect/proc_holder/pulse/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return
+	if(ranged_ability_user.incapacitated())
+		remove_ranged_ability()
+		return
+	var/turf/T = get_turf(ranged_ability_user)
+	if(!isturf(T))
+		return FALSE
+	if(target in view(7, get_turf(ranged_ability_user)))
+		if((!(iscultist(target) || istype(target, /obj/structure/destructible/cult)) || target == caller) && !(attached_action.throwing))
+			return
+		if(!attached_action.throwing)
+			attached_action.throwing = TRUE
+			attached_action.throwee = target
+			ranged_ability_user << 'sound/weapons/thudswoosh.ogg'
+			to_chat(ranged_ability_user,"<span class='cult'><b>You reach through the veil with your mind's eye and seize [target]!</b></span>")
+			return
+		else
+			new /obj/effect/temp_visual/cult/sparks(get_turf(attached_action.throwee), ranged_ability_user.dir)
+			var/distance = get_dist(attached_action.throwee, target)
+			if(distance >= 16)
+				return
+			playsound(target,'sound/magic/exit_blood.ogg')
+			attached_action.throwee.Beam(target,icon_state="sendbeam",time=4)
+			attached_action.throwee.forceMove(get_turf(target))
+			new /obj/effect/temp_visual/cult/sparks(get_turf(target), ranged_ability_user.dir)
+			attached_action.throwing = FALSE
+			attached_action.cooldown = world.time + attached_action.base_cooldown
+			remove_mousepointer(ranged_ability_user.client)
+			remove_ranged_ability("<span class='cult'>A pulse of blood magic surges through you as you shift [attached_action.throwee] through time and space.</span>")
+			caller.update_action_buttons_icon()
+			addtimer(CALLBACK(caller, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)

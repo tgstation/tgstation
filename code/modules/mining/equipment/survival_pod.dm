@@ -93,6 +93,7 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = FALSE
 	glass = TRUE
@@ -320,7 +321,6 @@
 						/obj/item/stack/telecrystal/twenty,
 						/obj/item/nuke_core,
 						/obj/item/phylactery,
-						/obj/item/riding_offhand,
 						/obj/item/weapon/banhammer)
 
 /obj/item/fakeartefact/Initialize()

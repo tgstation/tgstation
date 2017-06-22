@@ -36,6 +36,7 @@
 	var/aiming_time_fire_threshold = 2
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
+	var/scoped_slow = 1
 	var/aiming_time_increase_angle_multiplier = 0.6
 
 	var/lastangle = 0
@@ -85,8 +86,14 @@
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
 
-/obj/item/weapon/gun/energy/beam_rifle/New()
-	..()
+/obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
+	if(scoped)
+		slowdown = scoped_slow
+	else
+		slowdown = initial(slowdown)
+
+/obj/item/weapon/gun/energy/beam_rifle/Initialize()
+	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
@@ -116,6 +123,7 @@
 		recoil = hipfire_recoil
 		scoped = FALSE
 		user << "<span class='boldnotice'>You lower your [src].</span>"
+	update_slowdown()
 
 /obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
 	if(!scoped && !noscope)
@@ -161,12 +169,15 @@
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
-	if(!isturf(current_user.loc) || !(src in current_user.held_items))	//Doesn't work if you're not holding it!
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
 		terminate_aiming()
 		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
+	process_aim()
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
 	if(current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
 		if(isturf(current_user.client.mouseLocation))
@@ -204,6 +215,7 @@
 	current_user = mob
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
+	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold)
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
@@ -284,7 +296,7 @@
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
-	HS_BB.gun = host	
+	HS_BB.gun = host
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan

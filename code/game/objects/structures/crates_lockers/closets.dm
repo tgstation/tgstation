@@ -29,7 +29,7 @@
 	var/cutting_tool = /obj/item/weapon/weldingtool
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
-	var/cutting_sound = 'sound/items/Welder.ogg'
+	var/cutting_sound = 'sound/items/welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
@@ -234,7 +234,7 @@
 		if(!WT.remove_fuel(0, user))
 			return
 		to_chat(user, "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>")
-		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
+		playsound(loc, 'sound/items/welder2.ogg', 40, 1)
 		if(do_after(user, 40*WT.toolspeed, 1, target = src))
 			if(opened || !WT.isOn())
 				return
@@ -291,7 +291,7 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Weaken(2)
+				L.Knockdown(40)
 			O.forceMove(T)
 			close()
 	else

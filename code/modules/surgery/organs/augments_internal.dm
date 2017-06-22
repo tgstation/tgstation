@@ -1,4 +1,5 @@
-#define STUN_SET_AMOUNT	2
+#define STUN_SET_AMOUNT 40
+#define STUN_CHECK_AMOUNT 2
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -31,7 +32,7 @@
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
 		return
-	var/stun_amount = 5 + (severity-1 ? 0 : 5)
+	var/stun_amount = 200/severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
 	return stun_amount
@@ -107,10 +108,10 @@
 	if(crit_fail)
 		return
 
-	if(owner.stunned > STUN_SET_AMOUNT)
-		owner.stunned = STUN_SET_AMOUNT
-	if(owner.weakened > STUN_SET_AMOUNT)
-		owner.weakened = STUN_SET_AMOUNT
+	if(owner.AmountStun() > STUN_SET_AMOUNT)
+		owner.SetStun(STUN_SET_AMOUNT)
+	if(owner.knockdown > STUN_CHECK_AMOUNT)
+		owner.SetKnockdown(STUN_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail)
