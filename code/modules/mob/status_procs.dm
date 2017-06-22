@@ -42,7 +42,7 @@
 			S.duration = world.time + amount
 		else
 			S = apply_status_effect(STATUS_EFFECT_STUN)
-			S.duration = amount
+			S.duration = world.time + amount
 			S.update_canmove = updating
 		return S
 
@@ -53,7 +53,7 @@
 			S.duration += amount
 		else if(amount > 0)
 			S = apply_status_effect(STATUS_EFFECT_STUN)
-			S.duration = amount
+			S.duration = world.time + amount
 			S.update_canmove = updating
 		return S
 
