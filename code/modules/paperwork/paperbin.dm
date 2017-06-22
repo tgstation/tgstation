@@ -130,7 +130,7 @@
 
 /obj/item/weapon/paper_bin/update_icon()
 	if(total_paper < 1)
-		icon_state = "paper_bin_0"
+		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
 	cut_overlays()
