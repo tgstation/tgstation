@@ -687,6 +687,8 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")	
+	if (!eyes)
+		return
 	if(M.disabilities & BLIND)
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
