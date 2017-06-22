@@ -47,7 +47,7 @@
 	path = /obj/item/clothing/head/witchwig
 	cost = 130
 
-/datum/donat_stuff/hat/Cake-hat
+/datum/donat_stuff/hat/Cakehat
 	name = "Cake-hat"
 	path = /obj/item/clothing/head/hardhat/cakehat
 	cost = 100
@@ -57,7 +57,7 @@
 	path = /obj/item/clothing/head/wizard/fake
 	cost = 100
 
-/datum/donat_stuff/hat/Flat-cap
+/datum/donat_stuff/hat/Flatcap
 	name = "Flat-cap"
 	path = /obj/item/clothing/head/flatcap
 	cost = 120
@@ -168,7 +168,7 @@
 	path = /obj/item/clothing/mask/cigarette/cigar/havana
 	cost = 130
 
-/datum/donat_stuff/personal/E-Cigarette
+/datum/donat_stuff/personal/ECigarette
 	name = "E-Cigarette"
 	path = /obj/item/clothing/mask/vape
 	cost = 150
@@ -182,12 +182,12 @@
 	name = "Captain flask"
 	path = /obj/item/weapon/reagent_containers/food/drinks/flask
 	cost = 200
-
+/*
 /datum/donat_stuff/personal/Three_Mile_Island_Ice_Tea
 	name = "Three Mile Island Ice Tea"
 	path = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/threemileisland
 	cost = 100
-
+*/
 /datum/donat_stuff/personal/Red_glasses
 	name = "Red glasses"
 	path = /obj/item/clothing/glasses/red

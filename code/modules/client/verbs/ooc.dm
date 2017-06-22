@@ -64,9 +64,8 @@
 		donator_icon = "<img style='width:9px;height:9px;' class=icon src=\ref['icons/donator.dmi'] iconstate='[key]'>"
 
 	var/keyname = key
-	load_donator(ckey)
-	var/datum/donator/D = donators[ckey]
-	if(D && D.maxmoney >= 400)
+	var/donated = GLOB.donations.money_max[key]
+	if(donated >= 400)
 //		if(prefs.toggles & MEMBER_PUBLIC)
 //		if(holder.fakekey && is_donator(holder.fakekey))
 //			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[donator_icon][keyname]</font>"
