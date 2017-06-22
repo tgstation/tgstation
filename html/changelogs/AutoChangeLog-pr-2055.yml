@@ -1,0 +1,5 @@
+author: "Nanotrasen Robotics Department"
+delete-after: True
+changes: 
+  - tweak: "Traitor AIs' malfunction modules have received a firmware update and are more responsive, with HUD buttons and more sensible menus."
+  - tweak: "Overload and Override Machines now function differently; instead of right-clicking a machine to choose a context menu option, you activate the ability, which lets you left-click on a machine to overload or override it. This also changes your cursor."
