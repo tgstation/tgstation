@@ -452,7 +452,7 @@
 		return 1
 	if(unconscious)
 		return 1
-	if(IsStun())
+	if(stun)
 		return 1
 	if(stat)
 		return 1
@@ -1536,8 +1536,8 @@
 										if(ispath(A,/obj/item/ammo_casing/energy/electrode))
 											stunning = 1
 									var/shouldFire = 1
-									var/mob/living/stunCheck = TARGET
-									if(stunning && isliving(stunCheck) && stunCheck.IsStun())
+									var/mob/stunCheck = TARGET
+									if(stunning && stunCheck.stun)
 										shouldFire = 0
 									if(shouldFire)
 										if(P.cell.charge <= 10) // can shoot seems to bug out for tasers, using this hacky method instead
