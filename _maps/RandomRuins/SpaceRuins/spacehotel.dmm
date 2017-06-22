@@ -2541,7 +2541,6 @@
 	layer = 2.9
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -3044,7 +3043,6 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -4494,7 +4492,6 @@
 /area/ruin/hotel/security)
 "ls" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -4525,7 +4522,6 @@
 /area/ruin/hotel/security)
 "ly" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8
 	},
 /area/ruin/hotel/security)
@@ -4646,7 +4642,6 @@
 /area/ruin/hotel/pool)
 "lN" = (
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkred,
@@ -4779,7 +4774,6 @@
 "mf" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
@@ -4809,7 +4803,6 @@
 "mk" = (
 /obj/structure/table,
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/item/device/lightreplacer,
@@ -4949,7 +4942,6 @@
 /area/ruin/hotel/pool)
 "mC" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{

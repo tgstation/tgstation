@@ -420,7 +420,6 @@
 /area/awaymission/centcomAway/hangar)
 "bp" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3528,7 +3527,6 @@
 /area/space)
 "kU" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/space,

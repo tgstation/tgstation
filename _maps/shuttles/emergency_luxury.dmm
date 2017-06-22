@@ -88,7 +88,6 @@
 "ap" = (
 /obj/structure/toilet{
 	dir = 4;
-	icon_state = "toilet00";
 	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)

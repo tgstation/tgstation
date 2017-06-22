@@ -56,7 +56,6 @@
 "am" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced{
@@ -70,7 +69,6 @@
 "ao" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced{
@@ -3111,7 +3109,6 @@
 /area/awaymission/research/interior/bathroom)
 "iC" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/effect/landmark/awaystart,
@@ -3200,7 +3197,6 @@
 /area/awaymission/research/interior/bathroom)
 "iO" = (
 /obj/structure/window/reinforced/tinted{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
@@ -4305,7 +4301,6 @@
 /turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion";
 	},
 /turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
@@ -4417,7 +4412,6 @@
 "mz" = (
 /turf/open/floor/plating/asteroid/airless,
 /obj/structure/shuttle/engine/propulsion/burst{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/closed/wall/shuttle{

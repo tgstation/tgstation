@@ -11,7 +11,6 @@
 /area/shuttle/transport)
 "ac" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

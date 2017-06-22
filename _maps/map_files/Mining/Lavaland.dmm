@@ -440,7 +440,6 @@
 "bm" = (
 /obj/machinery/conveyor{
 	dir = 10;
-	icon_state = "conveyor0";
 	id = "gulag"
 	},
 /turf/open/floor/plating{
@@ -2358,7 +2357,6 @@
 /area/mine/production)
 "eZ" = (
 /obj/machinery/conveyor{
-	icon_state = "conveyor0";
 	dir = 10;
 	id = "mining_internal"
 	},

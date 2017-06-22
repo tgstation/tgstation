@@ -30,7 +30,6 @@
 /area/shuttle/abandoned)
 "ad" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -82,7 +81,6 @@
 /area/shuttle/abandoned)
 "aj" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/structure/window/reinforced,

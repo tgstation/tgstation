@@ -730,7 +730,6 @@
 /area/ruin/onehalf/drone_bay)
 "bJ" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -940,7 +939,6 @@
 /area/ruin/onehalf/bridge)
 "co" = (
 /obj/structure/chair/office{
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel,

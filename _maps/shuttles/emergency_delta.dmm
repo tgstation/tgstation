@@ -4,7 +4,6 @@
 /area/space)
 "ab" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -18,7 +17,6 @@
 "ad" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{

@@ -27,7 +27,6 @@
 "i" = (
 /obj/structure/chair,
 /obj/structure/window/reinforced{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
@@ -43,7 +42,6 @@
 "l" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion";
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -53,7 +51,6 @@
 /area/ruin/unpowered)
 "n" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -69,7 +66,6 @@
 "q" = (
 /obj/item/weapon/shard,
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,
@@ -79,7 +75,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue/airless,

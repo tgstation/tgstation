@@ -362,7 +362,6 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 4
 	},
 /obj/machinery/light/small{

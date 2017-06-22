@@ -457,7 +457,6 @@
 "bx" = (
 /obj/structure/toilet{
 	dir = 4;
-	icon_state = "toilet00";
 	},
 /obj/machinery/light/small{
 	dir = 4

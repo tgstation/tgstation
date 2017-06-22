@@ -638,7 +638,6 @@
 /area/shuttle/escape)
 "bS" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -736,7 +735,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -1032,7 +1030,6 @@
 /area/shuttle/escape)
 "cS" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -1212,7 +1209,6 @@
 /area/shuttle/escape)
 "ds" = (
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plating,

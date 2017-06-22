@@ -1116,7 +1116,6 @@
 "ds" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /turf/template_noop,
 /area/awaymission/BMPship/Aft)

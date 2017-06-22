@@ -432,7 +432,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "bf" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{

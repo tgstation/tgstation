@@ -19,7 +19,6 @@
 "e" = (
 /obj/structure/sign/mining/survival{
 	dir = 4;
-	icon_state = "survival";
 	pixel_x = 32;
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -46,7 +45,6 @@
 "i" = (
 /obj/structure/sign/mining/survival{
 	dir = 8;
-	icon_state = "survival";
 	pixel_x = -32;
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

@@ -61,7 +61,6 @@
 /area/ruin/powered)
 "j" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/template_noop,

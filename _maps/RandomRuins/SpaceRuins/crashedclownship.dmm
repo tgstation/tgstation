@@ -58,7 +58,6 @@
 /obj/structure/shuttle/engine/heater{
 	color = "#FFFF00";
 	dir = 4;
-	icon_state = "heater"
 	},
 /obj/structure/window/reinforced{
 	color = "#FFFF00";

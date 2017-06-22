@@ -154,7 +154,6 @@
 /area/ruin/deepstorage/crusher)
 "av" = (
 /obj/structure/window/reinforced/highpressure{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/machinery/conveyor{
@@ -1169,7 +1168,6 @@
 /area/ruin/deepstorage)
 "ck" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 4
 	},
 /obj/structure/sign/barsign{
@@ -1425,7 +1423,6 @@
 /area/ruin/deepstorage)
 "cH" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar{
@@ -1538,7 +1535,6 @@
 /area/ruin/deepstorage)
 "cU" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{

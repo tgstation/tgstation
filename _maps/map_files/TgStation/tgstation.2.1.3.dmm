@@ -14230,7 +14230,6 @@
 "aFF" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -51329,7 +51328,6 @@
 "ckq" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
@@ -57216,7 +57214,6 @@
 "cwU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
@@ -57739,7 +57736,6 @@
 "cym" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
-	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -61930,7 +61926,6 @@
 "cIg" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /obj/docking_port/mobile/arrivals,
 /obj/docking_port/stationary{

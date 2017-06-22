@@ -5906,7 +5906,6 @@
 "ajG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central{
@@ -6847,7 +6846,6 @@
 /area/quartermaster/storage)
 "akM" = (
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/quartermaster/storage)
@@ -7280,7 +7278,6 @@
 	icon_state = "1-2";
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central{
@@ -7882,7 +7879,6 @@
 	icon_state = "1-2";
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central{
@@ -8863,7 +8859,6 @@
 	icon_state = "1-2";
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central{
@@ -8886,7 +8881,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -8903,7 +8897,6 @@
 	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 1
 	},
 /area/hallway/primary/central{
@@ -8930,7 +8923,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central{
@@ -8944,7 +8936,6 @@
 	icon_state = "1-2";
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central{
@@ -9186,7 +9177,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -9201,7 +9191,6 @@
 "aoD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -9217,7 +9206,6 @@
 "aoE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/newscaster{
@@ -9552,7 +9540,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 8
 	},
 /area/hallway/primary/central{
@@ -9566,7 +9553,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 8
 	},
 /area/hallway/primary/central{
@@ -35470,7 +35456,6 @@
 	dir = 4
 	},
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -36580,7 +36565,6 @@
 /area/hallway/secondary/entry)
 "bjN" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{

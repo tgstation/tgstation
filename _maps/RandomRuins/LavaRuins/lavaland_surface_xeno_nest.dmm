@@ -88,7 +88,6 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
@@ -163,7 +162,6 @@
 /obj/structure/bed/nest,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
@@ -236,7 +234,6 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
 /obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},
@@ -272,7 +269,6 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/space/syndicate/orange,
 /obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_impregnated";
 	item_state = "facehugger_impregnated";
 	stat = 2
 	},

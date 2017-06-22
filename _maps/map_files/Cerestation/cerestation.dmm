@@ -423,7 +423,6 @@
 /area/maintenance/asteroid/disposal/north)
 "abh" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /obj/structure/sign/poster/random{
@@ -435,14 +434,12 @@
 /area/maintenance/asteroid/disposal/north)
 "abi" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/disposal/north)
 "abj" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -454,7 +451,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/conveyor/auto{
 	dir = 6;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
@@ -576,7 +572,6 @@
 /area/maintenance/asteroid/disposal/north)
 "abw" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -731,7 +726,6 @@
 "abL" = (
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -2396,7 +2390,6 @@
 /area/maintenance/asteroid/fore/com_north)
 "afk" = (
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
@@ -2917,7 +2910,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	icon_state = "darkredcorners";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3177,7 +3169,6 @@
 /area/maintenance/asteroid/fore/com_east)
 "agF" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -3188,7 +3179,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/conveyor/auto{
 	dir = 6;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating{
@@ -3622,7 +3612,6 @@
 /area/maintenance/asteroid/fore/com_east)
 "ahu" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 1
 	},
 /turf/open/floor/plating{
@@ -4243,7 +4232,6 @@
 /area/maintenance/asteroid/fore/com_east)
 "aiI" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 9
 	},
 /turf/open/floor/plating{
@@ -4252,7 +4240,6 @@
 /area/maintenance/asteroid/fore/com_east)
 "aiJ" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /obj/structure/plasticflaps,
@@ -4263,7 +4250,6 @@
 "aiK" = (
 /obj/machinery/conveyor/auto{
 	dir = 6;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating{
@@ -4751,7 +4737,6 @@
 "ajL" = (
 /obj/machinery/conveyor{
 	dir = 5;
-	icon_state = "conveyor0";
 	id = "CargoWaste";
 	verted = -1
 	},
@@ -5084,7 +5069,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -5149,7 +5133,6 @@
 "aky" = (
 /obj/machinery/conveyor{
 	dir = 9;
-	icon_state = "conveyor0";
 	id = "CargoWaste";
 	verted = -1
 	},
@@ -5392,7 +5375,6 @@
 "akY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -5825,7 +5807,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -5886,7 +5867,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -6171,7 +6151,6 @@
 	pixel_x = 24
 	},
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -6225,7 +6204,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -6364,7 +6342,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -7571,7 +7548,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -8039,7 +8015,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -10724,7 +10699,6 @@
 /area/shuttle/labor)
 "avx" = (
 /obj/machinery/disposal/deliveryChute{
-	icon_state = "intake";
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
@@ -11235,7 +11209,6 @@
 /area/security/main)
 "awC" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -11276,7 +11249,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -11580,7 +11552,6 @@
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -12568,7 +12539,6 @@
 	req_one_access_txt = "38;2"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -13055,7 +13025,6 @@
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -13253,7 +13222,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -14457,7 +14425,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -14542,7 +14509,6 @@
 /area/security/courtroom)
 "aCZ" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -14887,7 +14853,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -15783,7 +15748,6 @@
 /obj/item/stack/packageWrap,
 /obj/item/device/destTagger,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -16003,7 +15967,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -16110,7 +16073,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -16293,21 +16255,18 @@
 "aFL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/security/courtroom)
 "aFM" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/security/courtroom)
 "aFN" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -16315,7 +16274,6 @@
 "aFO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -16676,7 +16634,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -16965,7 +16922,6 @@
 /area/security/courtroom)
 "aGT" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -17452,7 +17408,6 @@
 "aHQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -18572,7 +18527,6 @@
 /area/security/brig)
 "aJY" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -18829,7 +18783,6 @@
 "aKy" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	icon_state = "intake";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -19320,7 +19273,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19333,7 +19285,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19345,7 +19296,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19358,7 +19308,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19372,7 +19321,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19387,7 +19335,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19398,7 +19345,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19409,7 +19355,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19421,7 +19366,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -19882,7 +19826,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -20111,7 +20054,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -20532,7 +20474,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21006,7 +20947,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21114,7 +21054,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21126,7 +21065,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21141,7 +21079,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21156,7 +21093,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21175,7 +21111,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21193,7 +21128,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21208,7 +21142,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21227,7 +21160,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21248,7 +21180,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21266,7 +21197,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21286,7 +21216,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21309,7 +21238,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21322,7 +21250,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21337,7 +21264,6 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21345,7 +21271,6 @@
 "aOJ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21355,7 +21280,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21380,7 +21304,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21396,7 +21319,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21409,7 +21331,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21419,7 +21340,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21433,7 +21353,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21446,7 +21365,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21463,7 +21381,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21513,7 +21430,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21533,7 +21449,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21551,7 +21466,6 @@
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21568,7 +21482,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21584,7 +21497,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21736,7 +21648,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21754,7 +21665,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21769,7 +21679,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21794,7 +21703,6 @@
 	name = "navigation beacon (Command-Middle 2)"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21813,7 +21721,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21828,7 +21735,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21843,7 +21749,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21858,7 +21763,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21873,7 +21777,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21891,7 +21794,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21906,7 +21808,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21921,7 +21822,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21931,7 +21831,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21945,14 +21844,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/fore)
 "aPx" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21963,7 +21860,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21975,7 +21871,6 @@
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21985,7 +21880,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -21993,7 +21887,6 @@
 "aPB" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22009,7 +21902,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22025,7 +21917,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22043,7 +21934,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22065,7 +21955,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22083,7 +21972,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22103,7 +21991,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22118,7 +22005,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22138,7 +22024,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22193,7 +22078,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -22661,7 +22545,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23147,7 +23030,6 @@
 "aRw" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23155,7 +23037,6 @@
 "aRx" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23166,14 +23047,12 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/starboard/fore)
 "aRz" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23185,7 +23064,6 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23195,7 +23073,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23207,7 +23084,6 @@
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23224,7 +23100,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23235,7 +23110,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23245,7 +23119,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23259,7 +23132,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23274,7 +23146,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23596,7 +23467,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -23708,7 +23578,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24009,7 +23878,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24244,7 +24112,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24268,7 +24135,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24523,7 +24389,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24662,7 +24527,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24733,7 +24597,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24744,7 +24607,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24941,7 +24803,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -24989,7 +24850,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25016,7 +24876,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25212,7 +25071,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25353,7 +25211,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25365,7 +25222,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25488,7 +25344,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25728,7 +25583,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -25927,7 +25781,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -26165,7 +26018,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -26256,7 +26108,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -26482,7 +26333,6 @@
 "aXm" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	icon_state = "intake";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -26538,14 +26388,12 @@
 /area/hallway/secondary/bridges/med_cargo)
 "aXt" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/port/west)
 "aXu" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -26580,14 +26428,12 @@
 	},
 /obj/machinery/conveyor/auto{
 	dir = 5;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/port/west)
 "aXz" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 10
 	},
 /turf/open/floor/plating,
@@ -26642,14 +26488,12 @@
 /area/maintenance/asteroid/port/west)
 "aXH" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/port/west)
 "aXI" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -26979,7 +26823,6 @@
 "aYy" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27069,7 +26912,6 @@
 "aYL" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27083,7 +26925,6 @@
 "aYN" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27164,7 +27005,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27350,7 +27190,6 @@
 /area/hallway/primary/central)
 "aZl" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27362,7 +27201,6 @@
 /area/hallway/primary/central)
 "aZn" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27400,7 +27238,6 @@
 "aZr" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27414,7 +27251,6 @@
 "aZt" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27447,7 +27283,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27659,7 +27494,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27671,7 +27505,6 @@
 /area/hallway/primary/starboard)
 "aZR" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27725,7 +27558,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27863,7 +27695,6 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27926,7 +27757,6 @@
 /area/hallway/primary/starboard)
 "baq" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27945,7 +27775,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -27991,7 +27820,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28181,7 +28009,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28259,7 +28086,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28270,7 +28096,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28297,7 +28122,6 @@
 "baY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28438,7 +28262,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28452,7 +28275,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28543,7 +28365,6 @@
 "bbA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28674,7 +28495,6 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28789,7 +28609,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28960,7 +28779,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29076,7 +28894,6 @@
 /area/crew_quarters/rehab_dome)
 "bcA" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29088,7 +28905,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29101,7 +28917,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29128,7 +28943,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29249,7 +29063,6 @@
 	network = list("SS13","QM")
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29517,7 +29330,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29534,7 +29346,6 @@
 "bdv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29667,7 +29478,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29690,7 +29500,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29754,7 +29563,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29935,7 +29743,6 @@
 "beh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29945,7 +29752,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29955,7 +29761,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29967,7 +29772,6 @@
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29983,7 +29787,6 @@
 	pixel_y = 24;
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30011,7 +29814,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30021,7 +29823,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30034,7 +29835,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30047,7 +29847,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30057,7 +29856,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30302,7 +30100,6 @@
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30651,7 +30448,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30843,7 +30639,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30861,7 +30656,6 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30871,7 +30665,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30889,7 +30682,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30911,7 +30703,6 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -30923,14 +30714,12 @@
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/central)
 "bgc" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31135,7 +30924,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31154,7 +30942,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31172,7 +30959,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31195,7 +30981,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31216,7 +31001,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31234,7 +31018,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31258,7 +31041,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31279,7 +31061,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31299,7 +31080,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31320,7 +31100,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31343,7 +31122,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31643,7 +31421,6 @@
 "bhb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31651,7 +31428,6 @@
 "bhc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31746,7 +31522,6 @@
 "bhm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32048,7 +31823,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32066,7 +31840,6 @@
 "bhU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32196,7 +31969,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32256,7 +32028,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32722,7 +32493,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32880,7 +32650,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32908,7 +32677,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32928,7 +32696,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -33224,7 +32991,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -33830,7 +33596,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -33853,7 +33618,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -33915,7 +33679,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -33951,7 +33714,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -34659,7 +34421,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -34671,7 +34432,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -34718,7 +34478,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -34730,7 +34489,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35495,7 +35253,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35544,7 +35301,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35613,7 +35369,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35991,7 +35746,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36060,7 +35814,6 @@
 	c_tag = "Service Asteroid Hallway 7"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36070,7 +35823,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36080,14 +35832,12 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/port)
 "boQ" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36101,7 +35851,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36115,7 +35864,6 @@
 	c_tag = "Service Asteroid Hallway 8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36126,7 +35874,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36140,7 +35887,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36151,7 +35897,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36161,7 +35906,6 @@
 	c_tag = "Engineering Asteroid Hallway 1"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36175,7 +35919,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36185,7 +35928,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36195,7 +35937,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36364,7 +36105,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36378,7 +36118,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36388,7 +36127,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36398,7 +36136,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36412,7 +36149,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -36806,7 +36542,6 @@
 /area/maintenance/asteroid/starboard)
 "bpW" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -36865,7 +36600,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37011,7 +36745,6 @@
 	pixel_x = 29
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37175,7 +36908,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37695,7 +37427,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37827,7 +37558,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37844,7 +37574,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37859,7 +37588,6 @@
 	pixel_y = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37870,7 +37598,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37880,7 +37607,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37892,7 +37618,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37900,7 +37625,6 @@
 "brP" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37913,7 +37637,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37929,7 +37652,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37942,7 +37664,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37957,7 +37678,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37979,7 +37699,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37992,7 +37711,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38033,7 +37751,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38098,7 +37815,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38241,14 +37957,12 @@
 "bsn" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/starboard)
 "bso" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38259,7 +37973,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38273,7 +37986,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38977,7 +38689,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -39002,7 +38713,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -40716,7 +40426,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41020,7 +40729,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41433,7 +41141,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41590,7 +41297,6 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41876,7 +41582,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -42405,7 +42110,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -43528,7 +43232,6 @@
 /area/maintenance/asteroid/starboard)
 "bBA" = (
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
@@ -44943,7 +44646,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -45231,7 +44933,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -45691,7 +45392,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -47072,7 +46772,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -48252,7 +47951,6 @@
 /area/crew_quarters/fitness)
 "bKn" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -48260,7 +47958,6 @@
 "bKo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -48269,7 +47966,6 @@
 /obj/effect/landmark/lightsout,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -49520,7 +49216,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -49845,7 +49540,6 @@
 /area/crew_quarters/fitness)
 "bMX" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -49853,14 +49547,12 @@
 "bMY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/crew_quarters/fitness)
 "bMZ" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -50200,7 +49892,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -50849,7 +50540,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -51013,7 +50703,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -51646,7 +51335,6 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52022,7 +51710,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52494,7 +52181,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52621,7 +52307,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52835,7 +52520,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52953,7 +52637,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52963,7 +52646,6 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -52993,7 +52675,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -53419,7 +53100,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -54436,7 +54116,6 @@
 "bVH" = (
 /obj/machinery/light/small,
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/button/door{
@@ -54680,7 +54359,6 @@
 /area/maintenance/asteroid/disposal/east)
 "bWi" = (
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
@@ -54693,7 +54371,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -54855,7 +54532,6 @@
 "bWE" = (
 /obj/machinery/light/small,
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/button/door{
@@ -55188,7 +54864,6 @@
 /area/maintenance/asteroid/disposal/east)
 "bXj" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 5
 	},
 /turf/open/floor/plating,
@@ -55376,7 +55051,6 @@
 	},
 /obj/machinery/conveyor/auto{
 	dir = 10;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
@@ -55617,7 +55291,6 @@
 /area/maintenance/asteroid/disposal/east)
 "bYk" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 4
 	},
 /obj/machinery/light/small,
@@ -55626,7 +55299,6 @@
 "bYl" = (
 /obj/machinery/conveyor/auto{
 	dir = 10;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
@@ -55791,7 +55463,6 @@
 /area/crew_quarters/abandoned_gambling_den)
 "bYC" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -57033,7 +56704,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -57181,7 +56851,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -57205,7 +56874,6 @@
 	dir = 4
 	},
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /turf/open/floor/plating{
@@ -57338,7 +57006,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58074,7 +57741,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58121,7 +57787,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58164,7 +57829,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58314,7 +57978,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58473,7 +58136,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -58688,7 +58350,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59059,7 +58720,6 @@
 "ceX" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59074,7 +58734,6 @@
 /obj/machinery/door/airlock/glass,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59252,7 +58911,6 @@
 /area/hallway/primary/aft)
 "cfu" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59264,7 +58922,6 @@
 /area/hallway/primary/aft)
 "cfw" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59419,7 +59076,6 @@
 /area/hallway/secondary/exit)
 "cfP" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59527,7 +59183,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -59750,7 +59405,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60189,7 +59843,6 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60199,7 +59852,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60402,7 +60054,6 @@
 "chO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60729,7 +60380,6 @@
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60926,7 +60576,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61048,7 +60697,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61070,7 +60718,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61410,7 +61057,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61513,7 +61159,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61528,7 +61173,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -61940,7 +61584,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62009,7 +61652,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62017,7 +61659,6 @@
 "ckz" = (
 /obj/structure/closet/toolcloset,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62279,7 +61920,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62331,7 +61971,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62362,7 +62001,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62668,7 +62306,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -62715,7 +62352,6 @@
 "clR" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion";
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -62725,7 +62361,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63011,7 +62646,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63161,7 +62795,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63179,7 +62812,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63197,7 +62829,6 @@
 	c_tag = "Research Asteroid Hallway 2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63219,7 +62850,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63239,7 +62869,6 @@
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63254,7 +62883,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63272,7 +62900,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63293,7 +62920,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63306,7 +62932,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63324,7 +62949,6 @@
 	c_tag = "Research Asteroid Hallway 3"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63339,7 +62963,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63359,7 +62982,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63375,7 +62997,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63395,7 +63016,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63408,7 +63028,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63426,7 +63045,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63444,7 +63062,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63459,7 +63076,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63479,7 +63095,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63499,7 +63114,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63512,7 +63126,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63530,7 +63143,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63548,7 +63160,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63566,7 +63177,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63585,7 +63195,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63643,7 +63252,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63651,14 +63259,12 @@
 "cnm" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/secondary/entry)
 "cnn" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63668,7 +63274,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63731,7 +63336,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63746,7 +63350,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -63951,7 +63554,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64246,7 +63848,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64257,7 +63858,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64273,7 +63873,6 @@
 	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64283,7 +63882,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64409,7 +64007,6 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64424,7 +64021,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64432,7 +64028,6 @@
 "coL" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64446,7 +64041,6 @@
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64457,7 +64051,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64467,14 +64060,12 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/aft)
 "coP" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64488,7 +64079,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64504,7 +64094,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64521,7 +64110,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64537,7 +64125,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64579,7 +64166,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64592,7 +64178,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64605,7 +64190,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64616,7 +64200,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64633,7 +64216,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64653,7 +64235,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -64739,7 +64320,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65175,7 +64755,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65192,7 +64771,6 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65205,7 +64783,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65215,7 +64792,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65225,7 +64801,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65238,7 +64813,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65246,7 +64820,6 @@
 "cpZ" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65260,7 +64833,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65271,7 +64843,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65286,7 +64857,6 @@
 	pixel_y = 20
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -69755,7 +69325,6 @@
 /area/hallway/secondary/entry)
 "cxI" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium,
@@ -72178,7 +71747,6 @@
 "cBX" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	icon_state = "intake";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -72287,7 +71855,6 @@
 /area/maintenance/asteroid/disposal/southeast)
 "cCk" = (
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
@@ -72651,7 +72218,6 @@
 /area/maintenance/asteroid/disposal/southeast)
 "cCX" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -72750,7 +72316,6 @@
 /area/maintenance/asteroid/disposal/southeast)
 "cDl" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -72758,14 +72323,12 @@
 "cDm" = (
 /obj/machinery/conveyor/auto{
 	dir = 9;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/disposal/southwest)
 "cDn" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 6
 	},
 /turf/open/floor/plating,
@@ -72918,14 +72481,12 @@
 /area/maintenance/asteroid/disposal/southeast)
 "cDC" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 5
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/disposal/southeast)
 "cDD" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -72933,14 +72494,12 @@
 "cDE" = (
 /obj/machinery/conveyor/auto{
 	dir = 10;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
 /area/maintenance/asteroid/disposal/southeast)
 "cDF" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 4
 	},
 /obj/structure/sign/poster/random{
@@ -73000,7 +72559,6 @@
 /obj/machinery/light/small,
 /obj/machinery/conveyor/auto{
 	dir = 9;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating,
@@ -73150,7 +72708,6 @@
 /area/maintenance/asteroid/disposal/southeast)
 "cEe" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 4
 	},
 /obj/machinery/light/small,
@@ -73481,7 +73038,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73510,7 +73066,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73530,7 +73085,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73913,7 +73467,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -73985,7 +73538,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74295,7 +73847,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74460,7 +74011,6 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74507,7 +74057,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74549,7 +74098,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74762,7 +74310,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74785,7 +74332,6 @@
 /obj/machinery/disposal/deliveryChute{
 	desc = "A chute for big and small crimnals alike!";
 	dir = 1;
-	icon_state = "intake";
 	name = "Criminal Delivery Chute";
 	},
 /obj/machinery/door/window/brigdoor/northleft{
@@ -74809,7 +74355,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74912,14 +74457,12 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/security/brig)
 "cHD" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74932,7 +74475,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74943,7 +74485,6 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -74953,7 +74494,6 @@
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75046,7 +74586,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75059,7 +74598,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75075,7 +74613,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75094,7 +74631,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75110,7 +74646,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75259,7 +74794,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75314,7 +74848,6 @@
 /obj/machinery/door/airlock/glass,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75349,7 +74882,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75372,7 +74904,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75391,7 +74922,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75419,7 +74949,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75537,7 +75066,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75551,7 +75079,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75878,7 +75405,6 @@
 "cJs" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -76019,7 +75545,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -76224,7 +75749,6 @@
 /obj/machinery/disposal/deliveryChute{
 	desc = "A chute for big and small crimnals alike!";
 	dir = 1;
-	icon_state = "intake";
 	name = "Criminal Delivery Chute";
 	},
 /obj/machinery/door/window/brigdoor/northleft{
@@ -77360,7 +76884,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -77877,7 +77400,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -82155,7 +81677,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -82650,7 +82171,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -82874,7 +82394,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -82886,7 +82405,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83141,7 +82659,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83161,7 +82678,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83242,7 +82758,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83254,7 +82769,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83266,7 +82780,6 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83326,7 +82839,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -83497,7 +83009,6 @@
 /area/shuttle/abandoned)
 "cYy" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -84551,7 +84062,6 @@
 /area/shuttle/escape)
 "daR" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -84636,7 +84146,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -84931,7 +84440,6 @@
 /area/shuttle/escape)
 "dbP" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -85111,7 +84619,6 @@
 /area/shuttle/escape)
 "dcp" = (
 /obj/machinery/light/small{
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -87245,14 +86752,12 @@
 "dhi" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/hallway/primary/starboard/fore)
 "dhj" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87518,7 +87023,6 @@
 /area/hallway/primary/starboard/fore)
 "dhU" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87560,7 +87064,6 @@
 "dia" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87843,7 +87346,6 @@
 "diU" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87859,7 +87361,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87881,7 +87382,6 @@
 /area/hallway/primary/starboard/aft)
 "diZ" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87892,7 +87392,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87910,7 +87409,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87948,7 +87446,6 @@
 "djh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -88070,7 +87567,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -88393,7 +87889,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -88403,7 +87898,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -88427,7 +87921,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -88437,7 +87930,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -89088,7 +88580,6 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -90260,7 +89751,6 @@
 /obj/machinery/disposal/deliveryChute{
 	desc = "A chute for the reformed crewmember to re-enter the station population.";
 	dir = 1;
-	icon_state = "intake";
 	name = "Gulag Exit Chute";
 	},
 /obj/machinery/door/window/northright,
@@ -91665,7 +91155,6 @@
 "dqR" = (
 /obj/machinery/conveyor/auto{
 	dir = 5;
-	icon_state = "conveyor0";
 	verted = -1
 	},
 /turf/open/floor/plating{
@@ -91674,7 +91163,6 @@
 /area/maintenance/asteroid/fore/com_west)
 "dqS" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -91683,7 +91171,6 @@
 /area/maintenance/asteroid/fore/com_west)
 "dqT" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 10
 	},
 /turf/open/floor/plating{
@@ -91870,7 +91357,6 @@
 /area/maintenance/asteroid/fore/com_west)
 "drm" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 8
 	},
 /turf/open/floor/plating{
@@ -91879,7 +91365,6 @@
 /area/maintenance/asteroid/fore/com_west)
 "drn" = (
 /obj/machinery/conveyor/auto{
-	icon_state = "conveyor0";
 	dir = 10
 	},
 /turf/open/floor/plating{
@@ -94472,7 +93957,6 @@
 /area/security/main)
 "dws" = (
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -95877,7 +95361,6 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -95892,7 +95375,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/red/corner{
-	icon_state = "redcorner";
 	dir = 1;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -95908,7 +95390,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 4;
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

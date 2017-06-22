@@ -30,7 +30,6 @@
 "i" = (
 /obj/structure/piano,
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -64,7 +63,6 @@
 /area/ruin/powered/aesthetic)
 "o" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -78,7 +76,6 @@
 /area/ruin/powered/aesthetic)
 "r" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,

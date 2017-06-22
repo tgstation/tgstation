@@ -5055,7 +5055,6 @@
 "akO" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4;
-	icon_state = "propulsion";
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -24601,7 +24600,6 @@
 "baG" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -37975,7 +37973,6 @@
 "bBS" = (
 /obj/machinery/conveyor{
 	dir = 10;
-	icon_state = "conveyor0";
 	id = "toxmineral"
 	},
 /obj/machinery/light/small,
@@ -50652,7 +50649,6 @@
 /area/shuttle/abandoned)
 "ceV" = (
 /obj/structure/shuttle/engine/propulsion/burst{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium,
@@ -52130,7 +52126,6 @@
 "cim" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /obj/docking_port/mobile/arrivals{
 	height = 13;

@@ -33,7 +33,6 @@
 "ah" = (
 /obj/structure/foamedmetal,
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/holofloor/asteroid,
@@ -41,7 +40,6 @@
 "ai" = (
 /obj/structure/foamedmetal,
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/holofloor/asteroid,
@@ -279,7 +277,6 @@
 /area/holodeck/rec_center/winterwonderland)
 "aR" = (
 /obj/structure/window/reinforced/tinted{
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/holofloor{
@@ -964,7 +961,6 @@
 /area/holodeck/rec_center/medical)
 "cW" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/structure/bed,
@@ -979,7 +975,6 @@
 /area/holodeck/rec_center/medical)
 "cX" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/machinery/computer/pandemic,
@@ -1055,7 +1050,6 @@
 /area/holodeck/rec_center/medical)
 "dk" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/structure/bed,
@@ -1069,7 +1063,6 @@
 /area/holodeck/rec_center/medical)
 "dl" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/machinery/sleeper{
@@ -1267,7 +1260,6 @@
 "dM" = (
 /obj/machinery/conveyor/holodeck{
 	dir = 5;
-	icon_state = "conveyor0";
 	id = "holocoaster";
 	movedir = null;
 	verted = -1
@@ -2054,7 +2046,6 @@
 "fH" = (
 /obj/machinery/conveyor/holodeck{
 	dir = 9;
-	icon_state = "conveyor0";
 	id = "holocoaster";
 	verted = -1
 	},
@@ -6276,11 +6267,9 @@
 /area/syndicate_mothership/control)
 "qr" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/structure/window/reinforced/tinted{
-	icon_state = "rwindow";
 	dir = 1
 	},
 /obj/machinery/door/window{
@@ -10142,7 +10131,6 @@
 /area/wizard_station)
 "zF" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
@@ -12517,7 +12505,6 @@
 /area/centcom/evac)
 "FJ" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

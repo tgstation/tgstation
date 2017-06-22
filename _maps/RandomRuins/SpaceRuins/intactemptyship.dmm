@@ -22,7 +22,6 @@
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
-	icon_state = "propulsion";
 	},
 /turf/template_noop,
 /area/ruin/powered/authorship)

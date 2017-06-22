@@ -30992,7 +30992,6 @@
 "bgu" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
@@ -80819,7 +80818,6 @@
 "cWf" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
-	icon_state = "propulsion"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -87187,7 +87185,6 @@
 "djM" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4;
-	icon_state = "propulsion"
 	},
 /obj/docking_port/mobile/arrivals,
 /obj/docking_port/stationary{

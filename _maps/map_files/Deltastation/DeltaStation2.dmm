@@ -579,7 +579,6 @@
 /area/maintenance/solars/starboard/fore)
 "abp" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8224,7 +8223,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/secondary/entry)
@@ -17051,7 +17049,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/security/prison)
@@ -17766,7 +17763,6 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /area/prison/execution_room)
@@ -17788,7 +17784,6 @@
 	on = 1
 	},
 /turf/open/floor/plasteel/darkred/corner{
-	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/prison/execution_room)
@@ -19164,7 +19159,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	icon_state = "intake";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -19485,7 +19479,6 @@
 "aNC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk{
@@ -21860,7 +21853,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/fore)
@@ -23676,7 +23668,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/fore)
@@ -27021,7 +27012,6 @@
 "bbu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/fore)
@@ -27608,7 +27598,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/fore)
@@ -28306,7 +28295,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/fore)
@@ -30300,7 +30288,6 @@
 	name = "hallway camera"
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/fore)
@@ -31856,7 +31843,6 @@
 "bkV" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -31865,7 +31851,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -31875,7 +31860,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -31884,7 +31868,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown/corner{
-	icon_state = "browncorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -62401,7 +62384,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -63951,7 +63933,6 @@
 "cqZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -64660,7 +64641,6 @@
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -65489,7 +65469,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -66309,7 +66288,6 @@
 	name = "hallway camera"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -66964,7 +66942,6 @@
 	pixel_x = -26
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/hallway/primary/central)
@@ -67023,7 +67000,6 @@
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/crew_quarters/toilet/restrooms)
@@ -67055,7 +67031,6 @@
 	name = "restroom camera"
 	},
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/crew_quarters/toilet/restrooms)
@@ -68042,7 +68017,6 @@
 /area/crew_quarters/toilet/restrooms)
 "cyJ" = (
 /turf/open/floor/plasteel/neutral/corner{
-	icon_state = "neutralcorner";
 	dir = 1
 	},
 /area/crew_quarters/toilet/restrooms)
@@ -74614,7 +74588,6 @@
 /area/science/xenobiology)
 "cLn" = (
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 1
 	},
 /obj/structure/disposalpipe/trunk,
@@ -78636,7 +78609,6 @@
 /area/maintenance/department/electrical)
 "cTv" = (
 /obj/structure/disposaloutlet{
-	icon_state = "outlet";
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk{
@@ -99858,7 +99830,6 @@
 /area/hallway/primary/aft)
 "dJj" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -109452,7 +109423,6 @@
 /area/shuttle/transport)
 "eeq" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 1
 	},
 /turf/open/floor/plating/airless,

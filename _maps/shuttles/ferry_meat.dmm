@@ -4,7 +4,6 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/overspace,
@@ -122,7 +121,6 @@
 /area/shuttle/transport)
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/shuttle{

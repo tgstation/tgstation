@@ -152,7 +152,6 @@
 /area/awaymission/cabin)
 "aB" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
