@@ -53,7 +53,7 @@
 		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
-	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), src, lifespan=100, null, FALSE, get_turf(chosen_beacon))
+	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	try_move_adjacent(J)
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
 	qdel(src)
