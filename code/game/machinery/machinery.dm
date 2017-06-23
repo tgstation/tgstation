@@ -500,7 +500,7 @@ Class Procs:
 	if(AM && AM == occupant && AM.loc != src)
 		occupant = null
 
-/obj/machinery/Exited(atom/movable/AM, atom/oldloc)
+/obj/machinery/Exited(atom/movable/AM, atom/newloc)
 	. = ..()
 	if (AM == occupant)
 		addtimer(CALLBACK(src, .proc/ClearOccupant, AM), 0) //the current thread may have plans
