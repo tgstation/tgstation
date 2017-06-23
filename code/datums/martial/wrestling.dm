@@ -10,6 +10,8 @@
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
+	required_object = /obj/item/weapon/storage/belt/champion/wrestling
+	required_slot = slot_belt
 	var/datum/action/slam/slam = new/datum/action/slam()
 	var/datum/action/throw_wrassle/throw_wrassle = new/datum/action/throw_wrassle()
 	var/datum/action/kick/kick = new/datum/action/kick()

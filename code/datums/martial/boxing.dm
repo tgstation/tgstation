@@ -1,5 +1,7 @@
 /datum/martial_art/boxing
 	name = "Boxing"
+	required_object = /obj/item/clothing/gloves/boxing
+	required_slot = slot_gloves
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
@@ -64,4 +66,4 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(slot_gloves) == src)
 		style.remove(H)
-	return
+ 	return

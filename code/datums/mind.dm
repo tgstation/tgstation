@@ -88,6 +88,9 @@
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	if(martial_art)
+		martial_art.mind_transfer(current, new_character)
+
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)

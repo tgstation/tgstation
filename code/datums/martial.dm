@@ -9,7 +9,10 @@
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
+	var/mob/living/carbon/human/martial_art_owner //The human that owns this martial art
 	var/no_guns = FALSE
+	var/obj/required_object //Any object required to use the martial art
+	var/required_slot //If there's a required object, it needs to be in this slot
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -86,6 +89,7 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
+	martial_art_owner = H
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.mind.martial_art != src)
@@ -93,3 +97,17 @@
 	H.mind.martial_art = base
 	if(help_verb)
 		H.verbs -= help_verb
+	martial_art_owner = null
+
+/datum/martial_art/proc/mind_transfer(mob/living/carbon/human/present, mob/living/future)
+	if(!required_object)
+		martial_art_owner = future
+	else
+		var/obj/O = locate(required_object) in future
+		if(!O)
+			remove(present) //The player can always just re-equip the object, assuming they have access to their old corpse
+		else
+			if(!required_slot && present.get_item_by_slot(required_slot) != O)
+				remove(present)
+			else
+				martial_art_owner = future
