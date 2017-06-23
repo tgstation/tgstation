@@ -65,9 +65,9 @@
 /datum/antagonist/wizard/apply_innate_effects()
 	forge_wizard_objectives()
 	var/mob/living/carbon/human/H = owner.current
-	H.equipOutfit(pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb), summoner)
+	H.equipOutfit(summoner ? pick(/datum/outfit/wizard,/datum/outfit/wizard/red,/datum/outfit/wizard/weeb) : /datum/outfit/wizard, summoner)
 	finalize_wizard()
-	INVOKE_ASYNC(src, name_wizard(summoner))
+	name_wizard(summoner)
 	return
 
 /datum/antagonist/wizard/proc/finalize_wizard()
@@ -85,19 +85,21 @@
 	return
 
 /datum/antagonist/wizard/proc/name_wizard()
+	var/mob/living/carbon/human/H = owner.current
+	if(summoner)
+		H.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
+	else if(H.age < WIZARD_AGE_MIN)
+		H.age = WIZARD_AGE_MIN
 	var/randomname = "[pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)]"
 	var/message = summoner ? "You are [summoner.real_name]'s apprentice." : "You are a 'diplomat' of the Wizard Federation."
 	var/newname = copytext(sanitize(input(owner.current, "[message] Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
-	var/mob/living/carbon/human/H = owner.current
+	if(QDELETED(owner.current) || !iswizard(owner.current))
+		return
 	if(!newname)
 		newname = randomname
 	H.real_name = newname
 	H.name = newname
 	owner.name = newname
-	if(summoner)
-		H.age = rand(AGE_MIN, WIZARD_AGE_MIN - 1)
-	else if(H.age < WIZARD_AGE_MIN)
-		H.age = WIZARD_AGE_MIN
 	H.dna.update_dna_identity()
 	return
 
