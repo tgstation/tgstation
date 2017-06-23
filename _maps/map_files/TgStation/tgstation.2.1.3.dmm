@@ -444,9 +444,7 @@
 "abt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -463,9 +461,7 @@
 "abv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -503,9 +499,7 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -649,9 +643,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -670,8 +662,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -1019,9 +1010,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
@@ -1392,9 +1381,7 @@
 /area/crew_quarters/heads/hos)
 "adp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -1786,9 +1773,7 @@
 "aed" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/machinery/button/ignition{
 	id = "executionburn";
@@ -2011,9 +1996,7 @@
 /area/security/main)
 "aew" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
@@ -2267,9 +2250,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -2633,9 +2614,7 @@
 /obj/structure/table,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/item/weapon/storage/box/hug,
 /obj/item/weapon/razor{
@@ -3057,9 +3036,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -3458,9 +3435,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -4071,9 +4046,7 @@
 "aiB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/security/prison)
@@ -4106,9 +4079,7 @@
 /area/security/brig)
 "aiH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -4370,9 +4341,7 @@
 	c_tag = "Courtroom North"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
@@ -5311,9 +5280,7 @@
 "alf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -5427,9 +5394,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
@@ -5459,9 +5424,7 @@
 "aly" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
@@ -5704,9 +5667,7 @@
 "amb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
@@ -6566,9 +6527,7 @@
 /area/hallway/primary/fore)
 "anR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -6597,9 +6556,7 @@
 "anW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/security/courtroom)
@@ -6768,9 +6725,7 @@
 "aor" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 6
@@ -7415,8 +7370,7 @@
 "apZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -8379,9 +8333,7 @@
 /area/crew_quarters/dorms)
 "asn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/security/vacantoffice/b)
@@ -8455,9 +8407,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -8563,9 +8513,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
@@ -8702,9 +8650,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
@@ -8998,9 +8944,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
@@ -9265,8 +9209,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -9776,8 +9719,7 @@
 "avM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
@@ -10454,9 +10396,7 @@
 "axh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/machinery/light{
 	dir = 1
@@ -10790,8 +10730,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/fitness)
@@ -11233,9 +11172,7 @@
 "ayU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -11284,9 +11221,7 @@
 "ayZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/blue/corner,
 /area/hallway/primary/fore)
@@ -11681,8 +11616,7 @@
 "azV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/side,
 /area/crew_quarters/dorms)
@@ -12586,9 +12520,7 @@
 "aCa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
@@ -12992,9 +12924,7 @@
 /area/maintenance/port/fore)
 "aCX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
@@ -13015,9 +12945,7 @@
 "aDa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
@@ -13167,9 +13095,7 @@
 "aDs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -13226,9 +13152,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/gateway)
@@ -13376,9 +13300,7 @@
 /area/crew_quarters/toilet)
 "aDO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
@@ -13441,8 +13363,7 @@
 "aDU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -13474,9 +13395,7 @@
 /obj/effect/landmark/start/mime,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -13824,9 +13743,7 @@
 "aEK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/checkpoint2)
@@ -14358,9 +14275,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -15126,9 +15041,7 @@
 "aHv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/gateway)
@@ -15178,9 +15091,7 @@
 "aHB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/storage/eva)
@@ -15690,9 +15601,7 @@
 /area/construction/mining/aux_base)
 "aII" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
@@ -16083,9 +15992,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -16486,9 +16393,7 @@
 "aKz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -16536,9 +16441,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
@@ -16666,9 +16569,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
@@ -16776,9 +16677,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -16949,9 +16848,7 @@
 "aLH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -17030,8 +16927,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -17179,8 +17075,7 @@
 "aMl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
@@ -17356,9 +17251,7 @@
 "aML" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -17572,18 +17465,14 @@
 "aNs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aNt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -18241,8 +18130,7 @@
 "aOU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -18914,9 +18802,7 @@
 "aQK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
@@ -19442,9 +19328,7 @@
 /area/crew_quarters/locker)
 "aSi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -19663,8 +19547,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -19684,9 +19567,7 @@
 "aSQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/green/side{
 	dir = 8
@@ -19973,9 +19854,7 @@
 /area/storage/art)
 "aTF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/structure/table,
 /obj/item/device/camera_film,
@@ -20061,9 +19940,7 @@
 /area/bridge)
 "aTU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
@@ -20248,9 +20125,7 @@
 "aUw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
@@ -20962,17 +20837,14 @@
 "aWc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aWd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/library)
@@ -21078,9 +20950,7 @@
 "aWs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/security/vacantoffice)
@@ -21783,9 +21653,7 @@
 "aXO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -22303,9 +22171,7 @@
 "aZa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -22877,9 +22743,7 @@
 "baB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
@@ -23183,9 +23047,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/locker)
@@ -23377,9 +23239,7 @@
 "bbP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/storage)
@@ -23507,9 +23367,7 @@
 "bci" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -23753,9 +23611,7 @@
 "bcP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
@@ -23947,9 +23803,7 @@
 /area/hallway/primary/central)
 "bdo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -24114,9 +23968,7 @@
 "bdF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
@@ -24291,9 +24143,7 @@
 "bec" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -25007,9 +24857,7 @@
 /area/maintenance/port)
 "bfN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
@@ -25412,8 +25260,7 @@
 "bgQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2
@@ -25636,9 +25483,7 @@
 /area/storage/emergency/starboard)
 "bhs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
@@ -25882,8 +25727,7 @@
 "bhP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
@@ -26629,9 +26473,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -26736,9 +26578,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -27305,9 +27145,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -27708,9 +27546,7 @@
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -28038,8 +27874,7 @@
 "bmv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
@@ -28341,9 +28176,7 @@
 "bng" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -29184,9 +29017,7 @@
 "boT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -29361,9 +29192,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain)
@@ -29494,9 +29323,7 @@
 "bpz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -30246,9 +30073,7 @@
 "bri" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2
@@ -30736,9 +30561,7 @@
 "bsd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -30876,8 +30699,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -31184,9 +31006,7 @@
 "btc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -31246,9 +31066,7 @@
 /area/medical/genetics)
 "btl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -31414,9 +31232,7 @@
 "btC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
@@ -31927,9 +31743,7 @@
 "buF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -32040,9 +31854,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -32278,9 +32090,7 @@
 "bvo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -32495,9 +32305,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
@@ -32608,9 +32416,7 @@
 "bwb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -32826,9 +32632,7 @@
 /obj/structure/chair,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/sleeper)
@@ -32972,8 +32776,7 @@
 "bwR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -33317,9 +33120,7 @@
 /obj/effect/landmark/start/depsec/science,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science)
@@ -33475,8 +33276,7 @@
 "bxO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -33598,9 +33398,7 @@
 "byd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 2
@@ -33914,9 +33712,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/supply)
@@ -34400,9 +34196,7 @@
 /area/quartermaster/qm)
 "bzU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 2
@@ -34876,9 +34670,7 @@
 /area/janitor)
 "bAU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/janitor)
@@ -35709,9 +35501,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -35830,9 +35620,7 @@
 "bCV" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -35847,9 +35635,7 @@
 /obj/item/weapon/cigbutt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/storage)
@@ -36702,9 +36488,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/storage/tech)
@@ -36853,9 +36637,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -37053,8 +36835,7 @@
 "bFE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/heads/cmo)
@@ -37569,9 +37350,7 @@
 "bGM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -37716,9 +37495,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
@@ -37757,9 +37534,7 @@
 "bHg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -38390,9 +38165,7 @@
 "bIp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -38462,9 +38235,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -38572,9 +38343,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -38603,9 +38372,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -38687,8 +38454,7 @@
 "bIU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
@@ -39711,9 +39477,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -40157,9 +39921,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -41017,9 +40779,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41059,9 +40819,7 @@
 /area/medical/virology)
 "bNX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/science/misc_lab)
@@ -41559,9 +41317,7 @@
 "bPc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -41710,9 +41466,7 @@
 "bPu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -41954,17 +41708,13 @@
 "bQb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bQc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/construction)
@@ -42217,8 +41967,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -42720,9 +42469,7 @@
 /obj/structure/chair/office/dark,
 /obj/effect/landmark/start/depsec/engineering,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
@@ -44370,9 +44117,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -44523,9 +44268,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/caution{
 	dir = 8
@@ -45570,9 +45313,7 @@
 "bYa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -45876,9 +45617,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/hallway/primary/aft)
@@ -46978,9 +46717,7 @@
 "cba" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -47126,9 +46863,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral{
 	dir = 2
@@ -48095,9 +47830,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -48413,9 +48146,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -48541,9 +48272,7 @@
 "cen" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -49094,9 +48823,7 @@
 /area/crew_quarters/heads/chief)
 "cfG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -49250,9 +48977,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -51063,9 +50788,7 @@
 "cjQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -52590,9 +52313,7 @@
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engine_smes)
@@ -53624,9 +53345,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -53652,9 +53371,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/machinery/airalarm{
 	dir = 1;
@@ -53957,9 +53674,7 @@
 "cpW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -55390,9 +55105,7 @@
 "ctu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -55474,8 +55187,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -55955,9 +55667,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/darkblue/corner{
 	dir = 4
@@ -56047,8 +55757,7 @@
 "cuI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat/service)
@@ -56326,9 +56035,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/machinery/turretid{
 	control_area = "AI Satellite Hallway";
@@ -56574,9 +56281,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat/hallway)
@@ -56832,8 +56537,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -59152,9 +58856,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -59802,9 +59504,7 @@
 "cDr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -60289,8 +59989,7 @@
 "cEw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -60477,8 +60176,7 @@
 "cEP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -60580,9 +60278,7 @@
 "cFb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -60623,8 +60319,7 @@
 "cFf" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -61255,9 +60950,7 @@
 "cGR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)

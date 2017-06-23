@@ -196,9 +196,7 @@
 	})
 "aC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -257,9 +255,7 @@
 	})
 "aK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -318,9 +314,7 @@
 	})
 "aS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -379,9 +373,7 @@
 	})
 "ba" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1731,8 +1723,7 @@
 "eb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
@@ -1775,9 +1766,7 @@
 "eh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1812,9 +1801,7 @@
 "el" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -2211,8 +2198,7 @@
 "ft" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -2292,9 +2278,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
@@ -2834,8 +2818,7 @@
 "hk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
@@ -2864,9 +2847,7 @@
 "ho" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
@@ -3480,9 +3461,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
@@ -3677,9 +3656,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -3997,8 +3974,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
 	icon_state = "yellow";
@@ -4180,9 +4156,7 @@
 "ky" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/security)
@@ -4233,9 +4207,7 @@
 "kG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -4824,9 +4796,7 @@
 "mo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/ruin/hotel/custodial)
@@ -4843,8 +4813,7 @@
 "mr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
