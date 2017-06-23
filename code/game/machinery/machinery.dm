@@ -495,3 +495,11 @@ Class Procs:
 		emp_act(2)
 	else
 		ex_act(2)
+
+/obj/machinery/proc/ClearOccupant(atom/movable/AM)
+    if(AM == occupant)
+		occupant = null
+
+/obj/machinery/Exited(atom/movable/AM)
+	if (AM == occupant)
+		addtimer(CALLBACK(src, .proc/ClearOccupant, AM), 0) //the current thread may have plans
