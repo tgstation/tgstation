@@ -477,6 +477,13 @@ BLIND     // can't see anything
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damaged[blood_overlay_type]")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		var/mob/living/carbon/human/M = loc
+		if(ishuman(M) && M.w_uniform)
+			var/obj/item/clothing/under/U = M.w_uniform
+			if(istype(U) && U.attached_accessory)
+				var/obj/item/clothing/accessory/A = U.attached_accessory
+				if(A.above_suit)
+					. += U.accessory_overlay
 
 /obj/item/clothing/suit/update_clothes_damaged_state(damaging = TRUE)
 	..()
@@ -545,25 +552,19 @@ BLIND     // can't see anything
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory
+	var/mutable_appearance/accessory_overlay
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
-
 	if(!isinhands)
 
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
-		if(attached_accessory)
-			var/accessory_color = attached_accessory.item_color
-			if(!accessory_color)
-				accessory_color = attached_accessory.icon_state
-			var/mutable_appearance/accessory = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
-			accessory.alpha = attached_accessory.alpha
-			accessory.color = attached_accessory.color
-			. += accessory
+		if(accessory_overlay)
+			. += accessory_overlay
 
 /obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
@@ -602,12 +603,20 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(attached_accessory && slot != slot_hands)
+	if(attached_accessory && slot != slot_hands && ishuman(user))
+		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
+		if(attached_accessory.above_suit)
+			H.update_inv_wear_suit()
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
 		attached_accessory.on_uniform_dropped(src, user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(attached_accessory.above_suit)
+				H.update_inv_wear_suit()
+
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
@@ -631,9 +640,17 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
 
+			var/accessory_color = attached_accessory.item_color
+			if(!accessory_color)
+				accessory_color = attached_accessory.icon_state
+			accessory_overlay = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
+			accessory_overlay.alpha = attached_accessory.alpha
+			accessory_overlay.color = attached_accessory.color
+
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
+				H.update_inv_wear_suit()
 
 			return TRUE
 
@@ -654,6 +671,7 @@ BLIND     // can't see anything
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_w_uniform()
+			H.update_inv_wear_suit()
 
 
 /obj/item/clothing/under/examine(mob/user)

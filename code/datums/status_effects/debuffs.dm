@@ -254,7 +254,7 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
 
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/mining_hammer/new_hammer_synced)
 	. = ..()
