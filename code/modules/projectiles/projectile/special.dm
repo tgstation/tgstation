@@ -201,9 +201,16 @@
 	damage_type = BRUTE
 	damage = 5
 	range = 4
-	dismemberment = 20
+	dismemberment = 0
+	weapon_weight = WEAPON_HEAVY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
 	var/mine_range = 3 //mines this many additional tiles
+
+/obj/item/projectile/plasma/Range()
+	..()
+	damage += -0.5
+	if(damage < 0)
+		qdel(src)
 
 /obj/item/projectile/plasma/Initialize()
 	. = ..()
@@ -232,6 +239,12 @@
 	damage = 7
 	range = 5
 	mine_range = 5
+
+/obj/item/projectile/plasma/adv/Range()
+	..()
+	damage += -1
+	if(damage < 0)
+		qdel(src)
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
