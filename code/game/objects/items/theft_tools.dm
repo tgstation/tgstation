@@ -14,7 +14,7 @@
 	var/pulse = 0
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
-	var/list/blacklisted_locs = (/obj/machinery/nuclearbomb,  /obj/item/nuke_core_container)
+	var/list/blacklisted_locs = list(/obj/machinery/nuclearbomb,  /obj/item/nuke_core_container)
 
 /obj/item/nuke_core/Initialize()
 	. = ..()
@@ -219,6 +219,8 @@
 		return
 	if(ismovableatom(O))
 		Consume(O)
+		qdel(src)
+		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
 
 /obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
