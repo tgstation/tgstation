@@ -31,7 +31,7 @@
 		return ..()
 
 /obj/item/nuke_core/process()
-	if(is_type_in_typecache(loc, blacklisted_locs_typecache)
+	if(is_type_in_typecache(loc, blacklisted_locs_typecache))
 		return
 	if(cooldown < world.time - 60)
 		cooldown = world.time
