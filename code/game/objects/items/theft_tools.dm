@@ -14,7 +14,6 @@
 	var/pulse = 0
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
-	var/static/list/blacklisted_locs_typecache = typecacheof(list(/obj/machinery/nuclearbomb, /obj/item/nuke_core_container))
 
 /obj/item/nuke_core/Initialize()
 	. = ..()
@@ -31,8 +30,6 @@
 		return ..()
 
 /obj/item/nuke_core/process()
-	if(is_type_in_typecache(loc, blacklisted_locs_typecache))
-		return
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
