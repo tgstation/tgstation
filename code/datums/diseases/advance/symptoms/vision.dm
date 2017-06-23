@@ -80,6 +80,8 @@ Bonus
 	..()
 	var/mob/living/M = A.affected_mob
 	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	if (!eyes)
+		return
 	switch(A.stage)
 		if(4, 5) //basically oculine
 			if(M.disabilities & BLIND)
