@@ -218,9 +218,7 @@ The following different coding styles are not only not enforced, but it is gener
 * English/British spelling on var/proc names
 	* Color/Colour nobody cares,
 * Spaces after control statements
-	* if() if () nobody cares,
-* Spaces separating bitwise operators
-	* A|B A | B nobody cares.
+	* if() if () nobody cares.
 
 #### Operators and spaces:
 (this is not strictly enforced, but more a guideline for readability's sake)
