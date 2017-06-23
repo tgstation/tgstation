@@ -237,7 +237,7 @@
 		death()
 
 /mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || unconscious || IsStun() || knockdown || (!ignore_restraints && restrained(ignore_grab)))
+	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 /mob/living/proc/InCritical()
@@ -935,7 +935,7 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_canmove()
-	var/ko = knockdown || unconscious || stat || (status_flags & FAKEDEATH)
+	var/ko = IsKnockdown() || IsUnconscious() || stat || (status_flags & FAKEDEATH)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
