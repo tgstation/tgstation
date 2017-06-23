@@ -68,6 +68,7 @@
 #include "code\__DEFINES\subsystems.dm"
 #include "code\__DEFINES\tgui.dm"
 #include "code\__DEFINES\tick.dm"
+#include "code\__DEFINES\time.dm"
 #include "code\__DEFINES\typeids.dm"
 #include "code\__DEFINES\vv.dm"
 #include "code\__DEFINES\wires.dm"

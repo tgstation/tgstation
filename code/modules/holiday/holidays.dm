@@ -1,16 +1,17 @@
 /datum/holiday
 	var/name = "Bugsgiving"
-	//Right now, only holidays that take place on a certain day or within a time period are supported
-	//It would be nice to support things like "the second monday in march" or "the first sunday after the second sunday in june"
+
 	var/begin_day = 1
 	var/begin_month = 0
 	var/end_day = 0 // Default of 0 means the holiday lasts a single day
 	var/end_month = 0
-
+	var/begin_week = FALSE //If set to a number, then this holiday will begin on certain week
+	var/begin_weekday = FALSE //If set to a weekday, then this will trigger the holiday on the above week
 	var/always_celebrate = FALSE // for christmas neverending, or testing.
 
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
+	return
 
 // When the round starts, this proc is ran to get a text message to display to everyone to wish them a happy holiday
 /datum/holiday/proc/greet()
@@ -23,7 +24,7 @@
 	return copytext(name,1,i)
 
 // Return 1 if this holidy should be celebrated today
-/datum/holiday/proc/shouldCelebrate(dd, mm, yy)
+/datum/holiday/proc/shouldCelebrate(dd, mm, yy, ww, ddd)
 	if(always_celebrate)
 		return TRUE
 
@@ -31,7 +32,9 @@
 		end_day = begin_day
 	if(!end_month)
 		end_month = begin_month
-
+	if(begin_week && begin_weekday)
+		if(begin_week == ww && begin_weekday == ddd)
+			return TRUE
 	if(end_month > begin_month) //holiday spans multiple months in one year
 		if(mm == end_month) //in final month
 			if(dd <= end_day)
@@ -229,7 +232,7 @@
 /datum/holiday/programmers
 	name = "Programmers' Day"
 
-/datum/holiday/programmers/shouldCelebrate(dd, mm, yy) //Programmer's day falls on the 2^8th day of the year
+/datum/holiday/programmers/shouldCelebrate(dd, mm, yy, ww, ddd) //Programmer's day falls on the 2^8th day of the year
 	if(mm == 9)
 		if(yy/4 == round(yy/4)) //Note: Won't work right on September 12th, 2200 (at least it's a Friday!)
 			if(dd == 12)
@@ -314,6 +317,70 @@
 	begin_day = 14
 	begin_month = DECEMBER
 
+/datum/holiday/thanksgiving
+	name = "Thanksgiving in the United States"
+	begin_week = 4
+	begin_month = NOVEMBER
+	begin_weekday = THURSDAY
+
+/datum/holiday/thanksgiving/canada
+	name = "Thanksgiving in Canada"
+	begin_week = 2
+	begin_month = OCTOBER
+	begin_weekday = MONDAY
+
+/datum/holiday/columbus
+	name = "Columbus Day"
+	begin_week = 2
+	begin_month = OCTOBER
+	begin_weekday = MONDAY
+
+/datum/holiday/mother
+	name = "Mother's Day"
+	begin_week = 2
+	begin_month = MAY
+	begin_weekday = SUNDAY
+
+/datum/holiday/mother/greet()
+	return "Happy Mother's Day in most of the Americas, Asia, and Oceania!"
+
+/datum/holiday/father
+	name = "Father's Day"
+	begin_week = 3
+	begin_month = JUNE
+	begin_weekday = SUNDAY
+
+/datum/holiday/ramadan
+	name = "Start of Ramadan"
+
+/*
+
+For anyone who stumbles on this some time in the future: this was calibrated to 2017
+Calculated based on the start and end of Ramadan in 2000 (First year of the Gregorian Calendar supported by BYOND)
+This is going to be accurate for at least a decade, likely a lot longer
+Since the date fluctuates, it may be inaccurate one year and then accurate for several after
+Inaccuracies will never be by more than one day for at least a hundred years
+Finds the number of days since the day in 2000 and gets the modulo of that and the average length of a Muslim year since the first one (622 AD, Gregorian)
+Since Ramadan is an entire month that lasts 29.5 days on average, the start and end are holidays and are calculated from the two dates in 2000
+
+*/
+
+/datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
+	if (round(((world.realtime - 285984000) / 864000) % 354.373435326843) == 0)
+		return TRUE
+	return FALSE
+
+/datum/holiday/ramadan/getStationPrefix()
+	return pick("Harm","Halaal","Jihad","Muslim")
+
+/datum/holiday/ramadan/end
+	name = "End of Ramadan"
+
+/datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
+	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == 0)
+		return TRUE
+	return FALSE
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
@@ -345,10 +412,9 @@
 /datum/holiday/friday_thirteenth
 	name = "Friday the 13th"
 
-/datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yy)
-	if(dd == 13)
-		if(time2text(world.timeofday, "DDD") == "Fri")
-			return TRUE
+/datum/holiday/friday_thirteenth/shouldCelebrate(dd, mm, yy, ww, ddd)
+	if(dd == 13 && ddd == FRIDAY)
+		return TRUE
 	return FALSE
 
 /datum/holiday/friday_thirteenth/getStationPrefix()
@@ -359,7 +425,7 @@
 	var/const/days_early = 1 //to make editing the holiday easier
 	var/const/days_extra = 1
 
-/datum/holiday/easter/shouldCelebrate(dd, mm, yy)
+/datum/holiday/easter/shouldCelebrate(dd, mm, yy, ww, ddd)
 // Easter's celebration day is as snowflakey as Uhangi's code
 
 	if(!begin_month)
@@ -424,7 +490,6 @@
 	return ..()
 
 /datum/holiday/easter/celebrate()
-	..()
 	GLOB.maintenance_loot += list(
 		/obj/item/weapon/reagent_containers/food/snacks/egg/loaded = 15,
 		/obj/item/weapon/storage/bag/easterbasket = 15)
