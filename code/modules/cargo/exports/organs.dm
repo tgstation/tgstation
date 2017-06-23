@@ -87,7 +87,7 @@
 	unit_name = "cat ears"
 	export_types = list(/obj/item/organ/ears/cat)
 	
-/datum/export/obj/item/organ/cat/tail
+/datum/export/organ/cat/tail
 	cost = 1000
 	unit_name = "cat tail"
 	export_types = list(/obj/item/organ/tail/cat)
