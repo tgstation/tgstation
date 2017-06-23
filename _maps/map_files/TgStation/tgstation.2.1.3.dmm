@@ -4528,10 +4528,10 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajC" = (
-/obj/item/weapon/storage/toolbox/drone,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/weapon/storage/toolbox/sec,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "ajD" = (
@@ -89643,7 +89643,7 @@ aJq
 aLY
 aJq
 aJq
-bcW
+aRh
 bbV
 bfo
 bkS
