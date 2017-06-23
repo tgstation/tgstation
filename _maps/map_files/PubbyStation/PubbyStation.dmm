@@ -892,9 +892,7 @@
 "acb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
@@ -1305,9 +1303,7 @@
 "adg" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -2891,9 +2887,7 @@
 "agz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
@@ -5740,9 +5734,7 @@
 "amr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Brig Gulag Teleporter";
@@ -18157,9 +18149,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
@@ -19347,9 +19337,7 @@
 "aPD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
@@ -21499,9 +21487,7 @@
 "aUi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 1
@@ -21582,9 +21568,7 @@
 "aUq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
@@ -24414,9 +24398,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -27098,9 +27080,7 @@
 "bgE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -28923,9 +28903,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone3)
@@ -40616,9 +40594,7 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -41722,9 +41698,7 @@
 "bKQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -43564,9 +43538,7 @@
 "bOx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -44301,9 +44273,7 @@
 "bQm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
@@ -45492,9 +45462,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 8

@@ -1574,9 +1574,7 @@
 "cH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/structure/chair/wood/normal{
 	dir = 1
@@ -1622,9 +1620,7 @@
 "cK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
@@ -2389,9 +2385,7 @@
 "dS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 2;
@@ -2421,9 +2415,7 @@
 "dV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
@@ -2663,9 +2655,7 @@
 "ep" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -3495,9 +3485,7 @@
 "fA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/structure/chair/wood/normal,
 /turf/open/floor/carpet{
@@ -8047,9 +8035,7 @@
 "me" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white{
@@ -8882,9 +8868,7 @@
 "nm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
@@ -10947,9 +10931,7 @@
 "pQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/button/door{
 	id = "awaydorm4";
@@ -11002,9 +10984,7 @@
 "pU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/button/door{
 	id = "awaydorm6";
@@ -13163,9 +13143,7 @@
 "sG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13320,9 +13298,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/red/side{
@@ -14743,9 +14719,7 @@
 "uO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
@@ -16407,9 +16381,7 @@
 "xe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/newscaster{
 	pixel_y = -28
@@ -17092,9 +17064,7 @@
 "ya" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	heat_capacity = 1e+006

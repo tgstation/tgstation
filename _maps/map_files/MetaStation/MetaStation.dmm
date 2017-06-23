@@ -2808,9 +2808,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/heads/hos)
@@ -5029,9 +5027,7 @@
 "ajE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/landmark/secequipment,
 /turf/open/floor/plasteel/vault,
@@ -5103,9 +5099,7 @@
 "ajM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/range)
@@ -9586,9 +9580,7 @@
 "asn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/camera{
 	c_tag = "Labor Shuttle Control Desk";
@@ -9776,9 +9768,7 @@
 "asy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/vehicle/secway,
 /obj/item/key/security,
@@ -11247,9 +11237,7 @@
 "avj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/security/brig)
@@ -13635,9 +13623,7 @@
 "azF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -14520,9 +14506,7 @@
 "aBj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -15813,9 +15797,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/machinery/button/flasher{
 	id = "holdingflash";
@@ -76728,9 +76710,7 @@
 "cOb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/plasteel/black,
@@ -83143,9 +83123,7 @@
 "dbb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)

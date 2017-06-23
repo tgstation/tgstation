@@ -1861,9 +1861,7 @@
 "et" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1887,9 +1885,7 @@
 "ew" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -3663,9 +3659,7 @@
 "jh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -4363,9 +4357,7 @@
 /obj/item/weapon/papercutter,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/security)
