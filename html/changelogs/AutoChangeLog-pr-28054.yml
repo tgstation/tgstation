@@ -1,0 +1,6 @@
+author: "That Really Good Soda Flavor"
+delete-after: True
+changes: 
+  - experiment: "Added the ability for a holiday to start on the nth weekday of a month."
+  - experiment: "Allahu ackbar! Added the ability to calculate Ramadan."
+  - rscadd: "Added Thanksgiving, Mother's Day, Father's Day, Ramadan, and Columbus Day to the possible holidays."
