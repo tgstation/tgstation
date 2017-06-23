@@ -41,7 +41,6 @@
 		var/datum/status_effect/incapacitating/unconscious/U = IsUnconscious()
 		if(amount <= 0)
 			if(U)
-				U.update_canmove = updating
 				qdel(U)
 		else if(U)
 			U.duration = world.time + amount
@@ -81,7 +80,6 @@
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(amount <= 0)
 		if(S)
-			S.update_canmove = updating
 			qdel(S)
 	else if(S)
 		S.duration = world.time + amount

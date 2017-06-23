@@ -4,29 +4,21 @@
 	tick_interval = 0
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	var/update_canmove = TRUE
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	if(isnum(set_duration))
 		duration = set_duration
 	. = ..()
 	if(.)
-		if(isnum(updating_canmove))
-			update_canmove = updating_canmove
-		if(update_canmove)
+		if(updating_canmove)
 			owner.update_canmove()
 			if(issilicon(owner))
 				owner.update_stat()
 
-/datum/status_effect/incapacitating/on_apply()
-	. = ..()
-	update_canmove = TRUE
-
 /datum/status_effect/incapacitating/on_remove()
-	if(update_canmove)
-		owner.update_canmove()
-		if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
-			owner.update_stat()
+	owner.update_canmove()
+	if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+		owner.update_stat()
 
 //STUN
 /datum/status_effect/incapacitating/stun
@@ -50,7 +42,7 @@
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
 	if(.)
-		if(update_canmove)
+		if(updating_canmove)
 			owner.update_stat()
 		if(iscarbon(owner)) //to avoid repeated istypes
 			carbon_owner = owner
@@ -75,8 +67,7 @@
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	..()
-	if(update_canmove)
-		owner.update_stat()
+	owner.update_stat()
 
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"

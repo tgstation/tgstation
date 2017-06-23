@@ -30,7 +30,6 @@
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(amount <= 0)
 			if(S)
-				S.update_canmove = updating
 				qdel(S)
 		else
 			if(absorb_stun(amount, ignore_canstun))
@@ -79,7 +78,6 @@
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(amount <= 0)
 			if(K)
-				K.update_canmove = updating
 				qdel(K)
 		else
 			if(absorb_stun(amount, ignore_canknockdown))
