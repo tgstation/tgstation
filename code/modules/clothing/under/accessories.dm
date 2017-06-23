@@ -7,6 +7,7 @@
 	item_color = "plasma" //On accessories, this controls the worn sprite. That's a bit weird.
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
+	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
@@ -55,6 +56,7 @@
 	plane = initial(plane)
 	U.cut_overlays()
 	U.attached_accessory = null
+	U.accessory_overlay = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
@@ -62,9 +64,16 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
+/obj/item/clothing/accessory/AltClick()
+	if(initial(above_suit))
+		above_suit = !above_suit
+		to_chat(usr, "\The [src] will be worn [above_suit ? "above" : "below"] your suit.")
+
 /obj/item/clothing/accessory/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>")
+	if(initial(above_suit))
+		to_chat(user, "<span class='notice'>\The [src] can be worn above or below your suit. Alt-click to toggle.</span>")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -284,4 +293,13 @@
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
 	item_color = "talisman"
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+
+
+/obj/item/clothing/accessory/skullcodpiece
+	name = "skull codpiece"
+	desc = "A skull shaped ornament, intended to protect the important things in life."
+	icon_state = "skull"
+	item_color = "skull"
+	above_suit = TRUE
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
