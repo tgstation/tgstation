@@ -13,7 +13,8 @@
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
-	luminosity = 4
+	light_range = 5
+	light_power = 1
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
