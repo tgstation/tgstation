@@ -55,7 +55,7 @@
 		if(!check_rights_for(C, R_MENTOR) || C.holder.fakekey)
 			Lines += "\t [C.key][show_info(C)] ([round(C.avgping, 1)]ms)"
 
-	for(var/line in sortList(Lines))
+	for(var/line in Lines)
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(GLOB.clients)]</b>"
