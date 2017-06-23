@@ -219,7 +219,7 @@
 		return
 	if(ismovableatom(O))
 		Consume(O)
-		qdel(src)
+		QDEL_NULL(sliver)
 		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
 
 /obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
