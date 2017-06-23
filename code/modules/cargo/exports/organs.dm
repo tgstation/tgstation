@@ -92,7 +92,6 @@
 	unit_name = "cat tail"
 	export_types = list(/obj/item/organ/tail/cat)
 
-
 // Human organs.
 
 // Do not put human brains here, they are not sellable for a purpose.
