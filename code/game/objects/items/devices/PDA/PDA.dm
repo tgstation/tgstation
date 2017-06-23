@@ -846,16 +846,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/device/pda/Destroy()
 	GLOB.PDAs -= src
-	if(id)
+	if(istype(id))
 		qdel(id)
 		id = null
 	if(istype(cartridge))
 		qdel(cartridge)
 		cartridge = null
-	if(pai)
+	if(istype(pai))
 		qdel(pai)
 		pai = null
-	if(inserted_item)
+	if(istype(inserted_item))
 		qdel(inserted_item)
 		inserted_item = null
 	return ..()
