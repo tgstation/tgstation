@@ -77,10 +77,6 @@
 	return ..()
 	
 // Kitty Organs.
-
-/datum/export/organ/cat
-	contrabrand = FALSE
-	include_subtypes = FALSE
 	
 /datum/export/organ/cat/ears
 	cost = 1000
