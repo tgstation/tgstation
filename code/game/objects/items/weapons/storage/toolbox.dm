@@ -128,6 +128,21 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
+/obj/item/weapon/storage/toolbox/sec
+	name = "mechanical toolbox"
+	icon_state = "blue"
+	item_state = "toolbox_blue"
+
+/obj/item/weapon/storage/toolbox/sec/PopulateContents()
+	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil(src,30,pickedcolor)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+
 /obj/item/weapon/storage/toolbox/brass
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
