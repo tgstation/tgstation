@@ -56,7 +56,7 @@
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
-	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/mech/radio = null
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
@@ -117,6 +117,7 @@
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
+/obj/item/device/radio/mech //this has to go somewhere
 
 /obj/mecha/Initialize()
 	. = ..()
@@ -145,7 +146,7 @@
 /obj/mecha/get_cell()
 	return cell
 
-/obj/mecha/Destroy()
+/obj/mecha/deconstruct(disassembled = TRUE)
 	go_out()
 	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
