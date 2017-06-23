@@ -291,7 +291,7 @@
 	results = list("blood" = 1)
 	required_reagents = list("virusfood" = 1)
 	required_catalysts = list("blood" = 1)
-	var/level_min = 0
+	var/level_min = 1
 	var/level_max = 2
 
 /datum/chemical_reaction/mix_virus/on_reaction(datum/reagents/holder, created_volume)
