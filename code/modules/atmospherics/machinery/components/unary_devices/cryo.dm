@@ -170,6 +170,9 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	var/turf/T = get_turf(src)
+	if(occupant && occupant.loc != src)
+		occupant = null
+		update_icon()
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
