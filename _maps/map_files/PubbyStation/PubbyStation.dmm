@@ -3433,9 +3433,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "ahF" = (
 /obj/machinery/door/firedoor,
@@ -3449,9 +3447,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "ahG" = (
 /obj/machinery/door/firedoor,
@@ -3461,9 +3457,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "ahH" = (
 /turf/closed/wall,
@@ -9331,9 +9325,7 @@
 	name = "prisoner processing blast door"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "atW" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -18038,9 +18030,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aME" = (
 /obj/machinery/door/poddoor/shutters{
@@ -18049,9 +18039,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aMF" = (
 /obj/machinery/door/poddoor/shutters{
@@ -18059,9 +18047,7 @@
 	name = "warehouse shutters"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aMG" = (
 /obj/structure/closet/crate/internals,
@@ -19836,9 +19822,7 @@
 	id = "cargodeliver"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/quartermaster/office)
 "aQr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -33765,9 +33749,7 @@
 "btn" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/science/storage)
 "bto" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -33780,9 +33762,7 @@
 	network = list("SS13","RD")
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/science/storage)
 "btp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -39860,9 +39840,7 @@
 	name = "atmos blast door"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "bGo" = (
 /obj/structure/chair/office/dark{
@@ -40114,9 +40092,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "bGU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -40247,9 +40223,7 @@
 	req_access_txt = "11"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bHk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -40279,9 +40253,7 @@
 	req_access_txt = "11"
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/storage/tech)
 "bHn" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -40444,9 +40416,7 @@
 	opacity = 1
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/atmos)
 "bHC" = (
 /obj/machinery/navbeacon{
@@ -41322,9 +41292,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "bJy" = (
 /obj/structure/disposalpipe/segment,
@@ -41739,9 +41707,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "bKp" = (
 /obj/machinery/door/firedoor/heavy,
@@ -42443,9 +42409,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "bLF" = (
 /obj/machinery/door/poddoor/preopen{
@@ -42461,9 +42425,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "bLG" = (
 /obj/machinery/door/poddoor/preopen{
@@ -42475,9 +42437,7 @@
 	dir = 6
 	},
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/engine/engineering)
 "bLH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{

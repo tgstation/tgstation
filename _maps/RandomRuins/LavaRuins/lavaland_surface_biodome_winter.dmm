@@ -120,38 +120,33 @@
 /area/ruin/powered/snow_biodome)
 "at" = (
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "au" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "av" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aw" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ax" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/beans,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "ay" = (
@@ -175,8 +170,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aB" = (
@@ -196,8 +190,7 @@
 "aD" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aE" = (
@@ -208,8 +201,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aG" = (
@@ -217,15 +209,13 @@
 	dir = 8
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aH" = (
 /mob/living/simple_animal/hostile/skeleton/eskimo,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aI" = (
@@ -250,8 +240,7 @@
 "aL" = (
 /obj/structure/displaycase/captain,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aM" = (
@@ -262,8 +251,7 @@
 "aN" = (
 /obj/structure/bed/dogbed,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "aO" = (
@@ -447,8 +435,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bx" = (
@@ -456,8 +443,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "by" = (
@@ -472,15 +458,13 @@
 "bz" = (
 /obj/machinery/light,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bA" = (
 /obj/machinery/light,
 /turf/open/floor/wood{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	name = "floor"
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered/snow_biodome)
 "bB" = (

@@ -1197,8 +1197,7 @@
 /area/storage/primary)
 "dj" = (
 /turf/open/floor/plasteel{
-	icon_state = "L13";
-	name = "floor"
+	icon_state = "L13"
 	},
 /area/storage/primary)
 "dk" = (

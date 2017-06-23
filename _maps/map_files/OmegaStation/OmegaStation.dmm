@@ -6596,8 +6596,7 @@
 	},
 /turf/open/floor/plasteel{
 	desc = "";
-	icon_state = "L13";
-	name = "floor"
+	icon_state = "L13"
 	},
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -25249,8 +25248,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
-	icon_state = "L13";
-	name = "floor"
+	icon_state = "L13"
 	},
 /area/hallway/primary/central)
 "aPp" = (

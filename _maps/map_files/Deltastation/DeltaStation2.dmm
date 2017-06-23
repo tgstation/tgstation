@@ -32996,8 +32996,7 @@
 	},
 /turf/open/floor/plasteel{
 	desc = "";
-	icon_state = "L13";
-	name = "floor"
+	icon_state = "L13"
 	},
 /area/hallway/primary/central)
 "bmW" = (
@@ -70642,8 +70641,7 @@
 "cDW" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel{
-	icon_state = "L13";
-	name = "floor"
+	icon_state = "L13"
 	},
 /area/hallway/primary/central)
 "cDX" = (
