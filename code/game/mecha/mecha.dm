@@ -56,7 +56,7 @@
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
-	var/obj/item/device/radio/mech/radio = null
+	var/obj/item/device/radio/mech/radio
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
