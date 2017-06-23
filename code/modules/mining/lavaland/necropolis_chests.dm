@@ -538,6 +538,10 @@
 	throwforce = 20
 	throwforce_on = 20
 	icon = 'icons/obj/lavaland/artefacts.dmi'
+	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	icon_state = "cleaving_saw"
 	icon_state_on = "cleaving_saw_open"
 	slot_flags = SLOT_BELT
@@ -568,8 +572,8 @@
 		return FALSE
 	. = ..()
 	if(.)
-		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.75)
-		user.changeNext_move(CLICK_CD_MELEE * 0.375)
+		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
+		user.changeNext_move(CLICK_CD_MELEE * 0.25)
 
 /obj/item/weapon/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
@@ -592,18 +596,20 @@
 /obj/item/weapon/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
 		var/beast_bonus_active = FALSE
+		var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 		if(istype(target, /mob/living/simple_animal/hostile/asteroid) || ismegafauna(target))
-			var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 			if(!active)
 				if(!B)
 					target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+				else
+					B.add_bleed(B.bleed_buildup)
 			else
 				force += beast_force_bonus //we do bonus damage against beastly creatures
 				beast_bonus_active = TRUE
-			if(B)
-				B.add_bleed(B.bleed_buildup)
 		..()
 		if(beast_bonus_active)
+			if(B)
+				B.add_bleed(B.bleed_buildup)
 			force -= beast_force_bonus
 		return
 	var/turf/user_turf = get_turf(user)

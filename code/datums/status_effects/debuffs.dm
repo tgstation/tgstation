@@ -193,7 +193,7 @@
 	alert_type = null
 	var/mutable_appearance/bleed_overlay
 	var/mutable_appearance/bleed_underlay
-	var/bleed_amount = 0
+	var/bleed_amount = 3
 	var/bleed_buildup = 3
 	var/delay_before_decay = 5
 	var/bleed_damage = 200
@@ -217,8 +217,8 @@
 	bleed_overlay.pixel_y = Floor(icon_height * 0.25)
 	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
 	bleed_underlay.pixel_x = -owner.pixel_x
-	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 2
-	bleed_underlay.alpha = 35
+	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 4
+	bleed_underlay.alpha = 40
 	owner.add_overlay(bleed_overlay)
 	owner.underlays += bleed_underlay
 	return ..()
