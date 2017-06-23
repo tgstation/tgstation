@@ -14,7 +14,7 @@
 	var/pulse = 0
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
-	var/list/blacklisted_locs = list(/obj/machinery/nuclearbomb,  /obj/item/nuke_core_container)
+	var/static/list/blacklisted_locs_typecache = typecacheof(list(/obj/machinery/nuclearbomb, /obj/item/nuke_core_container))
 
 /obj/item/nuke_core/Initialize()
 	. = ..()
@@ -31,8 +31,7 @@
 		return ..()
 
 /obj/item/nuke_core/process()
-	var/turf/T = loc
-	if(T in blacklisted_locs)	// no radiation when in proper containment
+	if(is_type_in_typecache(loc, blacklisted_locs_typecache)
 		return
 	if(cooldown < world.time - 60)
 		cooldown = world.time
@@ -219,8 +218,8 @@
 		return
 	if(ismovableatom(O))
 		Consume(O)
-		QDEL_NULL(sliver)
 		to_chat(usr, "<span class='notice'>\The [sliver] is dusted along with \the [O]!</span>")
+		QDEL_NULL(sliver)
 
 /obj/item/weapon/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
 	if(sliver)
