@@ -149,11 +149,11 @@ doesn't have toxins access.
 				t_disk.stored_research.copy_research_to(stored_research)
 				updateUsrDialog()
 	else if(href_list["view_node"])
-		selected_node = GLOB.techweb_nodes[href_list["view_node"]]
+		selected_node = SSresearch.techweb_nodes[href_list["view_node"]]
 		screen = SCICONSOLE_NODEDESC
 
 	else if(href_list["view_design"])
-		selected_design = GLOB.techweb_designs[["view_design"]]
+		selected_design = SSresearch.techweb_designs[href_list["view_design"]]
 		screen = SCICONSOLE_DESIGNVIEW
 
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
