@@ -335,7 +335,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Traitor All ([objective])")
 			for(var/mob/living/H in GLOB.player_list)
-				if(!(istype(H, /mob/living/carbon/human)||istype(H, /mob/living/silicon/))) continue
+				if(!(ishuman(H)||istype(H, /mob/living/silicon/))) continue
 				if(H.stat == 2 || !H.client || !H.mind || ispAI(H)) continue
 				if(is_special_character(H)) continue
 				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)
@@ -390,7 +390,7 @@
 			SSblackbox.add_details("admin_secrets_fun_used","Chinese Cartoons")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
 			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-				H << sound('sound/AI/animes.ogg')
+				H << sound('sound/ai/animes.ogg')
 
 				if(H.dna.species.id == "human")
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
@@ -457,7 +457,7 @@
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/AI/commandreport.ogg')
+			priority_announce("Centcom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, 'sound/ai/commandreport.ogg')
 
 		if("guns")
 			if(!check_rights(R_FUN))

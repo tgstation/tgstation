@@ -124,7 +124,7 @@
 				if("gravgun")
 					G = new /obj/item/weapon/gun/energy/gravity_gun(get_turf(H))
 			G.unlock()
-			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
+			playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
 
 		else
 			switch (randomizemagic)
@@ -199,7 +199,7 @@
 						if("bloodcontract")
 							new /obj/item/blood_contract(get_turf(H))
 					to_chat(H, "<span class='notice'>You suddenly feel lucky.</span>")
-			playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
+			playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
 
 
 /proc/summonevents()

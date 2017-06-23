@@ -86,7 +86,7 @@
 		else if(istype(I,/obj/item/weapon/weldingtool) && panel_open)
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20*I.toolspeed, target = src) && panel_open)
 					if(!W.isOn())
@@ -334,7 +334,7 @@
 			. = TRUE
 
 /obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -473,7 +473,7 @@
 	if(isobj(AM))
 		var/obj/O = AM
 		O.loc = src
-	else if(istype(AM, /mob))
+	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
 			to_chat(M, "<span class='warning'>You hit the edge of the chute.</span>")

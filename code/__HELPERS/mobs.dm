@@ -1,3 +1,6 @@
+//wrapper macro for sending images that makes grepping easy
+#define SEND_IMAGE(target, image) target << image
+
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
@@ -304,7 +307,7 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || user.knockdown || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 

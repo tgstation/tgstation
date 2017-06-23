@@ -44,6 +44,7 @@
 
 	var/list/datum/station_goal/station_goals = list()
 
+	var/allow_persistence_save = TRUE
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
@@ -54,7 +55,7 @@
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready))
+		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -162,6 +163,10 @@
 
 	. = 1
 	sleep(rand(600,1800))
+	if(!SSticker.IsRoundInProgress())
+		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
+		round_converted = 0
+		return
 	 //somewhere between 1 and 3 minutes from now
 	if(!config.midround_antag[SSticker.mode.config_tag])
 		round_converted = 0
@@ -177,7 +182,7 @@
 	return 0
 
 
-/datum/game_mode/proc/check_finished() //to be called by SSticker
+/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -208,7 +213,7 @@
 					living_antag_player = Player
 					return 0
 
-		if(!config.continuous[config_tag])
+		if(!config.continuous[config_tag] || force_ending)
 			return 1
 
 		else
@@ -332,7 +337,7 @@
 			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
+	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/ai/intercept.ogg')
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
@@ -345,7 +350,7 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -353,7 +358,7 @@
 	players = shuffle(players)
 
 	for(var/mob/dead/new_player/player in players)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(role in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
@@ -367,7 +372,7 @@
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/dead/new_player/player in players)
-			if(player.client && player.ready)
+			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
@@ -389,13 +394,7 @@
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
-/*
-	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/dead/new_player/player in players)
-			if (player.client && player.ready)
-				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
-					drafted += player.mind
-*/
+
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
 			for(var/job in restricted_jobs)
@@ -418,17 +417,12 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-/*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/dead/new_player/player)
-	if(player.preferences.be_special & role)
-		return 1
-	return 0
-*/
+
 
 /datum/game_mode/proc/num_players()
 	. = 0
 	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready)
+		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
 ///////////////////////////////////

@@ -280,7 +280,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	)
 
 /datum/asset/simple/goonchat
-	verify = TRUE
+	verify = FALSE
 	assets = list(
 		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',

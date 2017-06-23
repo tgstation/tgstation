@@ -44,7 +44,7 @@
  	caliber = "laser"
  	icon_state = "s-casing-live"
  	projectile_type = /obj/item/projectile/beam
- 	fire_sound = 'sound/weapons/Laser.ogg'
+ 	fire_sound = 'sound/weapons/laser.ogg'
  	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/caseless/laser/gatling
@@ -55,7 +55,7 @@
 
 /obj/item/ammo_casing/caseless/foam_dart
 	name = "foam dart"
-	desc = "Its nerf or nothing! Ages 8 and up."
+	desc = "It's nerf or nothing! Ages 8 and up."
 	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart
 	caliber = "foam_force"
 	icon = 'icons/obj/guns/toy.dmi'
@@ -66,12 +66,12 @@
 	..()
 	if (modified)
 		icon_state = "foamdart_empty"
-		desc = "Its nerf or nothing! ... Although, this one doesn't look too safe."
+		desc = "It's nerf or nothing! ... Although, this one doesn't look too safe."
 		if(BB)
 			BB.icon_state = "foamdart_empty"
 	else
 		icon_state = initial(icon_state)
-		desc = "Its nerf or nothing! Ages 8 and up."
+		desc = "It's nerf or nothing! Ages 8 and up."
 		if(BB)
 			BB.icon_state = initial(BB.icon_state)
 
@@ -82,7 +82,7 @@
 		modified = 1
 		FD.modified = 1
 		FD.damage_type = BRUTE
-		to_chat(user, "<span class='notice'>You pop the safety cap off of [src].</span>")
+		to_chat(user, "<span class='notice'>You pop the safety cap off [src].</span>")
 		update_icon()
 	else if (istype(A, /obj/item/weapon/pen))
 		if(modified)

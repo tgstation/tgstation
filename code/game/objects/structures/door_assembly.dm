@@ -508,7 +508,7 @@
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 
 			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
@@ -618,7 +618,7 @@
 		if(G)
 			if(G.get_amount() >= 1)
 				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+					playsound(src.loc, 'sound/items/crowbar.ogg', 100, 1)
 					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 					if(do_after(user, 40, target = src))
@@ -646,7 +646,7 @@
 				else if(istype(G, /obj/item/stack/sheet/mineral))
 					var/M = G.sheettype
 					if(G.get_amount() >= 2)
-						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+						playsound(src.loc, 'sound/items/crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
 										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
 						if(do_after(user, 40, target = src))

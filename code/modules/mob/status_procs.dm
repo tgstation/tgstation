@@ -1,136 +1,190 @@
 
 //Here are the procs used to modify status effects of a mob.
-//The effects include: stunned, weakened, paralysis, sleeping, resting, jitteriness, dizziness, ear damage,
+//The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, BLIND disability, and NEARSIGHT disability.
 
-/////////////////////////////////// STUNNED ////////////////////////////////////
+#define STUN_TIME_MULTIPLIER 0.05 //temporary; multiplies input stun times by this, will be removed once stuns are status effects
 
-/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating)
-			update_canmove()
+/////////////////////////////////// STUN ////////////////////////////////////
+
+/mob/proc/IsStun() //non-living mobs shouldn't be stunned
+	return FALSE
+
+/mob/living/IsStun() //If we're stunned
+	return has_status_effect(STATUS_EFFECT_STUN)
+
+/mob/living/proc/AmountStun() //How many deciseconds remain in our stun
+	var/datum/status_effect/incapacitating/stun/S = IsStun()
+	if(S)
+		return S.duration - world.time
+	return 0
+
+/mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
+	if((status_flags & CANSTUN) || ignore_canstun)
+		var/datum/status_effect/incapacitating/stun/S = IsStun()
+		if(S)
+			var/remaining_duration = world.time - S.duration
+			S.duration = world.time + max(amount, remaining_duration)
+		else if(amount > 0)
+			S = apply_status_effect(STATUS_EFFECT_STUN)
+			S.duration = amount
+			S.update_canmove = updating
+		return S
+
+/mob/living/proc/SetStun(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
+	if((status_flags & CANSTUN) || ignore_canstun)
+		var/datum/status_effect/incapacitating/stun/S = IsStun()
+		if(amount <= 0)
+			if(S)
+				S.update_canmove = updating
+				qdel(S)
+		else if(S)
+			S.duration = world.time + amount
+		else
+			S = apply_status_effect(STATUS_EFFECT_STUN)
+			S.duration = amount
+			S.update_canmove = updating
+		return S
+
+/mob/living/proc/AdjustStun(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
+	if((status_flags & CANSTUN) || ignore_canstun)
+		var/datum/status_effect/incapacitating/stun/S = IsStun()
+		if(S)
+			S.duration += amount
+		else if(amount > 0)
+			S = apply_status_effect(STATUS_EFFECT_STUN)
+			S.duration = amount
+			S.update_canmove = updating
+		return S
+
+/////////////////////////////////// KNOCKDOWN ////////////////////////////////////
+
+/mob/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE)
+	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+		knockdown = max(max(knockdown,amount * STUN_TIME_MULTIPLIER),0)
 		return TRUE
 
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount,0)
-		if(updating)
-			update_canmove()
+/mob/living/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE)
+	. = ..()
+	if(. && updating)
+		update_canmove()	//updates lying, canmove and icons
+
+/mob/proc/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE)
+	if(status_flags & CANKNOCKDOWN || ignore_canknockdown)
+		knockdown = max(amount * STUN_TIME_MULTIPLIER,0)
 		return TRUE
 
-/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount,0)
-		if(updating)
-			update_canmove()
+/mob/living/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE)
+	. = ..()
+	if(. && updating)
+		update_canmove()	//updates lying, canmove and icons
+
+/mob/proc/AdjustKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE)
+	if((status_flags & CANKNOCKDOWN) || ignore_canknockdown)
+		knockdown = max(knockdown + (amount * STUN_TIME_MULTIPLIER) ,0)
 		return TRUE
 
-/////////////////////////////////// WEAKENED ////////////////////////////////////
+/mob/living/AdjustKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE)
+	. = ..()
+	if(. && updating)
+		update_canmove()	//updates lying, canmove and icons
 
-/mob/proc/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		if(updating)
-			update_canmove()	//updates lying, canmove and icons
-		return TRUE
+/////////////////////////////////// UNCONSCIOUS ////////////////////////////////////
 
-/mob/proc/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		if(updating)
-			update_canmove()	//updates lying, canmove and icons
-		return TRUE
-
-/mob/proc/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		if(updating)
-			update_canmove()	//updates lying, canmove and icons
-		return TRUE
-
-/////////////////////////////////// PARALYSIS ////////////////////////////////////
-
-/mob/proc/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		var/old_paralysis = paralysis
-		paralysis = max(max(paralysis,amount),0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+/mob/proc/Unconscious(amount, updating = TRUE, ignore_canunconscious = FALSE)
+	if(status_flags & CANUNCONSCIOUS || ignore_canunconscious)
+		var/old_unconscious = unconscious
+		unconscious = max(max(unconscious,amount * STUN_TIME_MULTIPLIER),0)
+		if((!old_unconscious && unconscious) || (old_unconscious && !unconscious))
 			if(updating)
 				update_stat()
 		return TRUE
 
-/mob/proc/SetParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		var/old_paralysis = paralysis
-		paralysis = max(amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+/mob/proc/SetUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE)
+	if(status_flags & CANUNCONSCIOUS || ignore_canunconscious)
+		var/old_unconscious = unconscious
+		unconscious = max(amount * STUN_TIME_MULTIPLIER,0)
+		if((!old_unconscious && unconscious) || (old_unconscious && !unconscious))
 			if(updating)
 				update_stat()
 		return TRUE
 
-/mob/proc/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
-		var/old_paralysis = paralysis
-		paralysis = max(paralysis + amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
+/mob/proc/AdjustUnconscious(amount, updating = TRUE, ignore_canunconscious = FALSE)
+	if(status_flags & CANUNCONSCIOUS || ignore_canunconscious)
+		var/old_unconscious = unconscious
+		unconscious = max(unconscious + (amount * STUN_TIME_MULTIPLIER) ,0)
+		if((!old_unconscious && unconscious) || (old_unconscious && !unconscious))
 			if(updating)
 				update_stat()
 		return TRUE
 
 /////////////////////////////////// SLEEPING ////////////////////////////////////
 
-/mob/proc/Sleeping(amount, updating = 1, no_alert = FALSE)
-	var/old_sleeping = sleeping
-	sleeping = max(max(sleeping,amount),0)
-	if(!old_sleeping && sleeping)
-		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating)
-			update_stat()
+/mob/living/proc/IsSleeping() //If we're asleep
+	return has_status_effect(STATUS_EFFECT_SLEEPING)
 
-/mob/proc/SetSleeping(amount, updating = 1, no_alert = FALSE)
-	var/old_sleeping = sleeping
-	sleeping = max(amount,0)
-	if(!old_sleeping && sleeping)
-		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating)
-			update_stat()
+/mob/living/proc/AmountSleeping() //How many deciseconds remain in our sleep
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		return S.duration - world.time
+	return 0
 
-/mob/proc/AdjustSleeping(amount, updating = 1, no_alert = FALSE)
-	var/old_sleeping = sleeping
-	sleeping = max(sleeping + amount,0)
-	if(!old_sleeping && sleeping)
-		if(!no_alert)
-			throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating)
-			update_stat()
+/mob/living/proc/Sleeping(amount, updating = TRUE) //Can't go below remaining duration
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		var/remaining_duration = world.time - S.duration
+		S.duration = world.time + max(amount, remaining_duration)
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
+		S.duration = amount
+		S.update_canmove = updating
+	return S
+
+/mob/living/proc/SetSleeping(amount, updating = TRUE) //Sets remaining duration
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(amount <= 0)
+		if(S)
+			S.update_canmove = updating
+			qdel(S)
+	else if(S)
+		S.duration = world.time + amount
+	else
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
+		S.duration = amount
+		S.update_canmove = updating
+	return S
+
+/mob/living/proc/AdjustSleeping(amount, updating = TRUE) //Adds to remaining duration
+	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
+	if(S)
+		S.duration += amount
+	else if(amount > 0)
+		S = apply_status_effect(STATUS_EFFECT_SLEEPING)
+		S.duration = amount
+		S.update_canmove = updating
+	return S
 
 /////////////////////////////////// RESTING ////////////////////////////////////
 
 /mob/proc/Resting(amount)
 	resting = max(max(resting,amount),0)
+
+/mob/living/Resting(amount)
+	..()
 	update_canmove()
 
 /mob/proc/SetResting(amount)
 	resting = max(amount,0)
+
+/mob/living/SetResting(amount)
+	..()
 	update_canmove()
 
 /mob/proc/AdjustResting(amount)
 	resting = max(resting + amount,0)
+
+/mob/living/AdjustResting(amount)
+	..()
 	update_canmove()
 
 /////////////////////////////////// JITTERINESS ////////////////////////////////////

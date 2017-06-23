@@ -128,7 +128,7 @@ Difficulty: Medium
 			new /obj/effect/temp_visual/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 
 	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/fire_wall, d)
@@ -304,7 +304,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/Fireball.ogg', 80, 1)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
@@ -316,7 +316,7 @@ Difficulty: Medium
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
-		if(!islist(flame_hit) || !flame_hit[L])
+		if(islist(flame_hit) && !flame_hit[L])
 			L.adjustFireLoss(40)
 			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
 			flame_hit[L] = TRUE
