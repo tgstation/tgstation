@@ -6,14 +6,17 @@
 	alert_type = null
 	var/update_canmove = TRUE
 
-/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, updating_canmove)
-	..()
-	if(isnum(updating_canmove))
-		update_canmove = updating_canmove
-	if(update_canmove)
-		owner.update_canmove()
-		if(issilicon(owner))
-			owner.update_stat()
+/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+	if(.)
+		if(isnum(updating_canmove))
+			update_canmove = updating_canmove
+		if(update_canmove)
+			owner.update_canmove()
+			if(issilicon(owner))
+				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_apply()
 	. = ..()
@@ -45,13 +48,14 @@
 	var/mob/living/carbon/human/human_owner
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
-	..()
-	if(update_canmove)
-		owner.update_stat()
-	if(iscarbon(owner)) //to avoid repeated istypes
-		carbon_owner = owner
-	if(ishuman(owner))
-		human_owner = owner
+	. = ..()
+	if(.)
+		if(update_canmove)
+			owner.update_stat()
+		if(iscarbon(owner)) //to avoid repeated istypes
+			carbon_owner = owner
+		if(ishuman(owner))
+			human_owner = owner
 
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
@@ -166,6 +170,11 @@
 	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"", "\"D*dn't **ey mak* an **te***c*i*n le**?\"", "\"The** f**ls for**t t* make a ***** *f-\"", \
 	"\"No, *O, you **re so cl***-\"", "You hear a yell of frustration, cut off by static.")
 
+/datum/status_effect/maniamotor/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/powered/mania_motor/new_motor)
+	. = ..()
+	if(.)
+		motor = new_motor
+
 /datum/status_effect/maniamotor/Destroy()
 	motor = null
 	return ..()
@@ -245,6 +254,11 @@
 	alert_type = null
 	var/mutable_appearance/marked_underlay
 	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/mining_hammer/new_hammer_synced)
+	. = ..()
+	if(.)
+		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
