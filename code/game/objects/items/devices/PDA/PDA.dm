@@ -849,7 +849,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(id)
 		qdel(id)
 		id = null
-	if(cartridge)
+	if(istype(cartridge))
 		qdel(cartridge)
 		cartridge = null
 	if(pai)
