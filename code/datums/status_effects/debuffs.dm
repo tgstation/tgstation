@@ -6,10 +6,10 @@
 	alert_type = null
 	var/update_canmove = TRUE
 
-/datum/status_effect/incapacitating/New(mob/living/new_owner, terrifying_second_argument)
+/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, updating_canmove)
 	..()
-	if(isnum(terrifying_second_argument))
-		update_canmove = terrifying_second_argument
+	if(isnum(updating_canmove))
+		update_canmove = updating_canmove
 	if(update_canmove)
 		owner.update_canmove()
 		if(issilicon(owner))
@@ -44,7 +44,7 @@
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
-/datum/status_effect/incapacitating/sleeping/New(mob/living/new_owner, terrifying_second_argument)
+/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	..()
 	if(update_canmove)
 		owner.update_stat()

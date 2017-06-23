@@ -440,6 +440,8 @@
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
 
+	if(A == src)
+		return //don't do an animation if attacking self
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
