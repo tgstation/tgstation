@@ -117,13 +117,7 @@
 	if(prob(deflect_chance))
 		severity++
 		log_append_to_last("Armor saved, changing severity to [severity].")
-	switch(severity)
-		if(1)
-			deconstruct(src)
-		if(2)
-			take_damage(rand(100, 250), BRUTE, "bomb", 0)
-		if(3)
-			take_damage(rand(10, 90), BRUTE, "bomb", 0)
+	. = ..()
 
 /obj/mecha/contents_explosion(severity, target)
 	severity++

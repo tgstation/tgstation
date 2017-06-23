@@ -146,7 +146,7 @@
 /obj/mecha/get_cell()
 	return cell
 
-/obj/mecha/deconstruct(disassembled = TRUE)
+/obj/mecha/Destroy()
 	go_out()
 	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
@@ -155,11 +155,9 @@
 			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
-
-	if(prob(30))
-		explosion(get_turf(loc), 0, 0, 1, 3)
-
 	if(wreckage)
+		if(prob(30))
+			explosion(get_turf(loc), 0, 0, 1, 3)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
