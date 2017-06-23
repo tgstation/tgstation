@@ -280,6 +280,7 @@
 	maxcharge = 50000
 	rating = 12
 	ratingdesc = FALSE
+	self_recharge = 1
 
 /obj/item/weapon/stock_parts/cell/infinite/abductor/update_icon()
 	return
