@@ -14,6 +14,7 @@
 	var/pulse = 0
 	var/cooldown = 0
 	var/pulseicon = "plutonium_core_pulse"
+	var/list/blacklisted_locs = (/obj/machinery/nuclearbomb,  /obj/item/nuke_core_container)
 
 /obj/item/nuke_core/Initialize()
 	. = ..()
@@ -30,6 +31,9 @@
 		return ..()
 
 /obj/item/nuke_core/process()
+	var/turf/T = loc
+	if(T in blacklisted_locs)	// no radiation when in proper containment
+		return
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
