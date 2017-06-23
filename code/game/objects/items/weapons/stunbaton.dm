@@ -180,13 +180,11 @@
 	desc = "An improvised stun baton."
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
-	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
 	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
-	slot_flags = SLOT_BACK
 	var/obj/item/device/assembly/igniter/sparkler = 0
 
 /obj/item/weapon/melee/baton/cattleprod/Initialize()
