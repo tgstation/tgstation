@@ -15,6 +15,7 @@
 				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
 
 /mob/living/carbon/set_eye_damage(amount)
+<<<<<<< HEAD
 	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
 	if (!eyes)
 		return 
