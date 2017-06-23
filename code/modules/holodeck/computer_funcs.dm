@@ -93,7 +93,7 @@
 /obj/machinery/computer/holodeck/proc/derez(var/obj/obj, var/silent = 1, var/forced = 0)
 	// Emagging a machine creates an anomaly in the derez systems.
 	if(obj && src.emagged && !src.stat && !forced)
-		if((ismob(obj) || istype(obj.loc,/mob)) && prob(50))
+		if((ismob(obj) || ismob(obj.loc)) && prob(50))
 			spawn(50) .(obj,silent) // may last a disturbingly long time
 			return
 	spawned.Remove(obj)

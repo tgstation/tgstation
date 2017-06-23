@@ -603,7 +603,7 @@
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
@@ -623,7 +623,7 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_neck)
 			if(H.wear_neck)
 				return 0
@@ -635,13 +635,13 @@
 				return 0
 			if( !(I.slot_flags & SLOT_BACK) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_suit)
 			if(H.wear_suit)
 				return 0
 			if( !(I.slot_flags & SLOT_OCLOTHING) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_gloves)
 			if(H.gloves)
 				return 0
@@ -649,7 +649,7 @@
 				return 0
 			if(num_arms < 2)
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_shoes)
 			if(H.shoes)
 				return 0
@@ -661,7 +661,7 @@
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_belt)
 			if(H.belt)
 				return 0
@@ -671,7 +671,7 @@
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_glasses)
 			if(H.glasses)
 				return 0
@@ -679,7 +679,7 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_head)
 			if(H.head)
 				return 0
@@ -687,7 +687,7 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_ears)
 			if(H.ears)
 				return 0
@@ -695,13 +695,13 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_w_uniform)
 			if(H.w_uniform)
 				return 0
 			if( !(I.slot_flags & SLOT_ICLOTHING) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_id)
 			if(H.wear_id)
 				return 0
@@ -711,7 +711,7 @@
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_l_store)
 			if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
 				return 0
@@ -782,6 +782,12 @@
 					return 1
 			return 0
 	return 0 //Unsupported slot
+
+/datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
+	if(!I.equip_delay_self || bypass_equip_delay_self)
+		return TRUE
+	H.visible_message("<span class='notice'>[H] start putting on [I]...</span>", "<span class='notice'>You start putting on [I]...</span>")
+	return do_after(H, I.equip_delay_self, target = H)
 
 /datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
@@ -882,14 +888,14 @@
 	if(!(RADIMMUNE in species_traits))
 		if(H.radiation)
 			if (H.radiation > 100)
-				if(!H.knockdown)
+				if(!H.IsKnockdown())
 					H.emote("collapse")
 				H.Knockdown(200)
 				to_chat(H, "<span class='danger'>You feel weak.</span>")
 			switch(H.radiation)
 				if(50 to 75)
 					if(prob(5))
-						if(!H.knockdown)
+						if(!H.IsKnockdown())
 							H.emote("collapse")
 						H.Knockdown(60)
 						to_chat(H, "<span class='danger'>You feel weak.</span>")
@@ -1139,7 +1145,7 @@
 		return
 	if(M.mind)
 		attacker_style = M.mind.martial_art
-	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		add_logs(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempted to touch [H]!</span>")
 		return 0
@@ -1159,7 +1165,7 @@
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
-		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I, I.force, "the [I.name]", MELEE_ATTACK, I.armour_penetration))
 			return 0
 	if(H.check_block())
 		H.visible_message("<span class='warning'>[H] blocks [I]!</span>")
@@ -1252,7 +1258,7 @@
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(islimb(def_zone))
+	if(isbodypart(def_zone))
 		BP = def_zone
 	else
 		if(!def_zone)

@@ -172,7 +172,6 @@
 /area/ruin/onehalf/dorms_med)
 "aB" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/structure/table,
@@ -254,8 +253,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";
-	pixel_x = 26;
-	pixel_y = 0
+	pixel_x = 26
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/onehalf/dorms_med)

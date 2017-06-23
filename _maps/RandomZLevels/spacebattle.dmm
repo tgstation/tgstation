@@ -1558,8 +1558,7 @@
 	dir = 2;
 	id = "spacebattlestorage";
 	name = "Secure Storage";
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
@@ -1955,8 +1954,7 @@
 	dir = 2;
 	id = "spacebattlestorage";
 	name = "Secure Storage";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -2538,8 +2536,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/spacebattle/cruiser)
@@ -2852,9 +2849,7 @@
 /obj/machinery/button/door{
 	dir = 2;
 	id = "spacebattlearmory";
-	name = "Weapon Cache";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "Weapon Cache"
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
@@ -2865,9 +2860,7 @@
 /obj/machinery/button/door{
 	dir = 2;
 	id = "spacebattlearmory2";
-	name = "Weapon Cache";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "Weapon Cache"
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 1
@@ -2878,9 +2871,7 @@
 /obj/machinery/button/door{
 	dir = 2;
 	id = "spacebattlearmory1";
-	name = "Weapon Cache";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "Weapon Cache"
 	},
 /turf/open/floor/plasteel/blue/side{
 	dir = 1

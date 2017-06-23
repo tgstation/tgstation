@@ -48,7 +48,6 @@
 	var/real_name = null
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
-	var/sleeping = 0		//Carbon
 	var/resting = 0			//Carbon
 	var/lying = 0
 	var/lying_prev = 0
@@ -69,9 +68,6 @@
 	var/satiety = 0//Carbon
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
-	var/unconscious = 0
-	var/stun = 0
-	var/knockdown = 0
 	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living
 	var/list/possible_a_intents = null//Living

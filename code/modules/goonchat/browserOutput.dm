@@ -32,7 +32,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		return
 
-	if(winget(owner, "browseroutput", "is-disabled") == "false") //Already setup
+	if(winget(owner, "browseroutput", "is-visible") == "true") //Already setup
 		doneLoading()
 
 	else //Not setup
@@ -90,7 +90,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	winset(owner, "browseroutput", "is-disabled=false")
+	winset(owner, "output", "is-disabled=true;is-visible=false")
+	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+
+
 	for(var/message in messageQueue)
 		to_chat(owner, message)
 
@@ -214,21 +217,21 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
 		target << message
 		CRASH("Invalid message! [message]")
-	
+
 	if(!istext(message))
 		return
 
 	if(target == world)
 		target = GLOB.clients
-	
+
 	var/list/targets
 	if(!islist(target))
 		targets = list(target)
 	else
-		targets = target 
+		targets = target
 		if(!targets.len)
 			return
-
+	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
@@ -241,14 +244,16 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 		if (!C)
 			continue
-		
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			C << message
+			C << original_message
 			return TRUE
-			
+
 		if(!C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += message
+			//But also send it to their output window since that shows until goonchat loads
+			C << original_message
 			return
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
@@ -257,7 +262,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/grab_client(target)
 	if(istype(target, /client))
 		return target
-	else if(istype(target, /mob))
+	else if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client
