@@ -90,8 +90,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	winset(owner, "output", "is-disabled=true;is-visible=false")
-	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+	showChat()
 
 
 	for(var/message in messageQueue)
@@ -101,6 +100,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	pingLoop()
+
+/datum/chatOutput/proc/showChat()
+	winset(owner, "output", "list2params(list("is-disabled" = "true", "is-visible" = "false", "on-show" = {".winset "output" "is-visible=false""})))
+	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
 /datum/chatOutput/proc/pingLoop()
 	set waitfor = FALSE
@@ -237,7 +240,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
-
+	
+	//Also send it to their output window.
+	C << original_message
+	
 	for(var/I in targets)
 		//Grab us a client if possible
 		var/client/C = grab_client(I)
@@ -252,8 +258,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		if(!C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			//But also send it to their output window since that shows until goonchat loads
-			C << original_message
 			return
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
