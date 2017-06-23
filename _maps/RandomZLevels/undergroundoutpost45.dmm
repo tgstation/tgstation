@@ -4778,7 +4778,7 @@
 	name = "UO45 Gateway"
 	})
 "hB" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -4802,7 +4802,7 @@
 	name = "UO45 Research"
 	})
 "hD" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -5185,7 +5185,7 @@
 	name = "UO45 Research"
 	})
 "ii" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -11799,7 +11799,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/machinery/r_n_d/server/core{
+/obj/machinery/rnd/server/core{
 	id_with_download_string = "3";
 	id_with_upload_string = "3";
 	req_access = null

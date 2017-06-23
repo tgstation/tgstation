@@ -425,7 +425,7 @@ proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
 
 /obj/item/device/radio - 1 time(s).
 
-/obj/machinery/r_n_d/circuit_imprinter - 1 time(s).
+/obj/machinery/rnd/circuit_imprinter - 1 time(s).
 
 /obj/machinery/door/window/brigdoor - 1 time(s).
 

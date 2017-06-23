@@ -66219,7 +66219,7 @@
 	},
 /area/science/robotics/lab)
 "cqv" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -66826,7 +66826,7 @@
 	},
 /area/science/research)
 "crz" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -66843,7 +66843,7 @@
 	},
 /area/science/lab)
 "crB" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -67685,7 +67685,7 @@
 	},
 /area/science/lab)
 "csW" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -70634,7 +70634,7 @@
 	},
 /area/science/mixing)
 "cxQ" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71477,7 +71477,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "czp" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /turf/open/floor/circuit{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -72577,7 +72577,7 @@
 /area/science/misc_lab)
 "cBg" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

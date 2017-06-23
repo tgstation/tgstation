@@ -26779,7 +26779,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bfn" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "bfo" = (
@@ -27609,7 +27609,7 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/research)
 "bhe" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -30795,7 +30795,7 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bnt" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -30806,7 +30806,7 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bnv" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -31378,7 +31378,7 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "boE" = (
-/obj/machinery/r_n_d/circuit_imprinter{
+/obj/machinery/rnd/circuit_imprinter{
 	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
@@ -34414,7 +34414,7 @@
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "buj" = (
-/obj/machinery/r_n_d/server/core,
+/obj/machinery/rnd/server/core,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
@@ -36003,7 +36003,7 @@
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "bxw" = (
-/obj/machinery/r_n_d/server/robotics,
+/obj/machinery/rnd/server/robotics,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"
