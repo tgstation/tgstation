@@ -497,7 +497,7 @@ Class Procs:
 		ex_act(2)
 
 /obj/machinery/proc/ClearOccupant(atom/movable/AM)
-    if(AM == occupant)
+    if(AM == occupant && AM.loc != src)
 		occupant = null
 
 /obj/machinery/Exited(atom/movable/AM)
