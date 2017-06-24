@@ -225,8 +225,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
 		if(!M)
+			stack_trace("Null detected in player_list. Type: [GLOB.player_list[M]]")
 			listclearnulls(GLOB.player_list)
-			stack_trace("Null detected in GLOB.player_list. List has been cleared from nulls.")
 			continue
 		if(M.stat != DEAD) //not dead, not important
 			continue
