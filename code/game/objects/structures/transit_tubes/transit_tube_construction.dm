@@ -3,6 +3,7 @@
 // normal transit tubes
 /obj/structure/c_transit_tube
 	name = "unattached transit tube"
+	desc = "A transit tube for moving things around."
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
 	density = 0
@@ -152,6 +153,7 @@
 //see station.dm for the logic
 /obj/structure/c_transit_tube_pod
 	name = "unattached transit tube pod"
+	desc = "The lynchpin of the transit system."
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
 	anchored = 0

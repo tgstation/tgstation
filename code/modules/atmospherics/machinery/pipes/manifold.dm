@@ -4,13 +4,10 @@
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifold"
-
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
-
 	dir = SOUTH
 	initialize_directions = EAST|NORTH|WEST
-
 	device_type = TRINARY
 
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()

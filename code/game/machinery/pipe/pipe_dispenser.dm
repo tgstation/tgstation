@@ -2,6 +2,7 @@
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses countless types of pipes. Very useful if you need pipes."
 	density = 1
 	anchored = 1
 	var/wait = 0
@@ -107,6 +108,7 @@
 	name = "disposal pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = 1
 	anchored = 1
 
@@ -181,6 +183,7 @@ Nah
 	name = "transit tube dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
+	desc = "Dispenses pipes that will move humans and/or trash around."
 	density = 1
 	anchored = 1
 

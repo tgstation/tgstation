@@ -12,7 +12,8 @@
 /obj/structure/windoor_assembly
 	icon = 'icons/obj/doors/windoor.dmi'
 
-	name = "windoor Assembly"
+	name = "windoor assembly"
+	desc = "A small glass and wire assembly for windoors."
 	icon_state = "l_windoor_assembly01"
 	anchored = 0
 	density = 0

@@ -2,6 +2,7 @@
 	name = "girder"
 	icon_state = "girder"
 	anchored = 1
+	desc = "A large structural assembly made out of metal; Requires a layer of metal before it can be considered a wall."
 	density = 1
 	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL

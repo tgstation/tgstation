@@ -4,6 +4,7 @@
 	name = "\improper AI core"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "0"
+	desc = "The framework for an artificial intelligence core."
 	obj_integrity = 500
 	max_integrity = 500
 	var/state = 0

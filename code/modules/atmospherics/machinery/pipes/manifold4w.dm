@@ -4,12 +4,9 @@
 /obj/machinery/atmospherics/pipe/manifold4w
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
 	icon_state = "manifold4w"
-
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of regular pipes"
-
 	initialize_directions = NORTH|SOUTH|EAST|WEST
-
 	device_type = QUATERNARY
 
 /obj/machinery/atmospherics/pipe/manifold4w/SetInitDirections()
