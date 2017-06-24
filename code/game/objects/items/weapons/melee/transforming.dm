@@ -48,14 +48,9 @@
 	return TRUE
 
 /obj/item/weapon/melee/transforming/proc/transform_messages(mob/living/user, supress_message_text)
-	if(active)
-		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
-		if(!supress_message_text)
-			to_chat(user, "<span class='notice'>[src] is now active.</span>")
-	else
-		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
-		if(!supress_message_text)
-			to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
+	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
+	if(!supress_message_text)
+		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/weapon/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
 	if(user.disabilities & CLUMSY && prob(50))
