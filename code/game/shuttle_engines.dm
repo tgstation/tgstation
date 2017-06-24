@@ -18,19 +18,27 @@
 	icon_state = "platform"
 
 /obj/structure/shuttle/engine/propulsion
-	name = "propulsion"
+	name = "propulsion engine"
 	icon_state = "propulsion"
 	opacity = 1
 
+/obj/structure/shuttle/engine/propulsion/left
+	name = "left propulsion engine"
+	icon_state = "propulsion_l"
+
+/obj/structure/shuttle/engine/propulsion/right
+	name = "right propulsion engine"
+	icon_state = "propulsion_r"
+
 /obj/structure/shuttle/engine/propulsion/burst
-	name = "burst"
+	name = "burst engine"
 
 /obj/structure/shuttle/engine/propulsion/burst/left
-	name = "left"
+	name = "left burst engine"
 	icon_state = "burst_l"
 
 /obj/structure/shuttle/engine/propulsion/burst/right
-	name = "right"
+	name = "right burst engine"
 	icon_state = "burst_r"
 
 /obj/structure/shuttle/engine/router
