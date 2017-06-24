@@ -60,7 +60,6 @@
 /area/ruin/powered/seedvault)
 "j" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -80,7 +79,6 @@
 /area/ruin/powered/seedvault)
 "m" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/open/space/basic,
