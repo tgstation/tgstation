@@ -52,6 +52,9 @@
 	else
 		SSresearch.invalid_design_ids[id] = 1
 
+/proc/node_boost_error(id, message)
+	SSresearch.invalid_node_boost[id] = message
+
 /proc/verify_techweb_nodes()
 	for(var/n in SSresearch.techweb_nodes)
 		var/datum/techweb_node/N = SSresearch.techweb_nodes[n]
@@ -77,6 +80,14 @@
 				stack_trace("WARNING: Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.designs -= d
 				design_id_error(d)
+		for(var/p in N.boost_item_paths)
+			if(!ispath(p))
+				N.boost_item_paths -= p
+				node_boost_error(N.id, "[p] is not a valid path.")
+			var/num = N.boost_item_paths[p]
+			if(!isnum(num))
+				N.boost_item_paths -= p
+				node_boost_error(N.id, "[num] is not a valid number.")
 		CHECK_TICK
 
 /proc/verify_techweb_designs()

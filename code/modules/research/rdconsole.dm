@@ -515,6 +515,7 @@ doesn't have toxins access.
 		SyncRDevices()
 
 	var/list/dat = list()
+	var/auto_linebreak = TRUE
 	switch(screen) //A quick check.
 		if(SCICONSOLE_NODEDESC)
 			if(!selected_node)
@@ -546,7 +547,7 @@ doesn't have toxins access.
 		if(SCICONSOLE_MENU) //Main Menu
 			dat += "<div class='statusDisplay'>"
 			dat += "<h3>Main Menu:</h3>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONOSLE_RES_PRIMARY];back_screen=[screen]'>Technology Web</A>"
+			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_RES_PRIMARY];back_screen=[screen]'>Technology Web</A>"
 			if(t_disk)
 				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_TDISK]'>Disk Operations</A>"
 			else if(d_disk)
@@ -569,6 +570,7 @@ doesn't have toxins access.
 			dat += "</div>"
 
 		if(SCICONSOLE_RES_PRIMARY)
+			auto_linebreak = FALSE			//Override.
 			var/list/avail = list()			//This could probably be optimized a bit later.
 			var/list/unavail = list()
 			var/list/res = list()
@@ -583,44 +585,39 @@ doesn't have toxins access.
 					continue
 				unavail += stored_research.visible_nodes[v]
 			dat += SCICONSOLE_HEADER
-			dat += "<h3>Technology Nodes:</h3><hr>"
-			dat += "<h3>Available for Research:</h3><hr>"
-			dat += "<div>"
+			dat += "<h3>Technology Nodes:</h3><hr><BR>"
+			dat += "<h3>Available for Research:</h3><hr><div><BR>"
 			for(var/datum/techweb_node/N in avail)
-				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
-			dat += "</div>"
-			dat += "<h3>Visible Nodes:</h3><hr><div>"
+				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A><BR>"
+			dat += "</div><hr><h3>Locked Nodes:</h3><div><BR>"
 			for(var/datum/techweb_node/N in unavail)
-				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
-			dat += "</div>"
-			dat += "<h3>Researched Nodes:</h3><hr><div>"
+				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A><BR>"
+			dat += "</div><hr><h3>Researched Nodes:</h3><div>"
 			for(var/datum/techweb_node/N in res)
-				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
+				dat += "<BR><A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
 			dat += "</div>"
 		if(SCICONSOLE_NODEDESC)
+			auto_linebreak = FALSE
 			dat += SCICONSOLE_HEADER
-			dat += "<div><h3>[selected_node.display_name]</h3>"
-			dat += "[selected_node.description]"
-			dat += "</div>"
-			dat += "<div><h3>Designs:</h3>"
+			dat += "<div><h3>[selected_node.display_name]</h3><hr>"
+			dat += "[selected_node.description]<br>"
+			dat += "</div><div><h3>Designs:</h3>"
 			for(var/i in selected_node.designs)
 				var/datum/design/D = selected_node.designs[i]
-				dat += "<A href='?src=\ref[src];view_design=[i]'>[D.name]</A>"
-			dat += "</div>"
-			dat += "<div><h3>Prerequisites:</h3>"
+				dat += "<br><A href='?src=\ref[src];view_design=[i]'>[D.name]</A>"
+			dat += "</div><hr><div><h3>Prerequisites:</h3>"
 			for(var/i in selected_node.prerequisites)
 				var/datum/techweb_node/prereq = selected_node.prerequisites[i]
 				var/fc = stored_research.researched_nodes[prereq.id]? "green" : "red"
-				dat += "<A href='?src=\ref[src];view_node=[i]'><font color='[fc]'>[prereq.display_name]</font></A>"
-			dat += "</div>"
-			dat += "<div><h3>Unlocks:</h3>"
+				dat += "<br><A href='?src=\ref[src];view_node=[i]'><font color='[fc]'>[prereq.display_name]</font></A>"
+			dat += "</div><hr><div><h3>Unlocks:</h3>"
 			for(var/i in selected_node.unlocks)
 				var/datum/techweb_node/unlock = selected_node.unlocks[i]
-				dat += "<A href='?src=\ref[src];view_node=[i]'>[unlock.display_name]</A>"
-			if(stored_research.available_nodes[selected_node.id])
-				dat += "<h3><A href='?src=\ref[src];research_node=[selected_node.id]'>RESEARCH</A></h3>"
+				dat += "<br><A href='?src=\ref[src];view_node=[i]'>[unlock.display_name]</A>"
+			if(stored_research.available_nodes[selected_node.id] && !stored_research.researched_nodes[selected_node.id])
+				dat += "<br><h3><A href='?src=\ref[src];research_node=[selected_node.id]'>RESEARCH</A></h3>"
 			else
-				dat += "<h3><span class='linkOff'>RESEARCH</span></h3>"
+				dat += "<br><h3><span class='linkOff'>RESEARCH</span></h3>"
 			dat += "</div>"
 		if(SCICONSOLE_TDISK) //Technology Disk Menu
 			dat += SCICONSOLE_HEADER
@@ -946,7 +943,11 @@ doesn't have toxins access.
 			CRASH("R&D console screen var corrupted!")
 
 	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
-	popup.set_content(dat.Join("<br>"))
+	if(auto_linebreak)
+		dat = dat.Join("<br>")
+	else
+		dat = dat.Join("")
+	popup.set_content(dat)
 	popup.open()
 	return
 

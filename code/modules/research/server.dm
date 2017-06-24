@@ -5,6 +5,7 @@
 	var/datum/techweb/stored_research
 	var/heat_health = 100
 	//Code for point mining here.
+	var/working = TRUE			//temperature should break it.
 	var/server_id = 0
 	var/base_mining_income = 2
 	var/heat_gen = 100
@@ -33,11 +34,11 @@
 	heat_gen /= max(1, tot_rating)
 
 /obj/machinery/rnd/server/Initialize(mapload)
-	. = ..()
+	SSresearch.servers |= src
+	stored_research = SSresearch.science_tech
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
-	SSresearch.servers += src
-	stored_research = SSresearch.science_tech
+	. = ..()
 
 /obj/machinery/rnd/server/proc/mine()
 	. = base_mining_income
@@ -75,14 +76,6 @@
 	if (shocked)
 		shock(user,50)
 	return
-
-/obj/machinery/rnd/server/centcom
-	name = "Centcom Central R&D Database"
-	server_id = -1
-
-/obj/machinery/rnd/server/centcom/Initialize()
-	. = ..()
-	fix_noid_research_servers()
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()

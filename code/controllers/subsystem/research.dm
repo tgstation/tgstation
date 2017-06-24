@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(research)
 	init_order = INIT_ORDER_RESEARCH
 	var/list/invalid_design_ids = list()
 	var/list/invalid_node_ids = list()
+	var/list/invalid_node_boost = list()
 	var/list/obj/machinery/rnd/server/servers = list()
 	var/datum/techweb/science/science_tech
 	var/datum/techweb/admin/admin_tech
@@ -38,8 +39,10 @@ SUBSYSTEM_DEF(research)
 		for(var/obj/machinery/rnd/server/miner in servers)
 			bitcoins += (miner.mine() * eff)	//SLAVE AWAY, SLAVE.
 	else
-		if(servers.len)
-			bitcoins = single_server_income
+		for(var/obj/machinery/rnd/server/miner in servers)
+			if(miner.working)
+				bitcoins = single_server_income
+				break			//Just need one to work.
 	science_tech.research_points += bitcoins
 
 /datum/controller/subsystem/research/proc/calculate_server_coefficient()	//Diminishing returns.

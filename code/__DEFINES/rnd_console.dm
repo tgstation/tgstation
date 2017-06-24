@@ -4,7 +4,7 @@
 #define SCICONSOLE_BACK_HREF "<A href='?src=\ref[src];menu=[lastscreen]'>Back</A>"
 #define SCICONSOLE_HEADER "[SCICONSOLE_MENU_HREF]<BR>[SCICONSOLE_BACK_HREF]<BR><h3>Current research points: [SSresearch.science_tech.research_points]</h3>"
 #define SCICONSOLE_MENU 1
-#define SCICONSOLE_RES_NODELIST 2
+#define SCICONSOLE_RES_PRIMARY 2
 #define SCICONSOLE_NODEDESC 3
 #define SCICONSOLE_UPDATE_DATABASE 4
 #define SCICONSOLE_LOCKED 5
