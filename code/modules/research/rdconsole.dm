@@ -246,17 +246,15 @@ doesn't have toxins access.
 		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
 			updateUsrDialog()
 			return
-
-		var/cancontinue = FALSE
-		//TODO: Add boost checking.
-		if(!cancontinue)
-			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
-			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
+		var/choice = input("Are you sure you want to destroy [loaded_item.name]?") in list("Proceed", "Cancel")
+		if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
+			return
 		linked_destroy.busy = 1
 		screen = SCICONSOLE_UPDATE_DATABASE
 		updateUsrDialog()
 		flick("d_analyzer_process", linked_destroy)
 		spawn(24)
+			stored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.path)
 			if(linked_destroy)
 				linked_destroy.busy = 0
 				if(!linked_destroy.loaded_item)
@@ -608,8 +606,8 @@ doesn't have toxins access.
 			dat += "</div><hr><div><h3>Prerequisites:</h3>"
 			for(var/i in selected_node.prerequisites)
 				var/datum/techweb_node/prereq = selected_node.prerequisites[i]
-				var/fc = stored_research.researched_nodes[prereq.id]? "green" : "red"
-				dat += "<br><A href='?src=\ref[src];view_node=[i]'><font color='[fc]'>[prereq.display_name]</font></A>"
+				var/sc = stored_research.researched_nodes[prereq.id]? "alienbold" : "prefix danger"
+				dat += "<br><A href='?src=\ref[src];view_node=[i]'><span class='[sc]'>[prereq.display_name]</span></A>"
 			dat += "</div><hr><div><h3>Unlocks:</h3>"
 			for(var/i in selected_node.unlocks)
 				var/datum/techweb_node/unlock = selected_node.unlocks[i]
@@ -711,12 +709,16 @@ doesn't have toxins access.
 		if(SCICONSOLE_DA_LOADED)
 			dat += SCICONSOLE_HEADER
 			dat += "<div class='statusDisplay'><h3>Deconstruction Menu</h3>"
-			dat += "Name: [linked_destroy.loaded_item.name]"
-			dat += "Origin Tech:"
-			//TODO: Add boost checking.
-			dat += "</div>Options: "
-			dat += "<A href='?src=\ref[src];deconstruct=1'>Deconstruct Item</A>"
 			dat += "<A href='?src=\ref[src];eject_item=1'>Eject Item</A>"
+			dat += "Name: [linked_destroy.loaded_item.name]"
+			dat += "Select a node to boost by deconstructing this item."
+			dat += "This item is able to boost:"
+			var/list/input = techweb_item_boost_check(linked_destroy.loaded_item)
+			for(var/datum/techweb_node/N in input)
+				if(!stored_research.researched_node[N] && !stored_research.boosted_nodes[N])
+					dat += "<A href='?src=\ref[src];deconstruct=[N.id]'>[N.display_name]: [input[N]] points</A>"
+				else
+					dat += "<span class='linkOff>[N.display_name]: [input[N]] points</span>"
 		/////////////////////PROTOLATHE SCREENS/////////////////////////
 		if(SCICONSOLE_PROTOLATHE_NONE)
 			dat += SCICONSOLE_HEADER

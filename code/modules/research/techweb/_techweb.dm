@@ -109,6 +109,15 @@
 	researched_nodes -= node.id
 	recalculate_nodes(TRUE)				//Fully rebuild the tree.
 
+/datum/techweb/proc/boost_with_path(node, itempath)
+	if(!istype(node)||!ispath(itempath))
+		return FALSE
+	var/datum/techweb_node/N = node
+	var/boost = N.boost_item_paths[itempath]
+	if(!boosted_nodes[N])
+		boosted_nodes[N] = boost
+	return TRUE
+
 /datum/techweb/proc/update_node_status(datum/techweb_node/node)
 	var/researched = FALSE
 	var/available = FALSE

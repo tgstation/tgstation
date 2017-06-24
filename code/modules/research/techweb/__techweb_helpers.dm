@@ -130,3 +130,7 @@
 				continue
 			SSresearch.techweb_boost_items[path] = list(node = node.boost_item_paths[path])
 		CHECK_TICK
+
+/proc/techweb_item_boost_check(obj/item/I)			//Returns an associative list of techweb node datums with values of the boost it gives.	var/list/returned = list()
+	if(SSresearch.techweb_boost_items[I.path])
+		return SSresearch.techweb_boost_items[I.path]		//It should already be formatted in node datum = value.

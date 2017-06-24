@@ -183,9 +183,23 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		pronoun = "It is"
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
-
-	//if(user.research_scanner) //Mob has a research scanner active.
-		//TODO: Add boost checking.
+	if(user.research_scanner)
+		var/list/input = item_boost_check(src)
+		if(input)
+			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
+			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
+			var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
+			for(var/datum/techweb_node/N in input)
+				var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
+				if(SSresearch.science_tech.researched_nodes[N])
+					res += str
+				else if(SSresearch.science_tech.boosted_nodes[N])
+					boosted += str
+				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+					output += str
+			output = output + boosted + res
+			if(output.len > 1)		//If there's boosts for that item.
+				to_chat(user, input.Join("<br>"))
 
 /obj/item/attack_self(mob/user)
 	interact(user)

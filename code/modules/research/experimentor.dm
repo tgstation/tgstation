@@ -118,7 +118,6 @@
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-		//TODO: Add boost checking
 		if(!user.drop_item())
 			return
 		loaded_item = O
@@ -132,29 +131,42 @@
 
 /obj/machinery/rnd/experimentor/attack_hand(mob/user)
 	user.set_machine(src)
-	var/dat = "<center>"
+	var/list/dat = "<center>"
 	if(!linked_console)
-		dat += "<b><a href='byond://?src=\ref[src];function=search'>Scan for R&D Console</A></b><br>"
+		dat += "<b><a href='byond://?src=\ref[src];function=search'>Scan for R&D Console</A></b>"
 	if(loaded_item)
-		dat += "<b>Loaded Item:</b> [loaded_item]<br>"
-		dat += "<b>Technology</b>:<br>"
-		//TODO: Add boost checking.
-		dat += "<br><br>Available tests:"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_POKE]'>Poke</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_GAS]'>Gas</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_HEAT]'>Burn</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_COLD]'>Freeze</A></b>"
-		dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b><br>"
+		dat += "<b>Loaded Item:</b> [loaded_item]"
+		dat += output
+		dat += "Available tests:"
+		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_POKE]'>Poke</A></b>"
+		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
+		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_GAS]'>Gas</A></b>"
+		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_HEAT]'>Burn</A></b>"
+		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_COLD]'>Freeze</A></b>"
+		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_OBLITERATE]'>Destroy</A></b>"
 		if(istype(loaded_item,/obj/item/weapon/relic))
-			dat += "<br><b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_DISCOVER]'>Discover</A></b><br>"
-		dat += "<br><b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
+			dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
+		dat += "<b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
+		var/list/input = item_boost_check(src)
+		if(input)
+			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
+			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
+			var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
+			for(var/datum/techweb_node/N in input)
+				var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
+				if(SSresearch.science_tech.researched_nodes[N])
+					res += str
+				else if(SSresearch.science_tech.boosted_nodes[N])
+					boosted += str
+				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+					output += str
+			output = output + boosted + res
 	else
 		dat += "<b>Nothing loaded.</b>"
-	dat += "<br><a href='byond://?src=\ref[src];function=refresh'>Refresh</A><br>"
-	dat += "<br><a href='byond://?src=\ref[src];close=1'>Close</A><br></center>"
+	dat += "<a href='byond://?src=\ref[src];function=refresh'>Refresh</A>"
+	dat += "<a href='byond://?src=\ref[src];close=1'>Close</A></center>"
 	var/datum/browser/popup = new(user, "experimentor","Experimentor", 700, 400, src)
-	popup.set_content(dat)
+	popup.set_content(dat.Join("<br>")
 	popup.open()
 	onclose(user, "experimentor")
 
@@ -531,7 +543,11 @@
 			dotype = matchReaction(process,scantype)
 		experiment(dotype,process)
 		use_power(750)
-		//yell at kevinz000 to finish his shit if this is still in the code.
+		if(dotype != FAIL)
+			var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
+			var/picked = pickweight(nodes)		//This should work.
+			if(linked_console)
+				linked_console.stored_research.boost_with_path(picked, process.path)
 	updateUsrDialog()
 	return
 

@@ -14,10 +14,7 @@
 	var/list/boost_item_paths = list()		//Associative list, path = point_value.
 	var/export_price = 0					//Cargo export price.
 	var/research_cost = 0					//Point cost to research.
-	var/boosted_path						//If science boosted this by deconning something, it puts the path here to make it one-time-only.
 
-/datum/techweb_node/proc/get_price()
-	if(!boosted_path)	//don't bother.
-		return research_cost
-	var/discount = boost_item_paths[boosted_path]
+/datum/techweb_node/proc/get_price(datum/techweb/host)
+	var/discount = boost_item_paths[host.boosted_nodes[src]]
 	return research_cost - discount

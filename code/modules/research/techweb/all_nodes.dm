@@ -28,9 +28,6 @@
 	design_ids = list("bluespace_matter_bin")
 
 
-
-
-
 /*
 /datum/techweb_node
 	var/id
@@ -38,12 +35,14 @@
 	var/description = "Why are you seeing this?"
 	var/starting_node = FALSE	//Whether it's available without any research.
 	var/list/prereq_ids = list()
-	var/list/unlock_ids = list()
 	var/list/design_ids = list()
-/	var/list/datum/techweb_node/prerequisites = list()
-	var/list/datum/techweb_node/unlocks = list()
-	var/list/datum/design/designs = list()
-
+	var/list/datum/techweb_node/prerequisites = list()		//Assoc list id = datum
+	var/list/datum/techweb_node/unlocks = list()			//CALCULATED FROM OTHER NODE'S PREREQUISITES. Assoc list id = datum.
+	var/list/datum/design/designs = list()					//Assoc list id = datum
+	var/list/boost_item_paths = list()		//Associative list, path = point_value.
+	var/export_price = 0					//Cargo export price.
+	var/research_cost = 0					//Point cost to research.
+	var/boosted_path						//If science boosted this by deconning something, it puts the path here to make it one-time-only.
 */
 
 

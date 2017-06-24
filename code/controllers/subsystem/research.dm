@@ -3,16 +3,16 @@ SUBSYSTEM_DEF(research)
 	name = "Research"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_RESEARCH
-	var/list/invalid_design_ids = list()
-	var/list/invalid_node_ids = list()
-	var/list/invalid_node_boost = list()
+	var/list/invalid_design_ids = list()		//associative id = number of times
+	var/list/invalid_node_ids = list()			//associative id = number of times
+	var/list/invalid_node_boost = list()		//associative id = error message
 	var/list/obj/machinery/rnd/server/servers = list()
 	var/datum/techweb/science/science_tech
 	var/datum/techweb/admin/admin_tech
-	var/list/techweb_nodes = list()
-	var/list/techweb_designs = list()
-	var/list/techweb_nodes_starting = list()
-	var/list/techweb_boost_items = list()
+	var/list/techweb_nodes = list()				//associative id = node datum
+	var/list/techweb_designs = list()			//associative id = node datum
+	var/list/techweb_nodes_starting = list()	//associative id = node datum
+	var/list/techweb_boost_items = list()		//associative double-layer path = list(node = point_discount)
 	var/single_server_income = 50
 	var/multiserver_calculation = FALSE
 	//20 wait = 2 seconds per tick

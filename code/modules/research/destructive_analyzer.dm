@@ -48,9 +48,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		. = 1
 		if(!is_insertion_ready(user))
 			return
-			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
+		if(!techweb_item_boost_check(O))
+			to_chat(user, "<span class='warning'>This item is of no value to research!</span>")
 			return
-		//TODO: Add boost checking.
 		if(!user.drop_item())
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
 			return
