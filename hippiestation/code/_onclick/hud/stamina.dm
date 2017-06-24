@@ -8,7 +8,7 @@
 	mouse_opacity = 0
 
 /mob/living/carbon/human/proc/staminahudamount()
-	if(stat == DEAD || stun || knockdown)
+	if(stat == DEAD || IsStun() || IsKnockdown())
 		return "stamina6"
 	else
 		switch(hal_screwyhud)

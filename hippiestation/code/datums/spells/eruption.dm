@@ -15,8 +15,8 @@
 	action_icon = 'hippiestation/icons/mob/actions.dmi'
 	sound = 'sound/magic/Fireball.ogg'
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/eruption/cast(list/targets,mob/user = usr)
-	user.stun += 2
+/obj/effect/proc_holder/spell/aoe_turf/conjure/eruption/cast(list/targets,mob/living/user = usr)
+	user.SetStun(40, TRUE)
 	var/list/viewarea = view(range, usr)
 	LAZYINITLIST(targets)
 	LAZYCLEARLIST(targets)
