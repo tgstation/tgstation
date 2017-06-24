@@ -295,12 +295,12 @@
 
 /obj/structure/pool/Lboard/proc/backswim(obj/O as obj, mob/user as mob) //Puts the sprite back to it's maiden condition after a jump.
 	if(jumping)
-		for(var/mob/jumpee in src.loc) //hackzors.
+		for(var/mob/living/jumpee in src.loc) //hackzors.
 			playsound(jumpee, 'hippiestation/sound/effects/splash.ogg', 60, 1, 1)
 			jumpee.layer = 4
 			jumpee.pixel_x = 0
 			jumpee.pixel_y = 0
-			jumpee.stun = 20
+			jumpee.SetStun(20, TRUE, TRUE)
 			jumpee.swimming = TRUE
 
 /obj/structure/pool/Lboard/attack_hand(mob/user as mob)
@@ -324,7 +324,7 @@
 				jumper.visible_message("<span class='notice'>[user] climbs up \the [src]!</span>", \
 									 "<span class='notice'>You climb up \the [src] and prepares to jump!</span>")
 				jumper.canmove = FALSE
-				jumper.stun = 80
+				jumper.SetStun(80, TRUE, TRUE)
 				jumping = TRUE
 				jumper.layer = 5.1
 				jumper.pixel_x = 3
@@ -332,7 +332,7 @@
 				jumper.dir=8
 				spawn(1) //somehow necessary
 					jumper.loc = T
-					jumper.stun = 80
+					jumper.SetStun(80, TRUE, TRUE)
 					spawn(10)
 						switch(rand(1, 100))
 							if(1 to 20)

@@ -137,6 +137,16 @@
 /obj/item/weapon/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
+/obj/item/weapon/flamethrower/AltClick(mob/user)
+	if(ptank && isliving(user) && !user.incapacitated() && Adjacent(user))
+		user.put_in_hands(ptank)
+		ptank = null
+		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+
+/obj/item/weapon/flamethrower/examine(mob/user)
+	..()
+	if(ptank)
+		to_chat(user, "<span class='notice'>\The [src] has \the [ptank] attached. Alt-click to remove it.</span>")
 
 /obj/item/weapon/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)

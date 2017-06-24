@@ -31,7 +31,7 @@
 	owner.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(owner), slot_back) // ditto
 
 /datum/mutation/human/cluwne/on_life(mob/living/carbon/human/owner)
-	if((prob(15) && owner.unconscious <= 1))
+	if((prob(15) && owner.IsUnconscious()))
 		owner.setBrainLoss(200) // there I changed it to setBrainLoss
 		switch(rand(1, 6))
 			if(1)

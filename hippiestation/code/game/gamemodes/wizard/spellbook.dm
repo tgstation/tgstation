@@ -866,10 +866,10 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
-/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(2)
+	user.SetStun(2)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
@@ -878,10 +878,10 @@
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
 
-/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(400)
+	user.SetKnockdown(400)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

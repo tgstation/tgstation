@@ -110,7 +110,7 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.reagents.remove_reagent("diphenhydramine",2) //Greatly increases rate of decay
-	if(M.stun || M.knockdown || M.unconscious)
+	if(M.IsStun() || M.IsKnockdown() || M.IsUnconscious())
 		M.AdjustStun(-40, 0)
 		M.AdjustKnockdown(-40, 0)
 		M.AdjustUnconscious(-40, 0)

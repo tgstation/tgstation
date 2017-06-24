@@ -20,7 +20,7 @@ Urist: I don't feel like figuring out how you store object spells so I'm leaving
 Make sure spells that are removed from spell_list are actually removed and deleted when mind transfering.
 Also, you never added distance checking after target is selected. I've went ahead and did that.
 */
-/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/user = usr, distanceoverride)
+/obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/living/user = usr, distanceoverride)
 	if(!targets.len)
 		to_chat(user, "<span class='warning'>No mind found!</span>")
 		return
@@ -59,7 +59,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.
-	var/mob/caster = user//The wizard/whomever doing the body transferring.
+	var/mob/living/caster = user//The wizard/whomever doing the body transferring.
 
 	//MIND TRANSFER BEGIN
 	var/mob/dead/observer/ghost = victim.ghostize(0)
