@@ -335,7 +335,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Traitor All ([objective])")
 			for(var/mob/living/H in GLOB.player_list)
-				if(!(istype(H, /mob/living/carbon/human)||istype(H, /mob/living/silicon/))) continue
+				if(!(ishuman(H)||istype(H, /mob/living/silicon/))) continue
 				if(H.stat == 2 || !H.client || !H.mind || ispAI(H)) continue
 				if(is_special_character(H)) continue
 				H.mind.add_antag_datum(ANTAG_DATUM_TRAITOR_CUSTOM)

@@ -1,5 +1,85 @@
 //Largely negative status effects go here, even if they have small benificial effects
+//STUN EFFECTS
+/datum/status_effect/incapacitating
+	tick_interval = 0
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	var/update_canmove = TRUE
 
+/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, updating_canmove)
+	..()
+	if(isnum(updating_canmove))
+		update_canmove = updating_canmove
+	if(update_canmove)
+		owner.update_canmove()
+		if(issilicon(owner))
+			owner.update_stat()
+
+/datum/status_effect/incapacitating/on_apply()
+	. = ..()
+	update_canmove = TRUE
+
+/datum/status_effect/incapacitating/on_remove()
+	if(update_canmove)
+		owner.update_canmove()
+		if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+			owner.update_stat()
+
+//STUN
+/datum/status_effect/incapacitating/stun
+	id = "stun"
+
+//KNOCKDOWN
+/datum/status_effect/incapacitating/knockdown
+	id = "knockdown"
+
+//UNCONSCIOUS
+/datum/status_effect/incapacitating/unconscious
+	id = "unconscious"
+
+//SLEEPING
+/datum/status_effect/incapacitating/sleeping
+	id = "sleeping"
+	alert_type = /obj/screen/alert/status_effect/asleep
+	var/mob/living/carbon/carbon_owner
+	var/mob/living/carbon/human/human_owner
+
+/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
+	..()
+	if(update_canmove)
+		owner.update_stat()
+	if(iscarbon(owner)) //to avoid repeated istypes
+		carbon_owner = owner
+	if(ishuman(owner))
+		human_owner = owner
+
+/datum/status_effect/incapacitating/sleeping/Destroy()
+	carbon_owner = null
+	human_owner = null
+	return ..()
+
+/datum/status_effect/incapacitating/sleeping/tick()
+	if(owner.staminaloss)
+		owner.adjustStaminaLoss(-0.35) //reduce stamina loss by 0.35 per tick, 7 per 2 seconds
+	if(human_owner && human_owner.drunkenness)
+		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
+	if(prob(20))
+		if(carbon_owner)
+			carbon_owner.handle_dreams()
+		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
+			owner.emote("snore")
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	..()
+	if(update_canmove)
+		owner.update_stat()
+
+/obj/screen/alert/status_effect/asleep
+	name = "Asleep"
+	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
+	icon_state = "asleep"
+
+//OTHER DEBUFFS
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1
@@ -47,7 +127,7 @@
 	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.null_rod_check() && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
-				owner.Weaken(1)
+				owner.Knockdown(20)
 			if(iscultist(owner))
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "l_leg")
 				owner.apply_damage(cultist_damage_on_toggle * 0.5, BURN, "r_leg")
@@ -138,7 +218,7 @@
 			if(is_eligible_servant(owner))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar("You are mine and his, now.")]\"</span>")
 				add_servant_of_ratvar(owner)
-			owner.Paralyse(5)
+			owner.Unconscious(100)
 		else
 			if(prob(severity * 0.15))
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(mania_messages))]\"</span>")
@@ -164,7 +244,7 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+	var/obj/item/weapon/twohanded/required/kinetic_crusher/hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)

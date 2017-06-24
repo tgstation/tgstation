@@ -235,7 +235,7 @@
 	name = "Compressed Matter Cartridge"
 	id = "rcd_ammo"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 3000, MAT_GLASS=2000)
+	materials = list(MAT_METAL = 12000, MAT_GLASS=8000)
 	build_path = /obj/item/weapon/rcd_ammo
 	category = list("initial","Construction")
 
@@ -477,6 +477,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
 	build_path = /obj/item/device/radio/off
+	category = list("initial", "T-Comm")
+
+/datum/design/intercom_frame
+	name = "Intercom Frame"
+	id = "intercom_frame"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
+	build_path = /obj/item/wallframe/intercom
 	category = list("initial", "T-Comm")
 
 /datum/design/infrared_emitter

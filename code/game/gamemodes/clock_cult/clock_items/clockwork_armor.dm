@@ -116,7 +116,7 @@
 	item_state = "clockwork_gauntlets"
 	item_color = null //So they don't wash.
 	strip_delay = 50
-	put_on_delay = 30
+	equip_delay_other = 30
 	body_parts_covered = ARMS
 	cold_protection = ARMS
 	heat_protection = ARMS
@@ -175,7 +175,7 @@
 	icon_state = "clockwork_treads"
 	w_class = WEIGHT_CLASS_NORMAL
 	strip_delay = 50
-	put_on_delay = 30
+	equip_delay_other = 30
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/clockwork/Initialize()
