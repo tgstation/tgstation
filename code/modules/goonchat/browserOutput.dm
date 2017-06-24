@@ -241,24 +241,23 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 	
-	//Also send it to their output window.
-	C << original_message
-	
 	for(var/I in targets)
 		//Grab us a client if possible
 		var/client/C = grab_client(I)
-
+		
 		if (!C)
 			continue
-
+		
+		//Send it to the old style output window.
+		C << original_message
+		
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			C << original_message
-			return TRUE
+			continue
 
 		if(!C.chatOutput.loaded)
-			//Client sucks at loading things, put their messages in a queue
+			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			return
+			continue
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
