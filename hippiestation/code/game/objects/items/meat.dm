@@ -17,3 +17,10 @@
 	desc = "Gross robot meat."
 	filling_color = "#000000"
 	tastes = list("metal" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/meeseeks
+	icon = 'hippiestation/icons/obj/foods.dmi'
+	icon_state = "meatseeks"
+	desc = "I'm Mr. Meatseeks, look at me!"
+	filling_color = "#74E2F3"
+	tastes = list("can-do" = 1)
