@@ -55,7 +55,7 @@
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/chasm/proc/is_safe()
-	//if anything matching this typecache is found in the lava, we don't burn things
+	//if anything matching this typecache is found in the chasm, we don't drop things
 	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile))
 	var/list/found_safeties = typecache_filter_list(contents, chasm_safeties_typecache)
 	return LAZYLEN(found_safeties)
