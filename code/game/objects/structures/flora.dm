@@ -91,6 +91,10 @@
 	icon_state = "[icon_state][rand(1, 6)]"
 	..()
 
+/obj/structure/flora/tree/jungle/small
+	pixel_y = 0
+	pixel_x = -32
+
 //grass
 /obj/structure/flora/grass
 	name = "grass"
