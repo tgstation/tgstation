@@ -166,7 +166,7 @@
 	dat += "<a href='byond://?src=\ref[src];function=refresh'>Refresh</A>"
 	dat += "<a href='byond://?src=\ref[src];close=1'>Close</A></center>"
 	var/datum/browser/popup = new(user, "experimentor","Experimentor", 700, 400, src)
-	popup.set_content(dat.Join("<br>")
+	popup.set_content(dat.Join("<br>"))
 	popup.open()
 	onclose(user, "experimentor")
 
