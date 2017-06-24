@@ -88,6 +88,8 @@
 			new impact_effect_type(target_loca, target, src)
 		return 0
 	var/mob/living/L = target
+	if(L.has_buckled_mobs())
+		L = pick(L.buckled_mobs)
 	if(blocked != 100) // not completely blocked
 		if(damage && L.blood_volume && damage_type == BRUTE)
 			var/splatter_dir = dir
