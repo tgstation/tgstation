@@ -1,0 +1,4 @@
+author: "That Really Good Soda Flavor"
+delete-after: True
+changes: 
+  - bugfix: "Fixed nuclear bombs being radioactive."
