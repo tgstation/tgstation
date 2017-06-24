@@ -108,16 +108,23 @@
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
+
+
+	if(T.z == ZLEVEL_TRANSIT)
+		for(var/A in SSshuttle.mobile)
+			var/obj/docking_port/mobile/M = A
+			if(M.launch_status == ENDGAME_TRANSIT && T in M.areaInstance)
+				return TRUE
 
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
-		return 0
+		return FALSE
 
 	//check for centcomm shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
 		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
-			return 1
+			return TRUE
 
 	//finally check for centcom itself
 	return istype(T.loc,/area/centcom)
