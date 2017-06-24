@@ -838,18 +838,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/device/pda/Destroy()
 	GLOB.PDAs -= src
-	if(id)
-		qdel(id)
-		id = null
-	if(cartridge)
-		qdel(cartridge)
-		cartridge = null
-	if(pai)
-		qdel(pai)
-		pai = null
-	if(inserted_item)
-		qdel(inserted_item)
-		inserted_item = null
+	if(istype(id))
+		QDEL_NULL(id)
+	if(istype(cartridge))
+		QDEL_NULL(cartridge)
+	if(istype(pai))
+		QDEL_NULL(pai)
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
 	return ..()
 
 //AI verb and proc for sending PDA messages.
