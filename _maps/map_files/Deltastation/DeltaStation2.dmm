@@ -87227,7 +87227,6 @@
 /area/science/explab)
 "dkS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/experimentor,
 /obj/item/device/healthanalyzer,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -87238,11 +87237,10 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "dkT" = (
-/obj/machinery/computer/rdconsole/experiment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/frame/computer{
+	anchored = 1;
+	state = 1
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "dkU" = (
@@ -89189,13 +89187,16 @@
 	},
 /area/science/explab)
 "dpa" = (
-/obj/machinery/r_n_d/experimentor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/science/explab)
 "dpb" = (
+/obj/item/weapon/paper{
+	info = "<center><b>Science Construction Inventions</b></center><center><small>Nanotrasen Subsidiary</small></center><br><br><center><i>Due to recent events involving power cells and falsified emissions reports, a recall has been issued for the E.X.P.E.R.I.MENTOR unit. Thank you for your cooperation.</i>";
+	name = "NOTICE - E.X.P.E.R.I.MENTOR RECALL"
+	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -156940,16 +156941,16 @@ cim
 brN
 brN
 bqq
-coe
+bkT
 cpL
-cqZ
+brH
 csr
-cub
+bmI
 cvE
 cwY
-cqZ
-cqZ
-cqZ
+brH
+brH
+brH
 brH
 bkT
 cFG
@@ -156975,10 +156976,10 @@ djZ
 dlM
 dnc
 doh
-dpQ
+dnc
 drt
 dsT
-dpQ
+dnc
 ego
 dwO
 dyc
