@@ -19,10 +19,7 @@
 
 /obj/item/weapon/dash/attack_self(mob/user)
 	dash_toggled = !dash_toggled
-	if(dash_toggled)
-		to_chat(user, "<span class='notice'>[src] is now in dash mode.</span>")
-	else
-		to_chat(user, "<span class='notice'>You disable the dash function on [src].</span>")
+	to_chat(user, "<span class='notice'>You [dash_toggled ? "enable" : "disable"] the dash function on [src].</span>")
 
 /obj/item/weapon/dash/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(dash_toggled)
