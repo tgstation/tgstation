@@ -288,7 +288,6 @@ CREATE TABLE `SS13_poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
-  `percentagecalc` tinyint(1) NOT NULL DEFAULT '1',
   `minval` int(3) DEFAULT NULL,
   `maxval` int(3) DEFAULT NULL,
   `descmin` varchar(32) DEFAULT NULL,
