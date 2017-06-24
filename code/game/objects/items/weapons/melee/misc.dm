@@ -77,7 +77,7 @@
 	var/cooldown = 0
 	var/on = 1
 
-/obj/item/weapon/melee/classic_baton/attack(mob/target, mob/living/user)
+/obj/item/weapon/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
 		return ..()
 

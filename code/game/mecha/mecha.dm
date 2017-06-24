@@ -905,7 +905,7 @@
 	if(!user.transferItemToLoc(mmi_as_oc, src))
 		to_chat(user, "<span class='warning'>\the [mmi_as_oc] is stuck to your hand, you cannot put it in \the [src]!</span>")
 		return FALSE
-	var/mob/brainmob = mmi_as_oc.brainmob
+	var/mob/living/brainmob = mmi_as_oc.brainmob
 	mmi_as_oc.mecha = src
 	occupant = brainmob
 	brainmob.forceMove(src) //should allow relaymove

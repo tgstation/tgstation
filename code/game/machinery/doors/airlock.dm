@@ -1200,7 +1200,7 @@
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
 	return !operating && density && user && W && W.isOn() && user.loc
 
-/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
 	var/beingcrowbarred = null
 	if(istype(I, /obj/item/weapon/crowbar) )
 		beingcrowbarred = 1

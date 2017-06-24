@@ -113,7 +113,7 @@
 /obj/effect/anomaly/grav/Bumped(mob/A)
 	gravShock(A)
 
-/obj/effect/anomaly/grav/proc/gravShock(mob/A)
+/obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
 	if(boing && isliving(A) && !A.stat)
 		A.Knockdown(40)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
