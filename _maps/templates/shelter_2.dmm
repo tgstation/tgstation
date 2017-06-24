@@ -4,8 +4,6 @@
 /area/survivalpod)
 "b" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (NORTH)";
-	icon_state = "survival";
 	dir = 1
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -50,8 +48,6 @@
 /area/survivalpod)
 "j" = (
 /obj/structure/sign/mining/survival{
-	tag = "icon-survival (EAST)";
-	icon_state = "survival";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -72,13 +68,11 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
 	icon_state = "pwindow";
-	layer = 3;
-	tag = "icon-pwindow (WEST)"
+	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
 	dir = 1;
-	icon_state = "windoor";
-	tag = "icon-windoor (NORTH)"
+	icon_state = "windoor"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -90,7 +84,6 @@
 	name = "lusty xenomorph maid"
 	},
 /obj/structure/window/reinforced/survival_pod{
-	tag = "icon-pwindow (NORTH)";
 	icon_state = "pwindow";
 	dir = 1
 	},
@@ -112,8 +105,7 @@
 "r" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
-	icon_state = "pwindow";
-	tag = "icon-pwindow (WEST)"
+	icon_state = "pwindow"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -138,19 +130,16 @@
 	pixel_y = -2
 	},
 /obj/structure/window/reinforced/survival_pod{
-	tag = "icon-pwindow (NORTH)";
 	icon_state = "pwindow";
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/black{
-	pixel_y = -9;
-	pixel_z = 0
+	pixel_y = -9
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
 "u" = (
 /obj/machinery/door/window/survival_pod{
-	tag = "icon-windoor (NORTH)";
 	icon_state = "windoor";
 	dir = 1
 	},
@@ -158,17 +147,13 @@
 /area/survivalpod)
 "v" = (
 /obj/structure/window/reinforced/survival_pod{
-	tag = "icon-pwindow (NORTH)";
 	icon_state = "pwindow";
 	dir = 1
 	},
 /obj/structure/displaycase{
 	alert = 0;
 	desc = "A display case containing an expensive forgery, probably.";
-	pixel_w = 0;
-	pixel_x = 0;
 	pixel_y = -4;
-	pixel_z = 0;
 	req_access = 48;
 	start_showpiece_type = /obj/item/fakeartefact
 	},
@@ -178,8 +163,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	density = 0;
 	dir = 9;
-	icon_state = "pwindow";
-	tag = "icon-pwindow (NORTHWEST)"
+	icon_state = "pwindow"
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -194,11 +178,9 @@
 /area/survivalpod)
 "y" = (
 /obj/structure/sink/kitchen{
-	tag = "icon-sink_alt (EAST)";
 	icon_state = "sink_alt";
 	dir = 4;
-	pixel_x = -13;
-	pixel_y = 0
+	pixel_x = -13
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)

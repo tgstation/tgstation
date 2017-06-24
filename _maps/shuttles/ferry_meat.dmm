@@ -4,7 +4,6 @@
 /area/space)
 "b" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/mineral/titanium/overspace,
@@ -75,9 +74,7 @@
 /area/shuttle/transport)
 "k" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
-	pixel_y = 30;
-	tag = "n"
+	pixel_y = 30
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
@@ -124,7 +121,6 @@
 /area/shuttle/transport)
 "r" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/shuttle{

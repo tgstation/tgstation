@@ -71,9 +71,8 @@
 	},
 /area/shuttle/abandoned)
 "ak" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_l"
+/obj/structure/shuttle/engine/propulsion/left{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -107,14 +106,11 @@
 /area/shuttle/abandoned)
 "ao" = (
 /obj/structure/mirror{
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -320,14 +316,12 @@
 /area/shuttle/abandoned)
 "aC" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aD" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -519,8 +513,7 @@
 "aT" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/mirror{
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -819,7 +812,6 @@
 /area/shuttle/abandoned)
 "bw" = (
 /obj/machinery/vending/coffee{
-	pixel_x = 0;
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium,
@@ -856,8 +848,7 @@
 	name = "dust"
 	},
 /obj/structure/fluff/empty_sleeper/nanotrasen{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -871,8 +862,7 @@
 	name = "dust"
 	},
 /obj/structure/fluff/empty_sleeper/nanotrasen{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -1283,7 +1273,6 @@
 /area/shuttle/abandoned)
 "co" = (
 /obj/machinery/door/airlock/titanium{
-	icon_state = "door_closed";
 	name = "medbay";
 	welded = 0
 	},
@@ -1450,9 +1439,7 @@
 "cC" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1468,7 +1455,6 @@
 /area/shuttle/abandoned)
 "cE" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -1534,13 +1520,11 @@
 /obj/machinery/vending/wallmed{
 	name = "Emergency NanoMed";
 	pixel_x = -28;
-	pixel_y = 0;
 	req_access_txt = "0";
 	use_power = 0
 	},
 /obj/machinery/iv_drip{
-	density = 0;
-	pixel_x = 0
+	density = 0
 	},
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1577,9 +1561,7 @@
 "cN" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/xenoblood,
 /obj/effect/decal/cleanable/xenoblood/xgibs/limb,
@@ -1590,9 +1572,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "cO" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "propulsion_r"
+/obj/structure/shuttle/engine/propulsion/right{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -1721,8 +1702,7 @@
 "cZ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3

@@ -65,7 +65,6 @@
 /area/ruin/powered/golem_ship)
 "i" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/open/floor/plating{

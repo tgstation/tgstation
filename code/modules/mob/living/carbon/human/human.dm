@@ -549,8 +549,8 @@
 	else
 		return null
 
-/mob/living/carbon/human/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
-	if(judgebot.emagged == 2)
+/mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
+	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
 
 	var/threatcount = 0
@@ -577,20 +577,20 @@
 
 	//Check for ID
 	var/obj/item/weapon/card/id/idcard = get_idcard()
-	if(judgebot.idcheck && !idcard && name=="Unknown")
+	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
 		threatcount += 4
 
 	//Check for weapons
-	if(judgebot.weaponscheck)
+	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck)
 		if(!idcard || !(GLOB.access_weapons in idcard.access))
 			for(var/obj/item/I in held_items)
-				if(judgebot.check_for_weapons(I))
+				if(weaponcheck.Invoke(I))
 					threatcount += 4
-			if(judgebot.check_for_weapons(belt))
+			if(weaponcheck.Invoke(belt))
 				threatcount += 2
 
 	//Check for arrest warrant
-	if(judgebot.check_records)
+	if(judgement_criteria & JUDGE_RECORDCHECK)
 		var/perpname = get_face_name(get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(R && R.fields["criminal"])

@@ -42,8 +42,8 @@
 	var/obj/effect/countdown/nuclearbomb/countdown
 	var/static/bomb_set
 
-/obj/machinery/nuclearbomb/New()
-	..()
+/obj/machinery/nuclearbomb/Initialize()
+	. = ..()
 	countdown = new(src)
 	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
@@ -81,14 +81,14 @@
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
-/obj/machinery/nuclearbomb/syndicate/New()
+/obj/machinery/nuclearbomb/syndicate/Initialize()
+	. = ..()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
 	if(existing)
 		qdel(src)
 		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
 		return 0
 	tag = "syndienuke"
-	return ..()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))

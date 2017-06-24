@@ -50,7 +50,7 @@
 	internal_organs += new /obj/item/organ/ears
 	..()
 
-/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+/mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)

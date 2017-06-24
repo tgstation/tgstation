@@ -120,9 +120,7 @@
 "ar" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plasteel/freezer{
@@ -154,8 +152,6 @@
 /area/ruin/deepstorage/crusher)
 "av" = (
 /obj/structure/window/reinforced/highpressure{
-	tag = "icon-rwindow (WEST)";
-	icon_state = "rwindow";
 	dir = 8
 	},
 /obj/machinery/conveyor{
@@ -1049,9 +1045,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1109,9 +1103,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1170,8 +1162,6 @@
 /area/ruin/deepstorage)
 "ck" = (
 /obj/structure/chair{
-	tag = "icon-chair (EAST)";
-	icon_state = "chair";
 	dir = 4
 	},
 /obj/structure/sign/barsign{
@@ -1427,8 +1417,6 @@
 /area/ruin/deepstorage)
 "cH" = (
 /obj/structure/chair{
-	tag = "icon-chair (EAST)";
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar{
@@ -1541,8 +1529,6 @@
 /area/ruin/deepstorage)
 "cU" = (
 /obj/structure/chair{
-	tag = "icon-chair (NORTH)";
-	icon_state = "chair";
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -1588,9 +1574,7 @@
 /area/ruin/deepstorage)
 "cY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1836,9 +1820,7 @@
 /area/ruin/deepstorage/armory)
 "du" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -1907,8 +1889,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	icon_state = "scrub_map";
-	on = 1;
-	tag = "icon-scrub_map (NORTH)"
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2769,8 +2750,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
 	icon_state = "scrub_map";
-	on = 1;
-	tag = "icon-scrub_map (NORTH)"
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -2956,8 +2936,6 @@
 /area/ruin/deepstorage/airlock)
 "fk" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	tag = "icon-connector_map (NORTH)";
-	icon_state = "connector_map";
 	dir = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -3063,9 +3041,7 @@
 "fv" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
-	icon_state = "mvalve_map";
-	name = "Port To Hall";
-	tag = "icon-mvalve_map (EAST)"
+	name = "Port To Hall"
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3074,8 +3050,6 @@
 "fw" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	tag = "icon-connector_map (WEST)";
-	icon_state = "connector_map";
 	dir = 8
 	},
 /obj/item/weapon/wrench,
@@ -3110,8 +3084,7 @@
 	icon_state = "mixer_off";
 	node1_concentration = 0.2;
 	node2_concentration = 0.8;
-	on = 1;
-	tag = "icon-mixer_off (NORTH)"
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3266,9 +3239,7 @@
 /obj/structure/closet/wardrobe/pjs,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3367,7 +3338,6 @@
 /area/ruin/deepstorage/power)
 "fY" = (
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (EAST)";
 	icon_state = "warningline";
 	dir = 4
 	},
@@ -3487,12 +3457,9 @@
 /area/ruin/deepstorage/power)
 "gi" = (
 /obj/machinery/power/terminal{
-	tag = "icon-term (WEST)";
-	icon_state = "term";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	tag = "icon-warningline (EAST)";
 	icon_state = "warningline";
 	dir = 4
 	},
@@ -3701,9 +3668,7 @@
 "gB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
