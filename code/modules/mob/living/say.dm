@@ -224,6 +224,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/list/the_dead = list()
 	for(var/_M in GLOB.player_list)
 		var/mob/M = _M
+		if(!M)
+			listclearnulls(GLOB.player_list)
+			stack_trace("Null detected in GLOB.player_list. List has been cleared from nulls.")
+			continue
 		if(M.stat != DEAD) //not dead, not important
 			continue
 		if(!M.client || !client) //client is so that ghosts don't have to listen to mice
