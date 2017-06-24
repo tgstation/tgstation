@@ -139,7 +139,20 @@
 /datum/alarm_listener/proc/alarm_created(datum/alarm/A)
 	to_chat(caller, "--- [A.type] alarm detected in [A.trigger_area.name] ---")
 
-s
-sw
 /datum/alarm_listener/proc/alarm_cancelled(datum/alarm/A)
 	to_chat(caller, "--- [A.type] alarm in [A.trigger_area.name] has been cleared ---")
+
+/datum/alarm_listener/computer/alarm_created(datum/alarm/A)
+	caller.update_alarm_display()
+
+/datum/alarm_listener/computer/alarm_cancelled(datum/alarm/A)
+	caller.update_alarm_display()
+
+/datum/alarm_listener/computer/get_data_for_ui()
+	var/alarms = list()
+	for(var/type in alert_types)
+		alarms[type] = list()
+		var/list/alarms_of_type = GLOB.alarms[type]
+		for(var/datum/alarm/A in alarms_of_type)
+			alarms[type] += A.trigger_area
+	return data
