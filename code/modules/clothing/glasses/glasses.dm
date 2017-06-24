@@ -39,9 +39,9 @@
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
-	var/static/list/meson_mining_failure_excuses = list("badly understood science", "damaged meson generators", "electromagnetic storms", "bluespace disruption", "ancient structures", \
-	"ambient radiation", "seismic activity", "extreme weather", "strange signals", "excessive lava", "giant monsters", "a loose wire", "lens warping", "radiant heat", "volcanic ash", \
-	"budget cuts","alien life","dense rock", "gravity", "dust")
+	var/static/list/meson_mining_failure_excuses = list("badly understood science", "damaged meson generators", "electromagnetic storms", "a lack of cosmic rays", "bluespace disruption", \
+	"ancient structures", "ambient radiation", "seismic activity", "extreme weather", "strange signals", "excessive lava", "giant monsters", "a loose wire", "lens warping", "radiant heat", \
+	"volcanic ash", "budget cuts","alien life","dense rock", "gravity", "dust")
 	var/picked_excuse
 	var/mesons_on = TRUE
 
@@ -135,7 +135,8 @@
 	origin_tech = "materials=2;magnets=1;engineering=2"
 	darkness_view = 2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	var/static/list/nvg_station_failure_excuses = list("electromagnetic radiation", "artificial gravity", "strange signals", "cosmic rays", "dark matter")
+	var/static/list/nvg_station_failure_excuses = list("electromagnetic radiation", "excessive surveillance", "interstellar signals", "artificial gravity", "wireless power", "neutron flow", \
+	"cosmic rays", "dark matter", "space lag")
 	var/picked_excuse
 	var/nvg_on = FALSE
 
