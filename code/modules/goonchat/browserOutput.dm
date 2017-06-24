@@ -102,7 +102,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	pingLoop()
 
 /datum/chatOutput/proc/showChat()
-	winset(owner, "output", list2params(list("is-disabled" = "true", "is-visible" = "false", "on-show" = {".winset "output" "is-visible=false""})))
+	winset(owner, "output", "is-visible=false")
 	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
 
 /datum/chatOutput/proc/pingLoop()
