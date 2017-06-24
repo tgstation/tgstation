@@ -135,7 +135,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 		to_chat(src, "<span class='notice'>There are no admin notices at the moment.</span>")
 
 /client/verb/fix_chat()
-	set name "Fix chat"
+	set name = "Fix chat"
 	set category = "OOC"
 	if (!chatOutput || !istype(chatOutput))
 		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
