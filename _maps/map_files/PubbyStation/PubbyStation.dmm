@@ -43452,7 +43452,6 @@
 	dir = 1;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	icon_state = "vent_map";
 	id_tag = "air_out";
 	internal_pressure_bound = 2000;
 	on = 1;
