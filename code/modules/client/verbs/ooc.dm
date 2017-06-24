@@ -148,7 +148,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum")
 		else
 			chatOutput.load()
-			alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+			action = alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum and forcing a load()")
 			else
@@ -169,7 +169,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a start()")
 				else
 					chatOutput.load()
-					alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+					action = alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
@@ -187,7 +187,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 				else
 					chatOutput.loaded = FALSE
 					chatOutput.load()
-					alert(src, "How about now? (give it a moment)", "", "Yes", "No")
+					action = alert(src, "How about now? (give it a moment)", "", "Yes", "No")
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
