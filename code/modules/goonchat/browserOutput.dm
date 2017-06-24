@@ -98,7 +98,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	messageQueue = null
 	sendClientData()
-
+	
+	//do not convert to to_chat()
+	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
+	
 	pingLoop()
 
 /datum/chatOutput/proc/showChat()
