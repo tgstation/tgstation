@@ -184,7 +184,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 	if(user.research_scanner)
-		var/list/input = item_boost_check(src)
+		var/list/input = techweb_item_boost_check(src)
 		if(input)
 			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
 			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
@@ -199,7 +199,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					output += str
 			output = output + boosted + res
 			if(output.len > 1)		//If there's boosts for that item.
-				to_chat(user, input.Join("<br>"))
+				to_chat(user, output.Join("<br>"))
 
 /obj/item/attack_self(mob/user)
 	interact(user)

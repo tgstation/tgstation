@@ -136,7 +136,7 @@
 		dat += "<b><a href='byond://?src=\ref[src];function=search'>Scan for R&D Console</A></b>"
 	if(loaded_item)
 		dat += "<b>Loaded Item:</b> [loaded_item]"
-		dat += output
+
 		dat += "Available tests:"
 		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_POKE]'>Poke</A></b>"
 		dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
@@ -147,7 +147,7 @@
 		if(istype(loaded_item,/obj/item/weapon/relic))
 			dat += "<b><a href='byond://?src=\ref[src];item=\ref[loaded_item];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
 		dat += "<b><a href='byond://?src=\ref[src];function=eject'>Eject</A>"
-		var/list/input = item_boost_check(src)
+		var/list/input = techweb_item_boost_check(src)
 		if(input)
 			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
 			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
@@ -161,6 +161,7 @@
 				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
 					output += str
 			output = output + boosted + res
+			dat += output
 	else
 		dat += "<b>Nothing loaded.</b>"
 	dat += "<a href='byond://?src=\ref[src];function=refresh'>Refresh</A>"
@@ -547,7 +548,7 @@
 			var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
 			var/picked = pickweight(nodes)		//This should work.
 			if(linked_console)
-				linked_console.stored_research.boost_with_path(picked, process.path)
+				linked_console.stored_research.boost_with_path(picked, process.type)
 	updateUsrDialog()
 	return
 

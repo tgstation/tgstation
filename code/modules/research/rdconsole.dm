@@ -246,7 +246,7 @@ doesn't have toxins access.
 		if(!linked_destroy || linked_destroy.busy || !linked_destroy.loaded_item)
 			updateUsrDialog()
 			return
-		var/choice = input("Are you sure you want to destroy [loaded_item.name]?") in list("Proceed", "Cancel")
+		var/choice = input("Are you sure you want to destroy [linked_destroy.loaded_item.name]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
 			return
 		linked_destroy.busy = 1
@@ -254,7 +254,7 @@ doesn't have toxins access.
 		updateUsrDialog()
 		flick("d_analyzer_process", linked_destroy)
 		spawn(24)
-			stored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.path)
+			stored_research.boost_with_path(SSresearch.techweb_nodes[href_list["destroy"]], linked_destroy.loaded_item.type)
 			if(linked_destroy)
 				linked_destroy.busy = 0
 				if(!linked_destroy.loaded_item)
@@ -715,7 +715,7 @@ doesn't have toxins access.
 			dat += "This item is able to boost:"
 			var/list/input = techweb_item_boost_check(linked_destroy.loaded_item)
 			for(var/datum/techweb_node/N in input)
-				if(!stored_research.researched_node[N] && !stored_research.boosted_nodes[N])
+				if(!stored_research.researched_nodes[N] && !stored_research.boosted_nodes[N])
 					dat += "<A href='?src=\ref[src];deconstruct=[N.id]'>[N.display_name]: [input[N]] points</A>"
 				else
 					dat += "<span class='linkOff>[N.display_name]: [input[N]] points</span>"
