@@ -39,8 +39,9 @@
 						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 				else
 					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
-				imp = null
-				update_icon()
+				if(QDELETED(imp))
+					imp = null
+					update_icon()
 
 /obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
