@@ -101,6 +101,8 @@ doesn't have toxins access.
 		. = ..()
 	updateUsrDialog()
 
+/obj/machinery/computer/rdconsole/proc/research_node(id)
+	CRASH("RESEARCH NODE NOT CODED!")
 
 /obj/machinery/computer/rdconsole/on_deconstruction()
 	if(linked_destroy)
@@ -139,6 +141,11 @@ doesn't have toxins access.
 
 	if(href_list["category"])
 		selected_category = href_list["category"]
+
+	else if(href_list["research_node"])
+		if(!SSresearch.science_tech.available_nodes[href_list["research_node"]])
+			return			//Nope!
+		research_node(href_list["research_node"])
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
 		screen = SCICONSOLE_UPDATE_DATABASE
@@ -539,7 +546,7 @@ doesn't have toxins access.
 		if(SCICONSOLE_MENU) //Main Menu
 			dat += "<div class='statusDisplay'>"
 			dat += "<h3>Main Menu:</h3>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_RES_NODELIST]'>Researched Nodes</A>"
+			dat += "<A href='?src=\ref[src];menu=[SCICONOSLE_RES_PRIMARY];back_screen=[screen]'>Technology Web</A>"
 			if(t_disk)
 				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_TDISK]'>Disk Operations</A>"
 			else if(d_disk)
@@ -561,12 +568,34 @@ doesn't have toxins access.
 			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_SETTINGS]'>Settings</A>"
 			dat += "</div>"
 
-		if(SCICONSOLE_RES_NODELIST) //Research viewer
-			dat += SCICONSOLE_HEADER
-			dat += "<h3>Currently researched nodes:</h3><div class='statusDisplay'>"
+		if(SCICONSOLE_RES_PRIMARY)
+			var/list/avail = list()			//This could probably be optimized a bit later.
+			var/list/unavail = list()
+			var/list/res = list()
 			for(var/v in stored_research.researched_nodes)
-				var/datum/techweb_node/N = stored_research.researched_nodes[v]
-				dat += "<A href='?src=\ref[src];view_node=\ref[N];back_screen=[screen]'>[N.display_name]</A>"
+				res += stored_research.researched_nodes[v]
+			for(var/v in stored_research.available_nodes)
+				if(stored_research.researched_nodes[v])
+					continue
+				avail += stored_research.available_nodes[v]
+			for(var/v in stored_research.visible_nodes)
+				if(stored_research.available_nodes[v])
+					continue
+				unavail += stored_research.visible_nodes[v]
+			dat += SCICONSOLE_HEADER
+			dat += "<h3>Technology Nodes:</h3><hr>"
+			dat += "<h3>Available for Research:</h3><hr>"
+			dat += "<div>"
+			for(var/datum/techweb_node/N in avail)
+				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
+			dat += "</div>"
+			dat += "<h3>Visible Nodes:</h3><hr><div>"
+			for(var/datum/techweb_node/N in unavail)
+				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
+			dat += "</div>"
+			dat += "<h3>Researched Nodes:</h3><hr><div>"
+			for(var/datum/techweb_node/N in res)
+				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
 			dat += "</div>"
 		if(SCICONSOLE_NODEDESC)
 			dat += SCICONSOLE_HEADER
@@ -581,12 +610,17 @@ doesn't have toxins access.
 			dat += "<div><h3>Prerequisites:</h3>"
 			for(var/i in selected_node.prerequisites)
 				var/datum/techweb_node/prereq = selected_node.prerequisites[i]
-				dat += "<A href='?src=\ref[src];view_node=[i]'>[prereq.display_name]</A>"
+				var/fc = stored_research.researched_nodes[prereq.id]? "green" : "red"
+				dat += "<A href='?src=\ref[src];view_node=[i]'><font color='[fc]'>[prereq.display_name]</font></A>"
 			dat += "</div>"
 			dat += "<div><h3>Unlocks:</h3>"
 			for(var/i in selected_node.unlocks)
 				var/datum/techweb_node/unlock = selected_node.unlocks[i]
 				dat += "<A href='?src=\ref[src];view_node=[i]'>[unlock.display_name]</A>"
+			if(stored_research.available_nodes[selected_node.id])
+				dat += "<h3><A href='?src=\ref[src];research_node=[selected_node.id]'>RESEARCH</A></h3>"
+			else
+				dat += "<h3><span class='linkOff'>RESEARCH</span></h3>"
 			dat += "</div>"
 		if(SCICONSOLE_TDISK) //Technology Disk Menu
 			dat += SCICONSOLE_HEADER
