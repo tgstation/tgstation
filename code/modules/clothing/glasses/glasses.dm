@@ -135,13 +135,13 @@
 	origin_tech = "materials=2;magnets=1;engineering=2"
 	darkness_view = 2
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	var/static/list/nvg_station_failure_excuses = list("cosmic rays", "artificial gravity")
+	var/static/list/nvg_station_failure_excuses = list("electromagnetic radiation", "artificial gravity", "strange signals", "cosmic rays", "dark matter")
 	var/picked_excuse
 	var/nvg_on = FALSE
 
 /obj/item/clothing/glasses/night/mining/Initialize()
 	. = ..()
-	picked_excuse = pick(nvg_mining_failure_excuses)
+	picked_excuse = pick(nvg_station_failure_excuses)
 	desc += "[picked_excuse]."
 	START_PROCESSING(SSobj, src)
 
@@ -174,7 +174,7 @@
 	if(T && T.z == ZLEVEL_MINING)
 		if(!nvg_on) //if we're on mining, turn nvg ON
 			toggle_mode(loc)
-	else if(mvg_on) //otherwise, if we're not on mining, turn nvg back OFF
+	else if(nvg_on) //otherwise, if we're not on mining, turn nvg back OFF
 		toggle_mode(loc)
 
 /obj/item/clothing/glasses/eyepatch
