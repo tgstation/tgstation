@@ -18,3 +18,5 @@
 #define ANTAG_DATUM_IAA_HUMAN_CUSTOM  		/datum/antagonist/traitor/human/internal_affairs/custom
 #define ANTAG_DATUM_IAA_AI_CUSTOM  		/datum/antagonist/traitor/AI/internal_affairs/custom
 #define ANTAG_DATUM_IAA_AI	  		/datum/antagonist/traitor/AI/internal_affairs
+#define ANTAG_DATUM_WIZARD			/datum/antagonist/wizard
+#define ANTAG_DATUM_APPRENTICE		/datum/antagonist/wizard/apprentice

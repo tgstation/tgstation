@@ -188,7 +188,7 @@
 
 /datum/mind/proc/remove_traitor()
 	if(src in SSticker.mode.traitors)
-		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
+		remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
@@ -201,10 +201,8 @@
 
 /datum/mind/proc/remove_wizard()
 	if(src in SSticker.mode.wizards)
-		SSticker.mode.wizards -= src
 		current.spellremove(current)
-	special_role = null
-	remove_antag_equip()
+		remove_antag_datum(ANTAG_DATUM_WIZARD)
 
 /datum/mind/proc/remove_cultist()
 	if(src in SSticker.mode.cult)
@@ -515,10 +513,8 @@
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if ((src in SSticker.mode.wizards) || (src in SSticker.mode.apprentices))
-			text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
-			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
+			text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>."
+			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>."
 		else
 			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
 
@@ -1105,10 +1101,9 @@
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
 			if("clear")
-				remove_wizard()
+				remove_antag_datum(ANTAG_DATUM_WIZARD)
 				to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a wizard!</span>")
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
-				SSticker.mode.update_wiz_icons_removed(src)
 			if("wizard")
 				if(!(src in SSticker.mode.wizards))
 					SSticker.mode.wizards += src
@@ -1120,13 +1115,6 @@
 					SSticker.mode.update_wiz_icons_added(src)
 			if("lair")
 				current.loc = pick(GLOB.wizardstart)
-			if("dressup")
-				SSticker.mode.equip_wizard(current)
-			if("name")
-				SSticker.mode.name_wizard(current)
-			if("autoobjectives")
-				SSticker.mode.forge_wizard_objectives(src)
-				to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if (href_list["changeling"])
 		switch(href_list["changeling"])
@@ -1498,20 +1486,12 @@
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in SSticker.mode.wizards))
-		SSticker.mode.wizards += src
-		special_role = "Wizard"
-		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
 			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)
-
-		SSticker.mode.equip_wizard(current)
-		SSticker.mode.name_wizard(current)
-		SSticker.mode.forge_wizard_objectives(src)
-		SSticker.mode.greet_wizard(src)
-
+		add_antag_datum(ANTAG_DATUM_WIZARD)
 
 /datum/mind/proc/make_Cultist()
 	if(!(src in SSticker.mode.cult))
