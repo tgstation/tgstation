@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - bugfix: "Nearly-full goliath hide stacks now correctly have a sprite."

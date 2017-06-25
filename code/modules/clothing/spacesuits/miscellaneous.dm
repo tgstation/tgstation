@@ -93,6 +93,19 @@ Contains:
 	desc = "An old, NASA Centcom branch designed, dark red space suit."
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
 
+/obj/item/clothing/head/helmet/space/nasavoid/old
+	name = "Engineering Void Helmet"
+	desc = "A Centcom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
+	icon_state = "void"
+	item_state = "void"
+
+/obj/item/clothing/suit/space/nasavoid/old
+	name = "Engineering Voidsuit"
+	icon_state = "void"
+	item_state = "void"
+	desc = "A Centcom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
+	slowdown = TRUE
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
 
 	//Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
