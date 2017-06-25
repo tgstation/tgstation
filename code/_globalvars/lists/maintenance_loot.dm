@@ -87,7 +87,6 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/weapon/weldingtool = 3,
 	/obj/item/weapon/wirecutters = 1,
 	/obj/item/weapon/wrench = 4,
-	/obj/item/weapon/relic = 3,
 	/obj/item/weaponcrafting/receiver = 2,
 	/obj/item/clothing/head/cone = 2,
 	/obj/item/weapon/grenade/smokebomb = 2,

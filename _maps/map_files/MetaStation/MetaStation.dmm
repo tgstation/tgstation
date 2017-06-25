@@ -59987,7 +59987,10 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ciU" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/item/weapon/paper{
+	info = "<center><b>Science Construction Inventions</b></center><center><small>Nanotrasen Subsidiary</small></center><br><br><center><i>Due to recent events involving power cells and falsified emissions reports, a recall has been issued for the E.X.P.E.R.I.MENTOR unit. Thank you for your cooperation.</i>";
+	name = "NOTICE - E.X.P.E.R.I.MENTOR RECALL"
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "ciV" = (
@@ -61896,16 +61899,15 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmT" = (
-/obj/machinery/computer/rdconsole/experiment,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
+/obj/structure/frame/computer{
+	anchored = 1;
+	state = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmU" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/book/manual/experimentor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
@@ -80589,7 +80591,6 @@
 	name = "spare equipment crate"
 	},
 /obj/item/weapon/grenade/chem_grenade/metalfoam,
-/obj/item/weapon/relic,
 /obj/item/device/t_scanner,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;

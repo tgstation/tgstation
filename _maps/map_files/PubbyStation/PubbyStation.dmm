@@ -26478,7 +26478,10 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "bfn" = (
-/obj/machinery/r_n_d/experimentor,
+/obj/item/weapon/paper{
+	info = "<center><b>Science Construction Inventions</b></center><center><small>Nanotrasen Subsidiary</small></center><br><br><center><i>Due to recent events involving power cells and falsified emissions reports, a recall has been issued for the E.X.P.E.R.I.MENTOR unit. Thank you for your cooperation.</i>";
+	name = "NOTICE - E.X.P.E.R.I.MENTOR RECALL"
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "bfo" = (
@@ -27832,16 +27835,15 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bin" = (
-/obj/machinery/computer/rdconsole/experiment,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/structure/frame/computer{
+	anchored = 1;
+	state = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bio" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder,
-/obj/item/weapon/book/manual/experimentor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -83443,7 +83445,7 @@ aAs
 aDJ
 bcJ
 bcI
-beP
+bdD
 bdG
 bgX
 bia
@@ -87535,18 +87537,18 @@ aJk
 aKl
 aHQ
 aMu
-bVG
+aHQ
 bVI
 aPg
 aQm
-bVG
+aHQ
 aSj
-bVG
+aHQ
 aTS
 aUS
-bVG
+aHQ
 bVI
-bVG
+aHQ
 axi
 aDd
 bar

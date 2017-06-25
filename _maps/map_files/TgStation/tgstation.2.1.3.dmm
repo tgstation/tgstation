@@ -33041,7 +33041,10 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bxp" = (
-/obj/machinery/computer/rdconsole/experiment,
+/obj/structure/frame/computer{
+	anchored = 1;
+	state = 1
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -33049,7 +33052,6 @@
 "bxq" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/book/manual/experimentor,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -34607,12 +34609,13 @@
 	},
 /area/hallway/primary/aft)
 "bAQ" = (
-/obj/effect/landmark/blobstart,
-/obj/effect/landmark/xeno_spawn,
+/obj/item/weapon/paper{
+	info = "<center><b>Science Construction Inventions</b></center><center><small>Nanotrasen Subsidiary</small></center><br><br><center><i>Due to recent events involving power cells and falsified emissions reports, a recall has been issued for the E.X.P.E.R.I.MENTOR unit. Thank you for your cooperation.</i>";
+	name = "NOTICE - E.X.P.E.R.I.MENTOR RECALL"
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "bAR" = (
-/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "bAS" = (
@@ -57697,7 +57700,8 @@
 /area/shuttle/abandoned)
 "czn" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	state = 1
 	},
 /obj/structure/light_construct,
 /turf/open/floor/mineral/titanium,
@@ -57754,7 +57758,8 @@
 /area/shuttle/abandoned)
 "czy" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	state = 1
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -62821,7 +62826,8 @@
 /area/shuttle/abandoned)
 "cLZ" = (
 /obj/structure/frame/computer{
-	anchored = 1
+	anchored = 1;
+	state = 1
 	},
 /obj/machinery/light{
 	dir = 1
@@ -89151,7 +89157,7 @@ aJq
 aLY
 aJq
 aJq
-bcW
+aRh
 bbV
 bfo
 bkS
@@ -113840,7 +113846,7 @@ bvO
 bxq
 byv
 bzO
-bAR
+bzO
 bzO
 bqe
 bED

@@ -71138,7 +71138,6 @@
 /area/science/misc_lab)
 "cBg" = (
 /obj/effect/landmark/event_spawn,
-/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -71379,7 +71378,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/machinery/computer/rdconsole/experiment,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
