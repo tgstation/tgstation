@@ -14,7 +14,13 @@
 	var/list/boost_item_paths = list()		//Associative list, path = point_value.
 	var/export_price = 0					//Cargo export price.
 	var/research_cost = 0					//Point cost to research.
+	var/actual_cost = 0
+
+/datum/techweb_node/New()
+	actual_cost = research_cost
+	..()
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
 	var/discount = boost_item_paths[host.boosted_nodes[src]]
-	return research_cost - discount
+	actual_cost = research_cost - discount
+	return actual_cost

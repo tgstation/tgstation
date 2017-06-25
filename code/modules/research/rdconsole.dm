@@ -29,11 +29,8 @@ doesn't have toxins access.
 	var/obj/machinery/rnd/protolathe/linked_lathe = null				//Linked Protolathe
 	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
-	var/screen = SCICONSOLE_MENU	//Which screen is currently showing.
-	var/lastscreen = SCICONSOLE_MENU
 	var/id = 0			//ID of the computer (for server restrictions).
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
-	var/first_use = 1	//If first_use = 1, it will try to auto-connect with nearby devices
 
 	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
 
@@ -69,7 +66,6 @@ doesn't have toxins access.
 			if(linked_imprinter == null)
 				linked_imprinter = D
 				D.linked_console = src
-	first_use = 0
 
 /obj/machinery/computer/rdconsole/Initialize()
 	. = ..()
@@ -77,6 +73,7 @@ doesn't have toxins access.
 	matching_designs = list()
 	if(!id)
 		fix_noid_research_servers()
+	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user, params)
 
@@ -101,7 +98,7 @@ doesn't have toxins access.
 		. = ..()
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/proc/research_node(id)
+/obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	CRASH("RESEARCH NODE NOT CODED!")
 
 /obj/machinery/computer/rdconsole/on_deconstruction()
@@ -123,29 +120,17 @@ doesn't have toxins access.
 		emagged = 1
 		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
+/*
 /obj/machinery/computer/rdconsole/Topic(href, href_list)
 	if(..())
 		return
-
 	add_fingerprint(usr)
-
-	usr.set_machine(src)
-	if(href_list["back_screen"])
-		lastscreen = text2num(href_list["back_screen"])
 
 	if(href_list["disk_slot"])
 		disk_slot_selected = text2num(href_list["disk_slot"])
 
-	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
-		screen = text2num(href_list["menu"])
-
 	if(href_list["category"])
 		selected_category = href_list["category"]
-
-	else if(href_list["research_node"])
-		if(!SSresearch.science_tech.available_nodes[href_list["research_node"]])
-			return			//Nope!
-		research_node(href_list["research_node"])
 
 	else if(href_list["updt_tech"]) //Update the research holder with information from the technology disk.
 		screen = SCICONSOLE_UPDATE_DATABASE
@@ -155,14 +140,6 @@ doesn't have toxins access.
 			if(t_disk)
 				t_disk.stored_research.copy_research_to(stored_research)
 				updateUsrDialog()
-	else if(href_list["view_node"])
-		selected_node = SSresearch.techweb_nodes[href_list["view_node"]]
-		screen = SCICONSOLE_NODEDESC
-
-	else if(href_list["view_design"])
-		selected_design = SSresearch.techweb_designs[href_list["view_design"]]
-		screen = SCICONSOLE_DESIGNVIEW
-
 	else if(href_list["clear_tech"]) //Erase data on the technology disk.
 		if(t_disk)
 			qdel(t_disk.stored_research)
@@ -496,42 +473,7 @@ doesn't have toxins access.
 				continue
 			if(findtext(D.name,href_list["to_search"]))
 				matching_designs.Add(D)
-
-	updateUsrDialog()
-	return
-
-
-/obj/machinery/computer/rdconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/rdconsole/interact(mob/user)
-	user.set_machine(src)
-
-	if(first_use)
-		SyncRDevices()
-
-	var/list/dat = list()
-	var/auto_linebreak = TRUE
-	switch(screen) //A quick check.
-		if(SCICONSOLE_NODEDESC)
-			if(!selected_node)
-				screen = SCICONSOLE_MENU
-		if(SCICONSOLE_DA_SCREENS)
-			if(linked_destroy == null)
-				screen = SCICONSOLE_DA_NONE
-			else if(linked_destroy.loaded_item == null)
-				screen = SCICONSOLE_DA_UNLOADED
-			else
-				screen = SCICONSOLE_DA_LOADED
-		if(SCICONSOLE_PROTOLATHE_SCREENS)
-			if(linked_lathe == null)
-				screen = SCICONSOLE_PROTOLATHE_NONE
-		if(SCICONSOLE_CIRCUIT_SCREENS)
-			if(linked_imprinter == null)
-				screen = SCICONSOLE_CIRCUIT_NONE
-	switch(screen)
+////////////////////////////////////////////////////////////	switch(screen)
 		//////////////////////R&D CONSOLE SCREENS//////////////////
 		if(SCICONSOLE_UPDATE_DATABASE)
 			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
@@ -542,80 +484,6 @@ doesn't have toxins access.
 			dat += "<div class='statusDisplay'>Constructing Prototype. Please Wait...</div>"
 		if(SCICONSOLE_UPDATE_CIRCUIT)
 			dat += "<div class='statusDisplay'>Imprinting Circuit. Please Wait...</div>"
-		if(SCICONSOLE_MENU) //Main Menu
-			dat += "<div class='statusDisplay'>"
-			dat += "<h3>Main Menu:</h3>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_RES_PRIMARY];back_screen=[screen]'>Technology Web</A>"
-			if(t_disk)
-				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_TDISK]'>Disk Operations</A>"
-			else if(d_disk)
-				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_DDISK]'>Disk Operations</A>"
-			else
-				dat += "<span class='linkOff'>Disk Operations</span>"
-			if(linked_destroy)
-				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_DA_LOADED]'>Destructive Analyzer Menu</A>"
-			else
-				dat += "<span class='linkOff'>Destructive Analyzer Menu</span>"
-			if(linked_lathe)
-				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_PROTOLATHE_CAT]'>Protolathe Construction Menu</A>"
-			else
-				dat += "<span class='linkOff'>Protolathe Construction Menu</span>"
-			if(linked_imprinter)
-				dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_CIRCUIT_CAT]'>Circuit Construction Menu</A>"
-			else
-				dat += "<span class='linkOff'>Circuit Construction Menu</span>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_SETTINGS]'>Settings</A>"
-			dat += "</div>"
-
-		if(SCICONSOLE_RES_PRIMARY)
-			auto_linebreak = FALSE			//Override.
-			var/list/avail = list()			//This could probably be optimized a bit later.
-			var/list/unavail = list()
-			var/list/res = list()
-			for(var/v in stored_research.researched_nodes)
-				res += stored_research.researched_nodes[v]
-			for(var/v in stored_research.available_nodes)
-				if(stored_research.researched_nodes[v])
-					continue
-				avail += stored_research.available_nodes[v]
-			for(var/v in stored_research.visible_nodes)
-				if(stored_research.available_nodes[v])
-					continue
-				unavail += stored_research.visible_nodes[v]
-			dat += SCICONSOLE_HEADER
-			dat += "<h3>Technology Nodes:</h3><hr><BR>"
-			dat += "<h3>Available for Research:</h3><hr><div><BR>"
-			for(var/datum/techweb_node/N in avail)
-				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A><BR>"
-			dat += "</div><hr><h3>Locked Nodes:</h3><div><BR>"
-			for(var/datum/techweb_node/N in unavail)
-				dat += "<A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A><BR>"
-			dat += "</div><hr><h3>Researched Nodes:</h3><div>"
-			for(var/datum/techweb_node/N in res)
-				dat += "<BR><A href='?src=\ref[src];view_node=[N.id];back_screen=[screen]'>[N.display_name]</A>"
-			dat += "</div>"
-		if(SCICONSOLE_NODEDESC)
-			auto_linebreak = FALSE
-			dat += SCICONSOLE_HEADER
-			dat += "<div><h3>[selected_node.display_name]</h3><hr>"
-			dat += "[selected_node.description]<br>"
-			dat += "</div><div><h3>Designs:</h3>"
-			for(var/i in selected_node.designs)
-				var/datum/design/D = selected_node.designs[i]
-				dat += "<br><A href='?src=\ref[src];view_design=[i]'>[D.name]</A>"
-			dat += "</div><hr><div><h3>Prerequisites:</h3>"
-			for(var/i in selected_node.prerequisites)
-				var/datum/techweb_node/prereq = selected_node.prerequisites[i]
-				var/sc = stored_research.researched_nodes[prereq.id]? "alienbold" : "prefix danger"
-				dat += "<br><A href='?src=\ref[src];view_node=[i]'><span class='[sc]'>[prereq.display_name]</span></A>"
-			dat += "</div><hr><div><h3>Unlocks:</h3>"
-			for(var/i in selected_node.unlocks)
-				var/datum/techweb_node/unlock = selected_node.unlocks[i]
-				dat += "<br><A href='?src=\ref[src];view_node=[i]'>[unlock.display_name]</A>"
-			if(stored_research.available_nodes[selected_node.id] && !stored_research.researched_nodes[selected_node.id])
-				dat += "<br><h3><A href='?src=\ref[src];research_node=[selected_node.id]'>RESEARCH</A></h3>"
-			else
-				dat += "<br><h3><span class='linkOff'>RESEARCH</span></h3>"
 			dat += "</div>"
 		if(SCICONSOLE_TDISK) //Technology Disk Menu
 			dat += SCICONSOLE_HEADER
@@ -650,33 +518,6 @@ doesn't have toxins access.
 				dat += "[D.name] "
 				dat += "<A href='?src=\ref[src];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
 			dat += "</div>"
-
-		if(SCICONSOLE_DESIGNVIEW)
-			dat += SCICONSOLE_HEADER
-			dat += "<div>"
-			var/datum/design/D = selected_design
-			dat += "Name: [D.name]"
-			if(D.build_type)
-				dat += "Lathe Types:"
-				if(D.build_type & IMPRINTER) dat += "Circuit Imprinter"
-				if(D.build_type & PROTOLATHE) dat += "Protolathe"
-				if(D.build_type & AUTOLATHE) dat += "Autolathe"
-				if(D.build_type & MECHFAB) dat += "Exosuit Fabricator"
-				if(D.build_type & BIOGENERATOR) dat += "Biogenerator"
-				if(D.build_type & LIMBGROWER) dat += "Limbgrower"
-				if(D.build_type & SMELTER) dat += "Smelter"
-			dat += "Required Materials:"
-			var/all_mats = D.materials + D.reagents_list
-			for(var/M in all_mats)
-				dat += "* [CallMaterialName(M)] x [all_mats[M]]"
-			dat += "</div>"
-		if(SCICONSOLE_SETTINGS) //R&D console settings
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'>"
-			dat += "<h3>R&D Console Setting:</h3>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_LINKING]'>Device Linkage Menu</A>"
-			dat += "<A href='?src=\ref[src];lock=[SCICONSOLE_LOCKED]'>Lock Console</A>"
-
 		if(SCICONSOLE_LINKING) //R&D device linkage
 			dat += SCICONSOLE_HEADER
 			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_SETTINGS]'>Settings Menu</A><div class='statusDisplay'>"
@@ -943,15 +784,89 @@ doesn't have toxins access.
 			dat += "</div>"
 		else
 			CRASH("R&D console screen var corrupted!")
+*/
+/obj/machinery/computer/rdconsole/ui_data(mob/user)
+	var/list/data = list()
+	//Tabs
+	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
+	//General Access
+	data["console_vars"] = vars
+	//Techweb Screen
+	data["techweb_vars"] = stored_research.vars
+	var/list/techweb_avail = list()
+	var/list/techweb_locked = list()
+	var/list/techweb_researched = list()
+	for(var/id in stored_research.available_nodes)
+		techweb_avail += stored_research.available_nodes[id]
+	for(var/id in (stored_research.visible_nodes - stored_research.available_nodes))
+		techweb_locked += stored_research.visible_nodes[id]
+	for(var/id in stored_research.researched_nodes)
+		techweb_researched += stored_research.researched_nodes[id]
+	data["techweb_avail"] = techweb_avail
+	data["techweb_locked"] = techweb_locked
+	data["techweb_researched"] = techweb_researched
+	//Node View
+	data["node_selected"] = selected_node? TRUE : FALSE
+	if(selected_node)
+		data["node_vars"] = selected_node.vars
+		var/list/prereqs = list()
+		var/list/unlocks = list()
+		var/list/designs = list()
+		for(var/id in selected_node.prerequisites)
+			prereqs += selected_node.prerequisites[id]
+		for(var/id in selected_node.unlocks)
+			unlocks += selected_node.unlocks[id]
+		for(var/id in selected_node.designs)
+			designs += selected_node.designs[id]
+		data["node_prereqs"] = prereqs
+		data["node_unlocks"] = unlocks
+		data["node_designs"] = designs
+	//Design View
+	data["design_selected"] = selected_design? TRUE : FALSE
+	if(selected_design)
+		data["sdesign_name"] = selected_design.name
+		data["sdesign_desc"] = selected_design.desc
+		data["sdesign_buildtype"] = selected_design.build_type
+		data["sdesign_mats"] = list()
+		for(var/M in selected_design.materials)
+			data["sdesign_mats"]["[CallMaterialName(M)]"] = selected_design.materials[M]
+	//Disk Operations
 
-	var/datum/browser/popup = new(user, "rndconsole", name, 460, 550)
-	if(auto_linebreak)
-		dat = dat.Join("<br>")
-	else
-		dat = dat.Join("")
-	popup.set_content(dat)
-	popup.open()
-	return
+
+/*
+		if(SCICONSOLE_SETTINGS) //R&D console settings
+			dat += SCICONSOLE_HEADER
+			dat += "<div class='statusDisplay'>"
+			dat += "<h3>R&D Console Setting:</h3>"
+			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_LINKING]'>Device Linkage Menu</A>"
+			dat += "<A href='?src=\ref[src];lock=[SCICONSOLE_LOCKED]'>Lock Console</A>"
+*/
+
+
+
+
+
+
+
+
+	return data
+
+/obj/machinery/computer/rdconsole/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("select_node")
+			selected_node = SSresearch.techweb_nodes[params["id"]]
+		if("select_design")
+			selected_design = SSresearch.techweb_designs[params["id"]]
+		if("research_node")
+			research_node(params["id"], usr)
+
+/obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "rdconsole_primary", "Research and Development", 880, 880, master_ui, state)
+		ui.open()
 
 //helper proc, which return a table containing categories
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)

@@ -197,9 +197,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					boosted += str
 				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
 					output += str
-			output = output + boosted + res
-			if(output.len > 1)		//If there's boosts for that item.
-				to_chat(user, output.Join("<br>"))
+			var/list/combine = output + res + boosted
+			var/strout = combine.Join("<br>")
+			to_chat(user, strout)
 
 /obj/item/attack_self(mob/user)
 	interact(user)

@@ -1,0 +1,6 @@
+<ui-display title='Status'>
+	<ui-section title='Research Points'>{{data.research_points_stored}}</ui-section>
+	<ui-section title='Deconstructive Analyzer'>{{#if data.console_vars.destroy_linked}}Linked{{else}}Not Linked{{/if}}</ui-section>
+	<ui-section title='Protolathe'>{{#if data.console_vars.protolathe_linked}}Linked{{else}}Not Linked{{/if}}</ui-section>
+	<ui-section title='Circuit Imprinter'>{{#if data.console_vars.circuit_linked}}Linked{{else}}Not Linked{{/if}}</ui-section>
+</ui-display>

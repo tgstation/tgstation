@@ -56,7 +56,6 @@
 #include "code\__DEFINES\qdel.dm"
 #include "code\__DEFINES\radio.dm"
 #include "code\__DEFINES\reagents.dm"
-#include "code\__DEFINES\rnd_console.dm"
 #include "code\__DEFINES\robots.dm"
 #include "code\__DEFINES\role_preferences.dm"
 #include "code\__DEFINES\say.dm"
