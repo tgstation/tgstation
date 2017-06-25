@@ -18,7 +18,7 @@ map hippiestation
 	#voteweight 1.5
 endmap
 
-map tgstation2
+map boxstation
 endmap
 
 map metastation
