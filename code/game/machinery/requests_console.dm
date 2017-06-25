@@ -439,12 +439,12 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	updateUsrDialog()
 	return
 
-/obj/machinery/requests_console/say_quote(input, list/spans, message_mode)
+/obj/machinery/requests_console/say_mod(input, message_mode)
 	var/ending = copytext(input, length(input) - 2)
 	if (ending == "!!!")
-		return "blares, \"[attach_spans(input, spans)]\""
-
-	return ..()
+		. = "blares"
+	else
+		. = ..()
 
 /obj/machinery/requests_console/proc/clear_emergency()
 	emergency = null

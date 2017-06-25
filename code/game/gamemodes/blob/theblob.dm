@@ -140,7 +140,7 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
-	var/obj/effect/overlay/temp/blob/O = new /obj/effect/overlay/temp/blob(src.loc)
+	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
 	O.setDir(dir)
 	if(controller)
 		var/mob/camera/blob/BO = controller
@@ -208,7 +208,7 @@
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
 		if(prob(100 - severity * 30))
-			new /obj/effect/overlay/temp/emp(get_turf(src))
+			new /obj/effect/temp_visual/emp(get_turf(src))
 
 /obj/structure/blob/tesla_act(power)
 	..()
@@ -262,7 +262,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
@@ -307,7 +307,7 @@
 /obj/structure/blob/examine(mob/user)
 	..()
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	if(user.research_scanner || (user in hud_to_check.hudusers))
+	if(user.research_scanner || hud_to_check.hudusers[user])
 		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
 		chemeffectreport(user)
 		typereport(user)

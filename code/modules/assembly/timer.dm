@@ -45,7 +45,7 @@
 	if(!secured || next_activate > world.time)
 		return FALSE
 	pulse(0)
-	audible_message("\icon[src] *beep* *beep*", null, 3)
+	audible_message("[bicon(src)] *beep* *beep*", null, 3)
 	if(loop)
 		timing = 1
 	update_icon()
@@ -93,10 +93,10 @@
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
 		if(timing && istype(holder, /obj/item/device/transfer_valve))
-			var/timer_message = "[key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated [src] attachment on [holder]."
+			var/timer_message = "[ADMIN_LOOKUPFLW(usr)] activated [src] attachment on [holder]."
 			message_admins(timer_message)
 			GLOB.bombers += timer_message
-			log_game("[key_name(usr)] activated [src] attachment for [loc]")
+			log_game("[key_name(usr)] activated [src] attachment on [holder]")
 		update_icon()
 	if(href_list["repeat"])
 		loop = text2num(href_list["repeat"])

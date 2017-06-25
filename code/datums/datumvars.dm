@@ -27,6 +27,7 @@
 	. += "---"
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
+	.["Delete"] = "?_src_=vars;delete=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -386,7 +387,7 @@
 /proc/debug_variable(name, value, level, datum/DA = null, sanitize = TRUE)
 	var/header
 	if(DA)
-		if (istype(DA, /list))
+		if (islist(DA))
 			var/index = name
 			if (value)
 				name = DA[name] //name is really the index until this line
@@ -441,11 +442,11 @@
 		else
 			item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /list))
+	else if (islist(value))
 		var/list/L = value
 		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? 50 : 150)))
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val
@@ -524,6 +525,16 @@
 
 		if(T)
 			callproc_datum(T)
+
+	else if(href_list["delete"])
+		if(!check_rights(R_DEBUG, 0))
+			return
+
+		var/datum/D = locate(href_list["delete"])
+		if(!D)
+			to_chat(usr, "Unable to locate item!")
+		admin_delete(D)
+		href_list["datumrefresh"] = href_list["delete"]
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
@@ -725,18 +736,6 @@
 
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
-
-		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))
-				return
-
-			var/mob/M = locate(href_list["ninja"])
-			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
-				return
-
-			src.cmd_admin_ninjafy(M)
-			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))

@@ -62,8 +62,9 @@
 
 /datum/emote/living/collapse/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.Paralyse(2)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Unconscious(40)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -110,8 +111,9 @@
 
 /datum/emote/living/faint/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.SetSleeping(10)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.SetSleeping(200)
 
 /datum/emote/living/flap
 	key = "flap"
@@ -329,8 +331,9 @@
 
 /datum/emote/living/surrender/run_emote(mob/user, params)
 	. = ..()
-	if(.)
-		user.Weaken(20)
+	if(. && isliving(user))
+		var/mob/living/L = user
+		L.Knockdown(200)
 
 /datum/emote/living/sway
 	key = "sway"
@@ -419,6 +422,9 @@
 	message = null
 	emote_type = EMOTE_VISIBLE
 
+/datum/emote/living/custom/replace_pronoun(mob/user, message)
+	return message
+
 /datum/emote/living/help
 	key = "help"
 
@@ -463,7 +469,7 @@
 
 /datum/emote/living/spin/run_emote(mob/user)
 	user.spin(20, 1)
-	if(istype(user, /mob/living/silicon/robot))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.buckled_mobs)
 			for(var/mob/M in R.buckled_mobs)

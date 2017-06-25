@@ -25,7 +25,7 @@
 		new /obj/item/ammo_box/magazine/m10mm(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/box/teargas(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/syndie/med(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/syndie/med(src)
 	new /obj/item/device/pda/syndicate(src)
 	return
 

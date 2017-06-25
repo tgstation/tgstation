@@ -17,32 +17,18 @@
 	sort_priority = 1
 	quickbind = TRUE
 	quickbind_desc = "Forces nearby non-Servants to walk, doing minor damage with each chant.<br><b>Maximum 15 chants.</b>"
-	var/noncultist_damage = 2 //damage per chant to noncultists
-	var/cultist_damage = 8 //damage per chant to non-walking cultists
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/carbon/C in hearers(7, invoker))
-		var/number_legs = C.get_num_legs()
-		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && number_legs) //you have legs right
-			C.apply_damage(noncultist_damage * 0.5, BURN, "l_leg")
-			C.apply_damage(noncultist_damage * 0.5, BURN, "r_leg")
-			if(C.m_intent != MOVE_INTENT_WALK)
-				if(!iscultist(C))
-					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s shiver":" shivers"] with pain!</span>")
-				else //Cultists take extra burn damage
-					to_chat(C, "<span class='warning'>Your leg[number_legs > 1 ? "s burn":" burns"] with pain!</span>")
-					C.apply_damage(cultist_damage * 0.5, BURN, "l_leg")
-					C.apply_damage(cultist_damage * 0.5, BURN, "r_leg")
-				C.toggle_move_intent()
+		C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 	return TRUE
 
 
 //Judicial Visor: Creates a judicial visor, which can smite an area.
 /datum/clockwork_scripture/create_object/judicial_visor
-	descname = "Delayed Area Stun Glasses"
+	descname = "Delayed Area Knockdown Glasses"
 	name = "Judicial Visor"
-	desc = "Forms a visor that, when worn, will grant the ability to smite an area, stunning, muting, and damaging non-Servants. \
-	Cultists of Nar-Sie will be set on fire, though they will be stunned for half the time."
+	desc = "Forms a visor that, when worn, will grant the ability to smite an area, knocking down, muting, and damaging non-Servants."
 	invocations = list("Grant me the flames of Engine!")
 	channel_time = 10
 	consumed_components = list(BELLIGERENT_EYE = 1)
@@ -55,14 +41,14 @@
 	primary_component = BELLIGERENT_EYE
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, stunning, muting, and damaging non-Servants after a delay."
+	quickbind_desc = "Creates a Judicial Visor, which can create a Judicial Marker at an area, knocking down, muting, and damaging non-Servants after a delay."
 
 
 //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 25% of all stuns absorbed are applied to the invoker.
 /datum/clockwork_scripture/vanguard
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is stunned for the equivalent of 25% of all stuns they absorbed. \
+	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is knocked down for the equivalent of 25% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Shield me...", "...from darkness!")
 	channel_time = 30
@@ -135,8 +121,8 @@
 /datum/clockwork_scripture/ranged_ability/geis_prep/run_scripture()
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
 				servants++
 	if(servants > SCRIPT_SERVANT_REQ)
 		whispered = FALSE
@@ -166,8 +152,8 @@
 /datum/clockwork_scripture/geis/run_scripture()
 	var/servants = 0
 	if(!GLOB.ratvar_awakens)
-		for(var/mob/living/M in GLOB.all_clockwork_mobs)
-			if(ishuman(M) || issilicon(M))
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(can_recite_scripture(M, TRUE))
 				servants++
 	if(target.buckled)
 		target.buckled.unbuckle_mob(target, TRUE)
@@ -191,7 +177,7 @@
 /datum/clockwork_scripture/channeled/taunting_tirade
 	descname = "Channeled, Mobile Confusion Trail"
 	name = "Taunting Tirade"
-	desc = "Allows movement for five seconds, leaving a confusing and weakening trail. Chanted every second for up to thirty seconds."
+	desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Hostiles on my back!", "Enemies on my trail!", "Gonna try and shake my tail.", "Bogeys on my six!")
 	chant_amount = 5
 	chant_interval = 10
@@ -201,7 +187,7 @@
 	primary_component = GEIS_CAPACITOR
 	sort_priority = 6
 	quickbind = TRUE
-	quickbind_desc = "Allows movement for five seconds, leaving a confusing and weakening trail.<br><b>Maximum 5 chants.</b>"
+	quickbind_desc = "Allows movement for five seconds, leaving a trail that confuses and knocks down.<br><b>Maximum 5 chants.</b>"
 	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
@@ -272,7 +258,7 @@
 	var/static/prev_cost = 0
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/creation_update()
-	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.25), 5)
+	var/cache_cost_increase = min(round(GLOB.clockwork_caches*0.4), 10)
 	if(cache_cost_increase != prev_cost)
 		prev_cost = cache_cost_increase
 		consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 1, HIEROPHANT_ANSIBLE = 0)

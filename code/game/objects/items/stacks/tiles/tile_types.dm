@@ -12,9 +12,10 @@
 	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+	novariants = TRUE
 
-/obj/item/stack/tile/New(loc, amount)
-	..()
+/obj/item/stack/tile/Initialize(mapload, amount)
+	. = ..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 
@@ -88,6 +89,14 @@
 	turf_type = /turf/open/floor/wood
 	resistance_flags = FLAMMABLE
 
+//Basalt
+/obj/item/stack/tile/basalt
+	name = "basalt tile"
+	singular_name = "basalt floor tile"
+	desc = "Artificially made ashy soil themed on a hostile enviroment."
+	icon_state = "tile_basalt"
+	origin_tech = "materials=1"
+	turf_type = /turf/open/floor/grass/fakebasalt
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -98,6 +107,13 @@
 	turf_type = /turf/open/floor/carpet
 	resistance_flags = FLAMMABLE
 
+/obj/item/stack/tile/carpet/black
+	name = "black carpet"
+	icon_state = "tile-carpet-black"
+	turf_type = /turf/open/floor/carpet/black
+
+/obj/item/stack/tile/carpet/black/fifty
+	amount = 50
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"

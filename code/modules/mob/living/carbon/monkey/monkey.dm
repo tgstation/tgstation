@@ -2,7 +2,7 @@
 	name = "monkey"
 	voice_name = "monkey"
 	verb_say = "chimpers"
-	initial_languages = list(/datum/language/monkey)
+	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
 	icon_state = ""
 	gender = NEUTER
@@ -30,10 +30,8 @@
 
 	create_internal_organs()
 
-	..()
+	. = ..()
 
-/mob/living/carbon/monkey/Initialize()
-	..()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 
@@ -92,13 +90,14 @@
 /mob/living/carbon/monkey/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/monkey/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
-	if(judgebot.emagged == 2)
+/mob/living/carbon/monkey/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
+	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
+
 	var/threatcount = 0
 
 	//Securitrons can't identify monkeys
-	if(!lasercolor && judgebot.idcheck )
+	if( !(judgement_criteria & JUDGE_IGNOREMONKEYS) && (judgement_criteria & JUDGE_IDCHECK) )
 		threatcount += 4
 
 	//Lasertag bullshit
@@ -114,9 +113,9 @@
 		return threatcount
 
 	//Check for weapons
-	if(judgebot.weaponscheck)
+	if( (judgement_criteria & JUDGE_WEAPONCHECK) && weaponcheck )
 		for(var/obj/item/I in held_items)
-			if(judgebot.check_for_weapons(I))
+			if(weaponcheck.Invoke(I))
 				threatcount += 4
 
 	//mindshield implants imply trustworthyness

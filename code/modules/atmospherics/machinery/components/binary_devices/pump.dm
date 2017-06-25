@@ -119,7 +119,7 @@ Thus, the two variables affect pump operation are set in New():
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -135,7 +135,7 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -159,7 +159,7 @@ Thus, the two variables affect pump operation are set in New():
 		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()
@@ -176,7 +176,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	if(..())
 		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			return 1
 

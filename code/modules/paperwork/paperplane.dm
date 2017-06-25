@@ -14,12 +14,13 @@
 	var/obj/item/weapon/paper/internalPaper
 
 /obj/item/weapon/paperplane/Initialize(mapload, obj/item/weapon/paper/newPaper)
-	..()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	if(newPaper)
 		internalPaper = newPaper
 		flags = newPaper.flags
+		color = newPaper.color
 		newPaper.forceMove(src)
 	else
 		internalPaper = new /obj/item/weapon/paper(src)
@@ -31,8 +32,8 @@
 		internalPaper = null
 	return ..()
 
-/obj/item/weapon/paperplane/suicide_act(mob/user)
-	user.Stun(10)
+/obj/item/weapon/paperplane/suicide_act(mob/living/user)
+	user.Stun(200)
 	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
@@ -44,8 +45,7 @@
 	var/list/stamped = internalPaper.stamped
 	if(stamped)
 		for(var/S in stamped)
-			var/image/stampoverlay = image('icons/obj/bureaucracy.dmi', "paperplane_[stamped]")
-			add_overlay(stampoverlay)
+			add_overlay("paperplane_[S]")
 
 /obj/item/weapon/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
@@ -96,7 +96,7 @@
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
 		H.adjust_blurriness(6)
 		H.adjust_eye_damage(rand(6,8))
-		H.Weaken(2)
+		H.Knockdown(40)
 		H.emote("scream")
 
 /obj/item/weapon/paper/AltClick(mob/living/carbon/user, obj/item/I)

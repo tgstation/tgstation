@@ -2,10 +2,7 @@
 	name = "Human Form"
 	desc = "We change into a human."
 	chemical_cost = 5
-	genetic_damage = 3
 	req_dna = 1
-	max_genetic_damage = 3
-
 
 //Transform into a human.
 /obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)

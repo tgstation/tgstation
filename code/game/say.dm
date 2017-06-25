@@ -35,10 +35,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
-	var/rendered = compose_message(src, message_language, message, , spans)
+	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
 	for(var/_AM in get_hearers_in_view(range, source))
 		var/atom/movable/AM = _AM
-		AM.Hear(rendered, src, message_language, message, , spans)
+		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
@@ -56,10 +56,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
 	//End name span.
 	var/endspanpart = "</span>"
+
 	//Message
 	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+	var/languageicon = ""
+	var/datum/language/D = GLOB.language_datum_instances[message_language]
+	if(istype(D) && D.display_icon(src))
+		languageicon = "[D.get_icon()] "
+
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -67,33 +73,37 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
-	if(!input)
-		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+/atom/movable/proc/say_mod(input, message_mode)
 	var/ending = copytext(input, length(input))
 	if(copytext(input, length(input) - 1) == "!!")
-		spans |= SPAN_YELL
-		return "[verb_yell], \"[attach_spans(input, spans)]\""
-	input = attach_spans(input, spans)
-	if(ending == "?")
-		return "[verb_ask], \"[input]\""
-	if(ending == "!")
-		return "[verb_exclaim], \"[input]\""
+		return verb_yell
+	else if(ending == "?")
+		return verb_ask
+	else if(ending == "!")
+		return verb_exclaim
+	else
+		return verb_say
 
-	return "[verb_say], \"[input]\""
+/atom/movable/proc/say_quote(input, list/spans=list(), message_mode)
+	if(!input)
+		input = "..."
+
+	if(copytext(input, length(input) - 1) == "!!")
+		spans |= SPAN_YELL
+
+	var/spanned = attach_spans(input, spans)
+	return "[say_mod(input, message_mode)], \"[spanned]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
-			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans, message_mode)
 			return AM.say_quote(raw_message, spans, message_mode)
 		else
 			return speaker.say_quote(raw_message, spans, message_mode)
 	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
-		var/datum/language/D = new language
+		var/datum/language/D = GLOB.language_datum_instances[language]
 		raw_message = D.scramble(raw_message)
 		if(AM)
 			return AM.say_quote(raw_message, spans, message_mode)
@@ -133,7 +143,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "0"
 
 /atom/movable/proc/GetVoice()
-	return name
+	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
 
 /atom/movable/proc/IsVocal()
 	return 1

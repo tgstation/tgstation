@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -175,9 +175,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
-				new /obj/effect/overlay/temp/guardian/phase/out(loc)
+				new /obj/effect/temp_visual/guardian/phase/out(loc)
 				forceMove(summoner.loc)
-				new /obj/effect/overlay/temp/guardian/phase(loc)
+				new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -260,9 +260,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	I.plane = ABOVE_HUD_PLANE
 
 /mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
-	var/I = guardian_overlays[cache_index]
-	if(I)
-		add_overlay(I)
+	if((. = guardian_overlays[cache_index]))
+		add_overlay(.)
 
 /mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
 	var/I = guardian_overlays[cache_index]
@@ -281,9 +280,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(!r_state)
 			r_state = r_hand.icon_state
 
-		var/image/r_hand_image = r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
-
-		hands_overlays += r_hand_image
+		hands_overlays += r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
@@ -296,9 +293,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
-
-		hands_overlays += l_hand_image
+		hands_overlays +=  l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
@@ -320,7 +315,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
-		new /obj/effect/overlay/temp/guardian/phase(loc)
+		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
 		return TRUE
 	return FALSE
@@ -328,7 +323,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
-	new /obj/effect/overlay/temp/guardian/phase/out(loc)
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10
@@ -419,7 +414,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
+			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/new_stand = null
 			if(candidates.len)
 				new_stand = pick(candidates)
@@ -494,7 +489,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	used = TRUE
 	to_chat(user, "[use_message]")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)

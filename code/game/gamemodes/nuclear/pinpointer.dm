@@ -17,6 +17,7 @@
 	var/atom/movable/constant_target = null //The thing we're always focused on, if we're in the right mode
 	var/target_x = 0 //The target coordinates if we're tracking those
 	var/target_y = 0
+	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
 	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
@@ -32,7 +33,7 @@
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
 	active = !active
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates their pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
-	playsound(user, 'sound/items/Screwdriver2.ogg', 50, 1)
+	playsound(user, 'sound/items/screwdriver2.ogg', 50, 1)
 	icon_state = "pin[active ? "onnull" : "off"]"
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
@@ -129,7 +130,7 @@
 	if(here.z != there.z)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]null"
 		return
-	if(here == there)
+	if(get_dist_euclidian(here,there)<=minimum_range)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]direct"
 	else
 		setDir(get_dir(here, there))
@@ -146,7 +147,7 @@
 		if(bomb.timing)
 			if(!nuke_warning)
 				nuke_warning = TRUE
-				playsound(src, 'sound/items/Nuke_toy_lowpower.ogg', 50, 0)
+				playsound(src, 'sound/items/nuke_toy_lowpower.ogg', 50, 0)
 				if(isliving(loc))
 					var/mob/living/L = loc
 					to_chat(L, "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>")
@@ -171,3 +172,6 @@
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
 	mode = TRACK_OPERATIVES
 	flags = NODROP
+
+
+

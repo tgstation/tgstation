@@ -8,8 +8,10 @@
 	alpha = 30 //initially quite hidden when not "recharging"
 	var/last_trigger = 0
 	var/time_between_triggers = 600 //takes a minute to recharge
+	var/charges = INFINITY
 
 	var/list/static/ignore_typecache
+	var/list/mob/immune_minds = list()
 
 	var/datum/effect_system/spark_spread/spark_system
 
@@ -30,8 +32,10 @@
 	. = ..()
 
 /obj/structure/trap/examine(mob/user)
-	..()
+	. = ..()
 	if(!isliving(user))
+		return
+	if(user.mind && user.mind in immune_minds)
 		return
 	if(get_dist(user, src) <= 1)
 		to_chat(user, "<span class='notice'>You reveal [src]!</span>")
@@ -41,16 +45,27 @@
 	// Makes the trap visible, and starts the cooldown until it's
 	// able to be triggered again.
 	visible_message("<span class='warning'>[src] flares brightly!</span>")
-	alpha = 200
-	animate(src, alpha = initial(alpha), time = time_between_triggers)
-	last_trigger = world.time
 	spark_system.start()
+	alpha = 200
+	last_trigger = world.time
+	charges--
+	if(charges <= 0)
+		animate(src, alpha = 0, time = 10)
+		QDEL_IN(src, 10)
+	else
+		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 /obj/structure/trap/Crossed(atom/movable/AM)
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
 	if(is_type_in_typecache(AM, ignore_typecache))
+		return
+	if(ismob(AM))
+		var/mob/M = AM
+		if(M.mind in immune_minds)
+			return
+	if(charges <= 0)
 		return
 	flare()
 	if(isliving(AM))
@@ -66,7 +81,7 @@
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
-	L.Weaken(5)
+	L.Knockdown(100)
 
 /obj/structure/trap/fire
 	name = "flame trap"
@@ -75,7 +90,7 @@
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
-	L.Weaken(1)
+	L.Knockdown(20)
 
 /obj/structure/trap/fire/flare()
 	..()
@@ -89,7 +104,7 @@
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
-	L.Weaken(1)
+	L.Knockdown(20)
 	L.bodytemperature -= 300
 	L.apply_status_effect(/datum/status_effect/freon)
 
@@ -102,7 +117,7 @@
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
-	L.Weaken(5)
+	L.Knockdown(100)
 	L.adjustBruteLoss(35)
 
 /obj/structure/trap/damage/flare()

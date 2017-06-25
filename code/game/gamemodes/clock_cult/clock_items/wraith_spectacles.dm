@@ -129,6 +129,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		apply_eye_damage(H)
+		return ..()
 
 /datum/status_effect/wraith_spectacles/tick()
 	if(!ishuman(owner))

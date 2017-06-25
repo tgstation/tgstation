@@ -8,8 +8,8 @@
 	state_open = 1
 	var/points = 0
 	var/credits = 0
-	var/list/history = list()
-	var/list/abductee_minds = list()
+	var/list/history
+	var/list/abductee_minds
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
 
@@ -116,12 +116,13 @@
 	else
 		dat += "<h3>Subject Status : </h3>"
 		dat += "[occupant.name] => "
-		switch(occupant.stat)
-			if(0)
+		var/mob/living/mob_occupant = occupant
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
 				dat += "<span class='good'>Conscious</span>"
-			if(1)
+			if(UNCONSCIOUS)
 				dat += "<span class='average'>Unconscious</span>"
-			else
+			else // DEAD
 				dat += "<span class='bad'>Deceased</span>"
 	dat += "<br>"
 	dat += "[flash]"
@@ -146,13 +147,16 @@
 	if(href_list["close"])
 		close_machine()
 		return
-	if(occupant && occupant.stat != DEAD)
-		if(href_list["experiment"])
-			flash = Experiment(occupant,href_list["experiment"])
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.stat != DEAD)
+			if(href_list["experiment"])
+				flash = Experiment(occupant,href_list["experiment"])
 	updateUsrDialog()
 	add_fingerprint(usr)
 
 /obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+	LAZYINITLIST(history)
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -165,8 +169,9 @@
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
 	if(H.mind != null && H.ckey != null)
-		history += H
-		abductee_minds += H.mind
+		LAZYINITLIST(abductee_minds)
+		LAZYADD(history, H)
+		LAZYADD(abductee_minds, H.mind)
 		say("Processing specimen...")
 		sleep(5)
 		switch(text2num(type))
@@ -178,7 +183,8 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		var/objtype = pick(subtypesof(/datum/objective/abductee/))
+		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
+		var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 		var/datum/objective/abductee/O = new objtype()
 		SSticker.mode.abductees += H.mind
 		H.mind.objectives += O
@@ -207,14 +213,13 @@
 
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
-	H.Sleeping(8)
+	H.Sleeping(160)
+	H.uncuff()
 	if(console && console.pad && console.pad.teleport_target)
 		H.forceMove(console.pad.teleport_target)
-		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(GLOB.latejoin))
-	H.uncuff()
+	SSjob.SendToLateJoin(H, FALSE)
 	return
 
 

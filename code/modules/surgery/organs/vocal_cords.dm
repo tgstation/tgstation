@@ -8,6 +8,7 @@
 	icon_state = "appendix"
 	zone = "mouth"
 	slot = "vocal_cords"
+	gender = PLURAL
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
@@ -18,6 +19,40 @@
 
 /obj/item/organ/vocal_cords/proc/handle_speech(message) //actually say the message
 	owner.say(message, spans = spans, sanitize = FALSE)
+
+/obj/item/organ/adamantine_resonator
+	name = "adamantine resonator"
+	desc = "Fragments of adamantine exists in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
+	zone = "head"
+	slot = "adamantine_resonator"
+	icon_state = "adamantine_resonator"
+
+/obj/item/organ/vocal_cords/adamantine
+	name = "adamantine vocal cords"
+	desc = "When adamantine resonates, it causes all nearby pieces of adamantine to resonate as well. Adamantine golems use this to broadcast messages to nearby golems."
+	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
+	zone = "mouth"
+	slot = "vocal_cords"
+	icon_state = "adamantine_cords"
+
+/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
+	if(!IsAvailable())
+		return
+	var/message = input(owner, "Resonate a message to all nearby golems.", "Resonate")
+	if(QDELETED(src) || QDELETED(owner) || !message)
+		return
+	owner.say(".x[message]")
+
+/obj/item/organ/vocal_cords/adamantine/handle_speech(message)
+	var/msg = "<span class='resonate'><span class='name'>[owner.real_name]</span> <span class='message'>resonates, \"[message]\"</span></span>"
+	for(var/m in GLOB.player_list)
+		if(iscarbon(m))
+			var/mob/living/carbon/C = m
+			if(C.getorganslot("adamantine_resonator"))
+				to_chat(C, msg)
+		if(isobserver(m))
+			var/link = FOLLOW_LINK(m, owner)
+			to_chat(m, "[link] [msg]")
 
 //Colossus drop, forces the listeners to obey certain commands
 /obj/item/organ/vocal_cords/colossus
@@ -146,12 +181,13 @@
 
 	for(var/V in listeners)
 		var/mob/living/L = V
-		if(L.mind && L.mind.devilinfo && findtext(message, L.mind.devilinfo.truename))
-			var/start = findtext(message, L.mind.devilinfo.truename)
-			listeners = list(L) //let's be honest you're never going to find two devils with the same name
+		var/datum/antagonist/devil/devilinfo = is_devil(L)
+		if(devilinfo && findtext(message, devilinfo.truename))
+			var/start = findtext(message, devilinfo.truename)
+			listeners = list(L) //Devil names are unique.
 			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
 			//Cut out the name so it doesn't trigger commands
-			message = copytext(message, 0, start)+copytext(message, start + length(L.mind.devilinfo.truename), length(message) + 1)
+			message = copytext(message, 0, start)+copytext(message, start + length(devilinfo.truename), length(message) + 1)
 			break
 		else if(dd_hasprefix(message, L.real_name))
 			specific_listeners += L //focus on those with the specified name
@@ -174,8 +210,8 @@
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-	var/static/regex/weaken_words = regex("drop|fall|trip|weaken")
-	var/static/regex/sleep_words = regex("sleep|slumber")
+	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
+	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up")
 	var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
 	var/static/regex/hallucinate_words = regex("see the truth|hallucinate")
@@ -206,7 +242,6 @@
 	var/static/regex/throwmode_words = regex("throw|catch")
 	var/static/regex/flip_words = regex("flip|rotate|revolve|roll|somersault")
 	var/static/regex/speak_words = regex("speak|say something")
-	var/static/regex/rest_words = regex("rest")
 	var/static/regex/getup_words = regex("get up")
 	var/static/regex/sit_words = regex("sit")
 	var/static/regex/stand_words = regex("stand")
@@ -223,32 +258,32 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(3 * power_multiplier)
+			L.Stun(60 * power_multiplier)
 
-	//WEAKEN
-	else if(findtext(message, weaken_words))
+	//KNOCKDOWN
+	else if(findtext(message, knockdown_words))
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Weaken(3 * power_multiplier)
+			L.Knockdown(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.Sleeping(2 * power_multiplier)
+			C.Sleeping(40 * power_multiplier)
 
 	//VOMIT
 	else if((findtext(message, vomit_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			C.vomit(10 * power_multiplier)
+			C.vomit(10 * power_multiplier, distance = power_multiplier)
 
 	//SILENCE
 	else if((findtext(message, silence_words)))
 		cooldown = COOLDOWN_STUN
 		for(var/mob/living/carbon/C in listeners)
-			if(user.mind && (user.mind.assigned_role == "Librarian" || user.mind.assigned_role == "Mime"))
+			if(user.mind && (user.mind.assigned_role == "Curator" || user.mind.assigned_role == "Mime"))
 				power_multiplier *= 3
 			C.silent += (10 * power_multiplier)
 
@@ -257,7 +292,7 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			new /obj/effect/hallucination/delusion(get_turf(L),L,duration=150 * power_multiplier,skip_nearby=0)
+			new /obj/effect/hallucination/delusion(get_turf(L),L,null,150 * power_multiplier,0)
 
 	//WAKE UP
 	else if((findtext(message, wakeup_words)))
@@ -328,8 +363,9 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.mind && L.mind.devilinfo)
-				L.say("[L.mind.devilinfo.truename]")
+			if(is_devil(L))
+				var/datum/antagonist/devil/devilinfo = is_devil(L)
+				L.say("[devilinfo.truename]")
 			else
 				L.say("[L.real_name]")
 			sleep(5) //So the chat flows more naturally
@@ -443,24 +479,16 @@
 			L.say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 			sleep(5) //So the chat flows more naturally
 
-	//REST
-	else if((findtext(message, rest_words)))
-		cooldown = COOLDOWN_MEME
-		for(var/V in listeners)
-			var/mob/living/L = V
-			if(!L.resting)
-				L.lay_down()
-
 	//GET UP
 	else if((findtext(message, getup_words)))
-		cooldown = COOLDOWN_DAMAGE
+		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
 			if(L.resting)
 				L.lay_down() //aka get up
-			L.SetStunned(0)
-			L.SetWeakened(0)
-			L.SetParalysis(0) //i said get up i don't care if you're being tazed
+			L.SetStun(0)
+			L.SetKnockdown(0)
+			L.SetUnconscious(0) //i said get up i don't care if you're being tazed
 
 	//SIT
 	else if((findtext(message, sit_words)))
@@ -527,7 +555,7 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 25)
 		if(user.mind && user.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
-				C.slip(0,7 * power_multiplier)
+				C.slip(140 * power_multiplier)
 			cooldown = COOLDOWN_MEME
 
 	//RIGHT ROUND

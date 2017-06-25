@@ -112,7 +112,7 @@
 	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
 	max_w_class = WEIGHT_CLASS_NORMAL
 	w_class = WEIGHT_CLASS_TINY
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/food/snacks/ash_flora,/obj/item/weapon/reagent_containers/honeycomb)
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/honeycomb)
 	resistance_flags = FLAMMABLE
 
 ////////
@@ -329,19 +329,19 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Weaken(2)
+			M.Knockdown(40)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
 	cut_overlays()
 	for(var/obj/item/I in contents)
-		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+		add_overlay(mutable_appearance(I.icon, I.icon_state))
 
 /obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
+	add_overlay(mutable_appearance(I.icon, I.icon_state))
 	. = ..()
 
 

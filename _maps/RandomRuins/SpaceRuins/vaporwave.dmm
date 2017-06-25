@@ -30,13 +30,15 @@
 "i" = (
 /obj/structure/piano,
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/powered/aesthetic)
 "j" = (
 /obj/structure/chair/stool,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/vaporwave,
 /area/ruin/powered/aesthetic)
 "k" = (
@@ -61,7 +63,6 @@
 /area/ruin/powered/aesthetic)
 "o" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 4
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -75,7 +76,6 @@
 /area/ruin/powered/aesthetic)
 "r" = (
 /obj/structure/window{
-	icon_state = "rwindow";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vaporwave,
@@ -137,7 +137,6 @@
 /area/ruin/unpowered/no_grav)
 "D" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-recharge_floor_asteroid";
 	icon_state = "recharge_floor_asteroid"
 	},
 /area/ruin/unpowered/no_grav)
@@ -153,10 +152,10 @@
 	},
 /area/ruin/unpowered/no_grav)
 "G" = (
+/obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating/astplate{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/obj/effect/turf_decal/stripes/asteroid/line,
 /area/ruin/unpowered/no_grav)
 "H" = (
 /obj/effect/overlay/palmtree_l,
@@ -166,25 +165,21 @@
 /turf/open/space,
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-platingsandeffect";
 	icon_state = "platingsandeffect"
 	},
 /area/ruin/unpowered/no_grav)
 "J" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-l";
 	icon_state = "stairs-l"
 	},
 /area/ruin/unpowered/no_grav)
 "K" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-m";
 	icon_state = "stairs-m"
 	},
 /area/ruin/unpowered/no_grav)
 "L" = (
 /turf/open/floor/plasteel/airless/asteroid{
-	tag = "icon-stairs-r";
 	icon_state = "stairs-r"
 	},
 /area/ruin/unpowered/no_grav)
@@ -195,6 +190,39 @@
 "N" = (
 /obj/effect/decal/sandeffect,
 /turf/open/floor/plasteel/airless/asteroid,
+/area/ruin/unpowered/no_grav)
+"O" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"P" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"Q" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/vaporwave,
+/area/ruin/powered/aesthetic)
+"R" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"S" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/astplate{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
@@ -294,7 +322,7 @@ h
 u
 y
 f
-B
+R
 d
 d
 a
@@ -326,7 +354,7 @@ j
 k
 k
 v
-k
+P
 f
 C
 I
@@ -390,11 +418,11 @@ a
 d
 c
 g
-n
+O
 n
 k
 w
-k
+Q
 g
 F
 I
@@ -430,7 +458,7 @@ p
 u
 y
 g
-B
+S
 d
 d
 a

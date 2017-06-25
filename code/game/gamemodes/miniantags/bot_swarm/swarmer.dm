@@ -62,7 +62,7 @@
 	icon = 'icons/mob/swarmer.dmi'
 	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
-	initial_languages = list(/datum/language/swarmer)
+	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
@@ -83,9 +83,9 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	attacktext = "shocks"
-	attack_sound = 'sound/effects/EMPulse.ogg'
+	attack_sound = 'sound/effects/empulse.ogg'
 	friendly = "pinches"
 	speed = 0
 	faction = list("swarmer")
@@ -435,7 +435,7 @@
 		resources += resource_gain
 		do_attack_animation(target)
 		changeNext_move(CLICK_CD_MELEE)
-		var/obj/effect/overlay/temp/swarmer/integrate/I = new /obj/effect/overlay/temp/swarmer/integrate(get_turf(target))
+		var/obj/effect/temp_visual/swarmer/integrate/I = new /obj/effect/temp_visual/swarmer/integrate(get_turf(target))
 		I.pixel_x = target.pixel_x
 		I.pixel_y = target.pixel_y
 		I.pixel_z = target.pixel_z
@@ -452,7 +452,7 @@
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisIntegrate(atom/movable/target)
-	new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
+	new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 	do_attack_animation(target)
 	changeNext_move(CLICK_CD_MELEE)
 	target.ex_act(3)
@@ -497,7 +497,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(obj/machinery/target)
 	do_attack_animation(target)
 	to_chat(src, "<span class='info'>We begin to dismantle this machine. We will need to be uninterrupted.</span>")
-	var/obj/effect/overlay/temp/swarmer/dismantle/D = new /obj/effect/overlay/temp/swarmer/dismantle(get_turf(target))
+	var/obj/effect/temp_visual/swarmer/dismantle/D = new /obj/effect/temp_visual/swarmer/dismantle(get_turf(target))
 	D.pixel_x = target.pixel_x
 	D.pixel_y = target.pixel_y
 	D.pixel_z = target.pixel_z
@@ -507,7 +507,7 @@
 		M.amount = 5
 		for(var/obj/item/I in target.component_parts)
 			I.loc = M.loc
-		var/obj/effect/overlay/temp/swarmer/disintegration/N = new /obj/effect/overlay/temp/swarmer/disintegration(get_turf(target))
+		var/obj/effect/temp_visual/swarmer/disintegration/N = new /obj/effect/temp_visual/swarmer/disintegration(get_turf(target))
 		N.pixel_x = target.pixel_x
 		N.pixel_y = target.pixel_y
 		N.pixel_z = target.pixel_z
@@ -519,23 +519,23 @@
 		qdel(target)
 
 
-/obj/effect/overlay/temp/swarmer //temporary swarmer visual feedback objects
+/obj/effect/temp_visual/swarmer //temporary swarmer visual feedback objects
 	icon = 'icons/mob/swarmer.dmi'
 	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/swarmer/disintegration
+/obj/effect/temp_visual/swarmer/disintegration
 	icon_state = "disintegrate"
 	duration = 10
 
-/obj/effect/overlay/temp/swarmer/disintegration/New()
-	playsound(src.loc, "sparks", 100, 1)
-	..()
+/obj/effect/temp_visual/swarmer/disintegration/Initialize()
+	. = ..()
+	playsound(loc, "sparks", 100, 1)
 
-/obj/effect/overlay/temp/swarmer/dismantle
+/obj/effect/temp_visual/swarmer/dismantle
 	icon_state = "dismantle"
 	duration = 25
 
-/obj/effect/overlay/temp/swarmer/integrate
+/obj/effect/temp_visual/swarmer/integrate
 	icon_state = "integrate"
 	duration = 5
 
@@ -560,9 +560,9 @@
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/swarmer/emp_act()
 	qdel(src)
@@ -582,7 +582,7 @@
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1, 1)
 			if(iscyborg(L))
-				L.Weaken(5)
+				L.Knockdown(100)
 			qdel(src)
 	..()
 

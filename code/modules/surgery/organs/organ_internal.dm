@@ -32,14 +32,14 @@
 		var/datum/action/A = X
 		A.Grant(M)
 
-
+//Special is for instant replacement like autosurgeons
 /obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
 	owner = null
 	if(M)
 		M.internal_organs -= src
 		if(M.internal_organs_slot[slot] == src)
 			M.internal_organs_slot.Remove(slot)
-		if(vital && !special)
+		if(vital && !special && !(M.status_flags & GODMODE))
 			M.death()
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -78,7 +78,9 @@
 
 /obj/item/organ/Destroy()
 	if(owner)
-		Remove(owner, 1)
+		// The special flag is important, because otherwise mobs can die
+		// while undergoing transformation into different mobs.
+		Remove(owner, special=TRUE)
 	return ..()
 
 /obj/item/organ/attack(mob/living/carbon/M, mob/user)
@@ -123,16 +125,13 @@
 	if(!getorganslot("tongue"))
 		var/obj/item/organ/tongue/T
 
-		if(dna && dna.species)
-			for(var/tongue_type in dna.species.mutant_organs)
-				if(ispath(tongue_type, /obj/item/organ/tongue))
-					T = new tongue_type()
-					T.Insert(src)
+		if(dna && dna.species && dna.species.mutanttongue)
+			T = new dna.species.mutanttongue()
+		else
+			T = new()
 
 		// if they have no mutant tongues, give them a regular one
-		if(!T)
-			T = new()
-			T.Insert(src)
+		T.Insert(src)
 
 	if(!getorganslot("eye_sight"))
 		var/obj/item/organ/eyes/E

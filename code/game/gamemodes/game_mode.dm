@@ -44,6 +44,7 @@
 
 	var/list/datum/station_goal/station_goals = list()
 
+	var/allow_persistence_save = TRUE
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
@@ -54,7 +55,7 @@
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready))
+		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -80,17 +81,20 @@
 		report = config.intercept
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	feedback_set_details("round_start","[time2text(world.realtime)]")
-	if(SSticker && SSticker.mode)
-		feedback_set_details("game_mode","[SSticker.mode]")
-	if(GLOB.revdata.commit)
-		feedback_set_details("revision","[GLOB.revdata.commit]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	if(SSdbcore.Connect())
+		var/sql
+		if(SSticker && SSticker.mode)
+			sql += "game_mode = '[SSticker.mode]'"
+		if(GLOB.revdata.originmastercommit)
+			if(sql)
+				sql += ", "
+			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
+		if(sql)
+			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
+			query_round_game_mode.Execute()
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
-	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count(1)
 	return 1
 
 
@@ -159,6 +163,10 @@
 
 	. = 1
 	sleep(rand(600,1800))
+	if(!SSticker.IsRoundInProgress())
+		message_admins("Roundtype conversion cancelled, the game appears to have finished!")
+		round_converted = 0
+		return
 	 //somewhere between 1 and 3 minutes from now
 	if(!config.midround_antag[SSticker.mode.config_tag])
 		round_converted = 0
@@ -174,7 +182,7 @@
 	return 0
 
 
-/datum/game_mode/proc/check_finished() //to be called by SSticker
+/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
 	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
@@ -205,7 +213,7 @@
 					living_antag_player = Player
 					return 0
 
-		if(!config.continuous[config_tag])
+		if(!config.continuous[config_tag] || force_ending)
 			return 1
 
 		else
@@ -234,11 +242,11 @@
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.z == 2)
+					if(M.z == ZLEVEL_CENTCOM)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.z == 2)
+				if(M.z == ZLEVEL_CENTCOM)
 					escaped_total++
 
 
@@ -246,18 +254,57 @@
 				ghosts++
 
 	if(clients > 0)
-		feedback_set("round_end_clients",clients)
+		SSblackbox.set_val("round_end_clients",clients)
 	if(ghosts > 0)
-		feedback_set("round_end_ghosts",ghosts)
+		SSblackbox.set_val("round_end_ghosts",ghosts)
 	if(surviving_humans > 0)
-		feedback_set("survived_human",surviving_humans)
+		SSblackbox.set_val("survived_human",surviving_humans)
 	if(surviving_total > 0)
-		feedback_set("survived_total",surviving_total)
+		SSblackbox.set_val("survived_total",surviving_total)
 	if(escaped_humans > 0)
-		feedback_set("escaped_human",escaped_humans)
+		SSblackbox.set_val("escaped_human",escaped_humans)
 	if(escaped_total > 0)
-		feedback_set("escaped_total",escaped_total)
+		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
+	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+		datum_cult_completion()
+
+	if(GLOB.borers.len)
+		var/borerwin = FALSE
+		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
+		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
+			if((B.key || B.controlling) && B.stat != DEAD)
+				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
+				var/turf/location = get_turf(B)
+				if(location.z == ZLEVEL_CENTCOM && B.victim)
+					borertext += "escaped with host"
+				else
+					borertext += "failed"
+				borertext += ")"
+		to_chat(world, borertext)
+
+		var/total_borers = 0
+		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
+			if((B.key || B.victim) && B.stat != DEAD)
+				total_borers++
+		if(total_borers)
+			var/total_borer_hosts = 0
+			for(var/mob/living/carbon/C in GLOB.mob_list)
+				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+				var/turf/location = get_turf(C)
+				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+					total_borer_hosts++
+			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
+				borerwin = TRUE
+			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
+			if(borerwin)
+				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
+			else
+				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
+
+		CHECK_TICK
+
 	return 0
 
 
@@ -290,7 +337,7 @@
 			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
+	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/ai/intercept.ogg')
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
@@ -303,7 +350,7 @@
 
 	// Ultimate randomizing code right here
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -311,7 +358,7 @@
 	players = shuffle(players)
 
 	for(var/mob/dead/new_player/player in players)
-		if(player.client && player.ready)
+		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(role in player.client.prefs.be_special)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
@@ -325,7 +372,7 @@
 
 	if(candidates.len < recommended_enemies)
 		for(var/mob/dead/new_player/player in players)
-			if(player.client && player.ready)
+			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
@@ -347,13 +394,7 @@
 
 		else												// Not enough scrubs, ABORT ABORT ABORT
 			break
-/*
-	if(candidates.len < recommended_enemies && override_jobbans) //If we still don't have enough people, we're going to start drafting banned people.
-		for(var/mob/dead/new_player/player in players)
-			if (player.client && player.ready)
-				if(jobban_isbanned(player, "Syndicate") || jobban_isbanned(player, roletext)) //Nodrak/Carn: Antag Job-bans
-					drafted += player.mind
-*/
+
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
 			for(var/job in restricted_jobs)
@@ -376,17 +417,12 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-/*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/dead/new_player/player)
-	if(player.preferences.be_special & role)
-		return 1
-	return 0
-*/
+
 
 /datum/game_mode/proc/num_players()
 	. = 0
 	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready)
+		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
 ///////////////////////////////////

@@ -261,6 +261,7 @@
 "K" = (
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
+	planetary_atmos = 1;
 	initial_gas_mix = "o2=13;n2=24;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
@@ -275,6 +276,7 @@
 /obj/item/weapon/pickaxe,
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
+	planetary_atmos = 1;
 	initial_gas_mix = "o2=13;n2=24;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)

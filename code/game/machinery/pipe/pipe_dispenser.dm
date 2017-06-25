@@ -53,20 +53,16 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2path(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (src.loc, pipe_type=p_type, dir=p_dir)
 			P.add_fingerprint(usr)
-			wait = 1
-			spawn(10)
-				wait = 0
+			wait = world.time + 10
 	if(href_list["makemeter"])
-		if(!wait)
+		if(wait < world.time )
 			new /obj/item/pipe_meter(src.loc)
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user, params)
@@ -165,7 +161,7 @@ Nah
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		if(!wait)
+		if(wait < world.time)
 			var/p_type = text2num(href_list["dmake"])
 			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
 
@@ -176,9 +172,7 @@ Nah
 
 			C.add_fingerprint(usr)
 			C.update_icon()
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return
 
 //transit tube dispenser
@@ -216,7 +210,7 @@ Nah
 		return 1
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
-	if(!wait)
+	if(wait < world.time)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
 			var/obj/structure/C
@@ -241,7 +235,5 @@ Nah
 					C = new /obj/structure/c_transit_tube_pod(loc)
 			if(C)
 				C.add_fingerprint(usr)
-			wait = 1
-			spawn(15)
-				wait = 0
+			wait = world.time + 15
 	return

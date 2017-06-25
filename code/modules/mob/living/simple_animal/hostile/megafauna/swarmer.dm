@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon/Initialize()
-	..()
+	. = ..()
 	swarmer_caps = GLOB.AISwarmerCapsByType //for admin-edits
 	internal = new/obj/item/device/gps/internal/swarmer_beacon(src)
 	for(var/ddir in GLOB.cardinal)
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/Initialize()
-	..()
+	. = ..()
 	ToggleLight() //so you can see them eating you out of house and home/shooting you/stunlocking you for eternity
 	LAZYINITLIST(GLOB.AISwarmersByType[type])
 	GLOB.AISwarmers += src
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 
 
 /mob/living/simple_animal/hostile/swarmer/ai/resource/Initialize()
-	..()
+	. = ..()
 	sharedWanted = typecacheof(sharedWanted)
 	sharedIgnore = typecacheof(sharedIgnore)
 
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	icon_state = "swarmer_ranged"
 	icon_living = "swarmer_ranged"
 	projectiletype = /obj/item/projectile/beam/laser
-	projectilesound = 'sound/weapons/Laser.ogg'
+	projectilesound = 'sound/weapons/laser.ogg'
 	check_friendly_fire = TRUE //you're supposed to protect the resource swarmers, you poop
 	retreat_distance = 3
 	minimum_distance = 3

@@ -31,7 +31,7 @@
 		return
 
 	// chance of monkey retaliation
-	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
+	if(ismonkey(C) && prob(MONKEY_CUFF_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = C
 		M.retaliate(user)
@@ -45,7 +45,7 @@
 			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
 				apply_cuffs(C,user)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
-				feedback_add_details("handcuffs","[type]")
+				SSblackbox.add_details("handcuffs","[type]")
 
 				add_logs(user, C, "handcuffed")
 			else
@@ -275,7 +275,7 @@
 						C.legcuffed = src
 						src.loc = C
 						C.update_inv_legcuffed()
-						feedback_add_details("handcuffs","[type]")
+						SSblackbox.add_details("handcuffs","[type]")
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
 				if(SA.mob_size > MOB_SIZE_TINY)
@@ -303,7 +303,7 @@
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
-	if(!istype(loc, /mob))
+	if(!ismob(loc))
 		do_sparks(1, TRUE, src)
 		qdel(src)
 
@@ -320,7 +320,7 @@
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
 	origin_tech = "engineering=3;combat=1"
-	var/weaken = 0
+	var/knockdown = 0
 
 /obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
@@ -336,9 +336,9 @@
 		C.legcuffed = src
 		src.loc = C
 		C.update_inv_legcuffed()
-		feedback_add_details("handcuffs","[type]")
+		SSblackbox.add_details("handcuffs","[type]")
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Weaken(weaken)
+		C.Knockdown(knockdown)
 
 /obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -346,7 +346,7 @@
 	icon_state = "bola_r"
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
-	weaken = 1
+	knockdown = 20
 
 /obj/item/weapon/restraints/legcuffs/bola/energy //For Security
 	name = "energy bola"

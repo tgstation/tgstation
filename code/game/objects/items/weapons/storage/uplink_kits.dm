@@ -87,13 +87,12 @@
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)
 			new /obj/item/device/sbeacondrop/powersink(src)
-			new /obj/item/weapon/cartridge/syndicate(src)
+			new /obj/item/weapon/cartridge/virus/syndicate(src)
 			new /obj/item/weapon/storage/toolbox/syndicate(src) //To actually get to those places
 			new /obj/item/pizzabox/bomb
 
 		if("darklord") //20 tc + tk + summon item close enough for now
-			new /obj/item/weapon/melee/energy/sword/saber(src)
-			new /obj/item/weapon/melee/energy/sword/saber(src)
+			new /obj/item/weapon/twohanded/dualsaber(src)
 			new /obj/item/weapon/dnainjector/telemut/darkbundle(src)
 			new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 			new /obj/item/weapon/card/id/syndicate(src)
@@ -220,6 +219,7 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/venom(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/neurotoxin2(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/formaldehyde(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/spewium(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/histamine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/initropidril(src)
@@ -237,6 +237,15 @@
 	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/nuke_core_container(src)
 	new /obj/item/weapon/paper/nuke_instructions(src)
+
+/obj/item/weapon/storage/box/syndie_kit/supermatter
+	name = "box"
+
+/obj/item/weapon/storage/box/syndie_kit/supermatter/PopulateContents()
+	new /obj/item/weapon/scalpel/supermatter(src)
+	new /obj/item/weapon/hemostat/supermatter(src)
+	new /obj/item/nuke_core_container/supermatter(src)
+	new /obj/item/weapon/paper/supermatter_sliver_instructions(src)
 
 /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	name = "boxed virus grenade kit"

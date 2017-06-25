@@ -43,6 +43,14 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/pug = 3)
 	gold_core_spawnable = 2
 
+/mob/living/simple_animal/pet/dog/Initialize()
+	. = ..()
+	var/dog_area = get_area(src)
+	for(var/obj/structure/bed/dogbed/D in dog_area)
+		if(!D.owner)
+			D.update_owner(src)
+			break
+
 /mob/living/simple_animal/pet/dog/corgi/Initialize()
 	..()
 	regenerate_icons()
@@ -99,7 +107,7 @@
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
-			playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 			shaved = 1
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
@@ -406,7 +414,7 @@
 	cut_overlays()
 	if(inventory_head)
 		var/image/head_icon
-		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
+		var/datum/dog_fashion/DF = new inventory_head.dog_fashion(src)
 
 		if(!DF.obj_icon_state)
 			DF.obj_icon_state = inventory_head.icon_state
@@ -416,17 +424,17 @@
 			DF.obj_color = inventory_head.color
 
 		if(health <= 0)
-			head_icon = DF.get_image(dir = EAST)
+			head_icon = DF.get_overlay(dir = EAST)
 			head_icon.pixel_y = -8
 			head_icon.transform = turn(head_icon.transform, 180)
 		else
-			head_icon = DF.get_image()
+			head_icon = DF.get_overlay()
 
 		add_overlay(head_icon)
 
 	if(inventory_back)
 		var/image/back_icon
-		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
+		var/datum/dog_fashion/DF = new inventory_back.dog_fashion(src)
 
 		if(!DF.obj_icon_state)
 			DF.obj_icon_state = inventory_back.icon_state
@@ -436,18 +444,20 @@
 			DF.obj_color = inventory_back.color
 
 		if(health <= 0)
-			back_icon = DF.get_image(dir = EAST)
+			back_icon = DF.get_overlay(dir = EAST)
 			back_icon.pixel_y = -11
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
-			back_icon = DF.get_image()
+			back_icon = DF.get_overlay()
 		add_overlay(back_icon)
 
 	if(facehugger)
+		var/mutable_appearance/facehugger_overlay = mutable_appearance('icons/mob/mask.dmi')
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
+			facehugger_overlay.icon_state = "facehugger_corgipuppy"
 		else
-			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
+			facehugger_overlay.icon_state = "facehugger_corgi"
+		add_overlay(facehugger_overlay)
 	if(pcollar)
 		add_overlay(collar)
 		add_overlay(pettag)
@@ -550,7 +560,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",ABOVE_MOB_LAYER), list(M.client), 20)
+				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)

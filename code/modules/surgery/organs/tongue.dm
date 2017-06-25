@@ -10,10 +10,14 @@
 	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
 		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
 		/datum/language/ratvar
 	))
 
@@ -33,7 +37,7 @@
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 
-/obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
+/obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
@@ -123,10 +127,11 @@
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
+		/datum/language/draconic,
 		/datum/language/ratvar,
 		/datum/language/monkey))
 
@@ -136,9 +141,7 @@
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
-	desc = "Apparently skeletons alter the sounds they produce \
-		through oscillation of their teeth, hence their characteristic \
-		rattling."
+	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
@@ -148,7 +151,7 @@
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
 
-/obj/item/organ/tongue/bone/New()
+/obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
 
@@ -168,6 +171,14 @@
 		if("papyrus")
 			. |= SPAN_PAPYRUS
 
+/obj/item/organ/tongue/bone/plasmaman
+	name = "plasma bone \"tongue\""
+	desc = "Like animated skeletons, Plasmamen vibrate their teeth in order to produce speech."
+	icon_state = "tongueplasma"
+
+/obj/item/organ/tongue/bone/plasmaman/get_spans()
+	return
+
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
@@ -177,16 +188,8 @@
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
 
-/obj/item/organ/tongue/robot/Initialize(mapload)
-	..()
-	languages_possible = typecacheof(list(
-		/datum/language/xenocommon,
-		/datum/language/common,
-		/datum/language/ratvar,
-		/datum/language/monkey,
-		/datum/language/drone,
-		/datum/language/machine,
-		/datum/language/swarmer))
+/obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
+	. = TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT

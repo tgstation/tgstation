@@ -178,8 +178,8 @@
 		if(istype(borghead, /obj/item/clothing/head/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
 			var/image/I = image(icon = 'icons/mob/robots.dmi' , icon_state = "robot", loc = H)
 			I.override = 1
-			I.add_overlay(image(icon = 'icons/mob/robots.dmi' , icon_state = "robot_e")) //gotta look realistic
-			H.add_alt_appearance("standard_borg_disguise", I, GLOB.silicon_mobs+H) //you look like a robot to robots! (including yourself because you're totally a robot)
+			I.add_overlay(mutable_appearance('icons/mob/robots.dmi', "robot_e")) //gotta look realistic
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
 
 
 /obj/item/clothing/suit/snowman
@@ -318,6 +318,7 @@
 	item_state = "straight_jacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	equip_delay_self = 50
 	strip_delay = 60
 	breakouttime = 3000
 
@@ -335,7 +336,7 @@
 
 /obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
 	name = "Vape Naysh shirt"
-	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironicly?"
+	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
 	icon_state = "vapeshirt"
 	item_state = "vapeshirt"
 
@@ -542,5 +543,5 @@
 	name = "spooky ghost"
 	desc = "this is obviously just a bedsheet, but maybe try it on?"
 	icon_state = "bedsheet"
-	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
+	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = INCORPOREAL_MOVE_BASIC, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire

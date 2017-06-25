@@ -16,7 +16,7 @@
 		return
 	if(isobserver(H) && !affect_ghosts)
 		return
-	if(!istype(H, /mob) && mobs_only)
+	if(!ismob(H) && mobs_only)
 		return
 	Trigger(H)
 
@@ -45,7 +45,7 @@
 	var/list/affecting = list()
 
 /obj/effect/step_trigger/thrower/Trigger(atom/A)
-	if(!A || !istype(A, /atom/movable))
+	if(!A || !ismovableatom(A))
 		return
 	var/atom/movable/AM = A
 	var/curtiles = 0
@@ -183,8 +183,9 @@
 	if(!T)
 		return
 
-	if(triggerer_only)
-		A.playsound_local(T, sound, volume, freq_vary)
+	if(triggerer_only && ismob(A))
+		var/mob/B = A
+		B.playsound_local(T, sound, volume, freq_vary)
 	else
 		playsound(T, sound, volume, freq_vary, extra_range)
 

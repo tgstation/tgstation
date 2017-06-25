@@ -127,7 +127,7 @@
 	icon = 'icons/obj/lavaland/cannon.dmi'
 	icon_state = "orbital_cannon1"
 	unsecuring_tool = null
-	var/static/image/top_layer = null
+	var/static/mutable_appearance/top_layer
 	var/ex_power = 3
 	var/power_used_per_shot = 2000000 //enough to kil standard apc - todo : make this use wires instead and scale explosion power with it
 	var/ready
@@ -161,19 +161,18 @@
 			return locate(world.maxx,y,z)
 	return get_turf(src)
 
-/obj/machinery/bsa/full/New(loc,cannon_direction = WEST)
-	..()
+/obj/machinery/bsa/full/Initialize(mapload, cannon_direction = WEST)
+	. = ..()
+	top_layer = top_layer || mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
 	switch(cannon_direction)
 		if(WEST)
 			dir = WEST
 			pixel_x = -192
-			top_layer = image("icons/obj/lavaland/orbital_cannon.dmi", "top_west")
-			top_layer.layer = ABOVE_MOB_LAYER
+			top_layer.icon_state = "top_west"
 			icon_state = "cannon_west"
 		if(EAST)
 			dir = EAST
-			top_layer = image("icons/obj/lavaland/orbital_cannon.dmi", "top_east")
-			top_layer.layer = ABOVE_MOB_LAYER
+			top_layer.icon_state = "top_east"
 			icon_state = "cannon_east"
 	add_overlay(top_layer)
 	reload()
@@ -259,6 +258,7 @@
 	data["ready"] = cannon ? cannon.ready : FALSE
 	data["connected"] = cannon
 	data["notice"] = notice
+	data["unlocked"] = GLOB.bsa_unlock
 	if(target)
 		data["target"] = get_target_name()
 	return data
@@ -327,7 +327,7 @@
 	var/datum/effect_system/smoke_spread/s = new
 	s.set_up(4,get_turf(centerpiece))
 	s.start()
-	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),cannon_direction=centerpiece.get_cannon_direction())
+	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),centerpiece.get_cannon_direction())
 	qdel(centerpiece.front)
 	qdel(centerpiece.back)
 	qdel(centerpiece)

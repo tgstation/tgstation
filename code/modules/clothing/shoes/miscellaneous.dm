@@ -34,7 +34,7 @@
 	name = "sandals"
 	icon_state = "wizard"
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -55,7 +55,7 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = 0
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 40, acid = 75)
 
@@ -94,7 +94,7 @@
 	item_state = "jackboots"
 	item_color = "hosred"
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
@@ -118,7 +118,7 @@
 	icon_state = "workboots"
 	item_state = "jackboots"
 	strip_delay = 40
-	put_on_delay = 40
+	equip_delay_other = 40
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/workboots/mining
@@ -142,6 +142,9 @@
 	name = "cultist boots"
 	icon_state = "cultalt"
 
+/obj/item/clothing/shoes/cult/alt/ghost
+	flags = NODROP|DROPDEL
+
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
@@ -151,7 +154,7 @@
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
@@ -159,7 +162,7 @@
 	icon_state = "roman"
 	item_state = "roman"
 	strip_delay = 100
-	put_on_delay = 100
+	equip_delay_other = 100
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -178,6 +181,7 @@
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
+	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
 	var/recharging_time = 0 //time until next dash
 	var/jumping = FALSE //are we mid-jump?
@@ -198,7 +202,7 @@
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
-	usr.throw_at(target, jumpdistance, 1, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+	usr.throw_at(target, jumpdistance, jumpspeed, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
 
 /obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE
@@ -208,10 +212,10 @@
 	name = "yellow performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "ysing"
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/shoes/singerb
 	name = "blue performer's boots"
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
-	put_on_delay = 50
+	equip_delay_other = 50

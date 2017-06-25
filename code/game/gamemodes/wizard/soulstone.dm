@@ -3,6 +3,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "soulstone"
 	item_state = "electronic"
+	layer = HIGH_OBJ_LAYER
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_BELT
@@ -43,9 +44,9 @@
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
-/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(spent)
@@ -54,7 +55,7 @@
 	if(!ishuman(M))//If target is not a human.
 		return ..()
 	if(iscultist(M))
-		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your fellow's soul.\"</span>")
+		to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 		return
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
@@ -62,13 +63,16 @@
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-/obj/item/device/soulstone/attack_self(mob/user)
+/obj/item/device/soulstone/attack_self(mob/living/user)
 	if(!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)
-		user.Paralyse(5)
+		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
+	release_shades(user)
+
+/obj/item/device/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
 		A.status_flags &= ~GODMODE
 		A.canmove = 1
@@ -132,11 +136,11 @@
 
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
-			if(SSticker.mode.name == "cult" && T.mind == SSticker.mode:sacrifice_target)
+			if(is_sacrifice_target(T.mind))
 				if(iscultist(user))
 					to_chat(user, "<span class='cult'><b>\"This soul is mine.</b></span> <span class='cultlarge'>SACRIFICE THEM!\"</span>")
 				else
-					to_chat(user, "<span class='danger'>The soulstone doesn't work for no apparent reason.</span>")
+					to_chat(user, "<span class='danger'>The soulstone seems to reject this soul.</span>")
 				return 0
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
@@ -188,7 +192,10 @@
 
 						else
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
-
+				for(var/datum/mind/B in SSticker.mode.cult)
+					if(B == A.mind)
+						SSticker.mode.cult -= A.mind
+						SSticker.mode.update_cult_icons_removed(A.mind)
 				qdel(T)
 				user.drop_item()
 				qdel(src)
@@ -200,13 +207,21 @@
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	if(stoner)
 		newstruct.faction |= "\ref[stoner]"
+		newstruct.master = stoner
+		var/datum/action/innate/seek_master/SM = new()
+		SM.Grant(newstruct)
 	newstruct.key = target.key
+	var/obj/screen/alert/bloodsense/BS
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && SSticker && SSticker.mode)
 		SSticker.mode.add_cultist(newstruct.mind, 0)
 	if(iscultist(stoner) || cultoverride)
 		to_chat(newstruct, "<b>You are still bound to serve the cult[stoner ? " and [stoner]":""], follow their orders and help them complete their goals at all costs.</b>")
 	else if(stoner)
 		to_chat(newstruct, "<b>You are still bound to serve your creator, [stoner], follow their orders and help them complete their goals at all costs.</b>")
+	newstruct.clear_alert("bloodsense")
+	BS = newstruct.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
+	if(BS)
+		BS.Cviewer = newstruct
 	newstruct.cancel_camera()
 
 
@@ -244,7 +259,7 @@
 			break
 
 	if(!chosen_ghost)	//Failing that, we grab a ghost
-		var/list/consenting_candidates = pollCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
+		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, poll_time = 50)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)

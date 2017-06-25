@@ -122,8 +122,8 @@
 	item_state = "beaker"
 	materials = list(MAT_GLASS=500)
 
-/obj/item/weapon/reagent_containers/glass/beaker/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/beaker/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
@@ -133,7 +133,7 @@
 	cut_overlays()
 
 	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
@@ -154,6 +154,12 @@
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
+
+/obj/item/weapon/reagent_containers/glass/beaker/jar
+	name = "honey jar"
+	desc = "A jar for honey. It can hold up to 50 units of sweet delight."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "vapour"
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
@@ -176,8 +182,8 @@
 	origin_tech = "materials=2;engineering=3;plasmatech=3"
 	flags = OPENCONTAINER
 
-/obj/item/weapon/reagent_containers/glass/beaker/noreact/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/beaker/noreact/Initialize()
+	. = ..()
 	reagents.set_reacting(FALSE)
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
@@ -279,3 +285,129 @@
 		slot_equipment_priority.Insert(index, slot_head)
 		return
 	return ..()
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle
+	name = "bottle of water"
+	desc = "A bottle of water filled at an old Earth bottling facility,"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "smallbottle"
+	item_state = "bottle"
+	list_reagents = list("water" = 49.5, "fluorine" = 0.5)//see desc, don't think about it too hard
+	materials = list(MAT_GLASS=0)
+	volume = 50
+	amount_per_transfer_from_this = 10
+	origin_tech = null
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty
+	list_reagents = list()
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large
+	desc = "A fresh commercial-sized bottle of water."
+	icon_state = "largebottle"
+	materials = list(MAT_GLASS=0)
+	list_reagents = list("water" = 100)
+	volume = 100
+	amount_per_transfer_from_this = 20
+
+/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty
+	list_reagents = list()
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/hydrogen
+	name = "hydrogen"
+	list_reagents = list("hydrogen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/lithium
+	name = "lithium"
+	list_reagents = list("lithium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/carbon
+	name = "carbon"
+	list_reagents = list("carbon" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/nitrogen
+	name = "nitrogen"
+	list_reagents = list("nitrogen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/oxygen
+	name = "oxygen"
+	list_reagents = list("oxygen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/fluorine
+	name = "fluorine"
+	list_reagents = list("fluorine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sodium
+	name = "sodium"
+	list_reagents = list("sodium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/aluminium
+	name = "aluminium"
+	list_reagents = list("aluminium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silicon
+	name = "silicon"
+	list_reagents = list("silicon" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/phosphorus
+	name = "phosphorus"
+	list_reagents = list("phosphorus" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sulfur
+	name = "sulfur"
+	list_reagents = list("sulfur" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/chlorine
+	name = "chlorine"
+	list_reagents = list("chlorine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/potassium
+	name = "potassium"
+	list_reagents = list("potassium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/iron
+	name = "iron"
+	list_reagents = list("iron" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/copper
+	name = "copper"
+	list_reagents = list("copper" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/mercury
+	name = "mercury"
+	list_reagents = list("mercury" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/radium
+	name = "radium"
+	list_reagents = list("radium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/water
+	name = "water"
+	list_reagents = list("water" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/ethanol
+	name = "ethanol"
+	list_reagents = list("ethanol" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sugar
+	name = "sugar"
+	list_reagents = list("sugar" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sacid
+	name = "sacid"
+	list_reagents = list("sacid" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/welding_fuel
+	name = "welding_fuel"
+	list_reagents = list("welding_fuel" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver
+	name = "silver"
+	list_reagents = list("silver" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/iodine
+	name = "iodine"
+	list_reagents = list("iodine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/bromine
+	name = "bromine"
+	list_reagents = list("bromine" = 50)

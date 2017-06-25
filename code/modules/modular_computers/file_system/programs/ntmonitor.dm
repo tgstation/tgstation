@@ -7,20 +7,7 @@
 	requires_ntnet = 1
 	required_access = GLOB.access_network	//Network control is a more secure program.
 	available_on_ntnet = 1
-
-/datum/computer_file/program/ntnetmonitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-
-		ui = new(user, src, ui_key, "ntnet_monitor", "NTNet Diagnostics and Monitoring Tool", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
-
+	tgui_id = "ntos_net_monitor"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, params)
 	if(..())

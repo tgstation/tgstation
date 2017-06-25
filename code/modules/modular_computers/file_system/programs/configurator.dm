@@ -4,7 +4,7 @@
 
 /datum/computer_file/program/computerconfig
 	filename = "compconfig"
-	filedesc = "Computer Configuration Tool"
+	filedesc = "Hardware Configuration Tool"
 	extended_desc = "This program allows configuration of computer's hardware"
 	program_icon_state = "generic"
 	unsendable = 1
@@ -12,20 +12,10 @@
 	size = 4
 	available_on_ntnet = 0
 	requires_ntnet = 0
+	tgui_id = "ntos_configuration"
+
 	var/obj/item/device/modular_computer/movable = null
 
-
-/datum/computer_file/program/computerconfig/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-
-		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "laptop_configuration", "NTOS Configuration Utility", 575, 700, state = state)
-		ui.open()
-		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/computerconfig/ui_data(mob/user)
 	movable = computer

@@ -28,7 +28,7 @@
 	. = successfuluse
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
-			user.whisper(invocation)
+			user.whisper(invocation, language = /datum/language/common)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
 			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
@@ -45,79 +45,11 @@
 		var/mob/living/carbon/C = user
 		C.apply_damage(10, BRUTE, "head")
 
-//Supply Talisman: Has a few unique effects. Granted only to starter cultists.
-/obj/item/weapon/paper/talisman/supply
-	cultist_name = "Supply Talisman"
-	cultist_desc = "A multi-use talisman that can create various objects. Intended to increase the cult's strength early on."
-	invocation = null
-	uses = 3
-
-/obj/item/weapon/paper/talisman/supply/invoke(mob/living/user, successfuluse = 1)
-	var/dat = "<B>There are [uses] bloody runes on the parchment.</B><BR>"
-	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
-	dat += "<HR>"
-	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Summons an arcane tome, used to scribe runes and communicate with other cultists.<BR>"
-	dat += "<A href='?src=\ref[src];rune=metal'>Bar'tea eas!</A> - Provides 5 runed metal.<BR>"
-	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
-	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
-	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
-	dat += "<A href='?src=\ref[src];rune=veiling'>Kla'atu barada nikt'o!</A> - Two use talisman, first use makes all nearby runes invisible, second use reveals nearby hidden runes.<BR>"
-	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
-	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with soulstone-captured souls. It is too large to carry on your person.<BR>"
-	var/datum/browser/popup = new(user, "talisman", "", 400, 400)
-	popup.set_content(dat)
-	popup.open()
-	return 0
-
-/obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if(src)
-		if(usr.stat || usr.restrained() || !in_range(src, usr))
-			return
-		if(href_list["rune"])
-			switch(href_list["rune"])
-				if("newtome")
-					var/obj/item/weapon/tome/T = new(usr)
-					usr.put_in_hands(T)
-				if("metal")
-					if(istype(src, /obj/item/weapon/paper/talisman/supply/weak))
-						usr.visible_message("<span class='cultitalic'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
-						return
-					var/obj/item/stack/sheet/runed_metal/R = new(usr,5)
-					usr.put_in_hands(R)
-				if("teleport")
-					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
-					usr.put_in_hands(T)
-				if("emp")
-					var/obj/item/weapon/paper/talisman/emp/T = new(usr)
-					usr.put_in_hands(T)
-				if("runestun")
-					var/obj/item/weapon/paper/talisman/stun/T = new(usr)
-					usr.put_in_hands(T)
-				if("soulstone")
-					var/obj/item/device/soulstone/T = new(usr)
-					usr.put_in_hands(T)
-				if("construct")
-					new /obj/structure/constructshell(get_turf(usr))
-				if("veiling")
-					var/obj/item/weapon/paper/talisman/true_sight/T = new(usr)
-					usr.put_in_hands(T)
-			src.uses--
-			if(src.uses <= 0)
-				if(iscarbon(usr))
-					var/mob/living/carbon/C = usr
-					C.drop_item()
-					visible_message("<span class='warning'>[src] crumbles to dust.</span>")
-				qdel(src)
-
-/obj/item/weapon/paper/talisman/supply/weak
-	cultist_name = "Lesser Supply Talisman"
-	uses = 2
-
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport
 	cultist_name = "Talisman of Teleportation"
 	cultist_desc = "A single-use talisman that will teleport a user to a random rune of the same keyword."
-	color = "#551A8B" // purple
+	color = RUNE_COLOR_TELEPORT
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
 	creation_time = 80
@@ -147,9 +79,10 @@
 	if(is_blocked_turf(target, TRUE))
 		to_chat(user, "<span class='warning'>The target rune is blocked. Attempting to teleport to it would be massively unwise.</span>")
 		return ..(user, 0)
-	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear in a flash of red light!</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>")
+	user.visible_message("<span class='warning'>Dust flows from [user]'s hand, and [user.p_they()] disappear[user.p_s()] with a sharp crack!</span>", \
+	"<span class='cultitalic'>You speak the words of the talisman and find yourself somewhere else!</span>", "<i>You hear a sharp crack.</i>")
 	user.forceMove(target)
+	target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	return ..()
 
 
@@ -176,7 +109,7 @@
 	invocation = "Kla'atu barada nikt'o!"
 	health_cost = 1
 	creation_time = 30
-	uses = 2
+	uses = 6
 	var/revealing = FALSE //if it reveals or not
 
 /obj/item/weapon/paper/talisman/true_sight/invoke(mob/living/user, successfuluse = 1)
@@ -186,29 +119,13 @@
 			"<span class='cultitalic'>You speak the words of the talisman, hiding nearby runes.</span>")
 		invocation = "Nikt'o barada kla'atu!"
 		revealing = TRUE
-		for(var/obj/effect/rune/R in range(3,user))
+		for(var/obj/effect/rune/R in range(4,user))
 			R.talismanhide()
 	else
 		user.visible_message("<span class='warning'>A flash of light shines from [user]'s hand!</span>", \
 			 "<span class='cultitalic'>You speak the words of the talisman, revealing nearby runes.</span>")
 		for(var/obj/effect/rune/R in range(3,user))
 			R.talismanreveal()
-
-//Rite of False Truths: Same as rune
-/obj/item/weapon/paper/talisman/make_runes_fake
-	cultist_name = "Talisman of Disguising"
-	cultist_desc = "A talisman that will make nearby runes appear fake."
-	color = "#ff80d5" // honk
-	invocation = "By'o nar'nar!"
-	creation_time = 20
-
-/obj/item/weapon/paper/talisman/make_runes_fake/invoke(mob/living/user, successfuluse = 1)
-	. = ..()
-	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
-						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
-	for(var/obj/effect/rune/R in orange(6,user))
-		R.desc = "A rune vandalizing the station."
-
 
 //Rite of Disruption: Weaker than rune
 /obj/item/weapon/paper/talisman/emp
@@ -252,8 +169,7 @@
 			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
 								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
 		else
-			target.Weaken(10)
-			target.Stun(10)
+			target.Knockdown(200)
 			target.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
@@ -309,12 +225,12 @@
 	invocation = "Lo'Nab Na'Dm!"
 	creation_time = 80
 
-/obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
-	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+/obj/item/weapon/paper/talisman/horror/afterattack(mob/living/target, mob/living/user)
+	if(iscultist(user) && (get_dist(user, target) < 7))
+		to_chat(user, "<span class='cultitalic'>You disturb [target] with visions of madness!</span>")
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
-			H.reagents.add_reagent("mindbreaker", 25)
+			H.reagents.add_reagent("mindbreaker", 12)
 			if(is_servant_of_ratvar(target))
 				to_chat(target, "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>")
 				target.emote("scream")
@@ -379,7 +295,7 @@
 	cultist_desc = "Use this talisman on a victim to handcuff them with dark bindings."
 	invocation = "In'totum Lig'abis!"
 	color = "#B27300" // burnt-orange
-	uses = 4
+	uses = 6
 
 /obj/item/weapon/paper/talisman/shackle/invoke(mob/living/user, successfuluse = 0)
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff

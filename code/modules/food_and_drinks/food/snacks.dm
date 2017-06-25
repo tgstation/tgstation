@@ -170,7 +170,7 @@
 					if(istype(A, B))
 						continue contents_loop
 				qdel(A)
-	feedback_add_details("food_made","[type]")
+	SSblackbox.add_details("food_made","[type]")
 
 	if(bonus_reagents && bonus_reagents.len)
 		for(var/r_id in bonus_reagents)
@@ -182,7 +182,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/slice(accuracy, obj/item/weapon/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
-		return 0
+		return FALSE
 
 	if ( \
 			!isturf(src.loc) || \
@@ -191,7 +191,7 @@
 			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
 		)
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
-		return 1
+		return FALSE
 
 	var/slices_lost = 0
 	if (accuracy >= IS_SHARP_ACCURATE)
@@ -211,12 +211,14 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/slice = new slice_path (loc)
 		initialize_slice(slice, reagents_per_slice)
 	qdel(src)
+	return TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_slice(obj/item/weapon/reagent_containers/food/snacks/slice, reagents_per_slice)
 	slice.create_reagents(slice.volume)
 	reagents.trans_to(slice,reagents_per_slice)
-	if( name != initial(name) || desc != initial(desc) )
-		slice.name = "slice of [src]"
+	if(name != initial(name))
+		slice.name = "slice of [name]"
+	if(desc != initial(desc))
 		slice.desc = "[desc]"
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/generate_trash(atom/location)
@@ -225,7 +227,7 @@
 			. = new trash(location)
 			trash = null
 			return
-		else if(istype(trash, /obj/item))
+		else if(isitem(trash))
 			var/obj/item/trash_item = trash
 			trash_item.forceMove(location)
 			. = trash
@@ -234,13 +236,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	cut_overlays()
-	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
+	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
-		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
+		filling.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else
-		I.color = S.filling_color
+		filling.color = S.filling_color
 
-	add_overlay(I)
+	add_overlay(filling)
 
 // initialize_cooked_food() is called when microwaving the food
 /obj/item/weapon/reagent_containers/food/snacks/proc/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/S, cooking_efficiency = 1)
@@ -262,7 +264,7 @@
 			initialize_cooked_food(S, M.efficiency)
 		else
 			initialize_cooked_food(S, 1)
-		feedback_add_details("food_made","[type]")
+		SSblackbox.add_details("food_made","[type]")
 	else
 		new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
 		if(M && M.dirty < 100)

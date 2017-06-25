@@ -662,9 +662,9 @@
 				playsound(src.loc, W.usesound, 50, 1)
 				if (do_after(user, 20*W.toolspeed, target = src))
 					if (buildstage == 1)
-						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
+						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/weapon/electronics/airalarm( src.loc )
-						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
 				return

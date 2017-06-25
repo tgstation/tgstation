@@ -51,7 +51,7 @@
 		return FALSE
 
 	smooth_zlevel(world.maxz)
-	SortAreas()
+	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
@@ -71,6 +71,9 @@
 	if(!bounds)
 		return
 
+	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
+		repopulate_sorted_areas()
+	
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 

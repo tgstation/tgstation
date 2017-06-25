@@ -19,20 +19,23 @@
 	var/safety = 1 //if you can zap people with the defibs on harm mode
 	var/powered = 0 //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/weapon/twohanded/shockpaddles/paddles
-	var/obj/item/weapon/stock_parts/cell/high/bcell = null
+	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/combat = 0 //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 
-/obj/item/weapon/defibrillator/New() //starts without a cell for rnd
-	..()
+/obj/item/weapon/defibrillator/get_cell()
+	return cell
+
+/obj/item/weapon/defibrillator/Initialize() //starts without a cell for rnd
+	. = ..()
 	paddles = make_paddles()
 	update_icon()
 	return
 
-/obj/item/weapon/defibrillator/loaded/New() //starts with hicap
-	..()
+/obj/item/weapon/defibrillator/loaded/Initialize() //starts with hicap
+	. = ..()
 	paddles = make_paddles()
-	bcell = new(src)
+	cell = new(src)
 	update_icon()
 	return
 
@@ -42,8 +45,8 @@
 	update_charge()
 
 /obj/item/weapon/defibrillator/proc/update_power()
-	if(bcell)
-		if(bcell.charge < paddles.revivecost)
+	if(cell)
+		if(cell.charge < paddles.revivecost)
 			powered = 0
 		else
 			powered = 1
@@ -56,21 +59,21 @@
 		add_overlay("[initial(icon_state)]-paddles")
 	if(powered)
 		add_overlay("[initial(icon_state)]-powered")
-	if(!bcell)
+	if(!cell)
 		add_overlay("[initial(icon_state)]-nocell")
 	if(!safety)
 		add_overlay("[initial(icon_state)]-emagged")
 
 /obj/item/weapon/defibrillator/proc/update_charge()
 	if(powered) //so it doesn't show charge if it's unpowered
-		if(bcell)
-			var/ratio = bcell.charge / bcell.maxcharge
+		if(cell)
+			var/ratio = cell.charge / cell.maxcharge
 			ratio = Ceiling(ratio*4) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
 
 /obj/item/weapon/defibrillator/CheckParts(list/parts_list)
 	..()
-	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
+	cell = locate(/obj/item/weapon/stock_parts/cell) in contents
 	update_icon()
 
 /obj/item/weapon/defibrillator/ui_action_click()
@@ -105,7 +108,7 @@
 		toggle_paddles()
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
-		if(bcell)
+		if(cell)
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
 			if(C.maxcharge < paddles.revivecost)
@@ -113,15 +116,15 @@
 				return
 			if(!user.transferItemToLoc(W, src))
 				return
-			bcell = W
+			cell = W
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(bcell)
-			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
-			bcell = null
+		if(cell)
+			cell.update_icon()
+			cell.forceMove(get_turf(src))
+			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			update_icon()
 	else
@@ -136,7 +139,7 @@
 		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.")
 
 /obj/item/weapon/defibrillator/emp_act(severity)
-	if(bcell)
+	if(cell)
 		deductcharge(1000 / severity)
 	if(safety)
 		safety = 0
@@ -200,11 +203,11 @@
 	update_icon()
 
 /obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
-	if(bcell)
-		if(bcell.charge < (paddles.revivecost+chrgdeductamt))
+	if(cell)
+		if(cell.charge < (paddles.revivecost+chrgdeductamt))
 			powered = 0
 			update_icon()
-		if(bcell.use(chrgdeductamt))
+		if(cell.use(chrgdeductamt))
 			update_icon()
 			return 1
 		else
@@ -213,8 +216,8 @@
 
 /obj/item/weapon/defibrillator/proc/cooldowncheck(mob/user)
 	spawn(50)
-		if(bcell)
-			if(bcell.charge >= paddles.revivecost)
+		if(cell)
+			if(cell.charge >= paddles.revivecost)
 				user.visible_message("<span class='notice'>[src] beeps: Unit ready.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_ready.ogg', 50, 0)
 			else
@@ -237,10 +240,10 @@
 	if(slot == user.getBeltSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/compact/loaded/New()
-	..()
+/obj/item/weapon/defibrillator/compact/loaded/Initialize()
+	. = ..()
 	paddles = make_paddles()
-	bcell = new(src)
+	cell = new(src)
 	update_icon()
 
 /obj/item/weapon/defibrillator/compact/combat
@@ -249,10 +252,10 @@
 	combat = 1
 	safety = 0
 
-/obj/item/weapon/defibrillator/compact/combat/loaded/New()
-	..()
+/obj/item/weapon/defibrillator/compact/combat/loaded/Initialize()
+	. = ..()
 	paddles = make_paddles()
-	bcell = new /obj/item/weapon/stock_parts/cell/infinite(src)
+	cell = new /obj/item/weapon/stock_parts/cell/infinite(src)
 	update_icon()
 
 /obj/item/weapon/defibrillator/compact/combat/loaded/attackby(obj/item/weapon/W, mob/user, params)
@@ -273,7 +276,6 @@
 	force = 0
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
-	flags = NODROP
 
 	var/revivecost = 1000
 	var/cooldown = 0
@@ -398,7 +400,7 @@
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
-	M.Weaken(5)
+	M.Knockdown(100)
 	M.updatehealth() //forces health update before next life tick
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
@@ -444,7 +446,7 @@
 				return
 			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 100, 1, -1)
 			H.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
@@ -453,7 +455,7 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
 			add_logs(user, H, "overloaded the heart of", defib)
-			H.Weaken(5)
+			H.Knockdown(100)
 			H.Jitter(100)
 			if(req_defib)
 				defib.deductcharge(revivecost)

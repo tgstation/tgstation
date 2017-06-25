@@ -47,8 +47,7 @@
 		queue_smooth_neighbors(src)
 
 /obj/structure/table/narsie_act()
-	if(prob(20))
-		new /obj/structure/table/wood(src.loc)
+	new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
 	new /obj/structure/table/reinforced/brass(src.loc)
@@ -91,7 +90,7 @@
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.forceMove(src.loc)
-	pushed_mob.Weaken(2)
+	pushed_mob.Knockdown(40)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
 	add_logs(user, pushed_mob, "pushed")
@@ -110,7 +109,7 @@
 			to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
 			playsound(src.loc, I.usesound, 50, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 				deconstruct(TRUE, 1)
 			return
 
@@ -196,10 +195,10 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
-	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL)
+	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
 		table_shatter(M)
 
-/obj/structure/table/glass/proc/table_shatter(mob/M)
+/obj/structure/table/glass/proc/table_shatter(mob/living/L)
 	visible_message("<span class='warning'>[src] breaks!</span>",
 		"<span class='danger'>You hear breaking glass.</span>")
 	var/turf/T = get_turf(src)
@@ -209,8 +208,8 @@
 		AM.forceMove(T)
 		debris -= AM
 		if(istype(AM, /obj/item/weapon/shard))
-			AM.throw_impact(M)
-	M.Weaken(5)
+			AM.throw_impact(L)
+	L.Knockdown(100)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -272,11 +271,19 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy)
+	canSmoothWith = list(/obj/structure/table/wood/fancy,/obj/structure/table/wood/fancy/black)
 
 /obj/structure/table/wood/fancy/New()
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi' //so that the tables place correctly in the map editor
 	..()
+
+/obj/structure/table/wood/fancy/black
+	icon_state = "fancy_table_black"
+	buildstack = /obj/item/stack/tile/carpet/black
+
+/obj/structure/table/wood/fancy/black/New()
+	..()
+	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /*
  * Reinforced tables
@@ -444,7 +451,7 @@
 	attack_hand(user)
 
 /obj/structure/rack/attack_hand(mob/living/user)
-	if(user.weakened || user.resting || user.lying || user.get_num_legs() < 2)
+	if(user.IsKnockdown() || user.resting || user.lying || user.get_num_legs() < 2)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
@@ -460,7 +467,7 @@
 			else
 				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+			playsound(loc, 'sound/items/welder.ogg', 40, 1)
 
 /*
  * Rack destruction

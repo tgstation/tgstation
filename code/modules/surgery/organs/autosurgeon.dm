@@ -12,7 +12,7 @@
 	var/starting_organ
 
 /obj/item/device/autosurgeon/Initialize(mapload)
-	..()
+	. = ..()
 	if(starting_organ)
 		insert_organ(new starting_organ(src))
 

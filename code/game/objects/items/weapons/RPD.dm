@@ -94,10 +94,10 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 		"Passive Gate"   = new /datum/pipe_info(PIPE_PASSIVE_GATE,		1, PIPE_UNARY),
 		"Volume Pump"    = new /datum/pipe_info(PIPE_VOLUME_PUMP,		1, PIPE_UNARY),
 		"Scrubber"       = new /datum/pipe_info(PIPE_SCRUBBER,			1, PIPE_UNARY),
+		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 		"Meter"          = new /datum/pipe_info/meter(),
 		"Gas Filter"     = new /datum/pipe_info(PIPE_GAS_FILTER,		1, PIPE_TRIN_M),
 		"Gas Mixer"      = new /datum/pipe_info(PIPE_GAS_MIXER,			1, PIPE_TRIN_M),
-//		"Injector"       = new /datum/pipe_info(PIPE_INJECTOR,     		1, PIPE_UNARY),
 	),
 	"Heat Exchange" = list(
 		"Pipe"           = new /datum/pipe_info(PIPE_HE,				1, PIPE_BENDABLE),
@@ -170,7 +170,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 /obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
-	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
 
 /obj/item/weapon/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
@@ -594,7 +594,7 @@ GLOBAL_LIST_INIT(RPD_recipes, list(
 
 
 /obj/item/weapon/pipe_dispenser/proc/activate()
-	playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 
 #undef PIPE_BINARY
 #undef PIPE_BENT

@@ -68,7 +68,7 @@
 		icon_state = initial(icon_state)
 		if(prob(15) && iscarbon(target))
 			var/mob/living/carbon/C = target
-			C.Weaken(2)
+			C.Knockdown(40)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/mob/living/creator = null // the creator
 	var/destroy_objects = 0
 	var/knockdown_people = 0
-	var/image/googly_eyes = null
+	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/mob.dmi', "googly_eyes")
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0)
@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		faction |= "\ref[owner]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
-	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, GLOB.protected_objects))
+	if((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, GLOB.protected_objects))
 		return 1
 	return 0
 
@@ -143,7 +143,6 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		icon_state = O.icon_state
 		icon_living = icon_state
 		copy_overlays(O)
-		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
 		add_overlay(googly_eyes)
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
@@ -152,7 +151,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 				knockdown_people = 1
 				melee_damage_lower *= 2
 				melee_damage_upper *= 2
-		else if(istype(O, /obj/item))
+		else if(isitem(O))
 			var/obj/item/I = O
 			health = 15 * I.w_class
 			melee_damage_lower = 2 + I.force
@@ -174,14 +173,9 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Weaken(2)
+		C.Knockdown(40)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")
-
-/mob/living/simple_animal/hostile/mimic/copy/Aggro()
-	..()
-	googly_eyes.setDir(get_dir(src,target))
-
 
 /mob/living/simple_animal/hostile/mimic/copy/machine
 	speak = list("HUMANS ARE IMPERFECT!", "YOU SHALL BE ASSIMILATED!", "YOU ARE HARMING YOURSELF", "You have been deemed hazardous. Will you comply?", \
@@ -209,7 +203,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(..())
 		emote_see = list("aims menacingly")
 		obj_damage = 0
-		environment_smash = 0 //needed? seems weird for them to do so
+		environment_smash = ENVIRONMENT_SMASH_NONE //needed? seems weird for them to do so
 		ranged = 1
 		retreat_distance = 1 //just enough to shoot
 		minimum_distance = 6
@@ -235,10 +229,10 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/ranged/OpenFire(the_target)
 	if(Zapgun)
-		if(Zapgun.power_supply)
+		if(Zapgun.cell)
 			var/obj/item/ammo_casing/energy/shot = Zapgun.ammo_type[Zapgun.select]
-			if(Zapgun.power_supply.charge >= shot.e_cost)
-				Zapgun.power_supply.use(shot.e_cost)
+			if(Zapgun.cell.charge >= shot.e_cost)
+				Zapgun.cell.use(shot.e_cost)
 				Zapgun.update_icon()
 				..()
 	else if(Zapstick)

@@ -38,7 +38,7 @@
 	var/obj/item/module_active = null
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 
-	var/image/eye_lights
+	var/mutable_appearance/eye_lights
 
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/item/weapon/stock_parts/cell/cell = null
@@ -96,6 +96,9 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
+
+/mob/living/silicon/robot/get_cell()
+	return cell
 
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -193,6 +196,10 @@
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/weapon/robot_module)
+		return
+
+	if(wires.is_cut(WIRE_RESET_MODULE))
+		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
 		return
 
 	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
@@ -556,7 +563,7 @@
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_held_item(), /obj/item))
+		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
 	return 0
 
@@ -568,7 +575,7 @@
 	if(!L.len) //no requirements
 		return 1
 
-	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
@@ -584,7 +591,7 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -602,7 +609,7 @@
 		else
 			add_overlay("ov-opencover -c")
 	if(hat)
-		var/image/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
+		var/mutable_appearance/head_overlay = hat.build_worn_icon(state = hat.icon_state, default_layer = 20, default_icon_file = 'icons/mob/head.dmi')
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
@@ -910,7 +917,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
+		if(IsUnconscious() || IsStun() || IsKnockdown() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -1109,14 +1116,14 @@
 		return
 	if(incapacitated())
 		return
-	if(M.restrained())
+	if(M.incapacitated())
 		return
 	if(module)
 		if(!module.allow_riding)
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
 	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because his hands are full!</span>")
+		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 

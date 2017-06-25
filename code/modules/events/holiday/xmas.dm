@@ -25,7 +25,7 @@
 
 /datum/round_event/presents/start()
 	for(var/obj/structure/flora/tree/pine/xmas in world)
-		if(xmas.z != 1)
+		if(xmas.z != ZLEVEL_STATION)
 			continue
 		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
@@ -83,6 +83,12 @@
 /obj/effect/landmark/xmastree
 	name = "christmas tree spawner"
 	var/tree = /obj/structure/flora/tree/pine/xmas
+
+/obj/effect/landmark/xmastree/Initialize(mapload)
+	..()
+	if(FESTIVE_SEASON in SSevents.holidays)
+		new tree(get_turf(src))
+	qdel(src)
 
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"

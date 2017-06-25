@@ -24,7 +24,8 @@
 	if(!no_bodyparts)
 		if(no_organs)//so the organs don't get transfered inside the bodyparts we'll drop.
 			for(var/X in internal_organs)
-				qdel(X)
+				if(no_brain || !istype(X, /obj/item/organ/brain))
+					qdel(X)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
 			for(var/X in internal_organs)
 				var/obj/item/organ/O = X
@@ -40,6 +41,9 @@
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
 			if(no_brain && istype(I, /obj/item/organ/brain))
+				qdel(I)
+				continue
+			if(no_organs && !istype(I, /obj/item/organ/brain))
 				qdel(I)
 				continue
 			I.Remove(src)

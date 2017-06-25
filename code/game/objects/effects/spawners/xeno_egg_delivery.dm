@@ -10,7 +10,7 @@
 	var/area/A = get_area(T)
 
 	new /obj/structure/alien/egg(T)
-	new /obj/effect/overlay/temp/gravpush(T)
+	new /obj/effect/temp_visual/gravpush(T)
 	playsound(T, 'sound/items/party_horn.ogg', 50, 1, -1)
 
 	message_admins("An alien egg has been delivered to [A] at [ADMIN_COORDJMP(T)].")

@@ -29,16 +29,11 @@
 
 	var/brute_heal = 1
 	var/burn_heal = 0
-	var/blood_gain = 0.4
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume += blood_gain
 	..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
@@ -60,7 +55,10 @@
 	// data for nutriment is one or more (flavour -> ratio)
 	// where all the ratio values adds up to 1
 
-	var/list/taste_amounts = data.Copy()
+	var/list/taste_amounts = list()
+	if(data)
+		taste_amounts = data.Copy()
+
 	counterlist_scale(taste_amounts, volume)
 
 	var/list/other_taste_amounts = newdata.Copy()
@@ -79,7 +77,6 @@
 
 	brute_heal = 1
 	burn_heal = 1
-	blood_gain = 0.5
 
 /datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
 	if(M.satiety < 600)
@@ -100,11 +97,11 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(30, 0)
+	M.AdjustSleeping(600, FALSE)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(3, 0)
+	M.AdjustSleeping(40, FALSE)
 	..()
 	. = 1
 
@@ -258,7 +255,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Weaken(3)
+			victim.Knockdown(60)
 			victim.drop_item()
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
@@ -272,7 +269,7 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Weaken(5)
+			victim.Knockdown(100)
 			victim.drop_item()
 		victim.update_damage_hud()
 
@@ -513,16 +510,64 @@
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar."
+	description = "Sweet sweet honey, decays into sugar and has natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/M)
 	M.reagents.add_reagent("sugar",3)
-	if(prob(20))
-		M.heal_bodypart_damage(3,1)
+	if(prob(55))
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		M.adjustOxyLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REM, 0)
 	..()
+
+/datum/reagent/consumable/mayonnaise
+	name = "Mayonnaise"
+	id = "mayonnaise"
+	description = "An white and oily mixture of mixed egg yolks."
+	color = "#DFDFDF"
+	taste_description = "mayonnaise"
+
+/datum/reagent/consumable/tearjuice
+	name = "Tear Juice"
+	id = "tearjuice"
+	description = "A blinding substance extracted from certain onions."
+	color = "#c0c9a0"
+	taste_description = "bitterness"
+
+/datum/reagent/consumable/tearjuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!istype(M))
+		return
+	var/unprotected = FALSE
+	switch(method)
+		if(INGEST)
+			unprotected = TRUE
+		if(INJECT)
+			unprotected = FALSE
+		else	//Touch or vapor
+			if(!M.is_mouth_covered() && !M.is_eyes_covered())
+				unprotected = TRUE
+	if(unprotected)
+		if(!M.getorganslot("eye_sight"))	//can't blind somebody with no eyes
+			to_chat(M, "<span class = 'notice'>Your eye sockets feel wet.</span>")
+		else
+			if(!M.eye_blurry)
+				to_chat(M, "<span class = 'warning'>Tears well up in your eyes!</span>")
+			M.blind_eyes(2)
+			M.blur_eyes(5)
+	..()
+
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/M)
+	..()
+	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
+		M.blur_eyes(4)
+		if(prob(10))
+			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
+			M.blind_eyes(2)
 
 
 ////Lavaland Flora Reagents////
@@ -537,7 +582,7 @@
 
 /datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
-		M.Paralyse(2, 0)
+		M.Unconscious(40, 0)
 		. = 1
 	if(prob(20))
 		M.losebreath += 4

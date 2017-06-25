@@ -38,10 +38,10 @@
 	to_chat(user, "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>")
 	open = !open
 	if(open)
-		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
-		colored.color = colour
+		var/mutable_appearance/colored_overlay = mutable_appearance(icon, "lipstick_uncap_color")
+		colored_overlay.color = colour
 		icon_state = "lipstick_uncap"
-		add_overlay(colored)
+		add_overlay(colored_overlay)
 	else
 		icon_state = "lipstick"
 
@@ -49,7 +49,7 @@
 	if(!open)
 		return
 
-	if(!istype(M, /mob))
+	if(!ismob(M))
 		return
 
 	if(ishuman(M))
@@ -118,7 +118,7 @@
 		H.hair_style = "Skinhead"
 
 	H.update_hair()
-	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
+	playsound(loc, 'sound/items/welder2.ogg', 20, 1)
 
 
 /obj/item/weapon/razor/attack(mob/M, mob/user)

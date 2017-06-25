@@ -30,4 +30,4 @@
 			return
 		last_request = world.time
 		to_chat(usr, "<span class='notice'>Your request has been recieved by Centcom.</span>")
-		to_chat(GLOB.admins, "<b>FERRY: <font color='blue'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) (<A HREF='?_src_=holder;secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>")
+		to_chat(GLOB.admins, "<b>FERRY: <font color='blue'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to Centcom.</font>")

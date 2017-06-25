@@ -30,7 +30,7 @@
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -298,7 +298,7 @@
 			else
 				for(var/mob/M in range(1,src))
 					if(CanHug(M))
-						child.Attach(M)
+						child.Leap(M)
 						break
 
 /obj/structure/alien/egg/obj_break(damage_flag)

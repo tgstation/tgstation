@@ -59,3 +59,23 @@
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	blob_allowed = FALSE
+
+/area/shuttle/sbc_starfury
+	name = "SBC Starfury"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_fighter1
+	name = "SBC Fighter 1"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_fighter2
+	name = "SBC Fighter 2"
+	blob_allowed = FALSE
+
+/area/shuttle/sbc_corvette
+	name = "SBC corvette"
+	blob_allowed = FALSE
+
+/area/shuttle/syndicate_scout
+	name = "Syndicate Scout"
+	blob_allowed = FALSE

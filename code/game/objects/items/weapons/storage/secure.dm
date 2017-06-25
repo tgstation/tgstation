@@ -94,7 +94,7 @@
 			else if ((src.code == src.l_code) && (src.l_set == 1))
 				src.locked = 0
 				cut_overlays()
-				add_overlay(image('icons/obj/storage.dmi', icon_opened))
+				add_overlay(icon_opened)
 				src.code = null
 			else
 				src.code = "ERROR"

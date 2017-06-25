@@ -6,6 +6,7 @@
 
 /datum/chemical_reaction/reagent_explosion/on_reaction(datum/reagents/holder, created_volume)
 	var/turf/T = get_turf(holder.my_atom)
+	var/area/A = get_area(T)
 	var/inside_msg
 	if(ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
@@ -14,9 +15,9 @@
 	var/touch_msg = "N/A"
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
-		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)"
-	message_admins("Reagent explosion reaction occurred at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>[inside_msg]. Last Fingerprint: [touch_msg].")
-	log_game("Reagent explosion reaction occurred at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
+		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
+	message_admins("Reagent explosion reaction occurred at [A] [ADMIN_COORDJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+	log_game("Reagent explosion reaction occurred at [A] [COORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
 	e.start()
@@ -73,7 +74,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Weaken(2)
+				C.Knockdown(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..()
@@ -220,9 +221,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 	holder.remove_reagent("flash_powder", created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
@@ -237,9 +238,9 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Weaken(5)
+				C.Knockdown(60)
 			else
-				C.Stun(5)
+				C.Stun(100)
 
 /datum/chemical_reaction/smoke_powder
 	name = "smoke_powder"
@@ -295,7 +296,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -307,7 +308,7 @@
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, 1)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
-		C.soundbang_act(1, 5, rand(0, 5))
+		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
 	name = "phlogiston"

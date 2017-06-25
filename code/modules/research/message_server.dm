@@ -4,7 +4,7 @@ GLOBAL_LIST_INIT(message_servers, list())
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
 	var/message = "Blank" //transferred message
-	var/image/photo = null //Attached photo
+	var/icon/photo //Attached photo
 
 /datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
 
@@ -78,12 +78,11 @@ GLOBAL_LIST_INIT(message_servers, list())
 	var/active = 1
 	var/decryptkey = "password"
 
-/obj/machinery/message_server/New()
+/obj/machinery/message_server/Initialize()
 	GLOB.message_servers += src
 	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
-	..()
-	return
+	. = ..()
 
 /obj/machinery/message_server/Destroy()
 	GLOB.message_servers -= src

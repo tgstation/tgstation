@@ -11,10 +11,10 @@
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 
-/obj/structure/toilet/New()
+/obj/structure/toilet/Initialize()
+	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
-	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -103,6 +103,21 @@
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
 	else
 		return ..()
+
+/obj/structure/toilet/secret
+	var/obj/item/secret
+	var/secret_type = null
+
+/obj/structure/toilet/secret/Initialize(mapload)
+	. = ..()
+	if (secret_type)
+		secret = new secret_type(src)
+		secret.desc += " It's a secret!"
+		w_items += secret.w_class
+		contents += secret
+
+
+
 
 /obj/structure/urinal
 	name = "urinal"
@@ -239,7 +254,7 @@
 		qdel(mymist)
 
 	if(on)
-		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
+		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
@@ -266,7 +281,7 @@
 			var/mob/living/L = O
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
-				C.slip(4,2,null,NO_SLIP_WHEN_WALKING)
+				C.slip(80,null,NO_SLIP_WHEN_WALKING)
 		else
 			wash_obj(O)
 
@@ -274,7 +289,7 @@
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
 	O.clean_blood()
 
-	if(istype(O,/obj/item))
+	if(isitem(O))
 		var/obj/item/I = O
 		I.acid_level = 0
 		I.extinguish()
@@ -448,7 +463,7 @@
 		user.clean_blood()
 
 
-/obj/structure/sink/attackby(obj/item/O, mob/user, params)
+/obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
@@ -465,12 +480,11 @@
 
 	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
-		if(B.bcell)
-			if(B.bcell.charge > 0 && B.status == 1)
+		if(B.cell)
+			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
-				user.Stun(stunforce)
-				user.Weaken(stunforce)
+				user.Knockdown(stunforce)
 				user.stuttering = stunforce
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks themself while attempting to wash the active [B.name]!</span>", \
@@ -552,7 +566,7 @@
 	icon_state = "open"
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
-	layer = WALL_OBJ_LAYER
+	layer = SIGN_LAYER
 	anchored = 1
 	opacity = 0
 	density = 0
@@ -575,13 +589,48 @@
 		density = 0
 		open = TRUE
 
+/obj/structure/curtain/attackby(obj/item/W, mob/user)
+	if (istype(W, /obj/item/toy/crayon))
+		color = input(user,"Choose Color") as color
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(anchored)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] unscrews [src] from the floor.</span>", "<span class='notice'>You start to unscrew [src] from the floor...</span>", "You hear rustling noises.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(!anchored)
+					return
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unscrew [src] from the floor.</span>")
+		else
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] screws [src] to the floor.</span>", "<span class='notice'>You start to screw [src] to the floor...</span>", "You hear rustling noises.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(anchored)
+					return
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You screw [src] to the floor.</span>")
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(!anchored)
+			playsound(src.loc, W.usesound, 100, 1)
+			user.visible_message("<span class='warning'>[user] cuts apart [src].</span>", "<span class='notice'>You start to cut apart [src].</span>", "You hear cutting.")
+			if(do_after(user, 50*W.toolspeed, target = src))
+				if(anchored)
+					return
+				to_chat(user, "<span class='notice'>You cut apart [src].</span>")
+				deconstruct()
+	else
+		. = ..()
+
+
 /obj/structure/curtain/attack_hand(mob/user)
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
 	..()
 
 /obj/structure/curtain/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 3)
+	new /obj/item/stack/sheet/cloth (loc, 2)
+	new /obj/item/stack/sheet/plastic (loc, 2)
+	new /obj/item/stack/rods (loc, 1)
 	qdel(src)
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

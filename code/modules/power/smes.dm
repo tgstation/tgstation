@@ -38,9 +38,6 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 
-	var/static/list/smesImageCache
-
-
 /obj/machinery/power/smes/examine(user)
 	..()
 	if(!terminal)
@@ -145,7 +142,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			if(C.get_amount() < 10 || !C)
@@ -173,9 +170,9 @@
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
 		log_game("[src] has been deconstructed by [key_name(user)]")
-		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
+		investigate_log("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
 		return
 	else if(panel_open && istype(I, /obj/item/weapon/crowbar))
 		return
@@ -194,11 +191,12 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
-		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+	if(SSticker && SSticker.IsRoundInProgress())
+		var/area/A = get_area(src)
+		var/turf/T = get_turf(src)
+		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
+		log_game("SMES deleted at [A][COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]", INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()
@@ -226,36 +224,20 @@
 	if(panel_open)
 		return
 
-	if(!smesImageCache || !smesImageCache.len)
-		smesImageCache = list()
-		smesImageCache.len = 9
-
-		smesImageCache[SMES_CLEVEL_1] = image('icons/obj/power.dmi',"smes-og1")
-		smesImageCache[SMES_CLEVEL_2] = image('icons/obj/power.dmi',"smes-og2")
-		smesImageCache[SMES_CLEVEL_3] = image('icons/obj/power.dmi',"smes-og3")
-		smesImageCache[SMES_CLEVEL_4] = image('icons/obj/power.dmi',"smes-og4")
-		smesImageCache[SMES_CLEVEL_5] = image('icons/obj/power.dmi',"smes-og5")
-
-		smesImageCache[SMES_OUTPUTTING] = image('icons/obj/power.dmi', "smes-op1")
-		smesImageCache[SMES_NOT_OUTPUTTING] = image('icons/obj/power.dmi',"smes-op0")
-		smesImageCache[SMES_INPUTTING] = image('icons/obj/power.dmi', "smes-oc1")
-		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
-
 	if(outputting)
-		add_overlay(smesImageCache[SMES_OUTPUTTING])
+		add_overlay("smes-op1")
 	else
-		add_overlay(smesImageCache[SMES_NOT_OUTPUTTING])
+		add_overlay("smes-op0")
 
 	if(inputting)
-		add_overlay(smesImageCache[SMES_INPUTTING])
+		add_overlay("smes-oc1")
 	else
 		if(input_attempt)
-			add_overlay(smesImageCache[SMES_INPUT_ATTEMPT])
+			add_overlay("smes-oc0")
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		add_overlay(smesImageCache[clevel])
-	return
+		add_overlay("smes-og[clevel]")
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
@@ -275,9 +257,9 @@
 		input_available = terminal.surplus()
 
 		if(inputting)
-			if(input_available > 0 && input_available >= input_level)		// if there's power available, try to charge
+			if(input_available > 0)		// if there's power available, try to charge
 
-				var/load = min((capacity-charge)/SMESRATE, input_level)		// charge at set rate, limited to spare capacity
+				var/load = min(min((capacity-charge)/SMESRATE, input_level), input_available)		// charge at set rate, limited to spare capacity
 
 				charge += load * SMESRATE	// increase the charge
 
@@ -287,7 +269,7 @@
 				inputting = 0		// stop inputting
 
 		else
-			if(input_attempt && input_available > 0 && input_available >= input_level)
+			if(input_attempt && input_available > 0)
 				inputting = 1
 	else
 		inputting = 0
@@ -303,7 +285,7 @@
 
 			if(output_used < 0.0001)		// either from no charge or set to 0
 				outputting = 0
-				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
+				investigate_log("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
 		else if(output_attempt && charge > output_level && output_level > 0)
 			outputting = 1
 		else
@@ -438,7 +420,7 @@
 				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
-	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", "singulo")
+	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user]", INVESTIGATE_SINGULO)
 
 
 /obj/machinery/power/smes/emp_act(severity)

@@ -15,9 +15,8 @@
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
 	var/timerid
 
-/obj/effect/clockwork/spatial_gateway/New()
-	..()
-	update_light()
+/obj/effect/clockwork/spatial_gateway/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/check_setup), 1)
 
 /obj/effect/clockwork/spatial_gateway/Destroy()
@@ -99,12 +98,12 @@
 	if(severity == 1 && uses)
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
-		animate(src, alpha = 0, transform = matrix()*2, time = 10)
+		animate(src, alpha = 0, transform = matrix()*2, time = 10, flags = ANIMATION_END_NOW)
 		deltimer(timerid)
 		timerid = QDEL_IN(src, 10)
 		linked_gateway.uses = 0
 		linked_gateway.visible_message("<span class='warning'>[linked_gateway] is disrupted!</span>")
-		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10)
+		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10, flags = ANIMATION_END_NOW)
 		deltimer(linked_gateway.timerid)
 		linked_gateway.timerid = QDEL_IN(linked_gateway, 10)
 		return TRUE
@@ -120,7 +119,7 @@
 		qdel(src)
 		return FALSE
 	if(!sender)
-		visible_message("<span class='warning'>[A] bounces off of [src]!</span>")
+		visible_message("<span class='warning'>[A] bounces off [src]!</span>")
 		return FALSE
 	if(!uses)
 		return FALSE
@@ -128,12 +127,12 @@
 		var/mob/living/user = A
 		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
-	playsound(src, 'sound/effects/EMPulse.ogg', 50, 1)
-	playsound(linked_gateway, 'sound/effects/EMPulse.ogg', 50, 1)
+	playsound(src, 'sound/effects/empulse.ogg', 50, 1)
+	playsound(linked_gateway, 'sound/effects/empulse.ogg', 50, 1)
 	transform = matrix() * 1.5
-	animate(src, transform = matrix() / 1.5, time = 10)
+	animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	linked_gateway.transform = matrix() * 1.5
-	animate(linked_gateway, transform = matrix() / 1.5, time = 10)
+	animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	A.forceMove(get_turf(linked_gateway))
 	if(!no_cost)
 		uses = max(0, uses - 1)
@@ -166,7 +165,7 @@
 		return FALSE
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
+	if(!src || !input_target_key || !invoker || !invoker.canUseTopic(src, !issilicon(invoker)) || !is_servant_of_ratvar(invoker) || (isitem(src) && invoker.get_active_held_item() != src) || !invoker.can_speak_vocal())
 		return FALSE //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	if(!target) //if we have no target, but did have a key, let them retry
 		to_chat(invoker, "<span class='warning'>That target no longer exists!</span>")
@@ -181,17 +180,26 @@
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 	var/istargetobelisk = istype(target, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
 	var/issrcobelisk = istype(src, /obj/structure/destructible/clockwork/powered/clockwork_obelisk)
-	if(issrcobelisk && !anchored)
-		to_chat(invoker, "<span class='warning'>[src] is no longer secured!</span>")
-		return FALSE
+	if(issrcobelisk)
+		if(!anchored)
+			to_chat(invoker, "<span class='warning'>[src] is no longer secured!</span>")
+			return FALSE
+		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = src //foolish as I am, how I set this proc up makes substypes unfeasible
+		if(CO.active)
+			to_chat(invoker, "<span class='warning'>[src] is now sustaining a gateway!</span>")
+			return FALSE
 	if(istargetobelisk)
 		if(!target.anchored)
 			to_chat(invoker, "<span class='warning'>That [target.name] is no longer secured!</span>")
 			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/CO = target
+		if(CO.active)
+			to_chat(invoker, "<span class='warning'>That [target.name] is sustaining a gateway, and cannot receive another!</span>")
+			return procure_gateway(invoker, time_duration, gateway_uses, two_way)
 		var/efficiency = CO.get_efficiency_mod()
 		gateway_uses = round(gateway_uses * (2 * efficiency), 1)
 		time_duration = round(time_duration * (2 * efficiency), 1)
+		CO.active = TRUE //you'd be active in a second but you should update immediately
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
 	var/obj/effect/clockwork/spatial_gateway/S1 = new(issrcobelisk ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))

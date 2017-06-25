@@ -83,14 +83,18 @@
 
 //sometimes we want to ignore that we don't have the required amount of legs.
 /mob/proc/get_leg_ignore()
-	return 0
+	return FALSE
 
 /mob/living/carbon/alien/larva/get_leg_ignore()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/get_leg_ignore()
 	if(movement_type & FLYING)
-		return 1
+		return TRUE
+	var/obj/item/weapon/tank/jetpack/J = get_jetpack()
+	if(J && J.on && !has_gravity())
+		return TRUE
+	return FALSE
 
 /mob/living/proc/get_missing_limbs()
 	return list()

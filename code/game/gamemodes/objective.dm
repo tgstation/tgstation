@@ -67,7 +67,14 @@
 /datum/objective/proc/update_explanation_text()
 	//Default does nothing, override where needed
 
-/datum/objective/proc/give_special_equipment()
+/datum/objective/proc/give_special_equipment(special_equipment)
+	if(owner && owner.current)
+		if(ishuman(owner.current))
+			var/mob/living/carbon/human/H = owner.current
+			var/list/slots = list ("backpack" = slot_in_backpack)
+			for(var/eq_path in special_equipment)
+				var/obj/O = new eq_path
+				H.equip_in_one_of_slots(O, slots)
 
 /datum/objective/assassinate
 	var/target_role_type=0
@@ -93,6 +100,14 @@
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/assassinate/internal
+	var/stolen = 0 		//Have we already eliminated this target?
+
+/datum/objective/assassinate/internal/update_explanation_text()
+	..()
+	if(target && !target.current)
+		explanation_text = "Assassinate [target.name], who was obliterated"
 
 
 /datum/objective/mutiny
@@ -468,7 +483,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		steal_target = targetinfo.targetitem
 		explanation_text = "Steal [targetinfo.name]."
 		dangerrating = targetinfo.difficulty
-		give_special_equipment()
+		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
 		explanation_text = "Free objective"
@@ -510,15 +525,6 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 				return 1
 	return 0
-
-/datum/objective/steal/give_special_equipment()
-	if(owner && owner.current && targetinfo)
-		if(ishuman(owner.current))
-			var/mob/living/carbon/human/H = owner.current
-			var/list/slots = list ("backpack" = slot_in_backpack)
-			for(var/eq_path in targetinfo.special_equipment)
-				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
 
 
 GLOBAL_LIST_EMPTY(possible_items_special)
@@ -652,9 +658,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/n_p = 1 //autowin
 		if (SSticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/dead/new_player/P in GLOB.player_list)
-				if(P.client && P.ready && P.mind!=owner)
+				if(P.client && P.ready == PLAYER_READY_TO_PLAY && P.mind!=owner)
 					n_p ++
-		else if (SSticker.current_state == GAME_STATE_PLAYING)
+		else if (SSticker.IsRoundInProgress())
 			for(var/mob/living/carbon/human/P in GLOB.player_list)
 				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
 					n_p ++
@@ -695,6 +701,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
+	
+/datum/objective/destroy/internal
+	var/stolen = FALSE 		//Have we already eliminated this target?
 
 /datum/objective/steal_five_of_type
 	explanation_text = "Steal at least five items!"

@@ -1,9 +1,10 @@
 PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_TICKER|SS_FIRE_IN_LOBBY
+	flags = SS_TICKER
 	wait = 1
 	priority = 500
-	init_order = -6
+	init_order = INIT_ORDER_OVERLAY
+	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_SETUP 
 
 	stat_tag = "Ov"
 	currentrun = null
@@ -55,7 +56,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
-	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches 
+	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
 	var/list/cached_icon = icon_states_cache[icon]
 	if (cached_icon)
 		var/cached_appearance = cached_icon["[iconstate]"]
@@ -91,7 +92,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 			new_overlays[i] = iconstate2appearance(icon, cached_overlay)
 		else if(isicon(cached_overlay))
 			new_overlays[i] = icon2appearance(cached_overlay)
-		else	//image probable
+		else	//image/mutable_appearance probable
 			appearance_bro.appearance = cached_overlay
 			if(!ispath(cached_overlay))
 				appearance_bro.dir = cached_overlay.dir
@@ -99,11 +100,11 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	return new_overlays
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
-#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src; 
+#define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src;
 /atom/proc/cut_overlays(priority = FALSE)
 	var/list/cached_overlays = our_overlays
 	var/list/cached_priority = priority_overlays
-	
+
 	var/need_compile = FALSE
 
 	if(LAZYLEN(cached_overlays)) //don't queue empty lists, don't cut priority overlays
@@ -160,12 +161,12 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	if(NOT_QUEUED_ALREADY && need_compile) //have we caught more pokemon?
 		QUEUE_FOR_COMPILE
 
-/atom/proc/copy_overlays(atom/other, cut_old = FALSE)	//copys our_overlays from another atom
+/atom/proc/copy_overlays(atom/other, cut_old)	//copys our_overlays from another atom
 	if(!other)
 		if(cut_old)
 			cut_overlays()
 		return
-	
+
 	var/list/cached_other = other.our_overlays
 	if(cached_other)
 		if(cut_old || !LAZYLEN(our_overlays))
@@ -189,3 +190,18 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 
 /image/proc/cut_overlays(x)
 	overlays.Cut()
+
+/image/proc/copy_overlays(atom/other, cut_old)
+	if(!other)
+		if(cut_old)
+			cut_overlays()
+		return
+
+	var/list/cached_other = other.our_overlays
+	if(cached_other)
+		if(cut_old || !overlays.len)
+			overlays = cached_other.Copy()
+		else
+			overlays |= cached_other
+	else if(cut_old)
+		cut_overlays()

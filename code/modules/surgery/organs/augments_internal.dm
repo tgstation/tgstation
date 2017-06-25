@@ -1,4 +1,4 @@
-#define STUN_SET_AMOUNT	2
+#define STUN_SET_AMOUNT 40
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -11,7 +11,7 @@
 	if(iscarbon(M))
 		src.Insert(M)
 	if(implant_overlay)
-		var/image/overlay = new /image(icon, implant_overlay)
+		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
 		add_overlay(overlay)
 	return ..()
@@ -31,7 +31,7 @@
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	if(!owner)
 		return
-	var/stun_amount = 5 + (severity-1 ? 0 : 5)
+	var/stun_amount = 200/severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
 	return stun_amount
@@ -107,10 +107,10 @@
 	if(crit_fail)
 		return
 
-	if(owner.stunned > STUN_SET_AMOUNT)
-		owner.stunned = STUN_SET_AMOUNT
-	if(owner.weakened > STUN_SET_AMOUNT)
-		owner.weakened = STUN_SET_AMOUNT
+	if(owner.AmountStun() > STUN_SET_AMOUNT)
+		owner.SetStun(STUN_SET_AMOUNT)
+	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)
+		owner.SetKnockdown(STUN_SET_AMOUNT)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail)
@@ -155,8 +155,7 @@
 		/obj/item/device/autosurgeon/reviver)
 	var/amount = 5
 
-/obj/item/weapon/storage/box/cyber_implants/bundle/New()
-	..()
+/obj/item/weapon/storage/box/cyber_implants/PopulateContents()
 	var/implant
 	while(contents.len <= amount)
 		implant = pick(boxed)

@@ -9,13 +9,16 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
+#define PIPE_VISIBLE_LEVEL 2
+#define PIPE_HIDDEN_LEVEL 1
+
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
-	layer = GAS_PIPE_LAYER //under wires
+	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	obj_integrity = 200
 	max_integrity = 200
@@ -60,19 +63,24 @@ Pipelines + Other Objects -> Pipe network
 		N.disconnect(src)
 		NODE_I = null
 
+/obj/machinery/atmospherics/proc/getNodeConnects()
+	var/list/node_connects = list()
+	node_connects.len = device_type
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/D in GLOB.cardinal)
+			if(D & GetInitDirections())
+				if(D in node_connects)
+					continue
+				node_connects[I] = D
+				break
+	return node_connects
+
+
 //this is called just after the air controller sets up turfs
 /obj/machinery/atmospherics/proc/atmosinit(var/list/node_connects)
 	if(!node_connects) //for pipes where order of nodes doesn't matter
-		node_connects = list()
-		node_connects.len = device_type
-
-		for(DEVICE_TYPE_LOOP)
-			for(var/D in GLOB.cardinal)
-				if(D & GetInitDirections())
-					if(D in node_connects)
-						continue
-					node_connects[I] = D
-					break
+		node_connects = getNodeConnects()
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connects[I]))
@@ -147,7 +155,7 @@ Pipelines + Other Objects -> Pipe network
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)
@@ -196,17 +204,10 @@ Pipelines + Other Objects -> Pipe network
 	//Generate a unique identifier for this image combination
 	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
 
-	var/image/img
-	if(pipeimages[identifier] == null)
-		img = image(iconset, icon_state=iconstate, dir=direction)
-		img.color = col
-
-		pipeimages[identifier] = img
-
-	else
-		img = pipeimages[identifier]
-
-	return img
+	if((!(. = pipeimages[identifier])))
+		var/image/pipe_overlay
+		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
+		pipe_overlay.color = col
 
 /obj/machinery/atmospherics/on_construction(pipe_type, obj_color)
 	if(can_unwrench)
@@ -245,7 +246,7 @@ Pipelines + Other Objects -> Pipe network
 	var/obj/machinery/atmospherics/target_move = findConnecting(direction)
 	if(target_move)
 		if(target_move.can_crawl_through())
-			if(is_type_in_list(target_move, GLOB.ventcrawl_machinery))
+			if(is_type_in_typecache(target_move, GLOB.ventcrawl_machinery))
 				user.forceMove(target_move.loc) //handle entering and so on.
 				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 			else
@@ -258,7 +259,7 @@ Pipelines + Other Objects -> Pipe network
 					user.last_played_vent = world.time
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
-		if((direction & initialize_directions) || is_type_in_list(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+		if((direction & initialize_directions) || is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 			user.forceMove(src.loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 	user.canmove = 0
@@ -288,3 +289,47 @@ Pipelines + Other Objects -> Pipe network
 //Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
 /obj/machinery/atmospherics/proc/can_see_pipes()
 	return 1
+
+//Properly updates pipes on shuttle movement
+/obj/machinery/atmospherics/shuttleRotate(rotation)
+	var/list/real_node_connect = getNodeConnects()
+	for(DEVICE_TYPE_LOOP)
+		real_node_connect[I] = angle2dir(rotation+dir2angle(real_node_connect[I]))
+
+	..()
+	SetInitDirections()
+	var/list/supposed_node_connect = getNodeConnects()
+	var/list/nodes_copy = nodes.Copy()
+
+	for(DEVICE_TYPE_LOOP)
+		var/new_pos = supposed_node_connect.Find(real_node_connect[I])
+		nodes[new_pos] = nodes_copy[I]
+
+/obj/machinery/atmospherics/afterShuttleMove()
+	..()
+	var/missing_nodes = FALSE
+	for(DEVICE_TYPE_LOOP)
+		if(src.nodes[I])
+			var/obj/machinery/atmospherics/node = src.nodes[I]
+			var/connected = FALSE
+			for(var/D in GLOB.cardinal)
+				if(node in get_step(src, D))
+					connected = TRUE
+					break
+
+			if(!connected)
+				nullifyNode(I)
+
+		if(!src.nodes[I])
+			missing_nodes = TRUE
+
+	if(missing_nodes)
+		atmosinit()
+		for(var/obj/machinery/atmospherics/A in pipeline_expansion())
+			A.atmosinit()
+			if(A.returnPipenet())
+				A.addMember(src)
+		build_network()
+	else
+		// atmosinit() calls update_icon(), so we don't need to call it
+		update_icon()

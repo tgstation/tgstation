@@ -37,13 +37,13 @@
 	var/previous_level = ""
 	var/obj/item/nuke_core/core = null
 	var/deconstruction_state = NUKESTATE_INTACT
-	var/image/lights = null
-	var/image/interior = null
+	var/lights = ""
+	var/interior = ""
 	var/obj/effect/countdown/nuclearbomb/countdown
 	var/static/bomb_set
 
-/obj/machinery/nuclearbomb/New()
-	..()
+/obj/machinery/nuclearbomb/Initialize()
+	. = ..()
 	countdown = new(src)
 	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
@@ -81,14 +81,14 @@
 /obj/machinery/nuclearbomb/syndicate
 	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
-/obj/machinery/nuclearbomb/syndicate/New()
+/obj/machinery/nuclearbomb/syndicate/Initialize()
+	. = ..()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
 	if(existing)
 		qdel(src)
 		throw EXCEPTION("Attempted to spawn a syndicate nuke while one already exists at [existing.loc.x],[existing.loc.y],[existing.loc.z]")
 		return 0
 	tag = "syndienuke"
-	return ..()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/nuclear))
@@ -201,30 +201,32 @@
 	cut_overlay(interior)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
-			interior = image(icon,"panel-unscrewed")
+			interior = "panel-unscrewed"
 		if(NUKESTATE_PANEL_REMOVED)
-			interior = image(icon,"panel-removed")
+			interior = "panel-removed"
 		if(NUKESTATE_WELDED)
-			interior = image(icon,"plate-welded")
+			interior = "plate-welded"
 		if(NUKESTATE_CORE_EXPOSED)
-			interior = image(icon,"plate-removed")
+			interior = "plate-removed"
 		if(NUKESTATE_CORE_REMOVED)
-			interior = image(icon,"core-removed")
+			interior = "core-removed"
 		if(NUKESTATE_INTACT)
-			interior = null
+			return
 	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
-	cut_overlay(lights)
+	if(lights)
+		cut_overlay(lights)
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED)
-			lights = null
+			lights = ""
+			return
 		if(NUKE_OFF_UNLOCKED)
-			lights = image(icon,"lights-safety")
+			lights = "lights-safety"
 		if(NUKE_ON_TIMING)
-			lights = image(icon,"lights-timing")
+			lights = "lights-timing"
 		if(NUKE_ON_EXPLODING)
-			lights = image(icon,"lights-exploding")
+			lights = "lights-exploding"
 	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
@@ -420,7 +422,7 @@
 	safety = TRUE
 	update_icon()
 	for(var/mob/M in GLOB.player_list)
-		M << 'sound/machines/Alarm.ogg'
+		M << 'sound/machines/alarm.ogg'
 	if(SSticker && SSticker.mode)
 		SSticker.mode.explosion_in_progress = 1
 	sleep(100)
@@ -448,7 +450,7 @@
 	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
 		var/datum/game_mode/nuclear/NM = SSticker.mode
-		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		NM.syndies_didnt_escape = (Shuttle && (Shuttle.z == ZLEVEL_CENTCOM || Shuttle.z == ZLEVEL_TRANSIT)) ? 0 : 1
 		NM.nuke_off_station = off_station
 
 	SSticker.station_explosion_cinematic(off_station,null,src)
@@ -457,8 +459,7 @@
 			var/datum/game_mode/nuclear/NM = SSticker.mode
 			NM.nukes_left --
 		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			spawn()
-				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
+			SSticker.Reboot("Station destroyed by Nuclear Device.", "nuke - unhandled ending")
 
 
 /*
@@ -526,7 +527,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
+	playsound(user.loc, 'sound/machines/alarm.ogg', 50, -1, 1)
 	var/end_time = world.time + 100
 	var/newcolor = "#00FF00"
 	while(world.time < end_time)

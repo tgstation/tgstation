@@ -48,15 +48,16 @@
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
+	var/area/area = get_area(src)
 	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(src)] ([T.x], [T.y], [T.z])</a>).")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [get_area(src)] ([T.x], [T.y], [T.z]).")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
 	if(reagents.has_reagent("facid"))
-		message_admins("[key_name_admin(user)] fired Fluacid from \a [src] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(src)] ([T.x], [T.y], [T.z])</a>).")
-		log_game("[key_name(user)] fired Fluacid from \a [src] at [get_area(src)] ([T.x], [T.y], [T.z]).")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired Fluacid from \a [src] at [area] [COORD(T)].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(src)] ([T.x], [T.y], [T.z])</a>).")
-		log_game("[key_name(user)] fired Space lube from \a [src] at [get_area(src)] ([T.x], [T.y], [T.z]).")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
+		log_game("[key_name(user)] fired Space lube from \a [src] at [area] [COORD(T)].")
 	return
 
 

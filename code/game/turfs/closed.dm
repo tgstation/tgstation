@@ -5,6 +5,9 @@
 	density = 1
 	blocks_air = 1
 
+/turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	return FALSE
+
 /turf/closed/indestructible
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -23,9 +26,6 @@
 
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
-
-
-
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
@@ -71,10 +71,8 @@
 /turf/closed/indestructible/fakeglass/Initialize()
 	..()
 	icon_state = null //set the icon state to null, so our base state isn't visible
-	var/image/I = image('icons/obj/structures.dmi', loc = src, icon_state = "grille")
-	underlays += I //add a grille underlay
-	I = image('icons/turf/floors.dmi', loc = src, icon_state = "plating")
-	underlays += I //add the plating underlay, below the grille
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
 /turf/closed/indestructible/fakedoor
 	name = "Centcom Access"
@@ -112,6 +110,11 @@
 	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
+
+/turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "necro1"
+	return TRUE
 
 /turf/closed/indestructible/riveted/hierophant
 	name = "wall"

@@ -124,7 +124,6 @@
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "uniform"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_iclothing
 	toggleable_inventory += inv_box
 
@@ -133,7 +132,6 @@
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_wear_suit
 	inv_box.icon_state = "suit"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_oclothing
 	toggleable_inventory += inv_box
 
@@ -155,7 +153,6 @@
 	inv_box.name = "id"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
-//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_id
 	inv_box.slot_id = slot_wear_id
 	static_inventory += inv_box
@@ -164,7 +161,6 @@
 	inv_box.name = "mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_mask
 	inv_box.slot_id = slot_wear_mask
 	toggleable_inventory += inv_box
@@ -173,7 +169,6 @@
 	inv_box.name = "neck"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "neck"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_neck
 	inv_box.slot_id = slot_neck
 	toggleable_inventory += inv_box
@@ -182,7 +177,6 @@
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
-//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_back
 	inv_box.slot_id = slot_back
 	static_inventory += inv_box
@@ -191,7 +185,6 @@
 	inv_box.name = "storage1"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
-//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage1
 	inv_box.slot_id = slot_l_store
 	static_inventory += inv_box
@@ -200,7 +193,6 @@
 	inv_box.name = "storage2"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
-//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage2
 	inv_box.slot_id = slot_r_store
 	static_inventory += inv_box
@@ -209,7 +201,6 @@
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_sstore1
 	inv_box.slot_id = slot_s_store
 	static_inventory += inv_box
@@ -233,7 +224,6 @@
 	inv_box.name = "gloves"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_gloves
 	inv_box.slot_id = slot_gloves
 	toggleable_inventory += inv_box
@@ -242,7 +232,6 @@
 	inv_box.name = "eyes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_glasses
 	inv_box.slot_id = slot_glasses
 	toggleable_inventory += inv_box
@@ -251,7 +240,6 @@
 	inv_box.name = "ears"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_ears
 	inv_box.slot_id = slot_ears
 	toggleable_inventory += inv_box
@@ -260,7 +248,6 @@
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_head
 	inv_box.slot_id = slot_head
 	toggleable_inventory += inv_box
@@ -269,7 +256,6 @@
 	inv_box.name = "shoes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
-//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_shoes
 	inv_box.slot_id = slot_shoes
 	toggleable_inventory += inv_box
@@ -322,6 +308,18 @@
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
+
+/datum/hud/human/update_locked_slots()
+	if(!mymob)
+		return
+	var/mob/living/carbon/human/H = mymob
+	var/datum/species/S = H.dna.species
+	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			if(inv.slot_id in S.no_equip)
+				inv.alpha = 128
+			else
+				inv.alpha = initial(inv.alpha)
 
 /datum/hud/human/hidden_inventory_update(mob/viewer)
 	if(!mymob)

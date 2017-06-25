@@ -48,7 +48,10 @@
 			brain = null
 			update_icon_dropped()
 		else
-			I.loc = T
+			if(istype(I, /obj/item/weapon/reagent_containers/pill))
+				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
+					qdel(AP)
+			I.forceMove(T)
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -119,7 +122,7 @@
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
 	cut_overlays()
-	var/list/standing = ..()
+	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 		var/datum/sprite_accessory/S
 
@@ -128,45 +131,48 @@
 			if(facial_hair_style)
 				S = GLOB.facial_hair_styles_list[facial_hair_style]
 				if(S)
-					var/image/img_facial = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER, "dir"=SOUTH)
-					img_facial.color = "#" + facial_hair_color
-					img_facial.alpha = hair_alpha
-					standing += img_facial
+					var/image/facial_overlay = image(S.icon, "[S.icon_state]", -HAIR_LAYER, SOUTH)
+					facial_overlay.color = "#" + facial_hair_color
+					facial_overlay.alpha = hair_alpha
+					. += facial_overlay
 
+			var/image/hair_overlay = image(layer = -HAIR_LAYER, dir = SOUTH)
+			. += hair_overlay
 			//Applies the debrained overlay if there is no brain
 			if(!brain)
 				if(animal_origin == ALIEN_BODYPART)
-					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_alien", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
+					hair_overlay.icon_state = "debrained_alien"
 				else if(animal_origin == LARVA_BODYPART)
-					standing += image("icon"='icons/mob/animal_parts.dmi', "icon_state" = "debrained_larva", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					hair_overlay.icon = 'icons/mob/animal_parts.dmi'
+					hair_overlay.icon_state = "debrained_larva"
 				else if(!(NOBLOOD in species_flags_list))
-					standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER, "dir"=SOUTH)
+					hair_overlay.icon = 'icons/mob/human_face.dmi'
+					hair_overlay.icon_state = "debrained"
 			else
 				if(hair_style)
 					S = GLOB.hair_styles_list[hair_style]
 					if(S)
-						var/image/img_hair = image("icon" = S.icon, "icon_state" = "[S.icon_state]", "layer" = -HAIR_LAYER, "dir"=SOUTH)
-						img_hair.color = "#" + hair_color
-						img_hair.alpha = hair_alpha
-						standing += img_hair
+						hair_overlay.icon = icon
+						hair_overlay.icon_state = "[S.icon_state]"
+						hair_overlay.color = "#" + hair_color
+						hair_overlay.alpha = hair_alpha
 
 
 		// lipstick
 		if(lip_style)
-			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[lip_style]", "layer" = -BODY_LAYER, "dir"=SOUTH)
-			lips.color = lip_color
-			standing += lips
+			var/image/lips_overlay = image('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER, SOUTH)
+			lips_overlay.color = lip_color
+			. += lips_overlay
 
 		// eyes
+		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes", -BODY_LAYER, SOUTH)
+		. += eyes_overlay
 		if(!eyes)
-			standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER, "dir"=SOUTH)
+			eyes_overlay.icon_state = "eyes_missing"
 
 		else if(eyes.eye_color)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER, "dir"=SOUTH)
-			img_eyes.color = "#" + eyes.eye_color
-			standing += img_eyes
-
-	return standing
+			eyes_overlay.color = "#" + eyes.eye_color
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

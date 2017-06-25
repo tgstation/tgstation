@@ -29,20 +29,17 @@ Clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/weapon/bikehorn
-	r_pocket = /obj/item/toy/crayon/rainbow
 	backpack_contents = list(
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
 		)
 
 	implants = list(/obj/item/weapon/implant/sad_trombone)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
 	satchel = /obj/item/weapon/storage/backpack/clown
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/clown //strangely has a duffle
+	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/clown //strangely has a duffel
 
 	box = /obj/item/weapon/storage/box/hug/survival
 
@@ -93,9 +90,9 @@ Mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
-	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
-		/obj/item/toy/crayon/mime=1)
+	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
+	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
 	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
 
@@ -112,11 +109,11 @@ Mime
 		H.mind.miming = 1
 
 /*
-Librarian
+Curator
 */
-/datum/job/librarian
-	title = "Librarian"
-	flag = LIBRARIAN
+/datum/job/curator
+	title = "Curator"
+	flag = CURATOR
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -125,23 +122,35 @@ Librarian
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 
-	outfit = /datum/outfit/job/librarian
+	outfit = /datum/outfit/job/curator
 
 	access = list(GLOB.access_library)
-	minimal_access = list(GLOB.access_library)
+	minimal_access = list(GLOB.access_library, GLOB.access_construction,GLOB.access_mining_station)
 
-/datum/outfit/job/librarian
-	name = "Librarian"
-	jobtype = /datum/job/librarian
+/datum/outfit/job/curator
+	name = "Curator"
+	jobtype = /datum/job/curator
 
-	belt = /obj/item/device/pda/librarian
-	uniform = /obj/item/clothing/under/rank/librarian
+	belt = /obj/item/device/pda/curator
+	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/weapon/storage/bag/books
-	r_pocket = /obj/item/weapon/barcodescanner
+	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/device/laser_pointer
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
-		/obj/item/soapstone = 1
+		/obj/item/weapon/melee/curator_whip = 1,
+		/obj/item/soapstone = 1,
+		/obj/item/weapon/barcodescanner = 1
 	)
+
+
+/datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	H.grant_all_languages(omnitongue=TRUE)
 
 /*
 Lawyer
@@ -174,7 +183,7 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
-	r_pocket = /obj/item/clothing/tie/lawyers_badge
+	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

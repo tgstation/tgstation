@@ -35,7 +35,7 @@
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/hitby(atom/movable/AM)
 	..()
@@ -48,6 +48,8 @@
 	take_damage(tforce, BRUTE, "melee", 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	..() //contents explosion
 	if(target == src)
 		qdel(src)
@@ -130,7 +132,7 @@
 			if(BRUTE)
 				playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 			if(BURN)
-				playsound(src, 'sound/items/Welder.ogg', 50, 1)
+				playsound(src, 'sound/items/welder.ogg', 50, 1)
 			if(TOX)
 				playsound(src, 'sound/effects/spray2.ogg', 50, 1)
 				return 0
@@ -148,7 +150,7 @@
 
 ///// ACID
 
-GLOBAL_DATUM_INIT(acid_overlay, /image, image("icon" = 'icons/effects/effects.dmi', "icon_state" = "acid"))
+GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "acid"))
 
 //the obj's reaction when touched by acid
 /obj/acid_act(acidpwr, acid_volume)
@@ -170,7 +172,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /image, image("icon" = 'icons/effects/effects.dm
 			if(armour_value != "acid" && armour_value != "fire")
 				armor[armour_value] = max(armor[armour_value] - round(sqrt(acid_level)*0.1), 0)
 		if(prob(33))
-			playsound(loc, 'sound/items/Welder.ogg', 150, 1)
+			playsound(loc, 'sound/items/welder.ogg', 150, 1)
 		take_damage(min(1 + round(sqrt(acid_level)*0.3), 300), BURN, "acid", 0)
 
 	acid_level = max(acid_level - (5 + 3*round(sqrt(acid_level))), 0)
@@ -257,3 +259,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /image, image("icon" = 'icons/effects/effects.dm
 		obj_break(damage_type)
 		return TRUE
 	return FALSE
+
+//returns how much the object blocks an explosion
+/obj/proc/GetExplosionBlock()
+	CRASH("Unimplemented GetExplosionBlock()")

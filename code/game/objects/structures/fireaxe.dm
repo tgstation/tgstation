@@ -19,8 +19,7 @@
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(fireaxe)
-		qdel(fireaxe)
-		fireaxe = null
+		QDEL_NULL(fireaxe)
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
@@ -33,7 +32,7 @@
 			playsound(loc, WT.usesound, 40, 1)
 			if(do_after(user, 40*I.toolspeed, target = src))
 				obj_integrity = max_integrity
-				playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 		else
@@ -73,9 +72,9 @@
 			if(broken)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
 			else
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/fireaxecabinet/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	if(open)
@@ -88,7 +87,7 @@
 	if(!broken && !(flags & NODECONSTRUCT))
 		update_icon()
 		broken = TRUE
-		playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
 
@@ -116,7 +115,7 @@
 			update_icon()
 			return
 	if(locked)
-		user <<"<span class='warning'> The [name] won't budge!</span>"
+		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open
@@ -132,7 +131,7 @@
 
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	if(locked)
-		user <<"<span class='warning'> The [name] won't budge!</span>"
+		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open
@@ -178,7 +177,7 @@
 	set src in oview(1)
 
 	if(locked)
-		usr <<"<span class='warning'> The [name] won't budge!</span>"
+		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
 		return
 	else
 		open = !open

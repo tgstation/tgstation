@@ -4,6 +4,7 @@
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
 	device_type = TRINARY
+	layer = GAS_FILTER_LAYER
 
 	var/flipped = 0
 
@@ -22,7 +23,7 @@
 Housekeeping and pipe network stuff
 */
 
-/obj/machinery/atmospherics/components/trinary/atmosinit()
+/obj/machinery/atmospherics/components/trinary/getNodeConnects()
 
 	//Mixer:
 	//1 and 2 is input
@@ -43,5 +44,4 @@ Housekeeping and pipe network stuff
 		node1_connect = turn(node1_connect, 180)
 		node3_connect = turn(node3_connect, 180)
 
-	var/list/node_connects = list(node1_connect, node2_connect, node3_connect)
-	..(node_connects)
+	return list(node1_connect, node2_connect, node3_connect)

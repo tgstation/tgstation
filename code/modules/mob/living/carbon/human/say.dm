@@ -1,10 +1,9 @@
-/mob/living/carbon/human/say_quote(input, spans, message_mode)
+/mob/living/carbon/human/say_mod(input, message_mode)
 	verb_say = dna.species.say_mod
-	. = ..()
-	if(src.slurring)
-		input = attach_spans(input, spans)
-		return "slurs, \"[input]\""
-
+	if(slurring)
+		return "slurs"
+	else
+		. = ..()
 
 /mob/living/carbon/human/treat_message(message)
 	message = dna.species.handle_speech(message,src)

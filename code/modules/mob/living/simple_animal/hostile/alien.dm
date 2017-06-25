@@ -158,14 +158,14 @@
 	a_intent = INTENT_HELP
 	friendly = "caresses"
 	obj_damage = 0
-	environment_smash = 0
+	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = 1
 	icon_state = "maid"
 	icon_living = "maid"
 	icon_dead = "maid_dead"
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
-	if(istype(target, /atom/movable))
+	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("[src] cleans up \the [target].")
 			qdel(target)

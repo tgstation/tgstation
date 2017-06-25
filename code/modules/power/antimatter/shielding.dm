@@ -28,11 +28,9 @@
 	var/dirs = 0
 
 
-/obj/machinery/am_shielding/New(loc)
-	..(loc)
-	spawn(10)
-		controllerscan()
-	return
+/obj/machinery/am_shielding/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/controllerscan), 10)
 
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
@@ -59,11 +57,9 @@
 
 	if(!control_unit)
 		if(!priorscan)
-			spawn(20)
-				controllerscan(1)//Last chance
+			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
 			return
 		qdel(src)
-	return
 
 
 /obj/machinery/am_shielding/Destroy()
@@ -154,7 +150,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 		else
 			return
 	if(damage_amount >= 10)

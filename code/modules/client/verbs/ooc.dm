@@ -57,7 +57,7 @@
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[bicon(icon('icons/member_content.dmi', "blag"))][keyname]</font>"
 
 	for(var/client/C in GLOB.clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -108,7 +108,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, OOC_COLOR)
 	if(new_ooccolor)
 		prefs.ooccolor = sanitize_ooccolor(new_ooccolor)
 		prefs.save_preferences()
-	feedback_add_details("admin_verb","Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/verb/resetcolorooc()

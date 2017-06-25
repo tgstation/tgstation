@@ -1,4 +1,9 @@
-/atom/movable/proc/onShuttleMove(turf/T1, rotation)
+// Called before shuttle starts moving atoms.
+/atom/movable/proc/beforeShuttleMove(turf/T1, rotation)
+	return
+
+// Called when shuttle attempts to move an atom.
+/atom/movable/proc/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	if(rotation)
 		shuttleRotate(rotation)
 	loc = T1
@@ -6,25 +11,16 @@
 		update_parallax_contents()
 	return 1
 
+// Called after all of the atoms on shuttle are moved.
+/atom/movable/proc/afterShuttleMove()
+	return
+
+
 /obj/onShuttleMove()
 	if(invisibility >= INVISIBILITY_ABSTRACT)
 		return 0
 	. = ..()
 
-/obj/machinery/atmospherics/onShuttleMove()
-	. = ..()
-	for(DEVICE_TYPE_LOOP)
-		if(get_area(nodes[I]) != get_area(src))
-			nullifyNode(I)
-
-#define DIR_CHECK_TURF_AREA(X) (get_area(get_ranged_target_turf(src, X, 1)) != A)
-/obj/structure/cable/onShuttleMove()
-	. = ..()
-	var/A = get_area(src)
-	//cut cables on the edge
-	if(DIR_CHECK_TURF_AREA(NORTH) || DIR_CHECK_TURF_AREA(SOUTH) || DIR_CHECK_TURF_AREA(EAST) || DIR_CHECK_TURF_AREA(WEST))
-		cut_cable_from_powernet()
-#undef DIR_CHECK_TURF_AREA
 
 /atom/movable/light/onShuttleMove()
 	return 0
@@ -51,12 +47,12 @@
 		else
 			shake_camera(src, 7, 1)
 
-/mob/living/carbon/onShuttleMove()
+/mob/living/carbon/onShuttleMove(turf/T1, rotation, knockdown = TRUE)
 	. = ..()
 	if(!.)
 		return
-	if(!buckled)
-		Weaken(3)
+	if(!buckled && knockdown)
+		Knockdown(60)
 
 /obj/effect/abstract/proximity_checker/onShuttleMove()
 	//timer so it only happens once

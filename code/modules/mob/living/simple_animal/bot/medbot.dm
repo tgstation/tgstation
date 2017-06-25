@@ -14,6 +14,8 @@
 	maxHealth = 20
 	pass_flags = PASSMOB
 
+	status_flags = (CANPUSH | CANSTUN)
+
 	radio_key = /obj/item/device/encryptionkey/headset_med
 	radio_channel = "Medical"
 
@@ -77,6 +79,9 @@
 	if(!on)
 		icon_state = "medibot0"
 		return
+	if(IsStun())
+		icon_state = "medibota"
+		return
 	if(mode == BOT_HEALING)
 		icon_state = "medibots[stationary_mode]"
 		return
@@ -90,12 +95,16 @@
 	update_icon()
 
 	if(skin)
-		add_overlay(image('icons/mob/aibots.dmi', "medskin_[skin]"))
+		add_overlay("medskin_[skin]")
 
 	var/datum/job/doctor/J = new /datum/job/doctor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
+
+/mob/living/simple_animal/bot/medbot/update_canmove()
+	. = ..()
+	update_icon()
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -265,17 +274,10 @@
 	if(mode == BOT_HEALING)
 		return
 
-	if(stunned)
-		icon_state = "medibota"
-		stunned--
-
+	if(IsStun())
 		oldpatient = patient
 		patient = null
 		mode = BOT_IDLE
-
-		if(stunned <= 0)
-			update_icon()
-			stunned = 0
 		return
 
 	if(frustration > 8)
@@ -504,11 +506,6 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/bot/medbot/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag == "taser")
-		stunned = min(stunned+10,20)
-	..()
-
 /mob/living/simple_animal/bot/medbot/explode()
 	on = 0
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
@@ -530,9 +527,7 @@
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
+	do_sparks(3, TRUE, src)
 	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)

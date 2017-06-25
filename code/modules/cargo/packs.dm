@@ -182,14 +182,14 @@
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 14000
+	cost = 20000
 	contains = list()
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
-	var/crate_value = 50
+	var/crate_value = 30
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	while(crate_value)
 		var/category = pick(uplink_items)
@@ -286,7 +286,7 @@
 	                /obj/item/device/camera,
 	                /obj/item/device/taperecorder,
 	                /obj/item/toy/crayon/white,
-	                /obj/item/clothing/head/det_hat)
+	                /obj/item/clothing/head/fedora/det_hat)
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/armory
@@ -541,6 +541,13 @@
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
 	crate_name = "electrical maintenance crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engineering/inducers
+	name = "NT-75 Electromagnetic Power Inducers Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0},/obj/item/weapon/inducer/sci {cell_type = /obj/item/weapon/stock_parts/cell/{maxcharge = 5000; charge = 5000};opened = 0}) //FALSE doesn't work in modified type paths apparently.
+	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engineering/engiequipment
@@ -828,6 +835,14 @@
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
 
+/datum/supply_pack/medical/vending
+	name = "Medical Vending Crate"
+	cost = 2000
+	contains = list(/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical,
+					/obj/item/weapon/vending_refill/medical)
+	crate_name = "medical vending crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -983,7 +998,7 @@
 /datum/supply_pack/organic/cream_piee
 	name = "High-yield Clown-grade Cream Pie Crate"
 	cost = 6000
-	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
+	contains = list(/obj/item/weapon/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
 	contraband = TRUE
 	access = GLOB.access_theatre
@@ -1234,13 +1249,13 @@
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets"
-	cost = 3000
+	cost = 7500
 	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/plasteel50
 	name = "50 Plasteel Sheets"
-	cost = 5000
+	cost = 16500
 	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	crate_name = "plasteel sheets crate"
 
@@ -1408,6 +1423,7 @@
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
+					/obj/item/weapon/pen/fountain,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/folder/blue,
@@ -1418,6 +1434,12 @@
 					/obj/item/weapon/stamp,
 					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
+
+/datum/supply_pack/misc/fountainpens
+	name = "Calligraphy Crate"
+	cost = 700
+	contains = list(/obj/item/weapon/storage/box/fountainpens)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"
@@ -1574,7 +1596,7 @@
 	name = "Contraband Crate"
 	contraband = TRUE
 	cost = 3000
-	num_contained = 6
+	num_contained = 5
 	contains = list(/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_midori,
@@ -1622,7 +1644,7 @@
 					/obj/item/clothing/suit/toggle/lawyer/purple,
 					/obj/item/clothing/under/lawyer/blacksuit,
 					/obj/item/clothing/suit/toggle/lawyer/black,
-					/obj/item/clothing/tie/waistcoat,
+					/obj/item/clothing/accessory/waistcoat,
 					/obj/item/clothing/neck/tie/blue,
 					/obj/item/clothing/neck/tie/red,
 					/obj/item/clothing/neck/tie/black,
@@ -1679,15 +1701,6 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
-
-/datum/supply_pack/misc/soapstone
-	name = "Librarian Engraving/Scribbling Crate"
-	crate_name = "librarian engraving/scribbling crate"
-	cost = 3000
-	contains = list(/obj/item/soapstone)
-	access = GLOB.access_library
-	crate_type = /obj/structure/closet/crate/secure
-
 
 /datum/supply_pack/misc/bsa
 	name = "Bluespace Artillery Parts"

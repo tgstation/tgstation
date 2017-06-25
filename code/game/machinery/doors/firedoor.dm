@@ -30,12 +30,30 @@
 	..()
 	CalculateAffectingAreas()
 
+/obj/machinery/door/firedoor/examine(mob/user)
+	..()
+	if(!density)
+		to_chat(user, "<span class='notice'>It is open, but could be <b>pried</b> closed.</span>")
+	else
+		if(!welded)
+			to_chat(user, "<span class='notice'>It is closed, but could be <i>pried</i> open. Deconstruction would require it to be <b>welded</b> shut.</span>")
+		else
+			if(boltslocked)
+				to_chat(user, "<span class='notice'>It is <i>welded</i> shut. The floor bolt have been locked by <b>screws</b>.</span>")
+			else
+				to_chat(user, "<span class='notice'>The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.</span>")
+
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
 	remove_from_areas()
 	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
 	for(var/I in affecting_areas)
 		var/area/A = I
 		LAZYADD(A.firedoors, src)
+
+/obj/machinery/door/firedoor/closed
+	icon_state = "door_closed"
+	opacity = TRUE
+	density = TRUE
 
 //see also turf/AfterChange for adjacency shennanigans
 
@@ -64,7 +82,6 @@
 		latetoggle()
 	else
 		stat |= NOPOWER
-	return
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	if(operating || !density)
@@ -73,7 +90,7 @@
 
 	user.visible_message("[user] bangs on \the [src].",
 						 "You bang on \the [src].")
-	playsound(loc, 'sound/effects/Glassknock.ogg', 10, FALSE, frequency = 32000)
+	playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
 
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user, params)
 	add_fingerprint(user)
@@ -90,14 +107,14 @@
 								 "<span class='notice'>You start unfastening [src]'s floor bolts...</span>")
 			if(!do_after(user, 50*C.toolspeed, target = src))
 				return
-			playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] unfastens [src]'s bolts.</span>", \
 								 "<span class='notice'>You undo [src]'s floor bolts.</span>")
 			deconstruct(TRUE)
 			return
 		if(istype(C, /obj/item/weapon/screwdriver))
-			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts...</span>", \
-								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts...</span>")
+			user.visible_message("<span class='notice'>[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts.</span>", \
+								 "<span class='notice'>You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts.</span>")
 			playsound(get_turf(src), C.usesound, 50, 1)
 			boltslocked = !boltslocked
 			return
@@ -109,9 +126,13 @@
 
 /obj/machinery/door/firedoor/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	if(W.remove_fuel(0, user))
-		welded = !welded
-		to_chat(user, "<span class='danger'>You [welded?"welded":"unwelded"] \the [src]</span>")
-		update_icon()
+		playsound(get_turf(src), W.usesound, 50, 1)
+		user.visible_message("<span class='notice'>[user] starts [welded ? "unwelding" : "welding"] [src].</span>", "<span class='notice'>You start welding [src].</span>")
+		if(do_after(user, 40*W.toolspeed, 1, target=src))
+			playsound(get_turf(src), W.usesound, 50, 1)
+			welded = !welded
+			to_chat(user, "<span class='danger'>[user] [welded?"welds":"unwelds"] [src].</span>", "<span class='notice'>You [welded ? "weld" : "unweld"] [src].</span>")
+			update_icon()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
 	if(welded || operating)
@@ -243,13 +264,15 @@
 	..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "There is a small metal plate covering the wires.")
+			to_chat(user, "<span class='notice'>It is <i>unbolted</i> from the floor. A small <b>loosely connected</b> metal plate is covering the wires.</span>")
+			if(!reinforced)
+				to_chat(user, "<span class='notice'>It could be reinforced with plasteel.</span>")
 		if(CONSTRUCTION_WIRES_EXPOSED)
-			to_chat(user, "Wires are trailing from the maintenance panel.")
+			to_chat(user, "<span class='notice'>The maintenance plate has been <i>pried away</i>, and <b>wires</b> are trailing.</span>")
 		if(CONSTRUCTION_GUTTED)
-			to_chat(user, "The circuit board is visible.")
+			to_chat(user, "<span class='notice'>The maintenance panel is missing <i>wires</i> and the circuit board is <b>loosely connected</b>.</span>")
 		if(CONSTRUCTION_NOCIRCUIT)
-			to_chat(user, "There are no electronics in the frame.")
+			to_chat(user, "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>")
 
 /obj/structure/firelock_frame/update_icon()
 	..()
@@ -266,7 +289,7 @@
 					return
 				if(constructionStep != CONSTRUCTION_PANEL_OPEN)
 					return
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] pries out a metal plate from [src], exposing the wires.</span>", \
 									 "<span class='notice'>You remove the cover plate from [src], exposing the wires.</span>")
 				constructionStep = CONSTRUCTION_WIRES_EXPOSED
@@ -285,7 +308,7 @@
 					return
 				user.visible_message("<span class='notice'>[user] finishes the firelock.</span>", \
 									 "<span class='notice'>You finish the firelock.</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				if(reinforced)
 					new /obj/machinery/door/firedoor/heavy(get_turf(src))
 				else
@@ -302,13 +325,13 @@
 					return
 				user.visible_message("<span class='notice'>[user] begins reinforcing [src]...</span>", \
 									 "<span class='notice'>You begin reinforcing [src]...</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				if(do_after(user, 60, target = src))
 					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.get_amount() < 2 || !P)
 						return
 					user.visible_message("<span class='notice'>[user] reinforces [src].</span>", \
 										 "<span class='notice'>You reinforce [src].</span>")
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 					P.use(2)
 					reinforced = 1
 				return
@@ -329,19 +352,17 @@
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
-			if(istype(C, /obj/item/weapon/weldingtool))
-				var/obj/item/weapon/weldingtool/W = C
-				if(W.remove_fuel(1, user))
-					playsound(get_turf(src), W.usesound, 50, 1)
-					user.visible_message("<span class='notice'>[user] starts welding a metal plate into [src]...</span>", \
-										 "<span class='notice'>You begin welding the cover plate back onto [src]...</span>")
-					if(!do_after(user, 80*C.toolspeed, target = src))
-						return
-					if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
-						return
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
-					user.visible_message("<span class='notice'>[user] welds the metal plate into [src].</span>", \
-										 "<span class='notice'>You weld [src]'s cover plate into place, hiding the wires.</span>")
+			if(istype(C, /obj/item/weapon/crowbar))
+				playsound(get_turf(src), C.usesound, 50, 1)
+				user.visible_message("<span class='notice'>[user] starts prying a metal plate into [src]...</span>", \
+									 "<span class='notice'>You begin prying the cover plate back onto [src]...</span>")
+				if(!do_after(user, 80*C.toolspeed, target = src))
+					return
+				if(constructionStep != CONSTRUCTION_WIRES_EXPOSED)
+					return
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
+				user.visible_message("<span class='notice'>[user] pries the metal plate into [src].</span>", \
+									 "<span class='notice'>You pry [src]'s cover plate into place, hiding the wires.</span>")
 				constructionStep = CONSTRUCTION_PANEL_OPEN
 				update_icon()
 				return
@@ -368,13 +389,13 @@
 					return
 				user.visible_message("<span class='notice'>[user] begins wiring [src]...</span>", \
 									 "<span class='notice'>You begin adding wires to [src]...</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				if(do_after(user, 60, target = src))
 					if(constructionStep != CONSTRUCTION_GUTTED || B.get_amount() < 5 || !B)
 						return
 					user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
 										 "<span class='notice'>You wire [src].</span>")
-					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 					B.use(5)
 					constructionStep = CONSTRUCTION_WIRES_EXPOSED
 					update_icon()
@@ -392,7 +413,7 @@
 						return
 					user.visible_message("<span class='notice'>[user] cuts apart [src]!</span>", \
 										 "<span class='notice'>You cut [src] into metal.</span>")
-					playsound(get_turf(src), 'sound/items/Welder2.ogg', 50, 1)
+					playsound(get_turf(src), 'sound/items/welder2.ogg', 50, 1)
 					var/turf/T = get_turf(src)
 					new /obj/item/stack/sheet/metal(T, 3)
 					if(reinforced)
@@ -402,7 +423,7 @@
 			if(istype(C, /obj/item/weapon/electronics/firelock))
 				user.visible_message("<span class='notice'>[user] starts adding [C] to [src]...</span>", \
 									 "<span class='notice'>You begin adding a circuit board to [src]...</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				if(!do_after(user, 40, target = src))
 					return
 				if(constructionStep != CONSTRUCTION_NOCIRCUIT)
@@ -411,7 +432,7 @@
 				qdel(C)
 				user.visible_message("<span class='notice'>[user] adds a circuit to [src].</span>", \
 									 "<span class='notice'>You insert and secure [C].</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, 1)
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
@@ -420,3 +441,9 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = 1
+
+#undef CONSTRUCTION_COMPLETE
+#undef CONSTRUCTION_PANEL_OPEN
+#undef CONSTRUCTION_WIRES_EXPOSED
+#undef CONSTRUCTION_GUTTED
+#undef CONSTRUCTION_NOCIRCUIT

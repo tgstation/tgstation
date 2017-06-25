@@ -14,8 +14,9 @@
 #define GAS_META		3
 #define META_GAS_SPECIFIC_HEAT	1
 #define META_GAS_NAME			2
-#define META_GAS_OVERLAY		4
 #define META_GAS_MOLES_VISIBLE	3
+#define META_GAS_OVERLAY		4
+#define META_GAS_DANGER			5
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -170,3 +171,5 @@
 #define ATMOS_PASS_PROC -1 //ask CanAtmosPass()
 #define ATMOS_PASS_DENSITY -2 //just check density
 #define CANATMOSPASS(A, O) ( A.CanAtmosPass == ATMOS_PASS_PROC ? A.CanAtmosPass(O) : ( A.CanAtmosPass == ATMOS_PASS_DENSITY ? !A.density : A.CanAtmosPass ) )
+
+#define LAVALAND_DEFAULT_ATMOS "o2=14;n2=23;TEMP=300"

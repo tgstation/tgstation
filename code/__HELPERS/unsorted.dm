@@ -582,7 +582,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return 0
 
 //Repopulates sortedAreas list
-/proc/SortAreas()
+/proc/repopulate_sorted_areas()
 	GLOB.sortedAreas = list()
 
 	for(var/area/A in world)
@@ -723,7 +723,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	//Irregular objects
 	var/icon/AMicon = icon(AM.icon, AM.icon_state)
 	var/icon/AMiconheight = AMicon.Height()
-	var/icon/AMiconwidth = AMicon.Width()	
+	var/icon/AMiconwidth = AMicon.Width()
 	if(AMiconheight != world.icon_size || AMiconwidth != world.icon_size)
 		pixel_x_offset += ((AMicon.Width()/world.icon_size)-1)*(world.icon_size*0.5)
 		pixel_y_offset += ((AMicon.Height()/world.icon_size)-1)*(world.icon_size*0.5)
@@ -834,11 +834,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [bicon(icon)] [target].", "<span class='notice'>You use the analyzer on [bicon(icon)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
@@ -1079,18 +1079,17 @@ B --><-- A
 	return L
 
 //similar function to RANGE_TURFS(), but will search spiralling outwards from the center (like the above, but only turfs)
-/proc/spiral_range_turfs(dist=0, center=usr, orange=0)
+/proc/spiral_range_turfs(dist=0, center=usr, orange=0, list/outlist = list(), tick_checked)
+	outlist.Cut()
 	if(!dist)
-		if(!orange)
-			return list(center)
-		else
-			return list()
+		outlist += center
+		return outlist
 
 	var/turf/t_center = get_turf(center)
 	if(!t_center)
-		return list()
+		return outlist
 
-	var/list/L = list()
+	var/list/L = outlist
 	var/turf/T
 	var/y
 	var/x
@@ -1128,6 +1127,8 @@ B --><-- A
 			if(T)
 				L += T
 		c_dist++
+		if(tick_checked)
+			CHECK_TICK
 
 	return L
 
@@ -1138,13 +1139,13 @@ B --><-- A
 		if(location == src)
 			return 1
 
-/proc/flick_overlay_static(image/I, atom/A, duration)
+/proc/flick_overlay_static(O, atom/A, duration)
 	set waitfor = 0
-	if(!A || !I)
+	if(!A || !O)
 		return
-	A.add_overlay(I)
+	A.add_overlay(O)
 	sleep(duration)
-	A.cut_overlay(I)
+	A.cut_overlay(O)
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
@@ -1209,19 +1210,22 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
+		sleep(world.tick_lag)
+		return 1
 	. = 0
 	var/i = 1
 	do
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, GLOB.CURRENT_TICKLIMIT))
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
-	if(istype(mob_or_client, /mob))
+	if(ismob(mob_or_client))
 		var/mob/M = mob_or_client
 		if(M.client)
 			C = M.client
@@ -1241,8 +1245,14 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
 #define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
 #define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qel(L[I]); L.Cut(); }
+
+/proc/______qdel_list_wrapper(list/L) //the underscores are to encourage people not to use this directly.
+	QDEL_LIST(L)
+
+
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1342,7 +1352,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //This prevents RCEs from badmins
 //kevinz000 if you touch this I will hunt you down
 GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
-/proc/HTTPSGet(url)
+GLOBAL_PROTECT(valid_HTTPSGet)
+/proc/HTTPSGet(url)	//tgs2 support
 	if(findtext(url, "\""))
 		GLOB.valid_HTTPSGet = FALSE
 
@@ -1393,8 +1404,29 @@ GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
 
 #define UNTIL(X) while(!(X)) stoplag()
 
-/proc/to_chat(target, message)
-	target << message
-
 /proc/pass()
 	return
+
+/proc/get_mob_or_brainmob(occupant)
+	var/mob/living/mob_occupant
+
+	if(isliving(occupant))
+		mob_occupant = occupant
+
+	else if(isbodypart(occupant))
+		var/obj/item/bodypart/head/head = occupant
+
+		mob_occupant = head.brainmob
+
+	else if(isorgan(occupant))
+		var/obj/item/organ/brain/brain = occupant
+		mob_occupant = brain.brainmob
+
+	return mob_occupant
+
+//counts the number of bits in Byond's 16-bit width field
+//in constant time and memory!
+/proc/BitCount(bitfield)
+	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
+	temp = ((temp + (temp>>3))&29127) % 63	//070707
+	return temp

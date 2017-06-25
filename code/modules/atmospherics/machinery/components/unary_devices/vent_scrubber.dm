@@ -11,6 +11,7 @@
 	can_unwrench = 1
 	welded = 0
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
 	var/on = 0
@@ -87,7 +88,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions))
+		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -344,7 +345,7 @@
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn())
 					return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
 					welded = 1
@@ -361,7 +362,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
 	if(..())
 		if (!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			return 1
 

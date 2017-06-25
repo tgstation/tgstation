@@ -101,8 +101,8 @@
 
 /turf/closed/wall/mineral/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma wall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
+		message_admins("Plasma wall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
@@ -111,7 +111,7 @@
 	new girder_type(src)
 	src.ChangeTurf(/turf/open/floor/plasteel)
 	var/turf/open/T = src
-	T.atmos_spawn_air("plasma=400;TEMP=1000")
+	T.atmos_spawn_air("plasma=400;TEMP=[temperature]")
 
 /turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
 	if(exposed_temperature > 300)
@@ -153,8 +153,11 @@
 	icon = 'icons/turf/walls/snow_wall.dmi'
 	icon_state = "snow"
 	hardness = 80
+	explosion_block = 0
+	slicing_duration = 30
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
+	girder_type = null
 
 /turf/closed/wall/mineral/abductor
 	name = "alien wall"
@@ -172,6 +175,7 @@
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
+	flags = CAN_BE_DIRTY | CHECK_RICOCHET
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine/heater, /obj/structure/falsewall/titanium)

@@ -61,7 +61,7 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		user.visible_message("[user] begins to take the glass off the solar panel.", "<span class='notice'>You begin to take the glass off the solar panel...</span>")
 		if(do_after(user, 50*W.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			deconstruct(TRUE)
 	else
@@ -73,14 +73,14 @@
 			if(stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
 			else
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/power/solar/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		unset_control()
 		update_icon()
@@ -103,9 +103,9 @@
 	..()
 	cut_overlays()
 	if(stat & BROKEN)
-		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "solar_panel-b", FLY_LAYER))
 	else
-		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
+		add_overlay(mutable_appearance(icon, "solar_panel", FLY_LAYER))
 		src.setDir(angle2dir(adir))
 
 //calculates the fraction of the sunlight that the panel recieves
@@ -282,7 +282,7 @@
 	var/list/connected_panels = list()
 
 /obj/machinery/power/solar_control/Initialize()
-	..()
+	. = ..()
 	if(powernet)
 		set_panels(currentdir)
 	connect_to_network()
@@ -345,7 +345,8 @@
 	else
 		add_overlay(icon_screen)
 	if(currentdir > -1)
-		add_overlay(image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir)))
+		setDir(angle2dir(currentdir))
+		add_overlay(mutable_appearance(icon, "solcon-o", FLY_LAYER))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -445,13 +446,13 @@
 			if(stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 			else
-				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/power/solar_control/obj_break(damage_flag)
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		stat |= BROKEN
 		update_icon()
 

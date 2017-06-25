@@ -94,7 +94,7 @@
 	name = "Head of Personnel"
 
 /obj/effect/landmark/start/librarian
-	name = "Librarian"
+	name = "Curator"
 
 /obj/effect/landmark/start/lawyer
 	name = "Lawyer"
@@ -182,7 +182,7 @@
 
 /obj/effect/landmark/latejoin/Initialize(mapload)
 	..()
-	GLOB.latejoin += loc
+	SSjob.latejoin_trackers += loc
 	qdel(src)
 
 // carp.

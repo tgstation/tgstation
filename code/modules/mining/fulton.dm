@@ -69,12 +69,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(uses_left <= 0)
 				user.drop_item(src)
 				loc = A
-			var/image/balloon
-			var/image/balloon2
-			var/image/balloon3
+			var/mutable_appearance/balloon
+			var/mutable_appearance/balloon2
+			var/mutable_appearance/balloon3
 			if(isliving(A))
 				var/mob/living/M = A
-				M.Weaken(16) // Keep them from moving during the duration of the extraction
+				M.Knockdown(320) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
 				A.anchored = 1
@@ -82,12 +82,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.loc = holder_obj
-			balloon2 = image('icons/obj/fulton_balloon.dmi',"fulton_expand")
+			balloon2 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_expand")
 			balloon2.pixel_y = 10
 			balloon2.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.add_overlay(balloon2)
 			sleep(4)
-			balloon = image('icons/obj/fulton_balloon.dmi',"fulton_balloon")
+			balloon = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_balloon")
 			balloon.pixel_y = 10
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon2)
@@ -107,9 +107,9 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			animate(holder_obj, pixel_z = 1000, time = 30)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
-				L.SetParalysis(0)
+				L.SetUnconscious(0)
 				L.drowsyness = 0
-				L.sleeping = 0
+				L.SetSleeping(0)
 			sleep(30)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
-			balloon3 = image('icons/obj/fulton_balloon.dmi',"fulton_retract")
+			balloon3 = mutable_appearance('icons/obj/fulton_balloon.dmi', "fulton_retract")
 			balloon3.pixel_y = 10
 			balloon3.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon)

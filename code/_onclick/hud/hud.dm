@@ -208,7 +208,6 @@
 	mymob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
-
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
 	hidden_inventory_update(viewmob)
@@ -266,3 +265,6 @@
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
 		show_hud(HUD_STYLE_STANDARD,mymob)
+
+/datum/hud/proc/update_locked_slots()
+	return

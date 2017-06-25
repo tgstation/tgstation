@@ -24,8 +24,8 @@
 
 // Auto conveyour is always on unless unpowered
 
-/obj/machinery/conveyor/auto/New(loc, newdir)
-	..(loc, newdir)
+/obj/machinery/conveyor/auto/Initialize(mapload, newdir)
+	. = ..()
 	operating = 1
 	update_move_direction()
 
@@ -43,8 +43,8 @@
 	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
-/obj/machinery/conveyor/New(loc, newdir)
-	..(loc)
+/obj/machinery/conveyor/Initialize(mapload, newdir)
+	. = ..()
 	if(newdir)
 		setDir(newdir)
 	update_move_direction()
@@ -104,11 +104,12 @@
 	if(!operating)
 		return
 	use_power(100)
-
 	affecting = loc.contents - src		// moved items will be all in loc
-	sleep(1)
+	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+
+/obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
-		if(A.loc == loc)
+		if((A.loc == loc) && A.has_gravity())
 			A.ConveyorMove(movedir)
 
 // attack with item, place item on conveyor
@@ -212,13 +213,14 @@
 
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
-	if(mapload)
-		return TRUE	//need machines list
 	..()
 	if(!id)
 		id = newid
 	update()
 
+	return INITIALIZE_HINT_LATELOAD //for machines list
+
+/obj/machinery/conveyor_switch/LateInitialize()
 	conveyors = list()
 	for(var/obj/machinery/conveyor/C in GLOB.machines)
 		if(C.id == id)
@@ -326,8 +328,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	var/id = "" //inherited by the switch
 
-/obj/item/conveyor_switch_construct/New()
-	..()
+/obj/item/conveyor_switch_construct/Initialize()
+	. = ..()
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
@@ -339,7 +341,7 @@
 			found = 1
 			break
 	if(!found)
-		to_chat(user, "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
+		to_chat(user, "[bicon(src)]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)

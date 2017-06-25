@@ -12,6 +12,7 @@
 	max_integrity = 350
 	armor = list(melee = 30, bullet = 30, laser = 20, energy = 20, bomb = 10, bio = 100, rad = 100, fire = 80, acid = 70)
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	flags = PREVENT_CLICK_UNDER
 
 	var/secondsElectrified = 0
 	var/shockedby = list()
@@ -31,6 +32,7 @@
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 	var/datum/effect_system/spark_spread/spark_system
 	var/damage_deflection = 10
+	var/real_explosion_block	//ignore this, just use explosion_block
 
 /obj/machinery/door/New()
 	..()
@@ -44,7 +46,9 @@
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 
-
+	//doors only block while dense though so we have to use the proc
+	real_explosion_block = explosion_block
+	explosion_block = EXPLOSION_BLOCK_PROC
 
 /obj/machinery/door/Destroy()
 	density = 0
@@ -180,13 +184,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 			else if(damage_amount)
 				playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -229,8 +233,6 @@
 		return 1
 	if(operating)
 		return
-	if(!SSticker || !SSticker.mode)
-		return 0
 	operating = 1
 	do_animate("opening")
 	set_opacity(0)
@@ -285,16 +287,17 @@
 
 /obj/machinery/door/proc/crush()
 	for(var/mob/living/L in get_turf(src))
+		L.visible_message("<span class='warning'>[src] closes on [L], crushing them!</span>", "<span class='userdanger'>[src] closes on you and crushes you!</span>")
 		if(isalien(L))  //For xenos
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 1.5) //Xenos go into crit after aproximately the same amount of crushes as humans.
 			L.emote("roar")
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Weaken(5)
+			L.Knockdown(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Weaken(5)
+			L.Knockdown(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
@@ -346,3 +349,5 @@
 	//if it blows up a wall it should blow up a door
 	..(severity ? max(1, severity - 1) : 0, target)
 
+/obj/machinery/door/GetExplosionBlock()
+	return density ? real_explosion_block : 0

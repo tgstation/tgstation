@@ -34,7 +34,7 @@
 		/obj/item/stack/sheet/mineral/uranium = 10) // We have no Pu-238, and this is the closest thing to it.
 
 /obj/machinery/power/rtg/Initialize()
-	..()
+	. = ..()
 	connect_to_network()
 
 /obj/machinery/power/rtg/process()
@@ -116,7 +116,7 @@
 	going_kaboom = TRUE
 	visible_message("<span class='danger'>\The [src] lets out an shower of sparks as it starts to lose stability!</span>",\
 		"<span class='italics'>You hear a loud electrical crack!</span>")
-	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, get_turf(src), 2, 3, 4, 8), 100) // Not a normal explosion.
 

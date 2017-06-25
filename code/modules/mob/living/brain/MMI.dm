@@ -31,13 +31,10 @@
 	else
 		icon_state = "mmi_empty"
 
-/obj/item/device/mmi/New()
-	..()
+/obj/item/device/mmi/Initialize()
+	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
 	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-/obj/item/device/mmi/Initialize()
-	..()
 	laws.set_laws_config()
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
@@ -73,7 +70,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		feedback_inc("cyborg_mmis_filled",1)
+		SSblackbox.inc("cyborg_mmis_filled",1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee

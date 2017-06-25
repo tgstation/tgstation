@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(machines)
 	name = "Machines"
-	init_order = 9
+	init_order = INIT_ORDER_MACHINES
 	flags = SS_KEEP_TIMING
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -37,11 +37,11 @@ SUBSYSTEM_DEF(machines)
 
 	var/seconds = wait * 0.1
 	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
+		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing && thing.process(seconds) != PROCESS_KILL)
-			if(thing:use_power)
-				thing:auto_use_power() //add back the power state
+			if(thing.use_power)
+				thing.auto_use_power() //add back the power state
 		else
 			processing -= thing
 			if (thing)

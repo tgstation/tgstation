@@ -160,6 +160,12 @@
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
+	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
+		var/obj/item/stack/sheet/hairlesshide/HH = O
+		var/obj/item/stack/sheet/wetleather/WL = new(get_turf(HH))
+		WL.amount = HH.amount
+		qdel(HH)
+
 /*
  *	Water reaction to a mob
  */
@@ -189,7 +195,7 @@
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(!data) data = 1
 	data++
-	M.jitteriness = max(M.jitteriness-5,0)
+	M.jitteriness = min(M.jitteriness+4,10)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
@@ -212,9 +218,9 @@
 				SSticker.mode.remove_cultist(M.mind, 1, 1)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
-			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
+			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			return
 	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
@@ -241,9 +247,9 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0)
+		M.AdjustUnconscious(-20, 0)
+		M.AdjustStun(-40, 0)
+		M.AdjustKnockdown(-40, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
@@ -357,8 +363,8 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStunned(2)
-			M.AdjustWeakened(2)
+			M.AdjustStun(40)
+			M.AdjustKnockdown(40)
 	..()
 
 
@@ -367,20 +373,24 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/N = M
-		if(N.dna.species.id == "human") // If they're human, turn em to the "orange" race, and give em spiky black hair
+		N.hair_style = "Spiky"
+		N.facial_hair_style = "Shaved"
+		N.facial_hair_color = "000"
+		N.hair_color = "000"
+		if(!(HAIR in N.dna.species.species_traits)) //No hair? No problem!
+			N.dna.species.species_traits += HAIR
+		if(N.dna.species.use_skintones)
 			N.skin_tone = "orange"
-			N.hair_style = "Spiky"
-			N.hair_color = "000"
-		if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
+		else if(MUTCOLORS in N.dna.species.species_traits) //Aliens with custom colors simply get turned orange
 			N.dna.features["mcolor"] = "f80"
 		N.regenerate_icons()
 		if(prob(7))
 			if(N.w_uniform)
 				M.visible_message(pick("<b>[M]</b>'s collar pops up without warning.</span>", "<b>[M]</b> flexes [M.p_their()] arms."))
 			else
-				M.visible_message("<b>[M]</b> [M.p_their()] their arms.")
+				M.visible_message("<b>[M]</b> flexes [M.p_their()] arms.")
 	if(prob(10))
-		M.say(pick("Check these sweet biceps bro!", "Deal with it.", "CHUG! CHUG! CHUG! CHUG!", "Winning!", "NERDS!", "My name is John and I hate every single one of you."))
+		M.say(pick("Shit was SO cash.", "You are everything bad in the world.", "What sports do you play, other than 'jack off to naked drawn Japanese people?'", "Don’t be a stranger. Just hit me with your best shot.", "My name is John and I hate every single one of you."))
 	..()
 	return
 
@@ -400,7 +410,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3, 0)
+	H.Knockdown(60, 0)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
@@ -658,7 +668,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
+	if(M.canmove && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -738,7 +748,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/M)
-	if(M.canmove && isspaceturf(M.loc))
+	if(M.canmove && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -1110,8 +1120,9 @@
 	id = "nitrous_oxide"
 	description = "A potent oxidizer used as fuel in rockets and as an anaesthetic during surgery."
 	reagent_state = LIQUID
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	color = "#808080"
-	taste_description = "numbness"
+	taste_description = "sweetness"
 
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
@@ -1122,13 +1133,25 @@
 	if(istype(T))
 		T.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[T20C]")
 
+/datum/reagent/nitrous_oxide/reaction_mob(mob/M, method=TOUCH, reac_volume)
+	if(method == VAPOR)
+		M.drowsyness += max(round(reac_volume, 1), 2)
 
+/datum/reagent/nitrous_oxide/on_mob_life(mob/living/M)
+	M.drowsyness += 2
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.blood_volume = max(H.blood_volume - 2.5, 0)
+	if(prob(20))
+		M.losebreath += 2
+		M.confused = min(M.confused + 2, 5)
+	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
 
-/datum/reagent/crayonpowder
+/datum/reagent/colorful_reagent/crayonpowder
 	name = "Crayon Powder"
 	id = "crayon powder"
 	var/colorname = "none"
@@ -1137,50 +1160,72 @@
 	color = "#FFFFFF" // rgb: 207, 54, 0
 	taste_description = "the back of class"
 
-/datum/reagent/crayonpowder/New()
+/datum/reagent/colorful_reagent/crayonpowder/New()
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
 
-/datum/reagent/crayonpowder/red
+/datum/reagent/colorful_reagent/crayonpowder/red
 	name = "Red Crayon Powder"
 	id = "redcrayonpowder"
 	colorname = "red"
+	color = "#DA0000" // red
+	random_color_list = list("#DA0000")
 
-/datum/reagent/crayonpowder/orange
+/datum/reagent/colorful_reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
 	id = "orangecrayonpowder"
 	colorname = "orange"
 	color = "#FF9300" // orange
+	random_color_list = list("#FF9300")
 
-/datum/reagent/crayonpowder/yellow
+/datum/reagent/colorful_reagent/crayonpowder/yellow
 	name = "Yellow Crayon Powder"
 	id = "yellowcrayonpowder"
 	colorname = "yellow"
 	color = "#FFF200" // yellow
+	random_color_list = list("#FFF200")
 
-/datum/reagent/crayonpowder/green
+/datum/reagent/colorful_reagent/crayonpowder/green
 	name = "Green Crayon Powder"
 	id = "greencrayonpowder"
 	colorname = "green"
 	color = "#A8E61D" // green
+	random_color_list = list("#A8E61D")
 
-/datum/reagent/crayonpowder/blue
+/datum/reagent/colorful_reagent/crayonpowder/blue
 	name = "Blue Crayon Powder"
 	id = "bluecrayonpowder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
+	random_color_list = list("#00B7EF")
 
-/datum/reagent/crayonpowder/purple
+/datum/reagent/colorful_reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
 	id = "purplecrayonpowder"
 	colorname = "purple"
 	color = "#DA00FF" // purple
+	random_color_list = list("#DA00FF")
 
-/datum/reagent/crayonpowder/invisible
+/datum/reagent/colorful_reagent/crayonpowder/invisible
 	name = "Invisible Crayon Powder"
 	id = "invisiblecrayonpowder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
+	random_color_list = list(null)	//because using the powder color turns things invisible
+
+/datum/reagent/colorful_reagent/crayonpowder/black
+	name = "Black Crayon Powder"
+	id = "blackcrayonpowder"
+	colorname = "black"
+	color = "#1C1C1C" // not quite black
+	random_color_list = list("#404040")
+
+/datum/reagent/colorful_reagent/crayonpowder/white
+	name = "White Crayon Powder"
+	id = "whitecrayonpowder"
+	colorname = "white"
+	color = "#FFFFFF" // white
+	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
 
 
 
@@ -1511,7 +1556,9 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	new /obj/item/organ/zombie_infection(H)
+	if(!H.getorganslot("zombie_infection"))
+		var/obj/item/organ/zombie_infection/ZI = new()
+		ZI.Insert(H)
 	..()
 
 /datum/reagent/growthserum
@@ -1545,6 +1592,13 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	description = "the petroleum based components of plastic."
+	color = "#f7eded"
+	taste_description = "plastic"
 
 /datum/reagent/glitter
 	name = "generic glitter"

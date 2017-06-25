@@ -32,7 +32,7 @@
 		return
 
 	var/list/masks = list(/obj/item/clothing/mask/spig, /obj/item/clothing/mask/cowmask, /obj/item/clothing/mask/horsehead)
-	var/list/mSounds = list('sound/magic/PigHead_curse.ogg', 'sound/magic/CowHead_Curse.ogg', 'sound/magic/HorseHead_curse.ogg')
+	var/list/mSounds = list('sound/magic/pighead_curse.ogg', 'sound/magic/cowhead_curse.ogg', 'sound/magic/horsehead_curse.ogg')
 	var/randM = rand(1,3)
 
 

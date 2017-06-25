@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Centcom would like to inform all employees that they have ears."
-  - rscadd: "Adds \"ear\" organs to all carbons. These organs store ear damage and
-deafness. A carbon without any ears is deaf. Genetic
-deafness functions as before."

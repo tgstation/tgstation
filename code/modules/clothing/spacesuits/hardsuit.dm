@@ -48,7 +48,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/proc/display_visor_message(var/msg)
 	var/mob/wearer = loc
 	if(msg && ishuman(wearer))
-		wearer.show_message("\icon[src]<b><span class='robot'>[msg]</span></b>", 1)
+		wearer.show_message("[bicon(src)]<b><span class='robot'>[msg]</span></b>", 1)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rad_act(severity)
 	..()
@@ -269,7 +269,7 @@
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	toggle_hardsuit_mode(user)
 	user.update_inv_head()
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
@@ -313,8 +313,8 @@
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit helmet"
-	desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in EVA mode. Property of Gorlex Marauders."
-	alt_desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in combat mode. Property of Gorlex Marauders."
+	desc = "An elite version of the syndicate helmet, with improved armour and fireproofing. It is in EVA mode. Property of Gorlex Marauders."
+	alt_desc = "An elite version of the syndicate helmet, with improved armour and fireproofing. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit0-syndielite"
 	item_color = "syndielite"
 	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70, fire = 100, acid = 100)
@@ -328,8 +328,8 @@
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"
-	desc = "An elite version of the syndicate hardsuit, with improved armour and fire shielding. It is in travel mode."
-	alt_desc = "An elite version of the syndicate hardsuit, with improved armour and fire shielding. It is in combat mode."
+	desc = "An elite version of the syndicate hardsuit, with improved armour and fireproofing. It is in travel mode."
+	alt_desc = "An elite version of the syndicate hardsuit, with improved armour and fireproofing. It is in combat mode."
 	icon_state = "hardsuit0-syndielite"
 	item_color = "syndielite"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
@@ -543,6 +543,34 @@
 	else
 		return FALSE
 
+	//Old Prototype
+/obj/item/clothing/head/helmet/space/hardsuit/ancient
+	name = "prototype RIG hardsuit helmet"
+	desc = "Early prototype RIG hardsuit helmet, designed to quickly shift over a user's head. Design constraints of the helmet mean it has no inbuilt cameras, thus it restricts the users visability."
+	icon_state = "hardsuit0-ancient"
+	item_state = "anc_helm"
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
+	tint = 2
+	item_color = "ancient"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/ancient
+	name = "prototype RIG hardsuit"
+	desc = "Prototype powered RIG hardsuit. Provides excellent protection from the elements of space while being comfortable to move around in, thanks to the powered locomotives. Remains very bulky however."
+	icon_state = "hardsuit-ancient"
+	item_state = "anc_hardsuit"
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
+	slowdown = 3
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
+	resistance_flags = FIRE_PROOF
+	var/footstep = 1
+
+obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+	if(footstep > 1)
+		playsound(src, "suitstep", 50, 1)
+		footstep = 0
+	else
+		footstep++
 
 /////////////SHIELDED//////////////////////////////////
 
@@ -562,7 +590,7 @@
 	var/shield_state = "shield-old"
 	var/shield_on = "shield-old"
 
-/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
+/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	recharge_cooldown = world.time + recharge_delay
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new
@@ -587,7 +615,7 @@
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
 		current_charges = Clamp((current_charges + recharge_rate), 0, max_charges)
-		playsound(loc, 'sound/magic/Charge.ogg', 50, 1)
+		playsound(loc, 'sound/magic/charge.ogg', 50, 1)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 			STOP_PROCESSING(SSobj, src)
@@ -597,9 +625,9 @@
 			C.update_inv_wear_suit()
 
 /obj/item/clothing/suit/space/hardsuit/shielded/worn_overlays(isinhands)
-    . = list()
-    if(!isinhands)
-        . += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_state]")
+	. = list()
+	if(!isinhands)
+		. += mutable_appearance('icons/effects/effects.dmi', shield_state, MOB_LAYER + 0.01)
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded
 	resistance_flags = FIRE_PROOF | ACID_PROOF

@@ -102,7 +102,7 @@
 				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
-			Weaken(1)
+			Knockdown(20)
 			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
@@ -111,8 +111,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
-			victim.Weaken(1)
-			Weaken(1)
+			victim.Knockdown(20)
+			Knockdown(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
@@ -258,7 +258,7 @@
 
 /mob/living/carbon/resist_fire()
 	fire_stacks -= 5
-	Weaken(3, 1, 1)
+	Knockdown(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -326,6 +326,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
+		changeNext_move(0)
 	if (legcuffed)
 		var/obj/item/weapon/W = legcuffed
 		legcuffed = null
@@ -338,6 +339,7 @@
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
+		changeNext_move(0)
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -376,10 +378,6 @@
 			dropItemToGround(I)
 			return
 		return TRUE
-
-/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
-		return 1
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
@@ -448,7 +446,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
@@ -457,7 +455,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Weaken(10)
+			Knockdown(200)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -470,10 +468,13 @@
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 
 	if(stun)
-		Stun(4)
+		Stun(80)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
+	if(!blood)
+		nutrition -= lost_nutrition
+		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
@@ -482,13 +483,21 @@
 				adjustBruteLoss(3)
 		else
 			if(T)
-				T.add_vomit_floor(src, 0)//toxic barf looks different
-			nutrition -= lost_nutrition
-			adjustToxLoss(-3)
+				T.add_vomit_floor(src, toxic)//toxic barf looks different
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
 	return 1
+
+/mob/living/carbon/proc/spew_organ(power = 5)
+	if(!internal_organs.len)
+		return //Guess we're out of organs
+	var/obj/item/organ/guts = pick(internal_organs)
+	var/turf/T = get_turf(src)
+	guts.Remove(src)
+	guts.forceMove(T)
+	var/atom/throw_target = get_edge_target_turf(guts, dir)
+	guts.throw_at(throw_target, power, 4, src)
 
 
 /mob/living/carbon/fully_replace_character_name(oldname,newname)
@@ -671,10 +680,10 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= HEALTH_THRESHOLD_DEAD || !getorgan(/obj/item/organ/brain))
+		if(health<= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -726,7 +735,7 @@
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/brain))
+	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.changeling))
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
@@ -752,7 +761,7 @@
 	..()
 
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR
 	overlays_standing[FIRE_LAYER] = new_fire_overlay
 	apply_overlay(FIRE_LAYER)

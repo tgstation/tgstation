@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			to_chat(src, "Icon is: \icon[getFlatIcon(src)]")
+			to_chat(src, "Icon is: [bicon(getFlatIcon(src))]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -991,7 +991,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		SET_SECONDARY_FLAG(src, FROZEN)
 
 //Assumes already frozed
-obj/proc/make_unfrozen()
+/obj/proc/make_unfrozen()
 	icon = initial(icon)
 	name = replacetext(name, "frozen ", "")
 	CLEAR_SECONDARY_FLAG(src, FROZEN)

@@ -47,9 +47,9 @@
 	M.disabilities = 0
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetWeakened(0, 0)
-	M.SetStunned(0, 0)
-	M.SetParalysis(0, 0)
+	M.SetKnockdown(0, 0)
+	M.SetStun(0, 0)
+	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
@@ -82,9 +82,9 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -288,30 +288,43 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a blood substitute on an IV drip."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 60
 	taste_description = "sweetness and salt"
+	var/last_added = 0
+	var/maximum_reachable = BLOOD_VOLUME_NORMAL - 10	//So that normal blood regeneration can continue with salglu active
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
+	if(last_added)
+		M.blood_volume -= last_added
+		last_added = 0
+	if(M.blood_volume < maximum_reachable)	//Can only up to double your effective blood level.
+		var/amount_to_add = min(M.blood_volume, volume*5)
+		var/new_blood_level = min(M.blood_volume + amount_to_add, maximum_reachable)
+		last_added = new_blood_level - M.blood_volume
+		M.blood_volume = new_blood_level
 	if(prob(33))
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			C.blood_volume += 0.2
 		. = 1
 	..()
 
-/datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(ishuman(M) && method == INJECT)
-		var/mob/living/carbon/human/H = M
-		if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
-			efficiency = Clamp(efficiency, 0.1, 0.75)
-			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
+/datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
+	if(prob(3))
+		to_chat(M, "<span class = 'warning'>You feel salty.</span>")
+		holder.add_reagent("sodiumchloride", 1)
+		holder.remove_reagent("salglu_solution", 0.5)
+	else if(prob(3))
+		to_chat(M, "<span class = 'warning'>You feel sweet.</span>")
+		holder.add_reagent("sugar", 1)
+		holder.remove_reagent("salglu_solution", 0.5)
+	if(prob(33))
+		M.adjustBruteLoss(0.5*REM, 0)
+		M.adjustFireLoss(0.5*REM, 0)
+		. = 1
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -334,10 +347,9 @@
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.Stun(4)
-			M.Weaken(4)
+			M.nutrition -= 5
 			if(show_message)
-				to_chat(M, "<span class='warning'>Your stomach agonizingly cramps!</span>")
+				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
 		else
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
@@ -534,9 +546,9 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
@@ -609,7 +621,7 @@
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 			. = 1
 	..()
 
@@ -745,9 +757,9 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-1, 0)
-		M.AdjustWeakened(-1, 0)
+		M.AdjustStun(-20, 0)
+		M.AdjustKnockdown(-20, 0)
+		M.AdjustUnconscious(-20, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -852,9 +864,9 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
+	M.AdjustStun(-60, 0)
+	M.AdjustKnockdown(-60, 0)
+	M.AdjustUnconscious(-60, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -867,44 +879,6 @@
 		. = 1
 	..()
 
-/datum/reagent/medicine/stimulants/longterm
-	name = "Stimulants"
-	id = "stimulants_longterm"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Highly addictive."
-	color = "#78008C"
-	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 0
-	addiction_threshold = 5
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage1(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(6*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	M.Stun(2, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage3(mob/living/M)
-	M.adjustToxLoss(7*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	M.adjustBrainLoss(1*REM)
-	M.Stun(2, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/stimulants/longterm/addiction_act_stage4(mob/living/M)
-	M.adjustToxLoss(8*REM, 0)
-	M.adjustStaminaLoss(5*REM, 0)
-	M.adjustBrainLoss(2*REM)
-	M.Stun(2, 0)
-	..()
-	. = 1
-
 /datum/reagent/medicine/insulin
 	name = "Insulin"
 	id = "insulin"
@@ -914,8 +888,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
-	if(M.sleeping)
-		M.AdjustSleeping(-1, 0)
+	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
 	M.reagents.remove_reagent("sugar", 3)
 	..()
@@ -987,8 +960,7 @@
 /datum/reagent/medicine/antitoxin/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-2*REM, 0)
 	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
+		M.reagents.remove_reagent(R.id,1)
 	..()
 	. = 1
 
@@ -1129,9 +1101,9 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()

@@ -2,14 +2,15 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "iron golem"
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	nojumpsuit = 1
 	sexes = 1
 	damage_overlay_type = ""
@@ -24,14 +25,16 @@
 
 	var/prefix = "Iron"
 	var/list/special_names
+	var/human_surname_chance = 3
+	var/special_name_chance = 5
 
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because
 	// cultural contamination
-	if(prob(3))
+	if(prob(human_surname_chance))
 		golem_surname = pick(GLOB.last_names)
-	else if(special_names && prob(5))
+	else if(special_names && special_names.len && prob(special_name_chance))
 		golem_surname = pick(special_names)
 
 	var/golem_name = "[prefix] [golem_surname]"
@@ -54,27 +57,69 @@
 	name = "Adamantine Golem"
 	id = "adamantine golem"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
 	fixed_mut_color = "4ed"
-	info_text = "As an <span class='danger'>Adamantine Golem</span>, you don't have any special traits."
+	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
 
-//Explodes on death
+//The suicide bombers of golemkind
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma golem"
 	fixed_mut_color = "a3d"
 	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!"
-	burnmod = 1.5
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
+	info_text = "As a <span class='danger'>Plasma Golem</span>, you burn easily. Be careful, if you get hot enough while burning, you'll blow up!"
+	heatmod = 0 //fine until they blow up
 	prefix = "Plasma"
 	special_names = list("Flood","Fire","Bar","Man")
+	var/boom_warning = FALSE
+	var/datum/action/innate/ignite/ignite
 
-/datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
-	explosion(get_turf(H),0,1,2,flame_range = 5)
-	if(H)
-		H.gib()
+/datum/species/golem/plasma/spec_life(mob/living/carbon/human/H)
+	if(H.bodytemperature > 750)
+		if(!boom_warning && H.on_fire)
+			to_chat(H, "<span class='userdanger'>You feel like you could blow up at any moment!<span>")
+			boom_warning = TRUE
+	else
+		if(boom_warning)
+			to_chat(H, "<span class='notice'>You feel more stable.<span>")
+			boom_warning = FALSE
+
+	if(H.bodytemperature > 850 && H.on_fire && prob(25))
+		explosion(get_turf(H),1,2,4,flame_range = 5)
+		if(H)
+			H.gib()
+	if(H.fire_stacks < 2) //flammable
+		H.adjust_fire_stacks(1)
+	..()
+
+/datum/species/golem/plasma/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		ignite = new
+		ignite.Grant(C)
+
+/datum/species/golem/plasma/on_species_loss(mob/living/carbon/C)
+	if(ignite)
+		ignite.Remove(C)
+	..()
+
+/datum/action/innate/ignite
+	name = "Ignite"
+	desc = "Set yourself aflame, bringing yourself closer to exploding!"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "sacredflame"
+
+/datum/action/innate/ignite/Activate()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.fire_stacks)
+			to_chat(owner, "<span class='notice'>You ignite yourself!</span>")
+		else
+			to_chat(owner, "<span class='warning'>You try ignite yourself, but fail!</span>")
+		H.IgniteMob() //firestacks are already there passively
 
 //Harder to hurt
 /datum/species/golem/diamond
@@ -169,7 +214,7 @@
 	id = "alloy golem"
 	fixed_mut_color = "333"
 	meat = /obj/item/stack/sheet/mineral/abductor
-	mutant_organs = list(/obj/item/organ/tongue/abductor) //abductor tongue
+	mutanttongue = /obj/item/organ/tongue/abductor
 	speedmod = 1 //faster
 	info_text = "As an <span class='danger'>Alloy Golem</span>, you are made of advanced alien materials: you are faster and regenerate over time. You are, however, only able to be heard by other alloy golems."
 	prefix = "Alien"
@@ -190,18 +235,15 @@
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
 	info_text = "As a <span class='danger'>Wooden Golem</span>, you have plant-like traits: you take damage from extreme temperatures, can be set on fire, and have lower armor than a normal golem. You regenerate when in the light and wither in the darkness."
 	prefix = "Wooden"
-
-/datum/species/golem/wood/random_name(gender,unique,lastname)
-	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	var/golem_name = "[prefix] [plant_name]"
-	return golem_name
+	special_names = list("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	human_surname_chance = 0
+	special_name_chance = 100
 
 /datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -298,7 +340,7 @@
 	brutemod = 3 //very fragile
 	burnmod = 0.25
 	info_text = "As a <span class='danger'>Glass Golem</span>, you reflect lasers and energy weapons, and are very resistant to burn damage, but you are extremely vulnerable to brute damage. On death, you'll shatter beyond any hope of recovery."
-	attack_sound = 'sound/effects/Glassbr2.ogg'
+	attack_sound = 'sound/effects/glassbr2.ogg'
 	prefix = "Glass"
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
@@ -364,7 +406,7 @@
 		else
 			reactive_teleport(H)
 
-/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
+/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		reactive_teleport(H)
@@ -434,7 +476,7 @@
 	meat = /obj/item/weapon/ore/bananium
 	info_text = "As a <span class='danger'>Bananium Golem</span>, you are made for pranking. Your body emits natural honks, and you cannot hurt people when punching them. Your skin also emits bananas when damaged."
 	attack_verb = "honk"
-	attack_sound = 'sound/items/AirHorn2.ogg'
+	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
 
 	var/last_honk = 0
@@ -448,7 +490,7 @@
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 
-/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style = M.martial_art)
+/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
 	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_turf(H))
@@ -500,7 +542,8 @@
 	limbs_id = "cultgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder God Nar'Sie."
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
+	prefix = "Runic"
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
 	var/obj/effect/proc_holder/spell/targeted/abyssal_gaze/abyssal_gaze
@@ -548,7 +591,7 @@
 	limbs_id = "clothgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable."
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors, and can burn
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
@@ -621,7 +664,7 @@
 		return
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
-	new /obj/effect/overlay/temp/mummy_animation(get_turf(src))
+	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
 	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	sleep(20)
@@ -639,3 +682,18 @@
 	if(P.is_hot())
 		visible_message("<span class='danger'>[src] bursts into flames!</span>")
 		fire_act()
+
+/datum/species/golem/plastic
+	name = "Plastic"
+	id = "plastic golem"
+	prefix = "Plastic"
+	fixed_mut_color = "fff"
+	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling, and passing through plastic flaps."
+
+/datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.ventcrawler = VENTCRAWLER_NUDE
+
+/datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.ventcrawler = initial(C.ventcrawler)

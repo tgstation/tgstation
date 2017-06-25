@@ -147,8 +147,8 @@
 	var/obj/structure/disposalconstruct/stored
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New(loc,var/obj/structure/disposalconstruct/make_from)
-	..()
+/obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 
 	if(make_from && !QDELETED(make_from))
 		base_icon_state = make_from.base_state
@@ -176,7 +176,6 @@
 				stored.ptype = DISP_SORTJUNCTION
 			if("pipe-j2s")
 				stored.ptype = DISP_SORTJUNCTION_FLIP
-	return
 
 
 	// pipe is deleted
@@ -302,7 +301,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
@@ -340,6 +339,16 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
+//Fixes dpdir on shuttle rotation
+/obj/structure/disposalpipe/shuttleRotate(rotation)
+	..()
+	var/new_dpdir = 0
+	for(var/D in GLOB.cardinal)
+		if(dpdir & D)
+			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
+	dpdir = new_dpdir
+
+
 // *** TEST verb
 //client/verb/dispstop()
 //	for(var/obj/structure/disposalholder/H in world)
@@ -349,15 +358,14 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-/obj/structure/disposalpipe/segment/New()
-	..()
+/obj/structure/disposalpipe/segment/Initialize()
+	. = ..()
 	if(stored.ptype == DISP_PIPE_STRAIGHT)
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
 
 	update()
-	return
 
 
 
@@ -366,8 +374,8 @@
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-/obj/structure/disposalpipe/junction/New()
-	..()
+/obj/structure/disposalpipe/junction/Initialize()
+	. = ..()
 	switch(stored.ptype)
 		if(DISP_JUNCTION)
 			dpdir = dir | turn(dir, -90) | turn(dir,180)
@@ -376,7 +384,6 @@
 		if(DISP_YJUNCTION)
 			dpdir = dir | turn(dir,90) | turn(dir, -90)
 	update()
-	return
 
 
 // next direction to move
@@ -442,8 +449,8 @@
 
 	dpdir = sortdir | posdir | negdir
 
-/obj/structure/disposalpipe/sortjunction/New()
-	..()
+/obj/structure/disposalpipe/sortjunction/Initialize()
+	. = ..()
 
 	// Generate a list of soring tags.
 	if(sortType)
@@ -458,7 +465,6 @@
 
 	updatedir()
 	update()
-	return
 
 /obj/structure/disposalpipe/sortjunction/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/destTagger))
@@ -506,8 +512,8 @@
 	var/negdir = 0
 	var/sortdir = 0
 
-/obj/structure/disposalpipe/wrapsortjunction/New()
-	..()
+/obj/structure/disposalpipe/wrapsortjunction/Initialize()
+	. = ..()
 	posdir = dir
 	if(stored.ptype == DISP_SORTJUNCTION)
 		sortdir = turn(posdir, -90)
@@ -519,7 +525,6 @@
 	dpdir = sortdir | posdir | negdir
 
 	update()
-	return
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir
@@ -547,14 +552,13 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/New()
-	..()
+/obj/structure/disposalpipe/trunk/Initialize()
+	. = ..()
 	dpdir = dir
 	spawn(1)
 		getlinked()
 
 	update()
-	return
 
 /obj/structure/disposalpipe/trunk/Destroy()
 	if(linked)
@@ -621,8 +625,8 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-/obj/structure/disposalpipe/broken/New()
-	..()
+/obj/structure/disposalpipe/broken/Initialize()
+	. = ..()
 	update()
 
 // the disposal outlet machine
@@ -645,9 +649,8 @@
 	var/start_eject = 0
 	var/eject_range = 2
 
-/obj/structure/disposaloutlet/New(loc, var/obj/structure/disposalconstruct/make_from)
-	..()
-
+/obj/structure/disposaloutlet/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = src
@@ -704,7 +707,7 @@
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 			if(do_after(user,20*I.toolspeed, target = src))
 				if(!src || !W.isOn()) return

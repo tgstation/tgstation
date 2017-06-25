@@ -57,10 +57,10 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
-				feedback_add_details("wizard_spell_improved", "[name]|[aspell.level]")
+				SSblackbox.add_details("wizard_spell_improved", "[name]|[aspell.level]")
 				return 1
 	//No same spell found - just learn it
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
@@ -252,7 +252,7 @@
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	category = "Offensive"
+	category = "Defensive"
 	cost = 1
 
 
@@ -265,7 +265,7 @@
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	new item_path(get_turf(user))
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	return 1
 
 /datum/spellbook_entry/item/GetInfo()
@@ -464,7 +464,7 @@
 		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
@@ -478,13 +478,13 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
+	return (!config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(0, user, 25)
 	active = 1
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
 	return 1
 
@@ -495,13 +495,13 @@
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
+	return (!config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(1, user, 25)
 	active = 1
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
 	return 1
 
@@ -513,13 +513,13 @@
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return 0
-	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
+	return (!config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	summonevents()
 	times++
-	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
 	return 1
 
@@ -777,6 +777,9 @@
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
 
+/obj/item/weapon/spellbook/oneuse/smoke/lesser //Chaplain smoke book
+	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
+
 /obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
@@ -784,6 +787,7 @@
 		user.nutrition -= 200
 		if(user.nutrition <= 0)
 			user.nutrition = 0
+
 
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -834,10 +838,10 @@
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 
-/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/forcewall/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(2)
+	user.Stun(40, ignore_canstun = TRUE)
 	user.petrify(30)
 
 /obj/item/weapon/spellbook/oneuse/knock
@@ -846,10 +850,10 @@
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
 
-/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/user)
+/obj/item/weapon/spellbook/oneuse/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Weaken(20)
+	user.Knockdown(40)
 
 /obj/item/weapon/spellbook/oneuse/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

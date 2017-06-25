@@ -15,13 +15,11 @@
 	next_move = 1
 
 	..()
-	if (key != client.key)
-		key = client.key
+
 	reset_perspective(loc)
 
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
+	if(loc)
+		loc.on_log(TRUE)
 
 	//readd this mob's HUDs (antag, med, etc)
 	reload_huds()
@@ -37,14 +35,13 @@
 
 	client.sethotkeys() //set mob specific hotkeys
 
-	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
-		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
-				AA.display_to(list(src))
-
 	update_client_colour()
 	if(client)
 		client.click_intercept = null
 
-	client.view = world.view // Resets the client.view in case it was changed.
+		client.view = world.view // Resets the client.view in case it was changed.
+
+	if(!GLOB.individual_log_list[ckey])
+		GLOB.individual_log_list[ckey] = logging
+	else
+		logging = GLOB.individual_log_list[ckey]

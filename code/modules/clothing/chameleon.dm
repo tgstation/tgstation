@@ -133,7 +133,7 @@
 	target.name = initial(picked_item.name)
 	target.desc = initial(picked_item.desc)
 	target.icon_state = initial(picked_item.icon_state)
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)
@@ -202,7 +202,7 @@
 	item_color = "black"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	origin_tech = "syndicate=2"
-	sensor_mode = 0 //Hey who's this guy on the Syndicate Shuttle??
+	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
 	random_sensor = 0
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
@@ -420,8 +420,8 @@
 	var/badmin_mode = FALSE
 	var/static/list/blacklisted_vars = list("locs", "loc", "contents", "x", "y", "z")
 
-/obj/item/weapon/gun/energy/laser/chameleon/New()
-	..()
+/obj/item/weapon/gun/energy/laser/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
 	chameleon_action.chameleon_name = "Gun"
@@ -455,8 +455,7 @@
 		if(v in blacklisted_vars)
 			continue
 		vars[v] = initial(vars[v])
-	if(chambered.BB)
-		qdel(chambered.BB)
+	QDEL_NULL(chambered.BB)
 	chambered.newshot()
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
@@ -559,8 +558,8 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/device/radio/headset/chameleon/New()
-	..()
+/obj/item/device/radio/headset/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/radio/headset
 	chameleon_action.chameleon_name = "Headset"

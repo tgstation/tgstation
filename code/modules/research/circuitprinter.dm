@@ -5,7 +5,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
 /obj/machinery/r_n_d/circuit_imprinter
-	name = "Circuit Imprinter"
+	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
 	container_type = OPENCONTAINER
@@ -27,8 +27,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Computer Parts"
 								)
 
-/obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
+/obj/machinery/r_n_d/circuit_imprinter/Initialize()
+	. = ..()
 	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
 	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)

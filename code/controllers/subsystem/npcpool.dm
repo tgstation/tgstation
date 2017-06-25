@@ -7,11 +7,12 @@ SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = 20
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/canBeUsed = list()
 	var/list/needsDelegate = list()
 	var/list/needsAssistant = list()
-	
+
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/stage
@@ -19,7 +20,7 @@ SUBSYSTEM_DEF(npcpool)
 /datum/controller/subsystem/npcpool/stat_entry()
 	..("NPCS:[processing.len]|D:[needsDelegate.len]|A:[needsAssistant.len]|U:[canBeUsed.len]")
 
-/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/carbon/human/interactive/I)
+/datum/controller/subsystem/npcpool/proc/stop_processing(mob/living/I)
 	processing -= I
 	currentrun -= I
 	needsDelegate -= I

@@ -12,11 +12,7 @@
 	canSmoothWith = null
 	buildstacktype = null
 	flags = NODECONSTRUCT
-	var/image/nest_overlay
-
-/obj/structure/bed/nest/New()
-	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=LYING_MOB_LAYER)
-	return ..()
+	var/static/mutable_appearance/nest_overlay = mutable_appearance('icons/mob/alien.dmi', "nestoverlay", LYING_MOB_LAYER)
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
 	if(has_buckled_mobs())
@@ -87,7 +83,7 @@
 		if(BRUTE)
 			playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user)
 	if(user.a_intent != INTENT_HARM)

@@ -53,6 +53,10 @@ LINEN BINS
 /obj/item/weapon/bedsheet/green
 	icon_state = "sheetgreen"
 	item_color = "green"
+	
+/obj/item/weapon/bedsheet/grey
+	icon_state = "sheetgrey"
+	item_color = "grey"
 
 /obj/item/weapon/bedsheet/orange
 	icon_state = "sheetorange"
@@ -105,6 +109,11 @@ LINEN BINS
 	desc = "It appears to have a beaker emblem, and is made out of fire-resistant material, although it probably won't protect you in the event of fires you're familiar with every day."
 	icon_state = "sheetrd"
 	item_color = "director"
+
+// for Free Golems.
+/obj/item/weapon/bedsheet/rd/royal_cape
+	name = "Royal Cape of the Liberator"
+	desc = "Majestic."
 
 /obj/item/weapon/bedsheet/medical
 	name = "medical blanket"

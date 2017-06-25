@@ -82,8 +82,8 @@ Chaplain
 
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 
-	feedback_set_details("religion_name","[new_religion]")
-	feedback_set_details("religion_deity","[new_deity]")
+	SSblackbox.set_details("religion_name","[new_religion]")
+	SSblackbox.set_details("religion_deity","[new_deity]")
 
 /datum/outfit/job/chaplain
 	name = "Chaplain"
@@ -92,5 +92,6 @@ Chaplain
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
+	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
 	backpack = /obj/item/weapon/storage/backpack/cultpack
 	satchel = /obj/item/weapon/storage/backpack/cultpack

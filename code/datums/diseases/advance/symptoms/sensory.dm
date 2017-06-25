@@ -125,4 +125,4 @@ Bonus
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40)

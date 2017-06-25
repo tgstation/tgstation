@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(choice=="Confirm")
 					scan_user(usr)
 					GLOB.news_network.CreateFeedChannel(channel_name, scanned_user, c_locked)
-					feedback_inc("newscaster_channels",1)
+					SSblackbox.inc("newscaster_channels",1)
 					screen=5
 			updateUsrDialog()
 		else if(href_list["set_channel_receiving"])
@@ -558,7 +558,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				screen=6
 			else
 				GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsepencode(msg, usr, SIGNFONT)]</font>", scanned_user, channel_name, photo, 0, allow_comments)
-				feedback_inc("newscaster_stories",1)
+				SSblackbox.inc("newscaster_stories",1)
 				screen=4
 				msg = ""
 			updateUsrDialog()
@@ -717,7 +717,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 		playsound(loc, I.usesound, 50, 1)
 		if(do_after(user, 60*I.toolspeed, target = src))
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
 				new /obj/item/stack/sheet/metal(loc, 5)
@@ -739,7 +739,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					if(!WT.isOn() || !(stat & BROKEN))
 						return
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					obj_integrity = max_integrity
 					stat &= ~BROKEN
 					update_icon()
@@ -754,9 +754,9 @@ GLOBAL_LIST_EMPTY(allCasters)
 			if(stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)
 			else
-				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
@@ -769,7 +769,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 /obj/machinery/newscaster/obj_break()
 	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		stat |= BROKEN
-		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		update_icon()
 
 
@@ -850,7 +850,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		return
 
 /obj/machinery/newscaster/proc/print_paper()
-	feedback_inc("newscaster_newspapers_printed",1)
+	SSblackbox.inc("newscaster_newspapers_printed",1)
 	var/obj/item/weapon/newspaper/NEWSPAPER = new /obj/item/weapon/newspaper
 	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 		NEWSPAPER.news_content += FC

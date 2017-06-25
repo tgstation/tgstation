@@ -6,7 +6,7 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 20, bio = 20, rad = 20, fire = 100, acid = 100)
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
 
@@ -70,7 +70,7 @@
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
 	strip_delay = 50
-	put_on_delay = 50
+	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/suit/wizrobe/red
@@ -169,7 +169,7 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!")
-	playsound(src.loc, 'sound/magic/Summon_Magic.ogg', 50, 1, 1)
+	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, 1, 1)
 	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
 	var/list/factions = usr.faction
 	M.faction = factions
@@ -224,5 +224,5 @@
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return
 	W.current_charges += 8
-	user <<"<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>"
+	to_chat(user, "<span class='notice'>You charge \the [W]. It can now absorb [W.current_charges] hits.</span>")
 	qdel(src)

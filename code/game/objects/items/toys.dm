@@ -181,7 +181,7 @@
 		user.show_message("<span class='warning'>*click*</span>", 2)
 		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 		return
-	playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
@@ -279,6 +279,28 @@
 	resistance_flags = FLAMMABLE
 
 
+/obj/item/toy/windupToolbox
+	name = "windup toolbox"
+	desc = "A replica toolbox that rumbles when you turn the key"
+	icon_state = "his_grace"
+	item_state = "artistic_toolbox"
+	var/active = FALSE
+	icon = 'icons/obj/weapons.dmi'
+	attack_verb = list("robusted")
+
+/obj/item/toy/windupToolbox/attack_self(mob/user)
+	if(!active)
+		icon_state = "his_grace_awakened"
+		to_chat(user, "<span class='warning'>You wind up [src], it begins to rumble.</span>")
+		active = TRUE
+		addtimer(CALLBACK(src, .proc/stopRumble), 600)
+	else
+		to_chat(user, "[src] is already active.")
+
+/obj/item/toy/windupToolbox/proc/stopRumble()
+	icon_state = initial(icon_state)
+	active = FALSE
+
 /*
  * Subtype of Double-Bladed Energy Swords
  */
@@ -294,7 +316,7 @@
 	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
-/obj/item/weapon/twohanded/dualsaber/toy/hit_reaction()
+/obj/item/weapon/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 
 /obj/item/weapon/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
@@ -499,7 +521,7 @@
 	return list(pick(messages))
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
-	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+	user.loc.visible_message("<span class='[span]'>[bicon(src)] [message]</span>")
 	if(chattering)
 		chatter(message, phomeme, user)
 
@@ -529,7 +551,7 @@
 		"<span class='notice'>You hear a soft click.</span>")
 
 /obj/item/toy/talking/codex_gigas/generate_messages()
-	var/datum/devilinfo/devil = randomDevilInfo()
+	var/datum/fakeDevil/devil = new
 	var/list/messages = list()
 	messages += "Some fun facts about: [devil.truename]"
 	messages += "[GLOB.lawlorify[LORE][devil.bane]]"
@@ -925,7 +947,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/Alarm.ogg', 100, 0, surround = 0)
+		playsound(src, 'sound/machines/alarm.ogg', 100, 0, surround = 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1055,7 +1077,7 @@
 		user.visible_message("<span class='notice'>[user] pulls back the string on [src].</span>")
 		icon_state = "[initial(icon_state)]_used"
 		sleep(5)
-		audible_message("<span class='danger'>\icon[src] Hiss!</span>")
+		audible_message("<span class='danger'>[bicon(src)] Hiss!</span>")
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
@@ -1218,9 +1240,9 @@
 	icon_state = "lawyer"
 	toysay = "My client is a dirty traitor!"
 
-/obj/item/toy/figure/librarian
-	name = "Librarian action figure"
-	icon_state = "librarian"
+/obj/item/toy/figure/curator
+	name = "Curator action figure"
+	icon_state = "curator"
 	toysay = "One day while..."
 
 /obj/item/toy/figure/md
@@ -1248,7 +1270,7 @@
 	name = "Wizard action figure"
 	icon_state = "wizard"
 	toysay = "Ei Nath!"
-	toysound = 'sound/magic/Disintegrate.ogg'
+	toysound = 'sound/magic/disintegrate.ogg'
 
 /obj/item/toy/figure/rd
 	name = "Research Director action figure"

@@ -14,7 +14,7 @@
 	light_color = "#BE8700"
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
-	var/proselytize_range = 10
+	var/convert_range = 10
 	dangerous_possession = TRUE
 
 /obj/structure/destructible/clockwork/massive/ratvar/Initialize()
@@ -25,10 +25,10 @@
 	START_PROCESSING(SSobj, src)
 	send_to_playing_players("<span class='ratvar'>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</span>")
 	send_to_playing_players('sound/effects/ratvar_reveal.ogg')
-	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
+	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0)
+	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 0, null, FALSE, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
 	GLOB.ratvar_awakens--
@@ -40,8 +40,8 @@
 
 /obj/structure/destructible/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
-	if(alertresult == "No" || !O)
-		return 0
+	if(alertresult == "No" || QDELETED(O) || !istype(O) || !O.key)
+		return FALSE
 	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
 	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
@@ -49,7 +49,7 @@
 /obj/structure/destructible/clockwork/massive/ratvar/Bump(atom/A)
 	var/turf/T = get_turf(A)
 	if(T == loc)
-		T = get_step(A, A.dir) //please don't run into a window like a bird, ratvar
+		T = get_step(T, dir) //please don't run into a window like a bird, ratvar
 	forceMove(T)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Process_Spacemove()
@@ -58,10 +58,10 @@
 /obj/structure/destructible/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
 		return
-	for(var/I in circlerangeturfs(src, proselytize_range))
+	for(var/I in circlerangeturfs(src, convert_range))
 		var/turf/T = I
 		T.ratvar_act()
-	for(var/I in circleviewturfs(src, round(proselytize_range * 0.5)))
+	for(var/I in circleviewturfs(src, round(convert_range * 0.5)))
 		var/turf/T = I
 		T.ratvar_act(TRUE)
 	var/dir_to_step_in = pick(GLOB.cardinal)
@@ -77,7 +77,7 @@
 		if(!prey && LAZYLEN(meals))
 			prey = pick(meals)
 			to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do, heretic.\"</font></span>\n\
-			<span class='userdanger'You feel something massive turn its crushing focus to you...</span>")
+			<span class='userdanger'>You feel something massive turn its crushing focus to you...</span>")
 			prey << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
@@ -117,12 +117,10 @@
 			if(!isnewplayer(M))
 				flash_color(M, flash_color="#966400", flash_time=1)
 				shake_camera(M, 4, 3)
-		var/ratvar_chance = min(SSticker.mode.servants_of_ratvar.len, 50)
-		var/narsie_chance = SSticker.mode.cult.len
-		for(var/mob/living/simple_animal/hostile/construct/harvester/C in GLOB.player_list)
-			narsie_chance++
+		var/ratvar_chance = min(LAZYLEN(SSticker.mode.servants_of_ratvar), 50)
+		var/narsie_chance = min(LAZYLEN(SSticker.mode.cult), 50)
 		ratvar_chance = rand(base_victory_chance, ratvar_chance)
-		narsie_chance = rand(base_victory_chance, min(narsie_chance, 50))
+		narsie_chance = rand(base_victory_chance, narsie_chance)
 		if(ratvar_chance > narsie_chance)
 			winner = "Ratvar"
 			break

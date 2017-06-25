@@ -13,10 +13,10 @@
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50))//honk honk
-			user.Weaken(stunforce*3)
+			user.Knockdown(stunforce*3)
 			deductcharge(hitcost)
 		else
-			user.Weaken(stunforce*3)
+			user.Knockdown(stunforce*3)
 			deductcharge(hitcost/4)
 		return
 	else
@@ -28,7 +28,7 @@
 
 /obj/item/weapon/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
 	if(istype(I, /obj/item/weapon/ore/bluespace_crystal))
-		if(!bcell)
+		if(!cell)
 			var/obj/item/weapon/melee/baton/cattleprod/teleprod/S = new /obj/item/weapon/melee/baton/cattleprod/teleprod
 			remove_item_from_storage(user)
 			qdel(src)

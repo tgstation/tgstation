@@ -1,12 +1,15 @@
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "cell-off"
+	icon_state = "pod-off"
 	density = 1
 	anchored = 1
 	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	layer = ABOVE_WINDOW_LAYER
 
 	var/on = FALSE
 	state_open = FALSE
@@ -15,7 +18,7 @@
 
 	var/efficiency = 1
 	var/sleep_factor = 750
-	var/paralyze_factor = 1000
+	var/unconscious_factor = 1000
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
 
@@ -26,10 +29,12 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/New()
-	..()
+	var/running_bob_anim = FALSE
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
+	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
+	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
 	B.apply_default_parts(src)
 
 	radio = new(src)
@@ -58,7 +63,7 @@
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C
-	paralyze_factor = initial(paralyze_factor) * C
+	unconscious_factor = initial(unconscious_factor) * C
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
 
@@ -87,17 +92,72 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	if(panel_open)
-		icon_state = "cell-o"
-	else if(state_open)
-		icon_state = "cell-open"
-	else if(on && is_operational())
-		if(occupant)
-			icon_state = "cell-occupied"
+	cut_overlays()
+
+	if(state_open)
+		icon_state = "pod-open"
+	else if(occupant)
+		var/image/occupant_overlay
+
+		if(ismonkey(occupant)) // Monkey
+			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
+
+		else if(isalienadult(occupant))
+
+			if(isalienroyal(occupant)) // Queen and prae
+				occupant_overlay = image(CRYOMOBS, "alienq")
+
+			else if(isalienhunter(occupant)) // Hunter
+				occupant_overlay = image(CRYOMOBS, "alienh")
+
+			else if(isaliensentinel(occupant)) // Sentinel
+				occupant_overlay = image(CRYOMOBS, "aliens")
+
+			else // Drone (or any other alien that isn't any of the above)
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
+
+		else // Anything else
+			occupant_overlay = image(CRYOMOBS, "generic")
+
+		occupant_overlay.dir = SOUTH
+		occupant_overlay.pixel_y = 22
+
+		if(on && is_operational() && !running_bob_anim)
+			icon_state = "pod-on"
+			running_bob_anim = TRUE
+			run_bob_anim(TRUE, occupant_overlay)
 		else
-			icon_state = "cell-on"
+			icon_state = "pod-off"
+			add_overlay(occupant_overlay)
+			add_overlay("cover-off")
+	else if(on && is_operational())
+		icon_state = "pod-on"
+		add_overlay("cover-on")
 	else
-		icon_state = "cell-off"
+		icon_state = "pod-off"
+		add_overlay("cover-off")
+
+	if(panel_open)
+		add_overlay("pod-panel")
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, image/occupant_overlay)
+	if(!on || !occupant || !is_operational())
+		running_bob_anim = FALSE
+		return
+	cut_overlays()
+	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
+		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(anim_up)
+		occupant_overlay.pixel_y++
+	else
+		occupant_overlay.pixel_y--
+	add_overlay(occupant_overlay)
+	add_overlay("cover-on")
+	addtimer(CALLBACK(src, .proc/run_bob_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -111,7 +171,8 @@
 	var/datum/gas_mixture/air1 = AIR1
 	var/turf/T = get_turf(src)
 	if(occupant)
-		if(occupant.health >= 100) // Don't bother with fully healed people.
+		var/mob/living/mob_occupant = occupant
+		if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
@@ -120,15 +181,15 @@
 				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
 				open_machine()
 			return
-		else if(occupant.stat == DEAD) // We don't bother with dead people.
+		else if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 			return
 			if(autoeject) // Eject if configured.
 				open_machine()
 			return
 		if(air1.gases.len)
-			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
-				occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
+			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
+				mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
@@ -149,19 +210,20 @@
 		update_icon()
 		return
 	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/mob/living/carbon/human/H = occupant
 		if(istype(H))
 			cold_protection = H.get_cold_protection(air1.temperature)
 
-		var/temperature_delta = air1.temperature - occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
+		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
 			var/heat = ((1 - cold_protection) / 10 + conduction_coefficient) \
 						* temperature_delta * \
 						(air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
-			occupant.bodytemperature = max(occupant.bodytemperature + heat / heat_capacity, TCMB)
+			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
 
 		air1.gases["o2"][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
 
@@ -182,6 +244,7 @@
 			var/mob/living/L = M
 			L.update_canmove()
 	occupant = null
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -254,16 +317,17 @@
 
 	var/list/occupantData = list()
 	if(occupant)
-		occupantData["name"] = occupant.name
-		occupantData["stat"] = occupant.stat
-		occupantData["health"] = occupant.health
-		occupantData["maxHealth"] = occupant.maxHealth
+		var/mob/living/mob_occupant = occupant
+		occupantData["name"] = mob_occupant.name
+		occupantData["stat"] = mob_occupant.stat
+		occupantData["health"] = mob_occupant.health
+		occupantData["maxHealth"] = mob_occupant.maxHealth
 		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
-		occupantData["bruteLoss"] = occupant.getBruteLoss()
-		occupantData["oxyLoss"] = occupant.getOxyLoss()
-		occupantData["toxLoss"] = occupant.getToxLoss()
-		occupantData["fireLoss"] = occupant.getFireLoss()
-		occupantData["bodyTemperature"] = occupant.bodytemperature
+		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
+		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
+		occupantData["toxLoss"] = mob_occupant.getToxLoss()
+		occupantData["fireLoss"] = mob_occupant.getFireLoss()
+		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
 	data["occupant"] = occupantData
 
 
@@ -315,3 +379,5 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+#undef CRYOMOBS

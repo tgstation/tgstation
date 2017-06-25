@@ -126,7 +126,7 @@
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled = TRUE)
 	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, 1)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
@@ -234,14 +234,15 @@
 
 /obj/structure/falsewall/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(W.is_hot() > 300)
-		message_admins("Plasma falsewall ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Plasma falsewall ignited by [key_name(user)] in ([x],[y],[z])")
+		var/turf/T = get_turf(src)
+		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Plasma falsewall ignited by [key_name(user)] in [COORD(T)]")
 		burnbabyburn()
 	else
 		return ..()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/Welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, 1)
 	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)
@@ -330,8 +331,8 @@
 /obj/structure/falsewall/brass/New(loc)
 	..()
 	var/turf/T = get_turf(src)
-	new /obj/effect/overlay/temp/ratvar/wall/false(T)
-	new /obj/effect/overlay/temp/ratvar/beam/falsewall(T)
+	new /obj/effect/temp_visual/ratvar/wall/false(T)
+	new /obj/effect/temp_visual/ratvar/beam/falsewall(T)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()

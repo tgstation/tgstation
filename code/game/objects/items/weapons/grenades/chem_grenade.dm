@@ -19,10 +19,10 @@
 	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
 	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
 
-/obj/item/weapon/grenade/chem_grenade/New()
+/obj/item/weapon/grenade/chem_grenade/Initialize()
+	. = ..()
 	create_reagents(1000)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
-	..()
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
@@ -36,8 +36,8 @@
 		else if(clown_check(user))
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has primed a [name] for detonation at [A.name][ADMIN_JMP(bombturf)].")
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
 			to_chat(user, "<span class='warning'>You prime the [name]! [det_time / 10] second\s!</span>")
 			playsound(user.loc, 'sound/weapons/armbomb.ogg', 60, 1)
 			active = 1
@@ -103,7 +103,7 @@
 			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
 			return
 
-	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters))
+	else if(stage == READY && istype(I, /obj/item/weapon/wirecutters) && !active)
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You unlock the [initial(name)] assembly.</span>")
 
@@ -164,7 +164,7 @@
 		reactants += G.reagents
 
 	if(!chem_splash(get_turf(src), affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		playsound(loc, 'sound/items/screwdriver2.ogg', 50, 1)
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.loc = get_turf(src)
@@ -177,12 +177,12 @@
 		var/mob/last = get_mob_by_ckey(nadeassembly.fingerprintslast)
 		var/turf/T = get_turf(src)
 		var/area/A = get_area(T)
-		message_admins("grenade primed by an assembly, attached by [key_name_admin(M)]<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) and last touched by [key_name_admin(last)]<A HREF='?_src_=holder;adminmoreinfo=\ref[last]'>(?)</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[last]'>FLW</A>) ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>.")
-		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] ([T.x], [T.y], [T.z])")
+		message_admins("grenade primed by an assembly, attached by [ADMIN_LOOKUPFLW(M)] and last touched by [ADMIN_LOOKUPFLW(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] [ADMIN_JMP(T)]</a>.")
+		log_game("grenade primed by an assembly, attached by [key_name(M)] and last touched by [key_name(last)] ([nadeassembly.a_left.name] and [nadeassembly.a_right.name]) at [A.name] [COORD(T)]")
 
 	var/turf/DT = get_turf(src)
 	var/area/DA = get_area(DT)
-	log_game("A grenade detonated at [DA.name] ([DT.x], [DT.y], [DT.z])")
+	log_game("A grenade detonated at [DA.name] [COORD(DT)]")
 
 	update_mob()
 
@@ -313,8 +313,8 @@
 	desc = "Used for emergency sealing of air breaches."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/metalfoam/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/metalfoam/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -331,8 +331,8 @@
 	desc = "Used for clearing rooms of living things."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/incendiary/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/incendiary/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -349,8 +349,8 @@
 	desc = "Used for purging large areas of invasive plant species. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/antiweed/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/antiweed/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -368,8 +368,8 @@
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/cleaner/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/cleaner/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -386,8 +386,8 @@
 	desc = "Waffle Co.-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/ez_clean/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/ez_clean/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
 
@@ -405,8 +405,8 @@
 	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/teargas/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/teargas/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
 
@@ -424,8 +424,8 @@
 	desc = "Used for melting armoured opponents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/facid/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/facid/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
@@ -444,8 +444,8 @@
 	desc = "Used for wide scale painting projects."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/colorful/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/colorful/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -463,8 +463,8 @@
 	stage = READY
 	var/glitter_type = "glitter"
 
-/obj/item/weapon/grenade/chem_grenade/glitter/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/glitter/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
@@ -496,8 +496,8 @@
 	desc = "BURN!-brand foaming clf3. In a special applicator for rapid purging of wide areas."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/clf3/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/clf3/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
@@ -514,8 +514,8 @@
 	desc = "Tiger Cooperative chemical foam grenade. Causes temporary irration, blindness, confusion, mutism, and mutations to carbon based life forms. Contains additional spore toxin"
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/bioterrorfoam/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/bioterrorfoam/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 
@@ -534,8 +534,8 @@
  	desc = "WARNING: GRENADE WILL RELEASE DEADLY SPORES CONTAINING ACTIVE AGENTS. SEAL SUIT AND AIRFLOW BEFORE USE."
  	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/tuberculosis/New()
-	..()
+/obj/item/weapon/grenade/chem_grenade/tuberculosis/Initialize()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/bluespace/B2 = new(src)
 

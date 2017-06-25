@@ -5,7 +5,7 @@
 	return 0
 
 /mob/living/carbon/true_devil/update_inv_hands()
-	//TODO LORDPIDEY:  Figure out how to make the hands line up properly.  the l/r_hand_image should use the down sprite when facing down, left, or right, and the up sprite when facing up.
+	//TODO LORDPIDEY:  Figure out how to make the hands line up properly.  the l/r_hand_overlay should use the down sprite when facing down, left, or right, and the up sprite when facing up.
 	remove_overlay(DEVIL_HANDS_LAYER)
 	var/list/hands_overlays = list()
 	var/obj/item/l_hand = get_item_for_held_index(1) //hardcoded 2-hands only, for now.
@@ -17,9 +17,9 @@
 		if(!r_state)
 			r_state = r_hand.icon_state
 
-		var/image/r_hand_image = r_hand.build_worn_icon(state = r_state, default_layer = DEVIL_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+		var/mutable_appearance/r_hand_overlay = r_hand.build_worn_icon(state = r_state, default_layer = DEVIL_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
 
-		hands_overlays += r_hand_image
+		hands_overlays += r_hand_overlay
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
@@ -33,9 +33,9 @@
 		if(!l_state)
 			l_state = l_hand.icon_state
 
-		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = DEVIL_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+		var/mutable_appearance/l_hand_overlay = l_hand.build_worn_icon(state = l_state, default_layer = DEVIL_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
 
-		hands_overlays += l_hand_image
+		hands_overlays += l_hand_overlay
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
@@ -54,6 +54,5 @@
 
 
 /mob/living/carbon/true_devil/apply_overlay(cache_index)
-	var/image/I = devil_overlays[cache_index]
-	if(I)
-		add_overlay(I)
+	if((. = devil_overlays[cache_index]))
+		add_overlay(.)

@@ -38,7 +38,7 @@
 			return
 
 		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+		if(over_object == M && M.CanReach(src,view_only = TRUE))
 			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
@@ -62,7 +62,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop_T(atom/movable/O, mob/user)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		var/obj/item/I = O
 		if(iscarbon(user) || isdrone(user))
 			var/mob/living/L = user
@@ -406,6 +406,8 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
+		if(contents.len >= storage_slots) //don't use items on the backpack if they don't fit
+			return 1
 		return 0
 
 	handle_item_insertion(W, 0 , user)
@@ -499,7 +501,7 @@
 
 
 /obj/item/weapon/storage/Initialize(mapload)
-	..()
+	. = ..()
 
 	can_hold = typecacheof(can_hold)
 	cant_hold = typecacheof(cant_hold)
