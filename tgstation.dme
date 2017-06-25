@@ -50,6 +50,7 @@
 #include "code\__DEFINES\misc.dm"
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\monkeys.dm"
+#include "code\__DEFINES\phases.dm"
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\preferences.dm"
