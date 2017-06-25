@@ -29613,7 +29613,6 @@
 /obj/item/device/healthanalyzer,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner{
@@ -55666,6 +55665,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = -32
 	},
+/obj/item/weapon/aiModule/core/full/ntdefault,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -77489,7 +77489,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /obj/machinery/status_display{
@@ -80937,7 +80936,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	pixel_x = -3;
-	pixel_x = -3;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -82053,7 +82051,6 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -104090,7 +104087,6 @@
 /obj/item/weapon/reagent_containers/syringe/antiviral,
 /obj/item/weapon/reagent_containers/dropper,
 /obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -3;
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -156940,16 +156936,16 @@ cim
 brN
 brN
 bqq
-coe
+bkT
 cpL
-cqZ
+brH
 csr
-cub
+bmI
 cvE
 cwY
-cqZ
-cqZ
-cqZ
+brH
+brH
+brH
 brH
 bkT
 cFG
@@ -156975,10 +156971,10 @@ djZ
 dlM
 dnc
 doh
-dpQ
+dnc
 drt
 dsT
-dpQ
+dnc
 ego
 dwO
 dyc

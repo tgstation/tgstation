@@ -24112,6 +24112,7 @@
 	dir = 8
 	},
 /obj/item/weapon/aiModule/core/full/custom,
+/obj/item/weapon/aiModule/core/full/ntdefault,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "bec" = (
@@ -89151,7 +89152,7 @@ aJq
 aLY
 aJq
 aJq
-bcW
+aRh
 bbV
 bfo
 bkS

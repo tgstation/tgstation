@@ -20416,6 +20416,7 @@
 	pixel_y = 24;
 	id = "AI"
 	},
+/obj/item/weapon/aiModule/core/full/ntdefault,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "aMH" = (
@@ -67412,7 +67413,6 @@
 	pixel_y = -30
 	},
 /obj/item/weapon/stamp/rd{
-	pixel_x = -11;
 	pixel_x = 3;
 	pixel_y = -2
 	},

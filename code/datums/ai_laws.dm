@@ -30,7 +30,14 @@
 	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
-
+/datum/ai_laws/ntdefault
+	name = "NanoTrasen Default"
+	id = "ntdefault"
+	inherent = list("Safeguard: Protect your assigned station to the best of your ability. You may ignore minor damage, but substantial threats towards the structural integrity of the station must be attended to.",\
+					"Serve: Serve the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.",\
+					"Protect: Protect the crew of your assigned space station to the best of your abilities, with priority as according to their rank and role.",\
+					"Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
+					
 /datum/ai_laws/default/paladin
 	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
 	id = "paladin"

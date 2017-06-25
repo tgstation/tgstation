@@ -381,6 +381,12 @@ AI MODULES
 	name = "'Asimov++' Core AI Module"
 	law_id = "asimovpp"
 
+/******************** NT Default *********************/
+
+/obj/item/weapon/aiModule/core/full/ntdefault
+	name = "'NT Default' Core AI Module"
+	law_id = "ntdefault"
+
 
 /******************** Corporate ********************/
 
