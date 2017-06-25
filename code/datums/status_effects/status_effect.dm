@@ -12,7 +12,10 @@
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 
-/datum/status_effect/New(mob/living/new_owner)
+/datum/status_effect/New(list/arguments)
+	on_creation(arglist(arguments))
+
+/datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
 	if(owner)
@@ -76,7 +79,7 @@
 // HELPER PROCS //
 //////////////////
 
-/mob/living/proc/apply_status_effect(effect) //applies a given status effect to this mob, returning the effect if it was successful
+/mob/living/proc/apply_status_effect(effect, ...) //applies a given status effect to this mob, returning the effect if it was successful
 	. = FALSE
 	var/datum/status_effect/S1 = effect
 	LAZYINITLIST(status_effects)
@@ -86,7 +89,9 @@
 				S.be_replaced()
 			else
 				return
-	S1 = new effect(src)
+	var/list/arguments = args.Copy()
+	arguments[1] = src
+	S1 = new effect(arguments)
 	. = S1
 
 /mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed

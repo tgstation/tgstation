@@ -387,7 +387,8 @@
 						if(istype(M, /obj/docking_port/mobile/pod))
 							M.dock(SSshuttle.getDock("[M.id]_away")) //Escape pods dock at centcomm
 						else
-							continue //Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+							M.launch_status = ENDGAME_TRANSIT
+							//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
 
 				// now move the actual emergency shuttle to centcomm
 				// unless the shuttle is "hijacked"
