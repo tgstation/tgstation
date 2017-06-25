@@ -196,9 +196,7 @@
 	})
 "aC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -206,7 +204,6 @@
 	})
 "aD" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-02";
 	icon_state = "plant-02"
 	},
 /turf/open/floor/wood,
@@ -258,9 +255,7 @@
 	})
 "aK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -268,7 +263,6 @@
 	})
 "aL" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-16";
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -320,9 +314,7 @@
 	})
 "aS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -330,7 +322,6 @@
 	})
 "aT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-16";
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -382,9 +373,7 @@
 	})
 "ba" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -392,7 +381,6 @@
 	})
 "bb" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-18";
 	icon_state = "plant-18"
 	},
 /turf/open/floor/wood,
@@ -1070,8 +1058,7 @@
 	dir = 4;
 	icon_state = "roomnum";
 	name = "Room Number 3";
-	pixel_y = 24;
-	tag = "icon-roomnum (EAST)"
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1082,8 +1069,7 @@
 	dir = 8;
 	icon_state = "roomnum";
 	name = "Room Number 4";
-	pixel_y = 24;
-	tag = "icon-roomnum (WEST)"
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1100,8 +1086,7 @@
 	dir = 6;
 	icon_state = "roomnum";
 	name = "Room Number 5";
-	pixel_y = 24;
-	tag = "icon-roomnum (SOUTHEAST)"
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1121,8 +1106,7 @@
 	dir = 10;
 	icon_state = "roomnum";
 	name = "Room Number 6";
-	pixel_y = 24;
-	tag = "icon-roomnum (SOUTHWEST)"
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -1271,8 +1255,7 @@
 	dir = 1;
 	icon_state = "roomnum";
 	name = "Room Number 2";
-	pixel_y = -24;
-	tag = "icon-roomnum (NORTH)"
+	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -1459,7 +1442,6 @@
 	})
 "dq" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-21";
 	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
@@ -1542,7 +1524,6 @@
 	})
 "dy" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-14";
 	icon_state = "plant-14"
 	},
 /turf/open/floor/wood,
@@ -1742,8 +1723,7 @@
 "eb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
@@ -1786,9 +1766,7 @@
 "eh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1823,9 +1801,7 @@
 "el" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1885,9 +1861,7 @@
 "et" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1911,9 +1885,7 @@
 "ew" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -2222,8 +2194,7 @@
 "ft" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -2299,14 +2270,11 @@
 /area/ruin/hotel/bar)
 "fI" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-02";
 	icon_state = "plant-02"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
@@ -2476,7 +2444,6 @@
 /area/ruin/hotel/dock)
 "gh" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-22";
 	icon_state = "plant-22"
 	},
 /turf/open/floor/wood,
@@ -2484,7 +2451,6 @@
 "gi" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -2555,8 +2521,6 @@
 	layer = 2.9
 	},
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -2850,15 +2814,13 @@
 "hk" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
 "hl" = (
 /obj/structure/kitchenspike,
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -2881,22 +2843,18 @@
 "ho" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
 "hp" = (
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
 "hq" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-18";
 	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/black,
@@ -3027,7 +2985,6 @@
 /area/ruin/hotel/workroom)
 "hG" = (
 /obj/effect/mob_spawn/human/hotel_staff{
-	tag = "icon-sleeper_s (NORTH)";
 	icon_state = "sleeper_s";
 	dir = 1
 	},
@@ -3036,7 +2993,6 @@
 /area/ruin/hotel/workroom)
 "hH" = (
 /obj/effect/mob_spawn/human/hotel_staff{
-	tag = "icon-sleeper_s (NORTH)";
 	icon_state = "sleeper_s";
 	dir = 1
 	},
@@ -3064,8 +3020,6 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
@@ -3166,7 +3120,6 @@
 	dir = 1
 	},
 /obj/structure/piano{
-	tag = "icon-piano";
 	icon_state = "piano"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -3321,7 +3274,6 @@
 "is" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTHWEST)";
 	icon_state = "yellow";
 	dir = 9
 	},
@@ -3339,7 +3291,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -3357,7 +3308,6 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -3372,7 +3322,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -3389,7 +3338,6 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTH)";
 	icon_state = "yellow";
 	dir = 1
 	},
@@ -3399,7 +3347,6 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTHEAST)";
 	icon_state = "yellow";
 	dir = 5
 	},
@@ -3468,7 +3415,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (WEST)";
 	icon_state = "yellow";
 	dir = 8
 	},
@@ -3496,7 +3442,6 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
 	dir = 4
 	},
@@ -3512,9 +3457,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
@@ -3539,7 +3482,6 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/head/welding,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (WEST)";
 	icon_state = "yellow";
 	dir = 8
 	},
@@ -3555,7 +3497,6 @@
 	amount = 60
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
 	dir = 4
 	},
@@ -3711,18 +3652,14 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
 "jh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -3732,7 +3669,6 @@
 /obj/item/weapon/stock_parts/cell/high,
 /obj/item/weapon/stock_parts/cell/high,
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (WEST)";
 	icon_state = "yellow";
 	dir = 8
 	},
@@ -3766,7 +3702,6 @@
 	amount = 50
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
 	dir = 4
 	},
@@ -3870,7 +3805,6 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (WEST)";
 	icon_state = "yellow";
 	dir = 8
 	},
@@ -3898,7 +3832,6 @@
 /area/ruin/hotel/power)
 "jE" = (
 /turf/open/floor/plasteel/yellow/corner{
-	tag = "icon-yellowcorner (EAST)";
 	icon_state = "yellowcorner";
 	dir = 4
 	},
@@ -3908,7 +3841,6 @@
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (NORTHEAST)";
 	icon_state = "yellow";
 	dir = 5
 	},
@@ -3918,7 +3850,6 @@
 /area/ruin/hotel/security)
 "jH" = (
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTHWEST)";
 	icon_state = "red";
 	dir = 9
 	},
@@ -3926,7 +3857,6 @@
 "jI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTH)";
 	icon_state = "red";
 	dir = 1
 	},
@@ -3934,7 +3864,6 @@
 "jJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTH)";
 	icon_state = "red";
 	dir = 1
 	},
@@ -3944,7 +3873,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTH)";
 	icon_state = "red";
 	dir = 1
 	},
@@ -3954,7 +3882,6 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (NORTHEAST)";
 	icon_state = "red";
 	dir = 5
 	},
@@ -4041,11 +3968,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (WEST)";
 	icon_state = "yellow";
 	dir = 8
 	},
@@ -4085,11 +4010,9 @@
 /area/ruin/hotel/power)
 "kg" = (
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
 	dir = 4
 	},
@@ -4099,7 +4022,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (WEST)";
 	icon_state = "red";
 	dir = 8
 	},
@@ -4118,7 +4040,6 @@
 /area/ruin/hotel/security)
 "kl" = (
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	icon_state = "red";
 	dir = 4
 	},
@@ -4148,7 +4069,6 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (SOUTHWEST)";
 	icon_state = "yellow";
 	dir = 10
 	},
@@ -4217,14 +4137,12 @@
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/yellow/side{
-	tag = "icon-yellow (SOUTHEAST)";
 	icon_state = "yellow";
 	dir = 6
 	},
 /area/ruin/hotel/power)
 "kx" = (
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (WEST)";
 	icon_state = "red";
 	dir = 8
 	},
@@ -4232,9 +4150,7 @@
 "ky" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/security)
@@ -4285,9 +4201,7 @@
 "kG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -4315,7 +4229,6 @@
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (WEST)";
 	icon_state = "red";
 	dir = 8
 	},
@@ -4337,7 +4250,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	icon_state = "red";
 	dir = 4
 	},
@@ -4383,7 +4295,6 @@
 /area/ruin/hotel/pool)
 "kU" = (
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -4437,7 +4348,6 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (WEST)";
 	icon_state = "red";
 	dir = 8
 	},
@@ -4447,9 +4357,7 @@
 /obj/item/weapon/papercutter,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/security)
@@ -4542,15 +4450,12 @@
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/weapon/restraints/handcuffs,
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (WEST)";
 	icon_state = "red";
 	dir = 8
 	},
 /area/ruin/hotel/security)
 "ls" = (
 /obj/structure/chair{
-	tag = "icon-chair (NORTH)";
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -4572,7 +4477,6 @@
 /area/ruin/unpowered/no_grav)
 "lw" = (
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (SOUTHWEST)";
 	icon_state = "red";
 	dir = 10
 	},
@@ -4582,18 +4486,14 @@
 /area/ruin/hotel/security)
 "ly" = (
 /turf/open/floor/plasteel/red/corner{
-	tag = "icon-redcorner (WEST)";
-	icon_state = "redcorner";
 	dir = 8
 	},
 /area/ruin/hotel/security)
 "lz" = (
 /obj/machinery/light{
-	tag = "icon-tube1 (EAST)";
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (EAST)";
 	icon_state = "red";
 	dir = 4
 	},
@@ -4649,7 +4549,6 @@
 /area/ruin/hotel/security)
 "lG" = (
 /obj/structure/window{
-	tag = "icon-window (NORTH)";
 	icon_state = "window";
 	dir = 1
 	},
@@ -4674,7 +4573,6 @@
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/structure/window{
-	tag = "icon-window (NORTH)";
 	icon_state = "window";
 	dir = 1
 	},
@@ -4708,8 +4606,6 @@
 /area/ruin/hotel/pool)
 "lN" = (
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (WEST)";
-	icon_state = "bulb1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkred,
@@ -4750,7 +4646,6 @@
 /area/ruin/hotel/security)
 "lU" = (
 /turf/open/floor/plasteel/red/side{
-	tag = "icon-red (SOUTHEAST)";
 	icon_state = "red";
 	dir = 6
 	},
@@ -4843,8 +4738,6 @@
 "mf" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
-	icon_state = "bulb1";
 	dir = 1
 	},
 /turf/open/floor/plasteel/neutral,
@@ -4874,8 +4767,6 @@
 "mk" = (
 /obj/structure/table,
 /obj/machinery/light/small{
-	tag = "icon-bulb1 (NORTH)";
-	icon_state = "bulb1";
 	dir = 1
 	},
 /obj/item/device/lightreplacer,
@@ -4897,9 +4788,7 @@
 "mo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral,
 /area/ruin/hotel/custodial)
@@ -4916,8 +4805,7 @@
 "mr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	on = 1;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -5015,8 +4903,6 @@
 /area/ruin/hotel/pool)
 "mC" = (
 /obj/structure/chair{
-	tag = "icon-chair (NORTH)";
-	icon_state = "chair";
 	dir = 1
 	},
 /turf/open/floor/plasteel/vault{
@@ -5025,7 +4911,6 @@
 /area/ruin/hotel/pool)
 "mD" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-25";
 	icon_state = "plant-25"
 	},
 /turf/open/floor/plasteel/neutral,
