@@ -5,6 +5,8 @@
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
 
+#define MAX_PAPER_FIELDS 1000
+
 /obj/item/weapon/paper
 	name = "paper"
 	gender = NEUTER
@@ -131,10 +133,13 @@
 
 
 /obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
+	if(id > MAX_PAPER_FIELDS)
+		return
+
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+	while(locid <= MAX_PAPER_FIELDS)
 		var/istart = 0
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
@@ -446,3 +451,5 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+#undef MAX_PAPER_FIELDS
