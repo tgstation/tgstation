@@ -790,7 +790,10 @@ doesn't have toxins access.
 	//Tabs
 	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
 	//General Access
-	data["console_vars"] = vars
+	data["research_points_stored"] = stored_research.research_points
+	data["protolathe_linked"] = linked_lathe? TRUE : FALSE
+	data["circuit_linked"] = linked_imprinter? TRUE : FALSE
+	data["destroy_linked"] = linked_destroy? TRUE : FALSE
 	//Techweb Screen
 	data["techweb_vars"] = stored_research.vars
 	var/list/techweb_avail = list()
@@ -808,7 +811,11 @@ doesn't have toxins access.
 	//Node View
 	data["node_selected"] = selected_node? TRUE : FALSE
 	if(selected_node)
-		data["node_vars"] = selected_node.vars
+		data["snode_id"] = selected_node.id
+		data["snode_researched"] = stored_research.researched_nodes[selected_node.id]? TRUE : FALSE
+		data["snode_cost"] = selected_node.get_price()
+		data["snode_export"] = selected_node.export_price
+		data["snode_desc"] = selected_node.description
 		var/list/prereqs = list()
 		var/list/unlocks = list()
 		var/list/designs = list()
@@ -824,6 +831,7 @@ doesn't have toxins access.
 	//Design View
 	data["design_selected"] = selected_design? TRUE : FALSE
 	if(selected_design)
+		data["sdesign_id"] = selected_design.id
 		data["sdesign_name"] = selected_design.name
 		data["sdesign_desc"] = selected_design.desc
 		data["sdesign_buildtype"] = selected_design.build_type
@@ -841,7 +849,6 @@ doesn't have toxins access.
 			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_LINKING]'>Device Linkage Menu</A>"
 			dat += "<A href='?src=\ref[src];lock=[SCICONSOLE_LOCKED]'>Lock Console</A>"
 */
-
 
 
 

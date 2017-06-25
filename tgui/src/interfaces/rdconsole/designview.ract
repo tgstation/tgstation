@@ -1,8 +1,6 @@
 {{#if data.design_selected}}
 	<ui-display title='{{data.sdesign_name}}'>
 		<ui-section title='Description'>{{data.sdesign_desc}}</ui-section>
-		<ui-section title='Point Cost'>{{data.node_vars.actual_cost}}</ui-section>
-		<ui-section title='Export Price'>{{data.node_vars.export_price}}</ui-section>
 	</ui-display>
 	<ui-display title='Lathe Types'>
 		{{#if data.sdesign_buildtype & 1}}

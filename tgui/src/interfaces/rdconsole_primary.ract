@@ -1,12 +1,12 @@
-<link rel='ractive' href='./rdconsole/diskops.ract'>
-<link rel='ractive' href='./rdconsole/designview.ract'>
 <link rel='ractive' href='./rdconsole/header.ract'>
+<link rel='ractive' href='./rdconsole/techweb.ract'>
 <link rel='ractive' href='./rdconsole/nodeview.ract'>
-<link rel='ractive' href='./rdconsole/settings.ract'>
-<link rel='ractive' href='./rdconsole/circuit.ract'>
+<link rel='ractive' href='./rdconsole/designview.ract'>
+<link rel='ractive' href='./rdconsole/diskops.ract'>
 <link rel='ractive' href='./rdconsole/destruct.ract'>
 <link rel='ractive' href='./rdconsole/protolathe.ract'>
-<link rel='ractive' href='./rdconsole/techweb.ract'>
+<link rel='ractive' href='./rdconsole/circuit.ract'>
+<link rel='ractive' href='./rdconsole/settings.ract'>
 
 <header/>
 <ui-tabs tabs='{{data.tabs}}'>

@@ -1,24 +1,24 @@
 {{#if data.node_selected}}
 	<ui-display title='{{display_name}}'>
-		<ui-section title='Description'>{{data.node_vars.description}}</ui-section>
-		<ui-section title='Point Cost'>{{data.node_vars.actual_cost}}</ui-section>
-		<ui-section title='Export Price'>{{data.node_vars.export_price}}</ui-section>
-		<ui-section title='Status'>{{data.techweb_vars.researched_nodes["{{node_selected.id}}"]? "Researched" : "Not Researched"}}</ui-section>
+		<ui-section title='Description'>{{data.snode_desc}}</ui-section>
+		<ui-section title='Point Cost'>{{data.snode_cost}}</ui-section>
+		<ui-section title='Export Price'>{{data.snode_export}}</ui-section>
+		<ui-section title='Status'>{{data.snode_researched? "Researched" : "Not Researched"}}</ui-section>
 		<ui-button action='research_node' params='{"id"="{{id}}"}'>Research Node</ui-button>
 	</ui-display>
 	<ui-display title='Prerequisites'>
 		{{#each data.node_prereqs}}
-			<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.console_vars.selected_node.id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+			<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
 		{{/each}}
 	</ui-display>
 	<ui-display title='Unlocks'>
 		{{#each data.node_unlocks}}
-			<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.console_vars.selected_node.id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
+			<ui-button action='select_node' params='{"id": "{{id}}"}' state='{{data.snode_id == id ? "selected" : null}}'>{{display_name}}</ui-button>	
 		{{/each}}
 	</ui-display>
 	<ui-display title='Designs'>
 		{{#each data.node_designs}}
-			<ui-button action='select_design' params='{"id": "{{id}}"}' state='{{data.console_vars.selected_design.id == id ? "selected" : null}}'>{{name}}</ui-button>	
+			<ui-button action='select_design' params='{"id": "{{id}}"}' state='{{data.sdesign_id == id ? "selected" : null}}'>{{name}}</ui-button>	
 		{{/each}}
 	</ui-display>
 {{/if}}
