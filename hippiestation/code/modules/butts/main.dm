@@ -59,7 +59,7 @@
 
 /obj/item/organ/butt/Destroy()
 	if(inv)
-		if(inv.contents.len)
+		if(LAZYLEN(inv.contents))
 			for(var/i in inv.contents)
 				var/obj/item/I = i
 				inv.remove_from_storage(I, get_turf(src))
