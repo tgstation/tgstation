@@ -46962,7 +46962,6 @@
 "bIB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -47559,7 +47558,6 @@
 "bJN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -51991,7 +51989,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -60698,6 +60695,7 @@
 	dir = 8
 	},
 /obj/item/weapon/aiModule/core/full/custom,
+/obj/item/weapon/aiModule/core/full/ntdefault,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -66642,7 +66640,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -70737,7 +70734,6 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -90819,9 +90815,8 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot{
-	pixel_y = 1;
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_y = -3;
+	pixel_x = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/orange{
