@@ -1,0 +1,4 @@
+
+<span class='bad'>Settings</span>
+<ui-button action='Lock'>LOCK CONSOLE</ui-button>
+<ui-button action='Resync'>RESYNC MACHINERY</ui-button>

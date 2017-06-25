@@ -130,20 +130,19 @@
 		needed--
 	if(!needed)
 		available = TRUE
+	researched_nodes -= node.id
+	available_nodes -= node.id
+	visible_nodes -= node.id
 	if(researched)
 		researched_nodes[node.id] = node
 		for(var/i in node.designs)
 			add_design(node.designs[i])
 	else
-		researched_nodes -= node.id
 		if(available)
 			available_nodes[node.id] = node
 		else
-			available_nodes -= node.id
 			if(visible)
 				visible_nodes[node.id] = node
-			else
-				visible_nodes -= node.id
 
 //Laggy procs to do specific checks, just in case. Don't use them if you can just use the vars that already store all this!
 /datum/techweb/proc/designHasReqs(datum/design/D)

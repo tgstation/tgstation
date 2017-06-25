@@ -9,29 +9,36 @@
 <link rel='ractive' href='./rdconsole/settings.ract'>
 
 <header/>
-<ui-tabs tabs='{{data.tabs}}'>
-	<tab name='Technology'>
-		<techweb/>
-	</tab>
-	<tab name='View Node'>
-		<nodeview/>
-	</tab>
-	<tab name='View Design'>
-		<designview/>
-	</tab>
-	<tab name='Disk Operations'>
-		<diskops/>
-	</tab>
-	<tab name='Deconstructive Analyzer'>
-		<destruct/>
-	</tab>
-	<tab name='Protolathe'>
-		<protolathe/>
-	</tab>
-	<tab name='Circuit Imprinter'>
-		<circuit/>
-	</tab>
-	<tab name='Settings'>
-		<settings/>
-	</tab>
-</ui-tabs>
+{{#if data.locked}}
+	<ui-display title='CONSOLE LOCKED'>
+		<ui-button action='Unlock'>Unlock</ui-button>
+	</ui-display>
+{{/if}}
+{{#if !data.locked}}
+	<ui-tabs tabs='{{data.tabs}}'>
+		<tab name='Technology'>
+			<techweb/>
+		</tab>
+		<tab name='View Node'>
+			<nodeview/>
+		</tab>
+		<tab name='View Design'>
+			<designview/>
+		</tab>
+		<tab name='Disk Operations'>
+			<diskops/>
+		</tab>
+		<tab name='Deconstructive Analyzer'>
+			<destruct/>
+		</tab>
+		<tab name='Protolathe'>
+			<protolathe/>
+		</tab>
+		<tab name='Circuit Imprinter'>
+			<circuit/>
+		</tab>
+		<tab name='Settings'>
+			<settings/>
+		</tab>
+	</ui-tabs>
+{{/if}}

@@ -29,9 +29,6 @@ doesn't have toxins access.
 	var/obj/machinery/rnd/protolathe/linked_lathe = null				//Linked Protolathe
 	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
-	var/id = 0			//ID of the computer (for server restrictions).
-	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
-
 	req_access = list(GLOB.access_tox)	//Data and setting manipulation requires scientist access.
 
 	var/selected_category
@@ -39,6 +36,7 @@ doesn't have toxins access.
 	var/disk_slot_selected = 0
 	var/datum/techweb_node/selected_node
 	var/datum/design/selected_design
+	var/locked = FALSE
 
 /proc/CallMaterialName(ID)
 	if (copytext(ID, 1, 2) == "$" && GLOB.materials_list[ID])
@@ -789,22 +787,26 @@ doesn't have toxins access.
 	var/list/data = list()
 	//Tabs
 	data["tabs"] = list("Technology", "View Node", "View Design", "Disk Operations", "Deconstructive Analyzer", "Protolathe", "Circuit Imprinter", "Settings")
+	//Locking
+	data["locked"] = locked
 	//General Access
 	data["research_points_stored"] = stored_research.research_points
 	data["protolathe_linked"] = linked_lathe? TRUE : FALSE
 	data["circuit_linked"] = linked_imprinter? TRUE : FALSE
 	data["destroy_linked"] = linked_destroy? TRUE : FALSE
 	//Techweb Screen
-	data["techweb_vars"] = stored_research.vars
 	var/list/techweb_avail = list()
 	var/list/techweb_locked = list()
 	var/list/techweb_researched = list()
 	for(var/id in stored_research.available_nodes)
-		techweb_avail += stored_research.available_nodes[id]
-	for(var/id in (stored_research.visible_nodes - stored_research.available_nodes))
-		techweb_locked += stored_research.visible_nodes[id]
+		var/datum/techweb_node/N = stored_research.available_nodes[id]
+		techweb_avail += list("id" = N.id, "display_name" = N.display_name)
+	for(var/id in stored_research.visible_nodes)
+		var/datum/techweb_node/N = stored_research.visible_nodes[id]
+		techweb_locked += list("id" = N.id, "display_name" = N.display_name)
 	for(var/id in stored_research.researched_nodes)
-		techweb_researched += stored_research.researched_nodes[id]
+		var/datum/techweb_node/N = stored_research.researched_nodes[id]
+		techweb_researched += list("id" = N.id, "display_name" = N.display_name)
 	data["techweb_avail"] = techweb_avail
 	data["techweb_locked"] = techweb_locked
 	data["techweb_researched"] = techweb_researched
@@ -820,11 +822,14 @@ doesn't have toxins access.
 		var/list/unlocks = list()
 		var/list/designs = list()
 		for(var/id in selected_node.prerequisites)
-			prereqs += selected_node.prerequisites[id]
+			var/datum/techweb_node/N = selected_node.prerequisites[id]
+			prereqs += list("id" = N.id, "display_name" = N.display_name)
 		for(var/id in selected_node.unlocks)
-			unlocks += selected_node.unlocks[id]
+			var/datum/techweb_node/N = selected_node.unlocks[id]
+			unlocks += list("id" = N.id, "display_name" = N.display_name)
 		for(var/id in selected_node.designs)
-			designs += selected_node.designs[id]
+			var/datum/design/D = selected_node.designs[id]
+			designs += list("id" = D.id, "name" = D.name)
 		data["node_prereqs"] = prereqs
 		data["node_unlocks"] = unlocks
 		data["node_designs"] = designs
@@ -838,20 +843,12 @@ doesn't have toxins access.
 		data["sdesign_mats"] = list()
 		for(var/M in selected_design.materials)
 			data["sdesign_mats"]["[CallMaterialName(M)]"] = selected_design.materials[M]
+
+	/*
 	//Disk Operations
 
 
-/*
-		if(SCICONSOLE_SETTINGS) //R&D console settings
-			dat += SCICONSOLE_HEADER
-			dat += "<div class='statusDisplay'>"
-			dat += "<h3>R&D Console Setting:</h3>"
-			dat += "<A href='?src=\ref[src];menu=[SCICONSOLE_LINKING]'>Device Linkage Menu</A>"
-			dat += "<A href='?src=\ref[src];lock=[SCICONSOLE_LOCKED]'>Lock Console</A>"
-*/
-
-
-
+	*/
 
 
 
@@ -868,6 +865,24 @@ doesn't have toxins access.
 			selected_design = SSresearch.techweb_designs[params["id"]]
 		if("research_node")
 			research_node(params["id"], usr)
+		if("Lock")
+			if(allowed(usr))
+				lock_console(usr)
+			else
+				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>"
+		if("Unlock")
+			if(allowed(usr))
+				unlock_console(usr)
+			else
+				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>"
+		if("Resync")
+			to_chat(usr, "<span class='boldnotice'>[bicon(src)]: Resyncing with nearby machinery.</span>")
+
+/obj/machinery/computer/rdconsole/proc/lock_console(mob/user)
+	locked = TRUE
+
+/obj/machinery/computer/rdconsole/proc/unlock_console(mob/user)
+	locked = FALSE
 
 /obj/machinery/computer/rdconsole/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
