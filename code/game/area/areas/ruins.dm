@@ -271,3 +271,68 @@
 	power_equip = 0
 	power_light = 0
 	poweralm = 0
+
+//Ruin of ancient Space Station
+
+/area/ruin/ancientstation
+	name = "Charlie Station Main Corridor"
+	icon_state = "green"
+
+/area/ruin/ancientstation/powered
+	name = "Powered Tile"
+	icon_state = "teleporter"
+	requires_power = FALSE
+
+/area/ruin/ancientstation/space
+	name = "Exposed To Space"
+	icon_state = "teleporter"
+	has_gravity = FALSE
+
+/area/ruin/ancientstation/atmo
+	name = "Beta Station Atmospherics"
+	icon_state = "red"
+	has_gravity = FALSE
+
+/area/ruin/ancientstation/betanorth
+	name = "Beta Station North Corridor"
+	icon_state = "blue"
+
+/area/ruin/ancientstation/solar
+	name = "Station Solar Array"
+	icon_state = "panelsAP"
+
+/area/ruin/ancientstation/engi
+	name = "Charlie Station Engineering"
+	icon_state = "engine"
+
+/area/ruin/ancientstation/comm
+	name = "Charlie Station Command"
+	icon_state = "captain"
+
+/area/ruin/ancientstation/hydroponics
+	name = "Charlie Station Hydroponics"
+	icon_state = "garden"
+
+/area/ruin/ancientstation/kitchen
+	name = "Charlie Station Kitchen"
+	icon_state = "kitchen"
+
+/area/ruin/ancientstation/sec
+	name = "Charlie Station Security"
+	icon_state = "red"
+
+/area/ruin/ancientstation/deltacorridor
+	name = "Delta Station Main Corridor"
+	icon_state = "green"
+
+/area/ruin/ancientstation/proto
+	name = "Delta Station Prototype Lab"
+	icon_state = "toxlab"
+
+/area/ruin/ancientstation/rnd
+	name = "Delta Station Research and Development"
+	icon_state = "toxlab"
+
+/area/ruin/ancientstation/hivebot
+	name = "Hivebot Mothership"
+	icon_state = "teleporter"
