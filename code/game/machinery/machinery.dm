@@ -495,3 +495,8 @@ Class Procs:
 		emp_act(2)
 	else
 		ex_act(2)
+
+/obj/machinery/Exited(atom/movable/AM, atom/newloc)
+	. = ..()
+	if (AM == occupant)
+		occupant = null
