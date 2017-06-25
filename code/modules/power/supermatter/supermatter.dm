@@ -207,12 +207,13 @@
 		// Pass all the gas related code an empty gas container
 		removed = new()
 
-	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
-		if(takes_damage)
-			damage += max((power-1600)/10, 0)
-		return 1
 
 	damage_archived = damage
+	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
+		if(takes_damage)
+			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point * 2),max((power-1600)/10, 0))		//2x as fast as hardcap.
+		return 1
+
 	if(takes_damage)
 		//causing damage
 		damage = max(damage + (max(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
