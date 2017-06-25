@@ -33,7 +33,7 @@
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
-	var/mode = null
+	var/obj/item/device/pda/host_pda = null
 	var/menu
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
@@ -47,6 +47,11 @@
 
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
+
+/obj/item/weapon/cartridge/Initialize(var/obj/item/device/pda/pda)
+	..()
+	if(pda)
+		host_pda = pda
 
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
@@ -125,7 +130,7 @@
 	icon_state = "cart-tox"
 	access = CART_REAGENT_SCANNER | CART_ATMOS
 
-/obj/item/weapon/cartridge/signal/New()
+/obj/item/weapon/cartridge/signal/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
@@ -174,7 +179,7 @@
 	access = CART_MANIFEST | CART_STATUS_DISPLAY | CART_REAGENT_SCANNER | CART_ATMOS | CART_DRONEPHONE
 	bot_access_flags = FLOOR_BOT | CLEAN_BOT | MED_BOT
 
-/obj/item/weapon/cartridge/rd/New()
+/obj/item/weapon/cartridge/rd/Initialize()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
 
@@ -189,26 +194,6 @@
 /obj/item/weapon/cartridge/captain/New()
 	..()
 	radio = new /obj/item/radio/integrated/signal(src)
-
-/obj/item/weapon/cartridge/proc/unlock()
-	if (!istype(loc, /obj/item/device/pda))
-		return
-
-	generate_menu()
-	print_to_host(menu)
-	return
-
-/obj/item/weapon/cartridge/proc/print_to_host(text)
-	if (!istype(loc, /obj/item/device/pda))
-		return
-	var/obj/item/device/pda/P = loc
-	P.cart = text
-
-	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
-			P.attack_self(M)
-
-	return
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
@@ -232,7 +217,9 @@
 
 
 /obj/item/weapon/cartridge/proc/generate_menu(mob/user)
-	switch(mode)
+	if(!host_pda)
+		return
+	switch(host_pda.mode)
 		if(40) //signaller
 			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
@@ -557,6 +544,10 @@ Code:
 		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
+		if (99) //Newscaster message permission error
+			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
+
+	return menu
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
@@ -566,15 +557,12 @@ Code:
 		usr << browse(null, "window=pda")
 		return
 
-	var/obj/item/device/pda/pda = loc
-
 	switch(href_list["choice"])
 		if("Medical Records")
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
-			pda.mode = 441
-			mode = 441
+			host_pda.mode = 441
 			if(!active2)
 				active1 = null
 
@@ -582,8 +570,7 @@ Code:
 			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
-			pda.mode = 451
-			mode = 451
+			host_pda.mode = 451
 			if(!active3)
 				active1 = null
 
@@ -622,34 +609,32 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			pda.mode = 433
-			mode = 433
+			host_pda.mode = 433
 
 		if("Supply Orders")
-			pda.mode =47
-			mode = 47
+			host_pda.mode =47
 
 		if("Newscaster Access")
-			mode = 53
+			host_pda.mode = 53
 
 		if("Newscaster Message")
-			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
-			var/message = pda.msg_input()
+			var/host_pda_owner_name = host_pda.id ? "[host_pda.id.registered_name] ([host_pda.id.assignment])" : "Unknown"
+			var/message = host_pda.msg_input()
 			var/datum/newscaster/feed_channel/current
 			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
-			if(current.locked && current.author != pda_owner_name)
-				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
-				pda.Topic(null,list("choice"="Refresh"))
+			if(current.locked && current.author != host_pda_owner_name)
+				host_pda.mode = 99
+				host_pda.Topic(null,list("choice"="Refresh"))
 				return
-			GLOB.news_network.SubmitArticle(message,pda.owner,current_channel)
-			pda.Topic(null,list("choice"=num2text(mode)))
+			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
+			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
 		if("Newscaster Switch Channel")
-			current_channel = pda.msg_input()
-			pda.Topic(null,list("choice"=num2text(mode)))
+			current_channel = host_pda.msg_input()
+			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
@@ -662,7 +647,7 @@ Code:
 			if("botlist")
 				active_bot = null
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
-				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= pda.GetAccess())
+				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= host_pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
 				active_bot.bot_control(command= href_list["op"], user= usr)
 
@@ -670,9 +655,9 @@ Code:
 
 		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
 
-	generate_menu(usr)
-	print_to_host(menu)
-
+	if(!host_pda)
+		return
+	host_pda.attack_self(usr)
 
 
 /obj/item/weapon/cartridge/proc/bot_control()

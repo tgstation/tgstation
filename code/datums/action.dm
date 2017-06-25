@@ -73,7 +73,7 @@
 		if(owner.restrained())
 			return 0
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.knockdown || owner.IsStun())
+		if(owner.IsKnockdown() || owner.IsStun())
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying)

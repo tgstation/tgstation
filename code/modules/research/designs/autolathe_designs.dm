@@ -479,6 +479,14 @@
 	build_path = /obj/item/device/radio/off
 	category = list("initial", "T-Comm")
 
+/datum/design/intercom_frame
+	name = "Intercom Frame"
+	id = "intercom_frame"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 75, MAT_GLASS = 25)
+	build_path = /obj/item/wallframe/intercom
+	category = list("initial", "T-Comm")
+
 /datum/design/infrared_emitter
 	name = "Infrared Emitter"
 	id = "infrared_emitter"
