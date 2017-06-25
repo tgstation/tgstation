@@ -9234,8 +9234,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 8;
 	frequency = 1441;
-	id = "n2_in";
-	volume_rate = 200
+	id = "n2_in"
 	},
 /turf/open/space,
 /area/engine/atmospherics_engine)
