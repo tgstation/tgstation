@@ -10,6 +10,7 @@
 	id = "lube"
 	results = list("lube" = 4)
 	required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
+	taste_description = "cherry"
 
 /datum/chemical_reaction/spraytan
 	name = "Spray Tan"
