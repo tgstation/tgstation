@@ -107,9 +107,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/msg = ""
 	var/sold_atoms = ""
 
-	for(var/obj/mecha/ME in areaInstance)
-		ME.wreckage = null // So mechs don't explode when they arrive at centcom
-
 	for(var/atom/movable/AM in areaInstance)
 		if(AM.anchored && !istype(AM, /obj/mecha))
 			continue
