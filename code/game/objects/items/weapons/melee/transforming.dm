@@ -31,14 +31,12 @@
 	for(var/F in target.faction)
 		if(F in nemesis_factions)
 			nemesis_faction = TRUE
-			if(!bonus_active)
-				force += faction_bonus_force
-				bonus_active = TRUE
+			force += faction_bonus_force
 			nemesis_effects(user, target)
-	if(!nemesis_faction && bonus_active)
-		force -= faction_bonus_force
-		bonus_active = FALSE
+			break
 	..()
+	if(nemesis_faction)
+		force -= faction_bonus_force
 
 /obj/item/weapon/melee/transforming/proc/transform_weapon(mob/living/user, supress_message_text)
 	active = !active
