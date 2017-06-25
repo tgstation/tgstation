@@ -99,6 +99,7 @@
 	cost = 5
 	unit_name = "radio"
 	export_types = list(/obj/item/device/radio)
+	exclude_types = list(/obj/item/device/radio/mech)
 
 
 // High-tech tools.
