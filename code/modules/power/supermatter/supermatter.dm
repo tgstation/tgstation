@@ -211,7 +211,7 @@
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
-			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point * 2),max((power-1600)/10, 0))		//2x as fast as hardcap.
+			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point * 4),max((power-1600)/10, 0))		//4x as fast as hardcap.
 		return 1
 
 	if(takes_damage)
