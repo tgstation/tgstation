@@ -11,10 +11,7 @@
 /mob/living/proc/AmountStun() //How many deciseconds remain in our stun
 	var/datum/status_effect/incapacitating/stun/S = IsStun()
 	if(S)
-		if(S.isprocessing)
-			return S.duration - world.time
-		else
-			return S.duration
+		return S.duration - world.time
 	return 0
 
 /mob/living/proc/Stun(amount, updating = TRUE, ignore_canstun = FALSE) //Can't go below remaining duration
@@ -23,14 +20,9 @@
 			return
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(S)
-			if(S.isprocessing)
-				S.duration = max(world.time + amount, S.duration)
-			else
-				S.duration = max(amount, S.duration)
+			S.duration = max(world.time + amount, S.duration)
 		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, updating)
-			S.duration = amount
-			S.update_canmove = updating
+			S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
 		return S
 
 /mob/living/proc/SetStun(amount, updating = TRUE, ignore_canstun = FALSE) //Sets remaining duration
@@ -38,19 +30,14 @@
 		var/datum/status_effect/incapacitating/stun/S = IsStun()
 		if(amount <= 0)
 			if(S)
-				S.update_canmove = updating
 				qdel(S)
 		else
 			if(absorb_stun(amount, ignore_canstun))
 				return
 			if(S)
-				if(S.isprocessing)
-					S.duration = world.time + amount
-				else
-					S.duration = amount
+				S.duration = world.time + amount
 			else
-				S = apply_status_effect(STATUS_EFFECT_STUN, updating)
-				S.duration = amount
+				S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
 		return S
 
 /mob/living/proc/AdjustStun(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration
@@ -61,8 +48,7 @@
 		if(S)
 			S.duration += amount
 		else if(amount > 0)
-			S = apply_status_effect(STATUS_EFFECT_STUN, updating)
-			S.duration = amount
+			S = apply_status_effect(STATUS_EFFECT_STUN, amount, updating)
 		return S
 
 ///////////////////////////////// KNOCKDOWN /////////////////////////////////////
@@ -73,10 +59,7 @@
 /mob/living/proc/AmountKnockdown() //How many deciseconds remain in our knockdown
 	var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 	if(K)
-		if(K.isprocessing)
-			return K.duration - world.time
-		else
-			return K.duration
+		return K.duration - world.time
 	return 0
 
 /mob/living/proc/Knockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Can't go below remaining duration
@@ -85,13 +68,9 @@
 			return
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(K)
-			if(K.isprocessing)
-				K.duration = max(world.time + amount, K.duration)
-			else
-				K.duration = max(amount, K.duration)
+			K.duration = max(world.time + amount, K.duration)
 		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, updating)
-			K.duration = amount
+			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
 		return K
 
 /mob/living/proc/SetKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Sets remaining duration
@@ -99,19 +78,14 @@
 		var/datum/status_effect/incapacitating/knockdown/K = IsKnockdown()
 		if(amount <= 0)
 			if(K)
-				K.update_canmove = updating
 				qdel(K)
 		else
 			if(absorb_stun(amount, ignore_canknockdown))
 				return
 			if(K)
-				if(K.isprocessing)
-					K.duration = world.time + amount
-				else
-					K.duration = amount
+				K.duration = world.time + amount
 			else
-				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, updating)
-				K.duration = amount
+				K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
 		return K
 
 /mob/living/proc/AdjustKnockdown(amount, updating = TRUE, ignore_canknockdown = FALSE) //Adds to remaining duration
@@ -122,8 +96,7 @@
 		if(K)
 			K.duration += amount
 		else if(amount > 0)
-			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, updating)
-			K.duration = amount
+			K = apply_status_effect(STATUS_EFFECT_KNOCKDOWN, amount, updating)
 		return K
 
 ///////////////////////////////////// STUN ABSORPTION /////////////////////////////////////
