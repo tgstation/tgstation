@@ -13,7 +13,11 @@ Format:
 	disabled (disables the map)
 endmap
 
+<<<<<<< HEAD
 map hippiestation
+=======
+map boxstation
+>>>>>>> 94effbd25f... Replaces all instances of the tgstation2 map with Box Station (#28463)
 	default
 	#voteweight 1.5
 endmap
