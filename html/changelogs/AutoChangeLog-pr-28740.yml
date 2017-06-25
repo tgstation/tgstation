@@ -1,0 +1,5 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "Station Engineers spawn with a Industrial Welder in their toolbelt."
+  - tweak: "Engineering Welder Locker now only holds three standard Welders."
