@@ -27,6 +27,9 @@
  * Backpack Types
  */
 
+/obj/item/weapon/storage/backpack/old
+	max_combined_w_class = 12
+
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."

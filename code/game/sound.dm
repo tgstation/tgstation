@@ -115,6 +115,8 @@
 				soundin = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
 			if ("clownstep")
 				soundin = pick('sound/effects/clownstep1.ogg','sound/effects/clownstep2.ogg')
+			if ("suitstep")
+				soundin = pick('sound/effects/suitstep1.ogg','sound/effects/suitstep2.ogg')
 			if ("swing_hit")
 				soundin = pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
 			if ("hiss")
