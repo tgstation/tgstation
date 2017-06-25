@@ -248,7 +248,6 @@
 	name = "spare equipment crate"
 	},
 /obj/item/weapon/grenade/chem_grenade/metalfoam,
-/obj/item/weapon/relic,
 /obj/item/device/t_scanner,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
