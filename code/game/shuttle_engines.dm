@@ -13,8 +13,8 @@
 
 /obj/structure/shuttle/engine
 	name = "engine"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/engine_power = 1
 	var/state = ENGINE_WELDED //welding shmelding
 
@@ -101,7 +101,7 @@
 
 /obj/structure/shuttle/engine/propulsion/burst/cargo
 	state = ENGINE_UNWRENCHED
-	anchored = 0
+	anchored = FALSE
 
 /obj/structure/shuttle/engine/propulsion/burst/left
 	name = "left"
