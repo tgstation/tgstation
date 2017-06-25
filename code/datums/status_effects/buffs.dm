@@ -145,6 +145,11 @@
 	alert_type = /obj/screen/alert/status_effect/power_regen
 	var/power_to_give = 0 //how much power is gained each tick
 
+/datum/status_effect/cyborg_power_regen/on_creation(mob/living/new_owner, new_power_per_tick)
+	. = ..()
+	if(. && isnum(new_power_per_tick))
+		power_to_give = new_power_per_tick
+
 /obj/screen/alert/status_effect/power_regen
 	name = "Power Regeneration"
 	desc = "You are quickly regenerating power!"
