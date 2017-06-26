@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "Glass shards will no longer hurt people with robotic legs."

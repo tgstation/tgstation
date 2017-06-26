@@ -27,7 +27,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -39,7 +39,7 @@
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturf = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
 

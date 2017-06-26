@@ -289,7 +289,7 @@
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
 	O.clean_blood()
 
-	if(istype(O,/obj/item))
+	if(isitem(O))
 		var/obj/item/I = O
 		I.acid_level = 0
 		I.extinguish()
@@ -463,7 +463,7 @@
 		user.clean_blood()
 
 
-/obj/structure/sink/attackby(obj/item/O, mob/user, params)
+/obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return

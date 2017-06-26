@@ -420,7 +420,7 @@
 
 /obj/machinery/power/supermatter_shard/bullet_act(obj/item/projectile/Proj)
 	var/turf/L = loc
-	if(!istype(L))		// We don't run process() when we are in space
+	if(!istype(L) || isspaceturf(L))		// We don't run process() when we are in space
 		return FALSE	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))
@@ -575,7 +575,7 @@
 /obj/machinery/power/supermatter_shard/proc/supermatter_pull(turf/center, pull_range = 10)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
 	for(var/atom/P in orange(pull_range,center))
-		if(istype(P, /atom/movable))
+		if(ismovableatom(P))
 			var/atom/movable/pulled_object = P
 			if(ishuman(P))
 				var/mob/living/carbon/human/H = P

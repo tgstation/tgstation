@@ -1,4 +1,0 @@
-author: "Bawhoppen"
-delete-after: True
-changes: 
-  - bugfix: "Grenade belts and bandoliers will no longer obscure half the screen when they're completely filled."

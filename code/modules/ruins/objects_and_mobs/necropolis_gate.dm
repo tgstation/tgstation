@@ -60,3 +60,168 @@
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+//stone tiles for boss arenas
+/obj/structure/stone_tile
+	name = "stone tile"
+	icon = 'icons/turf/boss_floors.dmi'
+	icon_state = "pristine_tile1"
+	layer = OVER_LATTICE_LAYER
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/tile_key = "pristine_tile"
+	var/tile_random_sprite_max = 24
+
+/obj/structure/stone_tile/Initialize(mapload)
+	. = ..()
+	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
+
+/obj/structure/stone_tile/block
+	name = "stone block"
+	icon_state = "pristine_block1"
+	tile_key = "pristine_block"
+	tile_random_sprite_max = 4
+
+/obj/structure/stone_tile/slab
+	name = "stone slab"
+	icon_state = "pristine_slab1"
+	tile_key = "pristine_slab"
+	tile_random_sprite_max = 4
+
+/obj/structure/stone_tile/center
+	name = "stone center tile"
+	icon_state = "pristine_center1"
+	tile_key = "pristine_center"
+	tile_random_sprite_max = 4
+
+/obj/structure/stone_tile/surrounding
+	name = "stone surrounding slab"
+	icon_state = "pristine_surrounding1"
+	tile_key = "pristine_surrounding"
+	tile_random_sprite_max = 2
+
+/obj/structure/stone_tile/surrounding_tile
+	name = "stone surrounding tile"
+	icon_state = "pristine_surrounding_tile1"
+	tile_key = "pristine_surrounding_tile"
+	tile_random_sprite_max = 2
+
+//cracked stone tiles
+/obj/structure/stone_tile/cracked
+	name = "cracked stone tile"
+	icon_state = "cracked_tile1"
+	tile_key = "cracked_tile"
+
+/obj/structure/stone_tile/block/cracked
+	name = "cracked stone block"
+	icon_state = "cracked_block1"
+	tile_key = "cracked_block"
+
+/obj/structure/stone_tile/slab/cracked
+	name = "cracked stone slab"
+	icon_state = "cracked_slab1"
+	tile_key = "cracked_slab"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/center/cracked
+	name = "cracked stone center tile"
+	icon_state = "cracked_center1"
+	tile_key = "cracked_center"
+
+/obj/structure/stone_tile/surrounding/cracked
+	name = "cracked stone surrounding slab"
+	icon_state = "cracked_surrounding1"
+	tile_key = "cracked_surrounding"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/surrounding_tile/cracked
+	name = "cracked stone surrounding tile"
+	icon_state = "cracked_surrounding_tile1"
+	tile_key = "cracked_surrounding_tile"
+
+//burnt stone tiles
+/obj/structure/stone_tile/burnt
+	name = "burnt stone tile"
+	icon_state = "burnt_tile1"
+	tile_key = "burnt_tile"
+
+/obj/structure/stone_tile/block/burnt
+	name = "burnt stone block"
+	icon_state = "burnt_block1"
+	tile_key = "burnt_block"
+
+/obj/structure/stone_tile/slab/burnt
+	name = "burnt stone slab"
+	icon_state = "burnt_slab1"
+	tile_key = "burnt_slab"
+
+/obj/structure/stone_tile/center/burnt
+	name = "burnt stone center tile"
+	icon_state = "burnt_center1"
+	tile_key = "burnt_center"
+
+/obj/structure/stone_tile/surrounding/burnt
+	name = "burnt stone surrounding slab"
+	icon_state = "burnt_surrounding1"
+	tile_key = "burnt_surrounding"
+
+/obj/structure/stone_tile/surrounding_tile/burnt
+	name = "burnt stone surrounding tile"
+	icon_state = "burnt_surrounding_tile1"
+	tile_key = "burnt_surrounding_tile"
+
+//hot stone tiles, cosmetic only
+/obj/structure/stone_tile/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/block/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/slab/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/center/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/surrounding/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/surrounding_tile/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+//hot cracked stone tiles, cosmetic only
+/obj/structure/stone_tile/cracked/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/block/cracked/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/slab/cracked/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/center/cracked/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/surrounding/cracked/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/surrounding_tile/cracked/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+//hot burnt stone tiles, cosmetic only
+/obj/structure/stone_tile/burnt/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/block/burnt/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/slab/burnt/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/center/burnt/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/surrounding/burnt/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
+
+/obj/structure/stone_tile/surrounding_tile/burnt/hot
+	icon = 'icons/turf/boss_floors_hot.dmi'
