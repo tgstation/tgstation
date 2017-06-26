@@ -250,6 +250,16 @@
 	if(.)
 		H.charge_time += bonus_value
 
+//blood-drunk hunter
+/obj/item/crusher_trophy/hunter_eye
+	name = "eye of a blood-drunk hunter"
+	desc = "Its pupil is collapsed and turned to mush, indicating the onset of the scourge of beasts. Suitable as a trophy for a kinetic crusher."
+	icon_state = "hunter_eye"
+	denied_type = /obj/item/crusher_trophy/hunter_eye
+
+/obj/item/crusher_trophy/hunter_eye/effect_desc()
+	return "does a thing"
+
 //ash drake
 /obj/item/crusher_trophy/tail_spike
 	desc = "A spike taken from a ash drake's tail. Suitable as a trophy for a kinetic crusher."
