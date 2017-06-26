@@ -5231,6 +5231,23 @@
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation)
+"lu" = (
+/obj/item/weapon/stock_parts/manipulator,
+/turf/open/floor/plasteel/airless/floorgrime,
+/area/template_noop)
+"lv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/stock_parts/console_screen,
+/turf/open/floor/plasteel/white/side{
+	tag = "icon-whitehall (EAST)";
+	icon_state = "whitehall";
+	dir = 4
+	},
+/area/template_noop)
+"lw" = (
+/obj/item/weapon/stock_parts/matter_bin,
+/turf/open/floor/plating/airless,
+/area/template_noop)
 
 (1,1,1) = {"
 aa
@@ -5297,7 +5314,7 @@ aa
 aa
 aa
 bf
-bq
+lu
 br
 bH
 bH
@@ -5357,7 +5374,7 @@ br
 di
 dD
 bq
-eH
+lv
 eH
 aa
 aa
@@ -5527,7 +5544,7 @@ aA
 bq
 bq
 bf
-bf
+lw
 aa
 aA
 aa
@@ -6954,8 +6971,8 @@ aa
 aa
 aa
 aa
-ak
-as
+by
+aH
 at
 aQ
 aI
@@ -7266,8 +7283,8 @@ aa
 aa
 aa
 aa
-ak
-ay
+by
+aM
 ax
 aQ
 aI
@@ -8841,7 +8858,7 @@ de
 dy
 dZ
 eD
-lr
+dZ
 fx
 dZ
 gQ
@@ -8893,7 +8910,7 @@ dc
 dy
 dZ
 eE
-ls
+dZ
 fy
 dZ
 gR

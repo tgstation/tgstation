@@ -40,8 +40,8 @@
 	icon_state = "pod_g"
 
 /obj/structure/showcase/oldpod
-	name = "damage cyrogenic pod"
-	desc = "A damage cyrogenic pod long since lost to time, including its former occupant..."
+	name = "damaged cyrogenic pod"
+	desc = "A damaged cyrogenic pod long since lost to time, including its former occupant..."
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper-open"
 
