@@ -7,13 +7,9 @@
 /area/lavaland/surface/outdoors)
 "ac" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -24,8 +20,6 @@
 "ae" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -36,51 +30,35 @@
 	pixel_y = -40
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ag" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ah" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2828,26 +2806,18 @@
 /area/lavaland/surface/outdoors/unexplored)
 "fT" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "fU" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2858,13 +2828,9 @@
 "fW" = (
 /obj/structure/necropolis_gate/second,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -2874,19 +2840,13 @@
 /area/lavaland/surface/outdoors)
 "fY" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
@@ -2894,85 +2854,59 @@
 /area/lavaland/surface/outdoors)
 "fZ" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ga" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gb" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gc" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gd" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
@@ -2980,66 +2914,46 @@
 /area/lavaland/surface/outdoors)
 "ge" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gf" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gg" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gh" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3047,67 +2961,47 @@
 "gi" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gj" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gk" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gl" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gm" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3115,13 +3009,9 @@
 "gn" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -3132,13 +3022,9 @@
 /area/lavaland/surface/outdoors)
 "gp" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile,
@@ -3146,55 +3032,37 @@
 /area/lavaland/surface/outdoors)
 "gq" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gr" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gs" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -3202,14 +3070,10 @@
 /area/lavaland/surface/outdoors)
 "gt" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3217,13 +3081,9 @@
 "gu" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -3234,13 +3094,9 @@
 /area/lavaland/surface/outdoors)
 "gw" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile,
@@ -3248,18 +3104,12 @@
 /area/lavaland/surface/outdoors)
 "gx" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3267,55 +3117,37 @@
 "gy" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gz" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gA" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -3323,18 +3155,12 @@
 /area/lavaland/surface/outdoors)
 "gB" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3342,18 +3168,12 @@
 "gC" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3361,64 +3181,44 @@
 "gD" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gE" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gF" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gG" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -3426,52 +3226,36 @@
 /area/lavaland/surface/outdoors)
 "gH" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gI" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gJ" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
@@ -3479,46 +3263,32 @@
 /area/lavaland/surface/outdoors)
 "gK" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gL" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gM" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -3529,8 +3299,6 @@
 /area/lavaland/surface/outdoors)
 "gO" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -3542,8 +3310,6 @@
 "gQ" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -3551,8 +3317,6 @@
 "gR" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3560,8 +3324,6 @@
 "gS" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3569,8 +3331,6 @@
 "gT" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -3581,8 +3341,6 @@
 /area/lavaland/surface/outdoors)
 "gV" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -3593,8 +3351,6 @@
 /area/lavaland/surface/outdoors)
 "gX" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -3606,8 +3362,6 @@
 "gZ" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -3615,8 +3369,6 @@
 "ha" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3624,8 +3376,6 @@
 "hb" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3633,8 +3383,6 @@
 "hc" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3642,8 +3390,6 @@
 "hd" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -3654,18 +3400,12 @@
 /area/lavaland/surface/outdoors)
 "hf" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3678,13 +3418,9 @@
 /area/lavaland/surface/outdoors)
 "hh" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
@@ -3697,8 +3433,6 @@
 "hj" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -3706,8 +3440,6 @@
 "hk" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3715,8 +3447,6 @@
 "hl" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -3724,8 +3454,6 @@
 "hm" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -3745,18 +3473,12 @@
 /area/lavaland/surface/outdoors)
 "hp" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
@@ -3764,90 +3486,62 @@
 /area/lavaland/surface/outdoors)
 "hq" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hr" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hs" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ht" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hu" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hv" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -3856,45 +3550,31 @@
 "hw" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hx" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hy" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile,
@@ -3902,100 +3582,68 @@
 /area/lavaland/surface/outdoors)
 "hz" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hA" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hB" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hC" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hD" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hE" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -4003,141 +3651,97 @@
 /area/lavaland/surface/outdoors)
 "hF" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hG" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hH" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hI" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hJ" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hK" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hL" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hM" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4145,13 +3749,9 @@
 "hN" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
@@ -4160,37 +3760,25 @@
 "hO" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "hP" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4198,13 +3786,9 @@
 "hQ" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4216,13 +3800,9 @@
 "hS" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4230,18 +3810,12 @@
 "hT" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
@@ -4249,19 +3823,13 @@
 /area/lavaland/surface/outdoors)
 "hU" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4269,13 +3837,9 @@
 "hV" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4283,18 +3847,12 @@
 "hW" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4302,13 +3860,9 @@
 "hX" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4316,18 +3870,12 @@
 "hY" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
@@ -4335,33 +3883,23 @@
 /area/lavaland/surface/outdoors)
 "hZ" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ia" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4372,77 +3910,53 @@
 /area/lavaland/surface/outdoors)
 "ic" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "id" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ie" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "if" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ig" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -4450,45 +3964,31 @@
 /area/lavaland/surface/outdoors)
 "ih" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ii" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ij" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4496,31 +3996,21 @@
 "ik" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "il" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4528,18 +4018,12 @@
 "im" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -4559,13 +4043,9 @@
 /area/lavaland/surface/outdoors)
 "ir" = (
 /obj/structure/stone_tile/slab/cracked{
-	tag = "icon-cracked_slab1 (NORTHEAST)";
-	icon_state = "cracked_slab1";
 	dir = 5
 	},
 /obj/structure/stone_tile/slab/cracked{
-	tag = "icon-cracked_slab1 (SOUTHWEST)";
-	icon_state = "cracked_slab1";
 	dir = 10
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4580,8 +4060,6 @@
 /area/lavaland/surface/outdoors)
 "iu" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4592,13 +4070,9 @@
 /area/lavaland/surface/outdoors)
 "iw" = (
 /obj/structure/stone_tile/slab/cracked{
-	tag = "icon-cracked_slab1 (EAST)";
-	icon_state = "cracked_slab1";
 	dir = 4
 	},
 /obj/structure/stone_tile/slab/cracked{
-	tag = "icon-cracked_slab1 (WEST)";
-	icon_state = "cracked_slab1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4613,13 +4087,9 @@
 /area/lavaland/surface/outdoors)
 "iz" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -4634,8 +4104,6 @@
 /area/lavaland/surface/outdoors)
 "iC" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/block/cracked,
@@ -4644,8 +4112,6 @@
 "iD" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4665,8 +4131,6 @@
 "iI" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4674,8 +4138,6 @@
 "iJ" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4683,8 +4145,6 @@
 "iK" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4740,13 +4200,9 @@
 "iX" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4754,8 +4210,6 @@
 "iY" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4766,16 +4220,12 @@
 /area/lavaland/surface/outdoors)
 "ja" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jb" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4786,19 +4236,13 @@
 /area/lavaland/surface/outdoors)
 "jd" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4809,19 +4253,13 @@
 /area/lavaland/surface/outdoors)
 "jf" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4829,55 +4267,37 @@
 "jg" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jh" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ji" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -4885,35 +4305,25 @@
 /area/lavaland/surface/outdoors)
 "jj" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jk" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jl" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -4921,75 +4331,51 @@
 "jm" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jn" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jo" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jp" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5004,16 +4390,12 @@
 /area/lavaland/surface/outdoors)
 "js" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jt" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5028,24 +4410,18 @@
 /area/lavaland/surface/outdoors)
 "jw" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jx" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jy" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5056,14 +4432,10 @@
 /area/lavaland/surface/outdoors)
 "jA" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
@@ -5080,18 +4452,12 @@
 /area/lavaland/surface/outdoors)
 "jC" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
@@ -5099,36 +4465,24 @@
 /area/lavaland/surface/outdoors)
 "jD" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jE" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -5137,14 +4491,10 @@
 "jF" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/center/cracked,
 /obj/structure/stone_tile/surrounding_tile/cracked{
-	tag = "icon-cracked_surrounding_tile1 (WEST)";
-	icon_state = "cracked_surrounding_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -5152,79 +4502,55 @@
 "jG" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jH" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/center/cracked,
 /obj/structure/stone_tile/surrounding_tile/cracked{
-	tag = "icon-cracked_surrounding_tile1 (EAST)";
-	icon_state = "cracked_surrounding_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jI" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jJ" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jK" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5232,14 +4558,10 @@
 "jL" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/center,
 /obj/structure/stone_tile/surrounding_tile/cracked{
-	tag = "icon-cracked_surrounding_tile1 (WEST)";
-	icon_state = "cracked_surrounding_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -5247,26 +4569,18 @@
 "jM" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jN" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile,
@@ -5275,19 +4589,13 @@
 /area/lavaland/surface/outdoors)
 "jO" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5295,42 +4603,30 @@
 "jP" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jQ" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jR" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jS" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5357,27 +4653,19 @@
 /area/lavaland/surface/outdoors)
 "jY" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "jZ" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5385,13 +4673,9 @@
 "ka" = (
 /obj/structure/stone_tile/block,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril,
@@ -5400,18 +4684,12 @@
 "kb" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5422,55 +4700,37 @@
 /area/lavaland/surface/outdoors)
 "kd" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ke" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kf" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5481,64 +4741,44 @@
 /area/lavaland/surface/outdoors)
 "kh" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ki" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kj" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kk" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5549,46 +4789,32 @@
 /area/lavaland/surface/outdoors)
 "km" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kn" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ko" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
@@ -5608,8 +4834,6 @@
 /area/lavaland/surface/outdoors)
 "ks" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5632,48 +4856,34 @@
 /area/lavaland/surface/outdoors)
 "kx" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ky" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kz" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kA" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5681,46 +4891,32 @@
 "kB" = (
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/center/cracked,
 /obj/structure/stone_tile/surrounding_tile/cracked{
-	tag = "icon-cracked_surrounding_tile1 (NORTH)";
-	icon_state = "cracked_surrounding_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kC" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kD" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/center,
@@ -5728,50 +4924,34 @@
 /area/lavaland/surface/outdoors)
 "kE" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kF" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kG" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -5779,14 +4959,10 @@
 /area/lavaland/surface/outdoors)
 "kH" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile,
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/center/cracked,
@@ -5794,32 +4970,22 @@
 /area/lavaland/surface/outdoors)
 "kI" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kJ" = (
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (EAST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (NORTH)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/surrounding_tile{
-	tag = "icon-pristine_surrounding_tile1 (WEST)";
-	icon_state = "pristine_surrounding_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/center/cracked,
@@ -5828,50 +4994,36 @@
 "kK" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kL" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kM" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kN" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kO" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -5891,87 +5043,59 @@
 "kS" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kT" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kU" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kV" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kW" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -5979,37 +5103,25 @@
 /area/lavaland/surface/outdoors)
 "kX" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "kY" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -6017,19 +5129,13 @@
 /area/lavaland/surface/outdoors)
 "kZ" = (
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6040,8 +5146,6 @@
 /area/lavaland/surface/outdoors)
 "lb" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6052,14 +5156,10 @@
 /area/lavaland/surface/outdoors)
 "ld" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6067,31 +5167,21 @@
 "le" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lf" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (EAST)";
-	icon_state = "pristine_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile,
@@ -6099,13 +5189,9 @@
 /area/lavaland/surface/outdoors)
 "lg" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6113,46 +5199,32 @@
 "lh" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (NORTH)";
-	icon_state = "pristine_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "li" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lj" = (
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6163,13 +5235,9 @@
 /area/lavaland/surface/outdoors)
 "ll" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6184,26 +5252,18 @@
 /area/lavaland/surface/outdoors)
 "lo" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lp" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6211,8 +5271,6 @@
 "lq" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6220,61 +5278,43 @@
 "lr" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ls" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lt" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lu" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lv" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -6289,21 +5329,15 @@
 /area/lavaland/surface/outdoors)
 "ly" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lz" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -6311,92 +5345,64 @@
 "lA" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lB" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lC" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lD" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lE" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lF" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile{
-	tag = "icon-pristine_tile1 (WEST)";
-	icon_state = "pristine_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lG" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /obj/structure/stone_tile/block,
@@ -6404,74 +5410,52 @@
 /area/lavaland/surface/outdoors)
 "lH" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lI" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lJ" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lK" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lL" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lM" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -6486,98 +5470,68 @@
 /area/lavaland/surface/outdoors)
 "lP" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lQ" = (
 /obj/structure/stone_tile/surrounding/cracked{
-	tag = "icon-cracked_surrounding1 (SOUTHEAST)";
-	icon_state = "cracked_surrounding1";
 	dir = 6
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lR" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lS" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lT" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lU" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lV" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6585,56 +5539,40 @@
 "lW" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lX" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lY" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "lZ" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ma" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6642,47 +5580,33 @@
 "mb" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (WEST)";
-	icon_state = "pristine_block1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mc" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "md" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "me" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -6690,22 +5614,16 @@
 "mf" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (NORTH)";
-	icon_state = "cracked_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mg" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6716,47 +5634,33 @@
 /area/lavaland/surface/outdoors)
 "mi" = (
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mj" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mk" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (EAST)";
-	icon_state = "pristine_block1";
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ml" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
@@ -6764,18 +5668,12 @@
 /area/lavaland/surface/outdoors)
 "mm" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (EAST)";
-	icon_state = "cracked_block1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (EAST)";
-	icon_state = "cracked_tile1";
 	dir = 4
 	},
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (WEST)";
-	icon_state = "cracked_tile1";
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -6783,22 +5681,16 @@
 "mn" = (
 /obj/structure/stone_tile/block/cracked,
 /obj/structure/stone_tile/block{
-	tag = "icon-pristine_block1 (NORTH)";
-	icon_state = "pristine_block1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "mo" = (
 /obj/structure/stone_tile/block/cracked{
-	tag = "icon-cracked_block1 (WEST)";
-	icon_state = "cracked_block1";
 	dir = 8
 	},
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
-	tag = "icon-cracked_tile1 (NORTH)";
-	icon_state = "cracked_tile1";
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
