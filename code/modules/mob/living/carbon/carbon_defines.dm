@@ -45,6 +45,8 @@
 	//Gets filled up in create_bodyparts()
 
 	var/list/hand_bodyparts = list() //a collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
-	
+
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
+
+	var/beat //is this mob having a heatbeat sound played? if so, which?

@@ -20,6 +20,14 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+	if(health <= HEALTH_THRESHOLD_CRIT)
+		beat = 2
+		src << sound(null)
+		src << 'sound/health/slowbeat.ogg'
+	if(beat == 2 && health > HEALTH_THRESHOLD_CRIT)
+		src << sound(null)
+		beat = 0
+
 	if(stat != DEAD)
 		return 1
 
@@ -351,6 +359,10 @@
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
+		if(!beat || beat == 2)
+			src << sound(null)
+			src << 'sound/health/fastbeat.ogg'
+			beat = 1
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
