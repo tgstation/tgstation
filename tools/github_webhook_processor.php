@@ -106,6 +106,13 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		die();
 }
 
+function autotag_tree($payload, $tree, $tag, &$tags, &$remove) {
+	if(has_tree_been_edited($payload, $tree))
+		$tags[] = $tag;
+	else
+		$remove[] = $tag;
+}
+
 //rip bs-12
 function tag_pr($payload, $opened) {
 	global $apiKey;
@@ -146,20 +153,11 @@ function tag_pr($payload, $opened) {
 	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	if(has_tree_been_edited($payload, '_maps'))
-		$tags[] = 'Map Edit';
-	else
-		$remove[] = 'Map Edit';
-
-	if(has_tree_been_edited($payload, 'tools'))
-		$tags[] = 'Tools';
-	else
-		$remove[] = 'Tools';
-
-	if(has_tree_been_edited($payload, 'SQL'))
-		$tags[] = 'SQL';
-	else
-		$remove[] = 'SQL';
+	autotag_tree($payload, '_maps', 'Map Edit', &$tags, &$remove);
+	autotag_tree($payload, 'tools', 'Tools', &$tags, &$remove);
+	autotag_tree($payload, 'SQL', 'SQL', &$tags, &$remove);
+	autotag_tree($payload, 'icons', 'Sprites', &$tags, &$remove);
+	autotag_tree($payload, 'sounds', 'Sound', &$tags, &$remove);
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
