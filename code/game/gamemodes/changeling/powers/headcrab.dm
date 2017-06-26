@@ -3,7 +3,7 @@
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 0 //IT'S THE THING! GET THE FLAMETHROWERS!!
 	req_human = 1
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)

@@ -211,7 +211,7 @@
 	Help will simply drag them closer, Disarm will grab whatever they're holding instead of them, Grab will put the victim in our hold after catching it, \
 	and Harm will stun it, and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
 	chemical_cost = 10
-	dna_cost = 2
+	dna_cost = 3
 	req_human = 1
 	weapon_type = /obj/item/weapon/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
@@ -373,7 +373,7 @@
 	desc = "We reform one of our arms into a hard shield."
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 2
 	req_human = 1
 
 	weapon_type = /obj/item/weapon/shield/changeling
@@ -468,7 +468,7 @@
 	desc = "We turn our skin into tough chitin to protect us from damage."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
 	chemical_cost = 20
-	dna_cost = 1
+	dna_cost = 4
 	req_human = 1
 	recharge_slowdown = 0.25
 
