@@ -425,8 +425,10 @@
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 
 	if(chambered && chambered.BB)
-		chambered.BB.damage *= 5
+		chambered.BB.damage *= 500 //make sure you die from it
 
+	var/suicidesound = pick('sound/misc/suicide1.ogg', 'sound/misc/suicide2.ogg')
+	playsound(get_turf(src), pick(suicidesound), 10, channel = 125)
 	process_fire(target, user, 1, params)
 
 /obj/item/weapon/gun/proc/unlock() //used in summon guns and as a convience for admins
