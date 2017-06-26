@@ -22,7 +22,7 @@
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	blood_volume = BLOOD_VOLUME_NORMAL
-	var/obj/item/weapon/melee/transforming/cleaving_saw/hunter/CS
+	var/obj/item/weapon/melee/transforming/cleaving_saw/hunter/hunter_saw
 	var/time_until_next_transform
 	var/dashing = FALSE
 	var/dash_cooldown = 15
@@ -48,7 +48,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/Initialize()
 	. = ..()
-	CS = new(src)
+	hunter_saw = new(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	var/adjustment_amount = amount * 0.15
@@ -60,7 +60,7 @@
 	if(health > 0)
 		return
 	new /obj/effect/temp_visual/dir_setting/hunter_death(loc, dir)
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/Move(atom/newloc)
 	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/floor/plating/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
@@ -70,7 +70,7 @@
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/ex_act(severity, target)
 	if(dash())
 		return
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/AttackingTarget()
 	if(next_move > world.time || !Adjacent(target)) //some cheating
@@ -78,7 +78,7 @@
 		return
 	face_atom(target)
 	changeNext_move(CLICK_CD_MELEE)
-	CS.melee_attack_chain(src, target)
+	hunter_saw.melee_attack_chain(src, target)
 	transform_weapon()
 	INVOKE_ASYNC(src, .proc/quick_attack_loop)
 	if(prob(10))
@@ -87,7 +87,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(!used_item)
-		used_item = CS
+		used_item = hunter_saw
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/GiveTarget(new_target)
@@ -163,7 +163,7 @@
 	var/turf/step_forward_turf = get_step(own_turf, get_cardinal_dir(own_turf, target_turf))
 	new /obj/effect/temp_visual/small_smoke/halfsecond(step_back_turf)
 	new /obj/effect/temp_visual/small_smoke/halfsecond(step_forward_turf)
-	var/obj/effect/temp_visual/decoy/fading/halfsecond/D = new /obj/effect/temp_visual/decoy/fading/halfsecond(own_turf, src)
+	var/obj/effect/temp_visual/decoy/fading/halfsecond/D = new (own_turf, src)
 	forceMove(step_back_turf)
 	playsound(own_turf, 'sound/weapons/punchmiss.ogg', 40, 1, -1)
 	dashing = TRUE
@@ -179,10 +179,10 @@
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/proc/transform_weapon()
 	if(time_until_next_transform <= world.time)
-		CS.transform_cooldown = 0
-		CS.transform_weapon(src, TRUE)
-		icon_state = "hunter[CS.active ? "_transformed":""]"
-		icon_living = "hunter[CS.active ? "_transformed":""]"
+		hunter_saw.transform_cooldown = 0
+		hunter_saw.transform_weapon(src, TRUE)
+		icon_state = "hunter[hunter_saw.active ? "_transformed":""]"
+		icon_living = "hunter[hunter_saw.active ? "_transformed":""]"
 		time_until_next_transform = world.time + rand(50, 100)
 
 /obj/effect/temp_visual/dir_setting/hunter_death
