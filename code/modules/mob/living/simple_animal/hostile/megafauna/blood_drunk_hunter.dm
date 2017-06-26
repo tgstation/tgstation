@@ -7,6 +7,7 @@
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon = 'icons/mob/broadMobs.dmi'
+	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 1
