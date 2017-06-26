@@ -1,7 +1,7 @@
 //The necropolis gate is used to call forth Legion from the Necropolis.
 /obj/structure/necropolis_gate
 	name = "necropolis gate"
-	desc = "A tremendous and impossibly large gateway, set into a massive tower of stone."
+	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
 	layer = TABLE_LAYER
@@ -16,7 +16,7 @@
 	var/static/mutable_appearance/top_overlay
 	var/static/mutable_appearance/door_overlay
 	var/obj/structure/opacity_blocker/sight_blocker
-	var/sight_blocker_distance = 2
+	var/sight_blocker_distance = 1
 
 /obj/structure/necropolis_gate/Initialize()
 	. = ..()
@@ -35,40 +35,6 @@
 	door_overlay = mutable_appearance('icons/effects/96x96.dmi', "door")
 	add_overlay(door_overlay)
 
-/obj/structure/necropolis_gate/attack_hand(mob/user)
-	if(open)
-		return
-	var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
-	if(safety == "Abort" || !in_range(src, user) || !src || open || user.incapacitated())
-		return
-	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
-	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
-	open = TRUE
-	sleep(50)
-	cut_overlay(door_overlay)
-	var/turf/T = get_turf(src)
-	new /obj/effect/temp_visual/necropolis_open(T)
-	sleep(2)
-	visible_message("<span class='warning'>The door starts to grind open...</span>")
-	playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
-	sleep(27)
-	qdel(sight_blocker, TRUE)
-	sleep(5)
-	density = FALSE
-	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
-	message_admins("[key_name_admin(user)] has released Legion!")
-	log_game("[key_name(user)] released Legion.")
-	for(var/mob/M in GLOB.player_list)
-		if(M.z == z)
-			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
-			M.playsound_local(T, 'sound/creatures/legion_spawn.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
-			flash_color(M, flash_color = "#FF0000", flash_time = 50)
-	var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
-	notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
-
-/obj/structure/necropolis_gate/singularity_pull()
-	return 0
-
 /obj/structure/necropolis_gate/Destroy(force)
 	if(force)
 		qdel(sight_blocker, TRUE)
@@ -76,13 +42,8 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
-/obj/effect/temp_visual/necropolis_open
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "door_opening"
-	duration = 38
-	layer = TABLE_LAYER
-	pixel_x = -32
-	pixel_y = -32
+/obj/structure/necropolis_gate/singularity_pull()
+	return 0
 
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/effects.dmi'
@@ -99,11 +60,81 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
-/obj/structure/necropolis_gate/second
-	sight_blocker_distance = 1
+/obj/structure/necropolis_gate/attack_hand(mob/user)
+	open_the_gate(user)
 
-/obj/structure/necropolis_gate/second/attack_hand(mob/user)
+/obj/structure/necropolis_gate/proc/open_the_gate(mob/user, legion_damaged)
+	if(open)
+		return
+	open = TRUE
+	cut_overlay(door_overlay)
+	var/turf/T = get_turf(src)
+	new /obj/effect/temp_visual/necropolis_open(T)
+	sleep(2)
+	visible_message("<span class='warning'>The door starts to grind open...</span>")
+	playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
+	sleep(27)
+	qdel(sight_blocker, TRUE)
+	sleep(5)
+	density = FALSE
+	return TRUE
+
+/obj/structure/necropolis_gate/locked/attack_hand(mob/user)
 	to_chat(user, "<span class='boldannounce'>It's locked.</span>")
+
+GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
+/obj/structure/necropolis_gate/legion_gate
+	desc = "A tremendous, impossibly large gateway, set into a massive tower of stone."
+	sight_blocker_distance = 2
+
+/obj/structure/necropolis_gate/legion_gate/Initialize()
+	. = ..()
+	GLOB.necropolis_gate = src
+
+/obj/structure/necropolis_gate/legion_gate/Destroy(force)
+	if(force)
+		if(GLOB.necropolis_gate == src)
+			GLOB.necropolis_gate = null
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
+/obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user)
+	if(open)
+		return
+	var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
+	if(safety == "Abort" || !in_range(src, user) || !src || open || user.incapacitated())
+		return
+	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
+	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
+	sleep(50)
+	..()
+
+/obj/structure/necropolis_gate/legion_gate/open_the_gate(mob/user, legion_damaged)
+	. = ..()
+	if(.)
+		visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
+		if(legion_damaged)
+			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
+			log_game("Legion took damage while the necropolis gate was closed and released itself.")
+		else
+			message_admins("[user ? "key_name_admin(user)":"Unknown"] has released Legion!")
+			log_game("[user ? "key_name(user)":"Unknown"] released Legion.")
+		for(var/mob/M in GLOB.player_list)
+			if(M.z == z)
+				to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
+				M.playsound_local(T, 'sound/creatures/legion_spawn.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
+				flash_color(M, flash_color = "#FF0000", flash_time = 50)
+		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
+		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
+
+/obj/effect/temp_visual/necropolis_open
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "door_opening"
+	duration = 38
+	layer = TABLE_LAYER
+	pixel_x = -32
+	pixel_y = -32
 
 /obj/structure/necropolis_arch
 	name = "necropolis arch"

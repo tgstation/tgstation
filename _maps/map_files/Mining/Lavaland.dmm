@@ -25,7 +25,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "af" = (
-/obj/structure/necropolis_gate,
+/obj/structure/necropolis_gate/legion_gate,
 /obj/structure/necropolis_arch{
 	pixel_y = -40
 	},
@@ -2826,7 +2826,7 @@
 /turf/closed/indestructible/riveted/boss/see_through,
 /area/lavaland/surface/outdoors)
 "fW" = (
-/obj/structure/necropolis_gate/second,
+/obj/structure/necropolis_gate/locked,
 /obj/structure/stone_tile/block{
 	dir = 8
 	},

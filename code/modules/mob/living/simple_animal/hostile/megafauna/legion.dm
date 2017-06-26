@@ -60,6 +60,11 @@ Difficulty: Medium
 	if(target)
 		wander = TRUE
 
+/mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(GLOB.necropolis_gate)
+		GLOB.necropolis_gate.open_the_gate(null, TRUE) //very clever.
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
 	if(. && ishuman(target))
