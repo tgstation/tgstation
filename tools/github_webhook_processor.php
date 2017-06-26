@@ -141,7 +141,7 @@ function tag_pr($payload, $opened) {
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
-		$lowertitle = strtolower($title)
+		$lowertitle = strtolower($title);
 		if(strpos($lowertitle, 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
