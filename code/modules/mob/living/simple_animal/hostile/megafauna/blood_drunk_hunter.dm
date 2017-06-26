@@ -48,6 +48,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/Initialize()
 	. = ..()
+	internal = new/obj/item/device/gps/internal/hunter(src)
 	hunter_saw = new(src)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -205,5 +206,11 @@
 	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 8, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(2)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+
+/obj/item/device/gps/internal/hunter
+	icon_state = null
+	gpstag = "Resonant Signal"
+	desc = "The sweet blood, oh, it sings to me."
+	invisibility = 100
 
 #undef HUNTER_DASH_RANGE
