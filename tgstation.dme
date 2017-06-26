@@ -1940,7 +1940,6 @@
 #include "code\modules\reagents\reagent_dispenser.dm"
 #include "code\modules\reagents\chemistry\colors.dm"
 #include "code\modules\reagents\chemistry\holder.dm"
-#include "code\modules\reagents\chemistry\readme.dm"
 #include "code\modules\reagents\chemistry\reagents.dm"
 #include "code\modules\reagents\chemistry\recipes.dm"
 #include "code\modules\reagents\chemistry\machinery\chem_dispenser.dm"
