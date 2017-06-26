@@ -132,19 +132,20 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/sting/para
-	name = "Paralysis Sting"
-	desc = "We silently sting a human, causing them to be unable to move or stand. They can still talk, however!"
-	helptext = "The victim will feel their muscles weaken and will likely notice they are unable to do anything besides talk... They can still yell for help!"
+	name = "Tiring Sting"
+	desc = "We silently sting a human, causing them to slowly lose energy and become tired."
+	helptext = "The victim will slowly lose energy and eventually become tired"
 	sting_icon = "sting_mute"
 	chemical_cost = 30
 	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/para/sting_action(mob/user, mob/living/carbon/target)
-	add_logs(user, target, "stung", "para sting")
-	to_chat(target, "<span class='userdanger'>Your muscles ache and feel weak, like jelly... can't stand..... Aghh!!</span>")
-	target.emote("cough")
-	target.Knockdown(300)
-	target.Stun(300)
+	add_logs(user, target, "stung", "tiring sting")
+	to_chat(target, "<span class='userdanger'>You feel tired... Maybe it's nap time...</span>")
+	if(target.reagents)
+		target.reagents.add_reagent("dizzysolution", 20)
+		target.reagents.add_reagent("tiresolution", 20)
+		target.reagents.add_reagent("morphine", 10) //A noticeable knockout that gives plenty of warning before
 	return TRUE
 
 
