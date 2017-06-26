@@ -2,7 +2,7 @@
 
 Modified table 'poll_option', removing the column 'percentagecalc'.
 
-ALTER TABLE `feedback`.`poll_option` DROP COLUMN `percentagecalc`
+ALTER TABLE `poll_option` DROP COLUMN `percentagecalc`
 
 Remember to add a prefix to the table name if you use them.
 
@@ -13,11 +13,11 @@ Remember to add a prefix to the table name if you use them.
 Modified table 'death', adding column 'round_id', removing column 'gender' and replacing column 'coord' with the columns 'x_coord', 'y_coord' and 'z_coord'.
 
 START TRANSACTION;
-ALTER TABLE `feedback`.`death` DROP COLUMN `gender`, ADD COLUMN `x_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `coord`, ADD COLUMN `y_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `x_coord`, ADD COLUMN `z_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `y_coord`, ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`;
+ALTER TABLE `death` DROP COLUMN `gender`, ADD COLUMN `x_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `coord`, ADD COLUMN `y_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `x_coord`, ADD COLUMN `z_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `y_coord`, ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`;
 SET SQL_SAFE_UPDATES = 0;
-UPDATE `feedback`.`death` SET `x_coord` = SUBSTRING_INDEX(`coord`, ',', 1), `y_coord` = SUBSTRING_INDEX(SUBSTRING_INDEX(`coord`, ',', 2), ',', -1), `z_coord` = SUBSTRING_INDEX(`coord`, ',', -1);
+UPDATE `death` SET `x_coord` = SUBSTRING_INDEX(`coord`, ',', 1), `y_coord` = SUBSTRING_INDEX(SUBSTRING_INDEX(`coord`, ',', 2), ',', -1), `z_coord` = SUBSTRING_INDEX(`coord`, ',', -1);
 SET SQL_SAFE_UPDATES = 1;
-ALTER TABLE `feedback`.`death` DROP COLUMN `coord`;
+ALTER TABLE `death` DROP COLUMN `coord`;
 COMMIT;
 
 Remember to add a prefix to the table name if you use them.
@@ -36,7 +36,7 @@ UPDATE death SET coord = CONCAT(SUBSTRING_INDEX(coord, ',', 2), ', ', CASE TRIM(
 
 Modified table 'ban', adding the column 'round_id'.
 
-ALTER TABLE `feedback`.`ban` ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`
+ALTER TABLE `ban` ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`
 
 Remember to add a prefix to the table name if you use them.
 
@@ -48,14 +48,14 @@ Created table `round` to replace tracking of the datapoints 'round_start', 'roun
 Once created this table is populated with rows from the `feedback` table.
 
 START TRANSACTION;
-CREATE TABLE `feedback`.`round` (`id` INT(11) NOT NULL AUTO_INCREMENT, `start_datetime` DATETIME NOT NULL, `end_datetime` DATETIME NULL, `server_ip` INT(10) UNSIGNED NOT NULL, `server_port` SMALLINT(5) UNSIGNED NOT NULL, `commit_hash` CHAR(40) NULL, `game_mode` VARCHAR(32) NULL, `game_mode_result` VARCHAR(64) NULL, `end_state` VARCHAR(64) NULL, `shuttle_name` VARCHAR(64) NULL, `map_name` VARCHAR(32) NULL, `station_name` VARCHAR(80) NULL, PRIMARY KEY (`id`));
-ALTER TABLE `feedback`.`feedback` ADD INDEX `tmp` (`round_id` ASC, `var_name` ASC);
-INSERT INTO `feedback`.`round`
+CREATE TABLE `round` (`id` INT(11) NOT NULL AUTO_INCREMENT, `start_datetime` DATETIME NOT NULL, `end_datetime` DATETIME NULL, `server_ip` INT(10) UNSIGNED NOT NULL, `server_port` SMALLINT(5) UNSIGNED NOT NULL, `commit_hash` CHAR(40) NULL, `game_mode` VARCHAR(32) NULL, `game_mode_result` VARCHAR(64) NULL, `end_state` VARCHAR(64) NULL, `shuttle_name` VARCHAR(64) NULL, `map_name` VARCHAR(32) NULL, `station_name` VARCHAR(80) NULL, PRIMARY KEY (`id`));
+ALTER TABLE `feedback` ADD INDEX `tmp` (`round_id` ASC, `var_name` ASC);
+INSERT INTO `round`
 (`id`, `start_datetime`, `end_datetime`, `server_ip`, `server_port`, `commit_hash`, `game_mode`, `game_mode_result`, `end_state`, `shuttle_name`, `map_name`, `station_name`)
 SELECT DISTINCT ri.round_id, IFNULL(STR_TO_DATE(st.details,'%a %b %e %H:%i:%s %Y'), TIMESTAMP(0)), STR_TO_DATE(et.details,'%a %b %e %H:%i:%s %Y'), IFNULL(INET_ATON(SUBSTRING_INDEX(IF(si.details = '', '0', IF(SUBSTRING_INDEX(si.details, ':', 1) LIKE '%_._%', si.details, '0')), ':', 1)), INET_ATON(0)), IFNULL(IF(si.details LIKE '%:_%', CAST(SUBSTRING_INDEX(si.details, ':', -1) AS UNSIGNED), '0'), '0'), ch.details, gm.details, mr.details, IFNULL(es.details, ep.details), ss.details, mn.details, sn.details
-FROM `feedback`.`feedback`AS ri
-LEFT JOIN `feedback`.`feedback` AS st ON ri.round_id = st.round_id AND st.var_name = "round_start" LEFT JOIN `feedback`.`feedback` AS et ON ri.round_id = et.round_id AND et.var_name = "round_end" LEFT JOIN `feedback`.`feedback` AS si ON ri.round_id = si.round_id AND si.var_name = "server_ip" LEFT JOIN `feedback`.`feedback` AS ch ON ri.round_id = ch.round_id AND ch.var_name = "revision" LEFT JOIN `feedback`.`feedback` AS gm ON ri.round_id = gm.round_id AND gm.var_name = "game_mode" LEFT JOIN `feedback`.`feedback` AS mr ON ri.round_id = mr.round_id AND mr.var_name = "round_end_result" LEFT JOIN `feedback`.`feedback` AS es ON ri.round_id = es.round_id AND es.var_name = "end_state" LEFT JOIN `feedback`.`feedback` AS ep ON ri.round_id = ep.round_id AND ep.var_name = "end_proper" LEFT JOIN `feedback`.`feedback` AS ss ON ri.round_id = ss.round_id AND ss.var_name = "emergency_shuttle" LEFT JOIN `feedback`.`feedback` AS mn ON ri.round_id = mn.round_id AND mn.var_name = "map_name" LEFT JOIN `feedback`.`feedback` AS sn ON ri.round_id = sn.round_id AND sn.var_name = "station_renames";
-ALTER TABLE `feedback`.`feedback` DROP INDEX `tmp`;
+FROM `feedback`AS ri
+LEFT JOIN `feedback` AS st ON ri.round_id = st.round_id AND st.var_name = "round_start" LEFT JOIN `feedback` AS et ON ri.round_id = et.round_id AND et.var_name = "round_end" LEFT JOIN `feedback` AS si ON ri.round_id = si.round_id AND si.var_name = "server_ip" LEFT JOIN `feedback` AS ch ON ri.round_id = ch.round_id AND ch.var_name = "revision" LEFT JOIN `feedback` AS gm ON ri.round_id = gm.round_id AND gm.var_name = "game_mode" LEFT JOIN `feedback` AS mr ON ri.round_id = mr.round_id AND mr.var_name = "round_end_result" LEFT JOIN `feedback` AS es ON ri.round_id = es.round_id AND es.var_name = "end_state" LEFT JOIN `feedback` AS ep ON ri.round_id = ep.round_id AND ep.var_name = "end_proper" LEFT JOIN `feedback` AS ss ON ri.round_id = ss.round_id AND ss.var_name = "emergency_shuttle" LEFT JOIN `feedback` AS mn ON ri.round_id = mn.round_id AND mn.var_name = "map_name" LEFT JOIN `feedback` AS sn ON ri.round_id = sn.round_id AND sn.var_name = "station_renames";
+ALTER TABLE `feedback` DROP INDEX `tmp`;
 COMMIT;
 
 It's not necessary to delete the rows from the `feedback` table but henceforth these datapoints will be in the `round` table.
@@ -68,7 +68,7 @@ Remember to add a prefix to the table names if you use them
 
 Modified table 'player', adding the column 'accountjoindate', removing the column 'id' and making the column 'ckey' the primary key.
 
-ALTER TABLE `feedback`.`player` DROP COLUMN `id`, ADD COLUMN `accountjoindate` DATE NULL AFTER `lastadminrank`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`), DROP INDEX `ckey`;
+ALTER TABLE `player` DROP COLUMN `id`, ADD COLUMN `accountjoindate` DATE NULL AFTER `lastadminrank`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`), DROP INDEX `ckey`;
 
 Remember to add a prefix to the table name if you use them.
 
@@ -78,9 +78,9 @@ Remember to add a prefix to the table name if you use them.
 
 Modified table 'death', adding the columns 'toxloss', 'cloneloss', and 'staminaloss' and table 'legacy_population', adding the columns 'server_ip' and 'server_port'.
 
-ALTER TABLE `feedback`.`death` ADD COLUMN `toxloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `oxyloss`, ADD COLUMN `cloneloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `toxloss`, ADD COLUMN `staminaloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `cloneloss`;
+ALTER TABLE `death` ADD COLUMN `toxloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `oxyloss`, ADD COLUMN `cloneloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `toxloss`, ADD COLUMN `staminaloss` SMALLINT(5) UNSIGNED NOT NULL AFTER `cloneloss`;
 
-ALTER TABLE `feedback`.`legacy_population` ADD COLUMN `server_ip` INT(10) UNSIGNED NOT NULL AFTER `time`, ADD COLUMN `server_port` SMALLINT(5) UNSIGNED NOT NULL AFTER `server_ip`;
+ALTER TABLE `legacy_population` ADD COLUMN `server_ip` INT(10) UNSIGNED NOT NULL AFTER `time`, ADD COLUMN `server_port` SMALLINT(5) UNSIGNED NOT NULL AFTER `server_ip`;
 
 Remember to add a prefix to the table name if you use them.
 
@@ -112,18 +112,18 @@ Created table 'messages' to supersede the 'notes', 'memos', and 'watchlist' tabl
 
 To create this new table run the following command:
 
-CREATE  TABLE `feedback`.`messages` (`id` INT(11) NOT NULL AUTO_INCREMENT , `type` VARCHAR(32) NOT NULL , `targetckey` VARCHAR(32) NOT NULL , `adminckey` VARCHAR(32) NOT NULL , `text` TEXT NOT NULL , `timestamp` DATETIME NOT NULL , `server` VARCHAR(32) NULL , `secret` TINYINT(1) NULL DEFAULT 1 , `lasteditor` VARCHAR(32) NULL , `edits` TEXT NULL , PRIMARY KEY (`id`) )
+CREATE  TABLE `messages` (`id` INT(11) NOT NULL AUTO_INCREMENT , `type` VARCHAR(32) NOT NULL , `targetckey` VARCHAR(32) NOT NULL , `adminckey` VARCHAR(32) NOT NULL , `text` TEXT NOT NULL , `timestamp` DATETIME NOT NULL , `server` VARCHAR(32) NULL , `secret` TINYINT(1) NULL DEFAULT 1 , `lasteditor` VARCHAR(32) NULL , `edits` TEXT NULL , PRIMARY KEY (`id`) )
 
 To copy the contents of the 'notes', 'memos', and 'watchlist' tables to this new table run the following commands:
 
-INSERT INTO `feedback`.`messages`
-(`id`,`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`server`,`secret`,`lasteditor`,`edits`) SELECT `id`, "note", `ckey`, `adminckey`, `notetext`, `timestamp`, `server`, `secret`, `last_editor`, `edits` FROM `feedback`.`notes`
+INSERT INTO `messages`
+(`id`,`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`server`,`secret`,`lasteditor`,`edits`) SELECT `id`, "note", `ckey`, `adminckey`, `notetext`, `timestamp`, `server`, `secret`, `last_editor`, `edits` FROM `notes`
 
-INSERT INTO `feedback`.`messages`
-(`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "memo", `ckey`, `ckey`, `memotext`, `timestamp`, `last_editor`, `edits` FROM `feedback`.`memo`
+INSERT INTO `messages`
+(`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "memo", `ckey`, `ckey`, `memotext`, `timestamp`, `last_editor`, `edits` FROM `memo`
 
-INSERT INTO `feedback`.`messages`
-(`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "watchlist entry", `ckey`, `adminckey`, `reason`, `timestamp`, `last_editor`, `edits` FROM `feedback`.`watch`
+INSERT INTO `messages`
+(`type`,`targetckey`,`adminckey`,`text`,`timestamp`,`lasteditor`,`edits`) SELECT "watchlist entry", `ckey`, `adminckey`, `reason`, `timestamp`, `last_editor`, `edits` FROM `watch`
 
 It's not necessary to delete the 'notes', 'memos', and 'watchlist' tables but they will no longer be used.
 
@@ -135,7 +135,7 @@ Remember to add a prefix to the table names if you use them
 
 Modified table 'notes', adding column 'secret'.
 
-ALTER TABLE `feedback`.`notes` ADD COLUMN `secret` TINYINT(1) NOT NULL DEFAULT '1'  AFTER `server`
+ALTER TABLE `notes` ADD COLUMN `secret` TINYINT(1) NOT NULL DEFAULT '1'  AFTER `server`
 
 Remember to add a prefix to the table name if you use them
 
@@ -145,7 +145,7 @@ Remember to add a prefix to the table name if you use them
 
 Changed appearance bans to be jobbans.
 
-UPDATE 'feedback'.`ban` SET `job` = "appearance", `bantype` = "JOB_PERMABAN" WHERE `bantype` = "APPEARANCE_PERMABAN"
+UPDATE `ban` SET `job` = "appearance", `bantype` = "JOB_PERMABAN" WHERE `bantype` = "APPEARANCE_PERMABAN"
 
 Remember to add a prefix to the table name if you use them
 
@@ -155,7 +155,7 @@ Remember to add a prefix to the table name if you use them
 
 Modified table 'poll_question', adding column 'dontshow' which was recently added to the server schema.
 
-ALTER TABLE `feedback`.`poll_question` ADD COLUMN `dontshow` TINYINT(1) NOT NULL DEFAULT '0'  AFTER `for_trialmin`
+ALTER TABLE `poll_question` ADD COLUMN `dontshow` TINYINT(1) NOT NULL DEFAULT '0'  AFTER `for_trialmin`
 
 Remember to add a prefix to the table name if you use them
 
@@ -165,7 +165,7 @@ Remember to add a prefix to the table name if you use them
 
 Added ipintel table, only required if ip intel is enabled in the config
 
-CREATE TABLE  `ipintel` (
+CREATE TABLE `ipintel` (
 `ip` INT UNSIGNED NOT NULL ,
 `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
 `intel` REAL NOT NULL DEFAULT  '0',
@@ -178,7 +178,7 @@ PRIMARY KEY (  `ip` )
 
 Modified table 'poll_question', adding columns 'createdby_ckey', 'createdby_ip' and 'for_trialmin' to bring it inline with the schema used by the tg servers.
 
-ALTER TABLE `feedback`.`poll_question` ADD COLUMN `createdby_ckey` VARCHAR(45) NULL DEFAULT NULL AFTER `multiplechoiceoptions`, ADD COLUMN `createdby_ip` VARCHAR(45) NULL DEFAULT NULL AFTER `createdby_ckey`, ADD COLUMN `for_trialmin` VARCHAR(45) NULL DEFAULT NULL AFTER `createdby_ip`
+ALTER TABLE `poll_question` ADD COLUMN `createdby_ckey` VARCHAR(45) NULL DEFAULT NULL AFTER `multiplechoiceoptions`, ADD COLUMN `createdby_ip` VARCHAR(45) NULL DEFAULT NULL AFTER `createdby_ckey`, ADD COLUMN `for_trialmin` VARCHAR(45) NULL DEFAULT NULL AFTER `createdby_ip`
 
 Remember to add a prefix to the table name if you use them
 
@@ -188,7 +188,7 @@ Remember to add a prefix to the table name if you use them
 
 Modified table 'watch', removing 'id' column, making 'ckey' primary and adding the columns 'timestamp', 'adminckey', 'last_editor' and 'edits'.
 
-ALTER TABLE `feedback`.`watch` DROP COLUMN `id`, ADD COLUMN `timestamp` datetime NOT NULL AFTER `reason`, ADD COLUMN `adminckey` varchar(32) NOT NULL AFTER `timestamp`, ADD COLUMN `last_editor` varchar(32) NULL AFTER `adminckey`, ADD COLUMN `edits` text NULL AFTER `last_editor`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`)
+ALTER TABLE `watch` DROP COLUMN `id`, ADD COLUMN `timestamp` datetime NOT NULL AFTER `reason`, ADD COLUMN `adminckey` varchar(32) NOT NULL AFTER `timestamp`, ADD COLUMN `last_editor` varchar(32) NULL AFTER `adminckey`, ADD COLUMN `edits` text NULL AFTER `last_editor`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`)
 
 Remember to add a prefix to the table name if you use them.
 
@@ -210,7 +210,7 @@ Remember to add prefix to the table name if you use them.
 
 Modified table 'memo', removing 'id' column and making 'ckey' primary.
 
-ALTER TABLE `feedback`.`memo` DROP COLUMN `id`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`) 
+ALTER TABLE `memo` DROP COLUMN `id`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`) 
 
 Remember to add prefix to the table name if you use them.
 
