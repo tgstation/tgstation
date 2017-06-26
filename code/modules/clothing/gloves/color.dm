@@ -22,6 +22,21 @@
 	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
+/obj/item/clothing/gloves/color/old
+	desc = "Old and worn out insulated gloves, hopefully they still work."
+	name = "worn out insulated gloves"
+	icon_state = "yellow"
+	item_state = "ygloves"
+	siemens_coefficient = 1
+	permeability_coefficient = 0.05
+	item_color="yellow"
+	resistance_flags = 0
+
+
+/obj/item/clothing/gloves/color/fyellow/New()
+	..()
+	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
+
 /obj/item/clothing/gloves/color/black
 	desc = "These gloves are fire-resistant."
 	name = "black gloves"

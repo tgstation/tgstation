@@ -14,10 +14,12 @@
 /area/ruin/ancientstation/hivebot)
 "ae" = (
 /obj/structure/closet/crate,
-/obj/item/stack/sheet/glass{
-	anchored = 20
-	},
 /obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "af" = (
@@ -42,6 +44,9 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 15
 	},
+/obj/item/weapon/ore/bluespace_crystal,
+/obj/item/weapon/ore/bluespace_crystal,
+/obj/item/weapon/ore/bluespace_crystal,
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "ak" = (
@@ -480,6 +485,7 @@
 "bu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/weapon/tank/internals/emergency_oxygen,
 /turf/open/floor/plasteel/blue/side,
 /area/ruin/ancientstation/comm)
 "bv" = (
@@ -1472,7 +1478,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "dM" = (
 /obj/structure/table,
@@ -1857,16 +1863,14 @@
 	d2 = 4
 	},
 /obj/machinery/power/solar,
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "eJ" = (
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged1"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "eK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3573,7 +3577,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "hN" = (
 /obj/structure/lattice/catwalk,
@@ -3918,8 +3922,10 @@
 /area/ruin/ancientstation/rnd)
 "iv" = (
 /obj/structure/table,
-/obj/item/device/multitool,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/gloves/color/old,
+/obj/item/clothing/gloves/color/old,
+/obj/item/device/multitool,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -4547,9 +4553,7 @@
 /area/template_noop)
 "jR" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel/airless{
-	icon_state = "damaged2"
-	},
+/turf/open/floor/plating/airless,
 /area/template_noop)
 "jS" = (
 /obj/structure/grille,
@@ -5204,6 +5208,29 @@
 "lp" = (
 /turf/closed/mineral/gold,
 /area/ruin/unpowered)
+"lq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/ancientstation/deltacorridor)
+"lr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/ore/bluespace_crystal,
+/turf/open/floor/plasteel/white,
+/area/ruin/ancientstation/rnd)
+"ls" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/ore/bluespace_crystal/refined,
+/turf/open/floor/plasteel/white,
+/area/ruin/ancientstation/rnd)
+"lt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mirror{
+	name = "dusty mirror";
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/ruin/ancientstation)
 
 (1,1,1) = {"
 aa
@@ -5900,20 +5927,20 @@ aa
 bd
 aa
 aa
-dG
-dG
-dG
+bf
+bf
+bf
 aa
 aa
 gb
 aa
 aa
 hM
-eh
-dG
+bf
+bf
 aA
-dG
-eh
+bf
+bf
 eI
 aa
 aa
@@ -6004,21 +6031,21 @@ aa
 bd
 aa
 aa
-dI
-eh
+bf
+bf
 eI
 aa
 aa
 gd
 aa
 aa
-eh
+bf
 hM
-dJ
+bf
 aA
-eh
-dG
-dJ
+bf
+bf
+bf
 aa
 aa
 aa
@@ -6108,21 +6135,21 @@ aa
 bd
 aa
 aa
-dJ
-dG
+bf
+bf
 eJ
 aa
 aa
 gd
 aa
 aa
-dG
-ia
-dG
+bf
+bf
+bf
 aA
-dG
-ia
-ia
+bf
+bf
+bf
 aa
 aa
 aa
@@ -6213,20 +6240,20 @@ bd
 aa
 aa
 dL
-dG
-dG
+bf
+bf
 aa
 aa
 gd
 aa
 aa
-dG
-ic
-ia
-aA
-dG
+bf
 eJ
-ic
+bf
+aA
+bf
+eJ
+eJ
 aa
 aa
 aa
@@ -7268,7 +7295,7 @@ ja
 cn
 jH
 aG
-bN
+lt
 bN
 bN
 bN
@@ -8134,7 +8161,7 @@ aa
 bD
 bZ
 cw
-ca
+lq
 bD
 aa
 aa
@@ -8814,7 +8841,7 @@ de
 dy
 dZ
 eD
-dZ
+lr
 fx
 dZ
 gQ
@@ -8866,7 +8893,7 @@ dc
 dy
 dZ
 eE
-dZ
+ls
 fy
 dZ
 gR

@@ -104,7 +104,7 @@ Contains:
 	icon_state = "void"
 	item_state = "void"
 	desc = "A Centcom engineering dark red space suit. Age has degraded the suit making is difficult to move around in."
-	slowdown = TRUE
+	slowdown = 4
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/device/multitool)
 
 	//Space santa outfit suit
