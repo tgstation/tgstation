@@ -472,6 +472,7 @@
 #include "code\game\gamemodes\gang\gang_items.dm"
 #include "code\game\gamemodes\gang\gang_pen.dm"
 #include "code\game\gamemodes\gang\recaller.dm"
+#include "code\game\gamemodes\gang\vigilante.dm"
 #include "code\game\gamemodes\malfunction\Malf_Modules.dm"
 #include "code\game\gamemodes\meteor\meteor.dm"
 #include "code\game\gamemodes\meteor\meteors.dm"

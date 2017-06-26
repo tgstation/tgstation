@@ -283,7 +283,7 @@
 	if(gang && user.mind && user.mind.gang_datum)
 		gang_mode = TRUE
 
-	// discontinue if the area isn't valid for tagging because gang "honour"
+	// discontinue if the area isn't valid for tagging because gang "honor"
 	if(gang_mode && (!can_claim_for_gang(user, target)))
 		return
 
@@ -394,14 +394,18 @@
 		return FALSE
 
 	var/spraying_over = FALSE
+	var/occupying_gang = territory_claimed(A, user)
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
-		spraying_over = TRUE
+		if(user.mind.gang_datum == occupying_gang)
+			to_chat(user, "<span class='danger'>This is your gang's tag!</span>")
+			return FALSE
+		else
+			spraying_over = TRUE
 
 	for(var/obj/machinery/power/apc in target)
 		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
 		return FALSE
 
-	var/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
 		to_chat(user, "<span class='danger'>[A] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
 		return FALSE
@@ -412,7 +416,7 @@
 /obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
 	for(var/datum/gang/G in SSticker.mode.gangs)
 		if(territory.type in (G.territory|G.territory_new))
-			. = G.name
+			. = G
 			break
 
 /obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target)

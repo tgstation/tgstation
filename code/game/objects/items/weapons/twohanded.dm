@@ -626,6 +626,29 @@
 		return 1
 	..()
 
+/obj/item/weapon/twohanded/pitchfork/gangfork
+	icon_state = "gangfork0"
+	name = "hardened pitchfork"
+	desc = "A favorite among lynch mobs."
+	force = 10
+	throw_speed = 4
+	throwforce = 24
+	w_class = WEIGHT_CLASS_BULKY
+	force_unwielded = 10
+	force_wielded = 24
+	armour_penetration = 15
+	block_chance = 40
+	attack_verb = list("attacked", "impaled", "pierced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 50, acid = 30)
+
+/obj/item/weapon/twohanded/pitchfork/gangfork/update_icon()
+	icon_state = "gangfork[wielded]"
+
+
 //HF blade
 
 /obj/item/weapon/twohanded/vibro_weapon

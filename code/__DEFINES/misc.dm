@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 //Gangster starting influences
 
 #define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
-#define GANGSTER_BOSS_STARTING_INFLUENCE 20
+#define GANGSTER_BOSS_STARTING_INFLUENCE 10
 
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1

@@ -507,6 +507,14 @@ SUBSYSTEM_DEF(job)
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
 
+/datum/controller/subsystem/job/proc/DisableJob(job_path)
+	for(var/I in occupations)
+		var/datum/job/J = I
+		if(istype(J, job_path))
+			J.total_positions = 0
+			J.spawn_positions = 0
+			J.current_positions = 0
+
 /datum/controller/subsystem/job/proc/SendToAtom(mob/M, atom/A, buckle)
 	if(buckle && isliving(M) && istype(A, /obj/structure/chair))
 		var/obj/structure/chair/C = A

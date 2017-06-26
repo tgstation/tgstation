@@ -3,6 +3,7 @@
 	desc = "Protects against brainwashing."
 	origin_tech = "materials=2;biotech=4;programming=4"
 	activated = 0
+	var/strong = FALSE
 
 /obj/item/weapon/implant/mindshield/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -17,7 +18,7 @@
 	return dat
 
 
-/obj/item/weapon/implant/mindshield/implant(mob/living/target, mob/user, silent = 0)
+/obj/item/weapon/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE)
 	if(..())
 		if((target.mind in (SSticker.mode.head_revolutionaries | SSticker.mode.get_gang_bosses())))
 			if(!silent)
@@ -27,11 +28,12 @@
 			return 0
 		if(target.mind in SSticker.mode.get_gangsters())
 			SSticker.mode.remove_gangster(target.mind)
-			if(!silent)
-				target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
-			removed(target, 1)
-			qdel(src)
-			return 0
+			if(!strong)
+				if(!silent)
+					target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
+				removed(target, 1)
+				qdel(src)
+				return 0
 		if(target.mind in SSticker.mode.revolutionaries)
 			SSticker.mode.remove_revolutionary(target.mind)
 		if(!silent)

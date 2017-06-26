@@ -15,7 +15,6 @@
 	var/outfits = 2
 	var/free_pen = 0
 	var/promotable = 0
-	var/list/tags = list()
 
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
 	..()
@@ -25,8 +24,8 @@
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))
 		return
+	var/list/dat = list()
 
-	var/dat
 	if(!gang)
 		dat += "This device is not registered.<br><br>"
 		if(user.mind in SSticker.mode.get_gang_bosses())
@@ -35,11 +34,8 @@
 				dat += "If this is meant as a spare device for yourself:<br>"
 			dat += "<a href='?src=\ref[src];register=1'>Register Device as Spare</a><br>"
 		else if (promotable)
-			if(user.mind.gang_datum.bosses.len < 3)
-				dat += "You have been selected for a promotion!<br>"
-				dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
-			else
-				dat += "No promotions available: All positions filled.<br>"
+			dat += "You have been selected for a promotion!<br>"
+			dat += "<a href='?src=\ref[src];register=1'>Accept Promotion</a><br>"
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
@@ -77,8 +73,8 @@
 
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
-	popup.set_content(dat)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
+	popup.set_content(dat.Join())
 	popup.open()
 
 
@@ -128,7 +124,7 @@
 				gang_rank = "3rd Lieutenant"
 			else
 				gang_rank = "[gang_rank - 1]th Lieutenant"
-		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank] - [user.real_name]</i>: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				to_chat(ganger.current, ping)
@@ -234,7 +230,7 @@
 		return 0
 	if(gang && (user.mind in gang.bosses))	//If it's already registered, only let the gang's bosses use this
 		return 1
-	else if(user.mind in SSticker.mode.get_all_gangsters()) // For soldiers and potential LT's
+	else if(istype(src, /obj/item/device/gangtool/soldier) || istype(src, /obj/item/device/gangtool/spare)) // For soldiers and potential LT's
 		return 1
 	return 0
 
@@ -246,25 +242,39 @@
 
 ///////////// Internal tool used by gang regulars ///////////
 
-/obj/item/device/gangtool/soldier/New(mob/user)
+/obj/item/device/gangtool/soldier
+	var/datum/action/innate/gang/tool/linked_action
+
+/obj/item/device/gangtool/soldier/Initialize()
 	. = ..()
-	gang = user.mind.gang_datum
+	var/mob/living/M = loc
+	gang = M.mind.gang_datum
 	gang.gangtools += src
-	var/datum/action/innate/gang/tool/GT = new
-	GT.Grant(user, src, gang)
+	linked_action = new(M)
+	linked_action.Grant(M, src, gang)
+
+/obj/item/device/gangtool/soldier/Destroy()
+	var/mob/living/M = loc
+	linked_action.Remove(M)
+	M.update_icons()
+	return ..()
+
 
 /obj/item/device/gangtool/soldier/attack_self(mob/user)
 	if (!can_use(user))
 		return
-	var/dat
+	var/list/dat = list()
 	if(gang.is_dominating)
 		dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
-	dat += "Registration: <B>[gang.name] - Foot Soldier</B><br>"
+	dat += "[gang.name] Gang Leadership: "
+	for(var/datum/mind/bossman in gang.bosses)
+		dat += "<b>[bossman.name]</b> - "
+	dat += "<br>"
 	dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
 	dat += "Your Influence: <B>[gang.get_influence(user.mind)]</B><br>"
-	if(LAZYLEN(tags))
+	if(LAZYLEN(gang.tags_by_mind[user.mind]))
 		dat += "Your tags generate bonus influence for you.<br> You have tagged the following territories:"
-		for(var/obj/effect/decal/cleanable/crayon/gang/T in tags)
+		for(var/obj/effect/decal/cleanable/crayon/gang/T in gang.tags_by_mind[user.mind])
 			dat += " [T.territory] -"
 	else
 		dat += "You have not personally tagged any territory for your gang. Use a spray can to mark your territory and receive bonus influence."
@@ -293,8 +303,8 @@
 
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
 
-	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v3.5", 340, 625)
-	popup.set_content(dat)
+	var/datum/browser/popup = new(user, "gangtool", "Welcome to GangTool v4.0", 400, 750)
+	popup.set_content(dat.Join())
 	popup.open()
 
 /obj/item/device/gangtool/soldier/Topic(href, href_list)
@@ -304,28 +314,24 @@
 		var/datum/gang_item/G = gang.reg_item_list[href_list["purchase"]]
 		if(G && G.can_buy(usr, gang, src))
 			G.purchase(usr, gang, src, FALSE)
-
 	attack_self(usr)
 
-/datum/action/innate/gang
-	background_icon_state = "bg_spell"
 
 /datum/action/innate/gang/IsAvailable()
-	if(!owner.mind || !owner.mind in SSticker.mode.get_all_gangsters())
+	if(!owner || !owner.mind || !owner.mind in SSticker.mode.get_all_gangsters())
 		return 0
 	return ..()
 
 /datum/action/innate/gang/tool
 	name = "Personal Gang Tool"
 	desc = "An implanted gang tool that lets you purchase gear"
-	background_icon_state = "bg_mime"
+	background_icon_state = "bg_demon"
 	button_icon_state = "bolt_action"
 	var/obj/item/device/gangtool/soldier/GT
 
-/datum/action/innate/gang/tool/Grant(mob/user, obj/reg, datum/gang/G)
+/datum/action/innate/gang/tool/Grant(mob/user, obj/reg)
 	. = ..()
 	GT = reg
-	button.color = G.color
 
 /datum/action/innate/gang/tool/Activate()
 	GT.attack_self(owner)

@@ -42,6 +42,7 @@
 	var/newcolor = G.color_hex
 	icon_state = G.name
 	G.territory_new |= list(territory.type = territory.name)
+
 	//If this isn't tagged by a specific gangster there's no bonus income.
 	set_mind_owner(user_mind)
 	..(mapload, newcolor, icon_state, e_name, rotation)

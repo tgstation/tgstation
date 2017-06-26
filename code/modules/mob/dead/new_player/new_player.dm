@@ -111,7 +111,7 @@
 		if(SSticker)
 			var/tready = text2num(href_list["ready"])
 			//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-			//This is likely not an actual issue but I don't have time to prove that this 
+			//This is likely not an actual issue but I don't have time to prove that this
 			//no longer is required
 			if(SSticker.current_state <= GAME_STATE_PREGAME)
 				ready = tready
@@ -367,6 +367,8 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
+		if(SSticker.mode.vigilantes)
+			vigilize(humanc)
 
 	GLOB.joined_player_list += character.ckey
 
