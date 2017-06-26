@@ -36691,11 +36691,11 @@
 "bGg" = (
 /obj/structure/table,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bGh" = (
 /obj/machinery/computer/shuttle/mining,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bGi" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -37338,7 +37338,7 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bHy" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small{
@@ -38172,7 +38172,7 @@
 	width = 7
 	},
 /turf/open/floor/plating,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bJd" = (
 /obj/machinery/door/airlock/glass_mining{
 	cyclelinkeddir = 8;
@@ -39339,11 +39339,11 @@
 "bLs" = (
 /obj/structure/ore_box,
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bLt" = (
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bLu" = (
 /obj/structure/rack{
 	dir = 8;
@@ -39867,7 +39867,7 @@
 	layer = 2.9
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "bMG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -62472,7 +62472,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/labor)
+/area/shuttle/mining)
 "cMm" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/highpressure/fulltile,
@@ -64406,6 +64406,86 @@
 	dir = 1
 	},
 /area/engine/engineering)
+"cTg" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTh" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTi" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTj" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTk" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTl" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTm" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTn" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTo" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTp" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTq" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTr" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTs" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTt" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTu" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTv" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/mining)
+"cTw" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTx" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+"cTy" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTz" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTA" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTB" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
+"cTC" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/mining)
 
 (1,1,1) = {"
 aaa
@@ -83830,13 +83910,13 @@ aaa
 aaa
 aaa
 aaa
-akD
-akD
-ajX
-akD
-ajX
-akD
-akD
+cTg
+cTl
+cTn
+cTr
+cTu
+cTw
+cTz
 aaa
 bCq
 bPS
@@ -84087,13 +84167,13 @@ aaa
 aaa
 aaa
 aaa
-akD
+cTh
 bGg
-amI
+cTo
 cMl
 bHx
-anM
-akD
+cTx
+cTA
 aaa
 bLv
 bPR
@@ -84344,10 +84424,10 @@ bxx
 bxu
 bxu
 bDi
-ajX
+cTi
 bGh
 bHx
-amI
+cTs
 bHx
 bLt
 bMF
@@ -84601,13 +84681,13 @@ bzP
 bAS
 bxu
 aaa
-akD
+cTj
 bGg
-amI
-amI
+cTp
+cTt
 bHx
 bLs
-akD
+cTB
 aaa
 bLv
 bPT
@@ -84858,13 +84938,13 @@ bzR
 byd
 bxx
 aaa
-akD
-akD
-ajX
+cTk
+cTm
+cTq
 bJc
-ajX
-akD
-akD
+cTv
+cTy
+cTC
 aaa
 bCq
 bPV
