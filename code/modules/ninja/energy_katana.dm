@@ -126,12 +126,11 @@
 		to_chat(user, "<span class='notice'>[msg]</span>")
 
 /obj/item/weapon/dash/energy_katana/Initialize()
-	..()
+	. = ..()
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
 /obj/item/weapon/dash/energy_katana/Destroy()
-	qdel(spark_system)
-	spark_system = null
+	QDEL_NULL(spark_system)
 	return ..()
