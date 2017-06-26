@@ -646,10 +646,7 @@
 	},
 /area/mine/eva)
 "bH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -964,10 +961,8 @@
 	},
 /area/mine/production)
 "cl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	layer = 2.4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -1394,9 +1389,7 @@
 	},
 /area/mine/maintenance)
 "dj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -1598,9 +1591,7 @@
 	},
 /area/mine/living_quarters)
 "dD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -1695,10 +1686,7 @@
 	},
 /area/mine/production)
 "dM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -1973,9 +1961,8 @@
 	},
 /area/mine/production)
 "ep" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2255,9 +2242,8 @@
 	},
 /area/mine/living_quarters)
 "eP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2423,9 +2409,8 @@
 	},
 /area/mine/living_quarters)
 "ff" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2503,9 +2488,8 @@
 	},
 /area/mine/living_quarters)
 "fp" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -2654,10 +2638,8 @@
 	},
 /area/mine/living_quarters)
 "fF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	layer = 2.4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface

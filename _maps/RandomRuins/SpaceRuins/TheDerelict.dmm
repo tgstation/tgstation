@@ -1532,15 +1532,11 @@
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
 "er" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
 /area/derelict/bridge)
 "es" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
 "et" = (
@@ -2022,9 +2018,7 @@
 	},
 /area/derelict/singularity_engine)
 "fM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "fN" = (
@@ -2252,15 +2246,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "gw" = (
@@ -2773,9 +2763,7 @@
 	},
 /area/derelict/medical/chapel)
 "ih" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
 "ii" = (
@@ -2875,15 +2863,11 @@
 	},
 /area/derelict/medical/chapel)
 "iy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
 "iz" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
 "iA" = (
@@ -3083,9 +3067,7 @@
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
 "je" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
 "jf" = (
@@ -3178,9 +3160,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "jr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -3526,15 +3506,11 @@
 	},
 /area/derelict/hallway/primary)
 "kn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "ko" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "kp" = (
@@ -3838,9 +3814,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "lf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -4299,9 +4273,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
 "mE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mF" = (
@@ -4334,9 +4306,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mL" = (
@@ -4433,9 +4403,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nc" = (
@@ -4606,9 +4574,7 @@
 	},
 /area/derelict/hallway/secondary)
 "nw" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nx" = (
@@ -4786,9 +4752,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
 "nW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "nX" = (
@@ -4888,9 +4852,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "oj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "ok" = (
