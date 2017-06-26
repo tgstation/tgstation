@@ -1,61 +1,134 @@
 //The necropolis gate is used to call forth Legion from the Necropolis.
 /obj/structure/necropolis_gate
 	name = "necropolis gate"
-	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
+	desc = "A tremendous and impossibly large gateway, set into a massive tower of stone."
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "door"
-	anchored = 1
-	density = 1
-	opacity = 1
-	bound_width = 96
-	bound_height = 96
+	icon_state = "gate_full"
+	layer = TABLE_LAYER
+	anchored = TRUE
+	density = TRUE
 	pixel_x = -32
+	pixel_y = -32
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	light_range = 1
-	var/boss = FALSE
-	var/is_anyone_home = FALSE
+	light_range = 8
+	light_color = LIGHT_COLOR_LAVA
+	var/open = FALSE
+	var/static/mutable_appearance/top_overlay
+	var/static/mutable_appearance/door_overlay
+	var/obj/structure/opacity_blocker/sight_blocker
+	var/sight_blocker_distance = 2
+
+/obj/structure/necropolis_gate/Initialize()
+	. = ..()
+	var/turf/sight_blocker_turf = get_turf(src)
+	if(sight_blocker_distance)
+		for(var/i in 1 to sight_blocker_distance)
+			if(!sight_blocker_turf)
+				break
+			sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
+	if(sight_blocker_turf)
+		sight_blocker = new (sight_blocker_turf) //we need to block sight in a different spot than most things do
+	icon_state = "gate_bottom"
+	top_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_top")
+	top_overlay.layer = EDGED_TURF_LAYER
+	add_overlay(top_overlay)
+	door_overlay = mutable_appearance('icons/effects/96x96.dmi', "door")
+	add_overlay(door_overlay)
 
 /obj/structure/necropolis_gate/attack_hand(mob/user)
-	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in GLOB.mob_list)
-		return
-	if(is_anyone_home)
+	if(open)
 		return
 	var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
-	if(safety == "Abort" || !in_range(src, user) || !src || is_anyone_home || user.incapacitated())
+	if(safety == "Abort" || !in_range(src, user) || !src || open || user.incapacitated())
 		return
 	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
 	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
-	is_anyone_home = TRUE
+	open = TRUE
 	sleep(50)
-	if(boss)
-		to_chat(user, "<span class='notice'>There's no response.</span>")
-		is_anyone_home = FALSE
-		return 0
-	boss = TRUE
-	visible_message("<span class='warning'>Locks along the door begin clicking open from within...</span>")
-	var/volume = 60
-	for(var/i in 1 to 3)
-		playsound(src, 'sound/items/deconstruct.ogg', volume, 0)
-		volume += 20
-		sleep(10)
-	sleep(10)
+	cut_overlay(door_overlay)
+	var/turf/T = get_turf(src)
+	new /obj/effect/temp_visual/necropolis_open(T)
+	sleep(2)
+	visible_message("<span class='warning'>The door starts to grind open...</span>")
+	playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
+	sleep(27)
+	qdel(sight_blocker, TRUE)
+	sleep(5)
+	density = FALSE
 	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
-	message_admins("[key_name_admin(user)] has summoned Legion!")
-	log_game("[key_name(user)] summoned Legion.")
+	message_admins("[key_name_admin(user)] has released Legion!")
+	log_game("[key_name(user)] released Legion.")
 	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
-			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>")
-			M << 'sound/creatures/legion_spawn.ogg'
+			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has been released.</span>")
+			M.playsound_local(T, 'sound/creatures/legion_spawn.ogg', 100, FALSE, 0, FALSE, pressure_affected = FALSE)
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
-	var/mutable_appearance/door_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
-	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, alert_overlay = door_overlay, action = NOTIFY_JUMP)
-	is_anyone_home = FALSE
-	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
+	var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
+	notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
 
 /obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
 /obj/structure/necropolis_gate/Destroy(force)
+	if(force)
+		qdel(sight_blocker, TRUE)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
+/obj/effect/temp_visual/necropolis_open
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "door_opening"
+	duration = 38
+	layer = TABLE_LAYER
+	pixel_x = -32
+	pixel_y = -32
+
+/obj/structure/opacity_blocker
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+	mouse_opacity = 0
+	opacity = TRUE
+
+/obj/structure/opacity_blocker/singularity_pull()
+	return 0
+
+/obj/structure/opacity_blocker/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
+/obj/structure/necropolis_gate/second
+	sight_blocker_distance = 1
+
+/obj/structure/necropolis_gate/second/attack_hand(mob/user)
+	to_chat(user, "<span class='boldannounce'>It's locked.</span>")
+
+/obj/structure/necropolis_arch
+	name = "necropolis arch"
+	desc = "A massive arch over the necropolis gate, set into a massive tower of stone."
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "arch_full"
+	layer = TABLE_LAYER
+	anchored = TRUE
+	pixel_x = -64
+	pixel_y = -40
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/open = FALSE
+	var/static/mutable_appearance/top_overlay
+
+/obj/structure/necropolis_arch/Initialize()
+	. = ..()
+	icon_state = "arch_bottom"
+	top_overlay = mutable_appearance('icons/effects/160x160.dmi', "arch_top")
+	top_overlay.layer = EDGED_TURF_LAYER
+	add_overlay(top_overlay)
+
+/obj/structure/necropolis_arch/singularity_pull()
+	return 0
+
+/obj/structure/necropolis_arch/Destroy(force)
 	if(force)
 		. = ..()
 	else
@@ -74,6 +147,12 @@
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
+
+/obj/structure/stone_tile/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/structure/stone_tile/block
 	name = "stone block"

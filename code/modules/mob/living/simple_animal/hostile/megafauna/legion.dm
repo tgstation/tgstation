@@ -45,6 +45,7 @@ Difficulty: Medium
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
+	wander = FALSE
 	elimination = 1
 	idle_vision_range = 13
 	appearance_flags = 0
@@ -53,6 +54,11 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
 	internal = new/obj/item/device/gps/internal/legion(src)
+
+/mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
+	. = ..()
+	if(target)
+		wander = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
