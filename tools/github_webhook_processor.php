@@ -153,11 +153,11 @@ function tag_pr($payload, $opened) {
 	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	autotag_tree($payload, '_maps', 'Map Edit', &$tags, &$remove);
-	autotag_tree($payload, 'tools', 'Tools', &$tags, &$remove);
-	autotag_tree($payload, 'SQL', 'SQL', &$tags, &$remove);
-	autotag_tree($payload, 'icons', 'Sprites', &$tags, &$remove);
-	autotag_tree($payload, 'sounds', 'Sound', &$tags, &$remove);
+	autotag_tree($payload, '_maps', 'Map Edit', $tags, $remove);
+	autotag_tree($payload, 'tools', 'Tools', $tags, $remove);
+	autotag_tree($payload, 'SQL', 'SQL', $tags, $remove);
+	autotag_tree($payload, 'icons', 'Sprites', $tags, $remove);
+	autotag_tree($payload, 'sounds', 'Sound', $tags, $remove);
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
