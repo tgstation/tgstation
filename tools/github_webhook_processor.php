@@ -141,10 +141,11 @@ function tag_pr($payload, $opened) {
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
-		if(strpos(strtolower($title), 'refactor') !== FALSE)
+		$lowertitle = strtolower($title)
+		if(strpos($lowertitle, 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
 		
-		if(strpos(strtolower($title), 'revert') !== FALSE || strpos(strtolower($title), 'removes') !== FALSE)
+		if(strpos($lowertitle, 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
 			$tags[] = 'Revert/Removal';
 	}
 
