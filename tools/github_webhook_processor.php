@@ -143,6 +143,9 @@ function tag_pr($payload, $opened) {
 
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
+		
+		if(strpos(strtolower($title), 'reverts') !== FALSE || strpos(strtolower($title), 'removes') !== FALSE)
+			$tags[] = 'Revert/Removal';
 	}
 
 	$remove = array();
