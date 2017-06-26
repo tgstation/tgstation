@@ -386,5 +386,5 @@
 	pixel_y = -16
 
 /obj/structure/flora/rock/pile/largejungle/Initialize()
-	..()
+	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
