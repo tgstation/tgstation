@@ -298,7 +298,7 @@
 		last_oxyloss = owner.getOxyLoss()
 		last_cloneloss = owner.getCloneLoss()
 		last_staminaloss = owner.getStaminaLoss()
-		owner.log_message("gained blood-drunk stun stun immunity", INDIVIDUAL_ATTACK_LOG)
+		owner.log_message("gained blood-drunk stun immunity", INDIVIDUAL_ATTACK_LOG)
 		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
 		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
 
