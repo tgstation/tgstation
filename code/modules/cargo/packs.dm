@@ -710,6 +710,15 @@
 					/obj/item/weapon/am_containment)
 	crate_name = "antimatter jar crate"
 
+/datum/supply_pack/engineering/shuttle_engine
+	name = "Shuttle Engine Crate"
+	cost = 5000
+	access = GLOB.access_ce
+	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
+	crate_name = "shuttle engine crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	special = TRUE
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
