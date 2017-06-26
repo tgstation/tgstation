@@ -195,9 +195,7 @@
 	name = "Hotel Guest Room 3"
 	})
 "aC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -254,9 +252,7 @@
 	name = "Hotel Guest Room 4"
 	})
 "aK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -313,9 +309,7 @@
 	name = "Hotel Guest Room 5"
 	})
 "aS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -372,9 +366,7 @@
 	name = "Hotel Guest Room 6"
 	})
 "ba" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -424,10 +416,7 @@
 	name = "Hotel Guest Room 3"
 	})
 "bh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 3"
@@ -471,10 +460,7 @@
 	name = "Hotel Guest Room 4"
 	})
 "bn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 4"
@@ -518,10 +504,7 @@
 	name = "Hotel Guest Room 5"
 	})
 "bt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 5"
@@ -565,10 +548,7 @@
 	name = "Hotel Guest Room 6"
 	})
 "bz" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
 	name = "Hotel Guest Room 6"
@@ -1721,9 +1701,8 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "eb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
@@ -1764,9 +1743,8 @@
 	name = "Hotel Guest Room 2"
 	})
 "eh" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1799,9 +1777,8 @@
 	name = "Hotel Guest Room 1"
 	})
 "el" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1844,9 +1821,8 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
 "er" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
@@ -1859,9 +1835,8 @@
 	name = "Hotel Guest Room 2"
 	})
 "et" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1883,9 +1858,8 @@
 	name = "Hotel Guest Room 1"
 	})
 "ew" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -2039,10 +2013,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
 "eW" = (
@@ -2192,9 +2163,8 @@
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
 "ft" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -2272,16 +2242,14 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
 "fJ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
@@ -2483,9 +2451,8 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
 "gn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
@@ -2697,9 +2664,8 @@
 /area/ruin/hotel/bar)
 "gW" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
@@ -2812,9 +2778,8 @@
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
 "hk" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
@@ -2842,9 +2807,7 @@
 /area/ruin/hotel/bar)
 "ho" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
 "hp" = (
@@ -3389,9 +3352,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
@@ -3456,9 +3418,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/ruin/hotel)
 "iO" = (
@@ -3651,15 +3611,12 @@
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
 "jh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -3824,9 +3781,8 @@
 /turf/open/floor/plasteel,
 /area/ruin/hotel/power)
 "jD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/power)
@@ -3966,9 +3922,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
 	icon_state = "yellow";
@@ -4148,9 +4103,8 @@
 	},
 /area/ruin/hotel/security)
 "ky" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/security)
@@ -4199,9 +4153,8 @@
 /turf/open/floor/wood,
 /area/ruin/hotel/pool)
 "kG" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -4287,9 +4240,8 @@
 	},
 /area/ruin/hotel/pool)
 "kT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -4355,9 +4307,8 @@
 "lc" = (
 /obj/structure/table,
 /obj/item/weapon/papercutter,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/security)
@@ -4786,9 +4737,8 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/pool)
 "mo" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
 /area/ruin/hotel/custodial)
@@ -4803,9 +4753,8 @@
 /turf/closed/wall,
 /area/ruin/hotel/custodial)
 "mr" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -4832,9 +4781,8 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/pool)
 "mu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/open/floor/plasteel/neutral,
 /area/ruin/hotel/custodial)
