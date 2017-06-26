@@ -100,7 +100,7 @@
 	var/mob/living/carbon/human/H = owner
 	H.mind.martial_art.streak = "drop"
 
-/datum/martial_art/wrestling/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
+/datum/martial_art/wrestling/teach(mob/living/carbon/human/H,make_temporary=0)
 	..()
 	to_chat(H, "<span class = 'userdanger'>SNAP INTO A THIN TIM!</span>")
 	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
@@ -110,8 +110,7 @@
 	throw_wrassle.Grant(H)
 	strike.Grant(H)
 
-/datum/martial_art/wrestling/remove(var/mob/living/carbon/human/H)
-	..()
+/datum/martial_art/wrestling/remove_act(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You no longer feel that the tower of power is too sweet to be sour...</span>")
 	drop.Remove(H)
 	kick.Remove(H)

@@ -1629,7 +1629,8 @@
 	if(martial_art)
 		if(martial_art.base) //Is the martial art temporary?
 			martial_art.remove(new_character)
-		martial_art.teach(new_character)
+		else
+			martial_art.teach(new_character)
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)

@@ -90,6 +90,15 @@
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.mind.martial_art != src)
 		return
-	H.mind.martial_art = base
+	if(base)
+		H.mind.martial_art = base
+	else
+		H.mind.martial_art = H.mind.default_martial_art
 	if(help_verb)
 		H.verbs -= help_verb
+	remove_act(H)
+	H.mind.martial_art.teach(H)
+	qdel(src)
+
+/datum/martial_art/proc/remove_act(mob/living/carbon/human/H)
+	return
