@@ -1,9 +1,9 @@
 #define HUNTER_DASH_RANGE 4
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter
 	name = "blood-drunk hunter"
-	desc = "A nightmare-riddled hunter wielding a vicious cleaving saw and a kinetic accelerator."
-	health = 1000
-	maxHealth = 1000
+	desc = "A hunter destined to wander forever, engaged in an endless hunt."
+	health = 900
+	maxHealth = 900
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon = 'icons/mob/broadMobs.dmi'
@@ -41,7 +41,7 @@
 
 /obj/item/projectile/kinetic/hunter
 	damage = 20
-	speed = 1
+	speed = 0.9
 	icon_state = "ka_tracer"
 	range = HUNTER_DASH_RANGE
 
@@ -54,8 +54,6 @@
 	if(world.time + adjustment_amount > next_move)
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
-	if(prob(adjustment_amount + 5))
-		INVOKE_ASYNC(src, .proc/dash)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/death()
 	if(health > 0)
