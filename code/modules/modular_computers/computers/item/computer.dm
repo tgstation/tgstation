@@ -49,14 +49,15 @@
 	var/comp_light_color			//The color of that light
 
 
-
+/obj/item/device/modular_computer/New()
+	all_components = list()
+	
 /obj/item/device/modular_computer/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)
 		physical = src
 	comp_light_color = "#FFFFFF"
-	all_components = list()
 	idle_threads = list()
 	update_icon()
 
