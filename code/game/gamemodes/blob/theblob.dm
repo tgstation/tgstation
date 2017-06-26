@@ -227,6 +227,8 @@
 	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
+	if(!Adjacent(user))
+		return
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
