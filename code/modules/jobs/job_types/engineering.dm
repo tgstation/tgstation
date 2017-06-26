@@ -39,7 +39,7 @@ Chief Engineer
 	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/device/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/device/modular_computer/tablet/preset/advanced/engi=1)
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel/eng
@@ -98,7 +98,7 @@ Station Engineer
 	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
-	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced/engi=1)
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"
@@ -150,7 +150,7 @@ Atmospheric Technician
 	duffelbag = /obj/item/weapon/storage/backpack/duffelbag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
-	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced/engi=1)
 
 /datum/outfit/job/atmos/rig
 	name = "Atmospheric Technician (Hardsuit)"
