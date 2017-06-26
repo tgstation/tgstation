@@ -2283,6 +2283,7 @@
 #include "hippiestation\code\modules\projectiles\projectile\energy.dm"
 #include "hippiestation\code\modules\reagents\reagent_dispenser.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents.dm"
+#include "hippiestation\code\modules\reagents\chemistry\machinery\chem_dispenser.dm"
 #include "hippiestation\code\modules\reagents\chemistry\machinery\reagentgrinder.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\drug_reagents.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\medicine_reagents.dm"

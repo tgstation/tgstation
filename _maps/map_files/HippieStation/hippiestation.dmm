@@ -1175,6 +1175,9 @@
 /obj/structure/table/wood,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/stamp/hos,
+/mob/living/simple_animal/pet/dog/pug{
+	name = "Handcuffs"
+	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acR" = (
@@ -19860,7 +19863,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aSH" = (
 /obj/structure/chair/stool,
@@ -22742,7 +22745,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Security Office";
+	c_tag = "Clown's Office";
 	dir = 1;
 	network = list("SS13")
 	},
@@ -24180,9 +24183,13 @@
 /turf/closed/wall,
 /area/quartermaster/storage)
 "bcU" = (
-/obj/item/stack/tile/plasteel,
-/turf/open/space,
-/area/space/nearstation)
+/obj/structure/table/reinforced,
+/obj/item/weapon/surgical_drapes,
+/obj/item/weapon/razor,
+/obj/item/clothing/gloves/color/latex,
+/obj/item/clothing/mask/surgical,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "bcV" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -42701,7 +42708,7 @@
 /area/tcommsat/computer)
 "bPR" = (
 /obj/effect/decal/cleanable/robot_debris/old,
-/turf/open/floor/wood,
+/turf/open/floor/plasteel/bar,
 /area/maintenance/port/aft)
 "bPS" = (
 /turf/open/floor/wood,
@@ -43180,9 +43187,8 @@
 	},
 /area/maintenance/port/aft)
 "bRd" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/wood,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/bar,
 /area/maintenance/port/aft)
 "bRe" = (
 /obj/structure/table/wood,
@@ -43190,13 +43196,12 @@
 	lootcount = 4;
 	name = "4maintenance loot spawner"
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plasteel/bar,
 /area/maintenance/port/aft)
 "bRf" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/item/weapon/soap/nanotrasen,
+/turf/open/floor/plasteel/bar,
 /area/maintenance/port/aft)
 "bRg" = (
 /obj/structure/rack,
@@ -43731,8 +43736,8 @@
 	},
 /area/maintenance/starboard/aft)
 "bSn" = (
-/obj/machinery/space_heater,
-/turf/open/floor/wood,
+/obj/structure/chair/stool,
+/turf/open/floor/carpet/black,
 /area/maintenance/port/aft)
 "bSo" = (
 /obj/structure/chair/stool,
@@ -43774,11 +43779,9 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bSu" = (
-/obj/item/stack/cable_coil{
-	amount = 5
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/floorgrime,
+/area/maintenance/port/aft)
 "bSv" = (
 /obj/machinery/camera{
 	c_tag = "Construction Area";
@@ -44304,16 +44307,14 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/turf/open/floor/carpet/black,
 /area/maintenance/port/aft)
 "bTu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/carpet/black,
 /area/maintenance/port/aft)
 "bTv" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -66496,7 +66497,7 @@
 /area/hippie/clown)
 "cTp" = (
 /obj/machinery/camera{
-	c_tag = "Central Hallway North";
+	c_tag = "Arrivals Ferry";
 	dir = 2
 	},
 /turf/open/floor/plasteel/arrival{
@@ -66524,11 +66525,9 @@
 /area/hallway/secondary/entry)
 "cTt" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/closet/crate/critter{
-	name = "Roger's crate"
-	},
 /mob/living/simple_animal/chicken/rabbit/space{
 	desc = "A hip little animal who can survive in space.";
+	eggsleft = 0;
 	name = "Roger";
 	speak_chance = 0
 	},
@@ -66563,7 +66562,7 @@
 "cTy" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/camera{
-	c_tag = "EVA South";
+	c_tag = "Mime's Office";
 	dir = 1
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -67221,6 +67220,174 @@
 "cVF" = (
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"cVG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Pool";
+	c_tag_order = 999;
+	dir = 1
+	},
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/hippie/pool)
+"cVH" = (
+/mob/living/simple_animal/pet/penguin/baby{
+	name = "Newspaper"
+	},
+/turf/open/floor/carpet,
+/area/library)
+"cVI" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVJ" = (
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVK" = (
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVL" = (
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVM" = (
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVN" = (
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVO" = (
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVP" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVQ" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVR" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVS" = (
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/bar,
+/area/maintenance/port/aft)
+"cVT" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"cVU" = (
+/obj/machinery/space_heater,
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
+"cVV" = (
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
+"cVW" = (
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
+"cVX" = (
+/obj/structure/chair/stool,
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
+"cVY" = (
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
+"cVZ" = (
+/obj/machinery/light/small,
+/turf/open/floor/carpet/black,
+/area/maintenance/port/aft)
+"cWa" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWb" = (
+/obj/machinery/chem_master,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWc" = (
+/obj/machinery/chem_dispenser/ghetto,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWd" = (
+/obj/structure/table/wood,
+/obj/item/weapon/retractor,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWe" = (
+/obj/structure/table/wood,
+/obj/item/weapon/restraints/handcuffs/cable,
+/obj/item/stack/ducttape,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/maintenance/port/aft)
+"cWf" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWg" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/maintenance/port/aft)
+"cWh" = (
+/obj/structure/table/wood,
+/obj/item/weapon/shard,
+/obj/item/weapon/screwdriver,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWi" = (
+/obj/structure/table/wood,
+/obj/item/organ/butt/xeno,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWj" = (
+/obj/structure/table/optable,
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
+"cWk" = (
+/obj/machinery/food_cart,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cWl" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cWm" = (
+/obj/machinery/icecream_vat,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cWn" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 
 (1,1,1) = {"
 aaa
@@ -84600,7 +84767,7 @@ aaa
 aaa
 aaa
 aaa
-aag
+cVT
 aaa
 aoV
 bZm
@@ -85111,11 +85278,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aag
-aaa
+bCq
+bCq
+bCq
+bLv
+bCq
 bVw
 bVz
 bVw
@@ -85368,11 +85535,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aag
-aaa
+bCq
+bJP
+bCq
+cVU
+bCq
 apQ
 bVz
 aoV
@@ -85625,11 +85792,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aag
-aaa
+bCq
+cVI
+cVP
+cVV
+bCq
 apQ
 bVz
 apQ
@@ -85880,13 +86047,13 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-aaf
 aaa
-aaa
-aag
-aaa
+cEl
+bLv
+cVJ
+cVQ
+cVW
+bCq
 bVx
 caf
 aoV
@@ -86140,9 +86307,9 @@ aaa
 aaa
 aaa
 bCq
-bCq
-bCq
-bLv
+cVK
+cVR
+cVX
 bCq
 aoV
 cbj
@@ -86396,9 +86563,9 @@ aaa
 aaa
 aaa
 aaa
-bCq
-bJP
-bCq
+bLv
+cVL
+cVS
 bSn
 bCq
 bCq
@@ -86654,10 +86821,10 @@ akD
 akD
 aaa
 bCq
-bPS
+cVM
 bRd
-bPS
-bPS
+bSn
+cVY
 bCq
 cbk
 bLv
@@ -86912,9 +87079,9 @@ akD
 aaa
 bLv
 bPR
-bRc
-bSo
-bTs
+bRd
+bSn
+cVZ
 bCq
 bVy
 bLv
@@ -87168,9 +87335,9 @@ bLt
 bMF
 aaa
 bCq
-bPS
+cVN
 bRf
-bSo
+bSn
 bTu
 bCq
 bVB
@@ -87425,9 +87592,9 @@ bLs
 akD
 aaa
 bLv
-bPT
+cVO
 bRe
-bSo
+bSn
 bTt
 bCq
 bVA
@@ -88976,10 +89143,10 @@ bVG
 bHE
 bHE
 bHE
-bLv
-apQ
-aoV
-aoV
+bCq
+cWk
+cWm
+bCq
 aoV
 aoV
 aoV
@@ -89229,14 +89396,14 @@ bHE
 bHE
 bCq
 bHE
-bLv
-bLv
-bLv
-bLv
-bLv
-aoV
-aoV
-aoV
+bCq
+bCq
+bCq
+bCq
+bCq
+bPS
+bPS
+bCq
 aoV
 aoV
 apQ
@@ -89486,14 +89653,14 @@ bHE
 bHE
 bTz
 bHE
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
+bCq
+bPS
+bPS
+bPS
+bPS
+bPS
+bHE
+bCq
 aoV
 aoV
 aoV
@@ -89743,14 +89910,14 @@ bHE
 bSs
 bCq
 bHE
-bLv
-aoV
-aoV
-aoV
+bCq
+cWa
+bPT
+bPT
 bcU
-apQ
-aaH
-cCa
+bPS
+bWy
+bCq
 aoV
 aoV
 aoV
@@ -90000,14 +90167,14 @@ bRh
 bSr
 bCq
 bHE
-bLv
-apQ
-apQ
-aoV
-aoV
-aaH
-bdV
-aaH
+bCq
+cWb
+bPS
+bTs
+cWj
+bHE
+bWy
+bCq
 apQ
 apQ
 apQ
@@ -90257,14 +90424,14 @@ bCq
 bCq
 bCq
 bHE
-bLv
-aoV
-aoV
-aoV
-aoV
-cjn
+bCq
+cWc
+cWg
+bHE
+bPS
+bPS
 bSu
-aaH
+bCq
 aoV
 aoV
 aoV
@@ -90514,14 +90681,14 @@ bLv
 aaa
 bLv
 bHE
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-aaH
-apQ
+bCq
+cWd
+bTs
+bPS
+bPS
+bWy
+bHE
+bCq
 aoV
 aoV
 aoV
@@ -90771,14 +90938,14 @@ bLv
 aaf
 bLv
 bUt
-bLv
-apQ
-apQ
-aoV
-aoV
-aoV
-aaH
-aoV
+bCq
+cWe
+bPS
+bPS
+bHE
+bPS
+bWy
+bCq
 aoV
 apQ
 apQ
@@ -91028,14 +91195,14 @@ bCq
 aaa
 bLv
 bUs
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-apQ
-aoV
+bCq
+cWf
+cWh
+cWi
+bPS
+bWy
+bWy
+bCq
 aoV
 aoV
 aoV
@@ -91289,10 +91456,10 @@ bES
 bES
 bES
 bES
-bGp
-bGp
-bGp
-bGp
+bES
+cWl
+cWn
+bES
 bES
 bES
 bES
@@ -93885,16 +94052,16 @@ czh
 cEm
 cVd
 csb
-cVh
+cVd
 cst
 cEF
 cFC
 cEF
 csu
-cVu
+cVd
 csb
-cVy
-cVC
+cVd
+cVd
 ccw
 cUq
 cEl
@@ -94140,17 +94307,17 @@ ccw
 ccw
 ccw
 crK
-cVe
+cVd
 cVg
 csj
-cVk
-cVm
-cVo
-cVq
-cVs
+cVd
+cVd
+cVd
+cVd
+cVd
 cUo
-cVx
-cVz
+cVg
+cVd
 cUt
 ccw
 ccw
@@ -94409,7 +94576,7 @@ cEr
 cFb
 cEr
 cEr
-cVE
+cVd
 ccw
 cUq
 cUa
@@ -98007,7 +98174,7 @@ cEr
 cFb
 cEr
 cEr
-cVF
+cVd
 ccw
 cUq
 aaa
@@ -98252,17 +98419,17 @@ ccw
 ccw
 ccw
 czF
-cVf
+cVd
 cEj
-cVi
-cVl
-cVn
-cVp
-cVr
-cVt
-cVv
+cVd
+cVd
+cVd
+cVd
+cVd
+cVd
+cVd
 cEj
-cVA
+cVd
 cUz
 ccw
 ccw
@@ -98511,16 +98678,16 @@ cDH
 crM
 crV
 cUg
-cVj
+cVd
 cEp
 cEF
 cUj
 cEF
 cFD
-cVw
+cVd
 cUg
-cVB
-cVD
+cVd
+cVd
 ccw
 cUq
 cEl
@@ -102022,7 +102189,7 @@ aur
 aur
 aur
 aur
-aAk
+cVG
 arj
 aCh
 aEc
@@ -110515,7 +110682,7 @@ aLg
 aMH
 aIt
 aYW
-aYW
+cVH
 aYW
 aYW
 aYW
