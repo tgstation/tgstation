@@ -156,6 +156,11 @@ function tag_pr($payload, $opened) {
 	else
 		$remove[] = 'Tools';
 
+	if(has_tree_been_edited($payload, 'SQL'))
+		$tags[] = 'SQL';
+	else
+		$remove[] = 'SQL';
+
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)
 		$tags[] = 'Do Not Merge';
