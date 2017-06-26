@@ -34,7 +34,7 @@
 	to_chat(user, "<span class='notice'>Does <b>80</b> damage if the target is backstabbed, instead of <b>50</b>.</span>")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
+		to_chat(user, "<span class='notice'>It has \a [T] attached, which cause [T.effect_desc()].</span>")
 
 /obj/item/weapon/twohanded/required/kinetic_crusher/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/weapon/crowbar))
@@ -258,7 +258,10 @@
 	denied_type = /obj/item/crusher_trophy/hunter_eye
 
 /obj/item/crusher_trophy/hunter_eye/effect_desc()
-	return "does a thing"
+	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
+
+/obj/item/crusher_trophy/hunter_eye/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(STATUS_EFFECT_BLOODDRUNK)
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike

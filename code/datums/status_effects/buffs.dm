@@ -262,3 +262,113 @@
 	deathrattle()
 	. = ..()
 
+/datum/status_effect/blooddrunk
+	id = "blooddrunk"
+	duration = 10
+	tick_interval = 0
+	alert_type = /obj/screen/alert/status_effect/blooddrunk
+	var/last_health = 0
+	var/last_bruteloss = 0
+	var/last_fireloss = 0
+	var/last_toxloss = 0
+	var/last_oxyloss = 0
+	var/last_cloneloss = 0
+	var/last_staminaloss = 0
+
+/obj/screen/alert/status_effect/blooddrunk
+	name = "Blood-Drunk"
+	desc = "You are drunk on blood! Your pulse thunders in your ears! Nothing can harm you!" //not true, and the item description mentions its actual effect
+	icon_state = "blooddrunk"
+
+/datum/status_effect/blooddrunk/on_apply()
+	. = ..()
+	if(.)
+		owner.maxHealth *= 10
+		owner.bruteloss *= 10
+		owner.fireloss *= 10
+		owner.toxloss *= 10
+		owner.oxyloss *= 10
+		owner.cloneloss *= 10
+		owner.staminaloss *= 10
+		owner.updatehealth()
+		last_health = owner.health
+		last_bruteloss = owner.getBruteLoss()
+		last_fireloss = owner.getFireLoss()
+		last_toxloss = owner.getToxLoss()
+		last_oxyloss = owner.getOxyLoss()
+		last_cloneloss = owner.getCloneLoss()
+		last_staminaloss = owner.getStaminaLoss()
+		add_logs(owner, null, "gained blood-drunk stun immunity")
+		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
+		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
+
+/datum/status_effect/blooddrunk/tick() //multiply the effect of healing by 10
+	if(owner.health > last_health)
+		var/needs_health_update = FALSE
+		var/new_bruteloss = owner.getBruteLoss()
+		if(new_bruteloss < last_bruteloss)
+			var/heal_amount = (new_bruteloss - last_bruteloss) * 10
+			owner.adjustBruteLoss(heal_amount, updating_health = FALSE)
+			new_bruteloss = owner.getBruteLoss()
+			needs_health_update = TRUE
+		last_bruteloss = new_bruteloss
+
+		var/new_fireloss = owner.getFireLoss()
+		if(new_fireloss < last_fireloss)
+			var/heal_amount = (new_fireloss - last_fireloss) * 10
+			owner.adjustFireLoss(heal_amount, updating_health = FALSE)
+			new_fireloss = owner.getFireLoss()
+			needs_health_update = TRUE
+		last_fireloss = new_fireloss
+
+		var/new_toxloss = owner.getToxLoss()
+		if(new_toxloss < last_toxloss)
+			var/heal_amount = (new_toxloss - last_toxloss) * 10
+			owner.adjustToxLoss(heal_amount, updating_health = FALSE)
+			new_toxloss = owner.getToxLoss()
+			needs_health_update = TRUE
+		last_toxloss = new_toxloss
+
+		var/new_oxyloss = owner.getOxyLoss()
+		if(new_oxyloss < last_oxyloss)
+			var/heal_amount = (new_oxyloss - last_oxyloss) * 10
+			owner.adjustOxyLoss(heal_amount, updating_health = FALSE)
+			new_oxyloss = owner.getOxyLoss()
+			needs_health_update = TRUE
+		last_oxyloss = new_oxyloss
+
+		var/new_cloneloss = owner.getCloneLoss()
+		if(new_cloneloss < last_cloneloss)
+			var/heal_amount = (new_cloneloss - last_cloneloss) * 10
+			owner.adjustCloneLoss(heal_amount, updating_health = FALSE)
+			new_cloneloss = owner.getCloneLoss()
+			needs_health_update = TRUE
+		last_cloneloss = new_cloneloss
+
+		var/new_staminaloss = owner.getStaminaLoss()
+		if(new_staminaloss < last_staminaloss)
+			var/heal_amount = (new_staminaloss - last_staminaloss) * 10
+			owner.adjustStaminaLoss(heal_amount, updating_health = FALSE)
+			new_staminaloss = owner.getStaminaLoss()
+			needs_health_update = TRUE
+		last_staminaloss = new_staminaloss
+
+		if(needs_health_update)
+			owner.updatehealth()
+			owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
+	last_health = owner.health
+
+/datum/status_effect/blooddrunk/on_remove()
+	tick()
+	owner.maxHealth *= 0.1
+	owner.bruteloss *= 0.1
+	owner.fireloss *= 0.1
+	owner.toxloss *= 0.1
+	owner.oxyloss *= 0.1
+	owner.cloneloss *= 0.1
+	owner.staminaloss *= 0.1
+	owner.updatehealth()
+	add_logs(owner, null, "lost blood-drunk stun immunity")
+	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
+		owner.stun_absorption -= "blooddrunk"
+
