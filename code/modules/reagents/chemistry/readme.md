@@ -109,7 +109,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 
 			my_atom
 				This is the atom the holder is 'in'. Useful if you need to find the location.
-				(i.e. for explosions)```
+				(i.e. for explosions)
 
 
 # About Reagents:
@@ -141,7 +141,7 @@ Reagents are all the things you can mix and fille in bottles etc. This can be an
 			You'll want to call the parents proc by using ..() .
 			If you dont, the chemical will stay in the mob forever -
 			unless you write your own piece of code to slowly remove it.
-			(Should be pretty easy, 1 line of code)```
+			(Should be pretty easy, 1 line of code)
 
 ## Important variables:
 
@@ -167,7 +167,7 @@ Reagents are all the things you can mix and fille in bottles etc. This can be an
 			you define it as "#RRGGBB", or, red green blue. You can also define it using the
 			rgb() proc, which returns a hexadecimal value too. The color is black by default.
 
-			A good website for color calculations: http://www.psyclops.com/tools/rgb/```
+			A good website for color calculations: http://www.psyclops.com/tools/rgb/
 
 # About Recipes:
 Recipes are simple datums that contain a list of required reagents and a result. They also have a proc that is called when the recipe is matched.
@@ -206,7 +206,7 @@ Recipes are simple datums that contain a list of required reagents and a result.
 			reaction with this.
 
 		required_temp
-			This is the required temperature.```
+			This is the required temperature.
 
 # About the Tools:
 By default, all atom have a reagents var - but its empty. if you want to use an object for the chem. system you'll need to add something like this in its new proc:
@@ -216,7 +216,7 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 		R.my_atom = src <<<<< set the holders my_atom to src so that we know where we are.
 
 		This can also be done by calling a convenience proc:
-		atom/proc/create_reagents(var/max_volume)```
+		atom/proc/create_reagents(var/max_volume)
 
 ## Other important stuff:
 ```		amount_per_transfer_from_this var
@@ -240,7 +240,7 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 		atom/proc/is_drawable()
 			Checks if something can be drawn from.
 			If this returns 1, you can use syringes and droppers
-			to draw from the contents of this object.```
+			to draw from the contents of this object.
 
 # GOON CHEMS README:
 Credit goes to Cogwerks, and all the other goonstation coders for the original idea and implementation of this over at goonstation.
