@@ -4717,7 +4717,7 @@
 	dir = 8;
 	frequency = 1441;
 	id_tag = "air_out";
-	name = "air out"
+	name = "air output"
 	},
 /turf/open/floor/engine/air,
 /area/ruin/ancientstation/atmo)
