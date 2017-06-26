@@ -69,6 +69,15 @@
 			if(!option)
 				return
 			option = sanitizeSQL(option)
+			var/default_display_in_results
+			if(polltype != POLLTYPE_IRV)
+				switch(alert("Should this option be included by default when poll results are generated?",,"Yes","No","Cancel"))
+				if("Yes")
+					default_display_in_results = 1
+				if("No")
+					default_display_in_results = 0
+				else
+					return
 			var/minval = 0
 			var/maxval = 0
 			var/descmin = ""
@@ -103,7 +112,7 @@
 					descmax = sanitizeSQL(descmax)
 				else if(descmax == null)
 					return
-			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'"))
+			sql_option_list += list(list("text" = "'[option]'", "minval" = "'[minval]'", "maxval" = "'[maxval]'", "descmin" = "'[descmin]'", "descmid" = "'[descmid]'", "descmax" = "'[descmax]'", "default_display_in_results" = "'[default_display_in_results]'"))
 			switch(alert(" ",,"Add option","Finish", "Cancel"))
 				if("Add option")
 					add_option = 1
