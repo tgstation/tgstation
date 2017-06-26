@@ -567,7 +567,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
 	var/mob/living/carbon/human/H = loc
-	if(!ishuman(H) || H.wear_suit != src)
+	if(!istype(H) || H.wear_suit != src)
 		return
 	if(footstep > 1)
 		playsound(src, "suitstep", 50, 1)
