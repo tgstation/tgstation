@@ -51,6 +51,8 @@
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
 	to_chat(target, "<span class='userdanger'>You are absorbed by the changeling!</span>")
 
+	changeling.geneticpoints += 2
+
 	if(!changeling.has_dna(target.dna))
 		changeling.add_new_profile(target, user)
 

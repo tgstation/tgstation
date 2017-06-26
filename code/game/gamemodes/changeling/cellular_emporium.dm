@@ -59,9 +59,6 @@
 		return
 
 	switch(action)
-		if("readapt")
-			if(changeling.canrespec)
-				changeling.lingRespec(usr)
 		if("evolve")
 			var/sting_name = params["name"]
 			changeling.purchasePower(usr, sting_name)

@@ -36,20 +36,6 @@
 	purchasedpowers += thepower
 	thepower.on_purchase(user)
 
-//Reselect powers
-/datum/changeling/proc/lingRespec(mob/user)
-	if(!ishuman(user))
-		to_chat(user, "<span class='danger'>We can't remove our evolutions in this form!</span>")
-		return
-	if(canrespec)
-		to_chat(user, "<span class='notice'>We have removed our evolutions from this form, and are now ready to readapt.</span>")
-		user.remove_changeling_powers(1)
-		canrespec = 0
-		user.make_changeling(TRUE)
-		return 1
-	else
-		to_chat(user, "<span class='danger'>You lack the power to readapt your evolutions!</span>")
-		return 0
 
 /mob/proc/make_changeling(is_respec)
 	if(!mind)
@@ -67,8 +53,6 @@
 			if(!mind.changeling.has_sting(S))
 				mind.changeling.purchasedpowers+=S
 			S.on_purchase(src, is_respec)
-	if(is_respec)
-		SSblackbox.add_details("changeling_power_purchase","Readapt")
 
 	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
 	if(ishuman(C))

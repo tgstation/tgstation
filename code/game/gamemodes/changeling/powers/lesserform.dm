@@ -2,7 +2,7 @@
 	name = "Lesser Form"
 	desc = "We debase ourselves and become lesser. We become a monkey."
 	chemical_cost = 5
-	dna_cost = 1
+	dna_cost = 2
 	req_human = 1
 
 //Transform into a monkey.

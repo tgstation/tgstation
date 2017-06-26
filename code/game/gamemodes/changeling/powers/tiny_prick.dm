@@ -60,7 +60,7 @@
 	helptext = "The victim will transform much like a changeling would. Does not provide a warning to others. Mutations will not be transferred, and monkeys will become human."
 	sting_icon = "sting_transform"
 	chemical_cost = 50
-	dna_cost = 3
+	dna_cost = 5 //Just so we don't have 50 of a single person until a ling gets at least a few absorbs...
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -100,65 +100,13 @@
 			C.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
 		C.updateappearance(mutcolor_update=1)
 
-
-/obj/effect/proc_holder/changeling/sting/false_armblade
-	name = "False Armblade Sting"
-	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
-	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
-	sting_icon = "sting_armblade"
-	chemical_cost = 20
-	dna_cost = 1
-
-/obj/item/weapon/melee/arm_blade/false
-	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
-	force = 5 //Basically as strong as a punch
-
-/obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
-	return
-
-/obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
-	if(!..())
-		return
-	if((target.disabilities & HUSK) || !target.has_dna())
-		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
-		return 0
-	return 1
-
-/obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", object="falso armblade sting")
-
-	if(!target.drop_item())
-		to_chat(user, "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>")
-		return
-
-	if(ismonkey(target))
-		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
-
-	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
-	target.put_in_hands(blade)
-	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-
-	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
-	return TRUE
-
-/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
-	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-	target.visible_message("<span class='warning'>With a sickening crunch, \
-	[target] reforms their [blade.name] into an arm!</span>",
-	"<span class='warning'>[blade] reforms back to normal.</span>",
-	"<span class='italics>You hear organic matter ripping and tearing!</span>")
-
-	qdel(blade)
-	target.update_inv_hands()
-
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
-	desc = "We stealthily sting a target and extract their DNA."
+	desc = "We stealthily sting a target and extract their DNA. This will count towards your objective, but will not grant evo points!"
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	sting_icon = "sting_extract"
 	chemical_cost = 25
-	dna_cost = 0
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())
@@ -183,21 +131,22 @@
 	target.silent += 30
 	return TRUE
 
-/obj/effect/proc_holder/changeling/sting/blind
-	name = "Blind Sting"
-	desc = "Temporarily blinds the target."
-	helptext = "This sting completely blinds a target for a short time."
-	sting_icon = "sting_blind"
-	chemical_cost = 25
-	dna_cost = 1
+/obj/effect/proc_holder/changeling/sting/para
+	name = "Paralysis Sting"
+	desc = "We silently sting a human, causing them to be unable to move or stand. They can still talk, however!"
+	helptext = "The victim will feel their muscles weaken and will likely notice they are unable to do anything besides talk... They can still yell for help!"
+	sting_icon = "sting_mute"
+	chemical_cost = 30
+	dna_cost = 2
 
-/obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
-	add_logs(user, target, "stung", "blind sting")
-	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
-	target.become_nearsighted()
-	target.blind_eyes(20)
-	target.blur_eyes(40)
+/obj/effect/proc_holder/changeling/sting/para/sting_action(mob/user, mob/living/carbon/target)
+	add_logs(user, target, "stung", "para sting")
+	to_chat(target, "<span class='userdanger'>Your muscles ache and feel weak, like jelly... can't stand..... Aghh!!</span>")
+	target.emote("cough")
+	target.Knockdown(300)
+	target.Stun(300)
 	return TRUE
+
 
 /obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucination Sting"
@@ -205,7 +154,7 @@
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
 	chemical_cost = 10
-	dna_cost = 1
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
@@ -222,7 +171,7 @@
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
-	dna_cost = 2
+	dna_cost = 3
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "cryo sting")
