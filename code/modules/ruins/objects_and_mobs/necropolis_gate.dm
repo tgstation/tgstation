@@ -171,6 +171,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
 	layer = OVER_LATTICE_LAYER
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
