@@ -39,6 +39,15 @@
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	var/anger_modifier = 0
+
+	var/phase = 1 //The "phase" the boss is in; different phases might have different moves.
+	var/phase_transition_style = ONE_PHASE //The method the boss uses to transition from phase to phase; see "phases.dm" in __DEFINES for the whole list
+	var/list/transition_to_phase_text //Associative list (syntax: "phase number" = "string") - text shown when moving UP to these phases
+	var/list/transition_from_phase_text //Associative list (syntax: "phase number" = "string") - text shown when moving DOWN to these phases
+	var/list/phase_transition_sound //Associative list (syntax: "phase number" = 'sound path') - sound played when moving to these phases
+	var/list/phase_examines //Associative list (syntax: "phase number" = "string") - text shown on examine while the mob's in these phases
+	var/list/phase_transition_threshold //Associative list (syntax: "phase number" = % of max health as decimal) - health thresholds to swap phases at, if applicable
+
 	var/obj/item/device/gps/internal
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
@@ -53,6 +62,10 @@
 	QDEL_NULL(internal)
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/Life()
+	..()
+	handle_phases()
+
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return
@@ -66,6 +79,11 @@
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type,score_type)
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/examine(mob/user)
+	..()
+	if(!stat && phase_examines["[phase]"])
+		to_chat(user, phase_examines["[phase]"])
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot
@@ -109,6 +127,46 @@
 	if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
+
+/mob/living/simple_animal/hostile/megafauna/proc/handle_phases()
+	switch(phase_transition_style)
+		if(ONE_PHASE) //no extra phases, no reason to switch!
+			return
+		if(PHASE_TRANSITION_HEALTH)
+			if(!phase_transition_threshold.len) //how'd this even happen?
+				WARNING("Megafauna [name] ([x], [y], [z]) tried to check health thresholds for phases without actually having any thresholds defined. Yell at the coders!")
+				phase_transition_style = ONE_PHASE
+				return
+			for(var/V in phase_transition_threshold)
+				var/threshold = phase_transition_threshold[V]
+				if(health / maxHealth <= threshold && "[phase]" != V) //if we're lower than the threshold, swap phases (as long as we're not in that phase already!)
+					phase_transition(text2num(V))
+				else if(health / maxHealth > threshold && phase == text2num(V) && phase_transition_style != PHASE_TRANSITION_HEALTH_NOREGRESS) //we can also regress to old phases!
+					phase_transition(phase - 1)
+		if(PHASE_TRANSITION_SET_POINT)
+			check_phase_transition()
+
+/mob/living/simple_animal/hostile/megafauna/proc/check_phase_transition() //Override this proc for any megafauna that switches phases with set conditions!
+	return
+
+/mob/living/simple_animal/hostile/megafauna/proc/phase_transition(to_phase) //Signals a phase transition
+	if(!to_phase)
+		return
+	if(phase_transition_sound["[to_phase]"]) //this uses a string so as not to be funky with list associations and index positions
+		playsound(src, phase_transition_sound["[to_phase]"], 50, 0)
+	if(to_phase > phase) //Transitioning to the next phase
+		if(transition_to_phase_text["[to_phase]"])
+			visible_message(transition_to_phase_text["[to_phase]"])
+	else //Transitioning back to the previous phase
+		if(transition_from_phase_text["[to_phase]"])
+			visible_message(transition_from_phase_text["[to_phase]"])
+	log_message("Transitioned from phase <b>[phase]</b> to phase <b>[to_phase]</b>", INDIVIDUAL_ATTACK_LOG)
+	phase = to_phase
+	enter_phase_effects()
+	return TRUE
+
+/mob/living/simple_animal/hostile/megafauna/proc/enter_phase_effects() //Override this with any procs/effects/attacks/etc. you want to occur just after a phase swap
+	return
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
