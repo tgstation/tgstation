@@ -2,7 +2,7 @@
 
 Modified table 'poll_option', adding the column 'default_display_in_results'.
 
-ALTER TABLE `poll_option` ADD COLUMN `default_display_in_results` TINYINT(1) UNSIGNED NOT NULL AFTER `descmax`
+ALTER TABLE `poll_option` ADD COLUMN `default_display_in_results` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' AFTER `descmax`
 
 Remember to add a prefix to the table name if you use them.
 
