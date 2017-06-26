@@ -164,6 +164,9 @@
 
 	. = ..()
 
+/mob/living/silicon/ai/IgniteMob()
+	fire_stacks = 0
+	. = ..()
 
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
