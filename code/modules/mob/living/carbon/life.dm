@@ -21,12 +21,12 @@
 	handle_changeling()
 
 	if(health <= HEALTH_THRESHOLD_CRIT)
-		beat = 2
+		beat = BEAT_SLOW
 		src << sound(null)
 		src << 'sound/health/slowbeat.ogg'
-	if(beat == 2 && health > HEALTH_THRESHOLD_CRIT)
+	if(beat == BEAT_SLOW && health > HEALTH_THRESHOLD_CRIT)
 		src << sound(null)
-		beat = 0
+		beat = BEAT_NONE
 
 	if(stat != DEAD)
 		return 1
@@ -308,7 +308,6 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-
 	if(staminaloss)
 		adjustStaminaLoss(-3)
 
@@ -359,10 +358,10 @@
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
-		if(!beat || beat == 2)
+		if(!beat || beat == BEAT_SLOW)
 			src << sound(null)
 			src << 'sound/health/fastbeat.ogg'
-			beat = 1
+			beat = BEAT_FAST
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)

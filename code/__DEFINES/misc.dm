@@ -434,3 +434,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
+
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
