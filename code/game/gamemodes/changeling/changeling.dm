@@ -479,6 +479,39 @@ GLOBAL_LIST_INIT(slot2type, list("head" = /obj/item/clothing/head/changeling, "w
 
 	user.regenerate_icons()
 
+/mob/proc/hivemind_say(message, mi = null)
+	/var/msg = "If you see this, something is probably wrong!"
+	if (mi != null)
+		mind = mi
+	if (!message)
+		return
+	if (mind && (mind.changeling || mind.linglink))
+		if (mind.changeling)
+			msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+		if (mind.linglink)
+			msg = "<i><font color=#800080><b>[mind]:</b> [message]</font></i>"
+		log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+		for(var/_M in GLOB.mob_list)
+			var/mob/M = _M
+			if(M in GLOB.dead_mob_list)
+				var/link = FOLLOW_LINK(M, src)
+				to_chat(M, "[link] [msg]")
+			else
+				if (mind && (mind.changeling || mind.linglink))
+					to_chat(M, msg)
+
+/mob/cling/proc/hivemind_chat(msg as text) //ARGHHHH THIS FEELS WRONG! WHY DOESN'T /datum/changeling INCLUDE THE mind VAR??!!
+	set name = "Hivemind-Say"
+	set category = "IC"
+
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	hivemind_say(msg)
+
 /datum/changelingprofile
 	var/name = "a bug"
 

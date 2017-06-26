@@ -22,7 +22,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Species
 	"b" = "binary",
-	"g" = "changeling",
 	"a" = "alientalk",
 
 	// Admin
@@ -57,7 +56,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Species
 	"è" = "binary",
-	"ï" = "changeling",
 	"ô" = "alientalk",
 
 	// Admin
@@ -70,8 +68,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 ))
 
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
-	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
-	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
+	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_ALIEN = TRUE)
+	var/static/list/unconscious_allowed_modes = list(MODE_ALIEN = TRUE)
 
 	var/static/list/one_character_prefix = list(MODE_HEADSET = TRUE, MODE_ROBOT = TRUE, MODE_WHISPER = TRUE)
 
@@ -313,7 +311,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return null
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_CHANGELING)
+	/*if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(3)
 				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
@@ -332,7 +330,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 								if(prob(40))
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
-				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
+				var/msg = "<i><font color=#800080><b>[mind.f.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/_M in GLOB.mob_list)
 					var/mob/M = _M
@@ -350,7 +348,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 									to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
 			if(1)
 				to_chat(src, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
-		return TRUE
+		return TRUE*/
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
@@ -406,14 +404,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return ITALICS | REDUCE_RANGE //Does not return 0 since this is only reached by humans, not borgs or AIs.
 	return 0
 
-/mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
-	if(mind && mind.changeling)
-		if(mind.changeling.changeling_speak)
-			return 2
-		return 1
-	if(mind && mind.linglink)
-		return 3
-	return 0
 
 /mob/living/say_mod(input, message_mode)
 	if(message_mode == MODE_WHISPER)

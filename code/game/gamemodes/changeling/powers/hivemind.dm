@@ -18,6 +18,7 @@
 	if(!changeling.has_sting(S2))
 		changeling.purchasedpowers+=S2
 
+
 // HIVE MIND UPLOAD/DOWNLOAD DNA
 GLOBAL_LIST_EMPTY(hivemind_bank)
 
