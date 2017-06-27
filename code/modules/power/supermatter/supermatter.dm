@@ -49,6 +49,12 @@
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
 
+//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
+#define SUPERMATTER_DELAM_PERCENT 5
+#define SUPERMATTER_EMERGENCY_PERCENT 25
+#define SUPERMATTER_DANGER_PERCENT 50
+#define SUPERMATTER_WARNING_PERCENT 100
+
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
@@ -175,16 +181,16 @@
 	if(!air)
 		return SUPERMATTER_ERROR
 
-	if(get_integrity() < 5)
+	if(get_integrity() < SUPERMATTER_DELAM_PERCENT)
 		return SUPERMATTER_DELAMINATING
 
-	if(get_integrity() < 25)
+	if(get_integrity() < SUPERMATTER_EMERGENCY_PERCENT)
 		return SUPERMATTER_EMERGENCY
 
-	if(get_integrity() < 50)
+	if(get_integrity() < SUPERMATTER_DANGER_PERCENT)
 		return SUPERMATTER_DANGER
 
-	if((get_integrity() < 100) || (air.temperature > CRITICAL_TEMPERATURE))
+	if((get_integrity() < SUPERMATTER_WARNING_PERCENT) || (air.temperature > CRITICAL_TEMPERATURE))
 		return SUPERMATTER_WARNING
 
 	if(air.temperature > (CRITICAL_TEMPERATURE * 0.8))

@@ -1,7 +1,4 @@
 
-/obj/item/device/modular_computer/tablet/preset/proc/install_programs()
-	return
-
 // This is literally the worst possible cheap tablet
 /obj/item/device/modular_computer/tablet/preset/cheap
 	desc = "A low-end tablet often seen among low ranked station personnel."
@@ -22,12 +19,6 @@
 	install_component(new /obj/item/weapon/computer_hardware/network_card)
 	install_component(new /obj/item/weapon/computer_hardware/card_slot)
 	install_component(new /obj/item/weapon/computer_hardware/printer/mini)
-	install_programs()
-
-/obj/item/device/modular_computer/tablet/preset/advanced/engi/install_programs()
-	var/obj/item/weapon/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-	hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
-	hard_drive.store_file(new/datum/computer_file/program/supermatter_monitor())
 
 /obj/item/device/modular_computer/tablet/preset/cargo/New()
 	. = ..()
