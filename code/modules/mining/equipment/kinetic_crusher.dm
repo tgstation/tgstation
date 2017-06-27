@@ -133,9 +133,8 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		var/had_effect = (L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)) //used as a boolean
-		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK, hammer_synced)
 		if(hammer_synced)
-			CM.hammer_synced = hammer_synced
 			for(var/t in hammer_synced.trophies)
 				var/obj/item/crusher_trophy/T = t
 				T.on_mark_application(target, CM, had_effect)

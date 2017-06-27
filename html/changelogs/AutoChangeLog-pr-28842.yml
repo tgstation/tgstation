@@ -1,0 +1,5 @@
+author: "Ergovisavi"
+delete-after: True
+changes: 
+  - bugfix: "Fixes stacking atmos resin objects in a single tile"
+  - tweak: "Lasers now go through atmos resin objects"

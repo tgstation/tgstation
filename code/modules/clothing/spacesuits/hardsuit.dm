@@ -543,6 +543,37 @@
 	else
 		return FALSE
 
+	//Old Prototype
+/obj/item/clothing/head/helmet/space/hardsuit/ancient
+	name = "prototype RIG hardsuit helmet"
+	desc = "Early prototype RIG hardsuit helmet, designed to quickly shift over a user's head. Design constraints of the helmet mean it has no inbuilt cameras, thus it restricts the users visability."
+	icon_state = "hardsuit0-ancient"
+	item_state = "anc_helm"
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
+	tint = 2
+	item_color = "ancient"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/space/hardsuit/ancient
+	name = "prototype RIG hardsuit"
+	desc = "Prototype powered RIG hardsuit. Provides excellent protection from the elements of space while being comfortable to move around in, thanks to the powered locomotives. Remains very bulky however."
+	icon_state = "hardsuit-ancient"
+	item_state = "anc_hardsuit"
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
+	slowdown = 3
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ancient
+	resistance_flags = FIRE_PROOF
+	var/footstep = 1
+
+/obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+	var/mob/living/carbon/human/H = loc
+	if(!istype(H) || H.wear_suit != src)
+		return
+	if(footstep > 1)
+		playsound(src, "suitstep", 50, 1)
+		footstep = 0
+	else
+		footstep++
 
 /////////////SHIELDED//////////////////////////////////
 

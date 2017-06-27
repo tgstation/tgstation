@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "You can now unfasten intercoms from walls and place them elsewhere on the station."
-  - rscadd: "Intercom frames can now be created at an autolathe for 75 metal and 25 glass."

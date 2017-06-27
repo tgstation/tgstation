@@ -68,7 +68,6 @@
 /area/shuttle/escape)
 "an" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHWEST)";
 	dir = 9
 	},
 /area/shuttle/escape)
@@ -77,13 +76,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
 "ap" = (
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTHEAST)";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -118,7 +115,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHWEST)";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -139,7 +135,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (SOUTHEAST)";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -170,8 +165,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/defibrillator/loaded,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
@@ -183,7 +177,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (WEST)";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -193,7 +186,6 @@
 	req_access_txt = "19"
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -225,7 +217,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -244,7 +235,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (NORTH)";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -326,9 +316,7 @@
 "aY" = (
 /obj/machinery/flasher{
 	id = "shuttleflash";
-	pixel_x = -26;
-	pixel_y = 0;
-	pixel_x = 0
+	pixel_x = -26
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 8
@@ -342,8 +330,7 @@
 "ba" = (
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 8;
-	icon_state = "darkyellow";
-	tag = "icon-darkyellow (NORTHEAST)"
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bb" = (
@@ -427,7 +414,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (NORTHEAST)";
 	icon_state = "darkyellow";
 	dir = 5
 	},
@@ -457,8 +443,7 @@
 "bf" = (
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 4;
-	icon_state = "darkyellow";
-	tag = "icon-darkyellow (NORTHEAST)"
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bg" = (
@@ -485,22 +470,19 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 10;
-	icon_state = "darkyellow";
-	tag = "icon-darkyellow (SOUTHEAST)"
+	icon_state = "darkyellow"
 	},
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plasteel/darkyellow/side{
-	tag = "icon-darkyellow (SOUTHEAST)";
 	icon_state = "darkyellow";
 	dir = 6
 	},
 /area/shuttle/escape)
 "bl" = (
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
-	pixel_y = 0
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
@@ -576,7 +558,6 @@
 /area/shuttle/escape)
 "br" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -653,8 +634,7 @@
 "bF" = (
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bG" = (
@@ -675,8 +655,7 @@
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bI" = (
@@ -703,7 +682,6 @@
 "bL" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -827,8 +805,7 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bU" = (
@@ -843,8 +820,7 @@
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "bW" = (
@@ -890,7 +866,6 @@
 "cb" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -940,15 +915,13 @@
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 9;
-	icon_state = "darkgreen";
-	tag = "icon-darkgreen (NORTH)"
+	icon_state = "darkgreen"
 	},
 /area/shuttle/escape)
 "ci" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 5
@@ -978,8 +951,7 @@
 /area/shuttle/escape)
 "cn" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1001,8 +973,7 @@
 "cq" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1062,7 +1033,6 @@
 /obj/machinery/button/door{
 	id = "shuttleshutters";
 	name = "Bridge Blast Shutters";
-	pixel_x = 0;
 	pixel_y = -26;
 	req_access_txt = "19"
 	},
@@ -1503,12 +1473,10 @@
 "eB" = (
 /obj/machinery/flasher{
 	id = "shuttleflash";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1516,8 +1484,7 @@
 /area/shuttle/escape)
 "eC" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 4
@@ -1538,7 +1505,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1556,7 +1522,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1583,7 +1548,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1593,7 +1557,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
@@ -1603,15 +1566,13 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	tag = "icon-darkgreen (NORTH)";
 	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/shuttle/escape)
 "eN" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4
@@ -1631,8 +1592,7 @@
 /area/shuttle/escape)
 "eQ" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
 	dir = 4

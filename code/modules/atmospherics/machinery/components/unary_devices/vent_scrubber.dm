@@ -40,6 +40,10 @@
 		assign_uid()
 		id_tag = num2text(uid)
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on
+	on = TRUE
+	icon_state = "scrub_map_on"
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)
 	A.air_scrub_names -= id_tag
