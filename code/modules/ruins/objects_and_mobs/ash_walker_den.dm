@@ -9,7 +9,7 @@
 	faction = list("ashwalker")
 	health = 200
 	maxHealth = 200
-	loot = list(/obj/effect/collapse, /obj/item/device/assembly/signaler/anomaly)
+	loot = list(/obj/effect/collapse)
 	var/meat_counter = 6
 
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/death()
