@@ -247,14 +247,15 @@
 /obj/item/device/flightpack/proc/update_cached_pull()
 	if(!wearer)
 		return
-	cached_pull = wearer.pulling
+	if(wearer.pulling && !QDELETED(wearer.pulling))
+		cached_pull = wearer.pulling
 	if(istype(cached_pull))
 		old_pull_turf = get_turf(cached_pull)
 	else if(old_pull_turf)
 		old_pull_turf = null
 
 /obj/item/device/flightpack/proc/handle_linked_movement(turf/oldTurf, turf/newTurf)
-	if(cached_pull)
+	if(cached_pull && !QDELETED(cached_pull))
 		cached_pull.forceMove(oldTurf)
 
 /obj/item/device/flightpack/intercept_user_move(dir, mob, newLoc, oldLoc)
