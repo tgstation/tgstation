@@ -2,14 +2,14 @@
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
-//Bottles now weaken and break when smashed on people's heads. - Giacom
+//Bottles now knockdown and break when smashed on people's heads. - Giacom
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
-	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
+	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
@@ -80,7 +80,7 @@
 		else
 			headarmor = 0
 
-		//Calculate the weakening duration for the target.
+		//Calculate the knockdown duration for the target.
 		armor_duration = (duration - headarmor) + force
 
 	else
@@ -88,7 +88,6 @@
 		armor_block = target.run_armor_check(affecting, "melee")
 		if(affecting == "head")
 			armor_duration = duration + force
-	armor_duration /= 10
 
 	//Apply the damage!
 	armor_block = min(90,armor_block)
@@ -98,9 +97,9 @@
 	var/head_attack_message = ""
 	if(affecting == "head" && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Weaken the target for the duration that we calculated and divide it by 5.
+		//Knockdown the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
+			target.apply_effect(min(armor_duration, 200) , KNOCKDOWN) // Never knockdown more than a flash!
 
 	//Display an attack message.
 	if(target != user)

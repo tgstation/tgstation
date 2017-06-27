@@ -334,7 +334,7 @@
 			. = TRUE
 
 /obj/machinery/disposal/bin/CanPass(atom/movable/mover, turf/target, height=0)
-	if (istype(mover,/obj/item) && mover.throwing)
+	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
 			return
@@ -473,7 +473,7 @@
 	if(isobj(AM))
 		var/obj/O = AM
 		O.loc = src
-	else if(istype(AM, /mob))
+	else if(ismob(AM))
 		var/mob/M = AM
 		if(prob(2)) // to prevent mobs being stuck in infinite loops
 			to_chat(M, "<span class='warning'>You hit the edge of the chute.</span>")

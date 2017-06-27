@@ -286,21 +286,6 @@
 		return
 	return ..()
 
-/obj/item/weapon/reagent_containers/glass/bucket/dwarf
-	name = "Wooden bucket"
-	desc = "It's a wooden bucket, don't question how it carries very hot liquids."
-	icon = 'icons/obj/janitor.dmi' //TODO: add the cool bucket sprite
-	icon_state = "bucket"
-	item_state = "bucket"
-	materials = list(MAT_METAL=200)
-	w_class = WEIGHT_CLASS_NORMAL
-	amount_per_transfer_from_this = 25 //Mods require 25u of reagents, saves a click
-	possible_transfer_amounts = list(10,15,20,25,30,50,70)
-	volume = 75 //Code adds 75u of reagents while the original bucket had 70u max, making it loose	flags = OPENCONTAINER
-	flags_inv = HIDEHAIR
-	slot_flags = SLOT_HEAD
-	resistance_flags = 0
-
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility,"
@@ -327,6 +312,106 @@
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
 
+/obj/item/weapon/reagent_containers/glass/beaker/large/hydrogen
+	name = "hydrogen"
+	list_reagents = list("hydrogen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/lithium
+	name = "lithium"
+	list_reagents = list("lithium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/carbon
+	name = "carbon"
+	list_reagents = list("carbon" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/nitrogen
+	name = "nitrogen"
+	list_reagents = list("nitrogen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/oxygen
+	name = "oxygen"
+	list_reagents = list("oxygen" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/fluorine
+	name = "fluorine"
+	list_reagents = list("fluorine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sodium
+	name = "sodium"
+	list_reagents = list("sodium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/aluminium
+	name = "aluminium"
+	list_reagents = list("aluminium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silicon
+	name = "silicon"
+	list_reagents = list("silicon" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/phosphorus
+	name = "phosphorus"
+	list_reagents = list("phosphorus" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sulfur
+	name = "sulfur"
+	list_reagents = list("sulfur" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/chlorine
+	name = "chlorine"
+	list_reagents = list("chlorine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/potassium
+	name = "potassium"
+	list_reagents = list("potassium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/iron
+	name = "iron"
+	list_reagents = list("iron" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/copper
+	name = "copper"
+	list_reagents = list("copper" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/mercury
+	name = "mercury"
+	list_reagents = list("mercury" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/radium
+	name = "radium"
+	list_reagents = list("radium" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/water
+	name = "water"
+	list_reagents = list("water" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/ethanol
+	name = "ethanol"
+	list_reagents = list("ethanol" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sugar
+	name = "sugar"
+	list_reagents = list("sugar" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/sacid
+	name = "sacid"
+	list_reagents = list("sacid" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/welding_fuel
+	name = "welding_fuel"
+	list_reagents = list("welding_fuel" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/silver
+	name = "silver"
+	list_reagents = list("silver" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/iodine
+	name = "iodine"
+	list_reagents = list("iodine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/beaker/large/bromine
+	name = "bromine"
+	list_reagents = list("bromine" = 50)
+
 /obj/item/weapon/reagent_containers/glass/mold
 	name = "mold"
 	desc = "A clay mold."
@@ -337,17 +422,26 @@
 	flags = OPENCONTAINER
 	var/obj/produce_type = null
 
+
+
+
 /obj/item/weapon/reagent_containers/glass/mold/sword
 	name = "sword mold"
 	desc = "A clay mold of a sword blade."
 	icon_state = "mold_blade"
 	produce_type = /obj/item/weapon/mold_result/blade
 
+
+
+
 /obj/item/weapon/reagent_containers/glass/mold/hammer
 	name = "hammer head mold"
 	desc = "A clay mold of a hammer head."
 	icon_state = "mold_blade"
 	produce_type = /obj/item/weapon/mold_result/hammer_head
+
+
+
 
 /obj/item/weapon/reagent_containers/glass/mold/pickaxe
 	name = "pickaxe mold"
@@ -388,7 +482,5 @@
 /obj/item/weapon/reagent_containers/glass/mold/bar
 	name = "bar mold"
 	desc = "A clay mold of a bar."
-
-
 
 

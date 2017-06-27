@@ -48,9 +48,9 @@
 	M.disabilities = 0
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetWeakened(0, 0)
-	M.SetStunned(0, 0)
-	M.SetParalysis(0, 0)
+	M.SetKnockdown(0, 0)
+	M.SetStun(0, 0)
+	M.SetUnconscious(0, 0)
 	M.silent = 0
 	M.dizziness = 0
 	M.drowsyness = 0
@@ -83,9 +83,9 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -547,9 +547,9 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
@@ -622,7 +622,7 @@
 		if(12 to 24)
 			M.drowsyness += 1
 		if(24 to INFINITY)
-			M.Sleeping(2, 0)
+			M.Sleeping(40, 0)
 			. = 1
 	..()
 
@@ -758,9 +758,9 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-1, 0)
-		M.AdjustWeakened(-1, 0)
+		M.AdjustStun(-20, 0)
+		M.AdjustKnockdown(-20, 0)
+		M.AdjustUnconscious(-20, 0)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -865,9 +865,9 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
+	M.AdjustStun(-60, 0)
+	M.AdjustKnockdown(-60, 0)
+	M.AdjustUnconscious(-60, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -889,8 +889,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
-	if(M.sleeping)
-		M.AdjustSleeping(-1, 0)
+	if(M.AdjustSleeping(-20, FALSE))
 		. = 1
 	M.reagents.remove_reagent("sugar", 3)
 	..()
@@ -1103,9 +1102,9 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingAdrenaline/on_mob_life(mob/living/M as mob)
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
 	M.adjustStaminaLoss(-1, 0)
 	. = 1
 	..()

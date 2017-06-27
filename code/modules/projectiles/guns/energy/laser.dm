@@ -24,6 +24,13 @@
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's private security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 	ammo_x_offset = 3
 
+/obj/item/weapon/gun/energy/laser/retro/old
+	name ="laser gun"
+	icon_state = "retro"
+	desc = "First generation lasergun, developed by Nanotrasen. Suffers from ammo issues but its unique ability to recharge its ammo without the need of a magazine helps compensate. You really hope someone has developed a better lasergun while you were in cyro."
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
+	ammo_x_offset = 3
+
 /obj/item/weapon/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"

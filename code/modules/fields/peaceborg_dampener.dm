@@ -43,7 +43,7 @@
 		if(R.has_buckled_mobs())
 			for(var/mob/living/L in R.buckled_mobs)
 				L.visible_message("<span class='warning'>[L] is knocked off of [R] by the charge in [R]'s chassis induced by [name]!</span>")	//I know it's bad.
-				L.Weaken(3)
+				L.Knockdown(60)
 				R.unbuckle_mob(L)
 				do_sparks(5, 0, L)
 	..()

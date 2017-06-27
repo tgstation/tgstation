@@ -14,6 +14,7 @@
 	var/mopcount = 0
 	var/mopcap = 5
 	var/mopspeed = 30
+	force_string = "robust... against germs"
 
 /obj/item/weapon/mop/New()
 	..()

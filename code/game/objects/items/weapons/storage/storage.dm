@@ -62,7 +62,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop_T(atom/movable/O, mob/user)
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		var/obj/item/I = O
 		if(iscarbon(user) || isdrone(user))
 			var/mob/living/L = user

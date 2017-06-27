@@ -4,7 +4,7 @@
 	. += config.human_delay
 	. += dna.species.movement_delay(src)
 
-/mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
+/mob/living/carbon/human/slip(knockdown_amount, obj/O, lube)
 	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
 		return 0
 	return ..()

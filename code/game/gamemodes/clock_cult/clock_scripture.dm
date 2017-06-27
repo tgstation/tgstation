@@ -253,7 +253,7 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 		to_chat(invoker, creator_message)
 	var/obj/O = new object_path (get_turf(invoker))
 	O.ratvar_act() //update the new object so it gets buffed if ratvar is alive
-	if(istype(O, /obj/item))
+	if(isitem(O))
 		invoker.put_in_hands(O)
 	return TRUE
 
