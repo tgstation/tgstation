@@ -360,6 +360,10 @@
 		clear_alert("oxy")
 		reload_fullscreen()
 		. = 1
+		if(mind)
+			for(var/S in mind.spell_list)
+				var/obj/effect/proc_holder/spell/spell = S
+				spell.updateButtonIcon()
 
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
