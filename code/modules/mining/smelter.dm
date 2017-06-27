@@ -43,7 +43,7 @@
 		var/obj/item/weapon/reagent_containers/glass/mold/M = W
 		var/datum/reagent/R = M.reagents.get_master_reagent()
 		if(R && R.volume == 25)
-			if(user.transferItemToLoc(M, src)
+			if(user.drop_item())
 				to_chat(user, "You place [M] on [src].")
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
