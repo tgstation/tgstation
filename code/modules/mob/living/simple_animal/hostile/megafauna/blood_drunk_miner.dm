@@ -1,107 +1,140 @@
-#define HUNTER_DASH_RANGE 4
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter
-	name = "blood-drunk hunter"
-	desc = "A hunter destined to wander forever, engaged in an endless hunt."
+#define MINER_DASH_RANGE 4
+#define MEDAL_PREFIX "Blood-drunk Miner"
+/*
+
+BLOOD-DRUNK MINER
+
+Effectively a highly aggressive miner, the blood-drunk miner has very few attacks but compensates by being highly aggressive.
+
+The blood-drunk miner's attacks are as follows
+- If not in KA range, it will rapidly dash at its target
+- If in KA range, it will fire its kinetic accelerator
+- If in melee range, will rapidly attack, akin to an actual player
+- After any of these attacks, may transform its cleaving saw:
+	Untransformed, it attacks very rapidly for smaller amounts of damage
+	Transformed, it attacks at normal speed for higher damage and cleaves enemies hit
+
+When the blood-drunk miner dies, it leaves behind the cleaving saw it was using and its kinetic accelerator.
+
+Difficulty: Medium
+
+*/
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner
+	name = "blood-drunk miner"
+	desc = "A miner destined to wander forever, engaged in an endless hunt."
 	health = 900
 	maxHealth = 900
-	icon_state = "hunter"
-	icon_living = "hunter"
+	icon_state = "miner"
+	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
 	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 1
 	move_to_delay = 3
-	projectiletype = /obj/item/projectile/kinetic/hunter
+	projectiletype = /obj/item/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
 	ranged = 1
 	pixel_x = -16
-	crusher_loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/hunter_eye)
+	crusher_loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
 	loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
 	stat_attack = UNCONSCIOUS
 	blood_volume = BLOOD_VOLUME_NORMAL
-	var/obj/item/weapon/melee/transforming/cleaving_saw/hunter/hunter_saw
+	medal_type = MEDAL_PREFIX
+	var/obj/item/weapon/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform
 	var/dashing = FALSE
 	var/dash_cooldown = 15
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	death_sound = "bodyfall"
 
-/obj/item/weapon/melee/transforming/cleaving_saw/hunter //nerfed saw because it is very murdery
+/obj/item/weapon/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6
 	force_on = 10
 
-/obj/item/weapon/melee/transforming/cleaving_saw/hunter/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/weapon/melee/transforming/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
 	var/target_knockdown_amount = target.AmountKnockdown()
 	..()
 	var/new_knockdown = target.AmountKnockdown()
 	if(new_knockdown != target_knockdown_amount)
 		target.SetKnockdown(max(target_knockdown_amount, 6), ignore_canknockdown = TRUE) //doesn't knock targets down for long if it does so
 
-/obj/item/projectile/kinetic/hunter
+/obj/item/projectile/kinetic/miner
 	damage = 20
 	speed = 0.9
 	icon_state = "ka_tracer"
-	range = HUNTER_DASH_RANGE
+	range = MINER_DASH_RANGE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/Initialize()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Initialize()
 	. = ..()
-	internal = new/obj/item/device/gps/internal/hunter(src)
-	hunter_saw = new(src)
+	internal = new/obj/item/device/gps/internal/miner(src)
+	miner_saw = new(src)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	var/adjustment_amount = amount * 0.15
 	if(world.time + adjustment_amount > next_move)
 		changeNext_move(adjustment_amount) //attacking it interrupts it attacking, but only briefly
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/death()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/death()
 	if(health > 0)
 		return
-	new /obj/effect/temp_visual/dir_setting/hunter_death(loc, dir)
+	new /obj/effect/temp_visual/dir_setting/miner_death(loc, dir)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/Move(atom/newloc)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Move(atom/newloc)
 	if(dashing || (newloc && newloc.z == z && (istype(newloc, /turf/open/floor/plating/lava) || istype(newloc, /turf/open/chasm)))) //we're not stupid!
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/ex_act(severity, target)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/ex_act(severity, target)
 	if(dash())
 		return
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget()
+	if(QDELETED(target))
+		return
 	if(next_move > world.time || !Adjacent(target)) //some cheating
 		INVOKE_ASYNC(src, .proc/quick_attack_loop)
 		return
 	face_atom(target)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			visible_message("<span class='danger'>[src] butchers [L]!</span>",
+			"<span class='userdanger'>You butcher [L], restoring your health!</span>")
+			if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
+				adjustBruteLoss(-L.maxHealth/2)
+			L.gib()
+			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
-	hunter_saw.melee_attack_chain(src, target)
+	miner_saw.melee_attack_chain(src, target)
 	transform_weapon()
 	INVOKE_ASYNC(src, .proc/quick_attack_loop)
 	if(prob(10))
 		INVOKE_ASYNC(src, .proc/dash)
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(!used_item)
-		used_item = hunter_saw
+		used_item = miner_saw
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/GiveTarget(new_target)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/GiveTarget(new_target)
 	var/targets_the_same = (new_target == target)
 	. = ..()
 	if(. && target && !targets_the_same)
-		wander = FALSE
+		wander = TRUE
 		transform_weapon()
 		INVOKE_ASYNC(src, .proc/quick_attack_loop)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/OpenFire()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
 	Goto(target, move_to_delay, minimum_distance)
-	if(get_dist(src, target) >= HUNTER_DASH_RANGE && world.time >= dash_cooldown)
+	if(get_dist(src, target) >= MINER_DASH_RANGE && world.time >= dash_cooldown)
 		INVOKE_ASYNC(src, .proc/dash, target)
 	else if(next_move <= world.time)
 		visible_message("<span class='danger'>[src] fires the proto-kinetic accelerator!</span>")
@@ -111,7 +144,7 @@
 		changeNext_move(CLICK_CD_RANGE)
 	transform_weapon()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/proc/quick_attack_loop()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/quick_attack_loop()
 	if(next_move <= world.time)
 		sleep(1)
 		.() //retry
@@ -126,7 +159,7 @@
 		return
 	AttackingTarget()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/proc/dash(atom/target)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/dash(atom/target)
 	if(world.time < dash_cooldown)
 		return
 	dash_cooldown = world.time + initial(dash_cooldown)
@@ -135,11 +168,11 @@
 	var/turf/own_turf = get_turf(src)
 	if(!QDELETED(target))
 		self_dist_to_target += get_dist(target, own_turf)
-	for(var/turf/open/O in RANGE_TURFS(HUNTER_DASH_RANGE, own_turf))
+	for(var/turf/open/O in RANGE_TURFS(MINER_DASH_RANGE, own_turf))
 		var/turf_dist_to_target = 0
 		if(!QDELETED(target))
 			turf_dist_to_target += get_dist(target, O)
-		if(get_dist(src, O) >= HUNTER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm))
+		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
 				if(is_blocked_turf(T, TRUE))
@@ -151,7 +184,7 @@
 		return
 	var/turf/target_turf
 	if(!QDELETED(target))
-		var/closest_dist = HUNTER_DASH_RANGE
+		var/closest_dist = MINER_DASH_RANGE
 		for(var/t in accessable_turfs)
 			if(accessable_turfs[t] < closest_dist)
 				closest_dist = accessable_turfs[t]
@@ -178,23 +211,23 @@
 	dashing = FALSE
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_hunter/proc/transform_weapon()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/transform_weapon()
 	if(time_until_next_transform <= world.time)
-		hunter_saw.transform_cooldown = 0
-		hunter_saw.transform_weapon(src, TRUE)
-		icon_state = "hunter[hunter_saw.active ? "_transformed":""]"
-		icon_living = "hunter[hunter_saw.active ? "_transformed":""]"
+		miner_saw.transform_cooldown = 0
+		miner_saw.transform_weapon(src, TRUE)
+		icon_state = "miner[miner_saw.active ? "_transformed":""]"
+		icon_living = "miner[miner_saw.active ? "_transformed":""]"
 		time_until_next_transform = world.time + rand(50, 100)
 
-/obj/effect/temp_visual/dir_setting/hunter_death
-	icon_state = "hunter_death"
+/obj/effect/temp_visual/dir_setting/miner_death
+	icon_state = "miner_death"
 	duration = 10
 
-/obj/effect/temp_visual/dir_setting/hunter_death/Initialize(mapload, set_dir)
+/obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fade_out)
 
-/obj/effect/temp_visual/dir_setting/hunter_death/proc/fade_out()
+/obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
 	var/matrix/M = new
 	M.Turn(pick(90, 270))
 	var/final_dir = dir
@@ -207,10 +240,11 @@
 	sleep(2)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
-/obj/item/device/gps/internal/hunter
+/obj/item/device/gps/internal/miner
 	icon_state = null
 	gpstag = "Resonant Signal"
 	desc = "The sweet blood, oh, it sings to me."
 	invisibility = 100
 
-#undef HUNTER_DASH_RANGE
+#undef MINER_DASH_RANGE
+#undef MEDAL_PREFIX

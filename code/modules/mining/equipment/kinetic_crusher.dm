@@ -251,16 +251,16 @@
 		H.charge_time += bonus_value
 
 //blood-drunk hunter
-/obj/item/crusher_trophy/hunter_eye
+/obj/item/crusher_trophy/miner_eye
 	name = "eye of a blood-drunk hunter"
-	desc = "Its pupil is collapsed and turned to mush, indicating the onset of the scourge of beasts. Suitable as a trophy for a kinetic crusher."
+	desc = "Its pupil is collapsed and turned to mush. Suitable as a trophy for a kinetic crusher."
 	icon_state = "hunter_eye"
-	denied_type = /obj/item/crusher_trophy/hunter_eye
+	denied_type = /obj/item/crusher_trophy/miner_eye
 
-/obj/item/crusher_trophy/hunter_eye/effect_desc()
+/obj/item/crusher_trophy/miner_eye/effect_desc()
 	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
 
-/obj/item/crusher_trophy/hunter_eye/on_mark_detonation(mob/living/target, mob/living/user)
+/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
 	user.apply_status_effect(STATUS_EFFECT_BLOODDRUNK)
 
 //ash drake
