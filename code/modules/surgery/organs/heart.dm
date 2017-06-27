@@ -8,6 +8,7 @@
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
+	var/beat //is this mob having a heatbeat sound played? if so, which?
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -48,6 +49,16 @@
 	S.icon_state = "heart-off"
 	return S
 
+/obj/item/organ/heart/on_life()
+	if(ishuman(owner) && owner.client)
+		var/mob/living/carbon/human/H = owner
+		if(H.health <= HEALTH_THRESHOLD_CRIT)
+			beat = BEAT_SLOW
+			src << sound(null)
+			src << 'sound/health/slowbeat.ogg'
+		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
+			src << sound(null)
+			beat = BEAT_NONE
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

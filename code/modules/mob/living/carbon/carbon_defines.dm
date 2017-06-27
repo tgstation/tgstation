@@ -48,5 +48,3 @@
 
 	var/icon_render_key = ""
 	var/static/list/limb_icon_cache = list()
-
-	var/beat //is this mob having a heatbeat sound played? if so, which?

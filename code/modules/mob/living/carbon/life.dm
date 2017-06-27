@@ -20,13 +20,6 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
-	if(health <= HEALTH_THRESHOLD_CRIT)
-		beat = BEAT_SLOW
-		src << sound(null)
-		src << 'sound/health/slowbeat.ogg'
-	if(beat == BEAT_SLOW && health > HEALTH_THRESHOLD_CRIT)
-		src << sound(null)
-		beat = BEAT_NONE
 
 	if(stat != DEAD)
 		return 1
@@ -358,10 +351,12 @@
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
-		if(!beat || beat == BEAT_SLOW)
-			src << sound(null)
-			src << 'sound/health/fastbeat.ogg'
-			beat = BEAT_FAST
+		var/obj/item/organ/heart/heart = getorgan(/obj/item/organ/heart)
+		if(heart)
+			if(!heart.beat || heart.beat == BEAT_SLOW)
+				src << sound(null)
+				src << 'sound/health/fastbeat.ogg'
+				heart.beat = BEAT_FAST
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
