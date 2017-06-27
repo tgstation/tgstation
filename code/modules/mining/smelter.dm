@@ -4,7 +4,7 @@
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "smelter"
 	density = TRUE
-	anchored = FALSE
+	anchored = TRUE 
 
 /obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
@@ -29,7 +29,7 @@
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "anvil"
 	density = TRUE
-	anchored = TRUE //I should make it possible to unanchor this somehow or something, alt click?
+	anchored = FALSE
 	var/obj/item/weapon/reagent_containers/glass/mold/current_mold
 	var/mutable_appearance/my_mold
 
