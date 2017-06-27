@@ -23,6 +23,7 @@
 	var/dwarf_hair = pick("Dwarf Beard", "Very Long Beard", "Full Beard")
 	var/mob/living/carbon/human/H = C
 	H.grant_language(/datum/language/dwarvish)
+	H.remove_language(/datum/language/common)
 	H.facial_hair_style = dwarf_hair
 	H.update_hair()
 

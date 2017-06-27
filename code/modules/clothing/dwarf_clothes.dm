@@ -8,7 +8,6 @@
 	heat_protection = CHEST|GROIN|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	strip_delay = 80
-	put_on_delay = 60
 	species_clothing_whitelist = list("dwarf")
 
 /obj/item/clothing/suit/armor/vest/dwarf/CheckParts(list/parts_list)

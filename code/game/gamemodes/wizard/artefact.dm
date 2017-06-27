@@ -42,14 +42,10 @@
 	var/spawn_fast = 0
 
 /obj/structure/rend/hfs
-	spawn_path = /mob/living/carbon/human/interactive/greytide/clown
+	spawn_path = /mob/living/simple_animal/hostile/faithless
 	spawn_amt_left = 30
 
-/obj/structure/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
-	src.spawn_path = spawn_type
-	src.spawn_amt_left = spawn_amt
-	src.desc = desc
-	src.spawn_fast = spawn_fast
+/obj/structure/rend/New()
 	START_PROCESSING(SSobj, src)
 	return
 

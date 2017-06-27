@@ -401,20 +401,6 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 		GLOB.secret_triggered = TRUE
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
 		new /obj/structure/rend/hfs(src)
-	else //Could add a random chance to spawn different secret fun stuff
-		var/mob/living/simple_animal/hostile/spawner/lavaland/tendril = new(get_turf(src))
-		visible_message("<span class = 'userdanger'>A tendril suddonly pops out of the ground!</span>")
-		for(var/mob/M in range(7,src)) //shit just got real
-			shake_camera(M, 15, 1) 
-		if(prob(50))
-			tendril.mob_type = /mob/living/carbon/human/interactive/greytide/clown //c l o w n s
-			tendril.name = "Silly tendril" //I should really had made a subtype of tendrils instead of snowflaking vars
-		else
-			tendril.mob_type = /mob/living/simple_animal/hostile/swarmer/ai
-			tendril.name = "Strange tendril"
-			tendril.spawn_time = 150 //Half the time
-		if(prob(1))
-			GLOB.secret_triggered = FALSE //How to be unlucky
 	..()
 
 
