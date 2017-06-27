@@ -13,7 +13,7 @@
 	var/smelting_result = W.on_smelt()
 	if(!smelting_result)
 		return ..()
-	if(user.drop_item())
+	if(user.temporarilyRemoveItemFromInventory(W))
 		to_chat(user, "You smelt [W].")
 		qdel(W)
 		var/obj/item/weapon/reagent_containers/glass/bucket/AB = new(get_turf(src))
@@ -29,40 +29,39 @@
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "anvil"
 	density = TRUE
-	anchored = FALSE
-	var/obj/item/weapon/reagent_containers/glass/mold/current_mold = null
-	var/mutable_appearance/my_mold = null
+	anchored = TRUE //I should make it possible to unanchor this somehow or something, alt click?
+	var/obj/item/weapon/reagent_containers/glass/mold/current_mold
+	var/mutable_appearance/my_mold
 
 /obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
 		to_chat(user, "You don't comprehend this tool well enough to use it.")
 		return
 	if(!istype(W, /obj/item/weapon/smith_hammer))
-		..()
+		return ..()
 	if(!current_mold && istype(W, /obj/item/weapon/reagent_containers/glass/mold))
 		var/obj/item/weapon/reagent_containers/glass/mold/M = W
 		var/datum/reagent/R = M.reagents.get_master_reagent()
 		if(R && R.volume == 25)
-			if(user.drop_item())
+			if(user.transferItemToLoc(M, src)
 				to_chat(user, "You place [M] on [src].")
-				M.loc = src
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
-				return 0
+				return FALSE
 		if(R && R.volume)
 			to_chat(user, "There's not enough in the mold to make a full cast!")
-			return 0
+			return FALSE
 		else
 			to_chat(user, "There's nothing in the mold!")
-			return 0
+			return FALSE
 	if(istype(W, /obj/item/weapon/smith_hammer))
 		if(current_mold)
 			to_chat(user, "You break the result out of the mold.")
 			new current_mold.type(get_turf(src))
 			var/datum/reagent/R = current_mold.reagents.get_master_reagent()
 			if(!R)
-				qdel(current_mold)
+				QDEL_NULL(current_mold) //not sure what this does but it apparently deletes null stuff, go figure
 				cut_overlay(my_mold)
 				my_mold = null
 				current_mold = null
@@ -76,13 +75,15 @@
 				I = new R.produce_type(get_turf(src))
 				var/obj/item/stack/S = I
 				S.amount = 5
-			qdel(current_mold)
+			QDEL_NULL(current_mold)
 			cut_overlay(my_mold)
 			my_mold = null
 			current_mold = null
 			return
 		else
 			to_chat(user, "There's nothing in the mold!")
+	else
+		return ..() //If your not hitting it with a hammer or mold
 
 /obj/item/weapon/smith_hammer
 	name = "smith's hammer"
