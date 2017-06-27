@@ -37,9 +37,6 @@
 	var/weapon_weight = WEAPON_LIGHT
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
-	var/unique_reskin = 0 //allows one-time reskinning
-	var/current_skin = null //the skin choice if we had a reskin
-	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -93,8 +90,6 @@
 		to_chat(user, "It has [pin] installed.")
 	else
 		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
-	if(unique_reskin && !current_skin)
-		to_chat(user, "<span class='notice'>Alt-click it to reskin it.</span>")
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/weapon/gun/proc/process_chamber()
@@ -400,26 +395,6 @@
 	if(alight)
 		alight.Remove(user)
 
-
-/obj/item/weapon/gun/AltClick(mob/user)
-	..()
-	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(unique_reskin && !current_skin && loc == user)
-		reskin_gun(user)
-
-
-/obj/item/weapon/gun/proc/reskin_gun(mob/M)
-	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
-
-	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
-		if(options[choice] == null)
-			return
-		current_skin = options[choice]
-		to_chat(M, "Your gun is now skinned as [choice]. Say hello to your new friend.")
-		update_icon()
-
 /obj/item/weapon/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
 	if(!ishuman(user) || !ishuman(target))
 		return
@@ -465,7 +440,7 @@
 
 /datum/action/toggle_scope_zoom
 	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_LYING
 	button_icon_state = "sniper_zoom"
 	var/obj/item/weapon/gun/gun = null
 

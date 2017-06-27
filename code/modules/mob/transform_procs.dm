@@ -31,7 +31,7 @@
 	//Make mob invisible and spawn animation
 	notransform = 1
 	canmove = 0
-	stunned = 1
+	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -182,7 +182,7 @@
 	//Make mob invisible and spawn animation
 	notransform = 1
 	canmove = 0
-	stunned = 1
+	Stun(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM

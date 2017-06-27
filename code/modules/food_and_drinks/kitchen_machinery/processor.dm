@@ -126,8 +126,6 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	output = /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
 
-
-
 /* mobs */
 /datum/food_processor_process/mob/process_food(loc, what, processor)
 	..()
@@ -299,7 +297,7 @@
 
 /obj/machinery/processor/slime
 	name = "Slime processor"
-	desc = "An industrial grinder with a sSSticker saying appropriated for science department. Keep hands clear of intake area while operating."
+	desc = "An industrial grinder with a sticker saying appropriated for science department. Keep hands clear of intake area while operating."
 
 /obj/machinery/processor/slime/New()
 	..()

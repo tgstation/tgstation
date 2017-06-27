@@ -38,7 +38,7 @@
 
 
 /datum/antagonist/traitor/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	if(istype(new_body,/mob/living/silicon/ai)==istype(old_body,/mob/living/silicon/ai))
+	if(issilicon(new_body) && issilicon(old_body))
 		..()
 	else
 		silent = TRUE
@@ -63,7 +63,7 @@
 
 /datum/antagonist/traitor/proc/specialise()
 	silent = TRUE
-	if(owner.current&&istype(owner.current,/mob/living/silicon/ai))
+	if(owner.current&&isAI(owner.current))
 		owner.add_antag_datum(ai_datum)
 	else owner.add_antag_datum(human_datum)
 	on_removal()
@@ -109,7 +109,7 @@
 		var/mob/living/silicon/ai/A = owner.current
 		A.set_zeroth_law("")
 		A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-		A.malf_picker.remove_verbs(A)
+		A.malf_picker.remove_malf_verbs(A)
 		qdel(A.malf_picker)
 	..()
 
@@ -247,13 +247,14 @@
 /datum/antagonist/traitor/AI/finalize_traitor()
 	..()
 	add_law_zero()
-	owner.current.playsound_local('sound/ambience/antag/malf.ogg',100,0)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
 	owner.current.grant_language(/datum/language/codespeak)
 
 /datum/antagonist/traitor/human/finalize_traitor()
 	..()
-	if(should_equip) equip(silent)
-	owner.current.playsound_local('sound/ambience/antag/tatoralert.ogg',100,0)
+	if(should_equip)
+		equip(silent)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/traitor/proc/give_codewords()
 	if(!owner.current)

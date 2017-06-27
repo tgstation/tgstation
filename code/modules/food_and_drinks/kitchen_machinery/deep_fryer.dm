@@ -131,6 +131,6 @@ insert ascii eagle on american flag background here
 		reagents.reaction(C, TOUCH)
 		C.adjustFireLoss(reagents.total_volume)
 		reagents.remove_any((reagents.total_volume/2))
-		C.Weaken(3)
+		C.Knockdown(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	..()

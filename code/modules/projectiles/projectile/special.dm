@@ -59,7 +59,7 @@
 	if(istype(target, /obj/mecha))
 		var/obj/mecha/M = target
 		M.take_damage(anti_armour_damage)
-	if(istype(target, /mob/living/silicon))
+	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
@@ -183,12 +183,12 @@
 		return ..()
 	if(!gun)
 		qdel(src)
-	gun.create_portal(src)
+	gun.create_portal(src, get_turf(src))
 
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"
 	damage = 25
-	weaken = 5
+	knockdown = 50
 
 /obj/item/projectile/bullet/frag12/on_hit(atom/target, blocked = 0)
 	..()

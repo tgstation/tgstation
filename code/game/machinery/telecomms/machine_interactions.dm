@@ -5,12 +5,8 @@
 
 */
 
-#define STATION_Z 1
-#define TELECOMM_Z 3
-
 /obj/machinery/telecomms
 	var/temp = "" // output message
-
 
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user, params)
 
@@ -54,9 +50,9 @@
 
 	user.set_machine(src)
 	var/dat
-	dat = "<font face = \"Courier\"><HEAD><TITLE>[src.name]</TITLE></HEAD><center><H3>[src.name] Access</H3></center>"
+	dat = "<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>"
 	dat += "<br>[temp]<br>"
-	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[src.toggled ? "On" : "Off"]</a>"
+	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[toggled ? "On" : "Off"]</a>"
 	if(on && toggled)
 		if(id != "" && id)
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>[id]</a>"
@@ -74,7 +70,7 @@
 		var/i = 0
 		for(var/obj/machinery/telecomms/T in links)
 			i++
-			if(T.hide && !src.hide)
+			if(T.hide && !hide)
 				continue
 			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
 		dat += "</ol>"
@@ -110,8 +106,7 @@
 
 // Off-Site Relays
 //
-// You are able to send/receive signals from the station's z level (changeable in the STATION_Z #define) if
-// the relay is on the telecomm satellite (changable in the TELECOMM_Z #define)
+// You are able to send/receive signals from the station's z level (changeable in the ZLEVEL_STATION #define) if
 
 
 /obj/machinery/telecomms/relay/proc/toggle_level()
@@ -119,13 +114,10 @@
 	var/turf/position = get_turf(src)
 
 	// Toggle on/off getting signals from the station or the current Z level
-	if(src.listening_level == STATION_Z) // equals the station
-		src.listening_level = position.z
-		return 1
-	else if(position.z == TELECOMM_Z)
-		src.listening_level = STATION_Z
-		return 1
-	return 0
+	if(listening_level == ZLEVEL_STATION) // equals the station
+		listening_level = position.z
+		return TRUE
+	return FALSE
 
 // Returns a multitool from a user depending on their mobtype.
 
@@ -158,8 +150,6 @@
 
 /obj/machinery/telecomms/relay/Options_Menu()
 	var/dat = ""
-	if(src.z == TELECOMM_Z)
-		dat += "<br>Signal Locked to Station: <A href='?src=\ref[src];change_listening=1'>[listening_level == STATION_Z ? "TRUE" : "FALSE"]</a>"
 	dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
 	dat += "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
 	return dat
@@ -172,14 +162,6 @@
 	if(href_list["broadcast"])
 		broadcasting = !broadcasting
 		temp = "<font color = #666633>-% Broadcasting mode changed. %-</font color>"
-	if(href_list["change_listening"])
-		//Lock to the station OR lock to the current position!
-		//You need at least two receivers and two broadcasters for this to work, this includes the machine.
-		var/result = toggle_level()
-		if(result)
-			temp = "<font color = #666633>-% [src]'s signal has been successfully changed.</font color>"
-		else
-			temp = "<font color = #666633>-% [src] could not lock its signal onto the station. Two broadcasters or receivers required.</font color>"
 
 // BUS
 
@@ -219,15 +201,10 @@
 
 			if("toggle")
 
-				src.toggled = !src.toggled
-				temp = "<font color = #666633>-% [src] has been [src.toggled ? "activated" : "deactivated"].</font color>"
+				toggled = !toggled
+				temp = "<font color = #666633>-% [src] has been [toggled ? "activated" : "deactivated"].</font color>"
 				update_power()
 
-			/*
-			if("hide")
-				src.hide = !hide
-				temp = "<font color = #666633>-% Shadow Link has been [src.hide ? "activated" : "deactivated"].</font color>"
-			*/
 
 			if("id")
 				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
@@ -293,10 +270,10 @@
 			var/obj/machinery/telecomms/T = P.buffer
 			if(istype(T) && T != src)
 				if(!(src in T.links))
-					T.links.Add(src)
+					T.links += src
 
-				if(!(T in src.links))
-					src.links.Add(T)
+				if(!(T in links))
+					links += T
 
 				temp = "<font color = #666633>-% Successfully linked with \ref[T] [T.name] %-</font color>"
 
@@ -314,7 +291,7 @@
 		temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 		P.buffer = null
 
-	src.Options_Topic(href, href_list)
+	Options_Topic(href, href_list)
 
 	usr.set_machine(src)
 
@@ -322,8 +299,5 @@
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
 	if(issilicon(user) || in_range(user, src))
-		return 1
-	return 0
-
-#undef TELECOMM_Z
-#undef STATION_Z
+		return TRUE
+	return FALSE

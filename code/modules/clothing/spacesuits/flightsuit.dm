@@ -539,7 +539,7 @@
 	if(damage)
 		crash_damage(density, anchored, momentum_speed, unmovablevictim.name)
 		userknockback(density, anchored, momentum_speed, dir)
-		losecontrol(stun = FALSE, move = FALSE)
+		losecontrol(knockdown = FALSE, move = FALSE)
 	crashing = FALSE
 
 /obj/item/device/flightpack/proc/door_hit(obj/structure/mineral_door/door)
@@ -624,7 +624,7 @@
 		var/obj/O = victim
 		O.take_damage(damage)
 
-/obj/item/device/flightpack/proc/losecontrol(stun = FALSE, move = TRUE)
+/obj/item/device/flightpack/proc/losecontrol(knockdown = FALSE, move = TRUE)
 	if(!move)
 		momentum_x = 0
 		momentum_y = 0
@@ -639,8 +639,8 @@
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
-		if(stun)
-			wearer.Weaken(4)
+		if(knockdown)
+			wearer.Knockdown(80)
 	momentum_x = 0
 	momentum_y = 0
 	if(flight)
@@ -670,7 +670,7 @@
 
 /obj/item/device/flightpack/proc/disable_flight(forced = FALSE)
 	if(forced)
-		losecontrol(stun = TRUE)
+		losecontrol(knockdown = TRUE)
 		return TRUE
 	if(momentum_speed <= 1)
 		momentum_x = 0
@@ -867,7 +867,7 @@
 
 /obj/item/clothing/shoes/flightshoes
 	name = "flight shoes"
-	desc = "A pair of specialized boots that contain stabilizers and sensors nessacary for flight gear to work" //Apparently you need these to detect mob movement.
+	desc = "A pair of specialized boots that contain stabilizers and sensors necessary for flight gear to work." //Apparently you need these to detect mob movement.
 	icon_state = "flightshoes"
 	item_state = "flightshoes_mob"
 	var/obj/item/clothing/suit/space/hardsuit/flightsuit/suit = null

@@ -5,6 +5,7 @@
 	icon_state = "water"
 	density = 1
 	anchored = 0
+	container_type = DRAWABLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	obj_integrity = 300
 	max_integrity = 300
@@ -55,7 +56,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
-	desc = "A highly-pressurized water tank made to hold gargantuan amounts of water.."
+	desc = "A highly pressurized water tank made to hold gargantuan amounts of water."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
 
@@ -107,7 +108,7 @@
 			reagents.trans_to(W, W.max_fuel)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
-			update_icon()
+			W.update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			var/message_admins = "[key_name_admin(user)] triggered a fueltank explosion via welding tool."

@@ -179,7 +179,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
 	if(A == target && target.stat!=DEAD)
-		target.Weaken(5)
+		target.Knockdown(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /obj/effect/hallucination/xeno_attack
@@ -227,7 +227,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_state = "brainslug"
 
 /obj/effect/hallucination/borer
-	//A borer paralyzes you and crawls in your ear
+	//A borer unconsciouss you and crawls in your ear
 	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/borer/borer = null
 
@@ -244,7 +244,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			walk_to(borer, get_step(borer, get_cardinal_dir(borer, T)))
 			if(borer.Adjacent(T))
 				to_chat(T, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-				T.Stun(4)
+				T.Stun(80)
 				sleep(50)
 				qdel(borer)
 				sleep(rand(60, 90))
@@ -262,51 +262,57 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	px = -32
 
 /obj/effect/hallucination/oh_yeah
-	var/turf/closed/wall/wall
-	var/obj/effect/hallucination/simple/bubblegum/bubblegum = null
+	var/obj/effect/hallucination/simple/bubblegum/bubblegum
 	var/image/fakebroken
 	var/image/fakerune
 
 /obj/effect/hallucination/oh_yeah/Initialize(mapload, var/mob/living/carbon/T)
-	..()
+	. = ..()
 	target = T
+	var/turf/closed/wall/wall
 	for(var/turf/closed/wall/W in range(7,target))
 		wall = W
 		break
-	if(wall)
-		fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
-		var/turf/landing = get_turf(target)
-		var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
-		fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
-		fakebroken.override = TRUE
-		if(target.client)
-			target.client.images |= fakebroken
-			target.client.images |= fakerune
-		target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
-		bubblegum = new(wall, target)
-		sleep(10) //ominous wait
-		var/charged = FALSE //only get hit once
-		while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
-			bubblegum.forceMove(get_step_towards(bubblegum, landing))
-			bubblegum.setDir(get_dir(bubblegum, landing))
-			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
-			shake_camera(target, 2, 1)
-			if(bubblegum.Adjacent(target) && !charged)
-				charged = TRUE
-				target.Weaken(4)
-				target.staminaloss += 40
-				step_away(target, bubblegum)
-				shake_camera(target, 4, 3)
-				target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
-			sleep(2)
-		sleep(30)
-		qdel(bubblegum)
+	if(!wall)
+		return INITIALIZE_HINT_QDEL
+
+	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
+	var/turf/landing = get_turf(target)
+	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
+	fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+	fakebroken.override = TRUE
+	if(target.client)
+		target.client.images |= fakebroken
+		target.client.images |= fakerune
+	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
+	bubblegum = new(wall, target)
+	addtimer(CALLBACK(src, .proc/bubble_attack, landing), 10)
+
+/obj/effect/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
+	var/charged = FALSE //only get hit once
+	while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
+		bubblegum.forceMove(get_step_towards(bubblegum, landing))
+		bubblegum.setDir(get_dir(bubblegum, landing))
+		target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
+		shake_camera(target, 2, 1)
+		if(bubblegum.Adjacent(target) && !charged)
+			charged = TRUE
+			target.Knockdown(80)
+			target.adjustStaminaLoss(40)
+			step_away(target, bubblegum)
+			shake_camera(target, 4, 3)
+			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+		sleep(2)
+	sleep(30)
 	qdel(src)
 
 /obj/effect/hallucination/oh_yeah/Destroy()
 	if(target.client)
 		target.client.images.Remove(fakebroken)
 		target.client.images.Remove(fakerune)
+	QDEL_NULL(fakebroken)
+	QDEL_NULL(fakerune)
+	QDEL_NULL(bubblegum)
 	return ..()
 
 /obj/effect/hallucination/singularity_scare
@@ -342,7 +348,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = SCREWYHUD_CRIT
-		target.SetSleeping(8, no_alert = TRUE)
+		target.SetUnconscious(160)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
@@ -625,7 +631,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	else if(src.dir == WEST)
 		del src.currentimage
 		src.currentimage = new /image(left,src)
-	to_chat(my_target, currentimage)
+	SEND_IMAGE(my_target, currentimage)
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
@@ -669,7 +675,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(target.loc)
 	O.name = "blood"
 	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	to_chat(target, I)
+	SEND_IMAGE(target, I)
 	QDEL_IN(O, 300)
 
 
@@ -786,7 +792,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			new /obj/effect/hallucination/items_other(src.loc,src)
 		if("sounds")
 			//Strange audio
-			//to_chat(src, "Strange Audio")
 			switch(rand(1,20))
 				if(1) playsound_local(null,'sound/machines/airlock.ogg', 15, 1)
 				if(2)
@@ -1003,7 +1008,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if("death")
 			//Fake death
 			hal_screwyhud = SCREWYHUD_DEAD
-			SetSleeping(20, no_alert = TRUE)
+			SetUnconscious(400)
 			var/area/area = get_area(src)
 			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))
