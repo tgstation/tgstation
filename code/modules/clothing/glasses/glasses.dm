@@ -130,7 +130,7 @@
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/night/mining
-	name = "Planetary Night Vision Goggles"
+	name = "planetary night vision goggles"
 	desc = "Used by mining staff to see in the dark; however, it is an extremely cheap brand that automatically shuts off in the presence of "
 	origin_tech = "materials=2;magnets=1;engineering=2"
 	darkness_view = 2
