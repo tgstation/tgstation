@@ -16,7 +16,7 @@
 	if(user.temporarilyRemoveItemFromInventory(W))
 		to_chat(user, "You smelt [W].")
 		qdel(W)
-		var/obj/item/weapon/reagent_containers/glass/bucket/AB = new(get_turf(src))
+		var/obj/item/weapon/reagent_containers/glass/bucket/dwarf/AB = new(get_turf(src)) //New bucket that holds 75u, adding snowflake sprite soon
 		AB.reagents.add_reagent(smelting_result, 75)
 		AB.reagents.chem_temp = 1000
 		AB.reagents.handle_reactions()
