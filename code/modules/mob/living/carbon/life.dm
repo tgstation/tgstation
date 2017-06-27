@@ -354,8 +354,8 @@
 		var/obj/item/organ/heart/heart = getorgan(/obj/item/organ/heart)
 		if(heart)
 			if(!heart.beat || heart.beat == BEAT_SLOW)
-				src << sound(null)
-				src << 'sound/health/fastbeat.ogg'
+				stop_sound_channel(150)
+				playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = 150)
 				heart.beat = BEAT_FAST
 
 	if(stuttering)
