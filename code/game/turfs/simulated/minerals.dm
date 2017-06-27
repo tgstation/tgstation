@@ -403,7 +403,7 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
 		new /obj/structure/rend/hfs(src)
 	else //Could add a random chance to spawn different secret fun stuff
-		var/tendril = new /mob/living/simple_animal/hostile/spawner/lavaland
+		var/mob/living/simple_animal/hostile/spawner/lavaland/tendril = new(get_turf(src))
 		visible_message("<span class = 'userdanger'>A tendril suddonly pops out of the ground!</span>")
 		for(var/mob/M in range(7,src)) //shit just got real
 			shake_camera(M, 15, 1) 
