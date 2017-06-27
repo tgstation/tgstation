@@ -395,13 +395,27 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
+	var/mutable_appearance/activated_overlay //Gibtonite copypasta, cool effects i guess
 
 /turf/closed/mineral/adamantine/gets_drilled()
 	if(!GLOB.secret_triggered)
 		GLOB.secret_triggered = TRUE
 		visible_message("<span class = 'userdanger'>You uncover an ancient evil!</span>")
 		new /obj/structure/rend/hfs(src)
+	else //Could add a random chance to spawn different secret fun stuff
+		var/tendril = new /mob/living/simple_animal/hostile/spawner/lavaland
+		visible_message("<span class = 'userdanger'>A tendril suddonly pops out of the ground!</span>")
+		if(prob(50))
+			tendril.mob_type = /mob/living/carbon/human/interactive/greytide/clown //c l o w n s
+			tendril.name = "Silly tendril" //I should really had made a subtype of tendrils instead of snowflaking vars
+		else
+			tendril.mob_type = /mob/living/simple_animal/hostile/swarmer/ai
+			tendril.name = "Strange tendril"
+			tendril.spawn_time = 150 //Half the time
+		if(prob(1))
+			GLOB.secret_triggered = FALSE //How to be unlucky
 	..()
+
 
 /turf/closed/mineral/clay
 	mineralType = /obj/item/stack/sheet/mineral/clay
