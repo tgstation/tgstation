@@ -514,6 +514,8 @@
 					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
 					S = GLOB.legs_list[H.dna.features["legs"]]
+				else
+					S = hippie_mutant_bodyparts(bodypart, H)
 
 			if(!S || S.icon_state == "none")
 				continue

@@ -14,3 +14,7 @@
 			var/obj/item/bodypart/B = O
 			B.should_draw_hippie = FALSE
 
+/datum/species/proc/hippie_mutant_bodyparts(bodypart, mob/living/carbon/human/H)
+	switch(bodypart)
+		if("moth_wings")
+			return GLOB.moth_wings_list[H.dna.features["moth_wings"]]
