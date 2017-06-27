@@ -405,6 +405,8 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	else //Could add a random chance to spawn different secret fun stuff
 		var/tendril = new /mob/living/simple_animal/hostile/spawner/lavaland
 		visible_message("<span class = 'userdanger'>A tendril suddonly pops out of the ground!</span>")
+		for(var/mob/M in range(7,src)) //shit just got real
+			shake_camera(M, 15, 1) 
 		if(prob(50))
 			tendril.mob_type = /mob/living/carbon/human/interactive/greytide/clown //c l o w n s
 			tendril.name = "Silly tendril" //I should really had made a subtype of tendrils instead of snowflaking vars
