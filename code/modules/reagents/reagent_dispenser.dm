@@ -5,6 +5,7 @@
 	icon_state = "water"
 	density = 1
 	anchored = 0
+	container_type = DRAWABLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	obj_integrity = 300
 	max_integrity = 300
