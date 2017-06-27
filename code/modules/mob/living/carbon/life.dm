@@ -357,6 +357,7 @@
 				stop_sound_channel(150)
 				playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = 150)
 				heart.beat = BEAT_FAST
+				to_chat(owner, "<span class = 'notice'>Your heat feels like it's going to beat out of your chest.</span>")
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
