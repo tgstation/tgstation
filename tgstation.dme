@@ -1825,7 +1825,6 @@
 #include "code\modules\ninja\suit\n_suit_verbs\ninja_stars.dm"
 #include "code\modules\ninja\suit\n_suit_verbs\ninja_stealth.dm"
 #include "code\modules\ninja\suit\n_suit_verbs\ninja_sword_recall.dm"
-#include "code\modules\ninja\suit\n_suit_verbs\ninja_teleporting.dm"
 #include "code\modules\orbit\orbit.dm"
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\contract.dm"
