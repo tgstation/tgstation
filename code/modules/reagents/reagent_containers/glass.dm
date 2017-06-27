@@ -294,7 +294,7 @@
 	item_state = "bucket"
 	materials = list(MAT_METAL=200)
 	w_class = WEIGHT_CLASS_NORMAL
-	amount_per_transfer_from_this = 20
+	amount_per_transfer_from_this = 25 //Mods require 25u of reagents, saves a click
 	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 75 //Code adds 75u of reagents while the original bucket had 70u max, making it loose	flags = OPENCONTAINER
 	flags_inv = HIDEHAIR
