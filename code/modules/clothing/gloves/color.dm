@@ -32,8 +32,7 @@
 	item_color="yellow"
 	resistance_flags = 0
 
-
-/obj/item/clothing/gloves/color/fyellow/New()
+/obj/item/clothing/gloves/color/old/New()
 	..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 

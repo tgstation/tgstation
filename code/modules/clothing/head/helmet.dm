@@ -35,6 +35,7 @@
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
+	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
 	icon_state = "blueshift"
