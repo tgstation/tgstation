@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		/obj/effect/proc_holder/spell/targeted/conjure_item/violin,
 		/obj/effect/proc_holder/spell/targeted/summon_dancefloor))
 	var/ascendable = FALSE
+	name = "Devil"
 
 
 /datum/antagonist/devil/New()
@@ -309,7 +310,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 /datum/antagonist/devil/proc/give_appropriate_spells()
 	remove_spells()
 	give_summon_contract()
-	if(SOULVALUE >= ARCH_THRESHOLD)
+	if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 		give_arch_spells()
 	else if(SOULVALUE >= TRUE_THRESHOLD)
 		give_true_spells()
@@ -403,7 +404,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
-	if(SOULVALUE < ARCH_THRESHOLD && ascendable) // once ascended, arch devils do not go down in power by any means.
+	if(SOULVALUE < ARCH_THRESHOLD || !ascendable) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
@@ -450,8 +451,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				A.faction |= "hell"
 				H.forceMove(A)
 				A.oldform = H
+				owner.transfer_to(A, TRUE)
 				A.set_name()
-				owner.transfer_to(A)
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
