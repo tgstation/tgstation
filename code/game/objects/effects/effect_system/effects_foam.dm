@@ -276,6 +276,10 @@
 		for(var/obj/item/Item in O)
 			Item.extinguish()
 
+/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return TRUE
+	. = ..()
 
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM

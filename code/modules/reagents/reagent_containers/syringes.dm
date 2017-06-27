@@ -96,7 +96,7 @@
 					to_chat(user, "<span class='warning'>[target] is empty!</span>")
 					return
 
-				if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers) && !istype(target,/obj/item/slime_extract))
+				if(!target.is_drawable())
 					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 					return
 
@@ -112,7 +112,7 @@
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target, /obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/slime_extract) && !istype(target, /obj/item/clothing/mask/cigarette) && !istype(target, /obj/item/weapon/storage/fancy/cigarettes))
+			if(!target.is_injectable())
 				to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
 				return
 			if(target.reagents.total_volume >= target.reagents.maximum_volume)

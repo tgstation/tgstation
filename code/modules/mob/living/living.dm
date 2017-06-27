@@ -357,6 +357,7 @@
 		updatehealth() //then we check if the mob should wake up.
 		update_canmove()
 		update_sight()
+		clear_alert("oxy")
 		reload_fullscreen()
 		. = 1
 

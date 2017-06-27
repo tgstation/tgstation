@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
+	container_type = INJECTABLE
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
