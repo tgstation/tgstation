@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(dwarves_list, list())
 	var/datum/objective/O = new("Make claim to these hellish lands, constructing a great fortress and mining the rock for its precious metals, in the name of the Dwarven people!")
 	M.mind.objectives += O
 	LAZYADD(GLOB.dwarves_list, M)
-	to_chat(src, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Lava_Dwarf to learn how to strike the earth!</b>")
+	to_chat(M, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Lava_Dwarf to learn how to strike the earth!</b>")
 
 /obj/machinery/migrant_spawner/attackby(obj/item/weapon/W, mob/user, params)
 	if(isdwarf(user))
