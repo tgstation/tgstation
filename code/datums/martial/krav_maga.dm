@@ -53,14 +53,14 @@
 		H.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
 /datum/martial_art/krav_maga/teach(mob/living/carbon/human/H,make_temporary=0)
-	..()
-	to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
-	to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
-	neckchop.Grant(H)
-	legsweep.Grant(H)
-	lungpunch.Grant(H)
+	if(..())
+		to_chat(H, "<span class = 'userdanger'>You know the arts of Krav Maga!</span>")
+		to_chat(H, "<span class = 'danger'>Place your cursor over a move at the top of the screen to see what it does.</span>")
+		neckchop.Grant(H)
+		legsweep.Grant(H)
+		lungpunch.Grant(H)
 
-/datum/martial_art/krav_maga/remove_act(mob/living/carbon/human/H)
+/datum/martial_art/krav_maga/on_remove(mob/living/carbon/human/H)
 	to_chat(H, "<span class = 'userdanger'>You suddenly forget the arts of Krav Maga...</span>")
 	neckchop.Remove(H)
 	legsweep.Remove(H)
