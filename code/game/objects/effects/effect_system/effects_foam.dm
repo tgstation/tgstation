@@ -229,7 +229,7 @@
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	to_chat(user, "<span class='warning'>You hit the metal foam but bounce off it!</span>")
+	to_chat(user, "<span class='warning'>You hit [src] but bounce off it!</span>")
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
@@ -276,6 +276,10 @@
 		for(var/obj/item/Item in O)
 			Item.extinguish()
 
+/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return TRUE
+	. = ..()
 
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM
