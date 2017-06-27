@@ -565,7 +565,10 @@
 	resistance_flags = FIRE_PROOF
 	var/footstep = 1
 
-obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+/obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+	var/mob/living/carbon/human/H = loc
+	if(!istype(H) || H.wear_suit != src)
+		return
 	if(footstep > 1)
 		playsound(src, "suitstep", 50, 1)
 		footstep = 0

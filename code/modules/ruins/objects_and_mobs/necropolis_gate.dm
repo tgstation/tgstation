@@ -63,12 +63,12 @@
 
 /obj/structure/necropolis_gate/CheckExit(atom/movable/O, target)
 	if(get_dir(O.loc, target) == dir)
-		return 0
+		return !density
 	return 1
 
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "gate_full"
+	icon_state = "gate_blocker"
 	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32

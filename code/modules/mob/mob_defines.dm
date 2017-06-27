@@ -8,7 +8,6 @@
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
-
 	var/static/next_mob_id = 0
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
@@ -52,7 +51,6 @@
 	var/lying = 0
 	var/lying_prev = 0
 	var/canmove = 1
-	var/eye_damage = 0//Living, potentially Carbon
 	var/lastpuke = 0
 
 	var/name_archive //For admin things like possession
