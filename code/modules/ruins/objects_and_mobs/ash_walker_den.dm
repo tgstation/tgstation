@@ -13,7 +13,7 @@
 	var/meat_counter = 6
 
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/death()
-	new /obj/item/device/assembly/signaler/anomaly (get_step(loc, pick(GLOB.cardinal)))
+	new /obj/item/device/assembly/signaler/anomaly (get_step(loc, pick(GLOB.alldirs)))
 	return ..()
 
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/handle_automated_action()
@@ -34,6 +34,6 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/ash_walker/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)
-		new /obj/effect/mob_spawn/human/ash_walker(get_step(loc, pick(GLOB.cardinal)))
+		new /obj/effect/mob_spawn/human/ash_walker(get_step(loc, pick(GLOB.alldirs)))
 		visible_message("<span class='danger'>One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!</span>")
 		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD
