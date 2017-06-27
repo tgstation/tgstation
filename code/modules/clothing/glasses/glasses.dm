@@ -88,6 +88,55 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/night/mining
+	name = "planetary night vision goggles"
+	desc = "Used by mining staff to see in the dark; however, it is an extremely cheap brand that automatically shuts off in the presence of "
+	origin_tech = "materials=2;magnets=1;engineering=2"
+	darkness_view = 2
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	var/static/list/nvg_station_failure_excuses = list("electromagnetic radiation", "excessive surveillance", "interstellar signals", "artificial gravity", "wireless power", "neutron flow", \
+	"cosmic rays", "dark matter", "space lag")
+	var/picked_excuse
+	var/nvg_on = FALSE
+
+/obj/item/clothing/glasses/night/mining/Initialize()
+	. = ..()
+	picked_excuse = pick(nvg_station_failure_excuses)
+	desc += "[picked_excuse]."
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/night/mining/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/glasses/night/mining/examine(mob/user)
+	..()
+	var/turf/T = get_turf(src)
+	if(T && T.z != ZLEVEL_MINING && !nvg_on)
+		to_chat(user, "<span class='warning'>Due to [picked_excuse], these [name] have disabled themselves to prevent damage.</span>")
+
+/obj/item/clothing/glasses/night/mining/proc/toggle_mode(mob/user)
+	nvg_on = !nvg_on
+	darkness_view = nvg_on ? 8 : 2
+	lighting_alpha = nvg_on ? LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE : LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
+	if(iscarbon(user)) //only carbons can wear glasses
+		var/mob/living/carbon/C = user
+		if(nvg_on)
+			to_chat(C, "<span class='notice'>Your [name] have reactivated.</span>")
+		else if(picked_excuse)
+			to_chat(C, "<span class='warning'>Due to the presence of [picked_excuse], your [name] have disabled themselves to prevent damage.</span>")
+		if(C.glasses == src)
+			C.update_sight()
+
+/obj/item/clothing/glasses/night/mining/process()
+	var/turf/T = get_turf(src)
+	if(T && T.z == ZLEVEL_MINING)
+		if(!nvg_on) //if we're on mining, turn nvg ON
+			toggle_mode(loc)
+	else if(nvg_on) //otherwise, if we're not on mining, turn nvg back OFF
+		toggle_mode(loc)
+
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
