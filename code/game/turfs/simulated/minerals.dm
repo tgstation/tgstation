@@ -395,7 +395,6 @@ GLOBAL_VAR_INIT(secret_triggered, FALSE)
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
-	var/mutable_appearance/activated_overlay //Gibtonite copypasta, cool effects i guess
 
 /turf/closed/mineral/adamantine/gets_drilled()
 	if(!GLOB.secret_triggered)
