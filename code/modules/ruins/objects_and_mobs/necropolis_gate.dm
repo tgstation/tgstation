@@ -4,6 +4,7 @@
 	desc = "A massive stone gateway."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_full"
+	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
 	density = TRUE
@@ -13,8 +14,11 @@
 	light_range = 8
 	light_color = LIGHT_COLOR_LAVA
 	var/open = FALSE
+	var/changing_openness = FALSE
+	var/locked = FALSE
 	var/static/mutable_appearance/top_overlay
 	var/static/mutable_appearance/door_overlay
+	var/static/mutable_appearance/dais_overlay
 	var/obj/structure/opacity_blocker/sight_blocker
 	var/sight_blocker_distance = 1
 
@@ -33,7 +37,11 @@
 	top_overlay.layer = EDGED_TURF_LAYER
 	add_overlay(top_overlay)
 	door_overlay = mutable_appearance('icons/effects/96x96.dmi', "door")
+	door_overlay.layer = EDGED_TURF_LAYER
 	add_overlay(door_overlay)
+	dais_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_dais")
+	dais_overlay.layer = CLOSED_TURF_LAYER
+	add_overlay(dais_overlay)
 
 /obj/structure/necropolis_gate/Destroy(force)
 	if(force)
@@ -61,26 +69,53 @@
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/necropolis_gate/attack_hand(mob/user)
-	open_the_gate(user)
-
-/obj/structure/necropolis_gate/proc/open_the_gate(mob/user, legion_damaged)
-	if(open)
+	if(locked)
+		to_chat(user, "<span class='boldannounce'>It's [open ? "stuck open":"locked"].</span>")
 		return
-	open = TRUE
-	cut_overlay(door_overlay)
+	toggle_the_gate(user)
+
+/obj/structure/necropolis_gate/proc/toggle_the_gate(mob/user, legion_damaged)
+	if(changing_openness)
+		return
+	changing_openness = TRUE
 	var/turf/T = get_turf(src)
-	new /obj/effect/temp_visual/necropolis_open(T)
-	sleep(2)
-	visible_message("<span class='warning'>The door starts to grind open...</span>")
-	playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
-	sleep(27)
-	qdel(sight_blocker, TRUE)
-	sleep(5)
-	density = FALSE
+	if(open)
+		new /obj/effect/temp_visual/necropolis(T)
+		visible_message("<span class='boldwarning'>The door slams closed!</span>")
+		sleep(1)
+		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 80000)
+		sleep(1)
+		density = TRUE
+		sleep(1)
+		var/turf/sight_blocker_turf = get_turf(src)
+		if(sight_blocker_distance)
+			for(var/i in 1 to sight_blocker_distance)
+				if(!sight_blocker_turf)
+					break
+				sight_blocker_turf = get_step(sight_blocker_turf, NORTH)
+		if(sight_blocker_turf)
+			sight_blocker.forceMove(sight_blocker_turf)
+		sleep(2.5)
+		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, TRUE, frequency = 15000)
+		add_overlay(door_overlay)
+		open = FALSE
+	else
+		cut_overlay(door_overlay)
+		new /obj/effect/temp_visual/necropolis/open(T)
+		sleep(2)
+		visible_message("<span class='warning'>The door starts to grind open...</span>")
+		playsound(T, 'sound/effects/stonedoor_openclose.ogg', 300, TRUE, frequency = 20000)
+		sleep(22)
+		sight_blocker.forceMove(src)
+		sleep(5)
+		density = FALSE
+		sleep(5)
+		open = TRUE
+	changing_openness = FALSE
 	return TRUE
 
-/obj/structure/necropolis_gate/locked/attack_hand(mob/user)
-	to_chat(user, "<span class='boldannounce'>It's locked.</span>")
+/obj/structure/necropolis_gate/locked
+	locked = TRUE
 
 GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/necropolis_gate/legion_gate
@@ -100,19 +135,21 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		return QDEL_HINT_LETMELIVE
 
 /obj/structure/necropolis_gate/legion_gate/attack_hand(mob/user)
-	if(open)
-		return
-	var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
-	if(safety == "Abort" || !in_range(src, user) || !src || open || user.incapacitated())
-		return
-	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
-	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
-	sleep(50)
+	if(!open && !changing_openness)
+		var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
+		if(safety == "Abort" || !in_range(src, user) || !src || open || changing_openness || user.incapacitated())
+			return
+		user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='boldannounce'>You tentatively knock on [src]...</span>")
+		playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
+		sleep(50)
 	..()
 
-/obj/structure/necropolis_gate/legion_gate/open_the_gate(mob/user, legion_damaged)
+/obj/structure/necropolis_gate/legion_gate/toggle_the_gate(mob/user, legion_damaged)
+	if(open)
+		return
 	. = ..()
 	if(.)
+		locked = TRUE
 		var/turf/T = get_turf(src)
 		visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
 		if(legion_damaged)
@@ -129,19 +166,25 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP)
 
-/obj/effect/temp_visual/necropolis_open
+/obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "door_opening"
-	duration = 38
-	layer = TABLE_LAYER
+	icon_state = "door_closing"
+	appearance_flags = 0
+	duration = 6
+	layer = EDGED_TURF_LAYER
 	pixel_x = -32
 	pixel_y = -32
+
+/obj/effect/temp_visual/necropolis/open
+	icon_state = "door_opening"
+	duration = 38
 
 /obj/structure/necropolis_arch
 	name = "necropolis arch"
 	desc = "A massive arch over the necropolis gate, set into a massive tower of stone."
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "arch_full"
+	appearance_flags = 0
 	layer = TABLE_LAYER
 	anchored = TRUE
 	pixel_x = -64
@@ -171,7 +214,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "stone tile"
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
-	layer = OVER_LATTICE_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
