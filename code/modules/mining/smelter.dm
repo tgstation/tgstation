@@ -4,7 +4,7 @@
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "smelter"
 	density = TRUE
-	anchored = TRUE
+	anchored = FALSE
 
 /obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
