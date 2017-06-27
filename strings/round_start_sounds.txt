@@ -3,4 +3,5 @@ sound/ambience/title2.ogg
 sound/ambience/title3.ogg
 sound/ambience/title4.ogg
 sound/misc/i_did_not_grief_them.ogg
+sound/misc/lobby_pictureperfect.ogg
 sound/ambience/clown.ogg
