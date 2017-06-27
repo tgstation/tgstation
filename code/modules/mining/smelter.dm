@@ -66,7 +66,7 @@
 				my_mold = null
 				current_mold = null
 				return
-			var/obj/item/I
+			var/obj/item/I //what the fook is this
 			if(!istype(current_mold, /obj/item/weapon/reagent_containers/glass/mold/bar))
 				I = new current_mold.produce_type(get_turf(src))
 				I.smelted_material = new R.type()
