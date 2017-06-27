@@ -26,12 +26,16 @@
 	status += "The reset module hardware light is [R.has_module() ? "on" : "off"]."
 	return status
 
-/datum/wires/robot/on_pulse(wire)
+/datum/wires/robot/on_pulse(wire, user)
 	var/mob/living/silicon/robot/R = holder
 	switch(wire)
 		if(WIRE_AI) // Pulse to pick a new AI.
 			if(!R.emagged)
-				var/new_ai = select_active_ai(R)
+				var/new_ai
+				if(user)
+					new_ai = select_active_ai(user)
+				else
+					new_ai = select_active_ai(R)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai
 					if(R.shell)
@@ -59,8 +63,12 @@
 	switch(wire)
 		if(WIRE_AI) // Cut the AI wire to reset AI control.
 			if(!mend)
+				if(R.shell)
+					R.undeploy()
+					R.notify_ai(AI_SHELL)
+				else
+					R.notify_ai(TRUE)
 				R.connected_ai = null
-				R.undeploy() //Forced disconnect of an AI should this body be a shell.
 		if(WIRE_LAWSYNC) // Cut the law wire, and the borg will no longer receive law updates from its AI. Repair and it will re-sync.
 			if(mend)
 				if(!R.emagged)
