@@ -4,7 +4,7 @@
 	ui_header = "smmon_0.gif"
 	program_icon_state = "smmon_0"
 	extended_desc = "This program connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
-	requires_ntnet = 1
+	requires_ntnet = TRUE
 	transfer_access = GLOB.access_engine
 	network_destination = "supermatter monitoring system"
 	size = 5
@@ -13,7 +13,7 @@
 	ui_y = 400
 	var/last_status = 0
 	var/list/supermatters
-	var/obj/machinery/power/supermatter_shard/active = null		// Currently selected supermatter crystal.
+	var/obj/machinery/power/supermatter_shard/active		// Currently selected supermatter crystal.
 
 
 /datum/computer_file/program/supermatter_monitor/process_tick()
@@ -70,32 +70,27 @@
 			refresh()
 			return
 		var/datum/gas_mixture/air = T.return_air()
-		if(!istype(air))
+		if(!air)
 			active = null
 			return
 
-		data["active"] = 1
+		data["active"] = TRUE
 		data["SM_integrity"] = active.get_integrity()
 		data["SM_power"] = active.power
 		data["SM_ambienttemp"] = air.temperature
 		data["SM_ambientpressure"] = air.return_pressure()
 		//data["SM_EPR"] = round((air.total_moles / air.group_multiplier) / 23.1, 0.01)
 		var/list/gasdata = list()
-		var/list/relevantgas = list("o2","co2","n2","plasma","n2o","freon")
 
 
 		if(air.total_moles())
 			for(var/gasid in air.gases)
-				if(!gasid in relevantgas)
-					continue
 				gasdata.Add(list(list(
 				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
 				"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
 
 		else
 			for(var/gasid in air.gases)
-				if(!gasid in relevantgas)
-					continue
 				gasdata.Add(list(list(
 					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
 					"amount" = 0)))
@@ -112,25 +107,25 @@
 				"uid" = S.uid
 				)))
 
-		data["active"] = 0
+		data["active"] = FALSE
 		data["supermatters"] = SMS
 
 	return data
 
 /datum/computer_file/program/supermatter_monitor/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(action)
 		if("PRG_clear")
 			active = null
-			return 1
+			return TRUE
 		if("PRG_refresh")
 			refresh()
-			return 1
+			return TRUE
 		if("PRG_set")
 			var/newuid = text2num(params["set"])
 			for(var/obj/machinery/power/supermatter_shard/S in supermatters)
 				if(S.uid == newuid)
 					active = S
-			return 1
+			return TRUE
