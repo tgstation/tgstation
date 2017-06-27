@@ -37,10 +37,11 @@
 	throwforce = 15 //still deadly when thrown
 	throw_speed = 3
 
-/obj/item/crossbow_bolt_spawner/New()
+/obj/item/crossbow_bolt_spawner/Initialize()
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/ammo_casing/caseless/crossbow(get_turf(src))
+	qdel(src)
 
 /obj/item/ammo_casing/caseless/crossbow
 	name = "crossbow bolt"

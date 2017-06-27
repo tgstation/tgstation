@@ -286,6 +286,21 @@
 		return
 	return ..()
 
+/obj/item/weapon/reagent_containers/glass/bucket/dwarf
+	name = "Wooden bucket"
+	desc = "It's a wooden bucket, don't question how it carries very hot liquids."
+	icon = 'icons/obj/janitor.dmi' //TODO: add the cool bucket sprite
+	icon_state = "bucket"
+	item_state = "bucket"
+	materials = list(MAT_METAL=200)
+	w_class = WEIGHT_CLASS_NORMAL
+	amount_per_transfer_from_this = 25 //Mods require 25u of reagents, saves a click
+	possible_transfer_amounts = list(10,15,20,25,30,50,70)
+	volume = 75 //Code adds 75u of reagents while the original bucket had 70u max, making it loose	flags = OPENCONTAINER
+	flags_inv = HIDEHAIR
+	slot_flags = SLOT_HEAD
+	resistance_flags = 0
+
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility,"
