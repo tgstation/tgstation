@@ -62,10 +62,10 @@
 			beat = BEAT_NONE
 
 		if(H.jitteriness)
-			if(!heart.beat || heart.beat == BEAT_SLOW)
-				stop_sound_channel(HEARTBEAT_CHANNEL)
-				playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = HEARTBEAT_CHANNEL)
-				heart.beat = BEAT_FAST
+			if(!beat || beat == BEAT_SLOW)
+				H.stop_sound_channel(HEARTBEAT_CHANNEL)
+				H.playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = HEARTBEAT_CHANNEL)
+				beat = BEAT_FAST
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
