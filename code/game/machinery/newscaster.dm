@@ -124,8 +124,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newMsg.is_admin_message = adminMessage
 	newMsg.locked = !allow_comments
 	if(photo)
-		newMsg.img = photo.img
-		newMsg.caption = photo.scribble
+		newMsg.img = photo.picture.picture_image
+		newMsg.caption = photo.picture.picture_name
 	for(var/datum/newscaster/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg

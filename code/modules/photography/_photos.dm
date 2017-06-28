@@ -2,7 +2,7 @@
 /datum/picture
 	var/picture_name = "picture"
 	var/picture_desc = "This is a picture."
-	var/image/picture_image
+	var/icon/picture_image
 	var/icon/picture_icon
 	var/psize_x = 0
 	var/psize_y = 0
@@ -28,7 +28,7 @@
 	P.has_blueprints = has_blueprints
 	if(greyscale)
 		P.picture_image.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-		P.picture_image.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+		P.picture_icon.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 	if(cropx || cropy)
 		P.picture_image.Crop(cropx, cropy, psize_x - cropx, psize_y - cropy)
 	return P
