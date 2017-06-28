@@ -347,16 +347,10 @@
 			AdjustSleeping(20)
 			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
-		var/obj/item/organ/heart/heart = getorgan(/obj/item/organ/heart)
-		if(heart)
-			if(!heart.beat || heart.beat == BEAT_SLOW)
-				stop_sound_channel(BEAT_CHANNEL)
-				playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = BEAT_CHANNEL)
-				heart.beat = BEAT_FAST
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
