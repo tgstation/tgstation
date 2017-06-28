@@ -159,7 +159,7 @@ Difficulty: Medium
 		return
 	AttackingTarget()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/dash(atom/target)
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/proc/dash(atom/dash_target)
 	if(world.time < dash_cooldown)
 		return
 	dash_cooldown = world.time + initial(dash_cooldown)
@@ -167,12 +167,13 @@ Difficulty: Medium
 	var/self_dist_to_target = 0
 	var/turf/own_turf = get_turf(src)
 	if(!QDELETED(target))
-		self_dist_to_target += get_dist(target, own_turf)
+		self_dist_to_target += get_dist(dash_target, own_turf)
 	for(var/turf/open/O in RANGE_TURFS(MINER_DASH_RANGE, own_turf))
 		var/turf_dist_to_target = 0
-		if(!QDELETED(target))
-			turf_dist_to_target += get_dist(target, O)
-		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm))
+		if(!QDELETED(dash_target))
+			turf_dist_to_target += get_dist(dash_target, O)
+		if(get_dist(src, O) >= MINER_DASH_RANGE && turf_dist_to_target <= self_dist_to_target && !istype(O, /turf/open/floor/plating/lava) && !istype(O, /turf/open/chasm) && \
+		(QDELETED(dash_target) || !O.Adjacent(dash_target)))
 			var/valid = TRUE
 			for(var/turf/T in getline(own_turf, O))
 				if(is_blocked_turf(T, TRUE))
