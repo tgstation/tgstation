@@ -64,7 +64,7 @@
 	retreat_distance = 2
 	minimum_distance = 2
 
-/mob/living/simple_animal/hostile/hivebot/engineer/Life()
+/mob/living/simple_animal/hostile/hivebot/engineer/handle_automated_action()
 	..()
 	for(var/obj/machinery/hivebot_swarm_core/C in view(5, src))
 		if(C.obj_integrity < C.max_integrity)

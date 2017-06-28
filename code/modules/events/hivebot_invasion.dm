@@ -13,8 +13,8 @@
 
 /datum/round_event/hivebot_invasion/setup()
 	invasion_point = pick(GLOB.generic_event_spawns)
-	message_admins("Hivebot invasion point set to [get_area(invasion_point)]! ([invasion_point.x],[invasion_point.y],[invasion_point.z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[invasion_point.x];Y=[invasion_point.y];Z=[invasion_point.z]'>JMP</a>)")
-	log_game("Hivebot invasion point set to [get_area(invasion_point)]! ([invasion_point.x],[invasion_point.y],[invasion_point.z])")
+	message_admins("Hivebot invasion point set to [get_area(invasion_point)]! [ADMIN_COORDJMP(invasion_point)]")
+	log_game("Hivebot invasion point set to [get_area(invasion_point)]! ([COORD(invasion_point)])")
 
 
 /datum/round_event/hivebot_invasion/announce()
