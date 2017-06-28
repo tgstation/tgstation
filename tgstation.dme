@@ -1782,6 +1782,7 @@
 #include "code\modules\modular_computers\file_system\programs\ntnrc_client.dm"
 #include "code\modules\modular_computers\file_system\programs\nttransfer.dm"
 #include "code\modules\modular_computers\file_system\programs\powermonitor.dm"
+#include "code\modules\modular_computers\file_system\programs\sm_monitor.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\dos.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\revelation.dm"
 #include "code\modules\modular_computers\hardware\_hardware.dm"
