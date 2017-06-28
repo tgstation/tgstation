@@ -2,6 +2,11 @@
 
 //Misc mob defines
 
+//Ready states at roundstart for mob/dead/new_player
+#define PLAYER_NOT_READY 0
+#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_READY_TO_OBSERVE 2
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -129,3 +134,11 @@
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+
+//Secbot and ED209 judgement criteria bitflag values
+#define JUDGE_EMAGGED 1
+#define JUDGE_IDCHECK 2
+#define JUDGE_WEAPONCHECK 4
+#define JUDGE_RECORDCHECK 8
+//ED209's ignore monkeys
+#define JUDGE_IGNOREMONKEYS 16

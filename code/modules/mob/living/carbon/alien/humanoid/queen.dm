@@ -127,7 +127,7 @@
 	icon = 'icons/mob/alien.dmi'
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
-	if(!isalienadult(M) || istype(M, /mob/living/carbon/alien/humanoid/royal))
+	if(!isalienadult(M) || isalienroyal(M))
 		to_chat(user, "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>")
 		return
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))

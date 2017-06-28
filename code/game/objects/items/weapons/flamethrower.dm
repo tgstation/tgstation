@@ -23,7 +23,7 @@
 	//variables for prebuilt flamethrowers
 	var/create_full = FALSE
 	var/create_with_tank = FALSE
-	var/igniter_type = /obj/item/device/assembly/igniter 
+	var/igniter_type = /obj/item/device/assembly/igniter
 
 /obj/item/weapon/flamethrower/Destroy()
 	if(weldtool)
@@ -137,6 +137,16 @@
 /obj/item/weapon/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
 
+/obj/item/weapon/flamethrower/AltClick(mob/user)
+	if(ptank && isliving(user) && !user.incapacitated() && Adjacent(user))
+		user.put_in_hands(ptank)
+		ptank = null
+		to_chat(user, "<span class='notice'>You remove the plasma tank from [src]!</span>")
+
+/obj/item/weapon/flamethrower/examine(mob/user)
+	..()
+	if(ptank)
+		to_chat(user, "<span class='notice'>\The [src] has \the [ptank] attached. Alt-click to remove it.</span>")
 
 /obj/item/weapon/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -145,7 +155,7 @@
 	if(!status)
 		to_chat(user, "<span class='notice'>Secure the igniter first!</span>")
 		return
-	to_chat(user, "<span class='notice'>You ignite [src]!</span>")
+	to_chat(user, "<span class='notice'>You [lit ? "extinguish" : "ignite"] [src]!</span>")
 	lit = !lit
 	if(lit)
 		START_PROCESSING(SSobj, src)
@@ -222,8 +232,9 @@
 /obj/item/weapon/flamethrower/full/tank
 	create_with_tank = TRUE
 
-/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(ptank && damage && attack_type == PROJECTILE_ATTACK && prob(15))
+/obj/item/weapon/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/obj/item/projectile/P = hitby
+	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>[attack_text] hits the fueltank on [owner]'s [src], rupturing it! What a shot!</span>")
 		var/target_turf = get_turf(owner)
 		igniter.ignite_turf(src,target_turf, release_amount = 100)

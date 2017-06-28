@@ -124,8 +124,7 @@
 		invoker.visible_message("<span class='warning'>The tendril, covered in blood, retracts from [invoker]'s head and back into the [slab.name]!</span>", \
 		"<span class='userdanger'>Total agony overcomes you as the tendril is forced out early!</span>")
 		invoker.notransform = FALSE
-		invoker.Stun(5)
-		invoker.Weaken(5)
+		invoker.Knockdown(100)
 		invoker.apply_damage(10, BRUTE, "head")
 		slab.busy = null
 		return FALSE

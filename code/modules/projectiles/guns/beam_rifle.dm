@@ -175,6 +175,9 @@
 	if(aiming_time_left > 0)
 		aiming_time_left--
 	aiming_beam()
+	process_aim()
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
 	if(current_user.client.mouseParams)
 		var/list/mouse_control = params2list(current_user.client.mouseParams)
 		if(isturf(current_user.client.mouseLocation))
@@ -212,6 +215,7 @@
 	current_user = mob
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
+	process_aim()
 	if(aiming_time_left <= aiming_time_fire_threshold)
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
@@ -292,7 +296,7 @@
 	HS_BB.structure_pierce_amount = structure_piercing
 	HS_BB.structure_bleed_coeff = structure_bleed_coeff
 	HS_BB.do_pierce = do_pierce
-	HS_BB.gun = host	
+	HS_BB.gun = host
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
@@ -339,7 +343,7 @@
 		if(prob(aoe_fire_chance))
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
-		if(!istype(O, /obj/item))
+		if(!isitem(O))
 			if(O.level == 1)	//Please don't break underfloor items!
 				continue
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)

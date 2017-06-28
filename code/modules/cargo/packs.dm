@@ -710,6 +710,15 @@
 					/obj/item/weapon/am_containment)
 	crate_name = "antimatter jar crate"
 
+/datum/supply_pack/engineering/shuttle_engine
+	name = "Shuttle Engine Crate"
+	cost = 5000
+	access = GLOB.access_ce
+	contains = list(/obj/structure/shuttle/engine/propulsion/burst/cargo)
+	crate_name = "shuttle engine crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	special = TRUE
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -1423,6 +1432,7 @@
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen/fourcolor,
 					/obj/item/weapon/pen,
+					/obj/item/weapon/pen/fountain,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/folder/blue,
@@ -1433,6 +1443,12 @@
 					/obj/item/weapon/stamp,
 					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
+
+/datum/supply_pack/misc/fountainpens
+	name = "Calligraphy Crate"
+	cost = 700
+	contains = list(/obj/item/weapon/storage/box/fountainpens)
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/misc/toner
 	name = "Toner Crate"

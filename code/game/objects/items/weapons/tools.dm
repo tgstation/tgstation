@@ -58,8 +58,8 @@
 	origin_tech = "materials=5;engineering=5;abductor=3"
 
 /obj/item/weapon/wrench/power
-	name = "Hand Drill"
-	desc ="A simple powered drill with a bolt bit"
+	name = "hand drill"
+	desc = "A simple powered hand drill. It's fitted with a bolt bit."
 	icon_state = "drill_bolt"
 	item_state = "drill"
 	usesound = 'sound/items/drill_use.ogg'
@@ -91,13 +91,13 @@
 	origin_tech = "materials=1;engineering=1;biotech=3"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
 
-/obj/item/weapon/wrench/medical/suicide_act(mob/user)
+/obj/item/weapon/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	// TODO Make them glow with the power of the M E D I C A L W R E N C H
 	// during their ascension
 
 	// Stun stops them from wandering off
-	user.Stun(5)
+	user.Stun(100, ignore_canstun = TRUE)
 	playsound(loc, 'sound/effects/pray.ogg', 50, 1, -1)
 
 	// Let the sound effect finish playing
@@ -182,8 +182,8 @@
 	toolspeed = 0.1
 
 /obj/item/weapon/screwdriver/power
-	name = "Hand Drill"
-	desc = "A simple hand drill with a screwdriver bit attached."
+	name = "hand drill"
+	desc = "A simple powered hand drill. It's fitted with a screw bit."
 	icon_state = "drill_screw"
 	item_state = "drill"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
@@ -283,8 +283,8 @@
 	toolspeed = 0.5
 
 /obj/item/weapon/wirecutters/power
-	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
+	name = "jaws of life"
+	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
@@ -714,8 +714,8 @@
 	toolspeed = 0.5
 
 /obj/item/weapon/crowbar/power
-	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
+	name = "jaws of life"
+	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a prying head."
 	icon_state = "jaws_pry"
 	item_state = "jawsoflife"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)

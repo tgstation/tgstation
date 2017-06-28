@@ -247,9 +247,9 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustParalysis(-1, 0)
-		M.AdjustStunned(-2, 0)
-		M.AdjustWeakened(-2, 0)
+		M.AdjustUnconscious(-20, 0)
+		M.AdjustStun(-40, 0)
+		M.AdjustKnockdown(-40, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
@@ -363,8 +363,8 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStunned(2)
-			M.AdjustWeakened(2)
+			M.AdjustStun(40)
+			M.AdjustKnockdown(40)
 	..()
 
 
@@ -410,7 +410,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Weaken(3, 0)
+	H.Knockdown(60, 0)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 

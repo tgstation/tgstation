@@ -93,7 +93,7 @@
 			agent_number++
 		spawnpos++
 		update_synd_icons_added(synd_mind)
-		synd_mind.current.playsound_local('sound/ambience/antag/ops.ogg',100,0)
+		synd_mind.current.playsound_local(get_turf(synd_mind.current), 'sound/ambience/antag/ops.ogg',100,0)
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in GLOB.nuke_list
 
 	if(nuke)
@@ -288,7 +288,7 @@
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
 		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
-			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
+			text += "<BIG>[bicon(icon('icons/badass.dmi', "badass"))]</BIG>"
 		to_chat(world, text)
 	return 1
 

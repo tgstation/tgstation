@@ -206,11 +206,13 @@
 		if(RCD_FLOORWALL)
 			return list("mode" = RCD_FLOORWALL, "delay" = 20, "cost" = 16)
 		if(RCD_AIRLOCK)
-			return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
+			if(the_rcd.airlock_glass)
+				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
+			else return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 4)
+			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
 	return FALSE
 
 /turf/open/floor/rcd_act(mob/user, obj/item/weapon/construction/rcd/the_rcd, passed_mode)
