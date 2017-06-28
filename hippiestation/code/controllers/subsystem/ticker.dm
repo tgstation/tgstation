@@ -7,7 +7,9 @@
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'hippiestation/sound/roundend/disappointed.ogg'\
+		'hippiestation/sound/roundend/disappointed.ogg',
+		'hippiestation/sound/roundend/enjoyedyourchaos.ogg',
+		'hippiestation/sound/roundend/yamakemesick.ogg'\
 		)
 
 	world << sound(round_end_sound)
