@@ -132,14 +132,14 @@
 	var/obj/item/organ/liver/liver = C.getorganslot("liver")
 	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
 
-	if(NOLIVER in species_traits) && liver)
+	if((NOLIVER in species_traits) && liver)
 		liver.Remove(C)
 		qdel(liver)
 	else if((!(NOLIVER in species_traits)) && (!liver))
 		liver = new()
 		liver.Insert(C)
 
-	if(NOSTOMACH in species_traits) && stomach)
+	if((NOSTOMACH in species_traits) && stomach)
 		stomach.Remove(C)
 		qdel(stomach)
 	else if((!(NOSTOMACH in species_traits)) && (!stomach))
