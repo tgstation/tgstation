@@ -35,8 +35,8 @@
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/machine/thermomachine/New()
-	..()
+/obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
+	. = ..()
 	if(prob(50))
 		name = "Freezer (Machine Board)"
 		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
