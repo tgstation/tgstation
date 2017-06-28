@@ -20,6 +20,7 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+
 	if(stat != DEAD)
 		return 1
 
@@ -300,7 +301,6 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-
 	if(staminaloss)
 		adjustStaminaLoss(-3)
 
@@ -347,7 +347,7 @@
 			AdjustSleeping(20)
 			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
