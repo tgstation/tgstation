@@ -171,7 +171,7 @@
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
 
-		if (istype(O,/obj/item))
+		if (isitem(O))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 

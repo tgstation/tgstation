@@ -201,6 +201,15 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Files and path accessed and referenced by code above simply being #included should be strictly lowercase to avoid issues on filesystems where case matters.
 
+### SQL
+* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
+
+* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
+
+* Queries must never specify the database, be it in code, or in text files in the repo.
+
+
+
 ### Other Notes
 * Code should be modular where possible, if you are working on a new class then it is best if you put it in a new file.
 
@@ -209,8 +218,6 @@ This prevents nesting levels from getting deeper then they need to be.
 * You are expected to help maintain the code that you add, meaning if there is a problem then you are likely to be approached in order to fix any issues, runtimes or bugs.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
-
-* Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
 #### Enforced not enforced
 The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:

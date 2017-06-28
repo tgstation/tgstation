@@ -84,21 +84,17 @@
 	return
 
 /obj/item/weapon/twohanded/dropped(mob/user)
-	..()
+	. = ..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(!wielded)
 		return
-	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_held_item()
-		if(istype(O))
-			O.unwield(user, FALSE)
 	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	..()
+	. = ..()
 	if(wielded) //Trying to unwield it
 		unwield(user)
 	else //Trying to wield it
@@ -622,7 +618,7 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !wielded)
 		return
-	if(istype(target, /turf/closed/wall))
+	if(iswallturf(target))
 		var/turf/closed/wall/W = target
 		user.visible_message("<span class='danger'>[user] blasts \the [target] with \the [src]!</span>")
 		playsound(target, 'sound/magic/disintegrate.ogg', 100, 1)

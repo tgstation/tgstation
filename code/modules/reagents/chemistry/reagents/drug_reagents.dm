@@ -182,7 +182,7 @@
 	. = 1
 
 /datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinal))
 	if(prob(20))
@@ -211,7 +211,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(15)
@@ -221,7 +221,7 @@
 	..()
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(20)
@@ -254,7 +254,7 @@
 	M.adjustBrainLoss(0.5)
 	M.adjustToxLoss(0.1, 0)
 	M.hallucination += 10
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		step(M, pick(GLOB.cardinal))
 		step(M, pick(GLOB.cardinal))
 	..()
@@ -262,7 +262,7 @@
 
 /datum/reagent/drug/bath_salts/overdose_process(mob/living/M)
 	M.hallucination += 10
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i in 1 to 8)
 			step(M, pick(GLOB.cardinal))
 	if(prob(20))
@@ -275,7 +275,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage1(mob/living/M)
 	M.hallucination += 10
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(5)
@@ -286,7 +286,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage2(mob/living/M)
 	M.hallucination += 20
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(10)
@@ -298,7 +298,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage3(mob/living/M)
 	M.hallucination += 30
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 12, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(15)
@@ -310,7 +310,7 @@
 
 /datum/reagent/drug/bath_salts/addiction_act_stage4(mob/living/carbon/human/M)
 	M.hallucination += 40
-	if(M.canmove && !istype(M.loc, /atom/movable))
+	if(M.canmove && !ismovableatom(M.loc))
 		for(var/i = 0, i < 16, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(50)

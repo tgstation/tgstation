@@ -32,7 +32,7 @@
 		internalPaper = null
 	return ..()
 
-/obj/item/weapon/paperplane/suicide_act(mob/user)
+/obj/item/weapon/paperplane/suicide_act(mob/living/user)
 	user.Stun(200)
 	user.visible_message("<span class='suicide'>[user] jams the [src] in [user.p_their()] nose. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	user.adjust_blurriness(6)

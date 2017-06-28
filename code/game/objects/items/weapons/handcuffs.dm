@@ -31,7 +31,7 @@
 		return
 
 	// chance of monkey retaliation
-	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
+	if(ismonkey(C) && prob(MONKEY_CUFF_RETALIATION_PROB))
 		var/mob/living/carbon/monkey/M
 		M = C
 		M.retaliate(user)
@@ -303,7 +303,7 @@
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
-	if(!istype(loc, /mob))
+	if(!ismob(loc))
 		do_sparks(1, TRUE, src)
 		qdel(src)
 

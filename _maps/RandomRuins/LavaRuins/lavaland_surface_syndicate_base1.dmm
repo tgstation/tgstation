@@ -43,8 +43,6 @@
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -127,7 +125,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "at" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate{
-	tag = "icon-sleeper_s (EAST)";
 	icon_state = "sleeper_s";
 	dir = 4
 	},
@@ -138,7 +135,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "av" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate{
-	tag = "icon-sleeper_s (WEST)";
 	icon_state = "sleeper_s";
 	dir = 8
 	},
@@ -147,8 +143,6 @@
 "aw" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -200,8 +194,6 @@
 "aA" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -258,7 +250,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "aI" = (
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms{
-	tag = "icon-sleeper_s (EAST)";
 	icon_state = "sleeper_s";
 	dir = 4
 	},
@@ -358,8 +349,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -401,8 +390,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "aZ" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -414,8 +401,6 @@
 /obj/item/device/flashlight/seclite,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -447,8 +432,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "bf" = (
 /obj/structure/toilet{
-	tag = "icon-toilet00 (WEST)";
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -486,16 +469,12 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
 "bj" = (
 /obj/machinery/chem_master,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -605,8 +584,6 @@
 /obj/machinery/iv_drip,
 /obj/item/weapon/reagent_containers/blood/random,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -673,8 +650,6 @@
 "bD" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -709,8 +684,6 @@
 	amount = 10
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -763,8 +736,6 @@
 "bM" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -795,8 +766,6 @@
 "bQ" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -814,8 +783,6 @@
 /obj/item/weapon/reagent_containers/syringe,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -875,8 +842,6 @@
 	pixel_x = 26
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -888,8 +853,6 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -914,8 +877,6 @@
 /obj/item/weapon/pen,
 /obj/machinery/light,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -929,8 +890,6 @@
 	amount = 10
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1005,22 +964,16 @@
 /area/ruin/powered/syndicate_lava_base)
 "cn" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
 "co" = (
 /turf/open/floor/plasteel/podhatch/corner{
-	tag = "icon-podhatchcorner (EAST)";
-	icon_state = "podhatchcorner";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
 "cp" = (
 /turf/open/floor/plasteel/podhatch/corner{
-	tag = "icon-podhatchcorner (WEST)";
-	icon_state = "podhatchcorner";
 	dir = 8
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1069,8 +1022,6 @@
 /obj/item/target/clown,
 /obj/item/target/clown,
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1090,8 +1041,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "cy" = (
 /turf/open/floor/plasteel/podhatch/corner{
-	tag = "icon-podhatchcorner (NORTH)";
-	icon_state = "podhatchcorner";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1100,8 +1049,6 @@
 /area/ruin/powered/syndicate_lava_base)
 "cA" = (
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (SOUTHEAST)";
-	icon_state = "podhatch";
 	dir = 6
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1347,14 +1294,12 @@
 /area/ruin/powered/syndicate_lava_base)
 "dc" = (
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
 	dir = 5
 	},
 /area/ruin/powered/syndicate_lava_base)
 "dd" = (
 /obj/effect/baseturf_helper,
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
 	dir = 5
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1446,7 +1391,6 @@
 	use_power = 0
 	},
 /turf/open/floor/plasteel/vault{
-	tag = "icon-vault (NORTHEAST)";
 	dir = 5
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1972,8 +1916,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -1994,8 +1936,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -2004,8 +1944,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (NORTH)";
-	icon_state = "podhatch";
 	dir = 1
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -2039,8 +1977,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
@@ -2072,8 +2008,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/podhatch{
-	tag = "icon-podhatch (EAST)";
-	icon_state = "podhatch";
 	dir = 4
 	},
 /area/ruin/powered/syndicate_lava_base)
