@@ -8,4 +8,9 @@
 	attack_verb = list("gored", "squished", "slapped")
 	desc = "Onaka ga suite imasu."
 
-	//todo: refactor food reagent metabolism onto this organ
+/obj/item/organ/stomach/on_life()
+	var/mob/living/carbon/C = owner
+
+	if(iscarbon(C))
+		if(ishuman(C))
+			C.dna.species.handle_digestion(C)
