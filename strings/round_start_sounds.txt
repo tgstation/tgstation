@@ -4,3 +4,4 @@ sound/ambience/title3.ogg
 sound/ambience/title4.ogg
 sound/misc/i_did_not_grief_them.ogg
 sound/ambience/clown.ogg
+sound/misc/non_nobis_domine.ogg
