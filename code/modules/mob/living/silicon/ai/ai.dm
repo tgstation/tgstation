@@ -11,7 +11,6 @@
 				subject.attack_ai(M)
 	return is_in_use
 
-
 /mob/living/silicon/ai
 	name = "AI"
 	icon = 'icons/mob/ai.dmi'

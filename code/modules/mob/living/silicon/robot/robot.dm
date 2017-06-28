@@ -1096,6 +1096,10 @@
 /mob/living/silicon/robot/shell
 	shell = TRUE
 
+/mob/living/silicon/robot/proc/picturesync()
+	if(connected_ai && connected_ai.aicamera && aicamera)
+		connected_ai.aicamera.stored |= aicamera.stored
+
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(!(M in buckled_mobs) && isliving(M))
