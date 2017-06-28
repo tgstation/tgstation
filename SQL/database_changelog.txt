@@ -1,3 +1,13 @@
+26 June 2017, by Jordie0608
+
+Modified table 'poll_option', adding the column 'default_percentage_calc'.
+
+ALTER TABLE `poll_option` ADD COLUMN `default_percentage_calc` TINYINT(1) UNSIGNED NOT NULL DEFAULT '1' AFTER `descmax`
+
+Remember to add a prefix to the table name if you use them.
+
+----------------------------------------------------
+
 22 June 2017, by Jordie0608
 
 Modified table 'poll_option', removing the column 'percentagecalc'.
