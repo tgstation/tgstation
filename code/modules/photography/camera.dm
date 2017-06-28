@@ -99,7 +99,7 @@
 		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || T in seen)
 			turfs += T
 			desc += camera_get_mobs(T)
-			if(locate(/obj/item/area_editer/blueprints) in T)
+			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size

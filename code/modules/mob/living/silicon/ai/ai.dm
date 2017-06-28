@@ -341,7 +341,7 @@
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
@@ -448,7 +448,7 @@
 		cameraFollow = null
 
 	if (!C || stat == DEAD) //C.can_use())
-		return 0
+		return FALSE
 
 	if(!eyeobj)
 		view_core()
@@ -457,7 +457,7 @@
 	eyeobj.setLoc(get_turf(C))
 	//machine = src
 
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
 	set category = "AI Commands"
@@ -521,7 +521,7 @@
 	if(alarmsource.z != z)
 		return
 	if (stat == 2)
-		return 1
+		return TRUE
 	var/list/L = alarms[class]
 	for (var/I in L)
 		if (I == A.name)
@@ -529,7 +529,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-			return 1
+			return TRUE
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
 	if (O && istype(O, /list))
@@ -554,7 +554,7 @@
 	else
 		queueAlarm(text("--- [] alarm detected in []! (No Camera)", class, A.name), class)
 	if (viewalerts) ai_alerts()
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/cancelAlarm(class, area/A, obj/origin)
 	var/list/L = alarms[class]
@@ -814,7 +814,7 @@
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 
 /mob/living/silicon/ai/can_buckle()
-	return 0
+	return FALSE
 
 /mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat)
@@ -826,7 +826,7 @@
 	//get_turf_pixel() is because APCs in maint aren't actually in view of the inner camera
 	if(M && GLOB.cameranet && !GLOB.cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
-	return 1
+	return TRUE
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	raw_message = lang_treat(speaker, message_language, raw_message, spans, message_mode)

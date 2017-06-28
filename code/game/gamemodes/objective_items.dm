@@ -9,7 +9,7 @@
 	var/list/special_equipment = list()
 
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
-	return 1
+	return TRUE
 
 /datum/objective_item/steal/caplaser
 	name = "the captain's antique laser gun"
@@ -116,8 +116,8 @@
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
 		if(isAI(A) && A.stat != 2) //See if any AI's are alive inside that card.
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/objective_item/steal/blueprints
 	name = "the station blueprints"
@@ -128,12 +128,12 @@
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
-		return 1
+		return TRUE
 	if(istype(I, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = I
-		if(P.blueprints)	//if the blueprints are in frame
-			return 1
-	return 0
+		if(P.picture.blueprints)	//if the blueprints are in frame
+			return TRUE
+	return FALSE
 
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract"
@@ -143,8 +143,8 @@
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Unique Objectives
 /datum/objective_item/unique/docs_red

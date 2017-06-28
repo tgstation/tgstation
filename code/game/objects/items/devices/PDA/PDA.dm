@@ -676,7 +676,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!I)
 		if(id)
 			remove_id()
-			return 1
+			return TRUE
 		else
 			var/obj/item/weapon/card/id/C = user.get_active_held_item()
 			if(istype(C))
@@ -684,13 +684,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if(I && I.registered_name)
 		if(!user.transferItemToLoc(I, src))
-			return 0
+			return FALSE
 		var/obj/old_id = id
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()
-	return 1
+	return TRUE
 
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)

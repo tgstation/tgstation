@@ -969,17 +969,17 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/weapon/newspaper/proc/notContent(list/L)
 	if(!L.len)
-		return 0
+		return FALSE
 	for(var/i=L.len;i>0;i--)
 		var/num = abs(L[i])
 		if(creationTime <= num)
 			continue
 		else
 			if(L[i] > 0)
-				return 1
+				return TRUE
 			else
-				return 0
-	return 0
+				return FALSE
+	return FALSE
 
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr

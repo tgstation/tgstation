@@ -324,36 +324,36 @@
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
 	if(!ass)
-		return 0
+		return FALSE
 	if(ass.loc != src.loc)
 		ass = null
 		updateUsrDialog()
-		return 0
+		return FALSE
 	else if(ishuman(ass))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/photocopier/proc/copier_blocked()
 	if(QDELETED(src))
 		return
 	if(loc.density)
-		return 1
+		return TRUE
 	for(var/atom/movable/AM in loc)
 		if(AM == src)
 			continue
 		if(AM.density)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/photocopier/proc/copier_empty()
 	if(copy || photocopy || check_ass())
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /*
  * Toner cartridge

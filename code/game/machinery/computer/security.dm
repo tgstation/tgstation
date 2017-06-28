@@ -174,10 +174,10 @@
 					if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
 						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
 							var/obj/item/weapon/photo/P1 = active1.fields["photo_front"]
-							user << browse_rsc(P1.img, "photo_front")
+							user << browse_rsc(P1.picture.picture_image, "photo_front")
 						if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
 							var/obj/item/weapon/photo/P2 = active1.fields["photo_side"]
-							user << browse_rsc(P2.img, "photo_side")
+							user << browse_rsc(P2.picture.picture_image, "photo_side")
 						dat += {"<table><tr><td><table>
 						<tr><td>Name:</td><td><A href='?src=\ref[src];choice=Edit Field;field=name'>&nbsp;[active1.fields["name"]]&nbsp;</A></td></tr>
 						<tr><td>ID:</td><td><A href='?src=\ref[src];choice=Edit Field;field=id'>&nbsp;[active1.fields["id"]]&nbsp;</A></td></tr>
@@ -737,7 +737,7 @@ What a mess.*/
 	var/obj/item/weapon/photo/P = null
 	if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
-		var/datum/picture/selection = tempAI.selectpicture()
+		var/datum/picture/selection = tempAI.aicamera.selectpicture()
 		if(selection)
 			P = new(null, selection)
 	else if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
@@ -786,8 +786,8 @@ What a mess.*/
 		if(authenticated)
 			if(user.canUseTopic(src))
 				if(!trim(message1))
-					return 0
+					return FALSE
 				if(!record1 || record1 == active1)
 					if(!record2 || record2 == active2)
-						return 1
-	return 0
+						return TRUE
+	return FALSE

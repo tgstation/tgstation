@@ -111,10 +111,10 @@
 					if(active1 in GLOB.data_core.general)
 						if(istype(active1.fields["photo_front"], /obj/item/weapon/photo))
 							var/obj/item/weapon/photo/P1 = active1.fields["photo_front"]
-							user << browse_rsc(P1.img, "photo_front")
+							user << browse_rsc(P1.picture.picture_image, "photo_front")
 						if(istype(active1.fields["photo_side"], /obj/item/weapon/photo))
 							var/obj/item/weapon/photo/P2 = active1.fields["photo_side"]
-							user << browse_rsc(P2.img, "photo_side")
+							user << browse_rsc(P2.picture.picture_image, "photo_side")
 						dat += "<tr><td>Name:</td><td>[active1.fields["name"]]</td>"
 						dat += "<td><a href='?src=\ref[src];field=show_photo_front'><img src=photo_front height=80 width=80 border=4></a></td>"
 						dat += "<td><a href='?src=\ref[src];field=show_photo_side'><img src=photo_side height=80 width=80 border=4></a></td></tr>"
@@ -596,8 +596,8 @@
 				if(user.canUseTopic(src))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
-							return 1
-	return 0
+							return TRUE
+	return FALSE
 
 /obj/machinery/computer/med_data/laptop
 	name = "medical laptop"
