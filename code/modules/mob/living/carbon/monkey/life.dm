@@ -49,8 +49,7 @@
 		..()
 
 /mob/living/carbon/monkey/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
+	return
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
 	if(abs(310.15 - breath.temperature) > 50)

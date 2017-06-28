@@ -7,4 +7,11 @@
 	slot = "liver"
 	desc = "Goes great with a nice chianti and some fava beans."
 
-	//TODO: refactor toxin damage and reagent metabolism onto this organ, add mutant versions of it
+/obj/item/organ/liver/on_life()
+	var/mob/living/carbon/C = owner
+
+	if(iscarbon(C))
+		if(C.reagents)
+			C.reagents.metabolize(C, can_overdose=1)
+			if(ishuman(C)//todo: remove handle_chemicals_in_body() to reduce proc call overhead
+				C.dna.species.handle_chemicals_in_body(C)//todo: this is the proc for nutrition, refactor this onto stomach

@@ -269,9 +269,7 @@
 
 
 /mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
+	return
 
 
 /mob/living/carbon/human/handle_random_events()
