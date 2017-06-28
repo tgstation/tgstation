@@ -1,0 +1,4 @@
+author: "Carbonhell"
+delete-after: True
+changes: 
+  - bugfix: "Reinforced false walls have the right icon now."
