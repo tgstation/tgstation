@@ -17,16 +17,16 @@
 	icon = 'hippiestation/icons/mob/mutant_bodyparts.dmi'
 	icon_state = "tcat"
 
-/datum/sprite_accessory/snouts/screen
+/datum/sprite_accessory/screen
 	name = "Screen"
 	icon = 'hippiestation/icons/mob/mutant_bodyparts.dmi'
 	icon_state = "screen"
 	color_src = null
-	locked = TRUE
 
 //moth shit
 /datum/sprite_accessory/moth_wings
 	icon = 'hippiestation/icons/mob/wings.dmi'
+	color_src = null
 
 /datum/sprite_accessory/moth_wings/plain
 	name = "Plain"

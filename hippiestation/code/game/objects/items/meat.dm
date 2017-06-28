@@ -5,6 +5,13 @@
 	filling_color = "#BF896B"
 	tastes = list("chicken" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/moth
+	icon = 'hippiestation/icons/obj/foods.dmi'
+	icon_state = "mothmeat"
+	desc = "Moth meat."
+	filling_color = "#BF896B"
+	tastes = list("insects" = 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/cat
 	icon_state = "rottenmeat"
 	desc = "Furry meat. Gross!"

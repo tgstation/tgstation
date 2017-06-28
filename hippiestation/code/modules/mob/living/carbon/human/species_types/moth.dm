@@ -11,6 +11,7 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = TRUE
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/moth
 
 /datum/species/moth/on_species_gain(mob/living/carbon/human/C)
 	C.draw_hippie_parts()
