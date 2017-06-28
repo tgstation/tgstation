@@ -20,6 +20,9 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+	if(stat != DEAD)
+		handle_liver()
+
 
 	if(stat != DEAD)
 		return 1
@@ -380,3 +383,7 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+/mob/living/carbon/proc/handle_liver()
+	if((!NOLIVER in dna.species.species_traits) && !getorganslot("liver"))
+		adjustToxLoss(8)
