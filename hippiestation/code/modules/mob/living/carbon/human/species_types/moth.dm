@@ -36,3 +36,11 @@
 	if(rank in GLOB.command_positions)
 		return 0
 	return 1
+
+/datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
+	..()
+	if(H.dna.features["moth_wings"] != "Punished")
+		if(H.bodytemperature >= 800)//If you reach this, you're in the red zone with the lil +.
+			to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
+			H.dna.features["moth_wings"] = "Punished"
+			handle_mutant_bodyparts(H)
