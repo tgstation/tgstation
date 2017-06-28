@@ -257,12 +257,20 @@
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
 	//calculating gas related values
 	combined_gas = max(removed.total_moles(), 0)
-	plasmacomp = max(removed.gases["plasma"][MOLES]/combined_gas, 0)
-	o2comp = max(removed.gases["o2"][MOLES]/combined_gas, 0)
-	co2comp = max(removed.gases["co2"][MOLES]/combined_gas, 0)
-	n2ocomp = max(removed.gases["n2o"][MOLES]/combined_gas, 0)
-	n2comp = max(removed.gases["n2"][MOLES]/combined_gas, 0)
-	freoncomp = max(removed.gases["freon"][MOLES]/combined_gas, 0)
+	if(combined_gas)
+		plasmacomp = max(removed.gases["plasma"][MOLES]/combined_gas, 0)
+		o2comp = max(removed.gases["o2"][MOLES]/combined_gas, 0)
+		co2comp = max(removed.gases["co2"][MOLES]/combined_gas, 0)
+		n2ocomp = max(removed.gases["n2o"][MOLES]/combined_gas, 0)
+		n2comp = max(removed.gases["n2"][MOLES]/combined_gas, 0)
+		freoncomp = max(removed.gases["freon"][MOLES]/combined_gas, 0)
+	else
+		plasmacomp = 0
+		o2comp = 0
+		co2comp = 0
+		n2ocomp = 0
+		n2comp = 0
+		freoncomp = 0
 	gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp - n2comp - freoncomp, 0), 1)
 	dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY)+(o2comp * OXYGEN_HEAT_PENALTY)+(co2comp * CO2_HEAT_PENALTY)+(n2comp * NITROGEN_HEAT_MODIFIER), 0.5)
 	dynamic_heat_resistance = max(n2ocomp * N2O_HEAT_RESISTANCE, 1)
