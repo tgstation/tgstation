@@ -393,9 +393,9 @@
 			dat += "<font color=#BE8700><b>Geis:</b></font> An important scripture used to make normal crew and robots into servants of Ratvar.<br>"
 			dat += "<font color=#BE8700><b>BE:</b></font> Belligerent eye, a component type used in offensive scriptures.<br>"
 			dat += "<font color=#BE8700><b>VG:</b></font> Vanguard cogwheel, a component type used in defensive scriptures.<br>"
-			dat += "<font color=#BE8700><b>GC:</b></font> Belligerent eye, a component type used in mind-related scriptures.<br>"
-			dat += "<font color=#BE8700><b>RA:</b></font> Belligerent eye, a component type used in construction scriptures.<br>"
-			dat += "<font color=#BE8700><b>HA:</b></font> Belligerent eye, a component type used in energy scriptures.<br>"
+			dat += "<font color=#BE8700><b>GC:</b></font> Geis capacitor, a component type used in mind-related scriptures.<br>"
+			dat += "<font color=#BE8700><b>RA:</b></font> Replicant alloy, a component type used in construction scriptures.<br>"
+			dat += "<font color=#BE8700><b>HA:</b></font> Hierophant ansible, a component type used in energy scriptures.<br>"
 			dat += "<font color=#BE8700><b>Ark:</b></font> The cult's win condition, a huge structure that needs to be defended.<br><br>"
 			dat += "<font color=#BE8700 size=3>Items</font><br>"
 			dat += "<font color=#BE8700><b>Slab:</b></font> A clockwork slab, a servant's most important tool. You're holding one! Keep it safe and hidden.<br>"
@@ -421,7 +421,8 @@
 			dat += "<font color=#BE8700><b>Transgression:</b></font> Stuns the first non-servant to cross it for ten seconds and blinds others nearby. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Submission:</b></font> Converts the first non-servant to stand on the sigil for seven seconds. Disappears on use.<br>"
 			dat += "<font color=#BE8700><b>Accession:</b></font> Identical to the Sigil of Submission, but doesn't disappear on use. It can also convert a single mindshielded target, but will disappear after doing this.<br>"
-			dat += "<font color=#BE8700><b>Transmission:</b></font> Stores power for clockwork structures. Feeding it brass sheets will create power.<br>"
+			dat += "<font color=#BE8700><b>Transmission:</b></font> Stores power for clockwork structures. Feeding it brass sheets will create power.<br><br>"
+			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
 			var/servants = 0 //Calculate the current production time for slab components
 			var/production_time = SLAB_PRODUCTION_TIME
