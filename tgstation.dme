@@ -1047,6 +1047,8 @@
 #include "code\modules\admin\verbs\SDQL2\SDQL_2.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2_parser.dm"
 #include "code\modules\admin\verbs\SDQL2\SDQL_2_wrappers.dm"
+#include "code\modules\ai\goof_ai.dm"
+#include "code\modules\ai\logic_testing\test_actions.dm"
 #include "code\modules\assembly\assembly.dm"
 #include "code\modules\assembly\bomb.dm"
 #include "code\modules\assembly\doorcontrol.dm"
