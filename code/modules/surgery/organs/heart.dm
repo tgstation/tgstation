@@ -62,7 +62,7 @@
 
 		if(H.jitteriness)
 			if(!beat || beat == BEAT_SLOW)
-				H.playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = CHANNEL_HEARTBEAT)
+				H.playsound_local(get_turf(H),'sound/health/fastbeat.ogg',40,0, channel = CHANNEL_HEARTBEAT)
 				beat = BEAT_FAST
 
 /obj/item/organ/heart/cursed
