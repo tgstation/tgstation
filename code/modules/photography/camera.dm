@@ -17,6 +17,8 @@
 	var/cooldown = 64
 	var/see_ghosts = 0	//for the spoop of it
 	var/sound/custom_sound
+	var/picture_size_x = 1
+	var/picture_size_y = 1
 
 /obj/item/device/camera/CheckParts(list/parts_list)
 	..()
@@ -68,7 +70,7 @@
 	if(!can_target(target, user, flag))
 		return
 
-	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag)
+	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x, picture_size_y)
 
 	if(istype(custom_sound))
 		playsound(loc, custom_sound, 75, 1, -3)
@@ -160,8 +162,8 @@
 		sorted.Insert(j+1, c)
 		CHECK_TICK
 
-	var/xcomp = Floor(psize_x / 2) + 1
-	var/ycomp = Floor(psize_y / 2) + 1
+	var/xcomp = Floor(psize_x / 2) - 15
+	var/ycomp = Floor(psize_y / 2) - 15
 	for(var/atom/A in sorted)
 		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
 		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp

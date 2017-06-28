@@ -32,3 +32,5 @@
 	if(cropx || cropy)
 		P.picture_image.Crop(cropx, cropy, psize_x - cropx, psize_y - cropy)
 	return P
+
+

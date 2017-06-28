@@ -48,7 +48,7 @@
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='[picture.psize_x]' height='[picture.psize_y]' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=book;size=[picture.psize_x]x[scribble ? picture.psize_y + 208 : picture.psize_y]")
+		+ "</body></html>", "window=book;size=["[picture.psize_x]"]x[scribble ? "[picture.psize_y + 208]" : "[picture.psize_y]"]")
 	onclose(user, "[name]")
 
 /obj/item/weapon/photo/verb/rename()
