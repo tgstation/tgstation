@@ -5,3 +5,5 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "stomach"
+
+	//todo: refactor food reagent metabolism onto this organ

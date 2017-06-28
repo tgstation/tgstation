@@ -116,13 +116,13 @@
 		var/has_liver = (!(NOLIVER in dna.species.species_traits))
 		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
 
-	if(has_liver && !getorganslot("liver"))
-		var/obj/item/organ/liver/LI = new()
-		LI.Insert(src)
+		if(has_liver && !getorganslot("liver"))
+			var/obj/item/organ/liver/LI = new()
+			LI.Insert(src)
 
-	if(has_stomach && !getorganslot("stomach"))
-		var/obj/item/organ/stomach/S = new()
-		S.Insert(src)
+		if(has_stomach && !getorganslot("stomach"))
+			var/obj/item/organ/stomach/S = new()
+			S.Insert(src)
 
 	if(breathes && !getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()
