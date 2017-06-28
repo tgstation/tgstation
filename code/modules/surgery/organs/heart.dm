@@ -8,7 +8,7 @@
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
-	var/beat //is this mob having a heatbeat sound played? if so, which?
+	var/beat = BEAT_NONE//is this mob having a heatbeat sound played? if so, which?
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
