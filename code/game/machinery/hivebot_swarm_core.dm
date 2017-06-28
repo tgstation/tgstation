@@ -11,7 +11,7 @@
 	anchored = TRUE
 	density = TRUE
 	var/recharge_period = 0 //The number of ticks the core is waiting for and cannot do anything
-	var/mob/living/threat_to_swarm //The core's "target" for its attacks
+	var/atom/movable/threat_to_swarm //The core's "target" for its attacks
 	var/hivebot_limit = 40 //Stop making hivebots if there are this many in a 7x7 square around us
 
 /obj/machinery/hivebot_swarm_core/Destroy()
@@ -50,10 +50,12 @@
 	if(threat_to_swarm)
 		return
 	var/list/potential_targets = list()
-	for(var/mob/living/carbon/L in view(7, src))
-		potential_targets += L
-	if(!potential_targets.len)
-		return
+	for(var/mob/living/carbon/C in view(7, src))
+		potential_targets += C
+	for(var/mob/living/silicon/S in view(7, src))
+		potential_targets += S
+	for(var/obj/mecha/M in view(7, src))
+		potential_targets += M
 	for(var/mob/living/L in potential_targets)
 		if(L.stat)
 			potential_targets -= L
@@ -68,7 +70,9 @@
 	say("SUBJECT STATUS: THREAT TO SWARM. TARGET LOCKED.")
 
 /obj/machinery/hivebot_swarm_core/proc/defend_the_swarm()
-	if(!threat_to_swarm || !threat_to_swarm in view(7, src) || threat_to_swarm.stat)
+	var/threat_to_swarm = src.threat_to_swarm
+	var/mob/living/L = istype(L, /mob) && !L.stat ? threat_to_swarm : null
+	if(QDELETED(threat_to_swarm) || !threat_to_swarm in view(7, src) || L)
 		say("TARGET LOST. RESUMING FABRICATION ROUTINE.")
 		threat_to_swarm = null
 		return
@@ -77,7 +81,10 @@
 	switch(pickweight(combat_actions))
 		if("laser")
 			threat_to_swarm.Beam(T, "sat_beam", time = 5)
-			threat_to_swarm.adjustFireLoss(15)
+			if(L)
+				L.adjustFireLoss(15)
+			else
+				threat.take_damage(15, "fire", "laser")
 			playsound(src, 'sound/weapons/plasma_cutter.ogg', 50, 1)
 			playsound(threat_to_swarm, 'sound/weapons/sear.ogg', 50, 1)
 		if("swarm")
