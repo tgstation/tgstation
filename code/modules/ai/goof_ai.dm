@@ -23,14 +23,13 @@
 	var/list/possible_actions = list()
 	var/list/potential_plans = list()
 	var/ramblers_lets_get_rambling = null
+	var/executing_plan = FALSE
 
 /datum/goof_ai/proc/load_ai(list/actions_to_use)
 	if(actions_to_use.len)
 		for(var/A in actions_to_use)
 			var/datum/goof_action/ACT = new A
 			possible_actions += list(list(ACT.type = ACT.cost))
-		var/list/the_act = possible_actions.Copy()
-		possible_actions = sortTim(the_act, associative=1)
 
 /datum/goof_ai/proc/create_plan(list/desired_world_state)
 	ramblers_lets_get_rambling = null
@@ -75,7 +74,6 @@
 				if(P.revisit_later.len)
 					P.unused_actions = P.revisit_later.Copy()
 					P.revisit_later.Cut()
-					P.unused_actions = sortTim(P.unused_actions, associative=1) // re-sort JUST IN CASE
 					world.log << "LOADING REVISIT ACTIONS"
 					max_revisits++
 		if(compare_world_state(P.temp_world_state, desired_world_state))

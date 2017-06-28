@@ -1,6 +1,6 @@
 /obj/item/goof_ai_tester
 	name = "goof AI tester"
-	var/list/starting_world_state = list("crusading" = 0, "has_sword" = 0, "has_shield" = 0, "has_horse" = 0, "has_prayed" = 0, "at_holy_land" = 0)
+	var/list/starting_world_state = list("crusading" = 0, "has_sword" = 0, "has_shield" = 0, "has_horse" = 0, "has_prayed" = 0, "at_holy_land" = 0, "has_boat" = 0)
 
 /obj/item/goof_ai_tester/New()
 	..()
@@ -20,8 +20,8 @@
 
 /obj/item/goof_ai_tester/sailor
 	name = "sailor AI tester"
-	starting_world_state = list("has_boat" = 1)
+	starting_world_state = list("crusading" = 0, "has_sword" = 0, "has_shield" = 0, "has_horse" = 0, "has_boat" = 1, "has_prayed" = 0, "at_holy_land" = 0)
 
 /obj/item/goof_ai_tester/knight
 	name = "knight AI tester"
-	starting_world_state = list("has_sword" = 1, "has_horse" = 1, "has_shield" = 1)
+	starting_world_state = list("crusading" = 0, "has_sword" = 1, "has_shield" = 1, "has_horse" = 1, "has_boat" = 0, "has_prayed" = 0, "at_holy_land" = 0)
