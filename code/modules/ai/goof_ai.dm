@@ -22,7 +22,7 @@
 	var/list/world_state = list()
 	var/list/possible_actions = list()
 	var/list/potential_plans = list()
-	var/list/ramblers_lets_get_rambling = null
+	var/ramblers_lets_get_rambling = null
 
 /datum/goof_ai/proc/load_ai(list/actions_to_use)
 	if(actions_to_use.len)
@@ -47,12 +47,14 @@
 				if(is_action_possible(P.temp_world_state, ACT))
 					if(does_action_satisfy_requirement(P.wanted_world_state, P.temp_world_state, ACT))
 						ACT.do_action(P.temp_world_state)
+						P.actions += ACT
 						P.unused_actions.Remove(ACT)
 						P.current_cost += ACT.cost
 						break
 				else // cant do it now, revisit on the next loop in case it is possible
-					P.revisit_later += list(list(ACT = ACT.cost))
-					P.unused_actions.Remove(ACT)
+					if(!is_action_useless(P.temp_world_state, ACT))
+						P.revisit_later += list(list(ACT = ACT.cost))
+						P.unused_actions.Remove(ACT)
 					break
 			if(!P.unused_actions.len)
 				if(P.revisit_later.len)
@@ -83,9 +85,16 @@
 
 /datum/goof_ai/proc/is_action_possible(list/world_state, datum/goof_action/A)
 	for(var/WC in A.prereq_world_state)
-		if(world_state[WC] == A.prereq_world_state[prereq_world_state])
+		if(world_state[WC] == A.prereq_world_state[WC])
 			continue
-		else if(!isnull(A.prereq_world_state[WC])
+		else if(!isnull(A.prereq_world_state[WC]))
 			return FALSE
 	return TRUE
 
+/datum/goof_ai/proc/is_action_useless(list/world_state, datum/goof_action/A)
+	for(var/WC in A.world_state_changes)
+		if(world_state[WC] == A.world_state_changes[WC])
+			continue
+		else if(!isnull(A.prereq_world_state[WC]))
+			return FALSE
+	return TRUE
