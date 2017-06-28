@@ -74,7 +74,7 @@
 		return
 
 	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
-		aicamera.camera_mode_off()
+		aicamera.toggle_camera_mode()
 		aicamera.captureimage(pixel_turf, usr)
 		return
 	if(waypoint_mode)

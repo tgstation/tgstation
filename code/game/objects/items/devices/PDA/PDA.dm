@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						hidden_uplink.interact(U)
 						to_chat(U, "The PDA softly beeps.")
 						U << browse(null, "window=pda")
-						src.mode = 0
+						mode = 0
 					else
 						t = copytext(sanitize(t), 1, 20)
 						ttone = t
@@ -428,10 +428,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					return
 			if("Message")
 				var/obj/item/device/pda/P = locate(href_list["target"])
-				src.create_message(U, P)
+				create_message(U, P)
 
 			if("MessageAll")
-				src.send_to_all(U)
+				send_to_all(U)
 
 			if("cart")
 				if(cartridge)
@@ -457,7 +457,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if("1")		// Configure pAI device
 						pai.attack_self(U)
 					if("2")		// Eject pAI device
-						var/turf/T = get_turf(src.loc)
+						var/turf/T = get_turf(loc)
 						if(T)
 							pai.loc = T
 
@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
+				log_pda("[user] (PDA: [name]) sent \"[message]\" to [P.name]")
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
@@ -546,7 +546,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
 		show_to_ghosts(user,last_sucessful_msg,1)
-		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
+		log_pda("[user] (PDA: [name]) sent \"[message]\" to Everyone")
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
@@ -596,7 +596,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				useMS = MS
 				break
 
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 
 	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
@@ -721,7 +721,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
-	else if(istype(C, /obj/item/device/paicard) && !src.pai)
+	else if(istype(C, /obj/item/device/paicard) && !pai)
 		if(!user.transferItemToLoc(C, src))
 			return
 		pai = C
@@ -857,14 +857,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(user.stat == 2)
 		return //won't work if dead
 
-	if(src.aiPDA.toff)
+	if(aiPDA.toff)
 		to_chat(user, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in get_viewable_pdas())
 		if (P == src)
 			continue
-		else if (P == src.aiPDA)
+		else if (P == aiPDA)
 			continue
 
 		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
@@ -879,9 +879,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(aicamera.aipictures.len>0)
 		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
 		if(add_photo=="Yes")
-			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
-			src.aiPDA.photo = Pic.fields["img"]
-	src.aiPDA.create_message(src, selected)
+			var/datum/picture/Pic = aicamera.selectpicture()
+			if(Pic)
+				aiPDA.photo = Pic.picture_image
+	aiPDA.create_message(src, selected)
 
 
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()

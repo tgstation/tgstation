@@ -36,7 +36,7 @@
 
 /obj/item/device/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	var/number = stored.len
-	picture.picture_name = "Image [number] (taken by [src.loc.name])"
+	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored += picture
 	to_chat(usr, "<span class='unconscious'>Image recorded</span>")
 

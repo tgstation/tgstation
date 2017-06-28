@@ -48,7 +48,7 @@
 /obj/machinery/computer/secure_data/attack_hand(mob/user)
 	if(..())
 		return
-	if(src.z > 6)
+	if(z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 	var/dat
@@ -259,7 +259,7 @@
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -449,7 +449,7 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
+								new /obj/item/weapon/poster/wanted(loc, photo.img, wanted_name, info)
 							printing = 0
 
 //RECORD DELETE
@@ -476,7 +476,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", authenticated, rank, worldtime2text(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)

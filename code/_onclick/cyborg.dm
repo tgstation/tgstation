@@ -50,7 +50,7 @@
 		return
 	*/
 	if(aicamera.in_camera_mode) //Cyborg picture taking
-		aicamera.camera_mode_off()
+		aicamera.toggle_camera_mode()
 		aicamera.captureimage(A, usr)
 		return
 
