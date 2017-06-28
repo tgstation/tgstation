@@ -2202,6 +2202,7 @@
 #include "hippiestation\code\game\objects\items\weapons\implants\implant_misc.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implantcase.dm"
 #include "hippiestation\code\game\objects\items\weapons\implants\implanter.dm"
+#include "hippiestation\code\game\objects\items\weapons\storage\boxes.dm"
 #include "hippiestation\code\game\objects\items\weapons\storage\dakis.dm"
 #include "hippiestation\code\game\objects\items\weapons\storage\toolbox.dm"
 #include "hippiestation\code\game\objects\items\weapons\storage\uplink_kits.dm"

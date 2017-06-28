@@ -29,7 +29,6 @@
 	resistance_flags = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
-	icon = 'hippiestation/icons/obj/storage.dmi'
 
 /obj/item/weapon/storage/box/Initialize(mapload)
 	..()
