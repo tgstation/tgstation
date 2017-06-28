@@ -385,5 +385,6 @@
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
 
 /mob/living/carbon/proc/handle_liver()
-	if((!NOLIVER in dna.species.species_traits) && !getorganslot("liver"))
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if((!(NOLIVER in dna.species.species_traits)) && (!liver))
 		adjustToxLoss(8)

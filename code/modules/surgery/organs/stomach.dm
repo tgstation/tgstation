@@ -9,8 +9,7 @@
 	desc = "Onaka ga suite imasu."
 
 /obj/item/organ/stomach/on_life()
-	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/human/H = owner
 
-	if(iscarbon(C))
-		if(ishuman(C))
-			C.dna.species.handle_digestion(C)
+	if(ishuman(H))
+		H.dna.species.handle_digestion(H)
