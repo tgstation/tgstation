@@ -212,10 +212,10 @@
 		var/image = get_id_photo(H, C)
 		var/datum/picture/pf = new
 		var/datum/picture/ps = new
-		pf.name = "[H]"
-		ps.name = "[H]"
-		pf.desc = "This is [H]."
-		ps.desc = "Thsi is [H]."
+		pf.picture_name = "[H]"
+		ps.picture_name = "[H]"
+		pf.picture_desc = "This is [H]."
+		ps.picture_desc = "This is [H]."
 		pf.picture_image = icon(image, dir = SOUTH)
 		ps.picture_image = icon(image, dir = WEST)
 		var/obj/item/weapon/photo/photo_front = new(null, pf)
