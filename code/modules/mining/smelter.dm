@@ -4,7 +4,7 @@
 	icon = 'icons/obj/blacksmithing.dmi'
 	icon_state = "smelter"
 	density = TRUE
-	anchored = TRUE 
+	anchored = TRUE
 
 /obj/machinery/smelter/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
@@ -30,21 +30,22 @@
 	icon_state = "anvil"
 	density = TRUE
 	anchored = FALSE
-	var/obj/item/weapon/reagent_containers/glass/mold/current_mold
-	var/mutable_appearance/my_mold
+	var/obj/item/weapon/reagent_containers/glass/mold/current_mold = null
+	var/mutable_appearance/my_mold = null
 
 /obj/machinery/anvil/attackby(obj/item/weapon/W, mob/user, params)
 	if(!isdwarf(user))
 		to_chat(user, "You don't comprehend this tool well enough to use it.")
 		return
 	if(!istype(W, /obj/item/weapon/smith_hammer))
-		return ..()
+		..()
 	if(!current_mold && istype(W, /obj/item/weapon/reagent_containers/glass/mold))
 		var/obj/item/weapon/reagent_containers/glass/mold/M = W
 		var/datum/reagent/R = M.reagents.get_master_reagent()
 		if(R && R.volume == 25)
 			if(user.drop_item())
 				to_chat(user, "You place [M] on [src].")
+				M.loc = src
 				current_mold = M
 				my_mold = mutable_appearance('icons/obj/blacksmithing.dmi', M.icon_state)
 				add_overlay(my_mold)
@@ -82,8 +83,6 @@
 			return
 		else
 			to_chat(user, "There's nothing in the mold!")
-	else
-		return ..() //If your not hitting it with a hammer or mold
 
 /obj/item/weapon/smith_hammer
 	name = "smith's hammer"
