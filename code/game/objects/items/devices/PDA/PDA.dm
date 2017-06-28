@@ -739,7 +739,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			update_icon()
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
-		photo = P.img
+		photo = P.picture.picture_image
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.attackby(C, user, params)
@@ -876,7 +876,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/selected = plist[c]
 
-	if(aicamera.aipictures.len>0)
+	if(aicamera.stored.len)
 		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
 		if(add_photo=="Yes")
 			var/datum/picture/Pic = aicamera.selectpicture()

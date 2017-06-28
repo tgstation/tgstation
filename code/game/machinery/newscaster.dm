@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	wanted_issue.scannedUser = scanned_user
 	wanted_issue.isAdminMsg = adminMsg
 	if(photo)
-		wanted_issue.img = photo.img
+		wanted_issue.img = photo.picture.picture_image
 	if(newMessage)
 		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
 			N.newsAlert()

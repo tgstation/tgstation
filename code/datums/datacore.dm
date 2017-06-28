@@ -210,10 +210,16 @@
 		if(!C)
 			C = H.client
 		var/image = get_id_photo(H, C)
-		var/obj/item/weapon/photo/photo_front = new()
-		var/obj/item/weapon/photo/photo_side = new()
-		photo_front.photocreate(null, icon(image, dir = SOUTH))
-		photo_side.photocreate(null, icon(image, dir = WEST))
+		var/datum/picture/pf = new
+		var/datum/picture/ps = new
+		pf.name = "[H]"
+		ps.name = "[H]"
+		pf.desc = "This is [H]."
+		ps.desc = "Thsi is [H]."
+		pf.picture_image = icon(image, dir = SOUTH)
+		ps.picture_image = icon(image, dir = WEST)
+		var/obj/item/weapon/photo/photo_front = new(null, pf)
+		var/obj/item/weapon/photo/photo_side = new(null, ps)
 
 		//These records should ~really~ be merged or something
 		//General Record

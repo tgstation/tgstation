@@ -131,7 +131,7 @@
 		return TRUE
 	if(istype(I, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = I
-		if(P.picture.blueprints)	//if the blueprints are in frame
+		if(P.picture.has_blueprints)	//if the blueprints are in frame
 			return TRUE
 	return FALSE
 

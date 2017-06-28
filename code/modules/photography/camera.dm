@@ -121,7 +121,6 @@
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
 			if(see_ghosts && isobserver(M))
-				var/mob/dead/observer/O = M
 				mob_details += "You can also see a g-g-g-g-ghooooost!"
 			else
 				continue

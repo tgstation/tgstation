@@ -147,16 +147,19 @@
 						temp_img = icon('icons/ass/assdrone.png')
 					else
 						break
-					var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-					p.desc = "You see [ass]'s ass on the photo."
-					p.pixel_x = rand(-10, 10)
-					p.pixel_y = rand(-10, 10)
-					p.img = temp_img
-					var/icon/small_img = icon(temp_img) //Icon() is needed or else temp_img will be rescaled too >.>
+					var/datum/picture/P = new
+					P.picture_name = "ass"
+					P.picture_desc = "You see someone or something's ass on it."
+					P.picture_image = temp_img
+					var/icon/small_img = icon(temp_img)
 					var/icon/ic = icon('icons/obj/items.dmi',"photo")
 					small_img.Scale(8, 8)
 					ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-					p.icon = ic
+					P.picture_icon = ic
+					var/obj/item/weapon/photo/p = new (loc, P)
+					p.desc = "You see [ass]'s ass on the photo."
+					p.pixel_x = rand(-10, 10)
+					p.pixel_y = rand(-10, 10)
 					toner -= 5
 					busy = 1
 					sleep(15)
