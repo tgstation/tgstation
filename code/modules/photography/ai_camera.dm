@@ -11,10 +11,10 @@
 /obj/item/device/camera/siliconcam/proc/selectpicture()
 	var/list/nametemp = list()
 	var/find
-	if(!targetloc.stored.len)
+	if(!stored.len)
 		to_chat(usr, "<span class='boldannounce'>No images saved</span>")
 		return
-	for(var/datum/picture/t in targetloc.stored)
+	for(var/datum/picture/t in stored)
 		nametemp += t.picture_name
 	find = input("Select image") in nametemp|null
 	if(!find)
@@ -36,8 +36,8 @@
 
 /obj/item/device/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	var/number = stored.len
-	picture.picture_name = "Image [numberer] (taken by [src.loc.name])"
-	aipictures += P
+	picture.picture_name = "Image [number] (taken by [src.loc.name])"
+	stored += picture
 	to_chat(usr, "<span class='unconscious'>Image recorded</span>")
 
 /obj/item/device/camera/siliconcam/robot_camera
@@ -46,14 +46,14 @@
 /obj/item/device/camera/siliconcam/robot_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	var/mob/living/silicon/robot/C = loc
 	if(istype(C) && C.connected_ai)
-		var/number = C.connected_ai.aicameria.stored.len
+		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
-		C.connected_ai.aicamera.stored += P
+		C.connected_ai.aicamera.stored += picture
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to remote database</span>")
 	else
-		var/number = C.connected_ai.aicameria.stored.len
+		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
-		stored += P
+		stored += picture
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.</span>")
 
 /obj/item/device/camera/siliconcam/robot_camera/selectpicture()
@@ -81,7 +81,7 @@
 	if(!istype(selection))
 		to_chat(usr, "<span class='warning'>Invalid Image.</span>")
 		return
-	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc, selecftion)
+	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc, selection)
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image

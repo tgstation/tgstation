@@ -794,33 +794,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 			return
 		photo.loc = src
 	if(issilicon(user))
-		var/list/nametemp = list()
-		var/find
-		var/datum/picture/selection
-		var/obj/item/device/camera/siliconcam/targetcam = null
-		if(isAI(user))
-			var/mob/living/silicon/ai/R = user
-			targetcam = R.aicamera
-		else if(iscyborg(user))
-			var/mob/living/silicon/robot/R = user
-			if(R.connected_ai)
-				targetcam = R.connected_ai.aicamera
-			else
-				targetcam = R.aicamera
-		else
-			to_chat(user, "<span class='warning'>You cannot interface with silicon photo uploading!</span>")
-		if(targetcam.aipictures.len == 0)
-			to_chat(usr, "<span class='boldannounce'>No images saved</span>")
+		var/mob/living/silicon/S = user
+		if(!istype(S) || !istype(S.aicamera))
 			return
-		for(var/datum/picture/t in targetcam.aipictures)
-			nametemp += t.fields["name"]
-		find = input("Select image (numbered in order taken)") in nametemp
-		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-		for(var/datum/picture/q in targetcam.aipictures)
-			if(q.fields["name"] == find)
-				selection = q
-				break
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
+		var/datum/picture/selection = S.aicamera.selectphoto()
+		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(src, selection)
 		P.sillynewscastervar = 1
 		photo = P
 		qdel(P)

@@ -205,27 +205,12 @@
 		if(!isAI(usr))
 			return
 		if(toner >= 5 && !busy)
-			var/list/nametemp = list()
-			var/find
-			var/datum/picture/selection
 			var/mob/living/silicon/ai/tempAI = usr
-			if(tempAI.aicamera.aipictures.len == 0)
-				to_chat(usr, "<span class='boldannounce'>No images saved</span>")
+			var/datum/picture/selection = tempAI.aicamera.selectpicture()
+			if(!istype(selection))
+				to_chat(tempAI, "<span class='warning'>Invalid Picture.</span>")
 				return
-			for(var/datum/picture/t in tempAI.aicamera.aipictures)
-				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
-			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
-			for(var/datum/picture/q in tempAI.aicamera.aipictures)
-				if(q.fields["name"] == find)
-					selection = q
-					break
-			var/icon/I = selection.fields["icon"]
-			var/icon/img = selection.fields["img"]
-			p.icon = I
-			p.img = img
-			p.desc = selection.fields["desc"]
-			p.blueprints = selection.fields["blueprints"]
+			var/obj/item/weapon/photo/p = new(loc, selection)
 			p.pixel_x = rand(-10, 10)
 			p.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently

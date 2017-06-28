@@ -11,6 +11,7 @@
 	var/datum/picture/picture		//Picture itself.
 	var/scribble		//Scribble on the back.
 	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
+	//Someone refactor out sillynewscastervar and other things to use the datum and not the phyiscal object later....
 
 /obj/item/weapon/photo/Initialize(mapload, datum/picture/P)
 	if(istype(P))
@@ -43,7 +44,7 @@
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='[picture.psize_x]' height='[picture.psize_y]' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=book;size=[picture.psize_x]x[scribble ? [picture.psize_y + 208] : [picture.psize_y]]")
+		+ "</body></html>", "window=book;size=[picture.psize_x]x[scribble ? picture.psize_y + 208 : picture.psize_y]")
 	onclose(user, "[name]")
 
 /obj/item/weapon/photo/verb/rename()

@@ -16,7 +16,7 @@
 	var/on = TRUE
 	var/cooldown = 64
 	var/see_ghosts = 0	//for the spoop of it
-	var/datum/sound/custom_sound
+	var/sound/custom_sound
 
 /obj/item/device/camera/CheckParts(list/parts_list)
 	..()
@@ -60,7 +60,7 @@
 	to_chat(user, "It has [pictures_left] photos left.")
 
 /obj/item/device/camera/proc/can_target(atom/target, mob/user, prox_flag)
-	if(!on || !pictures_left || !isturf(target.loc) || !((isAI(user) && GLOB.cameranet.checkTurfVis(get_turf(target))) || ((user.client && (get_turf(target) in get_hear(user.client.view, user)) || (get_turf(target) in get_hear(world.view, user))))
+	if(!on || !pictures_left || !isturf(target.loc) || !((isAI(user) && GLOB.cameranet.checkTurfVis(get_turf(target))) || ((user.client && (get_turf(target) in get_hear(user.client.view, user)) || (get_turf(target) in get_hear(world.view, user))))))
 		return FALSE
 	return TRUE
 
@@ -95,11 +95,11 @@
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/blueprints = FALSE
-	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, viewc.z), locate(target_turf.x + size_x, target_turf.y + size_y, viewc.z)))
+	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
 		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || T in seen)
 			turfs += T
 			desc += camera_get_mobs(T)
-			if(locate(/obj/item/area_editor/blueprints) in T)
+			if(locate(/obj/item/area_editer/blueprints) in T)
 				blueprints = TRUE
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
@@ -122,7 +122,7 @@
 		if(M.invisibility)
 			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M
-				mob_detail += "You can also see a g-g-g-g-ghooooost!"
+				mob_details += "You can also see a g-g-g-g-ghooooost!"
 			else
 				continue
 		var/list/holding = list()
@@ -142,7 +142,7 @@
 	res.Scale(psize_x, psize_y)
 	var/list/atoms = list()
 	for(var/turf/T in turfs)
-		atoms.Add(A)
+		atoms.Add(T)
 		for(var/atom/movable/A in T)
 			if(A.invisibility)
 				if(!(see_ghosts && isobserver(A)))
@@ -161,8 +161,8 @@
 		sorted.Insert(j+1, c)
 		CHECK_TICK
 
-	var/xcomp = floor(psize_x / 2) + 1
-	var/ycomp = floor(psize_y / 2) + 1
+	var/xcomp = Floor(psize_x / 2) + 1
+	var/ycomp = Floor(psize_y / 2) + 1
 	for(var/atom/A in sorted)
 		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
 		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
