@@ -54,11 +54,11 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
-			H.stop_sound_channel(150)
-			H.playsound_local(get_turf(H),'sound/health/slowbeat.ogg',40,0, channel = 150)
+			H.stop_sound_channel(BEAT_CHANNEL)
+			H.playsound_local(get_turf(H),'sound/health/slowbeat.ogg',40,0, channel = BEAT_CHANNEL)
 			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
 		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
-			H.stop_sound_channel(150)
+			H.stop_sound_channel(BEAT_CHANNEL)
 			beat = BEAT_NONE
 
 /obj/item/organ/heart/cursed
