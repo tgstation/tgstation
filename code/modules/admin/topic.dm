@@ -842,6 +842,7 @@
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>Alien</a></td>"
 
+<<<<<<< HEAD
 		//Borer
 		if(jobban_isbanned(M, "borer") || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=borer;jobban4=\ref[M]'><font color=red>Borer</font></a></td>"
@@ -864,6 +865,8 @@
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=cluwneban;jobban4=\ref[M]'>Cluwneban</a></td>"
 
+=======
+>>>>>>> ac96764660... Merge pull request #28851 from Cyberboss/RevertBorers
 		dat += "</tr></table>"
 		usr << browse(dat, "window=jobban2;size=800x450")
 		return
