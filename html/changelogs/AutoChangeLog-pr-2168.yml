@@ -1,0 +1,4 @@
+author: "Carbonhell"
+delete-after: True
+changes: 
+  - bugfix: "All invisible boxes(most notably the monkey cube box) have been fixed."
