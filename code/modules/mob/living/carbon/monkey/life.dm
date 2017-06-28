@@ -48,9 +48,6 @@
 					domutcheck()
 		..()
 
-/mob/living/carbon/monkey/handle_chemicals_in_body()
-	return
-
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
 	if(abs(310.15 - breath.temperature) > 50)
 		switch(breath.temperature)

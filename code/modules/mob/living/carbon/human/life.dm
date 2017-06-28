@@ -267,11 +267,6 @@
 
 	return min(1,thermal_protection)
 
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	return
-
-
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
 	if(!stat)

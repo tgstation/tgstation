@@ -276,10 +276,6 @@
 				radiation = max(radiation-3,0)
 				adjustToxLoss(3)
 
-/mob/living/carbon/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
-
 
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
