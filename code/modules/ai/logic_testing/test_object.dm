@@ -1,6 +1,6 @@
 /obj/item/goof_ai_tester
 	name = "goof AI tester"
-	var/list/starting_world_state = list()
+	var/list/starting_world_state = list("crusading" = 0, "has_sword" = 0, "has_shield" = 0, "has_horse" = 0, "has_prayed" = 0, "at_holy_land" = 0)
 
 /obj/item/goof_ai_tester/New()
 	..()

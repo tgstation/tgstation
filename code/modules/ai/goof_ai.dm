@@ -28,24 +28,35 @@
 	if(actions_to_use.len)
 		for(var/A in actions_to_use)
 			var/datum/goof_action/ACT = new A
-			possible_actions += list(list(ACT = ACT.cost))
-		possible_actions = sortTim(possible_actions, associative=1)
+			possible_actions += list(list(ACT.type = ACT.cost))
+		var/list/the_act = possible_actions.Copy()
+		possible_actions = sortTim(the_act, associative=1)
 
 /datum/goof_ai/proc/create_plan(list/desired_world_state)
 	ramblers_lets_get_rambling = null
+	var/max_revisits = 3
+	var/revisits = 0
 	while(!ramblers_lets_get_rambling)
 		var/datum/goof_plan/P = new
 		P.wanted_world_state = desired_world_state
 		P.temp_world_state = world_state
-		P.unused_actions = possible_actions
+		P.unused_actions = possible_actions.Copy()
+		P.actions.Cut()
+		P.revisit_later.Cut()
 
 		while(P.unused_actions.len)
 			if(compare_world_state(P.temp_world_state, desired_world_state))
 				break
-			for(var/A in P.unused_actions)
-				var/datum/goof_action/ACT = A
+			for(var/i in 1 to P.unused_actions.len)
+				var/temp = P.unused_actions[i][1]
+				world.log << temp
+				world.log << i
+				var/datum/goof_action/ACT = new temp
+				world.log << "CHECKING: [ACT.name]"
 				if(is_action_possible(P.temp_world_state, ACT))
+					world.log << "ACTION POSSIBLE: [ACT.name]"
 					if(does_action_satisfy_requirement(P.wanted_world_state, P.temp_world_state, ACT))
+						world.log << "SATISFIES REQUIREMENT: [ACT.name]"
 						ACT.do_action(P.temp_world_state)
 						P.actions += ACT
 						P.unused_actions.Remove(ACT)
@@ -53,16 +64,24 @@
 						break
 				else // cant do it now, revisit on the next loop in case it is possible
 					if(!is_action_useless(P.temp_world_state, ACT))
-						P.revisit_later += list(list(ACT = ACT.cost))
+						world.log << "UNUSABLE BUT USEFUL SAVING FOR LATER: [ACT.name]"
+						P.revisit_later += list(list(ACT.type = ACT.cost))
 						P.unused_actions.Remove(ACT)
-					break
+					continue
 			if(!P.unused_actions.len)
+				if(revisits >= max_revisits)
+					world.log << "MAX REVISITS, CALLING IT QUITS"
+					break
 				if(P.revisit_later.len)
 					P.unused_actions = P.revisit_later.Copy()
 					P.revisit_later.Cut()
 					P.unused_actions = sortTim(P.unused_actions, associative=1) // re-sort JUST IN CASE
+					world.log << "LOADING REVISIT ACTIONS"
+					max_revisits++
 		if(compare_world_state(P.temp_world_state, desired_world_state))
 			ramblers_lets_get_rambling = P
+			world.log << "PLAN FOUND"
+			return ramblers_lets_get_rambling
 		else
 			return FALSE // well shit that didnt work
 	return ramblers_lets_get_rambling
@@ -72,29 +91,40 @@
 		if(check[A] == correct[A] && !isnull(correct[A]))
 			continue
 		else
+			world.log << "compare_world_state: FALSE: [A]"
 			return FALSE
+	world.log << "compare_world_state: TRUE"
 	return TRUE
 
 /datum/goof_ai/proc/does_action_satisfy_requirement(list/correct, list/existing_state, datum/goof_action/A)
 	for(var/WC in A.world_state_changes)
 		if(!isnull(correct[WC]) && existing_state[WC] != A.world_state_changes[WC] && A.world_state_changes[WC] == correct[WC])
+			world.log << "does_action_satisfy_requirement: TRUE [WC]"
 			return TRUE
 		else
 			continue
+	world.log << "does_action_satisfy_requirement: FALSE"
 	return FALSE
 
 /datum/goof_ai/proc/is_action_possible(list/world_state, datum/goof_action/A)
 	for(var/WC in A.prereq_world_state)
 		if(world_state[WC] == A.prereq_world_state[WC])
 			continue
-		else if(!isnull(A.prereq_world_state[WC]))
+		else
+			world.log << "is_action_possible: FALSE [WC]"
 			return FALSE
+	world.log << "is_action_possible: TRUE"
 	return TRUE
 
 /datum/goof_ai/proc/is_action_useless(list/world_state, datum/goof_action/A)
+	var/useless_change = TRUE
 	for(var/WC in A.world_state_changes)
+		world.log << "is_action_useless: [WC]"
+		world.log << world_state[WC]
+		world.log << "VS"
+		world.log << A.world_state_changes[WC]
 		if(world_state[WC] == A.world_state_changes[WC])
-			continue
-		else if(!isnull(A.prereq_world_state[WC]))
-			return FALSE
-	return TRUE
+			useless_change = FALSE
+			world.log << "is_action_useless: FALSE [WC]"
+	world.log << "is_action_useless: [useless_change]"
+	return useless_change

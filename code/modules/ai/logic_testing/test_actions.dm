@@ -18,13 +18,13 @@
 	prereq_world_state = list("at_holy_land" = 0)
 
 // prayer (very important for crusading)
-/datum/goof_action/crusading/walk_to_holy
+/datum/goof_action/crusading/pray_at_church
 	cost = 3
 	name = "Pray at the Church before Departing"
 	world_state_changes = list("has_prayed" = 1)
 	prereq_world_state = list("at_holy_land" = 0, "has_prayed" = 0)
 
-/datum/goof_action/crusading/walk_to_holy
+/datum/goof_action/crusading/pray_at_holy_land
 	cost = 5
 	name = "Pray at the Holy Land"
 	world_state_changes = list("has_prayed" = 1)
