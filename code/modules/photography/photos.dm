@@ -30,6 +30,10 @@
 			scribble = txt
 	..()
 
+/obj/item/weapon/photo/proc/photocopy(greyscale = FALSE, cropx = 0, cropy = 0)
+	var/obj/item/weapon/photo/P = new(src, picture.Copy(greyscale, cropx, cropy))
+	return P
+
 /obj/item/weapon/photo/examine(mob/user)
 	..()
 

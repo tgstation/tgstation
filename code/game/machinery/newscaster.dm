@@ -797,7 +797,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		var/mob/living/silicon/S = user
 		if(!istype(S) || !istype(S.aicamera))
 			return
-		var/datum/picture/selection = S.aicamera.selectphoto()
+		var/datum/picture/selection = S.aicamera.selectpicture()
 		var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(src, selection)
 		P.sillynewscastervar = 1
 		photo = P

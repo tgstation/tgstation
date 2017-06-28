@@ -16,3 +16,19 @@
 	psize_x = size_x
 	psize_y = size_y
 	has_blueprints = bp
+
+/datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)
+	var/datum/picture/P = new
+	P.picture_name = picture_name
+	P.picture_desc = picture_desc
+	P.picture_image = picture_image
+	P.picture_icon = picture_icon
+	P.psize_x = psize_x - cropx * 2
+	P.psize_y = psize_y - cropy * 2
+	P.has_blueprints = has_blueprints
+	if(greyscale)
+		P.picture_image.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+		P.picture_image.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	if(cropx || cropy)
+		P.picture_image.Crop(cropx, cropy, psize_x - cropx, psize_y - cropy)
+	return P
