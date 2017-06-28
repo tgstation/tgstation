@@ -347,9 +347,7 @@
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
-						M.launch_status = ENDGAME_LAUNCHED
-						M.enterTransit()
+					M.on_emergency_launch()
 
 				//now move the actual emergency shuttle to its transit dock
 				var/list/areas = list()
@@ -383,12 +381,7 @@
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == ENDGAME_LAUNCHED)
-						if(istype(M, /obj/docking_port/mobile/pod))
-							M.dock(SSshuttle.getDock("[M.id]_away")) //Escape pods dock at centcomm
-						else
-							M.launch_status = ENDGAME_TRANSIT
-							//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
+					M.on_emergency_dock()
 
 				// now move the actual emergency shuttle to centcomm
 				// unless the shuttle is "hijacked"
@@ -562,9 +555,6 @@
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 
-#undef UNLAUNCHED
-#undef LAUNCHED
-#undef EARLY_LAUNCHED
 #undef TIMELEFT
 #undef ENGINES_START_TIME
 #undef ENGINES_STARTED
