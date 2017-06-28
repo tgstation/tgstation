@@ -129,6 +129,23 @@
 	var/obj/item/organ/ears/ears = C.getorganslot("ears")
 	var/obj/item/organ/tongue/tongue = C.getorganslot("tongue")
 
+	var/obj/item/organ/liver/liver = C.getorganslot("liver")
+	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
+
+	if(NOLIVER in species_traits) && liver)
+		liver.Remove(C)
+		qdel(liver)
+	else if((!(NOLIVER in species_traits)) && (!liver))
+		liver = new()
+		liver.Insert(C)
+
+	if(NOSTOMACH in species_traits) && stomach)
+		stomach.Remove(C)
+		qdel(stomach)
+	else if((!(NOSTOMACH in species_traits)) && (!stomach))
+		stomach = new()
+		stomach.Insert(C)
+
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
 		qdel(heart)
