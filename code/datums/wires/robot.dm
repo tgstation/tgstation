@@ -36,6 +36,7 @@
 					new_ai = select_active_ai(user)
 				else
 					new_ai = select_active_ai(R)
+				R.notify_ai(DISCONNECT)
 				if(new_ai && (new_ai != R.connected_ai))
 					R.connected_ai = new_ai
 					if(R.shell)
@@ -63,11 +64,9 @@
 	switch(wire)
 		if(WIRE_AI) // Cut the AI wire to reset AI control.
 			if(!mend)
+				R.notify_ai(DISCONNECT)
 				if(R.shell)
 					R.undeploy()
-					R.notify_ai(AI_SHELL)
-				else
-					R.notify_ai(TRUE)
 				R.connected_ai = null
 		if(WIRE_LAWSYNC) // Cut the law wire, and the borg will no longer receive law updates from its AI. Repair and it will re-sync.
 			if(mend)
