@@ -439,3 +439,5 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
+
+#define BEAT_CHANNEL 150 //sound channel for heartbeats
