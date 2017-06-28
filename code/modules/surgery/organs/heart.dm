@@ -50,8 +50,8 @@
 	return S
 
 /obj/item/organ/heart/on_life()
-	if(ishuman(owner) && owner.client)
-		var/mob/living/carbon/human/H = owner
+	if(owner.client)
+		var/mob/living/carbon/H = owner
 		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
 			H.stop_sound_channel(BEAT_CHANNEL)
