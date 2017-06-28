@@ -11,7 +11,7 @@
 	tgui_id = "ntos_supermatter_monitor"
 	ui_x = 600
 	ui_y = 400
-	var/last_status = 0
+	var/last_status = SUPERMATTER_INACTIVE
 	var/list/supermatters
 	var/obj/machinery/power/supermatter_shard/active		// Currently selected supermatter crystal.
 
