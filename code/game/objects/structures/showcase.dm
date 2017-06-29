@@ -45,6 +45,10 @@
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper-open"
 
+/obj/structure/showcase/oldpod/used
+	name = "opened cyrogenic pod"
+	desc = "Cyrogenic pod that has recently discharged its occupand. The pod appears non-functional."
+
 
 //Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
