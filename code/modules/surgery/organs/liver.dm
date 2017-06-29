@@ -33,7 +33,7 @@
 				if(toxamount <= toxTolerance && toxamount > 0)
 					C.reagents.remove_all("toxin", toxTolerance, 1)
 				else if(toxamount > toxTolerance)
-					damage += toxamount/toxLethality
+					damage += toxamount*toxLethality
 
 				C.reagents.metabolize(C, can_overdose=1)
 
