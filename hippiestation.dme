@@ -2237,6 +2237,7 @@
 #include "hippiestation\code\modules\hydroponics\buttflower.dm"
 #include "hippiestation\code\modules\hydroponics\limbflower.dm"
 #include "hippiestation\code\modules\hydroponics\seed_extractor.dm"
+#include "hippiestation\code\modules\jobs\job_types\civilian.dm"
 #include "hippiestation\code\modules\library\lib_machines.dm"
 #include "hippiestation\code\modules\mentor\follow.dm"
 #include "hippiestation\code\modules\mentor\mentor_memo.dm"
