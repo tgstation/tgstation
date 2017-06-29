@@ -386,11 +386,16 @@
 
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
-	if((!(NOLIVER in dna.species.species_traits)) && (!liver))
-		//stabiliver prevents the damage
-		if(reagents.get_reagent_amount("stabiliver"))
-			return
-		adjustToxLoss(8)
+	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)) || liver.damage == 100)
+		liver_failure()
 
-		if(prob(30))
-			to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+/mob/living/carbon/proc/applyLiverDamage(var/obj/item/organ/liver/L, var/d)
+	L.damage += d
+
+/mob/living/carbon/proc/liver_failure()
+	if(reagents.get_reagent_amount("stabiliver"))
+		return
+	adjustToxLoss(8)
+	if(prob(30))
+		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+
