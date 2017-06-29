@@ -12,7 +12,7 @@
 	var/mob/living/carbon/C = owner
 
 	//slowly heal liver damage
-	damage -= 0.1
+	damage <= 0 ? damage += 0.1 : damage -= 0.1
 
 	if(iscarbon(C))
 		if(C.reagents)
