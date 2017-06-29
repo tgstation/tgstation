@@ -53,8 +53,8 @@
 			return keywords_lookup(params[SERVICE_CMD_PARAM_TARGET], 1)
 		if(SERVICE_CMD_ADMIN_WHO)
 			return ircadminwho()
-        if(SERVICE_CMD_CHANGE_PORT)
-            GLOB.service_port = params[SERVICE_CMD_PARAM_PORT]
-            return "SUCCESS"
+		if(SERVICE_CMD_CHANGE_PORT)
+			GLOB.service_port = params[SERVICE_CMD_PARAM_PORT]
+			return "SUCCESS"
 		else
 			return "Unknown command: [command]"
