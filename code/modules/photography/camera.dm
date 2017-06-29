@@ -1,4 +1,6 @@
 
+#define CAMERA_PICTURE_SIZE_HARD_LIMIT 15
+
 /obj/item/device/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
@@ -15,6 +17,7 @@
 	var/pictures_left = 10
 	var/on = TRUE
 	var/cooldown = 64
+	var/blending = FALSE		//lets not take pictures while the previous is still processing!
 	var/see_ghosts = 0	//for the spoop of it
 	var/sound/custom_sound
 	var/picture_size_x = 1
@@ -62,13 +65,16 @@
 	to_chat(user, "It has [pictures_left] photos left.")
 
 /obj/item/device/camera/proc/can_target(atom/target, mob/user, prox_flag)
-	if(!on || !pictures_left || !isturf(target.loc) || !((isAI(user) && GLOB.cameranet.checkTurfVis(get_turf(target))) || ((user.client && (get_turf(target) in get_hear(user.client.view, user)) || (get_turf(target) in get_hear(world.view, user))))))
+	if(!on || blending || !pictures_left || (!isturf(target) && !isturf(target.loc)) || !((isAI(user) && GLOB.cameranet.checkTurfVis(get_turf(target))) || ((user.client && (get_turf(target) in get_hear(user.client.view, user)) || (get_turf(target) in get_hear(world.view, user))))))
 		return FALSE
 	return TRUE
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!can_target(target, user, flag))
 		return
+
+	on = FALSE
+	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
 
 	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x, picture_size_y)
 
@@ -78,17 +84,19 @@
 		playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	icon_state = state_off
-	on = FALSE
-	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
 
 /obj/item/device/camera/proc/cooldown()
 	icon_state = state_on
 	on = TRUE
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag, size_x = 1, size_y = 1)
+	blending = TRUE
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))
+		blending = FALSE
 		return FALSE
+	size_x = Clamp(size_x, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	size_y = Clamp(size_y, 0, CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	var/list/desc = list()
 	var/ai_user = isAI(user)
 	var/list/seen
@@ -103,6 +111,7 @@
 			desc += camera_get_mobs(T)
 			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
+			CHECK_TICK
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
 
@@ -115,8 +124,9 @@
 	var/icon/ic = icon('icons/obj/items.dmi',"photo")
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-	var/datum/picture/P = new("picture", desc.Join(""), temp, ic, size_x, size_y, blueprints)
+	var/datum/picture/P = new("picture", desc.Join(""), temp, ic, psize_x, psize_y, blueprints)
 	after_picture(user, P, flag)
+	blending = FALSE
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/list/mob_details
@@ -136,6 +146,7 @@
 					holding += " and \a [I]"
 			holding = holding.Join()
 			mob_details += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+		CHECK_TICK
 	return mob_details
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96)
@@ -173,6 +184,7 @@
 			yo += AM.step_y
 		var/icon/img = getFlatIcon(A)
 		res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
+		CHECK_TICK
 	return res
 
 /obj/item/device/camera/proc/after_picture(mob/user, datum/picture/picture, proximity_flag)

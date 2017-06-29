@@ -12,6 +12,10 @@ GLOBAL_VAR(round_id)
 GLOBAL_PROTECT(round_id)
 GLOBAL_VAR(config_error_log)
 GLOBAL_PROTECT(config_error_log)
+GLOBAL_VAR(picture_log_folder)
+//GLOBAL_PROTECT(picture_log_folder)
+GLOBAL_VAR_INIT(picture_logging, TRUE)		//Set to false if you don't want IC pictures to autosave to logs.
+//GLOBAL_PROTECT(picture_logging)				//don't even tempt myself
 
 GLOBAL_LIST_EMPTY(bombers)
 GLOBAL_PROTECT(bombers)

@@ -83,6 +83,7 @@
 	GLOB.world_attack_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
 	GLOB.world_runtime_log << "\n\nStarting up round ID [GLOB.round_id]. [time_stamp()]\n---------------------"
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+	GLOB.picture_log_folder = GLOB.log_directory + "/pictures/"
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)

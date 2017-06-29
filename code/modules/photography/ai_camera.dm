@@ -42,16 +42,17 @@
 
 /obj/item/device/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
+	var/printcost = 2
 
 /obj/item/device/camera/siliconcam/robot_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	var/mob/living/silicon/robot/C = loc
-	if(istype(C) && C.connected_ai)
+	if(istype(C) && istype(C.connected_ai))
 		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		C.connected_ai.aicamera.stored += picture
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to remote database</span>")
 	else
-		var/number = C.connected_ai.aicamera.stored.len
+		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored += picture
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.</span>")
@@ -84,6 +85,6 @@
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc, selection)
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
-	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
+	C.toner -= printcost	 //All fun allowed.
 	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
 	to_chat(usr, "<span class='notice'>You print a photograph.</span>")

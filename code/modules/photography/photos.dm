@@ -17,6 +17,8 @@
 	if(istype(P))
 		picture = P
 		icon = P.picture_icon
+		if(P.caption)
+			scribble = P.caption
 	return ..()
 
 /obj/item/weapon/photo/attack_self(mob/user)
@@ -47,7 +49,7 @@
 	user << browse("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='[picture.psize_x]' height='[picture.psize_y]' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
+		+ "[scribble ? "<br>There is a caption that reads:<br><i>[scribble]</i>" : ""]"\
 		+ "</body></html>", "window=book;size=["[picture.psize_x]"]x[scribble ? "[picture.psize_y + 208]" : "[picture.psize_y]"]")
 	onclose(user, "[name]")
 
