@@ -391,7 +391,6 @@
 		if(reagents.get_reagent_amount("stabiliver"))
 			return
 		adjustToxLoss(8)
-		ticks_since_msg++
 
 		if(prob(30))
 			to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
