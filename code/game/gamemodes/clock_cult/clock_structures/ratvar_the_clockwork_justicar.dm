@@ -69,7 +69,7 @@
 	for(var/mob/living/L in GLOB.living_mob_list) //we want to know who's alive so we don't lose and retarget a single person
 		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
 			meals += L
-	if(GLOB.cult_narsie)
+	if(GLOB.cult_narsie && GLOB.cult_narsie.z == z)
 		meals = list(GLOB.cult_narsie) //if you're in the way, handy for him, but ratvar only cares about nar-sie!
 		prey = GLOB.cult_narsie
 		if(get_dist(src, prey) <= 10)
