@@ -326,7 +326,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
-	flags = NULL
+	flags = NO_FLAG
 	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
