@@ -57,7 +57,7 @@
 /datum/uplink_item/badass/sports
 	name = "Sports bundle"
 	desc = "A hand-selected box of paraphernalia from one of the best sports. \
-			Currently available are hockey, wrestling, and bowling kits."
+			Currently available are hockey, wrestling, football, and bowling kits."
 	item = /obj/item/weapon/paper
 	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
