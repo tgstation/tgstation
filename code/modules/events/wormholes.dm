@@ -62,11 +62,10 @@
 			return
 
 	if(ismovableatom(M))
-		var/turf/target
 		if(GLOB.portals.len)
 			var/obj/effect/portal/P = pick(GLOB.portals)
 			if(P && isturf(P.loc))
 				hard_target = P.loc
-		if(!target)
+		if(!hard_target)
 			return
 		do_teleport(M, hard_target, 1, 1, 0, 0) ///You will appear adjacent to the beacon
