@@ -60,7 +60,7 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	materials = list(MAT_METAL = 1000)
 
-/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
@@ -77,7 +77,7 @@
 	var/cooldown = 0
 	var/on = 1
 
-/obj/item/weapon/melee/classic_baton/attack(mob/target, mob/living/user)
+/obj/item/weapon/melee/classic_baton/attack(mob/living/target, mob/living/user)
 	if(!on)
 		return ..()
 
@@ -105,7 +105,7 @@
 		if(cooldown <= world.time)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				if (H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+				if (H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
 					return
 				if(check_martial_counter(H, user))
 					return
@@ -185,6 +185,7 @@
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
 	origin_tech = "combat=7;materials=6"
+	force_string = "INFINITE"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()

@@ -20,6 +20,7 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+
 	if(stat != DEAD)
 		return 1
 
@@ -179,7 +180,7 @@
 		if(SA_partialpressure > SA_para_min)
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
-				Sleeping(max(sleeping+40, 100))
+				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
@@ -286,7 +287,7 @@
 		if(M.loc != src)
 			stomach_contents.Remove(M)
 			continue
-		if(istype(M, /mob/living/carbon) && stat != DEAD)
+		if(iscarbon(M) && stat != DEAD)
 			if(M.stat == DEAD)
 				M.death(1)
 				stomach_contents.Remove(M)
@@ -300,18 +301,8 @@
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
-
 	if(staminaloss)
-		if(sleeping)
-			adjustStaminaLoss(-10)
-		else
-			adjustStaminaLoss(-3)
-
-	if(sleeping)
-		handle_dreams()
-		AdjustSleeping(-20)
-		if(prob(10) && health>HEALTH_THRESHOLD_CRIT)
-			emote("snore")
+		adjustStaminaLoss(-3)
 
 	var/restingpwr = 1 + 4 * resting
 
@@ -356,7 +347,7 @@
 			AdjustSleeping(20)
 			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)

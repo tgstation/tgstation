@@ -197,6 +197,8 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O))
 				return
+			if(O.status == BODYPART_ROBOTIC)
+				return
 			var/feetCover = (H.wear_suit && H.wear_suit.body_parts_covered & FEET) || (H.w_uniform && H.w_uniform.body_parts_covered & FEET)
 			if(H.shoes || feetCover || H.movement_type & FLYING || H.buckled)
 				return

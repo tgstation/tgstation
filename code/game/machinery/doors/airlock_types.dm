@@ -379,20 +379,20 @@
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
 
-/obj/machinery/door/airlock/cult/allowed(mob/M)
+/obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return 1
-	if(friendly || iscultist(M) || istype(M, /mob/living/simple_animal/shade) || isconstruct(M))
+	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		new openingoverlaytype(loc)
 		return 1
 	else
 		new /obj/effect/temp_visual/cult/sac(loc)
 		var/atom/throwtarget
-		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
-		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
-		flash_color(M, flash_color="#960000", flash_time=20)
-		M.Knockdown(40)
-		M.throw_at(throwtarget, 5, 1,src)
+		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+		L << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		flash_color(L, flash_color="#960000", flash_time=20)
+		L.Knockdown(40)
+		L.throw_at(throwtarget, 5, 1,src)
 		return 0
 
 /obj/machinery/door/airlock/cult/narsie_act()

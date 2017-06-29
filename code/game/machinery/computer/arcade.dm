@@ -618,7 +618,9 @@
 				if(emagged) //has to be here because otherwise it doesn't work
 					playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
-					usr.Stun(200) //you can't run :^)
+					if(isliving(usr))
+						var/mob/living/L = usr
+						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					emagged = 0 //immediately removes emagged status so people can't kill themselves by sprinting up and interacting
 					sleep(50)
@@ -1050,27 +1052,8 @@
 	name = "Spaceport Security"
 	desc = "The Premier security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
-	loot = list(/obj/effect/mob_spawn/human/corpse/orionsecurity,
-				/obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted,
-				/obj/item/weapon/shield/energy)
-
-/obj/effect/mob_spawn/human/corpse/orionsecurity
-	name = "Spaceport Security"
-	id_job = "Officer"
-	id_access_list = list(GLOB.access_syndicate)
-	outfit = /datum/outfit/orionsecurity
-
-/datum/outfit/orionsecurity
-	name = "Orion Spaceport Security"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas
-	head = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/weapon/storage/backpack
-	id = /obj/item/weapon/card/id
+	loot = list()
+	del_on_death = TRUE
 
 /obj/item/weapon/orion_ship
 	name = "model settler ship"

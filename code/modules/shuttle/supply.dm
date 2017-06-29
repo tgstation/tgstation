@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/sold_atoms = ""
 
 	for(var/atom/movable/AM in areaInstance)
-		if(AM.anchored)
+		if(AM.anchored && !istype(AM, /obj/mecha))
 			continue
 		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 

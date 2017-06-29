@@ -32,7 +32,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//Something's wrong here
 	var/list/medium = list("fake_alert"=15,"items"=10,"items_other"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
 	//AAAAH
-	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20,"koolaid"=10)
+	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"delusion"=20,"koolaid"=10)
 
 	handling_hal = 1
 	while(hallucination > 20)
@@ -222,39 +222,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 /obj/effect/hallucination/simple/clown/scary
 	image_state = "scary_clown"
 
-/obj/effect/hallucination/simple/borer
-	image_icon = 'icons/mob/animal.dmi'
-	image_state = "brainslug"
-
-/obj/effect/hallucination/borer
-	//A borer unconsciouss you and crawls in your ear
-	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
-	var/obj/effect/hallucination/simple/borer/borer = null
-
-/obj/effect/hallucination/borer/Initialize(mapload, var/mob/living/carbon/T)
-	..()
-	target = T
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
-		if(!U.welded)
-			pump = U
-			break
-	if(pump)
-		borer = new(pump.loc,target)
-		for(var/i=0, i<11, i++)
-			walk_to(borer, get_step(borer, get_cardinal_dir(borer, T)))
-			if(borer.Adjacent(T))
-				to_chat(T, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-				T.Stun(80)
-				sleep(50)
-				qdel(borer)
-				sleep(rand(60, 90))
-				to_chat(T, "<span class='changeling'><i>Primary [rand(1000,9999)] states:</i> [pick("Hello","Hi","You're my slave now!","Don't try to get rid of me...")]</span>")
-				break
-			sleep(4)
-		if(!QDELETED(borer))
-			qdel(borer)
-	qdel(src)
-
 /obj/effect/hallucination/simple/bubblegum
 	name = "Bubblegum"
 	image_icon = 'icons/mob/lavaland/96x96megafauna.dmi'
@@ -348,7 +315,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
 		target.hal_screwyhud = SCREWYHUD_CRIT
-		target.SetSleeping(160, no_alert = TRUE)
+		target.SetUnconscious(160)
 		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
 
 /obj/effect/hallucination/battle
@@ -764,8 +731,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	switch(hal_type)
 		if("xeno")
 			new /obj/effect/hallucination/xeno_attack(src.loc,src)
-		if("borer")
-			new /obj/effect/hallucination/borer(src.loc,src)
 		if("singulo")
 			new /obj/effect/hallucination/singularity_scare(src.loc,src)
 		if("koolaid")
@@ -1008,7 +973,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if("death")
 			//Fake death
 			hal_screwyhud = SCREWYHUD_DEAD
-			SetSleeping(400, no_alert = TRUE)
+			SetUnconscious(400)
 			var/area/area = get_area(src)
 			to_chat(src, "<span class='deadsay'><b>[mind.name]</b> has died at <b>[area.name]</b>.</span>")
 			if(prob(50))

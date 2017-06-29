@@ -281,7 +281,7 @@
 			var/mob/living/L = O
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
-				C.slip(4,null,NO_SLIP_WHEN_WALKING)
+				C.slip(80,null,NO_SLIP_WHEN_WALKING)
 		else
 			wash_obj(O)
 
@@ -289,7 +289,7 @@
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
 	O.clean_blood()
 
-	if(istype(O,/obj/item))
+	if(isitem(O))
 		var/obj/item/I = O
 		I.acid_level = 0
 		I.extinguish()
@@ -463,7 +463,7 @@
 		user.clean_blood()
 
 
-/obj/structure/sink/attackby(obj/item/O, mob/user, params)
+/obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return

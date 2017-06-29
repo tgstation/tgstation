@@ -46,7 +46,7 @@
 	name = "stun mine"
 	var/stun_time = 80
 
-/obj/effect/mine/stun/mineEffect(mob/victim)
+/obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
 		victim.Knockdown(stun_time)
 

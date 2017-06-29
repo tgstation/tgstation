@@ -10,7 +10,7 @@
 /obj/item/device/pda/clown/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if(M.slip(6, src, NO_SLIP_WHEN_WALKING))
+		if(M.slip(120, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
 				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
 					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
@@ -23,7 +23,7 @@
 	icon_state = "NONE"
 	ttone = "data"
 	fon = 0
-	detonate = 0
+	detonatable = FALSE
 
 /obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
@@ -121,7 +121,7 @@
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	inserted_item = /obj/item/weapon/pen/fountain/captain
 	icon_state = "pda-captain"
-	detonate = 0
+	detonatable = FALSE
 
 /obj/item/device/pda/cargo
 	name = "cargo technician PDA"

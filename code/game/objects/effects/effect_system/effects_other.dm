@@ -128,10 +128,10 @@
 		s.set_up(2, 1, location)
 		s.start()
 
-		for(var/mob/M in viewers(1, location))
-			if (prob (50 * amount))
-				to_chat(M, "<span class='danger'>The explosion knocks you down.</span>")
-				M.Knockdown(rand(20,100))
+		for(var/mob/living/L in viewers(1, location))
+			if(prob(50 * amount))
+				to_chat(L, "<span class='danger'>The explosion knocks you down.</span>")
+				L.Knockdown(rand(20,100))
 		return
 	else
 		dyn_explosion(location, amount, flashing_factor)
