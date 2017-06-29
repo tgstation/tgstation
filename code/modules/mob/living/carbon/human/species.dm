@@ -135,25 +135,7 @@
 	var/obj/item/organ/liver/liver = C.getorganslot("liver")
 	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
 
-	if((NOLIVER in species_traits) && liver)
-		liver.Remove(C)
-		qdel(liver)
-	else if((!(NOLIVER in species_traits)) && (!liver))
-		if(mutantliver)
-			liver = new mutantliver
-		else
-			liver = new()
-		liver.Insert(C)
 
-	if((NOSTOMACH in species_traits) && stomach)
-		stomach.Remove(C)
-		qdel(stomach)
-	else if((!(NOSTOMACH in species_traits)) && (!stomach))
-		if(mutantstomach)
-			stomach = new mutantstomach
-		else
-			stomach = new()
-		stomach.Insert(C)
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -168,13 +150,11 @@
 
 	if(liver)
 		qdel(liver)
-		liver = new mutantliver
-		liver.Insert(C)
+		liver = null
 
 	if(stomach)
 		qdel(stomach)
-		stomach = new mutantstomach
-		stomach.Insert(C)
+		stomach = null
 
 	if(C.get_bodypart("head"))
 		if(eyes)
@@ -198,6 +178,20 @@
 		else
 			lungs = new()
 		lungs.Insert(C)
+
+	if((!(NOLIVER in species_traits)) && (!liver))
+		if(mutantliver)
+			liver = new mutantliver()
+		else
+			liver = new()
+		liver.Insert(C)
+
+	if((!(NOSTOMACH in species_traits)) && (!stomach))
+		if(mutantstomach)
+			stomach = new mutantstomach()
+		else
+			stomach = new()
+		stomach.Insert(C)
 
 	if((NOHUNGER in species_traits) && appendix)
 		qdel(appendix)
