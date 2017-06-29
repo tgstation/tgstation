@@ -40,7 +40,7 @@ Bonus
 	if(!..())
 		return
 	var/mob/living/carbon/M = A.affected_mob
-	var/obj/item/organ/eyes = M.getorganslot("eye_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
 	if(istype(eyes))
 		switch(A.stage)
 			if(1, 2)
@@ -55,7 +55,7 @@ Bonus
 				M.adjust_eye_damage(5)
 				if(eyes.eye_damage >= 10)
 					M.become_nearsighted()
-				if(prob(M.eye_damage - 10 + 1))
+				if(prob(eyes.eye_damage - 10 + 1))
 					if(!remove_eyes)
 						if(M.become_blind())
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
