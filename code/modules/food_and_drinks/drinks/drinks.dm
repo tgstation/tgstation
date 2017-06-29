@@ -344,7 +344,7 @@
 	if(!is_open_container())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
 		flags |= OPENCONTAINER
-		playsound(src, pick(open_sounds), 50, 1)
+		playsound(user.loc, "can_open", 50, 1)
 		spillable = TRUE
 		return
 	return ..()
