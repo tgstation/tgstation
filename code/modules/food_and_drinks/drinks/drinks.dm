@@ -327,6 +327,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
 	flags = FALSE
+	spillable = 0
 	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
@@ -344,6 +345,7 @@
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
 		flags |= OPENCONTAINER
 		playsound(user, pick(open_sounds), 50, 1)
+		spillable = 1
 		return
 	return ..()
 
