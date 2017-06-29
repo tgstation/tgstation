@@ -6,7 +6,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "liver"
-	desc = "Goes great with a nice chianti and some fava beans."
+	desc = "Pairing suggestion: chianti and fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, 100 causes liver failure
 	var/alcohol_tolerance = ALCOHOL_RATE
 	var/failing //is this liver failing?
@@ -27,7 +27,7 @@
 				C.reagents.metabolize(C, can_overdose=1)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span = 'notice'>[pick("You feel nauseous", "You feel a dull pain in your lower body", "You feel confused")]</span>")
+				to_chat(C, "<span = 'notice'>[pick("You feel nauseous.", "You feel a dull pain in your lower body.", "You feel confused.")]</span>")
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
