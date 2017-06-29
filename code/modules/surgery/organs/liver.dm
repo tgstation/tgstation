@@ -18,3 +18,8 @@
 	if(iscarbon(C))
 		if(C.reagents)
 			C.reagents.metabolize(C, can_overdose=1)
+
+/obj/item/organ/liver/prepare_eat()
+	var/obj/S = ..()
+	S.reagents.add_reagent("iron", 5)
+	return S
