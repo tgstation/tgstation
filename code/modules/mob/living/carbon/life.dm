@@ -393,5 +393,5 @@
 		adjustToxLoss(8)
 		ticks_since_msg++
 
-		if(ticks_since_msg % 3 == 0)//only show message once every three ticks
+		if(prob(30))
 			to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
