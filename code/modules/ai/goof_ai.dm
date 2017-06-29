@@ -9,6 +9,12 @@
 	for(var/A in world_state_changes)
 		world_state_to_work_with[A] = world_state_changes[A]
 
+/datum/goof_action/proc/perform_action(atom/owner)
+	return TRUE
+
+/datum/goof_action/proc/calculate_cost(list/data = null)
+	return initial(cost)
+
 /datum/goof_plan
 	var/current_cost = 0
 	var/list/actions = list()
@@ -29,7 +35,7 @@
 	if(actions_to_use.len)
 		for(var/A in actions_to_use)
 			var/datum/goof_action/ACT = new A
-			possible_actions += list(list(ACT.type = ACT.cost))
+			possible_actions += list(list(ACT.type = ACT.calculate_cost()))
 
 /datum/goof_ai/proc/create_plan(list/desired_world_state)
 	ramblers_lets_get_rambling = null
@@ -38,7 +44,7 @@
 	while(!ramblers_lets_get_rambling)
 		var/datum/goof_plan/P = new
 		P.wanted_world_state = desired_world_state
-		P.temp_world_state = world_state
+		P.temp_world_state = world_state.Copy()
 		P.unused_actions = possible_actions.Copy()
 		P.actions.Cut()
 		P.revisit_later.Cut()
@@ -59,12 +65,12 @@
 						ACT.do_action(P.temp_world_state)
 						P.actions += ACT
 						P.unused_actions.Remove(ACT)
-						P.current_cost += ACT.cost
+						P.current_cost += ACT.calculate_cost()
 						break
 				else // cant do it now, revisit on the next loop in case it is possible
 					if(!is_action_useless(P.temp_world_state, ACT))
 						world.log << "UNUSABLE BUT USEFUL SAVING FOR LATER: [ACT.name]"
-						P.revisit_later += list(list(ACT.type = ACT.cost))
+						P.revisit_later += list(list(ACT.type = ACT.calculate_cost()))
 						P.unused_actions.Remove(ACT)
 					continue
 			if(!P.unused_actions.len)
