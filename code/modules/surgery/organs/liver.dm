@@ -13,7 +13,7 @@
 
 	//slowly heal liver damage
 	if(damage > 0)
-		damage -= 0.1
+		damage -= 0.01
 
 	if(iscarbon(C))
 		if(C.reagents)
