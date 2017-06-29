@@ -116,7 +116,7 @@ macro "default"
 		command = ".southwest"
 		is-disabled = false
 	elem 
-		name = "CTRL+S+REP"
+		name = "CTRL+S"
 		command = "say *scream"
 		is-disabled = false
 	elem 
@@ -406,7 +406,7 @@ macro "hotkeys"
 		command = ".movedown"
 		is-disabled = false
 	elem 
-		name = "CTRL+S+REP"
+		name = "CTRL+S"
 		command = "say *scream"
 		is-disabled = false
 	elem 
@@ -644,7 +644,7 @@ macro "robot-default"
 		command = "unequip-module"
 		is-disabled = false
 	elem 
-		name = "CTRL+S+REP"
+		name = "CTRL+S"
 		command = "say *scream"
 		is-disabled = false
 	elem 
@@ -898,7 +898,7 @@ macro "robot-hotkeys"
 		command = ".movedown"
 		is-disabled = false
 	elem 
-		name = "CTRL+S+REP"
+		name = "CTRL+S"
 		command = "say *scream"
 		is-disabled = false
 	elem 
