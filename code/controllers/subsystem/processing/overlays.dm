@@ -27,6 +27,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 	processing = SSoverlays.processing
 
 /datum/controller/subsystem/processing/overlays/fire(resumed = FALSE, mc_check = TRUE)
+	var/processing = src.processing
 	while(processing.len)
 		var/atom/thing = processing[processing.len]
 		processing.len--
