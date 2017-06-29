@@ -96,19 +96,8 @@
 			reagents.handle_reactions()
 	..()
 	
-/obj/item/weapon/reagent_containers/food/drinks/can
-	container_type = NULL
-	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
-	openc = 0
-	
-/obj/item/weapon/reagent_containers/food/drinks/can/attack_self(mob/user)
-	if(!is_open_container())
-		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
-		flags |= OPENCONTAINER
-		playsound(user, pick(open_sounds), 50, 1)
-		return
-	return ..()
-	
+
+
 	
 
 
@@ -215,7 +204,7 @@
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/beer
+/obj/item/weapon/reagent_containers/food/drinks/can/beer
 	name = "Space Beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
@@ -337,6 +326,8 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
+	flags = NULL
+	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
@@ -346,6 +337,23 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 	..()
+	
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
+	if(!is_open_container())
+		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
+		flags |= OPENCONTAINER
+		playsound(user, pick(open_sounds), 50, 1)
+		return
+	return ..()
+	
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
+	if(!is_open_container())
+		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
+		flags |= OPENCONTAINER
+		playsound(user, pick(open_sounds), 50, 1)
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
