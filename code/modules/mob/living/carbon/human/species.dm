@@ -71,8 +71,8 @@
 	var/obj/item/mutanthands = null
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
 
-	var/obj/item/organ/liver/mutantliver = /obj/item/organ/liver
-	var/obj/item/organ/stomach/mutantstomach = /obj/item/organ/stomach
+	var/obj/item/organ/liver/mutantliver = null
+	var/obj/item/organ/stomach/mutantstomach = null
 
 ///////////
 // PROCS //
