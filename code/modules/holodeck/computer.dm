@@ -171,6 +171,8 @@
 			load_program(area)
 	else if("safety" in href_list)
 		var/safe = text2num(href_list["safety"])
+		if(!issilicon(usr))
+			return
 		emagged = !safe
 		if(!program)
 			return
