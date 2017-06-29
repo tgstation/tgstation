@@ -231,4 +231,4 @@
 	name = "Stabiliver"
 	id = "stabiliver"
 	results = list("stabiliver" = 3)
-	required_reagents = list("bicaridine" = 2, "lithium" = 1)
+	required_reagents = list("antitoxin" = 2, "lithium" = 1)
