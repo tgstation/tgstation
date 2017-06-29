@@ -32,7 +32,7 @@ PROCESSING_SUBSYSTEM_DEF(overlays)
 		var/atom/thing = processing[processing.len]
 		processing.len--
 		if(thing)
-			thing.compile_overlays(FALSE)
+			thing.compile_overlays()
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
