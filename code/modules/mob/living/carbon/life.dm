@@ -386,7 +386,7 @@
 
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
-	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)) || liver.damage == 100)
+	if(((!(NOLIVER in dna.species.species_traits)) && (!liver)) || liver.damage >= 100)
 		liver_failure()
 
 /mob/living/carbon/proc/applyLiverDamage(var/obj/item/organ/liver/L, var/d)
