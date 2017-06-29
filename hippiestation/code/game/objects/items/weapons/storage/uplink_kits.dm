@@ -61,3 +61,17 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/comstimms(O)
 	O.update_icon()
+
+/obj/item/weapon/storage/box/syndie_kit/football
+	name = "\improper Pick-6 Space Football Kit"
+	desc = "Score a touchdown on your friends and tackle your foes to death with this new\
+	box of gear. Microscopic technology inside of the shoulder pads and helmet gives you the ability to tackle\
+	and throw footballs like a real pro. The longer your throws stay in the air, the more deadly they become.\
+	Throw your balls down the hallway and watch as your enemies explode into a bloody pulp."
+
+/obj/item/weapon/storage/box/syndie_kit/football/PopulateContents()
+	new /obj/item/clothing/head/helmet/hippie/football(src)
+	new /obj/item/clothing/suit/hippie/football(src)
+	new /obj/item/weapon/football(src)
+	new /obj/item/weapon/football(src)
+	new /obj/item/weapon/football(src)
