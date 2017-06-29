@@ -10,7 +10,7 @@
 	var/damage = 0 //liver damage, 0 is no damage, 100 causes liver failure
 	var/alcohol_tolerance = ALCOHOL_RATE
 	var/failing //is this liver failing?
-	var/health = LIVER_DEFAULT_HEALTH
+	var/maxHealth = LIVER_DEFAULT_HEALTH
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -18,8 +18,8 @@
 	//slowly heal liver damage
 	if(damage > 0)
 		damage -= 0.01//in most cases the pure toxin damage from too much alcohol will kill you first.
-	if(damage > health)//cap liver damage
-		damage = health-1
+	if(damage > maxHealth)//cap liver damage
+		damage = maxHealth-1
 
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
