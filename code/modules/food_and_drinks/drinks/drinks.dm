@@ -338,14 +338,6 @@
 		qdel(src)
 	..()
 	
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
-	if(!is_open_container())
-		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
-		flags |= OPENCONTAINER
-		playsound(user, pick(open_sounds), 50, 1)
-		return
-	return ..()
-	
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
