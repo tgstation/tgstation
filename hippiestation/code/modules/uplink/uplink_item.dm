@@ -75,7 +75,8 @@
 	var/list/possible_items = list(
 								"/obj/item/weapon/storage/box/syndie_kit/wrestling",
 								"/obj/item/weapon/storage/box/syndie_kit/bowling",
-								"/obj/item/weapon/storage/box/syndie_kit/hockey"
+								"/obj/item/weapon/storage/box/syndie_kit/hockey",
+								"/obj/item/weapon/storage/box/syndie_kit/football"
 								)
 	if(possible_items.len)
 		var/obj/item/I = pick(possible_items)

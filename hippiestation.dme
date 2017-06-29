@@ -2306,6 +2306,7 @@
 #include "hippiestation\code\modules\research\designs\biogenerator_designs.dm"
 #include "hippiestation\code\modules\research\designs\medical_designs.dm .dm"
 #include "hippiestation\code\modules\sports\bowling.dm"
+#include "hippiestation\code\modules\sports\football.dm"
 #include "hippiestation\code\modules\sports\hockey.dm"
 #include "hippiestation\code\modules\sports\wrestling.dm"
 #include "hippiestation\code\modules\surgery\gender_reassignment.dm"
