@@ -1,4 +1,7 @@
-#define LIVER_DEFAULT_HEALTH 100
+#define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
+#define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
+#define LIVER_DEFAULT_TOX_LETHALITY 0.5 //lower values lower how harmful toxins are to the liver
+
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
@@ -11,6 +14,8 @@
 	var/alcohol_tolerance = ALCOHOL_RATE
 	var/failing //is this liver failing?
 	var/maxHealth = LIVER_DEFAULT_HEALTH
+	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE
+	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -24,6 +29,12 @@
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
 			if(C.reagents)
+				var/toxamount = C.get_reagent_amount("toxin")
+				if(toxamount <= toxTolerance && toxamount > 0)
+					C.reagents.remove_all("toxin", toxTolerance, 1)
+				else if(toxamount > toxTolerance)
+					damage += toxamount/toxLethality
+
 				C.reagents.metabolize(C, can_overdose=1)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
