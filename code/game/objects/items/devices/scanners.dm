@@ -145,8 +145,11 @@ MASS SPECTROMETER
 		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>")
 	else if (M.getBrainLoss() >= 10)
 		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
-	if(M.return_liver_damage() > 10)
-		to_chat(user, "\t<span class='alert'>[M.return_liver_damage() > 45 ? "severe" : "minor"] liver damage detected.</span>")
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.return_liver_damage() > 10)
+			to_chat(user, "\t<span class='alert'>[H.return_liver_damage() > 45 ? "severe" : "minor"] liver damage detected.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)

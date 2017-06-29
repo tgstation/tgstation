@@ -393,6 +393,7 @@
 		liver.failing = FALSE
 
 /mob/living/carbon/proc/undergoing_liver_failure()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
 	if(liver.failing)
 		return TRUE
 
