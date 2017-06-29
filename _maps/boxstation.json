@@ -2,6 +2,7 @@
     "map_name": "Box Station",
     "map_path": "map_files/BoxStation",
     "map_file": "BoxStation.dmm",
+    "badge_file": "icons/map_badges/box.png",
     "minetype": "lavaland",
     "transition_config": "default"
 }

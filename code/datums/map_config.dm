@@ -10,6 +10,7 @@
     var/map_file = "BoxStation.dmm"
 
     var/minetype = "lavaland"
+    var/badge_file = "icons/map_badges/box.png"
 
     var/list/transition_config = list(CENTCOMM = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
@@ -65,6 +66,7 @@
     map_path = json["map_path"]
     map_file = json["map_file"]
 
+    badge_file = json["badge_file"]
     minetype = json["minetype"]
 
     var/list/jtcl = json["transition_config"]
@@ -83,6 +85,7 @@
     CHECK_EXISTS("map_path")
     CHECK_EXISTS("map_file")
     CHECK_EXISTS("minetype")
+    CHECK_EXISTS("badge_file")
     CHECK_EXISTS("transition_config")
 
     var/path = GetFullMapPath(json["map_path"], json["map_file"])
