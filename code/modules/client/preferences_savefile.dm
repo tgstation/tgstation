@@ -138,7 +138,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tgui_lock"]			>> tgui_lock
 	S["windowflash"]		>> windowflashing
 	S["be_special"] 		>> be_special
-
+	S["reverb"]				>> reverb
 
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
@@ -194,8 +194,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 
 	S["version"] << SAVEFILE_VERSION_MAX		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
-
 	//general preferences
+	S["reverb"]				<< reverb
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
