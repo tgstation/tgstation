@@ -1345,63 +1345,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 				return FALSE
 	return TRUE
 
-//WHATEVER YOU USE THIS FOR MUST BE SANITIZED TO SHIT, IT USES SHELL
-//It also sleeps
-
-//Set this to TRUE before calling
-//This prevents RCEs from badmins
-//kevinz000 if you touch this I will hunt you down
-GLOBAL_VAR_INIT(valid_HTTPSGet, FALSE)
-GLOBAL_PROTECT(valid_HTTPSGet)
-/proc/HTTPSGet(url)	//tgs2 support
-	if(findtext(url, "\""))
-		GLOB.valid_HTTPSGet = FALSE
-
-	if(!GLOB.valid_HTTPSGet)
-		if(usr)
-			CRASH("[usr.ckey]([usr]) just attempted an invalid HTTPSGet on: [url]!")
-		else
-			CRASH("Invalid HTTPSGet call on: [url]")
-	GLOB.valid_HTTPSGet = FALSE
-
-	//"This has got to be the ugliest hack I have ever done"
-	//warning, here be dragons
-	/*
-						|  @___oo
-				/\  /\   / (__,,,,|
-				) /^\) ^\/ _)
-				)   /^\/   _)
-				)   _ /  / _)
-			/\  )/\/ ||  | )_)
-		<  >      |(,,) )__)
-			||      /    \)___)\
-			| \____(      )___) )___
-			\______(_______;;; __;;;
-		*/
-	var/temp_file = "data/HTTPSGetOutput.txt"
-	var/command
-	if(world.system_type == MS_WINDOWS)
-		command = "powershell -Command \"wget [url] -OutFile [temp_file]\""
-	else if(world.system_type == UNIX)
-		command = "wget -O [temp_file] [url]"
-	else
-		CRASH("Invalid world.system_type ([world.system_type])? Yell at Lummox.")
-
-	log_world("HTTPSGet: [url]")
-	var/result = shell(command)
-	if(result != 0)
-		log_world("Download failed: shell exited with code: [result]")
-		return
-
-	var/f = file(temp_file)
-	if(!f)
-		log_world("Download failed: Temp file not found")
-		return
-
-	. = file2text(f)
-	f = null
-	fdel(temp_file)
-
 #define UNTIL(X) while(!(X)) stoplag()
 
 /proc/pass()
