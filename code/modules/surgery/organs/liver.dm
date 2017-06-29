@@ -29,7 +29,7 @@
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
 			if(C.reagents)
-				var/toxamount = C.get_reagent_amount("toxin")
+				var/toxamount = C.reagents.get_reagent_amount("toxin")
 				if(toxamount <= toxTolerance && toxamount > 0)
 					C.reagents.remove_all("toxin", toxTolerance, 1)
 				else if(toxamount > toxTolerance)
