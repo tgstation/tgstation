@@ -8,11 +8,10 @@ CREATE TABLE `schema_revision` (
 `major` TINYINT(3) UNSIGNED NOT NULL ,
 `minor` TINYINT(3) UNSIGNED NOT NULL ,
 `date` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-PRIMARY KEY ( `major`,`minor` ),
+PRIMARY KEY ( `major`,`minor` )
 ) ENGINE = INNODB;
 
-INSERT INTO `schema_revision`
-(`major`, `minor`, `date`) VALUES (3, 0, SELECT CURRENT_TIMESTAMP);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (3, 0);
 
 Remember to add a prefix to the table name if you use them.
 
