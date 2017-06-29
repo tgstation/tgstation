@@ -11,7 +11,7 @@
 	max_integrity = 300
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 30)
 	layer = OBJ_LAYER
-
+	
 	var/on = FALSE
 	var/min_temperature = 0
 	var/max_temperature = 0
@@ -32,18 +32,17 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/micro_laser = 2,
-							/obj/item/stack/cable_coil/one = 1,
+							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/machine/thermomachine/Initialize()
 	. = ..()
-	if(!build_path)
-		if(prob(50))
-			name = "Freezer (Machine Board)"
-			build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-		else
-			name = "Heater (Machine Board)"
-			build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+	if(prob(50))
+		name = "Freezer (Machine Board)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	else
+		name = "Heater (Machine Board)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/item/weapon/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
 	var/obj/item/weapon/circuitboard/machine/freezer = /obj/item/weapon/circuitboard/machine/thermomachine/freezer
