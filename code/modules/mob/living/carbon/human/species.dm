@@ -166,6 +166,16 @@
 		qdel(lungs)
 		lungs = null
 
+	if(liver)
+		qdel(liver)
+		liver = new mutantliver
+		liver.Insert(C)
+
+	if(stomach)
+		qdel(stomach)
+		stomach = new mutantstomach
+		stomach.Insert(C)
+
 	if(C.get_bodypart("head"))
 		if(eyes)
 			qdel(eyes)
