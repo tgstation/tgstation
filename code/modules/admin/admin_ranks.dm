@@ -51,15 +51,10 @@ GLOBAL_PROTECT(admin_ranks)
 			flag = R_POSSESS
 		if("stealth")
 			flag = R_STEALTH
-<<<<<<< HEAD
 		if("mentor")
 			flag = R_MENTOR
-		if("rejuv","rejuvinate")
-			flag = R_REJUVINATE
-=======
 		if("poll")
 			flag = R_POLL
->>>>>>> 048c531952... Merge pull request #28893 from optimumtact/rankup
 		if("varedit")
 			flag = R_VAREDIT
 		if("everything","host","all")
