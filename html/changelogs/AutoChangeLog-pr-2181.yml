@@ -1,4 +1,0 @@
-author: "Carbonhell"
-delete-after: True
-changes: 
-  - bugfix: "Fixes clown and mime lacking maint access."
