@@ -11,7 +11,7 @@
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner
 
-	if(ishuman(H))
+	if(istype(H))
 		H.dna.species.handle_digestion(H)
 
 /obj/item/organ/stomach/fly
