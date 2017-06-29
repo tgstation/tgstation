@@ -406,7 +406,8 @@
 	L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
-	if(reagents.get_reagent_amount("stabiliver"))
+	if(reagents.get_reagent_amount("corazone"))
+		reagents.remove_all_type("corazone", 1) //corazone slowly deletes itself.
 		return
 	adjustToxLoss(8)
 	if(prob(30))

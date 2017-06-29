@@ -71,6 +71,9 @@
 	var/obj/item/mutanthands = null
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
 
+	var/obj/item/organ/liver/mutantliver = /obj/item/organ/liver
+	var/obj/item/organ/stomach/mutantstomach = /obj/item/organ/stomach
+
 ///////////
 // PROCS //
 ///////////
@@ -136,14 +139,20 @@
 		liver.Remove(C)
 		qdel(liver)
 	else if((!(NOLIVER in species_traits)) && (!liver))
-		liver = new()
+		if(mutantliver)
+			liver = new mutantliver
+		else
+			liver = new()
 		liver.Insert(C)
 
 	if((NOSTOMACH in species_traits) && stomach)
 		stomach.Remove(C)
 		qdel(stomach)
 	else if((!(NOSTOMACH in species_traits)) && (!stomach))
-		stomach = new()
+		if(mutantstomach)
+			stomach = new mutantstomach
+		else
+			stomach = new()
 		stomach.Insert(C)
 
 	if((NOBLOOD in species_traits) && heart)

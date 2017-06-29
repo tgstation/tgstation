@@ -1135,10 +1135,3 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
-
-/datum/reagent/medicine/stabiliver
-	//removing a liver won't do damage if this reagent is present
-	name = "Stabiliver"//great name, I know
-	id = "stabiliver"
-	description = "A medication used to stabilize a patient undergoing liver surgery. Discovered in the year 2479 by Leonard Zimann."
-	color = "#F5F5F5"
