@@ -222,7 +222,7 @@
 	density = 1
 	req_access = list(GLOB.access_teleporter)
 	flags = CONDUCT
-	use_power = 0
+	use_power = NO_POWER_USE
 	obj_integrity = 300
 	max_integrity = 300
 	var/active = FALSE

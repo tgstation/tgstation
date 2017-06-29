@@ -4,7 +4,7 @@
 
 	level = 1
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	can_unwrench = 1
 	var/datum/pipeline/parent = null
 

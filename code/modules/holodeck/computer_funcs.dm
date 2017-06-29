@@ -57,7 +57,7 @@
 
 	last_change = world.time
 	active = (A != offline_program)
-	use_power = active+1
+	use_power = active ? ACTIVE_POWER_USE : IDLE_POWER_USE
 
 	for(var/obj/effect/holodeck_effect/HE in effects)
 		HE.deactivate(src)

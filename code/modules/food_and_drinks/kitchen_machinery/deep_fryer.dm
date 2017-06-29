@@ -13,7 +13,7 @@ insert ascii eagle on american flag background here
 	icon_state = "fryer_off"
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	container_type = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?

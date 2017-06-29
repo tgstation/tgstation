@@ -7,7 +7,7 @@
 	var/metal_amount = 0
 	var/operating = 0
 	var/obj/item/being_built = null
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 
@@ -128,7 +128,7 @@ Please wait until completion...</TT><BR>
 			if (!isnull(building))
 				if (src.metal_amount >= build_cost)
 					src.operating = 1
-					src.use_power = 2
+					src.use_power = ACTIVE_POWER_USE
 
 					src.metal_amount = max(0, src.metal_amount - build_cost)
 
@@ -141,7 +141,7 @@ Please wait until completion...</TT><BR>
 						if (!isnull(src.being_built))
 							src.being_built.loc = get_turf(src)
 							src.being_built = null
-						src.use_power = 1
+						src.use_power = IDLE_POWER_USE
 						src.operating = 0
 						cut_overlay("fab-active")
 		return
