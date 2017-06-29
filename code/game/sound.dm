@@ -133,6 +133,8 @@
 								'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
 			if ("desceration")
 				soundin = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+			if ("im_here")
+				soundin = pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)

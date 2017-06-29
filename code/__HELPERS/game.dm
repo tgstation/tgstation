@@ -524,7 +524,7 @@
 	for(var/M in GLOB.player_list)
 		if(ismob(M) && !isnewplayer(M))
 			var/mob/MO = M
-			MO.playsound_local(MO, sound, volume, vary, pressure_affected = FALSE)
+			MO.playsound_local(get_turf(MO), sound, volume, vary, pressure_affected = FALSE)
 
 /proc/window_flash(client/C, ignorepref = FALSE)
 	if(ismob(C))
