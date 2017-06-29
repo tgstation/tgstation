@@ -7,13 +7,15 @@
 	slot = "liver"
 	desc = "Goes great with a nice chianti and some fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, 100 causes liver failure
+	var/alcohol_tolerance = ALCOHOL_RATE
+	var/failing //is this liver failing?
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
 
 	//slowly heal liver damage
 	if(damage > 0)
-		damage -= 0.01
+		damage -= 0.01//in most cases the pure toxin damage from too much alcohol will kill you first.
 
 	if(iscarbon(C))
 		if(C.reagents)

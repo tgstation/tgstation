@@ -118,7 +118,9 @@ MASS SPECTROMETER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>")
+			to_chat(user, "<span class='danger'>Subject suffering from heart attack: apply defibrillator immediately!</span>")
+		if(H.undergoing_liver_failure() && H.stat != DEAD)
+			to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply stabiliver and begin a liver transplant immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -143,8 +145,10 @@ MASS SPECTROMETER
 		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>")
 	else if (M.getBrainLoss() >= 10)
 		to_chat(user, "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>")
+	if(M.return_liver_damage() > 10)
+		to_chat(user, "\t<span class='alert'>[M.return_liver_damage() > 45 ? "severe" : "minor"] liver damage detected.</span>")
 
-	// Organ damage report
+	// Body part damage report
 	if(iscarbon(M) && mode == 1)
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
