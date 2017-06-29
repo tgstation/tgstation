@@ -24,11 +24,8 @@
 
 	config = new
 
-<<<<<<< HEAD
 	hippie_initialize()
-=======
 	CheckSchemaVersion()
->>>>>>> 0dfa3d8aa2... Adds a database versioning schema table (#28897)
 	SetRoundID()
 
 	SetupLogs()
@@ -65,9 +62,6 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-<<<<<<< HEAD
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')), '[world.port]')")
-=======
 			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")]")
 			db_version.Execute()
 			if(db_version.NextRow())
@@ -84,8 +78,7 @@
 /world/proc/SetRoundID()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
-			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
->>>>>>> 0dfa3d8aa2... Adds a database versioning schema table (#28897)
+			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[config.internet_address_to_use]' LIKE '', '0', '[config.internet_address_to_use]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
