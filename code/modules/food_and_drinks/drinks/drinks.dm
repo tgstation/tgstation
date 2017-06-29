@@ -326,9 +326,9 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
-	flags = FALSE
-	spillable = 0
-	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+	flags = 0
+	spillable = FALSE
+	var/list/can_pop_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
@@ -344,8 +344,8 @@
 	if(!is_open_container())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
 		flags |= OPENCONTAINER
-		playsound(user, pick(open_sounds), 50, 1)
-		spillable = 1
+		playsound(src, pick(open_sounds), 50, 1)
+		spillable = TRUE
 		return
 	return ..()
 
