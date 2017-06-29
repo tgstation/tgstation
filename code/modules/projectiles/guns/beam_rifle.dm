@@ -197,8 +197,8 @@
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	set_user(null)
-	clear_tracer()
-	..()
+	QDEL_NULL(current_tracer)
+	return ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
@@ -210,7 +210,6 @@
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
-	CHECK_TICK
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
 	P.gun = src
 	P.wall_pierce_amount = wall_pierce_amount
@@ -230,12 +229,9 @@
 	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
 	P.fire(lastangle)
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracer()
-	QDEL_NULL(current_tracer)
-
 /obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
 	stop_aiming()
-	clear_tracer()
+	QDEL_NULL(current_tracer)
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
@@ -330,7 +326,7 @@
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
-	clear_tracer()
+	QDEL_NULL(current_tracer)
 
 /obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
 	. = ..()

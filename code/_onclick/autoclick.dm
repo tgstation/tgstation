@@ -6,9 +6,6 @@
 	var/mouseObject = null
 	var/mouseControlObject = null
 
-/mob
-	var/list/mousemove_intercept_objects
-
 /client/MouseDown(object, location, control, params)
 	var/delay = mob.CanMobAutoclick(object, location, params)
 	if(delay)
