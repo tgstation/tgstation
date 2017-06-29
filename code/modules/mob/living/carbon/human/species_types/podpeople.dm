@@ -3,7 +3,7 @@
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR,NOLIVER,NOSTOMACH)
+	species_traits = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'

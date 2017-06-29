@@ -4,7 +4,7 @@
 	id = "jelly"
 	default_color = "00FF90"
 	say_mod = "chirps"
-	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER,NOLIVER,NOSTOMACH)
+	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
