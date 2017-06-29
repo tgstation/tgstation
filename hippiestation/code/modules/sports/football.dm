@@ -11,11 +11,11 @@
 		return FALSE
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H.wear_suit, /obj/item/clothing/suit/hippie/football) || !istype(H.head, /obj/item/clothing/head/helmet/hippie/football))
-		to_chat(H, "<span class='warning'>Coach always said, \"never forget your helmet or your pads when you play football!\"</span>")
+		to_chat(H, "<span class='warning'>You can't play football without the proper equipment on!</span>")
 		return FALSE
 	next_trigger = world.time + FOOTBALL_TACKLE_COOLDOWN
 	var/turf/end = get_ranged_target_turf(H, H.dir, 7)
-	H.Stun(18)
+	H.Stun(16)
 	var/slammed
 	for(var/turf/T in getline(get_turf(H), end))
 		for(var/atom/A in T)
@@ -36,7 +36,8 @@
 				break
 			if(!A.CanPass(H, T) || istype(T, /turf/closed))
 				slammed = TRUE
-				H.visible_message("<span class='danger'>[H] slams into [A]!</span>","<span class='userdanger'>You slam into [A]!</span>")
+				var/hit_message = "[istype(T, /turf/closed) ? T.name : A.name]" //You will hit 'proximity checker' otherwise
+				H.visible_message("<span class='danger'>[H] slams into the [hit_message]!</span>","<span class='userdanger'>You slam into the [hit_message]!</span>")
 				H.blur_eyes(8)
 				H.Knockdown(80)
 				H.adjustBrainLoss(18)
@@ -56,6 +57,7 @@
 	name = "football"
 	icon = 'hippiestation/icons/obj/weapons.dmi'
 	icon_state = "football"
+	resistance_flags = FIRE_PROOF
 	desc = "It should more accurately be called a \"hand-egg.\""
 	force = 1
 	w_class = WEIGHT_CLASS_SMALL
@@ -63,8 +65,8 @@
 	throw_speed = 1
 	var/stage = 0
 
-/obj/item/weapon/football/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback)
-	dir = thrower.dir
+/obj/item/weapon/football/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = TRUE, datum/callback/callback)
+	throw_speed = 1
 	icon_state = "football_air"
 	if(istype(thrower, /mob/living/carbon/human))
 		var/mob/living/carbon/human/user = thrower
@@ -77,6 +79,10 @@
 				stage = 1
 				throwforce = 2
 				START_PROCESSING(SSobj, src)
+			else
+				to_chat(thrower, "<span class='warning'>You fumble the ball! Wait a little bit before doing another pro-throw!</span>")
+				icon_state = "football"
+				return FALSE
 	. = ..(target, range, speed, thrower, FALSE, diagonals_first, callback)
 
 /obj/item/weapon/football/process()
@@ -90,23 +96,29 @@
 	if(stage)
 		STOP_PROCESSING(SSobj, src)
 		throwforce = (stage * 7)
-		if(stage > 3)
-			explosion(get_turf(src), 0, 0, 1)
-			visible_message("<span class='danger'>[src] explosively collides with [hit_atom]!</span>")
+		if(stage > 2)
+			var/turf/T = get_turf(hit_atom)
+			var/obj/effect/hotspot/W = new(T)
+			W.temperature = Clamp(350 * stage, 0, 1600)
+			W.volume = Clamp(20 * stage, 0, 100)
+		if(stage > 4)
+			var/light = round(stage / 1.5)
+			explosion(get_turf(hit_atom), 0, 0, light)
 		if(ishuman(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
-			if(stage < 4)
-				if(stage > 1)
-					T.hotspot_expose(700, 40)
-					visible_message("<span class='danger'>[src] combusts [H]!</span>")
 			H.adjust_blurriness(stage)
 			H.adjustStaminaLoss(2 * stage)
 			playsound(src, 'sound/effects/hit_punch.ogg', 75)
 		stage = 0
 		throwforce = 0
 		unlimitedthrow = FALSE
-	dir = initial(dir)
 	icon_state = "football"
 
 /obj/item/weapon/football/is_hot()
 	return stage * 900
+	
+/obj/item/weapon/football/ex_act()
+	return
+
+#undef FOOTBALL_TACKLE_COOLDOWN
+#undef FOOTBALL_THROW_COOLDOWN

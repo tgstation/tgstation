@@ -72,7 +72,6 @@
 /obj/item/weapon/storage/box/syndie_kit/football/PopulateContents()
 	new /obj/item/clothing/head/helmet/hippie/football(src)
 	new /obj/item/clothing/suit/hippie/football(src)
-	new /obj/item/clothing/under/hippie/football(src)
 	new /obj/item/weapon/football(src)
 	new /obj/item/weapon/football(src)
 	new /obj/item/weapon/football(src)
