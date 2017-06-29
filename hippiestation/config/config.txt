@@ -1,5 +1,0 @@
-#Determines what internet address to use.
-INTERNET_ADDRESS_TO_USE 0.0.0.0.0
-
-#Mentors only see ckeys by default. Uncomment to have them only see mob name
-#MENTORS_MOBNAME_ONLY
