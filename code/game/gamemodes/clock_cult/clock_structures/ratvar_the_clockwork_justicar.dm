@@ -70,7 +70,6 @@
 		if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
 			meals += L
 	if(GLOB.cult_narsie)
-		world << "prey: narnar"
 		meals = list(GLOB.cult_narsie) //if you're in the way, handy for him, but ratvar only cares about nar-sie!
 		prey = GLOB.cult_narsie
 		if(get_dist(src, prey) <= 10)
@@ -85,7 +84,6 @@
 			L.playsound_local(prey, 'sound/effects/ratvar_reveal.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
 		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
-			world << "target lost"
 			if(is_servant_of_ratvar(prey))
 				to_chat(prey, "<span class='heavy_brass'><font size=5>\"Serve me well.\"</font></span>\n\
 				<span class='big_brass'>You feel great joy as your god turns His eye to another heretic...</span>")
