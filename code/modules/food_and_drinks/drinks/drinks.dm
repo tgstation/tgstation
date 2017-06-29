@@ -204,7 +204,7 @@
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/can/beer
+/obj/item/weapon/reagent_containers/food/drinks/beer
 	name = "Space Beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
