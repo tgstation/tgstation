@@ -29,6 +29,10 @@
 
 	if(!canconsume(M, user))
 		return 0
+	
+	if (!is_open_container())
+		to_chat(user, "<span class='warning'>[src]'s tab hasn't been opened!</span>")
+		return 0
 
 	if(M == user)
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
@@ -50,6 +54,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	if(!proximity) return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	
+		if (!is_open_container())
+			to_chat(user, "<span class='warning'>[target]'s tab isn't open!</span>")
+			return
 
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty.</span>")
@@ -87,10 +95,27 @@
 			to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
 			reagents.handle_reactions()
 	..()
+	
+/obj/item/weapon/reagent_containers/food/drinks/can
+	container_type = NULL
+	var/list/open_sounds = list('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
+	openc = 0
+	
+/obj/item/weapon/reagent_containers/food/drinks/can/attack_self(mob/user)
+	if(!is_open_container())
+		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
+		flags |= OPENCONTAINER
+		playsound(user, pick(open_sounds), 50, 1)
+		return
+	return ..()
+	
+	
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
 ////////////////////////////////////////////////////////////////////////////////
+
 
 /obj/item/weapon/reagent_containers/food/drinks/trophy
 	name = "pewter cup"
