@@ -226,3 +226,9 @@
 	id = "corazone"
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
+
+/datum/chemical_reaction/stabiliver
+	name = "Stabiliver"
+	id = "stabiliver"
+	results = list("stabiliver" = 3)
+	required_reagents = list("bicaridine" = 2, "lithium" = 1)

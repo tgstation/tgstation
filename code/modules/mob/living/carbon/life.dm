@@ -387,4 +387,7 @@
 /mob/living/carbon/proc/handle_liver()
 	var/obj/item/organ/liver/liver = getorganslot("liver")
 	if((!(NOLIVER in dna.species.species_traits)) && (!liver))
+		//stabiliver prevents the damage
+		if(reagents.get_reagent_amount("stabiliver"))
+			return
 		adjustToxLoss(8)
