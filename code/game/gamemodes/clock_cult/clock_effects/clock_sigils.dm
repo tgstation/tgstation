@@ -69,7 +69,7 @@
 	if(iscultist(L))
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
-		L.Knockdown(140)
+		L.Knockdown(140, FALSE)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	L.Stun(100)
@@ -234,8 +234,7 @@
 		cyborg.visible_message("<span class='warning'>[cyborg] glows a brilliant orange!</span>")
 		var/previous_color = cyborg.color
 		cyborg.color = list("#EC8A2D", "#EC8A2D", "#EC8A2D", rgb(0,0,0))
-		var/datum/status_effect/cyborg_power_regen/CPR = cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN)
-		CPR.power_to_give = giving_power * 0.1 //ten ticks, restoring 10% each
+		cyborg.apply_status_effect(STATUS_EFFECT_POWERREGEN, giving_power * 0.1) //ten ticks, restoring 10% each
 		animate(cyborg, color = previous_color, time = 100)
 		addtimer(CALLBACK(cyborg, /atom/proc/update_atom_colour), 100)
 

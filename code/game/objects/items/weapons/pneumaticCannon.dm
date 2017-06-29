@@ -69,7 +69,7 @@
 			updateTank(tank, 1, user)
 	else if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, "<span class='warning'>\The [src] can't hold any more items!</span>")
-	else if(istype(W, /obj/item))
+	else if(isitem(W))
 		var/obj/item/IW = W
 		load_item(IW, user)
 

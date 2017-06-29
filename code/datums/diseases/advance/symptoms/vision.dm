@@ -53,9 +53,8 @@ Bonus
 			else
 				M.blur_eyes(20)
 				M.adjust_eye_damage(5)
-				if(M.eye_damage >= 10)
+				if(eyes.eye_damage >= 10)
 					M.become_nearsighted()
-
 				if(prob(M.eye_damage - 10 + 1))
 					if(!remove_eyes)
 						if(M.become_blind())
@@ -102,6 +101,9 @@ Bonus
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	if (!eyes)
+		return
 	switch(A.stage)
 		if(4, 5) //basically oculine
 			if(M.disabilities & BLIND)
@@ -119,7 +121,7 @@ Bonus
 				else if(M.eye_blind || M.eye_blurry)
 					M.set_blindness(0)
 					M.set_blurriness(0)
-				else if(M.eye_damage > 0)
+				else if(eyes.eye_damage > 0)
 					M.adjust_eye_damage(-1)
 		else
 			if(prob(base_message_chance))

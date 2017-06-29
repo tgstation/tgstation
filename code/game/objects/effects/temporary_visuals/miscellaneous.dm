@@ -312,3 +312,30 @@
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
+
+/obj/effect/temp_visual/bleed
+	name = "bleed"
+	icon = 'icons/effects/bleed.dmi'
+	icon_state = "bleed0"
+	duration = 10
+	var/shrink = TRUE
+
+/obj/effect/temp_visual/bleed/Initialize(mapload, atom/size_calc_target)
+	. = ..()
+	var/size_matrix = matrix()
+	if(size_calc_target)
+		layer = size_calc_target.layer + 0.01
+		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
+		size_matrix = matrix() * (I.Height()/world.icon_size)
+		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
+	var/matrix/M = transform
+	if(shrink)
+		M = size_matrix*0.1
+	else
+		M = size_matrix*2
+	animate(src, alpha = 20, transform = M, time = duration, flags = ANIMATION_PARALLEL)
+
+/obj/effect/temp_visual/bleed/explode
+	icon_state = "bleed10"
+	duration = 12
+	shrink = FALSE

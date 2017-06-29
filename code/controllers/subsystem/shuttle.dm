@@ -537,3 +537,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
 
+/datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return M

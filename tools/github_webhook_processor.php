@@ -134,8 +134,12 @@ function tag_pr($payload, $opened) {
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload, true, false);
 
-		if(strpos(strtolower($title), 'refactor') !== FALSE)
+		$lowertitle = strtolower($title);
+		if(strpos($lowertitle, 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
+		
+		if(strpos($lowertitle, 'revert') !== FALSE || strpos($lowertitle, 'removes') !== FALSE)
+			$tags[] = 'Revert/Removal';
 	}
 
 	$remove = array();
@@ -146,15 +150,12 @@ function tag_pr($payload, $opened) {
 	else if ($mergable === FALSE)
 		$tags[] = 'Merge Conflict';
 
-	if(has_tree_been_edited($payload, '_maps'))
-		$tags[] = 'Map Edit';
-	else
-		$remove[] = 'Map Edit';
-
-	if(has_tree_been_edited($payload, 'tools'))
-		$tags[] = 'Tools';
-	else
-		$remove[] = 'Tools';
+	$treetags = array('_maps' => 'Map Edit', 'tools' => 'Tools', 'SQL' => 'SQL', 'icons' => 'Sprites', 'sounds' => 'Sound');
+	foreach($treetags as $tree => $tag)
+		if(has_tree_been_edited($payload, $tree))
+			$tags[] = $tag;
+		else
+			$remove[] = $tag;
 
 	//only maintners should be able to remove these
 	if(strpos($title, '[DNM]') !== FALSE)

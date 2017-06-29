@@ -40,7 +40,7 @@
 	/obj/singularity,
 	/mob/living/simple_animal/hostile/morph,
 	/obj/effect))
-	
+
 	var/playstyle_string = "<b><font size=3 color='red'>You are a morph,</font> an abomination of science created primarily with changeling cells. \
 							You may take the form of anything nearby by shift-clicking it. This process will alert any nearby \
 							observers, and can only be performed once every five seconds. While morphed, you move faster, but do \
@@ -187,7 +187,7 @@
 				if(eat(L))
 					adjustHealth(-50)
 			return
-	else if(istype(target,/obj/item)) //Eat items just to be annoying
+	else if(isitem(target)) //Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
 			if(do_after(src, 20, target = I))

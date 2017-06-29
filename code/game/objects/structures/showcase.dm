@@ -39,6 +39,13 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_g"
 
+/obj/structure/showcase/oldpod
+	name = "damage cyrogenic pod"
+	desc = "A damage cyrogenic pod long since lost to time, including its former occupant..."
+	icon = 'icons/obj/cryogenic2.dmi'
+	icon_state = "sleeper-open"
+
+
 //Deconstructing
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
 //However if a player wants to move an existing showcase or remove one, this is for that.

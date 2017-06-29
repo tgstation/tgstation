@@ -102,6 +102,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
+	container_type = INJECTABLE
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	var/lit = FALSE

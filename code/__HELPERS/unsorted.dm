@@ -1210,6 +1210,9 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
+	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
+		sleep(world.tick_lag)
+		return 1
 	. = 0
 	var/i = 1
 	do
@@ -1222,7 +1225,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
-	if(istype(mob_or_client, /mob))
+	if(ismob(mob_or_client))
 		var/mob/M = mob_or_client
 		if(M.client)
 			C = M.client

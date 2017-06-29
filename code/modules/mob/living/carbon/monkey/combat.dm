@@ -53,9 +53,9 @@
 		return 1
 	if(health <= 0 && checkDead)
 		return 1
-	if(unconscious)
+	if(IsUnconscious())
 		return 1
-	if(stun)
+	if(IsStun())
 		return 1
 	if(stat)
 		return 1

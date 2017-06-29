@@ -119,6 +119,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	GLOB.dead_mob_list += src
 
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
+
 	. = ..()
 
 	grant_all_languages()
@@ -773,7 +779,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	register_pai()
 
 /mob/dead/observer/proc/register_pai()
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(SSpai)
 			SSpai.recruitWindow(src)
 	else

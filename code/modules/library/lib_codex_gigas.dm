@@ -5,14 +5,15 @@
 #define SUFFIX 5
 
 /obj/item/weapon/book/codex_gigas
-	name = "Codex Gigas"
+	name = "\improper Codex Gigas"
+	desc = "A book documenting the nature of devils."
 	icon_state ="demonomicon"
 	throw_speed = 1
 	throw_range = 10
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	author = "Forces beyond your comprehension"
 	unique = 1
-	title = "The codex gigas"
+	title = "the Codex Gigas"
 	var/inUse = 0
 	var/currentName = ""
 	var/currentSection = PRE_TITLE
@@ -29,7 +30,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.check_acedia())
-			to_chat(user, "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>")
+			to_chat(user, "<span class='notice'>None of this matters, why are you reading this? You put [title] down.</span>")
 			return
 	user.visible_message("[user] opens [title] and begins reading intently.")
 	ask_name(user)
@@ -90,8 +91,6 @@
 			currentSection = SYLLABLE
 	else if(GLOB.devil_suffix.Find(action))
 		currentSection = SUFFIX
-	else
-		to_chat(world, "Codex gigas failure [action]")
 	return currentSection != oldSection
 
 /obj/item/weapon/book/codex_gigas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
