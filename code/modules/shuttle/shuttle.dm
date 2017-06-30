@@ -164,7 +164,7 @@
 /obj/docking_port/stationary/transit
 	name = "In Transit"
 	turf_type = /turf/open/space/transit
-	var/list/turf/assigned_turfs = list()
+	var/datum/area_reservation/assigned_reservation
 	var/area/shuttle/transit/assigned_area
 	var/obj/docking_port/mobile/owner
 
@@ -172,22 +172,12 @@
 	. = ..()
 	SSshuttle.transit += src
 
-/obj/docking_port/stationary/transit/proc/dezone()
-	for(var/i in assigned_turfs)
-		var/turf/T = i
-		if(T.type == turf_type)
-			T.ChangeTurf(/turf/open/space)
-			T.flags |= UNUSED_TRANSIT_TURF
-
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		SSshuttle.transit -= src
 		if(owner)
 			owner = null
-		if(assigned_turfs)
-			dezone()
-			assigned_turfs.Cut()
-		assigned_turfs = null
+		QDEL_NULL(assigned_reservation)
 	. = ..()
 
 

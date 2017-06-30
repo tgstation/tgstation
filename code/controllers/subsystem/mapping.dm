@@ -18,6 +18,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+	var/list/unused_turfs = list()	//for area reservation
+
 	var/loading_ruins = FALSE
 
 /datum/controller/subsystem/mapping/PreInit()
@@ -60,6 +62,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	// Set up Z-level transistions.
 	setup_map_transitions()
+	SetupReservedAreas()
 	..()
 
 /* Nuke threats, for making the blue tiles on the station go RED
@@ -91,6 +94,7 @@ SUBSYSTEM_DEF(mapping)
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	unused_turfs = SSmapping.unused_turfs
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -252,3 +256,96 @@ SUBSYSTEM_DEF(mapping)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/*
+	Handles reserving an area of open space for you do do whatever with
+	Releases and clears out that area when Destroy()'d
+
+	Usage:
+
+	var/datum/area_reservation/R = SSmapping.RequestArea(width, height)    //assume this line sleeps
+
+	if(!R) return    //unable to reserve space
+
+	var/turf/bottom_right = R.bottom_right
+	var/turf/top_left = R.top_left
+
+	//do stuff with the area
+
+	qdel(R)
+*/
+
+/datum/controller/subsystem/mapping/proc/SetupReservedAreas()
+	// TODO: See if SHUTTLE_TRANSIT_BORDER is really necessary
+	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER, SHUTTLE_TRANSIT_BORDER, ZLEVEL_TRANSIT))
+	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER, world.maxy - SHUTTLE_TRANSIT_BORDER, ZLEVEL_TRANSIT))
+	unused_turfs = block(A, B)
+	var/datum/area_reservation/R = new
+	R.reserved_turfs = unused_turfs
+	qdel(R)	//this will prep the zone
+
+/datum/controller/subsystem/mapping/proc/RequestArea(width, height)
+	var/datum/area_reservation/R = new
+	if(!R.Reserve(width, height, unused_turfs, TRUE))
+		qdel(R)
+		return null
+	return R
+
+/datum/area_reservation
+	var/turf/bottom_right	//bottom right of reserved space
+	var/turf/top_left		//top left of reserved space
+	var/list/reserved_turfs	//list of all reserved_turfs
+	var/list/source_turfs	//list of turfs we took reserved_turfs from
+
+/datum/area_reservation/proc/Reserve(width, height, list/available_turfs, remove_source)
+	var/list/proposed_zone
+	var/turf/topleft
+	var/turf/bottomright
+	base:
+		for(var/i in available_turfs)
+			CHECK_TICK
+			topleft = i
+			if(!(topleft.flags & UNUSED_RESERVATION_TURF))
+				continue
+			bottomright = locate(topleft.x + width, topleft.y + height, topleft.z)
+			if(!bottomright)
+				continue
+			if(!(bottomright.flags & UNUSED_RESERVATION_TURF))
+				continue
+
+			proposed_zone = block(topleft, bottomright)
+			if(!proposed_zone)
+				continue
+			for(var/j in proposed_zone)
+				var/turf/T = j
+				if(!T)
+					continue base
+				if(!(T.flags & UNUSED_RESERVATION_TURF))
+					continue base
+			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
+			break base
+
+	if(!LAZYLEN(proposed_zone))
+		return FALSE
+	
+	for(var/I in proposed_zone)
+		var/turf/T = I
+		T.flags &= ~UNUSED_RESERVATION_TURF
+	top_left = topleft
+	bottom_right = bottomright
+	reserved_turfs = proposed_zone
+	if(remove_source)
+		available_turfs -= reserved_turfs
+		source_turfs = available_turfs
+	
+	return TRUE
+
+/datum/area_reservation/Destroy()
+	for(var/I in reserved_turfs)
+		var/turf/T = I
+		T.empty()	//changes the turf back to space
+		T.flags |= UNUSED_RESERVATION_TURF
+	//don't Cut() reserverd_turfs, it may be a reference
+	if(source_turfs)
+		source_turfs += reserved_turfs
+	return ..()

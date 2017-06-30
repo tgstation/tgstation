@@ -1,4 +1,3 @@
-#define HIGHLIGHT_DYNAMIC_TRANSIT 1
 #define MAX_TRANSIT_REQUEST_RETRIES 10
 
 SUBSYSTEM_DEF(shuttle)
@@ -12,7 +11,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/stationary = list()
 	var/list/transit = list()
 
-	var/list/turf/transit_turfs = list()
 	var/list/transit_requesters = list()
 	var/list/transit_request_failures = list()
 	var/clear_transit = FALSE
@@ -67,37 +65,9 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 		supply_packs[P.type] = P
 
-	setup_transit_zone()
 	initial_move()
-#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
-	color_space()
-#endif
 	..()
 
-/datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	// transit zone
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	for(var/i in block(A, B))
-		var/turf/T = i
-		T.ChangeTurf(/turf/open/space)
-		transit_turfs += T
-		T.flags |= UNUSED_TRANSIT_TURF
-
-#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
-/datum/controller/subsystem/shuttle/proc/color_space()
-	var/turf/A = get_turf(locate(SHUTTLE_TRANSIT_BORDER,SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	var/turf/B = get_turf(locate(world.maxx - SHUTTLE_TRANSIT_BORDER,world.maxy - SHUTTLE_TRANSIT_BORDER,ZLEVEL_TRANSIT))
-	for(var/i in block(A, B))
-		var/turf/T = i
-		// Only dying the "pure" space, not the transit tiles
-		if(istype(T, /turf/open/space/transit) || !isspaceturf(T))
-			continue
-		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
-			T.color = "#ffff00"
-		else
-			T.color = "#00ffff"
-#endif
 
 	//world.log << "[transit_turfs.len] transit turfs registered"
 
@@ -108,12 +78,10 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 		var/obj/docking_port/mobile/P = thing
 		P.check()
-	var/changed_transit = FALSE
 	for(var/thing in transit)
 		var/obj/docking_port/stationary/transit/T = thing
 		if(!T.owner)
 			qdel(T, force=TRUE)
-			changed_transit = TRUE
 		// This next one removes transit docks/zones that aren't
 		// immediately being used. This will mean that the zone creation
 		// code will be running a lot.
@@ -124,18 +92,11 @@ SUBSYSTEM_DEF(shuttle)
 			var/not_in_use = (!T.get_docked())
 			if(idle && not_centcom_evac && not_in_use)
 				qdel(T, force=TRUE)
-				changed_transit = TRUE
 	if(clear_transit)
 		transit_requesters.Cut()
 		for(var/i in transit)
 			qdel(i, force=TRUE)
-		setup_transit_zone()
 		clear_transit = FALSE
-		changed_transit = TRUE
-#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
-	if(changed_transit)
-		color_space()
-#endif
 
 	while(transit_requesters.len)
 		var/requester = popleft(transit_requesters)
@@ -396,37 +357,11 @@ SUBSYSTEM_DEF(shuttle)
 
 	// Then find a place to put the zone
 
-	var/list/proposed_zone
-
-	base:
-		for(var/i in transit_turfs)
-			CHECK_TICK
-			var/turf/topleft = i
-			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
-				continue
-			var/turf/bottomright = locate(topleft.x + transit_width,
-				topleft.y + transit_height, topleft.z)
-			if(!bottomright)
-				continue
-			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
-				continue
-
-			proposed_zone = block(topleft, bottomright)
-			if(!proposed_zone)
-				continue
-			for(var/j in proposed_zone)
-				var/turf/T = j
-				if(!T)
-					continue base
-				if(!(T.flags & UNUSED_TRANSIT_TURF))
-					continue base
-			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
-			break base
-
-	if((!proposed_zone) || (!proposed_zone.len))
+	var/datum/area_reservation/R = SSmapping.RequestArea(transit_width, transit_height)
+	if(!R)
 		return FALSE
 
-	var/turf/topleft = proposed_zone[1]
+	var/turf/topleft = R.top_left
 	//to_chat(world, "[COORD(topleft)] is TOPLEFT")
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
@@ -471,26 +406,27 @@ SUBSYSTEM_DEF(shuttle)
 	//to_chat(world, "Docking port at [transit_x], [transit_y], [topleft.z]")
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)
+		qdel(R)
 		return FALSE
 	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
+	var/list/proposed_zone = R.reserved_turfs
 	A.contents = proposed_zone
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
-	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
 	new_transit_dock.turf_type = transit_path
 	new_transit_dock.owner = M
 	new_transit_dock.assigned_area = A
+	new_transit_dock.assigned_reservation = R
 
 
 	// Add 180, because ports point inwards, rather than outwards
 	new_transit_dock.setDir(angle2dir(dock_angle))
 
-	for(var/i in new_transit_dock.assigned_turfs)
+	for(var/i in proposed_zone)
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
-		T.flags &= ~(UNUSED_TRANSIT_TURF)
 
 	M.assigned_transit = new_transit_dock
 	return TRUE
@@ -521,8 +457,6 @@ SUBSYSTEM_DEF(shuttle)
 		backup_shuttle = SSshuttle.backup_shuttle
 	if (istype(SSshuttle.supply))
 		supply = SSshuttle.supply
-	if (istype(SSshuttle.transit_turfs))
-		transit_turfs = SSshuttle.transit_turfs
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
