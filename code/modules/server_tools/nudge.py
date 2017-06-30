@@ -5,16 +5,15 @@ import socket
 
 
 def pack():
-    data = sys.argv[1]
+    port = int(sys.argv[1])
+    data = sys.argv[2]
 
-    nudge(str.encode(data))
+    nudge(str.encode(data), port)
 
 
-def nudge(data):
+def nudge(data, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    with open('config/server_to_tool_bridge_port.txt', 'r') as myfile:
-        portstr=myfile.read().replace('\n', '').strip()
-    s.connect(("localhost", int(portstr)))
+    s.connect(("localhost", port))
     s.send(data)
     s.close()
 

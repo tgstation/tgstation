@@ -16,8 +16,10 @@
 #define SERVICE_CMD_ADMIN_MSG "adminmsg"
 #define SERVICE_CMD_NAME_CHECK "namecheck"
 #define SERVICE_CMD_ADMIN_WHO "adminwho"
+#define SERVICE_CMD_CHANGE_PORT "changeport"
 
 //#define SERVICE_CMD_PARAM_KEY //defined in __compile_options.dm
+#define SERVICE_CMD_PARAM_PORT "interopport"
 #define SERVICE_CMD_PARAM_COMMAND "command"
 #define SERVICE_CMD_PARAM_MESSAGE "message"
 #define SERVICE_CMD_PARAM_TARGET "target"

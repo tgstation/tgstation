@@ -2009,6 +2009,7 @@
 #include "code\modules\ruins\objects_and_mobs\sin_ruins.dm"
 #include "code\modules\security_levels\keycard_authentication.dm"
 #include "code\modules\security_levels\security_levels.dm"
+#include "code\modules\server_tools\commands.dm"
 #include "code\modules\server_tools\server_tools.dm"
 #include "code\modules\shuttle\arrivals.dm"
 #include "code\modules\shuttle\assault_pod.dm"
