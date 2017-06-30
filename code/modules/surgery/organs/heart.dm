@@ -51,11 +51,9 @@
 
 /obj/item/organ/heart/on_life()
 	if(owner.client)
-		var/sound/slowbeat = sound('sound/health/slowbeat.ogg')
-		slowbeat.repeat = 1
+		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = 1)
 
-		var/sound/fastbeat = sound('sound/health/fastbeat.ogg')
-		fastbeat.repeat = 1
+		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = 1)
 		var/mob/living/carbon/H = owner
 		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
 			beat = BEAT_SLOW
