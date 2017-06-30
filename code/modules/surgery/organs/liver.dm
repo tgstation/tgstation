@@ -37,7 +37,7 @@
 			if(C.reagents)
 				if(filterToxins)
 					//handle liver toxin filtration
-					for(var/toxin in toxinList)
+					for(var/datum/reagent/toxin/toxin in toxinList)
 						var/TID = toxin.id
 						var/toxamount = C.reagents.get_reagent_amount(TID)
 						if(toxamount <= toxTolerance && toxamount > 0)
