@@ -1,4 +1,4 @@
-#CONTRIBUTING
+# CONTRIBUTING
 
 ## Reporting Issues
 
