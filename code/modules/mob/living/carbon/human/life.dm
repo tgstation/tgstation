@@ -66,7 +66,7 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 60 && stat != DEAD && stat != UNCONSCIOUS)
+	if (getBrainLoss() >= 60 && !stat)
 		if(prob(3))
 			if(prob(25))
 				emote("drool")
