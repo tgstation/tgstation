@@ -379,6 +379,10 @@
 	else if(full_pressure)
 		add_overlay("dispover-ready")
 
+/obj/machinery/disposal/bin/proc/do_flush()
+	SSblackbox.inc("disposal_auto_flush",1)
+	flush()
+
 //timed process
 //charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process()
@@ -389,9 +393,7 @@
 	if(flush_count >= flush_every_ticks)
 		if(contents.len)
 			if(full_pressure)
-				spawn(0)
-					SSblackbox.inc("disposal_auto_flush",1)
-					flush()
+				INVOKE_ASYNC(src, .proc/do_flush)
 		flush_count = 0
 
 	updateDialog()
@@ -447,10 +449,9 @@
 /obj/machinery/disposal/deliveryChute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 	stored.ptype = DISP_END_CHUTE
-	spawn(5)
-		trunk = locate() in loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/deliveryChute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.disposalEnterTry())

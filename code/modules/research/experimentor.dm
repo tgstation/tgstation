@@ -1,5 +1,7 @@
 //this is designed to replace the destructive analyzer
 
+//NEEDS MAJOR CODE CLEANUP
+
 #define SCANTYPE_POKE 1
 #define SCANTYPE_IRRADIATE 2
 #define SCANTYPE_GAS 3
@@ -504,9 +506,11 @@
 			use_power(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 
-	spawn(resetTime)
-		icon_state = "h_lathe"
-		recentlyExperimented = 0
+	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)
+
+/obj/machinery/r_n_d/experimentor/proc/reset_exp()
+	icon_state = "h_lathe"
+	recentlyExperimented = FALSE
 
 /obj/machinery/r_n_d/experimentor/Topic(href, href_list)
 	if(..())
@@ -613,10 +617,12 @@
 		else if(src.loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			spawn(cooldownMax)
-				cooldown = FALSE
+			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
 		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
+
+/obj/item/weapon/relic/proc/cd()
+	cooldown = FALSE
 
 //////////////// RELIC PROCS /////////////////////////////
 
@@ -673,31 +679,37 @@
 		dupes |= R
 		R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
-	spawn(rand(10,100))
-		for(counter = 1; counter <= dupes.len; counter++)
-			var/obj/item/weapon/relic/R = dupes[counter]
-			qdel(R)
+	addtimer(CALLBACK(src, .proc/del_dupes, dupes), rand(10, 100)
 	warn_admins(user, "Rapid duplicator", 0)
+
+/obj/item/weapon/relic/proc/del_dupes(list/dupes)
+	for(counter = 1; counter <= dupes.len; counter++)
+		var/obj/item/weapon/relic/R = dupes[counter]
+		qdel(R)
 
 /obj/item/weapon/relic/proc/explode(mob/user)
 	to_chat(user, "<span class='danger'>[src] begins to heat up!</span>")
-	spawn(rand(35,100))
-		if(src.loc == user)
-			visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
-			explosion(user.loc, -1, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
-			warn_admins(user, "Explosion")
-			qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
+	addtimer(CALLBACK(src, .proc/do_explode, user), rand(35, 100))
+
+/obj/item/weapon/relic/proc/do_explode(mob/user)
+	if(loc == user)
+		visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
+		explosion(user.loc, -1, rand(1,5), rand(1,5), rand(1,5), rand(1,5), flame_range = 2)
+		warn_admins(user, "Explosion")
+		qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/weapon/relic/proc/teleport(mob/user)
 	to_chat(user, "<span class='notice'>The [src] begins to vibrate!</span>")
-	spawn(rand(10,30))
-		var/turf/userturf = get_turf(user)
-		if(src.loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
-			visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
-			throwSmoke(userturf)
-			do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
-			throwSmoke(get_turf(user))
-			warn_admins(user, "Teleport", 0)
+	addtimer(CALLBACK(src, .proc/do_teleport, user), rand(10, 30))
+
+/obj/item/weapon/relic/proc/do_teleport(mob/user)
+	var/turf/userturf = get_turf(user)
+	if(src.loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
+		visible_message("<span class='notice'>The [src] twists and bends, relocating itself!</span>")
+		throwSmoke(userturf)
+		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
+		throwSmoke(get_turf(user))
+		warn_admins(user, "Teleport", 0)
 
 //Admin Warning proc for relics
 /obj/item/weapon/relic/proc/warn_admins(mob/user, RelicType, priority = 1)
