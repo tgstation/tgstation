@@ -28,9 +28,9 @@
 /obj/effect/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
 	playMagSound()
 	for(var/mob/living/target in targets)
-		INVOKE_ASYNC(src, .proc/launch, target)
+		INVOKE_ASYNC(src, .proc/launch, target, user)
 
-/obj/effect/proc_holder/spell/targeted/projectile/proc/launch(mob/living/target)
+/obj/effect/proc_holder/spell/targeted/projectile/proc/launch(mob/living/target, mob/user)
 	var/obj/effect/proc_holder/spell/targeted/projectile
 	if(istext(proj_type))
 		var/projectile_type = text2path(proj_type)

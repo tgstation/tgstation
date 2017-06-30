@@ -81,13 +81,16 @@ Notes:
 
 /datum/tooltip/proc/hide()
 	if (src.queueHide)
-		addtimer(GLOBAL_PROC, /proc/winshow, src.owner, src.control, 0)
+		addtimer(src, do_hide(), 1)
 	else
-		winshow(src.owner, src.control, 0)
+		do_hide()
 
-	src.queueHide = src.showing ? 1 : 0
+	queueHide = showing ? 1 : 0
 
 	return 1
+
+/datum/tooltip/proc/do_hide()
+	winshow(owner, control, 0)
 
 /* TG SPECIFIC CODE */
 

@@ -679,10 +679,10 @@
 		dupes |= R
 		R.throw_at(pick(oview(7,get_turf(src))),10,1)
 	counter = 0
-	addtimer(CALLBACK(src, .proc/del_dupes, dupes), rand(10, 100))
+	addtimer(CALLBACK(src, .proc/del_dupes, dupes, counter), rand(10, 100))
 	warn_admins(user, "Rapid duplicator", 0)
 
-/obj/item/weapon/relic/proc/del_dupes(list/dupes)
+/obj/item/weapon/relic/proc/del_dupes(list/dupes, counter)
 	for(counter = 1; counter <= dupes.len; counter++)
 		var/obj/item/weapon/relic/R = dupes[counter]
 		qdel(R)
