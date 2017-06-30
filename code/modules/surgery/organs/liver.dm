@@ -37,13 +37,15 @@
 			if(C.reagents)
 				if(filterToxins)
 					//handle liver toxin filtration
-					for(var/datum/reagent/toxin/toxin in toxinList)
-						var/TID = toxin.id
-						var/toxamount = C.reagents.get_reagent_amount(TID)
-						if(toxamount <= toxTolerance && toxamount > 0)
-							C.reagents.remove_all_type("toxin", toxTolerance, 1)
-						else if(toxamount > toxTolerance)
-							damage += toxamount*toxLethality
+					var/toxamount
+					for(var/toxin in toxinList)
+						var/datum/reagent/toxin/T = toxin
+						toxamount += C.reagents.get_reagent_amount(T.id)
+
+					if(toxamount <= toxTolerance && toxamount > 0)
+						C.reagents.remove_all_type("toxin", toxTolerance, 1)
+					else if(toxamount > toxTolerance)
+						damage += toxamount*toxLethality
 
 
 				//metabolize reagents
