@@ -22,20 +22,13 @@ There is an open list of approachable issues for [your inspiration here](https:/
 You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/coderbus) on irc.rizon.net. We are just here to have fun and help so do not expect professional support please.
 
 ## Meet the Team
+**Headcoders**
 
-**Project Leads**
-
-Project Leads, which are elected by the maintainers and members of the project, have complete control over what goes through and what is reverted. They are encouraged to take control in what features are added to the game. Project Leads can also act as Project Managers when needed.
-
-**Project Managers**
-
-Project Managers are responsible for recruiting and firing maintainers, enforcing coding standards, and reverting changes that should have not been committed. Project Managers are assigned by Project Leads. On things that Project Managers disagree on they are to refer to the Project Leads for advice. It is encouraged that if you do not want to waste time working on a feature, that might be denied, that you ask a Project Manager first.
+Don't fuck with them they're straight up killers.
 
 **Maintainers**
 
-Maintainers are quality control. If a proposed pull request does not meet the mentioned quality specifications then it can be closed if you fail to satisfy them. Maintainers are required to give a reason for closing the pull request.
-
-Maintainers can revert your changes if they feel they are not worth maintaining or if they did not live up to the quality specifications.
+Maintainers will argue about your pr in their secret irc channel and then it will be merged and then reverted in some kind of metawar you can barely comprehend, you can attempt to improve this process by using the 8b command in their channel to convince them
 
 ## Specification
 
