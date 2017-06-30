@@ -341,9 +341,9 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
-		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.")
+		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
 		flags |= OPENCONTAINER
-		playsound(user.loc, "can_open", 50, 1)
+		playsound(src, "can_open", 50, 1)
 		spillable = TRUE
 		return
 	return ..()
