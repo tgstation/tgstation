@@ -83,10 +83,10 @@ The previous code made compliant:
 
 ```c++
 /datum/datum1
-		var/varname1
-		var/varname2
-		var/static/varname3
-		var/static/varname4
+	var/varname1
+	var/varname2
+	var/static/varname3
+	var/static/varname4
 
 /datum/datum1/proc/proc1()
 	code
@@ -104,11 +104,11 @@ The previous code made compliant:
 ### No overriding type safety checks.
 The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
-### Type paths must began with a /
-eg: `/datum/thing` not `datum/thing`
+### Type paths must begin with a /
+eg: `/datum/thing`, not `datum/thing`
 
 ### Datum type paths must began with "datum"
-In byond this is optional, but omitting it makes finding definitions harder.
+In DM, this is optional, but omitting it makes finding definitions harder.
 
 ### Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
