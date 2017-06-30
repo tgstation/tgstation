@@ -26,7 +26,7 @@
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
 
-/obj/item/clothing/gloves/color/fyellow.old/Initalize()
+/obj/item/clothing/gloves/color/fyellow.old/Initialize()
 	..()
 	siemens_coefficient = pick(0,0,0,0.5,0.5,0.5,0.75)
 
