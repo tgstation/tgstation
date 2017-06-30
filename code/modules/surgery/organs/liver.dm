@@ -21,7 +21,8 @@
 
 /obj/item/organ/liver/New()
 	..()
-	toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
+	toxinList = typesof(/datum/reagent/toxin)
+
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -40,7 +41,8 @@
 					var/toxamount
 					for(var/toxin in toxinList)
 						var/datum/reagent/toxin/T = toxin
-						toxamount += C.reagents.get_reagent_amount(T.id)
+						if(istype(T))
+							toxamount += C.reagents.get_reagent_amount(T.type)
 
 					if(toxamount <= toxTolerance && toxamount > 0)
 						C.reagents.remove_all_type("toxin", toxTolerance, 1)
