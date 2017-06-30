@@ -30,7 +30,7 @@
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
-	sound_to_playing_players(get_sfx("im_here"))
+	sound_to_playing_players("im_here")
 
 	var/area/A = get_area(src)
 	if(A)

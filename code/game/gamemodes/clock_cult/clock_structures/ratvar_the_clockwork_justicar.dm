@@ -80,7 +80,7 @@
 			var/mob/living/L = prey
 			prey = pick(meals)
 			to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do, heretic.\"</font></span>\n\
-			<span class='userdanger'>You feel something massive turn its crushing hatred onto you...</span>")
+			<span class='userdanger'>You feel something massive turn its crushing focus to you...</span>")
 			L.playsound_local(prey, 'sound/effects/ratvar_reveal.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
 		if((!istype(prey, /obj/singularity/narsie) && prob(10) && LAZYLEN(meals) > 1) || prey.z != z || !(prey in meals))
@@ -89,7 +89,7 @@
 				<span class='big_brass'>You feel great joy as your god turns His eye to another heretic...</span>")
 			else
 				to_chat(prey, "<span class='heavy_brass'><font size=5>\"No matter. I will find you later, heretic.\"</font></span>\n\
-				<span class='userdanger'>You feel tremendous relief as the oppressive gaze wanders away from you...</span>")
+				<span class='userdanger'>You feel tremendous relief as the crushing focus relents...</span>")
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
