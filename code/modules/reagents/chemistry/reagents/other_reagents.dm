@@ -803,8 +803,11 @@
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
 	taste_description = "iron"
-
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	produce_type = /obj/item/stack/sheet/metal
+	color = "#E6E7E8" // rgb: 200, 165, 220
+	attack_force = 15
+	pick_speed = 40
+	durability_reduction = 8 // 25 hits
 
 /datum/reagent/iron/on_mob_life(mob/living/M)
 	if(iscarbon(M))
@@ -828,6 +831,11 @@
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
 	taste_description = "expensive metal"
+	produce_type = /obj/item/stack/sheet/mineral/gold
+	attack_force = 10
+	pick_speed = 30
+	durability_reduction = 10
+	penetration_value = 35
 
 /datum/reagent/silver
 	name = "Silver"
@@ -836,6 +844,12 @@
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
+	produce_type = /obj/item/stack/sheet/mineral/silver
+	attack_force = 10
+	pick_speed = 35
+	durability_reduction = 8
+	blunt_damage = TRUE
+	penetration_value = 25
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!isliving(M))
@@ -844,13 +858,46 @@
 		M.reagents.add_reagent("toxin", reac_volume)
 	..()
 
+/datum/reagent/diamond
+	name = "Diamond"
+	id = "diamond"
+	description = "A girl's best friend."
+	reagent_state = LIQUID
+	color = "#B9F2FF"
+	taste_description = "your wallet dying inside"
+	produce_type = /obj/item/stack/sheet/mineral/diamond
+	attack_force = 15
+	pick_speed = 8
+	penetration_value = 25
+	sharp_result = TRUE
+	durability_reduction = 6
+
+/datum/reagent/adamantine
+	name = "Adamantine"
+	id = "adamantine"
+	description = "STRIKE THE EARTH"
+	reagent_state = LIQUID
+	color = "#90EE90"
+	taste_description = "demons"
+	produce_type = /obj/item/stack/sheet/mineral/adamantine
+	attack_force = 20
+	pick_speed = 3
+	penetration_value = 40
+	sharp_result = TRUE
+	durability_reduction = 4 // strike the earth
+
 /datum/reagent/uranium
 	name ="Uranium"
 	id = "uranium"
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
-	color = "#B8B8C0" // rgb: 184, 184, 192
+	color = "#00FF00" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
+	produce_type = /obj/item/stack/sheet/mineral/uranium
+	attack_force = 2
+	pick_speed = 15
+	durability_reduction = 13
+	blunt_damage = TRUE
 
 /datum/reagent/uranium/on_mob_life(mob/living/M)
 	M.apply_effect(1/M.metabolism_efficiency,IRRADIATE,0)
@@ -871,6 +918,9 @@
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
+	attack_force = 1
+	pick_speed = 80
+	durability_reduction = 50
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)

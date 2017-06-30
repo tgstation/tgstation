@@ -52,20 +52,20 @@
 				var/width = template.width
 				var/height = template.height
 				src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
-
 		if(status != SHELTER_DEPLOY_ALLOWED)
 			used = FALSE
-			return
+			return FALSE
 
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 
 		var/turf/T = deploy_location
 		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
-			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a template spawner([name]) away from the mining level! [ADMIN_JMP(T)]")
+			log_admin("[key_name(usr)] activated a template spawner([name]) away from the mining level at [get_area(T)][COORD(T)]")
 		template.load(deploy_location, centered = TRUE)
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
+		return TRUE
 
 /obj/item/weapon/survivalcapsule/luxury
 	name = "luxury bluespace shelter capsule"
@@ -329,3 +329,33 @@
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
 	item_state = initial(I.item_state)
+
+/obj/item/weapon/survivalcapsule/fort_in_a_box
+	name = "fort-in-a-box"
+	desc = "Dwarven engineering at it's finest. Rumor has it drawbridges are used in the production of these."
+	icon_state = "dorf"
+
+/obj/item/weapon/survivalcapsule/fort_in_a_box/smeltery
+	name = "smeltery-in-a-box"
+	template_id = "smeltery"
+/obj/item/weapon/survivalcapsule/fort_in_a_box/throne_room
+	name = "throne-in-a-box"
+	template_id = "throne_room"
+/obj/item/weapon/survivalcapsule/fort_in_a_box/dining_hall
+	name = "diner-in-a-box"
+	template_id = "dining_hall"
+/obj/item/weapon/survivalcapsule/fort_in_a_box/brewery
+	name = "brewery-in-a-box"
+	template_id = "brewery"
+/obj/item/weapon/survivalcapsule/fort_in_a_box/dorm
+	name = "dorm-in-a-box"
+	template_id = "dorm"
+
+/obj/item/weapon/survivalcapsule/fort_in_a_box/dorm/attack_self()
+	if(..())
+		for(var/obj/machinery/migrant_spawner/M in GLOB.poi_list)
+			M.spawns_left += 6
+			M.ghost_message()
+/obj/item/weapon/survivalcapsule/fort_in_a_box/farm
+	name = "farm-in-a-box"
+	template_id = "farm"

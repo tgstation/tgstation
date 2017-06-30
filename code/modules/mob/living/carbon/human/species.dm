@@ -607,10 +607,26 @@
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
+	if(istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if(C.species_clothing_blacklist)
+			for(var/the_id in C.species_clothing_blacklist)
+				if(the_id == id)
+					return 0
+				else
+					continue
 
+		else if(C.species_clothing_whitelist)
+			var/whitelisted = FALSE
+			for(var/the_id in C.species_clothing_whitelist)
+				if(the_id != id)
+					continue
+				else
+					whitelisted = TRUE
+			if(!whitelisted)
+				return 0
 	var/num_arms = H.get_num_arms()
 	var/num_legs = H.get_num_legs()
-
 	switch(slot)
 		if(slot_hands)
 			if(H.get_empty_held_indexes())

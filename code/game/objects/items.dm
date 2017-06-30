@@ -106,6 +106,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/rpg_loot/rpg_loot = null
 
+	var/datum/reagent/smelted_material = null
+	var/starting_material = null
+
 
 	//Tooltip vars
 	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?

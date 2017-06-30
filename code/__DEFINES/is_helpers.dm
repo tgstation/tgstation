@@ -41,6 +41,7 @@
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define isshadowperson(A) (is_species(A, /datum/species/shadow))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
+#define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
 //more carbon mobs

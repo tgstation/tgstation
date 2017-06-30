@@ -71,6 +71,39 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 	return ..()
 
+/datum/reagent/consumable/ethanol/customizable
+	name = "Ale"
+	id = "customizable_ale"
+	description = "An alcoholic beverage brewed by hand."
+	color = "#664300" // rgb: 102, 67, 0
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 0 // filled out by brewing
+	taste_description = "ale"
+	glass_name = "glass of ale"
+	glass_desc = "A glass of ale. You feel a fey mood coming on just looking at it."
+	var/datum/reagents/contained_reagents
+
+/datum/reagent/consumable/ethanol/customizable/New()
+	. ..()
+	contained_reagents = new/datum/reagents(10000)
+
+/datum/reagent/consumable/ethanol/customizable/on_mob_life(mob/living/M)
+	..()
+	for(var/R in contained_reagents.reagent_list)
+		var/datum/reagent/RA = R
+		RA.volume = volume
+		RA.on_mob_life(M)
+
+/datum/reagent/consumable/ethanol/customizable/on_transfer(datum/reagent/OR)
+	if(istype(OR, /datum/reagent/consumable/ethanol/customizable))
+		var/datum/reagent/consumable/ethanol/customizable/TA = OR
+		for(var/datum/reagent/REA in TA.contained_reagents.reagent_list)
+			if(!is_type_in_list(REA, contained_reagents.reagent_list))
+				contained_reagents.add_reagent(REA.id, 1)
+				TA.contained_reagents.del_reagent(REA.id)
+		boozepwr = TA.boozepwr
+	..()
+
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
 	id = "beer"

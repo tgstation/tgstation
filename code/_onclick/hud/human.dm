@@ -84,7 +84,6 @@
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
 
-
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)

@@ -286,6 +286,21 @@
 		return
 	return ..()
 
+/obj/item/weapon/reagent_containers/glass/bucket/dwarf
+	name = "Wooden bucket"
+	desc = "It's a wooden bucket, don't question how it carries very hot liquids."
+	icon = 'icons/obj/janitor.dmi' //TODO: add the cool bucket sprite
+	icon_state = "bucket"
+	item_state = "bucket"
+	materials = list(MAT_METAL=200)
+	w_class = WEIGHT_CLASS_NORMAL
+	amount_per_transfer_from_this = 25 //Mods require 25u of reagents, saves a click
+	possible_transfer_amounts = list(10,15,20,25,30,50,70)
+	volume = 75 //Code adds 75u of reagents while the original bucket had 70u max, making it loose	flags = OPENCONTAINER
+	flags_inv = HIDEHAIR
+	slot_flags = SLOT_HEAD
+	resistance_flags = 0
+
 /obj/item/weapon/reagent_containers/glass/beaker/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility,"
@@ -411,3 +426,76 @@
 /obj/item/weapon/reagent_containers/glass/beaker/large/bromine
 	name = "bromine"
 	list_reagents = list("bromine" = 50)
+
+/obj/item/weapon/reagent_containers/glass/mold
+	name = "mold"
+	desc = "A clay mold."
+	icon = 'icons/obj/blacksmithing.dmi'
+	icon_state = "mold1"
+	volume = 25
+	amount_per_transfer_from_this = 25
+	flags = OPENCONTAINER
+	var/obj/produce_type = null
+
+
+
+
+/obj/item/weapon/reagent_containers/glass/mold/sword
+	name = "sword mold"
+	desc = "A clay mold of a sword blade."
+	icon_state = "mold_blade"
+	produce_type = /obj/item/weapon/mold_result/blade
+
+
+
+
+/obj/item/weapon/reagent_containers/glass/mold/hammer
+	name = "hammer head mold"
+	desc = "A clay mold of a hammer head."
+	icon_state = "mold_blade"
+	produce_type = /obj/item/weapon/mold_result/hammer_head
+
+
+
+
+/obj/item/weapon/reagent_containers/glass/mold/pickaxe
+	name = "pickaxe mold"
+	desc = "A clay mold of a pickaxe head."
+	icon_state = "mold_pickaxe"
+	produce_type = /obj/item/weapon/mold_result/pickaxe_head
+
+/obj/item/weapon/reagent_containers/glass/mold/shovel
+	name = "shovel mold"
+	desc = "A clay mold of a shovel head."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/shovel_head
+
+/obj/item/weapon/reagent_containers/glass/mold/helmet
+	name = "helmet mold"
+	desc = "A clay mold of a helmet."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/helmet_plating
+
+/obj/item/weapon/reagent_containers/glass/mold/armor
+	name = "armor mold"
+	desc = "A clay mold of armor plating."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/armor_plating
+
+/obj/item/weapon/reagent_containers/glass/mold/shield
+	name = "shield mold"
+	desc = "A clay mold of a shield backing."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/shield_backing
+
+/obj/item/weapon/reagent_containers/glass/mold/crossbow
+	name = "crossbow mold"
+	desc = "A clay mold of a crossbow base."
+	icon_state = "mold_shovel"
+	produce_type = /obj/item/weapon/mold_result/crossbow_base
+
+/obj/item/weapon/reagent_containers/glass/mold/bar
+	name = "bar mold"
+	desc = "A clay mold of a bar."
+
+
