@@ -492,3 +492,4 @@
 			to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
 		else
 			qdel(N)
+			to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
