@@ -14,12 +14,15 @@
 	//Someone refactor out sillynewscastervar and other things to use the datum and not the phyiscal object later....
 
 /obj/item/weapon/photo/Initialize(mapload, datum/picture/P)
+	init_photo(P)
+	return ..()
+
+/obj/item/weapon/photo/proc/init_photo(datum/picture/P)
 	if(istype(P))
 		picture = P
 		icon = P.picture_icon
 		if(P.caption)
 			scribble = P.caption
-	return ..()
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)

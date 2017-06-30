@@ -37,9 +37,9 @@ GLOBAL_LIST_INIT(picture_logging_information, list())
 	picinfo["pixel_size_x"] = psize_x
 	picinfo["pixel_size_y"] = psize_y
 	picinfo["blueprints"] = has_blueprints
-	picinfo["logpath"] = logpath
+	picinfo["logpath"] = finalpath
 	GLOB.picture_logging_information["[id]"] = picinfo
-	fcopy(picture_image, finalpath)
+	fcopy(icon(picture_image, dir = NORTH), finalpath)
 
 /datum/picture/proc/Copy(greyscale = FALSE, cropx = 0, cropy = 0)
 	var/datum/picture/P = new
@@ -56,5 +56,3 @@ GLOBAL_LIST_INIT(picture_logging_information, list())
 	if(cropx || cropy)
 		P.picture_image.Crop(cropx, cropy, psize_x - cropx, psize_y - cropy)
 	return P
-
-

@@ -196,3 +196,12 @@
 		user.put_in_hands(p)
 		pictures_left--
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
+		var/name1 = input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name") as text|null
+		var/caption = input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption") as text|null
+		if(name1)
+			name1 = copytext(name, 1, 33)
+			picture.picture_name = name1
+		if(caption)
+			caption = copytext(caption, 1, 257)
+			picture.caption = caption
+		p.init_photo(picture)

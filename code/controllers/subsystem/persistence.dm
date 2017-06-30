@@ -149,11 +149,17 @@ SUBSYSTEM_DEF(persistence)
 		T.placer_key = chosen_trophy["placer_key"]
 		T.update_icon()
 
-
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
+	StorePhotoInformation()
+
+/datum/controller/subsystem/persistence/proc/StorePhotoInformation()
+	var/finalpath = GLOB.picture_log_folder
+	finalpath += "photos.json"
+	var/file = file(finalpath)
+	file << json_encode(GLOB.picture_logging_information)
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	for(var/A in new_secret_satchels)
