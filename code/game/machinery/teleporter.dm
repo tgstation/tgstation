@@ -227,7 +227,7 @@
 	desc = "It's the hub of a teleporting machine."
 	icon_state = "tele0"
 	var/accurate = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/station/power_station
@@ -338,7 +338,7 @@
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
 	icon_state = "controller"
 	var/engaged = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/computer/teleporter/teleporter_console
