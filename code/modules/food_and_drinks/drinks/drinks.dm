@@ -31,7 +31,7 @@
 		return 0
 	
 	if (!is_open_container())
-		to_chat(user, "<span class='warning'>[src]'s tab hasn't been opened!</span>")
+		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
 		return 0
 
 	if(M == user)
