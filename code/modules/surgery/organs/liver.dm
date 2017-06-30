@@ -24,7 +24,7 @@
 	if(damage > 0)
 		damage -= 0.01//in most cases the pure toxin damage from too much alcohol will kill you first.
 	if(damage > maxHealth)//cap liver damage
-		damage = maxHealth-1
+		damage = maxHealth
 
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
