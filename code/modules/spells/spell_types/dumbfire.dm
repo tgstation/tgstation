@@ -36,9 +36,10 @@
 /obj/effect/proc_holder/spell/dumbfire/cast(list/targets, mob/user = usr)
 	playMagSound()
 	for(var/turf/target in targets)
-		INVOKE_ASYNC(src, .proc/launch_at, target, user)
+		launch_at(target, user)
 
 /obj/effect/proc_holder/spell/dumbfire/proc/launch_at(turf/target, mob/user)
+	set waitfor = FALSE
 	var/obj/effect/proc_holder/spell/targeted/projectile
 	if(istext(proj_type))
 		var/projectile_type = text2path(proj_type)
@@ -76,7 +77,7 @@
 			break
 
 		if(proj_trail && projectile)
-			INVOKE_ASYNC(src, .proc/proj_trail, projectile)
+			proj_trail(projectile)
 
 		current_loc = projectile.loc
 		var/matrix/M = new
@@ -89,9 +90,10 @@
 		qdel(projectile)
 
 /obj/effect/proc_holder/spell/dumbfire/proc/proj_trail(obj/effect/proc_holder/spell/targeted/projectile)
+	set waitfor = FALSE
 	if(projectile)
 		var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
 		trail.icon = proj_trail_icon
 		trail.icon_state = proj_trail_icon_state
-		trail.density = 0
+		trail.density = FALSE
 		QDEL_IN(trail, proj_trail_lifespan)

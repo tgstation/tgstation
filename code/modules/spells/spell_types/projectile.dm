@@ -28,9 +28,10 @@
 /obj/effect/proc_holder/spell/targeted/projectile/cast(list/targets, mob/user = usr)
 	playMagSound()
 	for(var/mob/living/target in targets)
-		INVOKE_ASYNC(src, .proc/launch, target, user)
+		launch(target, user)
 
 /obj/effect/proc_holder/spell/targeted/projectile/proc/launch(mob/living/target, mob/user)
+	set waitfor = FALSE
 	var/obj/effect/proc_holder/spell/targeted/projectile
 	if(istext(proj_type))
 		var/projectile_type = text2path(proj_type)
@@ -71,7 +72,7 @@
 			break
 
 		if(proj_trail && projectile)
-			INVOKE_ASYNC(src, .proc/spawntrail)
+			spawntrail(projectile)
 
 		if(projectile.loc in range(target.loc,proj_trigger_range))
 			projectile.perform(list(target),user=user)
@@ -85,9 +86,10 @@
 		qdel(projectile)
 
 /obj/effect/proc_holder/spell/targeted/projectile/proc/spawntrail(obj/effect/proc_holder/spell/targeted/projectile)
+	set waitfor = FALSE
 	if(projectile)
 		var/obj/effect/overlay/trail = new /obj/effect/overlay(projectile.loc)
 		trail.icon = proj_trail_icon
 		trail.icon_state = proj_trail_icon_state
-		trail.density = 0
+		trail.density = FALSE
 		QDEL_IN(trail, proj_trail_lifespan)

@@ -81,13 +81,13 @@ Notes:
 
 /datum/tooltip/proc/hide()
 	if (src.queueHide)
-		addtimer(src, do_hide(), 1)
+		addtimer(CALLBACK(src, .proc/do_hide), 1)
 	else
 		do_hide()
 
-	queueHide = showing ? 1 : 0
+	queueHide = showing ? TRUE : FALSE
 
-	return 1
+	return TRUE
 
 /datum/tooltip/proc/do_hide()
 	winshow(owner, control, 0)

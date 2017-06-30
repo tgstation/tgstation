@@ -67,5 +67,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/finish_loading()
+	update_icon()
+	busy = FALSE
+
+/obj/machinery/r_n_d/destructive_analyzer/update_icon()
 	icon_state = "d_analyzer_l"
-	busy = 0

@@ -29,8 +29,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 */
 
-//SPAWN() removal pending in RND techweb PR.
-
 /obj/machinery/computer/rdconsole
 	name = "R&D Console"
 	icon_screen = "rdcomp"

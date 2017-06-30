@@ -73,9 +73,10 @@
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
-	INVOKE_ASYNC(src, .proc/do_spray, A, wait_step, D, range, puff_reagent_left)
+	do_spray(A, wait_step, D, range, puff_reagent_left)
 
 /obj/item/weapon/reagent_containers/spray/proc/do_spray(atom/A, wait_step, obj/effect/decal/chempuff/D, range, puff_reagent_left)
+	set waitfor = FALSE
 	var/range_left = range
 	for(var/i=0, i<range, i++)
 		range_left--

@@ -380,7 +380,8 @@
 		add_overlay("dispover-ready")
 
 /obj/machinery/disposal/bin/proc/do_flush()
-	SSblackbox.inc("disposal_auto_flush",1)
+	set waitfor = FALSE
+	SSblackbox.inc("disposal_auto_flush")
 	flush()
 
 //timed process
@@ -399,7 +400,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		INVOKE_ASYNC(src, .proc/flush)
+		flush()
 
 	if(stat & NOPOWER) // won't charge if no power
 		return
