@@ -28,6 +28,9 @@ You can of course, as always, ask for help at [#coderbus](irc://irc.rizon.net/co
 
 The Design Lead has the final say on what gameplay changes get into and out of the game. He or she has full veto power on any feature or balance additions, changes, or removals, and establishes a general, personally-preferred direction for the game.
 
+**Headcoder**
+The Headcoder is responsible for controlling, adding, and removing maintainers from the project. In addition to filling te orles of a normal maintainer, they have sole authority on who becomes a maintainer, as well as who remains a maintainer and who does not.
+
 **Art Director**
 
 The Art Director controls sprites and aesthetic that get into the game. While sprites for brand-new additions are generally accepted regardless of quality, modified current art assets fall to the Art Director, who can decide whether or not a sprite tweak is both merited and a suitable replacement.
@@ -52,7 +55,7 @@ As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code mu
 
 DM will allow you nest almost any type keyword into a block, such as:
 
-```c++
+```DM
 datum
 	datum1
 		var
@@ -136,14 +139,14 @@ Copying code from one place to another may be suitable for small, short-time pro
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
-### Startup/runtime tradeoffs with lists and the "hidden" Init proc
+### Startup/Runtime tradeoffs with lists and the "hidden" init proc
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
 
 There are two key points here:
 
-1) Defining a list in the variable's definition calls a hidden proc - Init. If you have to define a list at startup, do so in New() (or preferably Initialize()) and avoid the overhead of a second call (Init() and then New())
+1) Defining a list in the variable's definition calls a hidden proc - init. If you have to define a list at startup, do so in New() (or preferably Initialize()) and avoid the overhead of a second call (Init() and then New())
 
-2) It also offsets list creation overhead to the point where the list is actually required and takes up all the processing power that it needs, even if the list itself would never be used!
+2) It also consumes more memory to the point where the list is actually required, even if the object in question may never use it!
 
 Remember: although this tradeoff makes sense in many cases, it doesn't cover them all. Think carefully about your addition before deciding if you need to use it.
 
@@ -153,7 +156,7 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 ### No magic numbers or strings
 This means stuff like having a "mode" variable for an object set to "1" or "2" with no clear indicator of what that means. Make these #defines with a name that more clearly states what it's for. For instance:
-````
+````DM
 /datum/proc/do_the_thing(thing_to_do)
 	switch(thing_to_do)
 		if(1)
@@ -162,7 +165,7 @@ This means stuff like having a "mode" variable for an object set to "1" or "2" w
 			(...)
 ````
 There's no indication of what "1" and "2" mean! Instead, you'd do something like this:
-````
+````DM
 #define DO_THE_THING_REALLY_HARD 1
 #define DO_THE_THING_EFFICIENTLY 2
 /datum/proc/do_the_thing(thing_to_do)
@@ -240,9 +243,9 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
 
-* Do not divide when you can easily do the same thing with multiplication. (ie `4/2` should be done as `4*0.5`)
+* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
 
-#### Grammar and syntax enforcement
+#### Enforced not enforced
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
 * English/British spelling on var/proc names
@@ -326,7 +329,7 @@ DM has a var keyword, called global. This var keyword is for vars inside of type
 mob
     var
         global
-            thing = 1
+            thing = TRUE
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 
@@ -358,6 +361,6 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 Just becuase something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
 ## A word on Git
-Yes, we know that the files have a tonne of mixed windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
+Yes, we know that the files have a tonne of mixed Windows and Linux line endings. Attempts to fix this have been met with less than stellar success, and as such we have decided to give up caring until there comes a time when it matters.
 
 Therefore, EOF settings of main repo are forbidden territory one must avoid wandering into, at risk of losing body and/or mind to the Git gods.
