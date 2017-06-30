@@ -5,7 +5,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = "stomach"
-	attack_verb = list("gored", "squished", "slapped")
+	attack_verb = list("gored", "squished", "slapped", "digested")
 	desc = "Onaka ga suite imasu."
 
 /obj/item/organ/stomach/on_life()
