@@ -478,7 +478,7 @@
 	uniform = /obj/item/clothing/under/rank/engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	id = /obj/item/weapon/card/id/away/old/eng
-	gloves = /obj/item/clothing/gloves/color/old
+	gloves = /obj/item/clothing/gloves/color/fyellow/old
 	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
