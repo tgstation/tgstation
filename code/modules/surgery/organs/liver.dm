@@ -17,10 +17,11 @@
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
+	var/list/toxinList
 
 /obj/item/organ/liver/New()
 	..()
-	var/list/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
+	list/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
