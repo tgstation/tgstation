@@ -14,6 +14,12 @@
 	var/drop_y = 1
 	var/drop_z = 1
 
+/turf/open/chasm/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
+
+/turf/open/chasm/MakeDry(wet_setting = TURF_WET_WATER)
+	return
+
 /turf/open/chasm/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
 	drop_stuff(AM)
