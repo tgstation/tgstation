@@ -1099,7 +1099,9 @@
 
 /mob/living/silicon/robot/proc/picturesync()
 	if(connected_ai && connected_ai.aicamera && aicamera)
-		connected_ai.aicamera.stored |= aicamera.stored
+		for(var/i in aicamera.stored)
+			var/datum/picture/p = i
+			connected_ai.aicamera.stored[p] = TRUE
 
 /mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()

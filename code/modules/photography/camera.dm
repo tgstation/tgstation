@@ -18,7 +18,7 @@
 	var/on = TRUE
 	var/cooldown = 64
 	var/blending = FALSE		//lets not take pictures while the previous is still processing!
-	var/see_ghosts = 0	//for the spoop of it
+	var/see_ghosts = FALSE	//for the spoop of it
 	var/sound/custom_sound
 	var/picture_size_x = 1
 	var/picture_size_y = 1
@@ -35,7 +35,7 @@
 /obj/item/device/camera/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
-	see_ghosts = 1
+	see_ghosts = TRUE
 
 /obj/item/device/camera/detective
 	name = "Detective's camera"
@@ -78,10 +78,6 @@
 
 	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x, picture_size_y)
 
-	if(istype(custom_sound))
-		playsound(loc, custom_sound, 75, 1, -3)
-	else
-		playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	icon_state = state_off
 
@@ -104,14 +100,18 @@
 	var/viewc = user.client? user.client.eye : target
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
+	var/list/mobs = list()
 	var/blueprints = FALSE
 	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
 		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || T in seen)
-			turfs += T
-			desc += camera_get_mobs(T)
+			turfs[T] = TRUE
+			for(var/mob/M in T)
+				mobs[M] = TRUE
 			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
 			CHECK_TICK
+	for(var/i in mobs)
+		desc += camera_get_mobdesc(mobs[i])
 	var/psize_x = (size_x * 2 + 1) * world.icon_size
 	var/psize_y = (size_y * 2 + 1) * world.icon_size
 
@@ -128,25 +128,23 @@
 	after_picture(user, P, flag)
 	blending = FALSE
 
-/obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
+/obj/item/device/camera/proc/camera_get_mobdesc(mob/M)
 	var/list/mob_details
-	for(var/mob/M in the_turf)
-		if(M.invisibility)
-			if(see_ghosts && isobserver(M))
-				mob_details += "You can also see a g-g-g-g-ghooooost!"
+	if(M.invisibility)
+		if(see_ghosts && isobserver(M))
+			mob_details += "You can also see a g-g-g-g-ghooooost!"
+		else
+			return mob_details
+	var/list/holding = list()
+	if(isliving(M))
+		var/mob/living/L = M
+		for(var/obj/item/I in L.held_items)
+			if(!holding)
+				holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
 			else
-				continue
-		var/list/holding = list()
-		if(isliving(M))
-			var/mob/living/L = M
-			for(var/obj/item/I in L.held_items)
-				if(!holding)
-					holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
-				else
-					holding += " and \a [I]"
-			holding = holding.Join()
-			mob_details += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
-		CHECK_TICK
+				holding += " and \a [I]"
+		holding = holding.Join()
+		mob_details += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
 	return mob_details
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96)
@@ -154,12 +152,12 @@
 	res.Scale(psize_x, psize_y)
 	var/list/atoms = list()
 	for(var/turf/T in turfs)
-		atoms.Add(T)
+		atoms[T] = TRUE
 		for(var/atom/movable/A in T)
 			if(A.invisibility)
 				if(!(see_ghosts && isobserver(A)))
 					continue
-			atoms.Add(A)
+			atoms[T] = TRUE
 		CHECK_TICK
 
 	var/list/sorted = list()
@@ -185,6 +183,12 @@
 		var/icon/img = getFlatIcon(A)
 		res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 		CHECK_TICK
+
+	if(istype(custom_sound))				//This is where the camera actually finishes its exposure.
+		playsound(loc, custom_sound, 75, 1, -3)
+	else
+		playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
+
 	return res
 
 /obj/item/device/camera/proc/after_picture(mob/user, datum/picture/picture, proximity_flag)

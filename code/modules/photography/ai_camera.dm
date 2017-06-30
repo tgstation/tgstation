@@ -14,14 +14,16 @@
 	if(!stored.len)
 		to_chat(usr, "<span class='boldannounce'>No images saved</span>")
 		return
-	for(var/datum/picture/t in stored)
-		nametemp += t.picture_name
+	for(var/i in stored)
+		var/datum/picture/p = stored[i]
+		nametemp += p.picture_name
 	find = input("Select image") in nametemp|null
 	if(!find)
 		return
-	for(var/datum/picture/q in stored)
-		if(q.picture_name == find)
-			return q
+	for(var/i in stored)
+		var/datum/picture/p = stored[i]
+		if(p.picture_name == find)
+			return p
 
 /obj/item/device/camera/siliconcam/proc/viewpictures()
 	var/datum/picture/selection = selectpicture()
@@ -37,7 +39,7 @@
 /obj/item/device/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
 	var/number = stored.len
 	picture.picture_name = "Image [number] (taken by [loc.name])"
-	stored += picture
+	stored[picture] = TRUE
 	to_chat(usr, "<span class='unconscious'>Image recorded</span>")
 
 /obj/item/device/camera/siliconcam/robot_camera
@@ -49,12 +51,12 @@
 	if(istype(C) && istype(C.connected_ai))
 		var/number = C.connected_ai.aicamera.stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
-		C.connected_ai.aicamera.stored += picture
+		C.connected_ai.aicamera.stored[picture] = TRUE
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to remote database</span>")
 	else
 		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
-		stored += picture
+		stored[picture] = TRUE
 		to_chat(usr, "<span class='unconscious'>Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.</span>")
 
 /obj/item/device/camera/siliconcam/robot_camera/selectpicture()
