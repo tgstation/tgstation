@@ -38,7 +38,8 @@
 		projectile = new projectile_type(user)
 	if(istype(proj_type,/obj/effect/proc_holder/spell))
 		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
-		projectile:linked_spells += proj_type
+		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
+		T.linked_spells += proj_type
 	projectile.icon = proj_icon
 	projectile.icon_state = proj_icon_state
 	projectile.setDir(get_dir(target,projectile))

@@ -46,7 +46,8 @@
 		projectile = new projectile_type(user)
 	else if(istype(proj_type,/obj/effect/proc_holder/spell))
 		projectile = new /obj/effect/proc_holder/spell/targeted/trigger(user)
-		projectile:linked_spells += proj_type
+		var/obj/effect/proc_holder/spell/targeted/trigger/T = projectile
+		T.linked_spells += proj_type
 	else
 		projectile = new proj_type(user)
 	projectile.icon = proj_icon
