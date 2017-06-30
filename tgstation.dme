@@ -1339,7 +1339,6 @@
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
-#include "code\modules\holodeck\computer_funcs.dm"
 #include "code\modules\holodeck\holo_effect.dm"
 #include "code\modules\holodeck\items.dm"
 #include "code\modules\holodeck\mobs.dm"
