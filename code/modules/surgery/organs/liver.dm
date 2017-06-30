@@ -18,7 +18,7 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
 
-	var/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
+	var/list/toxinList = typesof(/datum/reagent/toxin) //cached list of all toxins
 
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
@@ -32,7 +32,6 @@
 	if(istype(C))
 		if(!failing)//can't process reagents with a failing liver
 			if(C.reagents)
-
 				if(filterToxins)
 					//handle liver toxin filtration
 					for(var/toxin in toxinList)
