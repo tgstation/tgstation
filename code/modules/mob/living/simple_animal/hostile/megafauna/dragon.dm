@@ -185,14 +185,15 @@ Difficulty: Medium
 	negative = !negative //invert it for the swoop down later
 
 	var/oldtransform = transform
-	animate(src, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
+	alpha = 255
+	animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
 		sleep(1)
 		if(QDELETED(src) || stat == DEAD) //we got hit and died, rip us
 			qdel(F)
 			swooping &= ~SWOOP_DAMAGEABLE
 			return
-	animate(src, transform = matrix()*0.7, time = 7)
+	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
 	mouse_opacity = 0
 	sleep(7)
@@ -232,7 +233,7 @@ Difficulty: Medium
 			negative = TRUE
 	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
 	new /obj/effect/temp_visual/dragon_swoop(loc)
-	animate(src, transform = oldtransform, time = 5)
+	animate(src, alpha = 255, transform = oldtransform, time = 5)
 	sleep(5)
 	swooping &= ~SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)

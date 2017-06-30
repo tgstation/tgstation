@@ -24,6 +24,7 @@
 
 	config = new
 
+	CheckSchemaVersion()
 	SetRoundID()
 
 	SetupLogs()
@@ -56,18 +57,32 @@
 			external_rsc_urls.Cut(i,i+1)
 #endif
 
-/world/proc/SetRoundID()
+/world/proc/CheckSchemaVersion()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
+			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")]")
+			db_version.Execute()
+			if(db_version.NextRow())
+				var/db_major = db_version.item[1]
+				var/db_minor = db_version.item[2]
+				if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
+					message_admins("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("db schema ([db_major].[db_minor]) is behind latest tg schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			else
+				message_admins("Could not get schema version from db")
+		else
+			log_world("Your server failed to establish a connection with the database.")
+
+/world/proc/SetRoundID()
+	if(config.sql_enabled)
+		if(SSdbcore.Connect())
 			var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (start_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 			query_round_start.Execute()
 			var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
 			query_round_last_id.Execute()
 			if(query_round_last_id.NextRow())
 				GLOB.round_id = query_round_last_id.item[1]
-		else
-			log_world("Your server failed to establish a connection with the database.")
 
 /world/proc/SetupLogs()
 	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"

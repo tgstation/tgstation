@@ -4,6 +4,7 @@
 	tick_interval = 0
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	var/needs_update_stat = FALSE
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	if(isnum(set_duration))
@@ -12,12 +13,12 @@
 	if(.)
 		if(updating_canmove)
 			owner.update_canmove()
-			if(issilicon(owner))
+			if(needs_update_stat || issilicon(owner))
 				owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
 	owner.update_canmove()
-	if(issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
+	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
 //STUN
@@ -31,19 +32,19 @@
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
+	needs_update_stat = TRUE
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
 	alert_type = /obj/screen/alert/status_effect/asleep
+	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
 
 /datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
 	. = ..()
 	if(.)
-		if(updating_canmove)
-			owner.update_stat()
 		if(iscarbon(owner)) //to avoid repeated istypes
 			carbon_owner = owner
 		if(ishuman(owner))
@@ -64,10 +65,6 @@
 			carbon_owner.handle_dreams()
 		if(prob(10) && owner.health > HEALTH_THRESHOLD_CRIT)
 			owner.emote("snore")
-
-/datum/status_effect/incapacitating/sleeping/on_remove()
-	..()
-	owner.update_stat()
 
 /obj/screen/alert/status_effect/asleep
 	name = "Asleep"
